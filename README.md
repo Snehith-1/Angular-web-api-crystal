@@ -7,3 +7,9 @@
 7)run these command in command prompt :nvm list to check version.
 8) nvm use 11.10.1  for Javascript
 9) nvm use 18.16.0 for Angular
+CrystalDecisions.CrystalReports.Engine
+CrystalDecisions.Shared
+CrystalDecisions.ReportSource
+ 
+version:13.0.4000.0
+ 
