@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.hrm.Models
+{
+    public class MdlLeaveGrade
+    {
+        public List<leavegrade1_list> leavegrade_list { get; set; }          
+        
+
+    }
+
+
+    public class leavegrade1_list : result
+    {
+        public string leavegrade_gid { get; set; }
+        public string leavegrade_code { get; set; }
+        public string leavegrade_name { get; set; }
+        public string leavetype_name { get; set; }
+        public string total_leavecount { get; set; }
+        public string available_leavecount { get; set; }
+        public string leave_limit { get; set; }
+    }
+    public class leavegradecode_list : result
+    {
+        public string leavetype_name { get; set; }
+        public string leavetype_code { get; set; }
+        public string leavetype_gid { get; set; }
+        public string leave_limit { get; set; }
+        public string available_leavecount { get; set; }
+        public string total_leavecount { get; set; }
+    }
+
+    public class leavegradesubmit_list: result
+    {
+        public string leavetype_gid { get; set; }
+        public string leavegrade_code { get; set; }
+        public string leavegrade_name { get; set; }
+        public string leavegrade_gid { get; set; }
+        public string leave_limit { get; set; }
+        public string available_leavecount { get; set; }
+        public string total_leavecount { get; set; }
+        public List<leavegradecode_list> leavegradecode_list { get; set; }
+
+
+    }
+}

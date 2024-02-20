@@ -1,0 +1,342 @@
+<!--begin::Content-->
+<div id="kt_app_content" class="app-content  flex-column-fluid ">
+
+
+    <!--begin::Content container-->
+    <div id="kt_app_content_container" class="app-container  container-xxl ">
+        <!--begin::Inbox App - Compose -->
+        <div class="d-flex flex-column flex-lg-row">
+            <!--begin::Sidebar-->
+
+            <!--end::Sidebar-->
+
+            <!--begin::Content-->
+            <div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+
+                <!--begin::Card-->
+                <div class="card shadow-lg">
+
+                    <div class="card-header d-flex align-items-center justify-content-between py-3">
+                        <h2 class="card-title m-0">
+                            Create Campaign
+                        </h2>
+                        <div class="btn-group">
+                            <button type="button" class="btn draft-button text-white "
+                                (click)="onadd()">Save as Draft</button>
+                            
+                        </div>
+
+                        <!--begin::Toggle-->
+                        <a href="#"
+                            class="btn btn-sm btn-icon btn-color-primary btn-light btn-active-light-primary d-lg-none"
+                            data-bs-toggle="tooltip" data-bs-dismiss="click" data-bs-placement="top"
+                            title="Toggle inbox menu" id="kt_inbox_aside_toggle">
+                            <i class="ki-duotone ki-burger-menu-2 fs-3 m-0"><span class="path1"></span><span
+                                    class="path2"></span><span class="path3"></span><span class="path4"></span><span
+                                    class="path5"></span><span class="path6"></span><span class="path7"></span><span
+                                    class="path8"></span><span class="path9"></span><span class="path10"></span></i>
+                        </a>
+                        <!--end::Toggle-->
+                    </div>
+
+                    <div class="card-body p-0">
+                        <!--begin::Form-->
+                        <form [formGroup]="reactiveForm" #form="ngForm" id="kt_inbox_compose_form">
+                            <!--begin::Body-->
+                            <div class="d-block">
+                                <!--begin::From-->
+                                <div class="d-flex align-items-center border-bottom px-8 min-h-50px">
+                                    <!--begin::Label-->
+
+                                    <div class="text-gray-900 fw-bold w-75px">
+                                        From:
+                                    </div>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-transparent border-0"
+                                        formControlName="mail_from" value="" data-kt-inbox-form="tagify" />
+                                    <div *ngIf="mail_from.invalid && (mail_from.dirty || mail_from.touched)">
+                                        <div *ngIf="mail_from.errors?.['required']">
+                                            <span style="color:red;">&nbsp; From Mail Is required.</span>
+                                        </div>
+                                    </div>
+                                    <!--end::Input-->
+
+
+                                </div>
+                                <!--end::Reply To-->
+                                <!--begin::From-->
+                                <div class="d-flex align-items-center border-bottom px-8 min-h-50px">
+                                    <!--begin::Label-->
+                                    <div class="text-gray-900 fw-bold w-75px">
+                                        Reply To:
+                                    </div>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-transparent border-0"
+                                        formControlName="reply_to" value="" data-kt-inbox-form="tagify" />
+                                    <div *ngIf="reply_to.invalid && (reply_to.dirty || reply_to.touched)">
+                                        <div *ngIf="reply_to.errors?.['required']">
+                                            <span style="color:red;">&nbsp;Reply Is required.</span>
+                                        </div>
+                                    </div>
+                                    <!--end::Input-->
+
+
+                                </div>
+                                <!--end::Reply To-->
+                                <!--begin::To-->
+                                <div class="d-flex align-items-center border-bottom px-8 min-h-50px">
+                                    <!--begin::Label-->
+                                    <div class="text-gray-900 fw-bold w-75px">
+                                        To:
+                                    </div>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-transparent border-0"
+                                        formControlName="to" value="" data-kt-inbox-form="tagify" />
+                                    <div *ngIf="to.invalid && (to.dirty || to.touched)">
+                                        <div *ngIf="to.errors?.['required']">
+                                            <span style="color:red;">&nbsp;To Mail Is required.</span>
+                                        </div>
+                                        <div *ngIf="to.errors?.['pattern']">
+                                            <span style="color:red;">&nbsp; Invaild Email Format.</span>
+                                        </div>
+                                    </div>
+                                    <!--end::Input-->
+
+                                    <!--begin::CC & BCC buttons-->
+                                    <!-- <div class="ms-auto w-75px text-end">
+                                        <span class="text-muted fs-bold cursor-pointer text-hover-primary me-2"
+                                            data-kt-inbox-form="cc_button">Cc</span>
+                                    </div> -->
+                                    <!--end::CC & BCC buttons-->
+                                </div>
+                                <!--end::To-->
+
+                                <!--begin::CC-->
+                                <div class="d-none align-items-center border-bottom ps-8 pe-5 min-h-50px"
+                                    data-kt-inbox-form="cc">
+                                    <!--begin::Label-->
+                                    <div class="text-gray-900 fw-bold w-75px">
+                                        Cc:
+                                    </div>
+                                    <!--end::Label-->
+
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-transparent border-0"
+                                        formControlName="cc" value="" data-kt-inbox-form="tagify" />
+                                    <div *ngIf="cc.invalid && (cc.dirty || cc.touched)">
+                                        <div *ngIf="cc.errors?.['required']">
+                                            <span style="color:red;">&nbsp;CC Is required.</span>
+                                        </div>
+                                    </div>
+                                    <!--end::Input-->
+
+                                    <!--begin::Close-->
+                                    <span class="btn btn-clean btn-xs btn-icon" data-kt-inbox-form="cc_close">
+                                        <i class="ki-duotone ki-cross fs-5"><span class="path1"></span><span
+                                                class="path2"></span></i>
+                                    </span>
+                                    <!--end::Close-->
+                                </div>
+                                <!--end::CC-->
+
+
+
+                                <!--begin::Subject-->
+                                <div class="border-bottom">
+                                    <input class="form-control form-control-transparent border-0 px-8 min-h-45px"
+                                        formControlName="sub" placeholder="Subject" />
+                                    <div *ngIf="sub.invalid && (sub.dirty || sub.touched)">
+                                        <div *ngIf="sub.errors?.['required']">
+                                            <span style="color:red;">&nbsp;Subject Is required.</span>
+                                        </div>
+                                    </div>
+                                </div><br>
+                                <!--end::Subject-->
+                                <div class="d-flex flex-row m-6 mt-0">
+                                    <div class="col">
+                                        <span class="font-bold">Upload </span>
+                                        <div class="col-lg-12 fv-row mt-2">
+                                            <input (change)="onChange2($event)" accept="image/*," type="file" #fileInput
+                                                class="
+                      form-control form-control-lg form-control-solid bg-white
+                      mb-3 mb-lg-0  borderc-secondary custom-input
+                    " name="fName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Message-->
+                                <div class="col-12 col-lg-19 col-sm-12">
+
+
+
+                                    <div class="d-flex flex-row m-6 mt-0 ">
+                                        <div class="col">
+                                            <span class="text-gray-900 fw-bold">Body</span>
+                                            <div class="fv-row mt-2">
+                                                <angular-editor [config]="config"
+                                                    formControlName="body"></angular-editor>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                
+                            </div>
+                            <!--end::Body-->
+
+                            <!--begin::Footer-->
+                            <div
+                                class="d-flex flex-stack flex-wrap justify-content-center gap-2 py-5 ps-8 pe-5 border-top">
+                                <!--begin::Actions-->
+                                <div class="d-flex align-items-center me-3">
+                                    <!--begin::Send-->
+                                    <div class="btn-group align-items-center  me-4 ">
+                                        <!--begin::Submit-->
+
+                                        <!-- Example split danger button -->
+                                        <!-- app/send-button/send-button.component.html -->
+                                        <div class="btn-group ">
+                                            <button type="button" class="btn send-button  text-white"
+                                                (click)="onadd()">Send</button>
+                                            <!-- <button type="button"
+                                                class="btn send-button dropdown-toggle dropdown-toggle-split text-white"
+                                                (click)="toggleDropdown()" [attr.aria-expanded]="isDropdownOpen"
+                                                aria-haspopup="true">
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                                <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownOpen }">
+                                                    <a class="dropdown-item" href="#">Schedule send</a>
+                                                </div>
+                                            </button> -->
+                                            
+                                        </div> &nbsp;&nbsp;
+
+
+
+                                        <!--end::Submit-->
+
+                                    </div>
+                                    
+                                    <button type="button" class="btn-info btn-sm text-white me-4" data-bs-toggle="modal"
+                                    data-bs-target="#myModaladd">
+                                    <i class="fas fa-calendar"></i> &nbsp;&nbsp;&nbsp; Schedule Mail
+                                </button>
+
+                                    <form [formGroup]="reactiveForm" #form="ngForm">
+                                        <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                    
+                                                    <!-- Modal Header -->
+                                    
+                                                    
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        
+                                                        <div class="row"><span class="font-bold"><b>Schedule Time</b><span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                                        <input formControlName="schedule_time" type="datetime-local" step="3600" min="00:00"
+                                                            max="23:59" class="
+                                                         form-control form-control-lg form-control-solid
+                                                         custom-input
+                                                         mb-3 mb-lg-0
+                                                         bg-white
+                                                         custom-input
+                                                       " [ngStyle]="{
+                                                         'border-color':
+                                                         schedule_time.invalid && schedule_time.touched
+                                                             ? 'red'
+                                                             : 'rgb(209, 209, 209)'
+                                                       }" placeholder="Enter Schedule Time" pattern="^(?!\s*$).+" name="schedule_time" required />
+                             
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="schedule_time.invalid && (schedule_time.dirty || schedule_time.touched)">
+                                                    <div *ngIf="schedule_time.errors?.['required']">
+                                                        <span style="color:red;">Schedule Time is required.</span>
+                                                    </div>
+                                                </div>
+                                    
+                                                        
+                                                        <br>
+                                                        
+                                                        <div class="text-center my-4">
+                                                            <button class="btn-success btn-sm text-white me-4"(click)="schedulemail()" data-bs-dismiss="modal">
+                                                                <i class="fas fa-calendar text-white"></i> &nbsp;Schedule
+                                                            </button>
+                                                            
+                                                            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                                                                <i class="fas fa-close text-white"></i> &nbsp;Close
+                                                            </button>
+                                                        </div>
+                                    
+                                    
+                                                        
+                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="btn-group">
+
+                                        <button type="button" class="btn back-button text-white "
+                                            (click)="onback()">Back</button>
+
+                                    </div>
+
+                                    
+
+
+
+                                    <!--end::Send-->
+                                    <!--begin::Upload attachement-->
+
+
+                                    <!-- <span >
+                                            <button title="Attach Files" type="button" class="btn attachement-button btn-sm bg-view me-2" onclick="document.getElementById('fileInput').click()" ><i class="ki-duotone ki-paper-clip fs-2 m-0"></i></button>
+                                            <input (change)="onChange1($event)" accept="image/*" type="file" id="fileInput" name="file" style="display: none;" />
+                                            <input style="width: 300%;" (change)="onChange1($event)" accept=".xlsx, .xls" type="file" id="fileInput2" name="fName" style="display: none;" />
+                                        </span> -->
+
+
+
+                                    <!--end::Upload attachement-->
+                                </div>
+                                <!--end::Actions-->
+
+                            </div>
+                            <!--end::Footer-->
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                </div>
+                <!--end::Card-->
+
+            </div>
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Inbox App - Compose -->
+
+
+
+
+</div>
+<!--end::Content container-->
+
+
+
+
+<!--end::Page-->
+<!--end::App-->

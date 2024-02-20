@@ -1,0 +1,75 @@
+.back-icon {
+    text-align: right;
+    margin: 10px 35px 0 0;
+
+    i {
+        font-size: 30px;
+        color: #2c1a94;
+        cursor: pointer;
+    }
+}
+
+// .primary-button {
+//     background-color: #42ac72;
+//     color: #fff !important;
+//     font-size: 1.1rem !important;
+//     font-weight: 630 !important;
+//     padding: 9px 16px 9px 13px !important;
+//     border-radius: 3px;
+//     border: 0;
+// }
+
+// .secondary-button {
+//     background-color: #50cd89;
+//     color: #fff !important;
+//     font-size: 1.1rem !important;
+//     font-weight: 630 !important;
+//     padding: 9px 16px 9px 13px !important;
+//     border-radius: 3px;
+//     border: 0;
+// }
+
+.table-response {
+
+    th {
+        font-size: 7px;
+        text-align: left;
+    }
+
+
+    thead th {
+        font-size: 7px;
+    }
+}
+
+.table-responsive {
+
+    th {
+        font-size: 9px;
+        text-align: left;
+    }
+
+
+    thead th {
+        font-size: 9px;
+    }
+}
+
+.btn-success {
+    background-color: #50cd89 !important;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.btn-success:hover {
+    background-color: #42ac72 !important;
+}
+
+.btn-success:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+}

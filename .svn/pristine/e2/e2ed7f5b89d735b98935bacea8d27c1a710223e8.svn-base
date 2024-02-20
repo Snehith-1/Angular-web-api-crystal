@@ -1,0 +1,47 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+interface IEmployeeReport {
+ 
+}
+@Component({
+  selector: 'app-sys-rpt-employeereport',
+  templateUrl: './sys-rpt-employeereport.component.html',
+  styleUrls: ['./sys-rpt-employeereport.component.scss']
+})
+export class SysRptEmployeereportComponent {
+ 
+  responsedata: any;
+  employeereportlist: any[] = [];
+  employeereport!: IEmployeeReport;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+    this.employeereport = {} as IEmployeeReport;
+  }
+  ngOnInit(): void {
+   
+    //// Summary Grid//////
+
+    var url = 'SystemRptEmployeeReport/GetEmployeeReportSummary'
+    this.service.get(url).subscribe((result: any) => {
+   
+      this.responsedata = result;
+      this.employeereportlist = this.responsedata.employeereport_list;
+      //console.log(this.employeereportlist)
+      setTimeout(() => {
+        $('#employeereportlist').DataTable();
+      }, 1);
+   
+   
+    });
+   
+  }
+ 
+ 
+ 
+
+ 
+
+}
+
+

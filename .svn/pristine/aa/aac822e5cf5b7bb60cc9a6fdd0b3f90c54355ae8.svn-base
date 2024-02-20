@@ -1,0 +1,101 @@
+<div class="card " style="border: 1px solid rgb(185, 184, 184);">
+    <div class="card-header bg-skyblue">
+        <h3 class="card-title " style="color: white;"><i class="fab fa-facebook-square"
+                style="color: white; font-size: 20px;"></i>
+            &nbsp; Facebook View </h3>
+        <div style="margin: 13px; ">
+            <!-- <button class="btn-secondary" type="button" data-kt-element="filter" data-bs-target="#mydropdown"
+                data-bs-toggle="modal" style="margin-right:20px; border:1px solid rgb(211, 208, 208)">
+                <i class="fa-solid fa-filter fs-4" style="color: rgb(163, 153, 153); font-size: 20px;"></i>&nbsp;Filter
+            </button> -->
+
+            <button title="Back" routerLink="/crm/CrmSmmFacebookPage" class="btn-secondary btn-sm text-black me-4 "><i
+                    class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back</button>
+        </div>
+    </div>
+    <div>
+        <div class="d-flex flex-wrap flex-row col-12">
+            <div id="profile-d">
+                <div id="profile-pic">
+                    <img src="{{ post_url }}" alt="" style="width:69%;height:55px;">
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-3">
+
+
+                <div class="card1"
+                    style="border-left: 10px solid  #fa6868 !important;margin-left:70px;margin-top: 80px; padding-top: 10px">
+
+                    <span class="d-flex justify-content-center" style="font-size:14px ;"> <i class="bi bi-book-half"
+                            style="font-size: 22px;color:#c54949;"></i> &nbsp;&nbsp; <b style="color:#0e0e0d;">
+                            Caption
+                        </b> </span>
+                    <div>
+
+                        <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+                            <b>{{caption}}</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="card1"
+                    style="border-left: 10px solid  #b9b9b8 !important;margin-left: 22px;margin-top: 80px; padding-top: 10px">
+                    <span class="d-flex justify-content-center" style="font-size:14px ;"><i class="bi bi-eye"
+                            style="font-size: 22px;color:black"></i>&nbsp;&nbsp; <b style="color:#0e0e0d;"> Views
+                        </b> </span>
+                    <div>
+                        <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+                            <b>{{views_count}}</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <div class="card1"
+                    style="border-left: 10px solid  #3af13a !important;margin-left: 22px;margin-top: 80px; padding-top: 10px">
+                    <span class="d-flex justify-content-center" style="font-size:14px ;"><i class="bi bi-chat-dots"
+                            style="font-size: 22px;color:#3af13a"></i>&nbsp;&nbsp; <b style="color:#0e0e0d;">Comments
+                        </b> </span>
+                    <div>
+                        <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+                            <b>{{comments_count}}</b>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="product" class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+                <thead>
+                    <tr class=" text-white fw-bold fs-6 text-nowrap bg-gradient-darkgreens">
+                        <th style="width:2%">S.No</th>
+                        <th>Post Type</th>
+                        <th>Post Id</th>
+                        <th>Comment Id</th>
+                        <th>Comment</th>
+                        <th>Comment Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <br>
+                    <tr *ngFor="let data of viewfacebook_list; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td style="white-space: nowrap;">{{data.post_type}}</td>
+                        <td style="white-space: nowrap;">{{data.post_id}}</td>
+                        <td style="white-space: nowrap;">{{data.commentmessage_id}}</td>
+                        <td style="white-space: nowrap;">{{data.comment_message}}</td>
+                        <td style="white-space: nowrap;">{{data.comment_time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>  

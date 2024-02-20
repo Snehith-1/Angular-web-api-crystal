@@ -1,0 +1,48 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SysMstEmployeeAddComponent } from './component/sys-mst-employee-add/sys-mst-employee-add.component';
+import { SysMstMenuMappingComponent } from './component/sys-mst-menu-mapping/sys-mst-menu-mapping.component';
+import { SystemDashboardComponent } from './component/system-dashboard/system-dashboard.component';
+import { SysMstEmployeePendingSummaryComponent } from './component/sys-mst-employee-pending-summary/sys-mst-employee-pending-summary.component';
+import { SysMstEmployeeEditComponent } from './component/sys-mst-employee-edit/sys-mst-employee-edit.component';
+import { SysMstEmployeeViewComponent } from './component/sys-mst-employee-view/sys-mst-employee-view.component';
+import { SysMstEmployeeSummaryComponent } from './component/sys-mst-employee-summary/sys-mst-employee-summary.component';
+import { SysMstEntitySummaryComponent } from './component/sys-mst-entity-summary/sys-mst-entity-summary.component';
+import { SysRptEmployeereportComponent } from './component/sys-rpt-employeereport/sys-rpt-employeereport.component';
+import { SysMstBranchComponent } from './component/sys-mst-branch/sys-mst-branch.component';
+import { SysMstDepartmentComponent } from './component/sys-mst-department/sys-mst-department.component';
+import { SysMstDesignationComponent } from './component/sys-mst-designation/sys-mst-designation.component';
+import { SysMstUserprofileComponent } from './component/sys-mst-userprofile/sys-mst-userprofile.component';
+import { SysMstModulemanagerComponent } from './component/sys-mst-modulemanager/sys-mst-modulemanager.component';
+import { SysMstAssignemployeeComponent } from './component/sys-mst-assignemployee/sys-mst-assignemployee.component';
+import { SysMstTemplateSummaryComponent } from './component/sys-mst-template-summary/sys-mst-template-summary.component';
+import { SysMstTemplateAddComponent } from './component/sys-mst-template-add/sys-mst-template-add.component';
+import { SysMstTemplateEditComponent } from './component/sys-mst-template-edit/sys-mst-template-edit.component';
+
+const routes: Routes = [
+  { path: 'SysMstEmployeeAdd', component: SysMstEmployeeAddComponent},
+  { path: 'SysMstMenuMapping', component: SysMstMenuMappingComponent},
+  { path: 'SystemDashboard', component: SystemDashboardComponent},
+  { path: 'SysMstEmployeePendingSummary', component:SysMstEmployeePendingSummaryComponent},
+  { path: 'SysMstEmployeeEdit/:employee_gid', component:SysMstEmployeeEditComponent},
+  { path: 'SysMstEmployeeView/:employee_gid', component:SysMstEmployeeViewComponent},
+  { path: 'SysMstEmployeeSummary', component: SysMstEmployeeSummaryComponent},
+  { path: 'SysMstEntitySummary', component: SysMstEntitySummaryComponent},
+  { path: 'SysRptEmployeereport', component: SysRptEmployeereportComponent},
+  { path: 'SysMstBranch', component: SysMstBranchComponent},
+  { path: 'SysMstDepartment', component: SysMstDepartmentComponent},
+  { path: 'SysMstDesignation', component: SysMstDesignationComponent},
+  { path: 'SysMstUserProfile', component: SysMstUserprofileComponent},
+  { path: 'SysMstModuleManager', component: SysMstModulemanagerComponent},
+  { path: 'SysMstAssignemployee', component: SysMstAssignemployeeComponent},  
+  { path: 'SysMstTemplate', component: SysMstTemplateSummaryComponent},
+  { path: 'SysMstTemplateAdd', component: SysMstTemplateAddComponent},
+  { path: 'SysMstTemplateEdit/:template_gid', component: SysMstTemplateEditComponent},
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+
+export class EmsSystemRoutingModule { }

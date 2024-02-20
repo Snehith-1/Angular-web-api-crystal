@@ -1,0 +1,431 @@
+<div class="row" style="margin-top: 10px;">
+        
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnMarketingManagerSummary">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-violet"
+          >
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Total Leads</h5>
+                        <div *ngFor="let MyTodayTaskCount_List of totaltilecountdetails">
+                            <h4 class="badge-violet  badge-outline-violet fs-4 mt-2">{{MyTodayTaskCount_List.total_assignedleads}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+                            class="fa-solid fa-calendar-days"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnNewmarketing">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-darkblue"
+            >
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">New</h5>
+                        <div *ngFor="let MyNewTaskCount_List of totaltilecountdetails">
+                            <h4 class="badge-blue badge-outline-blue fs-4 mt-2">{{MyNewTaskCount_List.total_newleads}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i
+                            class="fa-solid fa-arrow-up-from-bracket"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnProspectmarketing">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-pinkish">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Prospects</h5>
+                        <div *ngFor="let ProspectsCount_List of totaltilecountdetails">
+                            <h4 cclass="badge1  badge-outline1 fs-4 mt-2">{{ProspectsCount_List.total_prospect}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-purple text-white ms-auto"><i
+                            class="fa-solid fa-users"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnPotentialmarketing">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-orange">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Potentials</h5>
+                        <div *ngFor="let PotentialsCount_List of totaltilecountdetails">
+                            <h4 class="badge-brown  badge-outline-brown fs-4 mt-2">{{PotentialsCount_List.total_potential}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreen text-white ms-auto"><i
+                            class="fa fa-file"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnCustomermarketing">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-darkgreen">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Customers</h5>
+                        <div *ngFor="let CompletedCount_List of totaltilecountdetails">
+                            <h4  class="badge-green  badge-outline-green fs-4 mt-2">{{CompletedCount_List.total_customer}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i
+                            class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnDropmarketing">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-purple"
+                style="background-color: rgb(255, 227, 186);">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Drop</h5>
+                            <div *ngFor="let DropCount_List of totaltilecountdetails">
+                                <h4  class="badge-orange badge-outline-orange fs-4 mt-2">{{DropCount_List.total_dropstatus}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-darkoranges text-white ms-auto"><i
+                                class="fa-solid fa-circle-down"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnUpcomingmarketing">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-brown">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary"> Scheduled</h5>
+                        <div *ngFor="let MyUpcomingTaskCount_List of totaltilecountdetails">
+                            <h4 class="badge-maroon  badge-outline-maroon fs-4 mt-2">{{MyUpcomingTaskCount_List.total_upcoming}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto"><i
+                            class="fa fa-calendar"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+      <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmCrmTrnMtd">
+        <div class="cardHead radius-10 border-start border-0 border-4 border-darkorange1">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">MTD</h5>
+                        <div *ngFor="let countlist of totaltilecountdetails">
+                            <h4  class="badge-green  badge-outline-green fs-4 mt-2">{{countlist.total_mtd}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-dark text-white ms-auto"><i
+                            class="fa fa-clipboard"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnYtd">
+        <div class="cardHead radius-10 border-start border-0 border-4 border-Q2D">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">YTD</h5>
+                        <div *ngFor="let countlist of totaltilecountdetails">
+                            <h4 class="badge-coffee  badge-outline-coffee fs-4 mt-2">{{countlist.total_ytd}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-Q2D text-white ms-auto">
+                        <i class="fa fa-calculator"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> 
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnLapsedleadmarketing">
+        <div class="cardHead radius-10 border-start border-0 border-4 border-cottoncandy">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Lapsed Leads</h5>
+                        <div *ngFor="let PotentialsCount_List of totallapsedlongest">
+                            <h4 class="badge1  badge-outline1 fs-4 mt-2">{{PotentialsCount_List.total_lapsedcount}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-darkpink text-white fw-bold ms-auto">
+                        <i class="fa fa-book"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2" routerLink="/crm/CrmTrnLongestleadmarketing">
+        <div class="cardHead radius-10 border-start border-0 border-3 border-blue">
+            <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Longest Leads</h5>
+                        <div *ngFor="let PotentialsCount_List of totallapsedlongest">
+                            <h4 class="badge-royalblue  badge-outline-royalblue fs-4 mt-2">{{PotentialsCount_List.total_longestcount}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-darkblues text-white ms-auto">
+                        <i class="fa fa-cubes"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2"style="cursor: not-allowed;">
+        <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkorange "style="background-color:#F5F5F5;">  <div class="card-body12">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h5 class="mb-0 text-secondary">Team Count</h5>
+                        <div *ngFor="let teamdetails of teamdetails">
+                            <h4 class="badge-violet  badge-outline-violet fs-4 mt-2">{{teamdetails.team_count}}</h4>
+                        </div>
+                    </div>
+                    <div class="widgets-icons-2 rounded-circle bg-gradient-lightpurple text-white ms-auto"><i
+                            class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+</div>
+
+<div class="card">
+       <!--Marketing Team Insights-->
+       <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card-header "
+                style="background: rgb(81,183,204);
+    background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+                <b>Marketing Team Insights</b>
+                <button class="btn dropdown-toggle fs-1" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#collapseeight" aria-expanded="true" aria-controls="collapseeight"></button>
+            </div>
+            <div id="collapseeight" class="accordion-collapse collapse show" data-bs-parent="#accordionExample8">
+                <div class="accordion-body m-8">
+                    <table id="countlist1" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-7 text-nowrap bg-lightbluegray text-black">
+                                <th>S.No</th>
+                                <th>Team</th>
+                                <th>Total</th>
+                                <th>New</th>
+                                <th>Pospect</th>
+                                <th>Potentials</th>
+                                <th>Customer</th>
+                                <th>Drop</th>
+                                <th>Scheduled</th>
+                                <th>MTD</th>
+                                <th>YTD</th>
+                                <th>Lapsed Leads</th>
+                                <th>Longest Leads</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of countlist; let i=index;" class="align-middle">
+                                <td>{{i+1}}</td>
+                                <td>{{data.campaign_title}}</td>
+                                <td>{{data.assigned_leads}}</td>
+                                <td>{{data.newleads}}</td>
+                                <td>{{data.prospect}}</td>
+                                <td>{{data.visit}}</td>
+                                <td>{{data.customer}}</td>
+                                <td>{{data.drop_status}}</td>
+                                <td>{{data.upcoming}}</td>
+                                <td>{{data.mtd}}</td>
+                                <td>{{data.ytd}}</td>
+                                <td>{{data.Lapsed_Leads}}</td>
+                                <td>{{data.Longest_Leads}}</td>    
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Marketing Manager - Drop</h3>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="card card-body m-8 shadow-xl p-5 mb-8 bg-white rounded">
+            <table id="Drop" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <!-- <th>Branch</th> -->
+                        <th>Team/Employee</th>
+                        <th>Lead</th>
+                        <th>Contact</th>
+                        <th>Customer Type</th>
+                        <th class="text-center text-nowrap">Lead Notes</th>
+                        <th>Generated by</th>
+                        <th class="text-center text-nowrap">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of Drop; let i=index;">
+                        <td style="white-space: nowrap;">{{i+1}}</td>
+                      
+                        <td>{{data.emp_team}}</td>
+                      
+                        <td>{{data.leadbank_name}}</td>
+                        <td>{{data.Contact}}</td>
+                        <th>{{data.customer_type}}</th>
+                       
+                                                <td class="text-center text-nowrap">
+                            <label title="Remarks" data-bs-toggle="modal" data-bs-target="#myModalUpdateimage9"
+                                (click)="popmodal(data.internal_notes,data.leadbank_name)">
+                                <i class="fas fa-question-circle fa-5x text-primary fs-2"></i>
+                            </label>
+                        </td>
+                        <td>{{data.created_by}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="360 View" type="button"
+                                class="btn btn-icon btn-sm  me-2 bg-gradient-darkblue">
+                                <i class="fa-solid fa-arrows-spin" style="font-size:14px;font-weight:bolder;"
+                                    (click)="Onopen(data.leadbank_gid,data.lead2campaign_gid)"></i>
+                            </button>
+                        </td>
+                        <br> <br>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!---Remarks New popup-->
+  <div class="modal fade" id="myModalUpdateimage9" tabindex="-1" data-bs-backdrop='static'
+    aria-labelledby="editamlcategoryLabel" aria-hidden="true" data-bs-keyboard="false"> 
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card-header p-1 pb-1 pt-1 rounded-top bg-primary"
+                style="display: flex; align-items: center; height: 40px;">
+                <h3 style="color: white; font-weight: bold; text-align: left; width: 100%; margin-left: 10px;">
+                    {{leadbank_name}}</h3>
+            </div>
+            <div class="modal-body">
+                <div class="col-12 col-lg-3 col-md-6 col-lg-12">
+                    <span class="fw-bold">Remarks: </span>
+                    <p class="mt-2 wrap-text" style="max-width: 100%; overflow: auto; max-height: 200px;">{{remarks}}
+                    </p>
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-2" data-bs-dismiss="modal"
+                        style="background-color: red;">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Team count -->
+ 
+<form  #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog  modal-lg modal-dialog-centered ">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+            
+                <div class="card-title p-6 pb-6 pt-6 rounded-top bg-primary">
+                    <h2 class="fw-bolder text-white">
+                      <i class="fas fa-chart-line fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Marketing Team Insights
+                    </h2>
+                  </div>
+                
+                <!-- Modal body --> <table id="countlist1" class="table table-striped table-row-bordered gy-5 gs-7 ">
+              
+                <thead>
+                    
+                    <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue">
+                      <th>S.No</th>
+                      <th>Team</th>
+                      <th>Total</th>
+                      <th>New</th>
+                      <th>Pospect</th>
+                      <th>Potentials</th>
+                      <th>Customer</th>
+                      <th>Drop</th>
+                      <th>Scheduled</th>
+                      <th>MTD</th>
+                      <th>YTD</th>
+                      <th>Lapsed Leads</th>
+                      <th>Longest Leads</th>
+                    
+                     
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of countlist; let i=index;" class="align-middle">
+                    <td>{{i+1}}</td>
+                    <td >{{data.campaign_title}}</td>
+                    <td >{{data.assigned_leads}}</td>
+                    <td>{{data.newleads}}</td>
+                    <td>{{data.prospect}}</td>
+                  <td>{{data.visit}}</td>
+                    <td>{{data.customer}}</td>
+                    <td>{{data.drop_status}}</td>
+                    <td>{{data.upcoming}}</td>
+                    <td>{{data.mtd}}</td>
+                    <td>{{data.ytd}}</td>
+                    <td>{{data.Lapsed_Leads}}</td>
+                    <td>{{data.Longest_Leads}}</td>
+                   
+                    
+                    
+                </tr>
+                 
+              </tbody>
+          </table>
+
+                                  <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <!-- (click)="onclose()" -->
+                        <button class="btn-danger btn-sm text-white me-4"  data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+</form>

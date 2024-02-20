@@ -1,0 +1,93 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,  ValidationErrors,
+  AbstractControl,
+  ValidatorFn} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+interface ILinkedin {
+  body_content: string;
+
+
+}
+@Component({
+  selector: 'app-crm-smm-linkedaccount',
+  templateUrl: './crm-smm-linkedaccount.component.html',
+  styleUrls: ['./crm-smm-linkedaccount.component.scss']
+})
+export class CrmSmmLinkedaccountComponent {
+  invite_link:any;
+  id:any;
+  first_name:any;
+  last_name:any;
+  group:any;
+  profile_photo:any;
+  linkedin_list:any;
+  LinkedinForm!:FormGroup;
+  linkedin!:ILinkedin;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+     this.linkedin = {} as ILinkedin;
+  }
+  ngOnInit(): void {
+    this.LinkedinForm = new FormGroup({
+
+      body_content: new FormControl(this.linkedin.body_content, [
+        Validators.required,
+        this.noWhitespaceValidator(),
+
+      ]),
+
+
+
+
+    });
+   
+    var url = 'Linkedin/GetLinkedinProfile'
+    this.service.get(url).subscribe((result:any)=>{
+
+     this.profile_photo=result;
+    //  console.log(this.profile_photo)
+   
+      
+    });
+    var url1 = 'Linkedin/GetLinkedinUser'
+    this.service.get(url1).subscribe((result:any)=>{
+      this.linkedin_list=result;
+      this.first_name=this.linkedin_list.localizedFirstName;
+      this.last_name=this.linkedin_list.localizedLastName;
+      // console.log(this.linkedin_list)
+      // console.log(this.linkedin_list.localizedFirstName)
+      // console.log(this.linkedin_list.localizedLastName)
+      
+    });
+  }
+  noWhitespaceValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isWhitespace = (control.value || '').trim().length === 0;
+      return isWhitespace ? { whitespace: true } : null;
+    };
+  }
+  //////////// popup validtion////////
+get body_content() {
+  return this.LinkedinForm.get('body_content')!;
+}
+
+public onsubmit(): void {
+  // console.log(this.LinkedinForm.value)
+  var url = 'Linkedin/Postlinkedin'
+    this.service.post(url,this.LinkedinForm.value).subscribe((result:any) => {
+
+      if(result.status ==false){
+        this.LinkedinForm.reset();
+        this.ToastrService.warning(result.message)
+        
+      }
+      else{
+        this.LinkedinForm.reset();
+        this.ToastrService.success(result.message)
+       
+       
+      }
+      
+    });
+}
+}

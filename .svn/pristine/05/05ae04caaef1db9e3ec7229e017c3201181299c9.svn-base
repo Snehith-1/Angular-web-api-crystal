@@ -1,0 +1,294 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Add Customer</h5>
+        </div>
+    </div>
+
+    <form [formGroup]="customerform" novalidate="novalidate" (ngSubmit)="submit()">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 ">
+                <b>Customer code<span style="color:red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " placeholder="Customer Code"
+                        formControlName="customercode" class="form-control" />
+                </div>
+                <div *ngIf="customercodeControl.invalid && customercodeControl.touched">
+                    <div *ngIf="customercodeControl.hasError('required')" style="color: red;">Customer Code is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <b>Customer Name<span style="color:red">*</span></b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Customer Name" formControlName="customername" class="form-control" />
+                </div>
+                <div *ngIf="customernameControl.invalid && customernameControl.touched">
+                    <div *ngIf="customernameControl.hasError('required')" style="color: red;">Customer Name is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"> <b>Contact Person Name</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " placeholder="Contact Person Name" formControlName="contactpersonname" class="form-control" />
+                </div>
+                <div *ngIf="contactpersonnamecontrol.invalid && contactpersonnamecontrol.touched">
+                    <div *ngIf="contactpersonnamecontrol.hasError('required')" style="color: red;">Contact person is required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Designation</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 "><input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+
+              " placeholder="Designation" formControlName="designation" class="form-control" />
+                </div>
+
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <b>Authorised Mobile<span style="color:red">*</span></b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <input type="tel" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+
+                  " placeholder="Mobile Number" formControlName="contacttelephonenumber" class="form-control" maxlength="10" minlength="10" pattern="^[0-9]+$"/>
+                </div>             
+
+            </div>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <b>Authorised Email<span style="color:red">*</span></b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="Email Address" formControlName="Email_ID" class="form-control" />
+
+                </div>
+                <div *ngIf="authmailControl.invalid && authmailControl.touched">
+                    <div *ngIf="authmailControl.hasError('required')"
+                           style="color: red;">Email is required.</div>
+                    <div *ngIf="authmailControl.hasError('pattern')"
+                           style="color: red;">Invalid Email!!</div>
+             </div>      
+
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <b>Address <span style="color:red">*</span></b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <textarea type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="Address" formControlName="Address1" class="form-control" rows="1"></textarea>
+                </div>               
+            </div>            
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>City</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <input type="text" class="
+
+                    form-control form-control-lg form-control-solid
+
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="City" formControlName="city" class="form-control" />
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>State</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <input type="text" class="
+
+                    form-control form-control-lg form-control-solid
+
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="State" formControlName="state" class="form-control" />
+
+                </div>
+
+            </div>
+        </div>
+        
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Postal Code</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <input type="number" class="
+
+                    form-control form-control-lg form-control-solid
+
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="Postal code" formControlName="pincode" class="form-control" />
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Country</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select
+                        class="form-select form-select-solid  form-select-lg borderc-secondary custom-input select2"
+                        formControlName="country"> 
+
+                        <option value=""disabled selected>Select Country </option>
+                        <option *ngFor="let country of country_list" [value]="country.country_gid">
+                            {{country.country_code}}</option>
+
+                    </select>
+
+                              <!-- class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+
+                            formControlName="country_code" [items]="country_list" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"> 
+
+                            bindLabel="accountgroup_name" bindValue="accountgroup_name" placeholder="Select country"></ng-select>
+
+                        --> 
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Region</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <select
+                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="Region">
+
+                        <option value="" disabled selected>Select Region</option>
+                        <option *ngFor="let region of region_list" [value]="region.region_gid">
+                            {{region.region_name}}</option>
+
+                    </select>
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Currency Code</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <select
+                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="currency">
+
+                        <option value="">Select Currency Code</option>
+                        <option *ngFor="let currency of currency_list" [value]="currency.currencyexchange_gid">
+                            {{currency.currency_code}}</option>
+
+                    </select>
+
+                </div>
+                <div *ngIf="CurrencyCodecontol.invalid && CurrencyCodecontol.touched">
+                    <div *ngIf="CurrencyCodecontol.hasError('required')" style="color: red;">Currency Code is required.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <b>Company Website<span style="color:red">*</span></b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <input type="text" class="form-control form-control-lg form-control-solidb mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="Company Website" formControlName="CompanyWebsite" class="form-control"/>
+
+                </div>
+                <div *ngIf="CompanyWebsitecontrol.invalid && CompanyWebsitecontrol.touched">
+                    <div *ngIf="CompanyWebsitecontrol.hasError('required')" style="color: red;">Company Website is required
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Currency Code</b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <select
+                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="currency">
+
+                        <option value="">Select Currency Code</option>
+                        <option *ngFor="let currency of currency_list" [value]="currency.currencyexchange_gid">
+                            {{currency.currency_code}}</option>
+
+                    </select>
+
+                </div>
+                <div *ngIf="CurrencyCodecontol.invalid && CurrencyCodecontol.touched">
+                    <div *ngIf="CurrencyCodecontol.hasError('required')" style="color: red;">Currency Code is required.
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <b>GST Number<span style="color:red">*</span></b>
+
+                <div class="col-lg-11 col-12 col-md-11 col-sm- 1 fv-row mt-2">
+
+                    <input type="text" maxlength="15"
+                        pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9A-Z]{1}$" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+
+                  " placeholder="GST Number" formControlName="gstnumber" class="form-control" />
+
+                    <div *ngIf="gstControl.invalid && gstControl.touched">
+                        <div *ngIf="gstControl.hasError('required')" style="color: red;">GST is required!!</div>
+                        <div *ngIf="gstControl.hasError('pattern')" style="color: red;">Invalid GST!!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-4">
+
+            <button class="btn-success btn-sm text-white me-2"  [disabled]="customerform.invalid"  (click)="submit()">
+
+                <i class="bi bi-check-square fs-5"></i>&nbsp;Submit</button>&nbsp;
+
+
+            <button class="btn-primary btn-sm text-white me-4" (click)="redirecttolist()">
+
+                <i class="ki-duotone ki-entrance-right fs-5">
+
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>Back</button>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,76 @@
+
+.card{
+	margin: 50px 50px;
+	border-width:2px;
+	border-style:none;
+	border-color: black;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	height: 500px;
+  
+  }
+  
+  .lefttop{
+	width: 150px;
+	height: 200px;
+	left:0;
+	position: absolute;
+	background-image: linear-gradient(#2c97e4,#d7e6fa);
+	border-radius: 0 60px 240px 0;
+	top: 0px;
+	
+  }
+  
+  .rightbottom{
+	width: 150px;
+	height: 200px;
+	right:0;
+	bottom:0px;
+	position: absolute;
+	background-image: linear-gradient(#2c97e4,#d7e6fa);
+	border-radius:  240px 0  0   60px  ;
+  }
+  .footer{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 92%;
+	background-image: linear-gradient(#2c97e4,#d7e6fa); 
+	color: rgb(0, 0, 0);
+	text-align: justify;
+	height: 50px;
+	
+   }
+   
+   .one{
+	width:500px; 
+	height:800px;
+	top:900px;
+	margin-top: -200px;
+  
+   }
+   .two {
+	width:2000px; height:900px;
+	margin-left: 800px;
+	margin-top: 50px;
+   }
+  
+   .flex-container{
+	display: flex;
+	flex-direction: column;
+	
+   }
+  
+   .flex-container1{
+	display: flex;
+	justify-content: center;
+	top:-80px;
+   
+   }
+   .flex-container2{
+	text-justify: auto;
+	top:-10px;
+   }
+  h1{
+	font-weight: bold;
+	color:#2c97e4;
+  }

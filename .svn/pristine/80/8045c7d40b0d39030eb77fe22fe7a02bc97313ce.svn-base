@@ -1,0 +1,94 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Odbc;
+using System.Linq;
+using System.Web;
+using ems.crm.Models;
+using OfficeOpenXml.Style;
+
+namespace ems.crm.DataAccess
+{
+    public class DaCrmDashboard
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msGetGid;
+        int mnResult, mnResult1;
+
+        // My Calls Count
+        public void DaGetDashboardCount(string employee_gid, string user_gid, MdlCrmDashboard values)
+        {   
+            msSQL = " select (select count(lead2campaign_gid) from crm_trn_tlead2campaign " +
+                    " where leadstage_gid IN (1, 2) and " +
+                    " assign_to='" + employee_gid + "') as mycalls_count, " +
+                    " (select count(lead2campaign_gid) from crm_trn_tlead2campaign " +
+                    " where leadstage_gid IN (3,6) and assign_to='" + employee_gid + "') as myleads_count," +
+                    " (select count(schedulelog_gid) from crm_trn_tschedulelog " +
+                    " where assign_to='" + employee_gid + "') as myappointments_count," +
+                    " (select count(schedulelog_gid) from crm_trn_tschedulelog " +
+                    " where assign_to='" + employee_gid + "' and schedule_status='Pending') as assignvisit_count," +
+                    " (select count(schedulelog_gid) from crm_trn_tschedulelog " +
+                    " where assign_to='" + employee_gid + "' and schedule_status='Closed') as completedvisit_count," +
+                    " (select count(proposal_gid) from crm_mst_tproposaltemplate " +
+                    " where created_by='" + user_gid + "') as shared_proposal," +
+                    " (select count(salesorder_gid) from smr_trn_tsalesorder where" +
+                    " salesorder_status<>'SO Amended' and created_by='" + employee_gid + "') as completedorder_count," +
+                    " (select count(enquiry_gid) from smr_trn_tsalesenquiry a" +
+                    " left join smr_trn_tsalesorder b on b.created_by = a. created_by" +
+                    " where a.created_by='" + employee_gid + "' and b.salesorder_status<>'SO Amended') as totalorder_count";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getDashboardList = new List<getDashboardCount_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getDashboardList.Add(new getDashboardCount_List
+                    {
+                        mycalls_count = (dt["mycalls_count"].ToString()),
+                        myleads_count = (dt["myleads_count"].ToString()),
+                        myappointments_count = (dt["myappointments_count"].ToString()),
+                        assignvisit_count = (dt["assignvisit_count"].ToString()),
+                        completedvisit_count = (dt["completedvisit_count"].ToString()),
+                        shared_proposal = (dt["shared_proposal"].ToString()),
+                        completedorder_count = (dt["completedorder_count"].ToString()),
+                        totalorder_count = (dt["totalorder_count"].ToString()),
+                    });
+                    values.getDashboardCount_List = getDashboardList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        // My Calls Count
+        public void DaGetDashboardQuotationAmount(string employee_gid, string user_gid, MdlCrmDashboard values)
+        {
+            string YearLabel = DateTime.Now.Year.ToString();
+
+            msSQL = " select year(quotation_date) as year ,MONTHNAME(quotation_date) month_name, " +
+                    " FORMAT(sum(total_amount), 2) as total_amount from smr_trn_treceivequotation " +
+                    " where quotation_date like '%" + YearLabel + "%'  " +
+                    " group by year(quotation_date),month(quotation_date) order by year(quotation_date), " +
+                    " month(quotation_date) ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getDashboardQuotationList = new List<getDashboardQuotationAmt_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getDashboardQuotationList.Add(new getDashboardQuotationAmt_List
+                    {
+                        year = (dt["year"].ToString()),
+                        month_name = (dt["month_name"].ToString()),
+                        total_amount = (dt["total_amount"].ToString()),
+                    });
+                    values.getDashboardQuotationAmt_List = getDashboardQuotationList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    }
+}

@@ -1,0 +1,117 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-pmr-mst-configuration',
+  templateUrl: './pmr-mst-configuration.component.html',
+  styleUrls: ['./pmr-mst-configuration.component.scss']
+})
+export class PmrMstConfigurationComponent {
+
+  purchaseconfigform: FormGroup;
+
+  responsedata: any;
+  allchargeslist: any;
+
+  ngOnInit(): void {
+    var api = 'PmrMstPurchaseConfig/GetAllChargesConfig';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.allchargeslist = this.responsedata.salesconfigalllist;
+
+      if(this.allchargeslist[0].flag == 'Y') {
+        this.purchaseconfigform.get("addoncharges")?.setValue(true)
+      }
+
+      if(this.allchargeslist[1].flag == 'Y') {
+        this.purchaseconfigform.get("additionaldiscount")?.setValue(true)
+      }
+
+      if(this.allchargeslist[2].flag == 'Y') {
+        this.purchaseconfigform.get("freightcharges")?.setValue(true)
+      }
+
+      if(this.allchargeslist[3].flag == 'Y') {
+        this.purchaseconfigform.get("packing_forwardingcharges")?.setValue(true)
+      }
+
+      if(this.allchargeslist[4].flag == 'Y') {
+        this.purchaseconfigform.get("insurancecharges")?.setValue(true)
+      }
+    });
+  }
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService, private router: ActivatedRoute, private route: Router) {
+
+    this.purchaseconfigform = new FormGroup({
+      addoncharges: new FormControl(''),
+      additionaldiscount: new FormControl(''),
+      freightcharges: new FormControl(''),
+      packing_forwardingcharges: new FormControl(''),
+      insurancecharges: new FormControl('')
+    })
+  }
+
+  addonchargestoggle() {
+    var api = 'PmrMstPurchaseConfig/UpdateAddOnChargesConfig';
+    this.service.post(api, this.purchaseconfigform.value).subscribe((result: any) => {
+      if(result.status == true) {
+        this.ToastrService.success(result.message)
+      }
+      else {
+        this.ToastrService.warning(result.message)
+      }
+    });
+  }
+
+  additionaldiscounttoggle() {
+    var api = 'PmrMstPurchaseConfig/UpdateAdditionalDiscountConfig';
+    this.service.post(api, this.purchaseconfigform.value).subscribe((result: any) => {
+      if(result.status == true) {
+        this.ToastrService.success(result.message)
+      }
+      else {
+        this.ToastrService.warning(result.message)
+      }
+    });
+  }
+
+  freightchargestoggle() {
+    var api = 'PmrMstPurchaseConfig/UpdateFreightChargesConfig';
+    this.service.post(api, this.purchaseconfigform.value).subscribe((result: any) => {
+      if(result.status == true) {
+        this.ToastrService.success(result.message)
+      }
+      else {
+        this.ToastrService.warning(result.message)
+      }
+    });
+  }
+
+  packing_forwardingchargestoggle() {
+    var api = 'PmrMstPurchaseConfig/UpdatePacking_ForwardingChargesConfig';
+    this.service.post(api, this.purchaseconfigform.value).subscribe((result: any) => {
+      if(result.status == true) {
+        this.ToastrService.success(result.message)
+      }
+      else {
+        this.ToastrService.warning(result.message)
+      }
+    });
+  }
+
+  insurancechargestoggle() {
+    var api = 'PmrMstPurchaseConfig/UpdateInsuranceChargesConfig';
+    this.service.post(api, this.purchaseconfigform.value).subscribe((result: any) => {
+      if(result.status == true) {
+        this.ToastrService.success(result.message)
+      }
+      else {
+        this.ToastrService.warning(result.message)
+      }
+    });
+  }
+}

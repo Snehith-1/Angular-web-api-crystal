@@ -1,0 +1,47 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Bank Book</h3> 
+    </div>
+
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded" style="overflow-x: hidden;">
+            <table id="bankbook_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue" >
+                        <th>Bank Code</th>
+                        <th>Bank Name</th>
+                        <th>Branch Name</th>
+                        <th>Account No</th>
+                        <th>IFSC Code</th>
+                        <th>NEFT Code</th>
+                        <th>SWIFT Code</th>
+                        <th>Opening Balance</th>
+                        <th>Closing Balance</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of bankbook_list; let i=index;"> 
+                        <td>{{data.bank_code}}</td>
+                        <td>{{data.bank_name}}</td>
+                        <td>{{data.branch_name}}</td>
+                        <td>{{data.account_no}}</td>
+                        <td>{{data.ifsc_code}}</td>
+                        <td>{{data.neft_code}}</td>
+                        <td>{{data.swift_code}}</td>
+                        <td>{{data.openning_balance}}</td>
+                        <td>{{data.closing_amount}}</td>
+                        <td class="text-center text-nowrap">
+                            <!-- <button class="link-button"  routerLink="/finance/AccTrnBankbook" >
+                                <span></span>Select Edit
+                            </button> -->
+                            <button class="link-button"  (click)="onclick(data.bank_gid)" >
+                                <span></span>Select 
+                            </button>
+                        </td>
+                    </tr>
+                </tbody> 
+            </table>
+        </div> 
+    </div> 
+</div>

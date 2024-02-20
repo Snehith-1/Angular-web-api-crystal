@@ -1,0 +1,144 @@
+<div class="m-12 " *ngFor="let m of leadbankedit_list">
+   <div class="card shadow-lg rounded-top" style="top:-35px;">
+      <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+         <h3 class="fw-bolder text-white"><i class="fas fa-eye fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;View Lead Bank
+            Details</h3>
+      </div>
+      <div class="card m-3 border">
+         <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0 ">
+               <h4 class="fw-bolder text-blue">Industry</h4>
+            </div>
+         </div>
+
+         <div class="d-flex flex-row m-3 mt-6 flex-wrap ">
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12 "><span class="fw-bold">Source</span>
+               <p class="mt-3">{{m.source_name}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Region</span>
+               <p class="mt-3">{{m.region_name}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Referred By</span>
+               <p class="mt-3">{{m.referred_by}}</p>
+            </div>
+            <br><br><br>
+
+      </div>
+   </div>
+
+      <div class="m-3 mt-5 border card">
+         <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0 ">
+               <h5 class="fw-bolder text-blue">Company</h5>
+            </div>
+         </div>
+         <div class="d-flex flex-row m-3 mt-2 flex-wrap ">
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Company Name / Individual Name</span>
+               <p class="mt-3">{{m.leadbank_name}}</p>
+            </div>
+            <br><br><br>
+        
+               <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Customer Type</span>
+               <p class="mt-3">{{m.customer_type}}</p>
+            </div>
+            <br><br><br>
+         </div>
+      </div>
+
+      <div class="m-3 mt-5 border card">
+         <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0 ">
+               <h5 class="fw-bolder text-blue">Contact Person</h5>
+            </div>
+         </div>
+         <div class="d-flex flex-row m-3 mt-2 flex-wrap border-bottom">
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Contact Person Name</span>
+               <p class="mt-3">{{m.leadbankcontact_name}}</p>
+            </div>
+            <br><br><br>
+
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Designation</span>
+               <p class="mt-3">{{m.designation}}</p>
+            </div>
+            <br><br><br>
+
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Mobile Number</span>
+               <p class="mt-3">{{m.mobile}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Personal Email Address</span>
+               <p class="mt-3">{{m.email}}</p>
+            </div>
+            <br><br><br>
+         </div>
+
+         <div class="d-flex flex-row  m-3 mt-2 flex-wrap">
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Telephone No 1</span>
+               <p class="mt-3">{{m.phone1}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Telephone No 2</span>
+               <p class="mt-3">{{m.phone2}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Fax</span>
+               <p class="mt-3">{{m.fax}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Company website</span>
+               <p class="mt-3">{{m.company_website}}</p>
+            </div>
+            <br><br><br>
+         </div>
+      </div>
+      <div class="m-3 mt-5 border card">
+         <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0 ">
+               <h5 class="fw-bolder text-blue">Address</h5>
+            </div>
+         </div>
+         <div class="d-flex flex-row m-3 mt-2 flex-wrap border-bottom">
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Address Line 1</span>
+               <p class="mt-3">{{m.leadbank_address1}}</p>
+            </div>
+            <br><br><br>
+
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Address Line 2</span>
+               <p class="mt-3">{{m.leadbank_address2}}</p>
+            </div>
+            <br><br><br>
+
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Country</span>
+               <p class="mt-3">{{m.country_name}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">State</span>
+               <p class="mt-3">{{m.leadbank_state}}</p>
+            </div>
+            <br><br><br>
+         </div>
+
+         <div class="d-flex flex-row  m-3 mt-2 flex-wrap">
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">City</span>
+               <p class="mt-3">{{m.leadbank_city}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Postal code</span>
+               <p class="mt-3">{{m.leadbank_pin}}</p>
+            </div>
+            <br><br><br>
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Remarks</span>
+               <p class="mt-3">{{m.remarks}}</p>
+            </div>
+            <br><br><br>
+         </div>
+      </div>
+      <div class="text-center my-4">
+         <button class="btn-primary btn-sm text-white me-4 mt-3" (click)="back()">
+            <i class="fas fa-arrow-left"></i> &nbsp;Back
+         </button>
+
+      </div>
+  

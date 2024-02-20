@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.einvoice.Models
+{
+    public class MdlReceipt:result
+    {
+        public List<receiptsummary_list> receiptsummary_list { get; set; }
+        public List<receiptaddsummary_list> receiptaddsummary_list { get; set; }
+        public List<Getmodeofpaymentlist> Getmodeofpaymentlist { get; set; }
+        public List<makereceipt_list> makereceipt_list { get; set; }
+        public List<updatereceipt_list> updatereceipt_list { get; set; }
+
+    }
+
+    public class Getmodeofpaymentlist : result
+    {
+        public string modeofpayment_gid { get; set; }
+        public string payment_type { get; set; }
+    }
+
+    public class receiptsummary_list : result
+    {
+        public string payment_gid { get; set; }
+        public string payment_mode { get; set; }
+        public string invoice_refno { get; set; }
+        public string payment_date { get; set; }
+        public string payment_type { get; set; }
+        public string customer_name { get; set; }
+        public string contact { get; set; }
+        public string total_amount { get; set; }
+        public string approval_status { get; set; }
+
+    }
+
+    public class receiptaddsummary_list : result 
+    {
+        public string invoice_from { get; set; }
+        public string customer_gid { get; set; }
+        public string invoice_refno { get; set; }
+        public string invoice_status { get; set; }
+        public string invoice_amount { get; set; }
+        public string customer_name { get; set; }
+        public string contact { get; set; }
+        public string payment_amount { get; set; }
+        public string outstanding { get; set; }
+    }
+
+    public class makereceipt_list : result
+    {
+        public string customer_address { get; set; }
+        public string invoice_gid { get; set; }
+
+        public string customer_contactnumber { get; set; }
+        public string customer_email { get; set; }
+        public string payment_date { get; set; }
+        public string branch_name { get; set; }
+
+        public string customer_name { get; set; }
+        public string invoice_id { get; set; }
+        public string currency_code { get; set; }
+        public string invoice_amount { get; set; }
+        public string advance_amount { get; set; }
+        public string os_amount { get; set; }
+        public string received_amount { get; set; }
+        public string tds_receivable { get; set; }
+        public string adjust_amount { get; set; }
+        public string payment_amount { get; set; }
+        public string total_amount { get; set; }
+    }
+
+    public class updatereceipt_list : result
+    {
+        public string receipt_payment_amount { get; set; }
+        public string invoice_gid { get; set; }
+        public string receipt_paymentdate { get; set; }
+        public string receipt_total_amount { get; set; }
+        public string tds_receivable { get; set; }
+        public string adjust_amount { get; set; }
+        public string bank_name { get; set; }
+        public string cheque_number { get; set; }
+        public string receipt_branch_name { get; set; }
+        public DateTime cheque_date { get; set; }
+        public DateTime neft_date { get; set; }
+        public DateTime cash_date { get; set; }
+        public string currency_code { get; set; }
+        public string payment_type { get; set; }
+        public string payment_remarks { get; set; }
+    }
+   
+  
+
+
+}

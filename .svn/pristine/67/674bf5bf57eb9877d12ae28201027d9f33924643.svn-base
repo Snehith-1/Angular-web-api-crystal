@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-smr-trn-salesorder-summary',
+  templateUrl: './smr-trn-salesorder-summary.component.html',
+  styleUrls: ['./smr-trn-salesorder-summary.component.scss']
+})
+export class SmrTrnSalesorderSummaryComponent {
+
+}

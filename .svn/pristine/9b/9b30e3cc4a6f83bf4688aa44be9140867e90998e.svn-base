@@ -1,0 +1,57 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Invoice</h3> 
+    </div>
+    <br>
+    <div class="m-3 ">
+        <button title="Raise Invoice" class="btn-primary btn-sm text-white m-1" routerLink="/payable/PmrTrnInvoiceAddselect">
+         
+            Raise Invoice</button>  &nbsp;
+    <!-- <button title="Add Invoice" class="btn-primary btn-sm text-white me-4" routerLink="/payable/PmrTrnInvoiceAddselect">
+        <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;
+        Add Invoice</button>  &nbsp; -->
+    </div>
+  
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white table-responsive rounded">
+            <table id="invoice_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>Invoice<br> Date</th>
+                        <th>Due<br> Date</th>
+                        <th>Invoice<br> Ref No</th>
+                        <th>Vendor <br>Ref No.</th>
+                        <th>Vendor</th>
+                        <th>Cost <br>Center</th>
+                        <th>Invoice<br> Amount</th>
+                        <th>Invoice <br>Type</th>
+                        <th>Status</th>
+                        <th>Overall<br> Status</th>
+                        <!-- <th>Details</th> -->
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of invoice_list; let i=index;"> 
+                        <td>{{data.invoice_date}}</td>
+                        <td>{{data.payment_date}}</td>
+                        <td>{{data.invoice_refno}}</td>
+                        <td>{{data.vendorinvoiceref_no}}</td>
+                        <td>{{data.costcenter_name}}</td>
+                        <td>{{data.vendor_companyname}}</td>
+                        <td>{{data.invoice_amount}}</td>
+                        <td>{{data.invoice_type}}</td>
+                        <td>{{data.invoice_status}}</td>
+                        <td>{{data.overall_status}}</td>
+                        
+                
+                        <td class="text-center text-nowrap">
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.invoice_gid)" ><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.employee_gid)"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                             <button title="Delete" type="button" (click)="openModaldelete(data.entity_gid)"   data-bs-toggle="modal" data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span class="fa-solid fa-trash text-white  fs-6"></span></button>  
+                        </td>
+                    </tr>
+                </tbody> 
+            </table>
+        </div> 
+    </div> 
+

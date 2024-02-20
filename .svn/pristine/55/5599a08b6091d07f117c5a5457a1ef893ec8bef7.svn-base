@@ -1,0 +1,601 @@
+<div class="m-12">
+  <div class="card shadow-lg rounded-top" style="top:-50px;">
+    <div class="card m-3">
+      <div class="m-3 mt-5 border card">
+        <div class="card-header bg-lightblue card-height55">
+          <div class="card-title m-0">
+            <h3 class="fw-bolder text-blue">RAISE QUOTATION</h3>
+          </div>
+        </div>
+        <form [formGroup]="quotationform" #form="ngForm">
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Q Ref. No</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="quotation_referenceno1" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Quotation Date</b> <span class="ms-1 text-red">*</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                <input type="date"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input date-picker"
+                  formControlName="quotation_date" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Branch</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                  class="form-control-plaintext form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  readonly placeholder="Branch" formControlName="branch_name" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Customer Name</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                  class="form-control form-control-lg form-control-solid custom-inputmb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  readonly placeholder="Auto Populate" formControlName="customer_name" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Contact Person</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" readonly
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  placeholder="Auto Populate" formControlName="customer_contact" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Enquiry Ref.No</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <textarea type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  placeholder="Auto Populate" rows="1" formControlName="enq"
+                  class="form-control"></textarea>
+              </div>
+            </div>
+           </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Contact Number</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" readonly
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="customer_mobile" placeholder="Auto Populate" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Email Address</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" readonly
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="customer_email" placeholder="Auto Populate" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Customer Address</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <textarea type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  placeholder="Auto Populate" rows="1" formControlName="customer_address"
+                  class="form-control"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Remarks</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <textarea type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="so_remarks" rows="1" placeholder="Remarks" class="form-control"></textarea>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Currency</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <ng-select [items]="currency_list" class="custom col-lg-12 col-12 fv-row mt-2" bindLabel="currency_code"
+                  formControlName="currency_code" bindValue="currencyexchange_gid"
+               ></ng-select>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Exchange Rate</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="exchange_rate" placeholder="Exchange Rate" class="form-control" />
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Attachment</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="file"
+                  class="form-control form-control-lg form-control-solid custom-input mb-6 mb-lg-0 borderc-secondary bg-white custom-input"
+                  (change)="onChange2()" accept=".xlsx , .xls" #fileinput class="form-control" />
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Freight Terms</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="freight_terms" placeholder="Freight Terms" class="form-control" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Payment Trems </b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                  formControlName="payment_terms" placeholder="Payment Terms" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <!--End : Form-->
+
+          <!--Start: Product-->
+          <div class="card shadow-sm">
+            <div class="card-header bg-lightblue card-height55" style="border-radius: 0px;">
+              <div class="card-title m-0">
+                <h3 class="fw-bolder text-blue">PRODUCT SUMMARY</h3>
+              </div>
+            </div>
+            <form [formGroup]="productform" #form="ngForm">
+              <div class="d-flex flex-row m-6 flex-wrap" style="border-radius: 0px;">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product<span class="ms-1 text-red">*</span></b>
+                  <ng-select [items]="product_list" class="
+              custom
+              col-lg-11 col-12
+              fv-row
+              mt-2" bindLabel="product_name" (change)="GetOnChangeProductName()" formControlName="product_name"
+                    placeholder="Select an option" [(ngModel)]="mdlUserName"></ng-select>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product Group</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control" formControlName="productgroup_name" readonly
+                      style="background-color: #e9e7e7">
+                  </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product Code</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control" formControlName="product_code" readonly
+                      style="background-color: #e9e7e7">
+                  </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Customer Code</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control" formControlName="customerproduct_code">
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Unit</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control" formControlName="productuom_name" readonly
+                      style="background-color: #e9e7e7;">
+                  </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Selling Price</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control" formControlName="selling_price">
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row m-0 flex-wrap">
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Unit Price</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <input type="text" class="form-control" placeholder="0.00" style="text-align: right;"
+                            formControlName="unitprice" [(ngModel)]="unitprice" (input)="prodtotalcal()">
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Quantity</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <input type="text" class="form-control" style="text-align: right;" formControlName="quantity"
+                            [(ngModel)]="quantity" (input)="prodtotalcal()">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row m-0 flex-wrap">
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Discount(%)</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <input type="text" class="form-control" placeholder="0.00" style="text-align: right;"
+                            formControlName="discountpercentage" [(ngModel)]="discountpercentage"
+                            (input)="prodtotalcal()">
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                          <input type="text" class="form-control" placeholder="0.00" readonly
+                            style="background-color: #e9e7e7; text-align: right;" formControlName="discountamount"
+                            [(ngModel)]="discountamount" (input)="prodtotalcal()">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row m-0 flex-wrap">
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Need By Date</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <input type="date" class="form-control" placeholder="0.00" style="text-align: right;"
+                            formControlName="product_requireddate">
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Remarks</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <textarea type="text" class="form-control" style="text-align: right;"
+                            formControlName="product_requireddateremarks" rows="1"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row m-0 flex-wrap">
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 1</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <ng-select [items]="tax_list" class="custom col-lg-11 col-12 fv-row mt-2" bindLabel="tax_name"
+                            [(ngModel)]="mdlTaxName1" formControlName="tax_name" bindValue="tax_gid"
+                            placeholder="Select an option" (change)="OnChangeTaxAmount1()"></ng-select>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                          <input type="text" class="form-control" placeholder="0.00" readonly
+                            style="text-align: right; background-color: #e9e7e7;" formControlName="tax_amount"
+                            [(ngModel)]="tax_amount" (input)="OnChangeTaxAmount1()">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row m-0 flex-wrap">
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 2</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <ng-select [items]="tax2_list" class="custom col-lg-11 col-12 fv-row mt-2"
+                            bindLabel="tax_name2" [(ngModel)]="mdlTaxName2" formControlName="tax_name2"
+                            bindValue="tax_gid2" placeholder="Select an option"
+                            (change)="OnChangeTaxAmount2()"></ng-select>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                          <input type="text" class="form-control" placeholder="0.00" readonly
+                            style="text-align: right; background-color: #e9e7e7;" formControlName="tax_amount2"
+                            [(ngModel)]="tax_amount2" (input)="OnChangeTaxAmount2()">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!-- <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row m-0 flex-wrap">
+                      <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 3</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <ng-select [items]="tax3_list" class="custom col-lg-11 col-12 fv-row mt-2"
+                            bindLabel="tax_name3" [(ngModel)]="mdlTaxName3" formControlName="tax_name3"
+                            bindValue="tax_gid3" placeholder="Select an option"
+                            (change)="OnChangeTaxAmount3()"></ng-select>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                          <input type="text" class="form-control" placeholder="0.00" readonly
+                            style="text-align: right; background-color: #e9e7e7;" formControlName="tax_amount3"
+                            [(ngModel)]="tax_amount3" (input)="OnChangeTaxAmount3()">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="d-flex flex-row flex-wrap">
+                  <div class="col-12 col-lg-12 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                      <div class="d-flex flex-row m-0 flex-wrap">
+                        <div class="col-lg-6 col-md-6 col-sm-6"><b>Total Amount</b>
+                          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="0.00"
+                              style="background-color: #e9e7e7; text-align: right;" formControlName="totalamount"
+                              [(ngModel)]="totalamount" (input)="prodtotalcal()">
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 ">
+                          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8 justify-content-center">
+                            <button type="button" class="btn-primary" style="margin-left: 20px;"
+                              (click)="productSubmit()">ADD</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+            </form>
+
+            <div class="table-responsive">
+              <div class="card card-body m-0 shadow-lg p-3 mb-5 bg-white rounded table-responsive">
+                <table id="GetQOSummaryList" class="table table-striped table-row-bordered gy-4 gs-2">
+                  <thead class="table_head">
+                    <tr class="text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                      <th>S.No</th>
+                      <th>Product </th>
+                      <th>Product Group</th>
+                      <th>Product Code</th>
+                      <th>Customer Product Code</th>
+                      <!-- <th>HSN Code / Description</th>  -->
+                      <th>Unit</th>
+                      <th style="text-align: right;">Unit Price</th>
+                      <th style="text-align: right;">MRP</th>
+                      <th style="text-align: center;">Quantity</th>
+                      <th style="text-align: right;">Discount (%)</th>
+                      <th style="text-align: center;">Need By Date</th>
+                      <th style="text-align: center; width: 120px;">Tax</th>
+                      <th style="text-align: right;">Amount</th>
+                      <th class="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of EnqtoQuote_list; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{data.product_name}}</td>
+                      <td>{{data.productgroup_name}}</td>
+                      <td>{{data.product_code}}</td>
+                      <td>{{data.customerproduct_code}}</td>
+                      <!-- <td>{{data.hsn}}</td> -->
+                      <td>{{data.productuom_name}}</td>
+                      <td style="text-align: center;">{{data.product_price | number}}</td>
+                      <td style="text-align: center;">{{data.selling_price | number}}</td>
+                      <td style="text-align: center;">{{data.quantity}}</td>
+                      <td style="text-align: center;">
+                        <div class="container">
+                          <div class="row">
+                            {{data.discountpercentage}}
+                          </div>
+                          <div class="row">
+                            {{data.discountamount}}
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="container">
+                          <div class="row">
+                            {{data.product_requireddate}}
+                          </div>
+                          <div class="row">
+                            {{data.product_requireddateremarks}}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col">
+                              {{data.tax_name}}
+                            </div>
+                            {{data.tax_amount}}
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              {{data.tax_name2}}
+                            </div>
+                            {{data.tax_amount2}}
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              {{data.tax_name3}}
+                            </div>
+                            {{data.tax_amount3}}
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>{{data.totalamount}}</td>
+                      <td class="text-center">
+                        <button title="Delete" type="button" (click)="openModaldelete(data.tmpquotationdtl_gid)"
+                        data-bs-toggle="modal" data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-1"><span
+                          class="fa-solid fa-trash text-white  fs-6"></span></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!--End: Product-->
+
+          <!--start: Amount-->
+          <div class="card">
+            <div class="d-flex flex-row m-6 flex-wrap">
+              <div class="col-12 col-lg-3 col-md-6 col-sm-12"><b>Payment Days</b><span class="ms-1 text-red">*</span>
+                <div class="col-lg-8 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text"
+                    class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                    formControlName="payment_days" class="form-control" placeholder="Payment Days"  />
+
+                </div>
+              </div>
+
+              <div class="col-12 col-lg-3 col-md-6 col-sm-12"><b>Delivery Days</b> <span class="ms-1 text-red">*</span>
+                <div class="col-lg-8 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text" placeholder="Delivery Days"
+                    class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                    formControlName="delivery_days" class="form-control" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Net Amount:</label>
+                <input type="text" class="form-control" style="width:120px" style="background-color: #e9e7e7; " readonly formControlName="producttotalamount" [(ngModel)]="producttotalamount"
+                (input)="finaltotal()">
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Tax:</label>
+
+
+                <ng-select class=" custom
+                    col-lg-10 col-12
+                    fv-row
+                    mt-2" style="width:70px" [items]="tax4_list" formControlName="tax_name4" bindLabel="tax_name4"
+                  bindValue="tax_gid4" placeholder="Select Tax" [(ngModel)]="mdlTaxName4" (change)="OnChangeTaxAmount4()" >
+                </ng-select>&nbsp;
+                <input type="text" class="form-control" style="width:70px"   (input)="OnChangeTaxAmount4()"
+                readonly style="text-align: right; background-color: #e9e7e7;" formControlName="tax_amount4"
+                [(ngModel)]="tax_amount4">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Total With Tax:</label>
+                <input type="text" class="form-control" formControlName="total_amount" style="width:120px"
+                  placeholder="0.00">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Addon Charges:</label>
+                <input type="text" class="form-control" formControlName="addon_charge" style="width:120px"
+                  placeholder="0.00" [(ngModel)]="addon_charge" (input)="finaltotal()">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Additional Discount:</label>
+                <input type="text" class="form-control"  formControlName="additional_discount"
+                  style="width:120px" placeholder="0.00" [(ngModel)]="additional_discount" (input)="finaltotal()">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Freight Charges:</label>
+                <input type="text" class="form-control" formControlName="freight_charges"  style="width:120px"
+                  placeholder="0.00" [(ngModel)]="freight_charges" (input)="finaltotal()">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Buy Back/Scrap:</label>
+                <input type="text" class="form-control" formControlName="buyback_charges"  style="width:120px"
+                  placeholder="0.00" (input)="finaltotal()" [(ngModel)]="buyback_charges">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Packing/ Forwarding Charges :</label>
+                <input type="text" class="form-control"  formControlName="packing_charges" style="width:120px"
+                  placeholder="0.00">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Insurance Charges:</label>
+                <input type="text" class="form-control"  formControlName="insurance_charges" style="width:120px"
+                  placeholder="0.00" (input)="finaltotal()" [(ngModel)]="insurance_charges">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Round Off:</label>
+                <input type="text" class="form-control" formControlName="roundoff"  style="width:120px"
+                  placeholder="0.00" (input)="finaltotal()" [(ngModel)]="roundoff">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div> 
+
+            <div class="d-flex row justify-content-end mt-2">
+              <div class="col-md-3 d-flex align-items-center">
+                <label class="col-sm-6 col-form-label fw-bolder">Grand Total:</label>
+                <input type="text" class="form-control" readonly formControlName="grandtotal" style="width:120px"
+                   (input)="finaltotal()" [(ngModel)]="grandtotal" style="text-align: right; background-color: #e9e7e7;">&nbsp;
+                <!-- <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{SelectedCurrencyCode}}</span> -->
+              </div>
+            </div>
+
+            <div class="card-header bg-lightblue card-height55 mt-5">
+              <div class="card-title m-0">
+                <h5 class="fw-bolder text-blue">Terms and Conditions</h5>
+              </div>
+            </div>
+            <ng-select [items]="terms_list" class="custom col-lg-5 col-12 fv-row mt-2" bindLabel="template_name"
+                            [(ngModel)]="mdlTerms" formControlName="template_name" bindValue="template_gid"
+                            placeholder="Select an option" (change)="GetOnChangeTerms()"></ng-select>
+            <div class="d-flex flex-row m-1 flex-wrap table-responsive">            
+              <div class="col-10 col-lg-5 col-md-10 col-sm-10 fv-row mt-2">
+                  <angular-editor  [config]="config" formControlName="template_content"  ></angular-editor>
+                      </div>
+                    </div>
+
+            <div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="text-center my-4">
+                    <h2><b>Are you sure?</b></h2>
+                    <br>
+                    <p style="display: block;">Do You Want To Delete the Record ?</p>
+                    <div class="text-center my-4">
+                      <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                      </button>&nbsp;
+                      <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                      </button>          
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <!--Summary count ends-->
+            <div class="text-center my-4">
+              <button class="btn-success btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onSubmit()">
+                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+              </button> &nbsp;&nbsp;
+              <button class="btn-primary btn-sm text-white me-4" (click)="close()" data-bs-dismiss="modal">
+                <i class="fas fa-arrow-left text-white"></i> &nbsp;Back
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>

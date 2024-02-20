@@ -1,0 +1,168 @@
+<div class="card shadow-sm">
+  <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <h3 class="card-title" style="font-size:15px;">Payment Summary</h3>
+    </div>
+    <div class="table-responsive">
+      <div class="card card-body m-1 shadow-lg p-3 mb-5 bg-white rounded">
+        <table id="payment_list" class="table table-striped table-row-bordered gy-5 gs-7">
+          <thead>
+            <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+              <th></th>
+              <th>S.No</th>
+              <th>Month</th>
+              <th>Year</th>
+              <th>Total Working Days</th>
+              <th>No.Of.Employees</th>
+              <th>No. Of Employees Paid</th>
+              <th>Total Salary</th>
+              <th>Salary Disposed</th>
+              <th>Outstanding Amount</th>
+              <th>Action</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of payment_list; let i=index;">
+              <td (click)="ondetail(data.payment_month,data.payment_year)" (click)="data.isExpand = !data.isExpand">
+                <i *ngIf="!data.isExpand" class="bi-chevron-right"></i>
+                <i *ngIf="data.isExpand" class="bi-chevron-up"></i>
+              </td>
+              <td>{{i+1}}</td>
+              <td>{{data.payment_month}}</td>
+              <td>{{data.payment_year}}</td>
+              <td>{{data.total_working_days}}</td>
+              <td>{{data.no_of_employee}}</td>
+              <td>{{data.paid_employee_count}}</td>
+              <td>{{data.total_salary}}</td>
+              <td>{{data.salary_disposed}}</td>
+              <td>{{data.outstanding_amount}}</td>
+              <td class="text-center text-nowrap">
+                <button title=" Payment" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                  (click)="makepayment(data.payment_month,data.payment_year)">
+                  <span class="fa-solid fa-dollar-sign"></span>
+                </button>
+
+              </td>
+
+              <br>
+              <td *ngIf="data.isExpand">
+                <br> <br> <br>
+                <div class="table-responsive" style="margin-left:-1000px;">
+                  <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                    <table class="table table-striped table-row-bordered gy-5 gs-7 ">
+                      <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                          <th></th>
+                          <th>S.No</th>
+                          <th>Payment Date</th>
+                          <th>Paid Amount</th>
+                          <th>No.Of.Employees Paid</th>
+                          <th>Bank (Paid From) / Mode of Payment</th>
+                          <th>Paid By</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data1 of paymentadd_list; let i=index;">
+                          <td
+                            (click)="ondetail1(data.payment_month,data.payment_year,data1.payment_date,data1.payment_type)"
+                            (click)="data1.isExpand = !data1.isExpand">
+                            <i *ngIf="!data1.isExpand" class="bi-chevron-right"></i>
+                            <i *ngIf="data1.isExpand" class="bi-chevron-up"></i>
+                          </td>
+                          <td>{{i+1}}</td>
+                          <td>{{data1.payment_date}}</td>
+                          <td>{{data1.paid_amount}}</td>
+                          <td>{{data1.no_of_employees}}</td>
+                          <td>{{data1.modeof_payment}}</td>
+                          <td>{{data1.paid_by}}</td>
+                          
+                          <br>
+                          <td *ngIf="data1.isExpand">
+                            <br> <br> <br>
+                            <div class="table-responsive" style="margin-left:-650px;">
+                              <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                                <table class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                  <thead>
+                                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+
+                                      <th>Payment Date</th>
+                                      <th>Employee Code</th>
+                                      <th>Employee Name</th>
+                                      <th>Branch</th>
+                                      <th>Department</th>
+                                      <th>Designation</th>
+                                      <th>Payment Amount</th>
+                                      <th>Paid Amount</th>
+                                      <th>Payment Type</th>
+                                      <th class="text-center">Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let data2 of paymentexpend_list; let i=index;">
+
+                                      <td>{{data2.payment_date}}</td>
+                                      <td>{{data2.user_code}}</td>
+                                      <td>{{data2.employee_name}}</td>
+                                      <td>{{data2.branch_name}}</td>
+                                      <td>{{data2.department_name}}</td>
+                                      <td>{{data2.designation_name}}</td>
+                                      <td>{{data2.payment_amount}}</td>
+                                      <td>{{data2.paid_amount}}</td>
+                                      <td>{{data2.payment_type}}</td>
+
+                                      <td class="text-center text-nowrap">
+
+                                        <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2"
+                                        data-bs-toggle="modal" data-bs-target="#myModaldelete" (click)="openModalpaymentdelete(data1.payment_gid)">
+                                        <i class="fa fa-trash fs-6" aria-hidden="true"></i>
+                                        </button>
+                                        </td>
+
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </td>
+
+
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog del_modal-dialog">
+    <div class="modal-content del_modal-content">
+      <div class="text-center my-4">
+        <h2><b>Are you sure?</b></h2>
+        <p style="display: block;">Do You Want To Delete the Payment ?</p>
+        <div class="text-center my-4">
+          <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+            <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+          </button>
+          <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white me-2"></i>Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

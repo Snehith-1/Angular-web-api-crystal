@@ -1,0 +1,87 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EmsUtilitiesModule } from '../ems.utilities/ems.utilities.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { DataTablesModule } from 'angular-datatables';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { EmsPayrollRoutingModule } from './ems.payroll-routing.module';
+import { PayTrnBonussummaryComponent } from './component/pay-trn-bonussummary/pay-trn-bonussummary.component';
+import { PayTrnEmployee2bonusComponent } from './component/pay-trn-employee2bonus/pay-trn-employee2bonus.component';
+import { PayTrnEmployeebankdetailsComponent } from './component/pay-trn-employeebankdetails/pay-trn-employeebankdetails.component';
+import { PayTrnEmployeeselectComponent } from './component/pay-trn-employeeselect/pay-trn-employeeselect.component';
+import { PayTrnSalaryManagementComponent } from './component/pay-trn-salary-management/pay-trn-salary-management.component';
+import { PayTrnLoansummaryComponent } from './component/pay-trn-loansummary/pay-trn-loansummary.component';
+import { PayTrnLoanaddComponent } from './component/pay-trn-loanadd/pay-trn-loanadd.component';
+import { PayTrnLoaneditComponent } from './component/pay-trn-loanedit/pay-trn-loanedit.component';
+import { PayTrnLoanviewComponent } from './component/pay-trn-loanview/pay-trn-loanview.component';
+import { PayMstLeavegenerateviewComponent } from './component/pay-mst-leavegenerateview/pay-mst-leavegenerateview.component';
+import { PayMstEmployeetemplatesummaryComponent } from './component/pay-mst-employeetemplatesummary/pay-mst-employeetemplatesummary.component';
+
+import { PayTrnSalarygradeTemplateComponent } from './component/pay-trn-salarygrade-template/pay-trn-salarygrade-template.component';
+import { PayTrnAddsalarygradeTemplateComponent } from './component/pay-trn-addsalarygrade-template/pay-trn-addsalarygrade-template.component';
+
+import { PayMstEmployee2gradeassignComponent } from './component/pay-mst-employee2gradeassign/pay-mst-employee2gradeassign.component';
+import { PayRptEmployeesalaryreportComponent } from './component/pay-rpt-employeesalaryreport/pay-rpt-employeesalaryreport.component';
+import { PayMstSalarycomponentComponent } from './component/pay-mst-salarycomponent/pay-mst-salarycomponent.component';
+import { PayMstSalarycomponentaddComponent } from './component/pay-mst-salarycomponentadd/pay-mst-salarycomponentadd.component';
+import { PayMstSalarycomponenteditComponent } from './component/pay-mst-salarycomponentedit/pay-mst-salarycomponentedit.component';
+import { PayMstSalarycomponentgroupComponent } from './pay-mst-salarycomponentgroup/pay-mst-salarycomponentgroup.component';
+import { PayTrnPayrunviewComponent } from './component/pay-trn-payrunview/pay-trn-payrunview.component';
+import { PayTrnPaymentsummaryComponent } from './component/pay-trn-paymentsummary/pay-trn-paymentsummary.component';
+import { PayTrnMakepaymentComponent } from './component/pay-trn-makepayment/pay-trn-makepayment.component';
+import { PayTrnPaymenteditComponent } from './component/pay-trn-paymentedit/pay-trn-paymentedit.component';
+import { PayTrnEditsalarygradeTemplateComponent } from './component/pay-trn-editsalarygrade-template/pay-trn-editsalarygrade-template.component';
+import { PayRptPaymentreportsummaryComponent } from './component/pay-rpt-paymentreportsummary/pay-rpt-paymentreportsummary.component';
+import { PayMstEmployeegradeconfirmComponent } from './component/pay-mst-employeegradeconfirm/pay-mst-employeegradeconfirm.component';
+import { PayMstEditemployee2gradeassignComponent } from './component/pay-mst-editemployee2gradeassign/pay-mst-editemployee2gradeassign.component';
+import { PayMstViewemployee2gradeassignComponent } from './component/pay-mst-viewemployee2gradeassign/pay-mst-viewemployee2gradeassign.component';
+
+
+
+@NgModule({
+  declarations: [    
+    PayTrnEmployee2bonusComponent,
+    PayTrnEmployeebankdetailsComponent,
+    PayTrnEmployeeselectComponent,
+    PayTrnLoansummaryComponent,
+    PayTrnLoanaddComponent,
+    PayTrnLoanviewComponent,
+    PayTrnLoaneditComponent,
+    PayTrnSalaryManagementComponent,
+    PayTrnSalarygradeTemplateComponent,
+    PayTrnAddsalarygradeTemplateComponent,
+    PayTrnSalaryManagementComponent,
+    PayRptEmployeesalaryreportComponent,
+    PayMstSalarycomponentComponent,
+    PayMstSalarycomponentaddComponent,
+    PayMstSalarycomponenteditComponent,
+    PayTrnSalaryManagementComponent,
+    PayMstLeavegenerateviewComponent,
+    PayMstEmployeetemplatesummaryComponent,
+    PayMstEmployee2gradeassignComponent,
+    PayMstSalarycomponentgroupComponent,
+    PayTrnPayrunviewComponent,
+    PayTrnPaymentsummaryComponent,
+    PayTrnMakepaymentComponent,
+    PayTrnPaymenteditComponent,
+    PayTrnEditsalarygradeTemplateComponent,
+    PayRptPaymentreportsummaryComponent,
+    PayMstEmployeegradeconfirmComponent,
+    PayMstEditemployee2gradeassignComponent,
+    PayMstViewemployee2gradeassignComponent,
+
+  ],
+  imports: [
+    CommonModule,
+    EmsPayrollRoutingModule,
+    FormsModule, ReactiveFormsModule,EmsUtilitiesModule,
+    NgApexchartsModule,DataTablesModule,
+    NgSelectModule,AngularEditorModule,
+    TabsModule
+  ]
+})
+export class EmsPayrollModule {}
+ 

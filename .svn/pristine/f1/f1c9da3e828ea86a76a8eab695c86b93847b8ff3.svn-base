@@ -1,0 +1,69 @@
+<div class="head" [ngClass]="getHeaderClass()">
+    <div class="head-content">
+        <div class="head-content-left">
+            <div *ngFor=" let list of menu; let i = index;" style="padding-left: 6px;">
+                <button class="head-menu-item-name-btn" (click)="getsidemenu(list);selectHead(i)"
+                    [ngClass]="{'activeHeader': selectedIndex === i}">{{list.text}}</button>
+            </div>
+        </div>
+        <div class="head-content-right">
+            <button class="head-menu-item-btn " title="Service" (click)="service()">
+                <i class="bi bi-gear" style="font-size:14px;font-weight: bolder;"></i>
+            </button>
+            <button class="head-menu-item-btn " title="Social Media" (click)="social()">
+                <i class="bi bi-cart4" style="font-size:14px;font-weight: bolder;"></i>
+            </button>
+            <!-- notification for message-->
+            <button class="head-menu-item-btn" title="Notification" (click)="onClickNotification()">
+                <i class="fa-solid fa-bell"><span>{{notification_count}}</span></i>
+            </button>
+
+            <div *ngIf="showMessage" class="sampel card border">
+                <div class="bg-white rounded-top">
+                    <h4 class="text-center pt-4 pb-3 align-middle">Notification</h4>
+                </div>
+                <div class="notification_list" id="scroll-bar-table">
+                    <div class="row p-3 d-flex justify-content-center align-items-center border-bottom border border-secondary nassar"
+                        *ngFor="let data of notification_list;" (click)="customer360redirect(data.leadbank_gid,data.lead2campaign_gid)">
+                        <div class="col-1 ps-2"><i class="fa-brands fa-whatsapp"
+                                style="color: #04ff00;font-size: 2.75rem;"></i></div>
+                        <div class="col-8">
+                            <div class="ps-3">
+                                <span class=" fw-bold">{{data.displayName}}</span>&nbsp;sent a message
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <h1 class="badge rounded-pill bg-success">
+                                {{data.count}}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- notification for message-->
+            <button class="head-menu-item-btn" title="Profile">
+                <i class="fa-solid fa-user"></i>
+            </button>
+            <button class="head-menu-item-btn" title="Logout" (click)="logout()">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="router.url != '/system/SystemDashboard' && router.url != '/base/SettingDashboard'">
+        <div *ngIf="showBreadCurmList" class="headBreadCrum">
+            <span *ngIf="level_one_name != '' && level_one_name != null" (click)=redirect_menu(level_one_link)>
+                &nbsp;&nbsp; {{level_one_name}} <span style="color: black;">></span>
+            </span>
+            <span *ngIf="level_two_name != '' && level_two_name != null" (click)=redirect_menu(level_two_link)>
+                {{level_two_name}} <span style="color: black;">></span>
+            </span>
+            <span *ngIf="level_three_name != '' && level_three_name != null" (click)=redirect_menu(level_three_link)>
+                {{level_three_name}} <span style="color: black;"></span>
+            </span>
+            <!-- <span *ngIf="level_four_link != '' && level_four_link != null" (click) = redirect_menu(level_four_link)>
+               >{{level_four_name}} 
+            </span>  -->
+        </div>
+    </div>
+
+</div>

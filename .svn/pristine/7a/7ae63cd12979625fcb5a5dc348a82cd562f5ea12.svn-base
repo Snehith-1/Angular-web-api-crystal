@@ -1,0 +1,15 @@
+.custom {
+    width: 100%;
+    max-width: 200px; /* Adjust the maximum width as needed */
+    margin-right: 10px; /* Add spacing between dropdowns */
+  }
+  
+  .btn-primary {
+    height: 40px; /* Adjust the button height as needed */
+  }
+  
+  .custom-light-red {
+    background-color: #ffcccc; /* Use your desired light red color code */
+    border-color: #ff3333; /* Use your desired border color if needed */
+    color: #e31111f7; /* Text color for the light red button */
+}

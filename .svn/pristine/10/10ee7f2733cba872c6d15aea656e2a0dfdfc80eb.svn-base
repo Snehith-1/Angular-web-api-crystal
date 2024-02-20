@@ -1,0 +1,104 @@
+<div class="card" style="height: 490px;">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Add Product</h5>
+        </div>
+    </div>
+
+    <form [formGroup]="productform" (ngSubmit)="onadd()">
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+
+
+      
+
+            <div></div></div>
+
+        
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Type<span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " formControlName="product_type"class="form-control"
+                        [ngClass]="{'invalid-border': product_type.invalid && product_type.touched}" />
+                </div>
+                <div *ngIf="product_type.invalid && (product_type.dirty || product_type.touched)">
+                    <div *ngIf="product_type.errors?.['required']">
+                        <span style="color:red;">product Type required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Name<span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " formControlName="product_name" class="form-control"
+                        [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}" />
+                </div>
+                <div *ngIf="product_name.invalid && (product_name.dirty || product_name.touched)">
+                    <div *ngIf="product_name.errors?.['required']">
+                        <span style="color:red;">product name required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Description
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  "  formControlName="product_desc" class="form-control" />
+                </div>
+            </div>
+           
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Vendor
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " formControlName="vendor" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12">Status
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                        <input class="form-check-input" type="radio" name="product_status" id="active"
+                            formControlName="product_status" value="active">
+                        <label class="form-check-label text-gray-700 text-nowrap" for="active">Active</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="product_status" formControlName="product_status"
+                            value="draft" id="draft">
+                        <label class="form-check-label text-gray-700 text-nowrap" for="draft">Draft</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="product_status" formControlName="product_status"
+                            value="archived" id="archived">
+                        <label class="form-check-label text-gray-700 text-nowrap" for="archived">Archived</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br><br><br>
+        <div class="text-center my-4">
+            <button type="submit" class="btn-success btn-sm text-white me-2">
+                <i class="fa fa-check fs-5"></i>&nbsp;&nbsp; Submit</button>
+
+            <button class="btn-primary btn-sm text-white me-4" (click)="redirecttolist()">
+                <i class="fa-solid fa-arrow-left fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp; Back</button>
+        </div>
+    </form>
+</div>

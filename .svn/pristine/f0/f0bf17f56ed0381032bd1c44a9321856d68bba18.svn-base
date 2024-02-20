@@ -1,0 +1,554 @@
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+// interface SalesOD{
+//   salesorder_gid: string;
+//   salesorder_date: string;
+//   branch_name: string;
+//   branch_gid: string;
+//   so_referencenumber: string;
+//   leadbank_name: string;
+//   leadbank_gid: string;
+//   customercontact_names: string;
+//   customercontact_gid: string;
+//   customer_mobile: string;
+//   customer_email: string;
+//   so_remarks: string;
+//   customer_address: string;
+//   shipping_to: string;
+//   user_name: string;
+//   user_gid: string;
+//   start_date: string;
+//   end_date: string;
+//   freight_terms: string;
+//   payment_terms: string;
+//   currencyexchange_gid: string;
+//   currency_code: string;
+//   exchange_rate: string;
+//   product_name: string;
+//   product_gid: string;
+//   productgroup_name: string;
+//   customerproduct_code: string;
+//   product_code: string;
+//   productuom: string;
+//   product_price: string;
+//   qty_quoted: string;
+//   margin_percentage: string;
+//   margin_amount: string;
+//   selling_price: string;
+//   product_requireddate: string;
+//   product_requireddateremarks: string;
+//   tax_name: string;
+//   tax_gid: string;
+//   tax_amount: string;
+//   tax_name2: string;
+//   tax_amount2: string;
+//   tax_name3: string;
+//   tax_amount3: string;
+//   price: string;
+// }
+@Component({
+  selector: 'app-smr-trn-raisesalesorder',
+  templateUrl: './smr-trn-raisesalesorder.component.html',
+  styleUrls: ['./smr-trn-raisesalesorder.component.scss']
+})
+export class SmrTrnRaisesalesorderComponent {
+
+  RaiseForm: FormGroup | any;
+  productform: FormGroup | any;
+  customer_list: any ;
+  branch_list: any [] = [];
+  contact_list: any [] = [];
+  currency_list: any [] = [];
+  user_list:any [] = [];
+  product_list: any [] = [];
+  tax_list: any [] = [];
+  tax2_list: any [] = [];
+  tax3_list: any [] = [];
+  tax4_list: any [] = [];
+  calci_list: any [] = [];
+  POproductlist: any [] = [];
+  mdlBranchName:any;
+  GetCustomerDet:any;
+  mdlCustomerName:any;
+  mdlUserName:any;
+  mdlProductName:any;
+  mdlTaxName3:any;
+  mdlTaxName2:any;
+  mdlTaxName1:any;
+  GetproductsCode:any;
+  mdlContactName:any;
+  unitprice: number = 0;
+  quantity: number = 0;
+  discountpercentage: number = 0;
+  discountamount: number = 0;
+  totalamount: number = 0;
+  addoncharges: number = 0;
+  POdiscountamount: number = 0;
+  frieghtcharges: number = 0;
+  forwardingCharges: number = 0;
+  insurancecharges: number = 0;
+  roundoff: number = 0;
+  grandtotal: number = 0;
+  tax_amount: number = 0;
+  taxpercentage: any;
+  productdetails_list: any;
+  tax_amount2: number = 0;
+  tax_amount3: number = 0;
+  producttotalamount: any;
+  parameterValue: string | undefined;
+  productnamelist: any;
+  selectedCurrencyCode: any;
+  POadd_list: any;
+  total_amount: any;
+  addoncharge: any;
+  insurance_charges: any;
+  additional_discount: any;
+  freightcharges: any;
+  packing_charges: any;
+  buybackorscrap: any;
+  responsedata: any;
+  
+  // salesOD!: SalesOD;
+  constructor(private http:HttpClient, private fb: FormBuilder, private router: ActivatedRoute, private route: Router, private service: SocketService, private ToastrService: ToastrService) {
+    // this.salesOD = {} as SalesOD
+
+
+    this.RaiseForm = new FormGroup({
+      branch: new FormControl('', Validators.required),
+      branch_name: new FormControl('', Validators.required),
+      dispatch_name: new FormControl('', Validators.required),
+      vendor_companyname: new FormControl('', Validators.required),
+      currency_code: new FormControl('', Validators.required),
+      payment_term: new FormControl('', Validators.required),
+      contact_person: new FormControl('', Validators.required),
+      email_address: new FormControl('', Validators.required),
+      contact_number: new FormControl('', Validators.required),
+      currency: new FormControl('', Validators.required),
+      exchange_rate: new FormControl('', Validators.required),
+      remarks: new FormControl('', Validators.required),
+      Shipping_address: new FormControl('', Validators.required),
+      vendor_address: new FormControl('', Validators.required),
+      vendor_fax: new FormControl('', Validators.required),
+      priority_flag: new FormControl('N', Validators.required),
+      buybackorscrap: new FormControl(''),
+      payment_terms: new FormControl(''),
+      freight_terms: new FormControl(''),
+      delivery_location: new FormControl(''),
+      template_content: new FormControl(''),
+      delivery_period: new FormControl(''),
+      payment_days: new FormControl(''),
+      product_total: new FormControl(''),
+      taxamount1: new FormControl(''),
+      discount_percentage: new FormControl(''),
+      qty: new FormControl(''),
+      mrp: new FormControl(''),
+      unitprice: new FormControl(''),
+      productuom: new FormControl(''),
+      product_code: new FormControl(''),
+      productgroup_name: new FormControl(''),
+      product_name: new FormControl(''),
+      totalamount: new FormControl(''),
+      totalamount3: new FormControl(''),
+      tax_name3: new FormControl(''),
+      taxamount2: new FormControl(''),
+      tax_name2: new FormControl(''),
+      tax_name1: new FormControl(''),
+      discountamount: new FormControl(''),
+      discountpercentage: new FormControl(''),
+      quantity: new FormControl(''),
+      productcode: new FormControl(''),
+      productgroup: new FormControl(''),
+      priority_remarks: new FormControl(''),
+      pocovernote_address: new FormControl(''),
+      roundoff: new FormControl(''),
+      ship_via: new FormControl(''),
+      po_no: new FormControl(''),
+      grandtotal:new FormControl(''),
+      additional_discount:new FormControl(''),
+      insurance_charges:new FormControl(''),
+      freightcharges:new FormControl(''),
+      addoncharge:new FormControl(''),
+      customercontact_names:new FormControl(''),
+      customer_mobile:new FormControl(''),
+      customer_name:new FormControl(''),
+      customer_email:new FormControl(''),
+      product_gid:new FormControl('')
+
+
+    })
+    this.productform = new FormGroup({
+      tax_gid:new FormControl(''),
+      product_gid: new FormControl(''),
+      productuom_gid: new FormControl(''),
+      productgroup_gid: new FormControl(''),
+      product_code: new FormControl('', Validators.required),
+      productcode: new FormControl('', Validators.required),
+      productgroup: new FormControl('', Validators.required),
+      productuom: new FormControl('', Validators.required),
+      productname: new FormControl('', Validators.required),
+      tax_name: new FormControl('', Validators.required),
+      tax_name2: new FormControl('', Validators.required),
+      tax_name3: new FormControl('', Validators.required),
+      remarks: new FormControl('', Validators.required),
+      product_name: new FormControl('', Validators.required),
+      productuom_name: new FormControl('', Validators.required),
+      productgroup_name: new FormControl('', Validators.required),
+      unitprice: new FormControl('', Validators.required),
+      quantity: new FormControl('', Validators.required),
+      discountpercentage: new FormControl('', Validators.required),
+      discountamount: new FormControl('', Validators.required),
+      taxname1: new FormControl('', Validators.required),
+      tax_amount: new FormControl('', Validators.required),
+      taxname2: new FormControl('', Validators.required),
+      tax_amount2: new FormControl('', Validators.required),
+      taxname3: new FormControl('', Validators.required),
+      tax_amount3: new FormControl('', Validators.required),
+      totalamount: new FormControl('', Validators.required),
+      
+
+
+
+    })
+    }
+    ngOnInit(): void {
+      this.salesorederSummary();
+ this.RaiseForm = new FormGroup ({
+  
+  salesorder_gid : new FormControl (''),
+  salesorder_date: new FormControl(''),
+  branch_name: new FormControl(''),
+  branch_gid: new FormControl(''),
+  so_referencenumber: new FormControl(''),
+  customer_name: new FormControl(''),
+  customer_gid: new FormControl(''),
+  customercontact_names: new FormControl(''),
+  customercontact_gid: new FormControl(''),
+  customer_mobile: new FormControl(''),
+  customer_email: new FormControl(''),
+  so_remarks: new FormControl(''),
+  customer_address: new FormControl(''),
+  shipping_to: new FormControl(''),
+  user_name: new FormControl(''),
+  user_gid: new FormControl(''),
+  start_date: new FormControl(''),
+  end_date: new FormControl(''),
+  freight_terms: new FormControl(''),
+  payment_terms: new FormControl(''),
+  currencyexchange_gid: new FormControl(''),
+  currency_code: new FormControl(''),
+  exchange_rate: new FormControl(''),
+
+});
+
+//// Branch Dropdown /////
+
+var url = 'SmrTrnSalesorder/GetBranchDtl'
+this.service.get(url).subscribe((result:any)=>{
+  this.branch_list = result.GetBranchDtl;
+ });
+
+/// Customer Name Dropdown ////
+
+var url = 'SmrTrnSalesorder/GetCustomerDtl'
+this.service.get(url).subscribe((result:any)=>{
+  this.customer_list = result.GetCustomerDtl;
+ });
+
+
+ //// Sales person Dropdown ////
+ var url = 'SmrTrnSalesorder/GetPersonDtl'
+this.service.get(url).subscribe((result:any)=>{
+  this.contact_list = result.GetPersonDtl;
+ });
+
+  //// Currency Dropdown ////
+  var url = 'SmrTrnSalesorder/GetCurrencyDtl'
+  this.service.get(url).subscribe((result:any)=>{
+    this.currency_list = result.GetCurrencyDtl;
+   });
+
+   //// Tax 1 Dropdown ////
+   var url = 'SmrTrnSalesorder/GetTax1Dtl'
+   this.service.get(url).subscribe((result:any)=>{
+     this.tax_list = result.GetTax1Dtl;
+    });
+
+     //// Tax 2 Dropdown ////
+   var url = 'SmrTrnSalesorder/GetTax2Dtl'
+   this.service.get(url).subscribe((result:any)=>{
+     this.tax2_list = result.GetTax2Dtl;
+    });
+
+     //// Tax 3 Dropdown ////
+   var url = 'SmrTrnSalesorder/GetTax3Dtl'
+   this.service.get(url).subscribe((result:any)=>{
+     this.tax3_list = result.GetTax3Dtl;
+    });
+
+      //// Tax 3 Dropdown ////
+   var url = 'SmrTrnSalesorder/GetTax4Dtl'
+   this.service.get(url).subscribe((result:any)=>{
+     this.tax4_list = result.GetTax4Dtl;
+    });
+
+      //// Product Dropdown ////
+   var url = 'SmrTrnSalesorder/GetProductNamDtl'
+   this.service.get(url).subscribe((result:any)=>{
+     this.product_list = result.GetProductNamDtl;
+    });
+}
+salesorederSummary() {
+  var api = 'SmrTrnSalesorder/GetSalesOrderummary';
+  this.service.get(api).subscribe((result: any) => {
+    this.responsedata = result;
+    this.POproductlist = this.responsedata.salesorders_list;
+    
+  });
+}
+
+  get branch_name() {
+    return this.RaiseForm.get('branch_name')!;
+  }
+  get customer_name() {
+    return this.RaiseForm.get('customer_name')!;
+  }
+  get customercontact_names() {
+    return this.RaiseForm.get('customercontact_names')!;
+  }
+  get user_name() {
+    return this.RaiseForm.get('user_name')!;
+  }
+  get currency_code() {
+    return this.RaiseForm.get('currency_code')!;
+  }
+  get product_name() {
+    return this.productform.get('product_name')!;
+  }
+  get tax_name(){
+    return this.productform.get('tax_name')!;
+  }
+  get tax_name2(){
+    return this.productform.get('tax_name2')!;
+  }
+  get tax_name3(){
+    return this.productform.get('tax_name3')!;
+  }
+
+
+
+  OnChangeCustomer(){
+    debugger
+    let customercontact_gid = this.RaiseForm.value.customer_name.customer_gid;
+    let param ={
+      customercontact_gid :customercontact_gid
+    }
+    var url = 'SmrTrnSalesorder/GetOnChangeCustomer';
+    
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.responsedata = result;
+      this.GetCustomerDet = this.responsedata.GetCustomer;
+      
+      this.RaiseForm.get("customer_mobile")?.setValue(result.GetCustomer[0].customer_mobile);
+      
+      this.RaiseForm.get("customercontact_names")?.setValue(result.GetCustomer[0].customercontact_names);
+      this.RaiseForm.get("customer_address")?.setValue(result.GetCustomer[0].customer_address);
+      this.RaiseForm.value.leadbank_gid = result.GetCustomer[0].leadbank_gid;
+      //this.RaiseForm.get("customer_email")?.setValue(result.GetCustomerDet[0].customer_email);
+      //this.RaiseForm.value.leadbank_gid = result.GetCustomer[0].leadbank_gid
+    });
+
+  }
+  OnChangeCurrency(event: Event){
+
+  }
+
+  onCurrencyCodeChange(event: Event){
+
+  }
+
+  GetOnChangeProductsName(){
+    debugger;
+    let product_gid = this.productform.value.product_name.product_gid;
+    let param = {
+      product_gid: product_gid
+    }
+    var url = 'SmrTrnSalesorder/GetOnChangeProductsName';
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.responsedata = result;
+      this.GetproductsCode = this.responsedata.ProductsCode;
+      this.productform.get("product_code")?.setValue(result.ProductsCode[0].product_code);
+      this.productform.get("productuom_name")?.setValue(result.ProductsCode[0].productuom_name);
+      this.productform.get("productgroup_name")?.setValue(result.ProductsCode[0].productgroup_name);
+      this.productform.value.productgroup_gid = result.ProductsCode[0].productgroup_gid
+       // this.productform.value.productuom_gid = result.GetProductsCode[0].productuom_gid
+    });
+
+
+  }
+  OnSubmit(){
+
+    console.log(this.RaiseForm)
+    var api = 'SmrTrnSalesorder/SalesSubmit';
+    this.service.post(api, this.RaiseForm.value).subscribe((result: any) => {
+      this.responsedata = result; 
+      this.route.navigate(['/pmr/PmrTrnPurchaseorderSummary']);
+    },
+
+    );
+
+  }
+  getDimensionsByFilter(id: any) {
+    return this.tax_list.filter((x: { tax_gid: any; }) => x.tax_gid === id);
+  }
+
+  OnChangeTaxAmount1(){
+    debugger
+    let tax_gid = this.productform.get('tax_name')?.value;
+    this.taxpercentage = this.getDimensionsByFilter(tax_gid);
+    let tax_percentage = this.taxpercentage[0].percentage;
+    this.tax_amount = ((tax_percentage) * (this.totalamount) / 100);
+
+    if (this.tax_amount == undefined) {
+      this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount));
+    }
+    else {
+      this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount) + (+this.tax_amount));
+    }
+
+  }
+
+  OnChangeTaxAmount2(){
+    debugger
+    let tax_gid = this.productform.get('tax_name2')?.value;
+    console.group(tax_gid)
+    this.taxpercentage = this.getDimensionsByFilter(tax_gid);
+    let tax_percentage = this.taxpercentage[0].percentage;
+    console.group(tax_percentage)
+    this.tax_amount2 = ((tax_percentage) * (((this.quantity) * (this.unitprice) - (this.discountamount))) / 100);
+
+    if (this.tax_amount == undefined && this.tax_amount2 == undefined) {
+      this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount));
+    }
+    else {
+      this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount) + (+this.tax_amount) + (+this.tax_amount2));
+    }
+
+  }
+
+  OnChangeTaxAmount3(){
+    let tax_gid = this.productform.get('tax_name3')?.value;
+    console.group(tax_gid)
+    this.taxpercentage = this.getDimensionsByFilter(tax_gid);
+    let tax_percentage = this.taxpercentage[0].percentage;
+    console.group(tax_percentage)
+    this.tax_amount3 = ((tax_percentage) * (((this.quantity) * (this.unitprice) - (this.discountamount))) / 100);
+
+    if (this.tax_amount == undefined && this.tax_amount2 == undefined && this.tax_amount3 == undefined) {
+      this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount));
+    }
+    else {
+      this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount) + (+this.tax_amount) + (+this.tax_amount2) + (+this.tax_amount3));
+    }
+
+  }
+
+  prodtotalcal(){
+    debugger
+    this.discountamount = ((this.totalamount) * (this.discountpercentage) / 100);
+    if (this.discountamount == undefined) {
+      this.discountamount = 0;
+    }
+    this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount) + (+this.tax_amount));
+    
+    // this.discountamount = ((this.totalamount) * (this.discountpercentage) / 100);
+    // this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount));
+
+
+
+    this.discountamount = ((this.totalamount) * (this.discountpercentage) / 100);
+    if (this.discountamount == undefined) {
+      this.discountamount = 0;
+    }
+    this.totalamount = ((this.quantity) * (this.unitprice) - (this.discountamount) + (+this.tax_amount));
+
+
+  }
+  
+
+  redirecttolist(){
+
+  }
+  OnTax(){
+
+  }
+
+  
+
+
+  finaltotal(){
+    this.grandtotal = ((this.totalamount) + (+this.addoncharge) + (+this.freightcharges) + (+this.buybackorscrap) + (+this.insurance_charges) + (+this.roundoff) - (+this.additional_discount));
+  }
+
+
+  
+  ondelete(product_gid : string){
+    let param = {
+      product_gid: product_gid
+    }
+  }
+close(){
+this.route.navigate(['/smr/SmrTrnSalesorderSummary']);
+  }
+
+
+  productSubmit(){
+    debugger
+    console.log(this.productform.value)
+    var params = {
+      product_name: this.productform.value.product_name.product_name,
+      product_gid: this.productform.value.product_name.product_gid,
+      quantity: this.productform.value.quantity,
+      selling_price: this.productform.value.totalamount,
+      tax_name: this.productform.value.tax_name1,
+      tax_name2: this.productform.value.tax_name2,
+      tax_name3: this.productform.value.tax_name3,
+      tax_amount: this.productform.value.tax_amount,
+      tax_amount2: this.productform.value.tax_amount2,
+      tax_amount3: this.productform.value.tax_amount3,
+      discountpercentage: this.productform.value.discountpercentage,
+      discountamount: this.productform.value.discountamount,
+      unitprice: this.productform.value.unitprice,
+      productgroup_gid: this.productform.value.productgroup_gid,
+      productgroup: this.productform.value.productgroup,
+      product_code: this.productform.value.product_code,
+      productuom_gid: this.productform.value.productuom_gid,
+      productuom_name: this.productform.value.productuom_name,
+      totalamount:this.productform.value.totalamount,
+      customerproduct_code:this.productform.value.customerproduct_code,
+      product_requireddate:this.productform.value.product_requireddate,
+      product_requireddateremarks:this.productform.value.product_requireddateremarks,
+
+
+    }
+    console.log(params)
+    var api = 'SmrTrnSalesorder/GetOnAdds';
+    this.service.post(api, params).subscribe((result: any) => {
+    this.Salessummary();
+    },
+    );
+  }
+  Salessummary() {
+    var api = 'SmrTrnSalesorder/GetSalesOrdersummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.POproductlist = this.responsedata.salesorders_list;
+      
+    });
+  }
+
+}

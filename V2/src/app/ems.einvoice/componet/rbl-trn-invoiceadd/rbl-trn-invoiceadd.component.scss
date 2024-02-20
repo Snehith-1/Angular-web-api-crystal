@@ -1,0 +1,119 @@
+.table_head th {
+    font-size: 11px;
+}
+
+.new_table {
+    text-align: center;
+}
+
+.lab {
+    font-family: Inter, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.in {
+    margin-left: 13px;
+    width: 100px;
+    font-family: Inter, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+.spn {
+    margin-left: 5px;
+    color: #3f51b5;
+    font-weight: bold;
+    font-family: Inter, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+.tbl_lab {
+    font-size: 13px;
+    font-family: Inter, Helvetica, sans-serif;
+    font-weight: bold;
+    width: 200px;
+}
+
+.tbl_in {
+    margin-left: 20px;
+    width: 100px;
+    text-align: right;
+    font-size: 13px;
+    font-family: Inter, Helvetica, sans-serif;
+}
+
+.tbl_tot_in {
+  margin-left: 20px;
+  width: 100px;
+  text-align: right;
+  font-size: 13px;
+  font-family: Inter, Helvetica, sans-serif;
+  background-color: #e9e7e7;
+  border: 1px solid #797979;
+}
+
+.tbl_spn {
+    margin-left: 10px;
+    color: #3f51b5;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: Inter, Helvetica, sans-serif;
+}
+
+.new_table1 {
+    text-align: right;
+}
+
+.icon {
+    background-color: #009ef7;
+    color: white;
+    font-weight: bold;
+}
+
+.table-responsive {
+    font-size: 11px;
+    // th {
+    //     text-decoration: underline;
+    // }
+}
+
+.modal-dialog {
+    margin-top: 200px;
+    
+    .modal-content{
+        height: 200px;
+        width: 350px;
+
+        h2 {
+            margin-top: 20px;
+        }
+        
+        p {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+}
+
+.btn-success {
+    background-color: #50cd89 !important;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.btn-success:hover {
+    background-color: #42ac72 !important;
+}
+
+.btn-success:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+}

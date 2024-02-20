@@ -1,0 +1,261 @@
+<div style="background-color: white;">
+<div class="card card-bordered" style="background-color: white;height:500px;">
+    <div class="card-header d-flex justify-content-center" style="background: rgb(81,183,204);
+    background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);">
+        <h1 class="card-title fw-bold fs-3"  style="color:black;">Social Media Dashboard</h1>
+    </div>
+    <div class="m-5 me-1 d-flex flex-wrap mb-0 mt-0 ">
+      <div class="col-12 col-lg-12 row ">
+        <div class="col-12 col-lg-4 pe-0">
+          <div class="m-3 me-0 card shadow-lg p-3 rounded">
+              <div class="card-header" style="background: rgb(81,183,204);
+              background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+              <h3 class="card-title fs-4 fw-bold" ><i class="fa-brands fa-shopify" style="font-size:20px;font-weight: bolder;color:black;"></i> &nbsp; <a routerLink="/crm/CrmSmmShopifycustomer" ><b style="color:black;">&nbsp;Shopify Store</b></a></h3>
+              <div class="card-toolbar"> </div>
+              </div>
+          <br/>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="cardHead radius-10 border-start border-0 border-3 border-darkgreen">
+                  <div class="card-body12">
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <h5 class="mb-0 text-secondary">Product</h5>
+                              <div>
+                                  <h4 class="my-1 text-info">{{shopifyproduct_counts}}</h4>
+                              </div>
+                          </div>
+                          <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto">
+                            <i class="fa-solid fa-cubes"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="cardHead radius-10 border-start border-0 border-3 border-violet">
+                  <div class="card-body12">
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <h5 class="mb-0 text-secondary">Customer</h5>
+                              <div>
+                                  <h4 class="my-1 text-info">{{customer_count}}</h4>
+                              </div>
+                          </div>
+                          <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+                            class="fa-solid fa-user"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cardHead radius-10 border-start border-0 border-3 border-brown">
+                    <div class="card-body12">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-0 text-secondary"> Unassign</h5>
+                                <div>
+                                    <h4 class="my-1 text-info">{{unassign_count}}</h4>
+                                </div>
+                            </div>
+                            <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto">
+                              <i class="fa-solid fa-user-minus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cardHead radius-10 border-start border-0 border-3 border-darkbrown">
+                    <div class="card-body12">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-0 text-secondary"> Assign</h5>
+                                <div>
+                                    <h4 class="my-1 text-info">{{customer_assigncount}}</h4>
+                                </div>
+                            </div>
+                            <div class="widgets-icons-2 rounded-circle bg-gradient-darkbrown text-white ms-auto">
+                              <i class="fa-solid fa-user-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              </div>
+              </div>
+          </div>
+          <div class="col-12 col-lg-4 pe-0">
+            <div class="m-3 me-0 card shadow-lg p-3 rounded">
+          <div class="card-header" style="background: rgb(81,183,204);
+          background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+          <h3 class="card-title fs-4 fw-bold" ><i class="fa-brands fa-whatsapp" style="font-size:20px;font-weight: bolder;color:black;"></i> &nbsp;<a routerLink="/crm/CrmSmmWatsapp"><b style="color:black;">&nbsp;WhatsApp </b></a>  </h3>
+          <div class="card-toolbar"> </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="cardHead radius-10 border-start border-0 border-3 border-darkblue">
+                  <div class="card-body12">
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <h5 class="mb-0 text-secondary">Contact</h5>
+                              <div>
+                                  <h4 class="my-1 text-info">{{contact_count}}</h4>
+                              </div>
+                          </div>
+                          <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i
+                            class="fa-solid fa-user"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="cardHead radius-10 border-start border-0 border-3 border-orange">
+                  <div class="card-body12">
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <h5 class="mb-0 text-secondary">Message</h5>
+                              <div>
+                                  <h4 class="my-1 text-info">{{message_count}}</h4>
+                              </div>
+                          </div>
+                          <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreen text-white ms-auto"><i
+                                  class="fa-solid fa-message"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cardHead radius-10 border-start border-0 border-3 border-blue">
+                    <div class="card-body12">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-0 text-secondary">Outgoing</h5>
+                                <div>
+                                    <h4 class="my-1 text-info">{{sent_count}}</h4>
+                                </div>
+                            </div>
+                            <div class="widgets-icons-2 rounded-circle bg-gradient-darkbluess text-white ms-auto"><i
+                              class="fa fa-external-link"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cardHead radius-10 border-start border-0 border-3 border-darkorange">
+                    <div class="card-body12">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-0 text-secondary">Incoming</h5>
+                                <div>
+                                    <h4 class="my-1 text-info">{{incoming_count}}</h4>
+                                </div>
+                            </div>
+                            <div class="widgets-icons-2 rounded-circle bg-gradient-purple text-white ms-auto"><i
+                              class="fa fa-arrow-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              </div>
+              </div>
+          </div>
+          <div class="col-12 col-lg-4 pe-0">
+            <div class="m-3 me-0 card shadow-lg p-3 rounded">
+          <div class="card-header" style="background: rgb(81,183,204);
+          background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+          <h3 class="card-title fs-4 fw-bold" ><i class="fa-solid fa-envelope" style="font-size:20px;font-weight: bolder;color:black;"></i> &nbsp;<a routerLink="/crm/CrmSmmEmailmanagement"><b style="color:black;">&nbsp;Email </b></a></h3>
+          <div class="card-toolbar"> </div>
+          </div>
+          <br/>
+          <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-skyblue">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Sent</h5>
+                            <div>
+                                <h4 class="my-1 text-info">{{mail_sent}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-skyblue text-white ms-auto"><i
+                          class="fa fa-paper-plane"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-redskyblue">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Delivery</h5>
+                            <div>
+                                <h4 class="my-1 text-info">{{deliverytotal_count}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-reddarkbluess text-white ms-auto"><i
+                          class="fa fa-line-chart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="cardHead radius-10 border-start border-0 border-3 border-lightgreenborder">
+                  <div class="card-body12">
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <h5 class="mb-0 text-secondary">Open</h5>
+                              <div>
+                                  <h4 class="my-1 text-info">{{opentotal_count}}</h4>
+                              </div>
+                          </div>
+                          <div class="widgets-icons-2 rounded-circle bg-gradient-greendarkbluess text-white ms-auto"><i
+                            class="fa-solid fa-envelope-open"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="cardHead radius-10 border-start border-0 border-3 border-skygreenborder">
+                  <div class="card-body12">
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <h5 class="mb-0 text-secondary">Click</h5>
+                              <div>
+                                  <h4 class="my-1 text-info">{{clicktotal_count}}</h4>
+                              </div>
+                          </div>
+                          <div class="widgets-icons-2 rounded-circle bg-gradient-skydarkbluess text-white ms-auto"><i
+                            class="fa-solid fa-paper-plane"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+            </div>
+          </div>
+          </div>
+    </div>
+</div>
+</div>
+
+
+

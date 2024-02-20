@@ -1,0 +1,371 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">CREATE SALARY GRADE TEMPLATE</h5>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap" style=" width: 50%; align-self: center;">    
+
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12 ">
+            <b>Salary Grade Template Name<span style="color:red">*</span></b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+              " placeholder="" formControlName="Gradetemplate_name" class="form-control" />
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12 ">
+            <b>Basic Salary	<span style="color:red">*</span></b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+              " placeholder="" formControlName="basic_salary" class="form-control"/>
+            </div>
+        </div>        
+    </div>
+
+    <div class="text-center my-4">
+        <button class="btn-success btn-sm text-white me-4" >              
+             GO</button>&nbsp;
+        <button class="btn-primary btn-sm text-white me-4" routerLink="/payroll/PayTrnSalaryGradeTemplate" >
+          <i class="fas fa-arrow-left"></i> 
+          Back</button>
+    
+       </div>   
+</div>
+
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55" >
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Additional Component </h5>
+        </div>
+    </div>
+
+<div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+        <h6 class="fw-bolder mt-12">Component Group</h6>
+        <div class="d-flex flex-row m-6 flex-wrap mt-15">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <label for="" class="mt-4">bonus</label>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap mt-10">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <label for="" class="mt-4">CGC pay</label>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap mt-10">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <label for="" class="mt-4">CGCPAY</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+        <h6 class="fw-bolder mt-12">Component Name</h6>
+        <div class="d-flex flex-row m-4 flex-wrap mt-11">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                 <select class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2">
+                    <option value="">Select</option>
+                    </select>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap mt-11">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <select class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2">
+                <option value="">Select</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap mt-11">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <select class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2">
+                <option value="">Select</option>
+                </select>
+            </div>
+        </div>
+    </div>    
+    
+    <div class="col-12 col-lg-4 col-md-4 col-sm-12" style="text-align: center;">
+        <h6 class="fw-bolder mt-4">Contribution</h6>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: center;">
+                <h6 class="fw-bolder mt-4">Employee</h6>
+            </div>
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: center;">
+                <h6 class="fw-bolder mt-4">Employer</h6>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="checkbox" class="mt-4"/>  Include
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="checkbox" class="mt-4"/>  Include
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <input type="checkbox" class="mt-4"/>  Include
+            </div>
+        </div>
+    </div>    
+
+</div>
+
+<div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <label for="" class="fw-bolder mt-4">Gross Salary</label>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap mt-10">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <label for="" class="fw-bolder mt-4">Net Salary</label>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap mt-10">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <label for="" class="fw-bolder mt-4">CTC</label>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <div class="col-12 col-lg-4 col-md-4 col-sm-12" style="margin-left: 345px;">        
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control"  style="width: 150px;"/>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 150px;"/>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">            
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left: 180px;">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 150px;"/>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">          
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left: 180px;">
+                <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 150px;"/>
+            </div>
+        </div>
+    </div>    
+</div>
+    <div class="card m-3">
+        <div class="card-header bg-lightblue card-height55" >
+            <div class="card-title m-0 ">
+                <h5 class="fw-bolder text-blue">Additional Component </h5>
+            </div>
+        </div>
+    
+    <div class="d-flex flex-row m-6 flex-wrap">
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            <h6 class="fw-bolder mt-12">Component Group</h6>
+            <div class="d-flex flex-row m-6 flex-wrap mt-15">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <label for="" class="mt-4">bonus</label>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap mt-10">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <label for="" class="mt-4">CGC pay</label>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap mt-10">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <label for="" class="mt-4">CGCPAY</label>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            <h6 class="fw-bolder mt-12">Component Name</h6>
+            <div class="d-flex flex-row m-4 flex-wrap mt-11">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                     <select class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2">
+                        <option value="">Select</option>
+                        </select>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap mt-11">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <select class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2">
+                    <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap mt-11">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <select class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2">
+                    <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+        </div>    
+        
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12" style="text-align: center;">
+            <h6 class="fw-bolder mt-4">Contribution</h6>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: center;">
+                    <h6 class="fw-bolder mt-4">Employee</h6>
+                </div>
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: center;">
+                    <h6 class="fw-bolder mt-4">Employer</h6>
+                </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="checkbox" class="mt-4"/>  Include
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="checkbox" class="mt-4"/>  Include
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 100px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <input type="checkbox" class="mt-4"/>  Include
+                </div>
+            </div>
+        </div>    
+    
+    </div>
+    
+    <div class="d-flex flex-row m-6 flex-wrap">
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <label for="" class="fw-bolder mt-4">Gross Salary</label>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap mt-10">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <label for="" class="fw-bolder mt-4">Net Salary</label>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap mt-10">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <label for="" class="fw-bolder mt-4">CTC</label>
+                </div>
+            </div>
+        </div>
+    
+        
+        
+        <div class="col-12 col-lg-4 col-md-4 col-sm-12" style="margin-left: 345px;">        
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control"  style="width: 150px;"/>
+                </div>
+    
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 150px;"/>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap">            
+    
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left: 180px;">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 150px;"/>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap">          
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left: 180px;">
+                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="" class="form-control" style="width: 150px;"/>
+                </div>
+            </div>
+        </div>
+    </div> 
+ <div class="text-center my-4 mt-8">
+    <button class="btn-success btn-sm text-white me-4" >
+      <i class="bi bi-check-square fs-5"></i>
+      <span class="ms-3">Submit</span>
+    </button>
+    <button class="btn-danger btn-sm text-white me-4"  data-bs-dismiss="modal">
+      <i class="fas fa-close text-white fs-5"></i>
+      <span class="ms-3">Close</span>
+    </button>
+  </div>
+
+
+

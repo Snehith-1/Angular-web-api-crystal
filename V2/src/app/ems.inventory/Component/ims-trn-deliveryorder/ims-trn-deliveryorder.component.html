@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <h3 class="card-title">Delivery Order Summary</h3>
+      </div>
+    </div>
+    <div class="col me-5">
+      <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal"
+        data-bs-target="#myModaladd" routerLink="/ims/ImsTrnAddDeliveryorder"><i class="fas fa-plus"></i>&nbsp;&nbsp;
+        Raise Delivery Order
+      </button>
+    </div>
+
+    <div class="table-responsive">
+      <div class="card card-body m-3 bg-white rounded table-responsive">
+        <input type="hidden" formControlName="directorder_gid">
+        <table id="deliveryorders_list" class="table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.No </th>
+              <th>DO Date</th>
+              <th>DO Reference .No</th>
+              <th>DO No</th>
+              <th>SO Ref No</th>
+              <th>Customer  </th>
+              <th>Branch </th>
+              <th>Contact Details</th>
+              <th>Created By</th>
+              <th>Status</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of deliveryorders_list; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.directorder_date}}</td>
+              <td>{{data.directorder_refno}}</td>
+              <td>{{data.dc_no}}</td>
+              <td>{{data.so_referenceno1}}</td> 
+              <td>{{data.customer_name}}</td> 
+              <td>{{data.branch_name}}</td>         
+              <td>{{data.contact}}</td>
+              <td>{{data.user_firstname}}</td>
+              <td>{{data.delivery_status}}</td>
+  
+              <td class="text-center text-nowrap">
+
+                <button title="View" type="button" (click)="onview(data.directorder_gid)" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-primary me-2"><span
+                  class="fa-solid fa-eye text-white  fs-6"></span></button>
+  
+                <!-- <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                (click)="openModaledit()" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                  class="fa-solid fa-pencil text-white  fs-6"></span></button>
+
+              <button title="Amend" type="button" (click)="openModalamend()" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-xmark text-white  fs-6"></span></button>
+
+                  <button title="Additional Information" type="button" 
+                  class="btn btn-icon btn-sm bg-warning me-2" (click)="onaddinfo()" >
+                  <span class="fa-solid fa-book text-white  fs-6"></span></button>  -->
+
+
+                  <button title="Pdf" type="button" class="btn btn-icon btn-sm background-color6 me-2"  (click)="PrintPDF(data.directorder_gid)" >
+                    <span class="fa-solid fa-file-pdf  fs-6" style="color: #ffffff;"></span>
+             </button>
+
+                  
+                  
+
+              </td>
+  
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+  
+  

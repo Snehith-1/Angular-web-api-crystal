@@ -1,0 +1,57 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Cash Book</h3> 
+    </div>
+    <br>
+    <div class="button-container">
+        <!-- ADD Function -->
+        <button title=" Add Entry" class="btn-primary btn-sm text-white me-4" routerLink="/finance/AccTrnCashbooksummary">
+            Add Entry
+        </button>  
+        <button title="Back" class="btn-primary btn-sm text-white me-4" routerLink="/finance/AccTrnCashbooksummary">
+            Back
+        </button>
+    </div> 
+    
+  
+      
+        <div class="table-responsive">
+            <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                <table id="CashBookSelect_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                    <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Transaction Date </th>
+                        <th>Ref No</th>
+                        <th>Branch Name</th>
+                        <th>Account Name</th>
+                        <th>Remarks</th>
+                        <th>Credit Amount</th>
+                        <th>Debit Amount</th>
+                        <th>Closing Amount</th>
+                        <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr *ngFor="let data of CashBookSelect_list; let i=index;"> 
+                            <td >{{i+1}}</td>
+                            <td>{{data.transaction_date}}</td>
+                            <td>{{data.journal_refno}}</td>
+                            <td>{{data.branch_name}}</td>
+                            <td>{{data.account_desc}}</td>
+                            <td>{{data.remarks}}</td>
+                            <td>{{data.credit_amount}}</td>
+                            <td>{{data.debit_amount}}</td>
+                            <td>{{data.closing_amount}}</td>                                           
+                            <td class="text-center text-nowrap">
+                              
+                                
+                             </td>
+                        </tr>
+                    </tbody> 
+                </table>
+            </div> 
+        </div> 
+    </div>
+    
+    

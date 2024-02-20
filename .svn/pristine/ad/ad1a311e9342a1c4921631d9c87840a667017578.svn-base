@@ -1,0 +1,104 @@
+<div style="margin-top:-30px;">
+
+    <span class="bi bi-telegram" style="font-size: 50px;color:#229ED9;margin-left:500px;"></span><span
+        style="font-weight: bold;font-size: 20px;margin-top:-10px;">&nbsp; Telegram Channel</span>
+       
+</div>
+<div class="card3  text-nowrap">
+<br>
+    <b><span style="color:black;font-weight: bold;margin-top:10px;margin-left: 95px;font-size:19px;">
+        <i style="color:#229ED9" class="bi bi-info-circle-fill"></i>
+        &nbsp; More Details</span></b>
+    <br>
+    <span style="color:#229ED9;"><b>&nbsp; ID:</b><span style="color:black">&nbsp;&nbsp;{{id}}</span></span>
+    <br>
+    <span style="color:#229ED9;"><b>&nbsp; Bot:</b><span style="color:black">&nbsp;&nbsp;{{bot_name}}</span></span>
+    <br>
+    <a href={{invite_link}} ><b style="color:#229ED9;">&nbsp; Invite Link:</b><span style="color:black">&nbsp;&nbsp;{{invite_link}}</span></a>
+
+
+</div>
+
+<br>
+<div class="card">
+    <div class="card1">
+        <!-- <img src="/assets/images/profile_logo.png" alt="Avatar"> -->
+        <br>
+        <span style="color: white;font-size:18px;margin-left: 15px;" >&nbsp;{{group}}</span>
+<br>
+
+        <span style="color: white;font-size:12px;margin-left: 23px;" class="blink">
+            <i  style="color:green" class="bi bi-circle-fill"></i>
+           </span><span
+            style="color:white;margin-top: 45px;">Online</span>
+        </div>
+    <br>
+
+    <form [formGroup]="TelegramForm" #form="ngForm">
+        <br> 
+       
+        <label style="margin-left: 25px;font-size: 16px;"><b>Message/Caption&nbsp;<span
+                    style="color:red">*</span></b></label><br>
+               
+    <div style="width: 90%;margin-left:20px;">
+
+
+                        <textarea formControlName="telegram_caption" type="text" pattern="^(?!\s*$).+" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     telegram_caption.invalid && telegram_caption.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="Enter Telegram Caption" pattern="^(?!\s*$).+" name="telegram_caption" required
+                            rows="3"></textarea>
+
+                    </div>
+                    <div *ngIf="telegram_caption.invalid && (telegram_caption.dirty || telegram_caption.touched)">
+                        <div *ngIf="telegram_caption.errors?.['required']  || telegram_caption.errors?.['whitespace']">
+                            <span style="color:red;">&nbsp; Caption is required.</span>
+                        </div>
+                        
+                    </div>
+        <br>
+        <label style="margin-left: 25px;font-size: 16px;color:rgb(7, 7, 7)"><b>Image/Video Only</b></label>
+<br>
+<div class="input-group mb-4" style="margin-left: 27px;width:90%;">
+
+  
+
+    <input class="form-control"  formControlName="file_path"  accept="image/*, video/*" (change)="onChange2($event)" style="margin-left:-8px;width:30%;"
+
+        type="file" #fileInput />
+
+
+
+       
+
+</div>
+      <br>
+<div class="text-center">
+    <button (click)="onsubmit()" [disabled]="TelegramForm.invalid" [ngClass]="{
+    'primary-button': !TelegramForm.invalid,
+    'secondary-button': TelegramForm.invalid
+  }" data-bs-dismiss="modal">
+        <i class="bi bi-send"></i> &nbsp;Post
+    </button>&nbsp;&nbsp;
+
+    <button class="btn-success btn-sm text-white me-4" routerLink="/crm/CrmSmmTelegramsummary">
+        <i class="fas fa-arrow-left"></i> &nbsp; Back
+      </button>
+
+
+</div>
+
+        <br>
+    </form>
+
+
+    <br>
+</div>

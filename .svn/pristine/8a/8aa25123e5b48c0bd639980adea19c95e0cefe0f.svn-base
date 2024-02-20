@@ -1,0 +1,192 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { Options } from 'flatpickr/dist/types/options';
+import flatpickr from 'flatpickr';
+@Component({
+  selector: 'app-smr-trn-customerraiseenquiry',
+  templateUrl: './smr-trn-customerraiseenquiry.component.html',
+  styleUrls: ['./smr-trn-customerraiseenquiry.component.scss']
+})
+export class SmrTrnCustomerraiseenquiryComponent {
+  // employee!: IEmployee;
+
+  private unsubscribe: Subscription[] = [];
+  file!:File;
+  cusraiseform: FormGroup | any;
+  productform: FormGroup | any;
+  responsedata: any;
+  parameterValue: any;
+  customer_list: any;
+  products_list: any;
+  products: any[] = [];
+  response_data :any;
+  NgxSpinnerService: any;
+  uom_list:any;
+  POproductlist: any;
+  productname_list : any[] = [];
+  productgrp_list : any[] = [];
+  products_list1: any;
+  products_unit: any;
+  constructor(private fb: FormBuilder,private route: ActivatedRoute,private router: Router,private service: SocketService,private ToastrService: ToastrService,) {
+    this.cusraiseform = new FormGroup({
+      customer_name : new FormControl(''),
+      customercontact_gid : new FormControl(''),
+      product_gid : new FormControl(''),
+      customer_gid:new FormControl(''),
+      enquiry_date : new FormControl(''),
+      branch_name : new FormControl(''),
+      enquiry_referencenumber : new FormControl(''),
+      contact_number : new FormControl(''),
+      customercontact_name : new FormControl(''),
+      assign_to : new FormControl(''),
+      contact_email : new FormControl(''),
+      enquiry_remarks : new FormControl(''),
+      contact_address : new FormControl(''),
+      customer_requirement : new FormControl(''),
+      landmark : new FormControl(''),
+      closure_date : new FormControl(''),
+      product_name : new FormControl(''),
+      product_code : new FormControl(''),
+      productuom_name : new FormControl(''),
+      productgroup_name : new FormControl(''),
+      //productgroup_name : new FormControl(''),
+      customerproduct_code : new FormControl(''),
+      //product_code : new FormControl(''),
+      qty_requested : new FormControl(''),
+      potential_value : new FormControl(''),
+      product_requireddate : new FormControl(''),
+
+
+
+    })
+    this.productform = new FormGroup({
+      product_gid : new FormControl(''),
+      product_name : new FormControl(''),
+      product_code : new FormControl(''),
+      productuom_name : new FormControl(''),
+      productgroup_name : new FormControl(''),
+      customerproduct_code : new FormControl(''),
+      qty_requested : new FormControl(''),
+      potential_value : new FormControl(''),
+      product_requireddate : new FormControl(''),
+
+
+
+    })
+  } 
+  
+
+  ngOnInit(): void {
+    this.POproductsummary();
+    var api = 'SmrTrnCustomerEnquiry/GetProductGroup';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.products_list = this.responsedata.GetProductGrp;
+
+    });
+   
+    const options: Options = {
+      dateFormat: 'd-m-Y',
+    };
+flatpickr('.date-picker', options);
+    var api = 'SmrTrnCustomerEnquiry/GetProduct';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.products_list1 = this.responsedata.GetProducts;
+
+    });
+    var api = 'SmrTrnCustomerEnquiry/GetProductUnit';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.uom_list = this.responsedata.GetProductUnits;
+
+    });
+    var api = 'SmrTrnCustomerEnquiry/GetCustomer';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.customer_list = this.responsedata.GetCustomername;
+
+
+    });
+  }
+  onadd(){}
+
+
+  GetOnChangeCustomerName(){
+    debugger
+    let customercontact_gid = this.cusraiseform.value.customer_name.customer_gid;
+    let param ={
+      customercontact_gid :customercontact_gid
+    }
+    var url = 'SmrTrnCustomerEnquiry/GetOnChangeCustomerName';
+    this.service.getparams(url, param).subscribe((result: any) => {
+      //this.cusraiseform.get("customercontact_gid")?.setValue(result.GetCustomer[0].customercontact_gid  );
+      this.cusraiseform.get("branch_name")?.setValue(result.GetCustomer[0].branch_name);
+      this.cusraiseform.get("contact_email")?.setValue(result.GetCustomer[0].contact_email);
+      this.cusraiseform.get("customercontact_name")?.setValue(result.GetCustomer[0].customercontact_name);
+      this.cusraiseform.get("contact_address")?.setValue(result.GetCustomer[0].contact_address);
+      this.cusraiseform.value.leadbank_gid = result.GetCustomer[0].leadbank_gid
+      //this.cusraiseform.value.leadbank_gid = result.GetCustomer[0].leadbank_gid
+    });
+
+  }
+  GetOnChangeProductsName() {
+    debugger;
+    let product_gid = this.productform.value.product_name.product_gid;
+    let param = {
+      product_gid: product_gid
+    }
+    var url = 'SmrTrnCustomerEnquiry/GetOnChangeProductsName';
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.productform.get("product_code")?.setValue(result.GetProductsName[0].product_code);
+      this.productform.get("productuom_name")?.setValue(result.GetProductsName[0].productuom_name);
+      this.productform.get("productgroup_name")?.setValue(result.GetProductsName[0].productgroup_name);
+      this.productform.value.productgroup_gid = result.GetProductsName[0].productgroup_gid
+        //this.cusraiseform.value.productuom_gid = result.GetProductsName[0].productuom_gid
+    });
+
+  }
+  
+
+  
+  productSubmit(){
+    debugger
+    console.log(this.productform.value)
+    var params = {
+      productgroup_name: this.productform.value.productgroup_name,
+      customerproduct_code: this.productform.value.customerproduct_code,
+      product_code: this.productform.value.product_code,
+      product_name: this.productform.value.product_name.product_name,
+      productuom_name: this.productform.value.productuom_name,
+      qty_requested: this.productform.value.qty_requested,
+      potential_value: this.productform.value.potential_value,
+      product_requireddate: this.productform.value.product_requireddate,
+      product_gid: this.productform.value.product_name.product_gid,
+      productgroup_gid: this.productform.value.productgroup_gid,
+      productuom_gid: this.productform.value.productuom_gid,
+
+
+
+    }
+    console.log(params)
+    var api = 'SmrTrnCustomerEnquiry/GetOnAdds';
+    this.service.post(api, params).subscribe((result: any) => {
+    this.POproductsummary();
+    },
+    );
+  }
+  POproductsummary() {
+    var api = 'SmrTrnCustomerEnquiry/GetProductsSummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.POproductlist = this.responsedata.productsummarys_list;
+      
+    });
+  }
+  onSubmit(){}
+
+}

@@ -1,0 +1,103 @@
+.head{
+    width: calc(100% - 5rem);
+    margin-left: 5rem;
+    z-index: 1051;
+    transition: all .5s ease;
+    background: #f4f7fa;
+    // padding: 1rem 1.5rem 0 1.5rem;
+    position: fixed;
+    top:0;
+
+    .head-content{
+        display: flex;
+        justify-content: space-between;
+        background-color: #fff;
+        border-radius: 0.625rem;
+        box-shadow: 0 0 10px 0 rgb(34 12 47 / 10%);
+        padding: 0.813rem 1.563rem;
+        
+        .head-content-left{
+            display: flex;
+            align-items: center;
+
+            .header-menu-name{
+                background-color: rgb(161, 160, 160);
+                padding: 7px;
+            }
+        }
+
+        .head-content-right{
+            display: flex;
+            justify-content:flex-end;
+        }
+    }
+}
+
+.head-trimmed{
+    width: calc(100% - 16.5625rem);
+    margin-left: 16.5625rem;
+}
+
+.head-md-screen{
+    width: calc(100% - 5rem);
+    margin-left: 5rem;
+}
+
+.header-menu-text{
+    padding: 5px;
+    background-color: rgb(88, 85, 85);
+    border-radius: 3px;
+    color: white;
+}
+
+.head-menu-item-btn{
+    font-size: 18px;
+    height: 42px;
+    width: 42px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    margin-left: 5px;
+    outline: 0;
+    color: #495057;
+    background-color:transparent;
+}
+
+.head-menu-item-btn:hover{
+    color: white;
+    font-weight: 600;
+    background-color:#009ef7;
+}
+
+.head-menu-item-name-btn{
+    font-size: 14px;
+    font-weight: 400;
+    width: auto;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 10%;
+    margin-left: 5px;
+    outline: 0;
+    padding: 8px 15px;
+    color: black;
+    background-color:transparent;
+}
+
+.head-menu-item-name-btn:hover{
+    // color: white;
+    font-weight: 600;
+    background-color:rgb(226, 226, 226);
+}
+
+.activeHeader{
+    color: white;
+    font-weight: 600;
+    // background-color:rgb(226, 226, 226);
+    background-color:#009ef7;
+}
+.activeHeader:hover{
+    color: white;
+    font-weight: 600;
+    // background-color:rgb(226, 226, 226);
+    background-color:#009ef7;
+}

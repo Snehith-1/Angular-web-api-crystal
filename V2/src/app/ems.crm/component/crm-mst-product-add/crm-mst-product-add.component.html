@@ -1,0 +1,331 @@
+<div class="card">
+    <div class="card-header bg-primary card-height55">
+        <div class="card-title m-0 ">
+            <h3 class="fw-bolder text-white"> <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;Add Product</h3>
+        </div>
+    </div>
+
+    <form [formGroup]="productform" (ngSubmit)="onadd()">
+        <div class="m-4 mt-4 border card ">
+            <div class="d-flex flex-row m-6 flex-wrap">
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+
+                    <span class="font-bold ">
+                        <span class="font-bold required">Product Type</span></span>
+
+                    <ng-select formControlName="producttype_name"   [(ngModel)]="selectedAccount"  [class.is-invalid]="
+
+                producttype_name.invalid && (producttype_name.dirty || producttype_name.touched) "
+                        [items]="producttype_list" required
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                        [ngClass]="{'invalid-border': producttype_name.invalid && producttype_name.touched}"
+                        bindLabel="producttype_name" bindValue="producttype_gid"
+                        placeholder="Select Product Type"></ng-select>
+
+                    <div *ngIf="producttype_name.invalid && (producttype_name.dirty || producttype_name.touched)">
+                        <div *ngIf="producttype_name.errors?.['required']">
+                            <span style="color:red;">Select Product Type</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Product Group</span>
+                    <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select formControlName="productgroup_name" [(ngModel)]="mdlproductgroup" [class.is-invalid]="
+                        productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)
+                          " [ngClass]="{'invalid-border': productgroup_name.invalid && productgroup_name.touched}"
+                            [items]="productgroup_list" required
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            bindLabel="productgroup_name" bindValue="productgroup_gid"
+                            placeholder="Select Product Group"></ng-select>
+
+                        <div
+                            *ngIf="productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)">
+                            <div *ngIf="productgroup_name.errors?.['required']">
+                                <span style="color:red;">Select Product Group</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12"> <b>Product Unit Class<span
+                        class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+
+                    <ng-select formControlName="productuomclass_name" [items]="productunitclass_list"
+                        class="custom col-lg-11 col-14  fv-row mt-2" bindLabel="productuomclass_name"
+                        bindValue="productuomclass_gid" placeholder="Select productgroup"
+                        style="border: 1px solid gray;border-radius: 10px;"></ng-select>
+
+                </div>
+                <div
+                    *ngIf="productuomclass_name.invalid && (productuomclass_name.dirty || productuomclass_name.touched)">
+                    <div *ngIf="productuomclass_name.errors?.['required']">
+                        <span style="color:red;">Select Product Unit Class </span>
+                    </div>
+                </div>
+                
+            </div> -->
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+
+                <span class="font-bold z-n1" >Product Unit Class</span>
+
+                <ng-select formControlName="productuomclass_name" [class.is-invalid]="
+
+                productuomclass_name && (productuomclass_name.dirty || productuomclass_name.touched) "
+
+                 [items]="productunitclass_list"
+
+                   class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="productuomclass_name"
+
+                  bindValue="productuomclass_gid" placeholder="Select an option"></ng-select>
+
+              </div> -->
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+
+                    <span class="font-bold required ">Product Unit Class
+                    </span>
+
+                    <ng-select formControlName="productuomclass_name" [class.is-invalid]="
+    
+                    productuomclass_name && (productuomclass_name.dirty || productuomclass_name.touched) "
+                        [items]="productunitclass_list" requierd
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                        [ngClass]="{'invalid-border': productuomclass_name.invalid && productuomclass_name.touched}"
+                        bindLabel="productuomclass_name" bindValue="productuomclass_gid"
+                        placeholder="Select Product Unit Class"></ng-select>
+
+                    <div
+                        *ngIf="productuomclass_name.invalid && (productuomclass_name.dirty || productuomclass_name.touched)">
+                        <div *ngIf="productuomclass_name.errors?.['required']">
+                            <span style="color:red;">Select Product Unit Class</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <div class="d-flex flex-row m-6  flex-wrap">
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Units<span class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+
+                    <ng-select formControlName="productuom_name" [items]="productunit_list"
+                        class="custom col-lg-11 col-14  fv-row mt-2" bindLabel="productuom_name"
+                        bindValue="productuom_gid" placeholder="Select productgroup"
+                        style="border: 1px solid gray;border-radius: 10px;"></ng-select>
+
+                </div>
+                <div *ngIf="productuom_name.invalid && (productuom_name.dirty || productuom_name.touched)">
+                    <div *ngIf="productuom_name.errors?.['required']">
+                        <span style="color:red;">Select Product Unit </span>
+                    </div>
+                </div>
+
+            </div> -->
+
+
+
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Code<span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" 
+                        formControlName="product_code" class="form-control"
+                        [ngClass]="{'invalid-border': product_code.invalid && product_code.touched}" />
+                </div>
+                <div *ngIf="product_code.invalid && (product_code.dirty || product_code.touched)">
+                    <div *ngIf="product_code.errors?.['required']">
+                        <span style="color:red;">product code is required </span>
+                    </div>
+                </div>
+            </div> -->
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+
+                    <span class="font-bold "><span class="font-bold">Product Units<span
+                                class="ms-1 text-red">*</span></span></span>
+
+                    <ng-select formControlName="productuom_name" [class.is-invalid]="
+
+                    productuom_name && (productuom_name.dirty || productuom_name.touched) " [items]="productunit_list"
+                       requierd class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="productuom_name"
+                        [ngClass]="{'invalid-border': productuom_name.invalid && productuom_name.touched}"
+                        bindValue="productuom_gid" placeholder="Select Product Units"></ng-select>
+                        <div
+                        *ngIf="productuom_name.invalid && (productuom_name.dirty || productuom_name.touched)">
+                        <div *ngIf="productuom_name.errors?.['required']">
+                            <span style="color:red;">Select Product Units</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Product Code</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input [readonly]="isReadOnly" [value]="defaultProductCode" type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                " formControlName="product_code" placeholder=" Product Code is Auto Generated" class="form-control"
+                            style="height: 40px;"
+                            [ngClass]="{'invalid-border': product_code.invalid && product_code.touched}" />
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Product Name<span
+                            class="ms-1 text-red">*</span></span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " formControlName="product_name" class="form-control" style="height: 40px;"
+                            placeholder="Enter Product Name"
+                            [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}" />
+                    </div>
+                    <div *ngIf="product_name.invalid && (product_name.dirty || product_name.touched)">
+                        <div *ngIf="product_name.errors?.['required']">
+                            <span style="color:red;">Product Name is Required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+
+
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Description
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  "  formControlName="product_desc" class="form-control" />
+                </div>
+            </div> -->
+
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">MRP</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " formControlName="mrp_price" maxlength="10" style="height: 40px;"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '')" class="form-control"
+                            placeholder="Enter MRP" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Cost Price</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " formControlName="cost_price" maxlength="10" style=" height: 40px;"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '')" class="form-control"
+                            placeholder="Enter Cost Price" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold">Product Description</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+              " placeholder=" Enter Product Description" formControlName="product_desc" class="form-control" rows="3">
+            </textarea>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="font-bold">Batch Tracker</span>
+                    <div class="d-flex justify-content-start mt-4 ms-2">
+                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                            <input class="form-check-input" type="radio" name="batchtracker" id="Y"
+                                formControlName="batch_flag" value="Y">
+                            <label class="form-check-label text-gray-700 text-nowrap" for="Yes">Yes</label>
+                        </div>
+                        <div
+                            class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                            <input class="form-check-input" type="radio" name="batchtracker"
+                                formControlName="batch_flag" value="N" id="N">
+                            <label class="form-check-label text-gray-700 text-nowrap" for="No">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="font-bold">Serial No. Tracker</span>
+                    <div class="d-flex justify-content-start mt-4 ms-2">
+                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                            <input class="form-check-input" type="radio" name="serialtracker" id="Y"
+                                formControlName="serial_flag" value="Y">
+                            <label class="form-check-label text-gray-700 text-nowrap"
+                                for="kt_builder_header_content_menu">Yes</label>
+                        </div>
+                        <div
+                            class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                            <input class="form-check-input" type="radio" name="serialtracker"
+                                formControlName="serial_flag" value="N" id="N">
+                            <label class="form-check-label text-gray-700 text-nowrap"
+                                for="kt_builder_header_content_page-title">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="font-bold">Warranty Tracker</span>
+                    <div class="d-flex justify-content-start mt-4 ms-2">
+                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                            <input class="form-check-input" type="radio" name="warrantytracker"
+                                formControlName="purchasewarrenty_flag" value="Y" id="Y">
+                            <label class="form-check-label text-gray-700 text-nowrap"
+                                for="kt_builder_header_content_menu">Yes</label>
+                        </div>
+                        <div
+                            class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                            <input class="form-check-input" type="radio" name="warrantytracker"
+                                formControlName="purchasewarrenty_flag" value="N" id="N">
+                            <label class="form-check-label text-gray-700 text-nowrap"
+                                for="kt_builder_header_content_page-title">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="font-bold">Expiry Tracker</span>
+                    <div class="d-flex justify-content-start mt-4 ms-2">
+                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                            <input class="form-check-input" type="radio" name="expiry"
+                                formControlName="expirytracking_flag" id="Y" value="Y">
+                            <label class="form-check-label text-gray-700 text-nowrap"
+                                for="kt_builder_header_content_menu">Yes</label>
+                        </div>
+                        <div
+                            class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                            <input class="form-check-input" type="radio" name="expiry"
+                                formControlName="expirytracking_flag" id="N" value="N">
+                            <label class="form-check-label text-gray-700 text-nowrap"
+                                for="kt_builder_header_content_page-title">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center my-4">
+                <!-- <button type="submit" class="btn-success btn-sm text-white me-2">
+                <i class="bi bi-check-square fs-5"></i>&nbsp;Submit</button> -->
+                <button [disabled]="productform.invalid"
+                    [ngStyle]="{ 'cursor': productform.invalid ? 'not-allowed' : 'pointer'}" [ngClass]="{ 'btn-success': !productform.invalid,
+                                     'btn-secondary': productform.invalid }" data-bs-dismiss="modal">
+                    <i class="fas fa-check text-white fs-5"></i> &nbsp;Submit
+                </button>
+                &nbsp;&nbsp;
+
+                <button class="btn-primary btn-sm text-white me-4" (click)="redirecttolist()">
+                    <i class="fas fa-arrow-left  fs-5">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                    </i>&nbsp;Back</button>
+            </div>
+        </div>
+    </form>
+</div>

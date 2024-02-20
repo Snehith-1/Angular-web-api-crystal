@@ -1,0 +1,110 @@
+﻿using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/Whatsapp")]
+    public class WhatsappController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaWhatsapp objDaWhatsapp = new DaWhatsapp();
+
+        [ActionName("CreateContact")]
+        [HttpPost]
+        public HttpResponseMessage CreateContact(mdlCreateContactInput values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            result objResult = new result();
+            objResult = objDaWhatsapp.dacreatecontact(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+        [ActionName("CreateProject")]
+        [HttpPost]
+        public HttpResponseMessage CreateProject(mdlCreateTemplateInput values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            result objResult = new result();
+            objResult = objDaWhatsapp.daCreateProject(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+        [ActionName("CreateTemplate")]
+        [HttpPost]
+        public HttpResponseMessage CreateTemplate(mdlCreateTemplateInput1 values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            result objResult = new result();
+            objResult = objDaWhatsapp.daCreateTemplate(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+        [ActionName("WhatsappSend")]
+        [HttpPost]
+        public HttpResponseMessage WhatsappSend(sendmessage values)
+        {
+
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            result objResult = new result();
+            objResult=objDaWhatsapp.DaWhatsappSend(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+
+        [ActionName("GetContactConversation")]
+        [HttpGet]   
+        public HttpResponseMessage GetContactConversation()
+        {
+            result values = new result();
+            values = objDaWhatsapp.DaGetContactConversation();
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetContact")]
+        [HttpGet]
+        public HttpResponseMessage GetContact()
+        {
+            MdlWhatsapp values = new MdlWhatsapp();
+            objDaWhatsapp.DaGetContact(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMessage")]
+        [HttpGet]
+        public HttpResponseMessage GetMessage(string whatsapp_gid)
+        {
+            MdlWhatsapp values = new MdlWhatsapp();
+            objDaWhatsapp.DaGetMessage(values, whatsapp_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMessageTemplatesummary")]
+        [HttpGet]
+        public HttpResponseMessage GetMessageTemplatesummary()
+        {
+            MdlWhatsapp values = new MdlWhatsapp();
+            objDaWhatsapp.DaGetMessageTemplatesummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetContactCount")]
+        [HttpGet]
+        public HttpResponseMessage GetContactCount()
+        {
+            MdlWhatsapp values = new MdlWhatsapp();
+            objDaWhatsapp.DaGetContactCount(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+    }
+}

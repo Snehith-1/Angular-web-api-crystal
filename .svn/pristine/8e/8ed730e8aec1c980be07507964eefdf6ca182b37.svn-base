@@ -1,0 +1,350 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators,ValidationErrors,
+  AbstractControl,
+  ValidatorFn } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ToastrService } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AES } from 'crypto-js';
+
+interface IWhatsappMessage {
+  platform: string;
+  localae: string;
+  template_name: string;
+  category: string;
+  category_change: string;
+  message_type: string;
+  name: string;
+  type: string;
+  description: string;
+  body: string;
+  footer: string;
+  project_id: string;
+  value1: string;
+  id: string;
+  template_id: string;
+  p_type: string;
+  p_name: string;
+  template_body: string;
+  whatsappTemplateName: string;
+
+
+
+
+}
+
+@Component({
+  selector: 'app-crm-smm-whatsappmessagetemplate',
+  templateUrl: './crm-smm-whatsappmessagetemplate.component.html',
+  styleUrls: ['./crm-smm-whatsappmessagetemplate.component.scss']
+})
+export class CrmSmmWhatsappmessagetemplateComponent {
+
+  file!: File;
+  image_path: any;
+  responsedata: any;
+  template_list: any[] = [];
+  templateview_list: any[] = [];
+  TemplateForm!: FormGroup;
+  reactiveForm!: FormGroup;
+  reactiveFormadd!: FormGroup;
+  reactiveMessageForm!: FormGroup;
+  reactiveFormpublish!: FormGroup;
+  whatsappmessage!: IWhatsappMessage;
+  parameterValue:any;
+  parameterValue1: any;
+  parameterValue2: any;
+  parameterValue3: any;
+  parameterValue4: any;
+  parameterValue5: any;
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService,
+    private route: Router, public service: SocketService) {
+    this.whatsappmessage = {} as IWhatsappMessage;
+  }
+
+  ngOnInit(): void {
+
+
+    this.GetMessageTemplatesummary();
+
+    this.reactiveForm = new FormGroup({
+      platform: new FormControl(this.whatsappmessage.platform, [
+        Validators.required,
+      ]),
+      localae: new FormControl(this.whatsappmessage.localae, [
+      ]),
+      template_name: new FormControl(this.whatsappmessage.template_name, [
+      ]),
+      category: new FormControl(this.whatsappmessage.category, [
+      ]),
+      // category_change: new FormControl(this.whatsappmessage.category_change, [
+      // ]),
+      message_type: new FormControl(this.whatsappmessage.message_type, [
+      ]),
+      type: new FormControl(this.whatsappmessage.type, [
+      ]),
+     
+      project_id: new FormControl(this.whatsappmessage.project_id, [
+      ]),
+      template_id: new FormControl(this.whatsappmessage.template_id, [
+      ]),
+      p_type: new FormControl(this.whatsappmessage.p_type, [
+      ]),
+      p_name: new FormControl(this.whatsappmessage.p_name, [
+      ]),
+      template_body: new FormControl(this.whatsappmessage.template_body, [
+      ]),
+      whatsappTemplateName: new FormControl(this.whatsappmessage.whatsappTemplateName, [
+      ]),
+      body: new FormControl(this.whatsappmessage.body, [
+        Validators.required,
+        this.noWhitespaceValidator(),
+      ]),
+      footer: new FormControl(this.whatsappmessage.footer, [
+        Validators.required,
+      ]),
+      file: new FormControl(''),
+      fileExtension: new FormControl(''),
+      fileName: new FormControl(''),
+      imagePath: new FormControl(''),
+      id: new FormControl(this.whatsappmessage.id, [
+      ]),
+    });
+
+
+    this.TemplateForm = new FormGroup({
+      name: new FormControl(this.whatsappmessage.name, [
+        this.noWhitespaceValidator(),
+      ]),
+      description: new FormControl(this.whatsappmessage.description, [
+        this.noWhitespaceValidator(),
+      ]),
+    });
+
+
+
+
+  }
+
+  get platform() {
+    return this.reactiveForm.get('platform')!;
+  }
+  get localae() {
+    return this.reactiveForm.get('localae')!;
+  }
+  get template_name() {
+    return this.reactiveForm.get('template_name')!;
+  }
+  get category() {
+    return this.reactiveForm.get('category')!;
+  }
+  // get value() {
+  //   return this.reactiveForm.get('value1')!;
+  // }
+  // get category_change() {
+  //   return this.reactiveForm.get('category_change')!;
+  // }
+  get message_type() {
+    return this.reactiveForm.get('message_type')!;
+  }
+  get project_type() {
+    return this.reactiveForm.get('type')!;
+  }
+  get project_name() {
+    return this.reactiveForm.get('name')!;
+  }
+  get project_description() {
+    return this.reactiveForm.get('description')!;
+  }
+  get body() {
+    return this.reactiveForm.get('body')!;
+  }
+  get footer() {
+    return this.reactiveForm.get('footer')!;
+  }
+  get image() {
+    return this.reactiveForm.get('image')!;
+  }
+  get template_id() {
+    return this.reactiveForm.get('template_id')!;
+  }
+  get name() {
+    return this.TemplateForm.get('name')!;
+
+  }
+  get description() {
+    return this.TemplateForm.get('description')!;
+  }
+  onChange1(event: any) {
+    this.file = event.target.files[0];
+  }
+  onclose() {
+    this.reactiveMessageForm.reset();
+  }
+
+  onprojectcreate() {
+    this.whatsappmessage = this.TemplateForm.value;
+    if (this.whatsappmessage.name != null
+      && this.whatsappmessage.description != null) {
+      console.log(this.TemplateForm.value)
+      //  this.leadbank.region_name != null,this.leadbank.country_name != null  &&
+      var api = 'Whatsapp/CreateProject';
+      this.service.post(api, this.whatsappmessage).subscribe((result: any) => {
+        console.log(result);
+        if (result.status == false) {
+          window.location.reload()
+          this.ToastrService.warning(result.message)
+        }
+        else {
+          // this.GetleadbranchaddSummary(this.leadbank_gid);
+          // this.route.navigate(['/crm/CrmTrnLeadBankbranch',this.leadbank_gid]);
+          window.location.reload()
+          this.ToastrService.success(result.message)
+        }
+      });
+    }
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+
+  //// Summary Grid//////
+  GetMessageTemplatesummary() {
+    var url = 'Whatsapp/GetMessageTemplatesummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#template_list').DataTable().destroy();
+      this.responsedata = result;
+      this.template_list = this.responsedata.whatsappMessagetemplatelist;
+      //console.log(this.source_list)
+      setTimeout(() => {
+        $('#template_list').DataTable();
+      }, 1);
+
+
+    });
+  }
+  openModaledit(parameter: string, p_name: string,template_body:string) {
+    this.parameterValue1 = parameter,
+    this.parameterValue3 = p_name.toLowerCase().replace(/\s/g, '');
+    this.parameterValue5 = template_body
+    this.reactiveForm.get("project_id")?.setValue(this.parameterValue1);
+    this.reactiveForm.get("p_name")?.setValue(this.parameterValue3);
+    this.reactiveForm.get("body")?.setValue(this.parameterValue5);
+}
+  openModalpublish(id: string, template_id: string, p_name: string, p_type: string  ) {
+    this.parameterValue1 = id,
+      this.parameterValue2 = template_id,
+      this.parameterValue3 = p_name,
+      this.parameterValue4 = p_type
+   
+    this.reactiveForm.get("project_id")?.setValue(this.parameterValue1);
+    this.reactiveForm.get("template_id")?.setValue(this.parameterValue2);
+    this.reactiveForm.get("p_name")?.setValue(this.parameterValue3);
+    this.reactiveForm.get("p_type")?.setValue(this.parameterValue4);
+
+
+
+
+  }
+
+  onsubmit() {
+    this.whatsappmessage = this.reactiveForm.value;
+    if (this.whatsappmessage.body != null) {
+      console.log(this.reactiveForm.value)
+      //  this.leadbank.region_name != null,this.leadbank.country_name != null  &&
+      var api = 'Whatsapp/CreateTemplate';
+      this.service.post(api, this.whatsappmessage).subscribe((result: any) => {
+        console.log(result);
+        if (result.status == false) {
+          window.location.reload()
+          this.ToastrService.warning(result.message)
+        }
+        else {
+          // this.GetleadbranchaddSummary(this.leadbank_gid);
+          // this.route.navigate(['/crm/CrmTrnLeadBankbranch',this.leadbank_gid]);
+          window.location.reload()
+          this.ToastrService.success(result.message)
+        }
+      });
+    }
+  }
+  onpublish() {
+    this.whatsappmessage = this.reactiveForm.value;
+    if (this.whatsappmessage.p_name != null
+      && this.whatsappmessage.p_type != null) {
+      console.log(this.reactiveForm.value)
+      //  this.leadbank.region_name != null,this.leadbank.country_name != null  &&
+      var api = 'Whatsapp/PublishTemplate';
+      this.service.post(api, this.whatsappmessage).subscribe((result: any) => {
+        console.log(result);
+        if (result.status == false) {
+          window.location.reload()
+          this.ToastrService.warning(result.message)
+        }
+        else {
+          // this.GetleadbranchaddSummary(this.leadbank_gid);
+          // this.route.navigate(['/crm/CrmTrnLeadBankbranch',this.leadbank_gid]);
+          window.location.reload()
+          this.ToastrService.success(result.message)
+        }
+      });
+    }
+  }
+  openModaldelete(parameter: string) {
+    this.parameterValue = parameter
+  }
+  ondelete() {
+
+    console.log(this.parameterValue);
+    var url = 'Whatsapp/DeleteCampaign'
+    let param = {
+      project_id: this.parameterValue
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      if (result.status == false) {
+        window.scrollTo({ 
+          top: 0, // Code is used for scroll top after event done
+        });
+        this.ToastrService.warning(result.message)
+      }
+      else {
+        window.scrollTo({
+          top: 0, // Code is used for scroll top after event done
+        });
+        this.ToastrService.success(result.message)
+        this.GetMessageTemplatesummary();
+      }
+    });
+  }
+  
+  GetTemplateview(project_id: any) {
+    
+    var url = 'Whatsapp/GetMessageTemplateview'
+    let param = {
+      project_id: project_id
+    }
+ 
+    this.service.getparams(url, param).subscribe((result: any) => {
+      $('#templateview_list').DataTable().destroy();
+   
+      this.responsedata = result;
+      this.templateview_list = this.responsedata.whatsappMessagetemplatelist;
+      //console.log(this.source_list)
+
+
+    });
+  }
+  noWhitespaceValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isWhitespace = (control.value || '').trim().length === 0;
+      return isWhitespace ? { whitespace: true } : null;
+    };
+  }
+}

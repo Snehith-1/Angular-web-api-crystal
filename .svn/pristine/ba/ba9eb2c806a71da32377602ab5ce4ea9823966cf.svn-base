@@ -1,0 +1,47 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES } from 'crypto-js';
+
+@Component({
+  selector: 'app-rbl-trn-salesinvoicesummary',
+  templateUrl: './rbl-trn-salesinvoicesummary.component.html',
+  styleUrls: ['./rbl-trn-salesinvoicesummary.component.scss']
+})
+export class RblTrnSalesinvoicesummaryComponent {
+  salesinvoice: any;
+  response_data :any;
+  parameterValue: any;
+
+  constructor(private fb: FormBuilder,private route: ActivatedRoute,private router: Router,private service: SocketService, private ToastrService: ToastrService) {} 
+
+  ngOnInit(): void {
+    var api = 'Einvoice/SalesinvoiceSummary';
+    this.service.get(api).subscribe((result:any) => {
+      this.response_data = result;
+      this.salesinvoice = this.response_data.salesinvoicesummary_list;
+      setTimeout(()=>{  
+        $('#salesinvoice').DataTable();
+      }, 1);
+    });
+  }
+
+  // invoiceaccounting(){
+  //   this.router.navigate[('/einvoice/Invoiceaccountingaddconfirm')]
+  // }
+
+
+  invoiceaccounting(params: any) {
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param, secretKey).toString();
+    this.router.navigate(['/einvoice/Invoiceaccountingaddconfirm', encryptedParam])
+  }
+  redirecttolist(){
+    this.router.navigate(['/einvoice/Invoice'])
+  }
+
+}

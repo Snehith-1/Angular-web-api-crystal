@@ -1,0 +1,5 @@
+.table-responsive{
+    width: 100%;
+    overflow-x: auto; /* Enable horizontal scrolling when necessary */
+    max-width: 100%; /* Ensure the table doesn't exceed its parent's width */
+}

@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.einvoice.Models
+{
+    public class Mdlcustomer : result
+    {
+        public List<CustomerSummary_list> CustomerSummary_list { get; set; }
+        public List<Customer_list> Customer_list { get; set; }
+
+    }
+
+    public class CustomerSummary_list : result
+    {
+        public string customer_gid { get; set; }
+        public string customercontact_name { get; set; }
+        public string customer_state { get; set; }
+        public string customer_id { get; set; }
+        public string customer_name { get; set; }
+        public string contact_details { get; set; }
+        public string region_name { get; set; }
+        public string created_by { get; set; }
+        public string created_date { get; set; }
+     }
+
+    public class Customer_list : result
+    {
+        public string customercode { get; set; }
+        public string customername { get; set; }
+        public string CompanyWebsite { get; set; }
+        public string Address1 { get; set; }
+        public string address2 { get; set; }
+        public string state { get; set; }
+        public string country { get; set; }
+        public string currency { get; set; }
+        public string city { get; set; }
+        public string pincode { get; set; }
+        public string Region { get; set; }
+        public string gstnumber { get; set; }
+        public string contactpersonname { get; set; }
+        public string Email_ID { get; set; }
+        public string contacttelephonenumber { get; set; }
+        public string designation { get; set; }
+        public string Format { get; set; }
+        public string Session { get; set; }
+        public string region_name { get; set; }
+        public string phone1 { get; set; }
+        public string phonearea1 { get; set; }
+        public string phoneCountrycode1 { get; set; }
+        public string Fax { get; set; }
+        public string Customer_gid { get; set; }
+        public string leadbankname { get; set; }
+         }
+}

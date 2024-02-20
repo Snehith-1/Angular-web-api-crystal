@@ -1,0 +1,82 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Product Summary</h3>
+        </div>
+
+        <div class="col me-5">
+            <button title="Add Product" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end" (click)="onadd()">
+                <i class="fas fa-plus"></i> &nbsp;&nbsp;Add Product</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="product" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Product Code</th>
+                        <th>Product Name </th>
+                        <th>Product Type </th>
+                        <th>Product Group</th>
+                        <th>Unit</th>
+                        <th style="text-align: right;">Cost Price</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of products; let i=index;" class="align-middle">
+                        <td>{{i+1}}</td>
+                        <td>{{data.product_code}}</td>
+                        <td>{{data.product_name}}</td>
+                        <td>{{data.producttype_name}}</td>
+                        <td>{{data.productgroup_name}}</td>
+                        <td>{{data.productuomclass_name}}</td>
+                        <td style="text-align: right;">{{data.cost_price}}</td>
+                        <td>{{data.Status}}</td>
+                        <td>{{data.created_date}}</td>
+                        <td>{{data.created_by}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                                (click)="onedit(data.product_gid)">
+                                <span class="fa-solid fa-pencil fs-6" style="color: #ffffff;"></span>
+                            </button>                            
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                                (click)="onview(data.product_gid)">
+                                <span class="fa-solid fa-eye fs-6" style="color: #ffffff;"></span>
+                            </button>
+                            <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2"
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                (click)="openModaldelete(data.product_gid)">
+                                <span class="fa-solid fa-trash fs-6" style="color: #ffffff;"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog del_modal-dialog">
+        <div class="modal-content del_modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()">
+                        <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+                    </button>
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white me-2"></i>Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2355 @@
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ChartComponent } from "ng-apexcharts";
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AES } from 'crypto-js';
+import { Subscription, Observable,timer } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+import { DatePipe } from '@angular/common';
+import { map, share } from "rxjs/operators";
+// import { NgxSpinnerService } from 'ngx-spinner';
+
+@Component({
+  selector: 'app-crm-rpt-enquiryrpt',
+  templateUrl: './crm-rpt-enquiryrpt.component.html',
+  styleUrls: ['./crm-rpt-enquiryrpt.component.scss']
+})
+export class CrmRptEnquiryrptComponent {
+  response_data :any;
+  getenquirychart_List: any; 
+  getselectenquirychart_List: any;
+  noleadstatus: any;
+  show: any;
+  emptyFlag1: boolean= false;
+  emptyFlag: boolean= false;
+  month1: any;
+  monthname1: any;
+  monthname3: any;
+  monthname4: any;
+  monthname5: any;
+  monthname6: any;
+  chartOptions2: any;
+  chartOptions: any;
+  month2: any;
+  month3: any;
+  month4: any;
+  month5: any;
+  month6: any;
+  monthname2: any;
+  year : any;
+  Year : any;
+  activitylog_list: any;
+  EnquiryReportSummary_list: any;
+  EnquiryReportMainSummary_list: any;
+  EnquirysubReportSummary_list: any;
+  from_date!:string;
+  to_date!:string;
+  responsedata: any;
+  parameterValue1: any;
+  Month: any;
+  Enquirycount: any;
+  parameterValue: any;
+  parameter1 : any;
+  getCustomerToLeadChartchart_List: any;
+  Customer: any;
+  Lead: any;
+  month: any;
+  Customer1: any;
+  Lead1: any;
+  Customer2: any;
+  Lead2: any;
+  month_lead: any;
+  month_lead1: any;
+  month_lead2: any;
+  month_lead3: any;
+  month_lead4: any;
+  month_lead5: any;
+  Lead3: any;
+  Lead4: any;
+  Lead5: any;
+  Customer3: any;
+  Customer4: any;
+  Customer5: any;
+  customer: any;
+  lead: any;
+  customer1: any;
+  lead1: any;
+  customer2: any;
+  lead2: any;
+  lead3: any;
+  lead4: any;
+  lead5: any;
+  customer3: any;
+  customer4: any;
+  customer5: any;
+  Month_lead: any;
+  Month_lead1: any;
+  Month_lead2: any;
+  Month_lead3: any;
+  Month_lead4: any;
+  Month_lead5: any;
+  Month1: any;
+  Month6: any;
+  Month3: any;
+  Month4: any;
+  Month5: any;
+  Monthname1: any;
+  Monthname3: any;
+  Monthname4: any;
+  Monthname5: any;
+  Monthname6: any;
+  Month2: any;
+  Monthname2: any;
+  
+
+  constructor(private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: SocketService,
+    private ToastrService: ToastrService,
+    private datePipe: DatePipe,
+  //  private NgxSpinnerService: NgxSpinnerService
+   ) 
+  {}
+ 
+  ngOnInit(): void {
+    this.GetEnquiryReportSummary();
+    this.GetEnquirymainReportSummary();
+    this.GetEnquiryChartReportSummary();
+    this.GetCustomerToLeadReport();
+  }
+  GetEnquiryReportSummary(){
+    var api = 'MarketingReport/GetEnquiryReportSummary';
+    this.service.get(api).subscribe((result:any) => {
+    this.response_data = result;
+    this.EnquiryReportSummary_list = this.response_data.EnquiryReportSummary_list;
+    this.year = this.EnquiryReportSummary_list[0].year;
+  }); 
+  }
+  GetEnquirymainReportSummary(){
+var api = 'MarketingReport/GetEnquirymainReportSummary';
+  this.service.get(api).subscribe((result:any) => {
+  this.response_data = result;
+  this.EnquiryReportMainSummary_list = this.response_data.EnquiryReportMainSummary_list;
+}); 
+  }
+  GetEnquiryChartReportSummary(){
+    // this.NgxSpinnerService.show();
+    debugger
+    if(this.from_date == null && this.to_date == null){
+        var api = 'MarketingReport/GetEnquiryChartReportSummary';
+    this.service.get(api).subscribe((result:any) => {
+    this.response_data = result;
+    this.getenquirychart_List = this.response_data.getenquirychart_List; 
+    if(this.getenquirychart_List == null) {
+      debugger
+      this.noleadstatus = 'Lead Not Available...';
+      this.show = true;
+      this.emptyFlag1=true;
+    }
+    else if (this.getenquirychart_List.length == 0) {
+      debugger
+      this.noleadstatus = 'Lead Not Available...';
+      this.show = true;
+      this.emptyFlag1=true;
+    }
+    else if (this.getenquirychart_List.length == 1) {
+        this.month1 = Number(this.getenquirychart_List[0].lead_count);
+        this.monthname1 = this.getenquirychart_List[0].lead_monthname;
+        // this.year = this.getenquirychart_List[0].year;
+        this.chartOptions2 = {
+      
+          series: [  
+          {
+            name: 'Enquiry Count',
+            data: [this.month1,],
+          },
+        ],
+        chart: {
+          fontFamily: 'inherit',
+          type: 'bar',
+          height: '350',
+          toolbar: {
+            show: false,
+          },
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '40%',
+            borderRadius: 3,
+          },
+        },
+        legend: {
+          show: false,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: [this.monthname1,],
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '12px',
+            },
+          },
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '12px',
+            },
+          },
+        },
+        fill: {
+          type: 'solid',
+        },
+        states: {
+          normal: {
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+          hover: {
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+          active: {
+            allowMultipleDataPointsSelection: false,
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+        },
+        
+        colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+        grid: {
+          padding: {
+            top: 10,
+          },
+          borderColor: '#e6ccb2',
+          strokeDashArray: 4,
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        };
+    }
+    else if (this.getenquirychart_List.length == 2) {
+      this.month1 = Number(this.getenquirychart_List[0].lead_count);
+      this.month2 = Number(this.getenquirychart_List[1].lead_count);
+      this.monthname1 = this.getenquirychart_List[0].lead_monthname;
+      this.monthname2 = this.getenquirychart_List[1].lead_monthname;
+      this.chartOptions2 = {
+
+        series: [  
+        {
+          name: 'Enquiry Count',
+          data: [this.month1, this.month2,],
+        },
+      ],
+      chart: {
+        fontFamily: 'inherit',
+        type: 'bar',
+        height: '350',
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '40%',
+          borderRadius: 3,
+        },
+      },
+      legend: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories: [this.monthname1,this.monthname2],
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          style: {
+            colors: '#000',
+            fontSize: '12px',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: '#000',
+            fontSize: '12px',
+          },
+        },
+      },
+      fill: {
+        type: 'solid',
+      },
+      states: {
+        normal: {
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+        hover: {
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+        active: {
+          allowMultipleDataPointsSelection: false,
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+      },
+      
+      colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+      grid: {
+        padding: {
+          top: 10,
+        },
+        borderColor: '#e6ccb2',
+        strokeDashArray: 4,
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
+      };
+      }
+      else if (this.getenquirychart_List.length == 3) {
+        this.month1 = Number(this.getenquirychart_List[0].lead_count);
+        this.month2 = Number(this.getenquirychart_List[1].lead_count);
+        this.month3 = Number(this.getenquirychart_List[2].lead_count);
+        this.monthname1 = this.getenquirychart_List[0].lead_monthname;
+        this.monthname2 = this.getenquirychart_List[1].lead_monthname;
+        this.monthname3 = this.getenquirychart_List[2].lead_monthname;
+        this.chartOptions2 = {
+  
+          series: [  
+          {
+            name: 'Enquiry Count',
+            data: [this.month1, this.month2,this.month3,],
+          },
+        ],
+        chart: {
+          fontFamily: 'inherit',
+          type: 'bar',
+          height: '350',
+          toolbar: {
+            show: false,
+          },
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '40%',
+            borderRadius: 3,
+          },
+        },
+        legend: {
+          show: false,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: [this.monthname1,this.monthname2,this.monthname3,],
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '12px',
+            },
+          },
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '12px',
+            },
+          },
+        },
+        fill: {
+          type: 'solid',
+        },
+        states: {
+          normal: {
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+          hover: {
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+          active: {
+            allowMultipleDataPointsSelection: false,
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+        },
+        
+        colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+        grid: {
+          padding: {
+            top: 10,
+          },
+          borderColor: '#e6ccb2',
+          strokeDashArray: 4,
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        };
+        }
+        else if (this.getenquirychart_List.length == 4) {
+          this.month1 = Number(this.getenquirychart_List[0].lead_count);
+          this.month2 = Number(this.getenquirychart_List[1].lead_count);
+          this.month3 = Number(this.getenquirychart_List[2].lead_count);
+          this.month4 = Number(this.getenquirychart_List[3].lead_count);
+          this.monthname1 = this.getenquirychart_List[0].lead_monthname;
+          this.monthname2 = this.getenquirychart_List[1].lead_monthname;
+          this.monthname3 = this.getenquirychart_List[2].lead_monthname;
+          this.monthname4 = this.getenquirychart_List[3].lead_monthname;
+          this.chartOptions2 = {
+    
+            series: [  
+            {
+              name: 'Enquiry Count',
+              data: [this.month1, this.month2,this.month3,this.month4,],
+            },
+          ],
+          chart: {
+            fontFamily: 'inherit',
+            type: 'bar',
+            height: '350',
+            toolbar: {
+              show: false,
+            },
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: '40%',
+              borderRadius: 3,
+            },
+          },
+          legend: {
+            show: false,
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent'],
+          },
+          xaxis: {
+            categories: [this.monthname1,this.monthname2,this.monthname3,this.monthname4],
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              style: {
+                colors: '#000',
+                fontSize: '12px',
+              },
+            },
+          },
+          yaxis: {
+            labels: {
+              style: {
+                colors: '#000',
+                fontSize: '12px',
+              },
+            },
+          },
+          fill: {
+            type: 'solid',
+          },
+          states: {
+            normal: {
+              filter: {
+                type: 'none',
+                value: 0,
+              },
+            },
+            hover: {
+              filter: {
+                type: 'none',
+                value: 0,
+              },
+            },
+            active: {
+              allowMultipleDataPointsSelection: false,
+              filter: {
+                type: 'none',
+                value: 0,
+              },
+            },
+          },
+          
+          colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+          grid: {
+            padding: {
+              top: 10,
+            },
+            borderColor: '#e6ccb2',
+            strokeDashArray: 4,
+            yaxis: {
+              lines: {
+                show: true,
+              },
+            },
+          },
+          };
+          }
+          else if (this.getenquirychart_List.length == 5) {
+            this.month1 = Number(this.getenquirychart_List[0].lead_count);
+            this.month2 = Number(this.getenquirychart_List[1].lead_count);
+            this.month3 = Number(this.getenquirychart_List[2].lead_count);
+            this.month4 = Number(this.getenquirychart_List[3].lead_count);
+            this.month5 = Number(this.getenquirychart_List[4].lead_count);
+            this.monthname1 = this.getenquirychart_List[0].lead_monthname;
+            this.monthname2 = this.getenquirychart_List[1].lead_monthname;
+            this.monthname3 = this.getenquirychart_List[2].lead_monthname;
+            this.monthname4 = this.getenquirychart_List[3].lead_monthname;
+            this.monthname5 = this.getenquirychart_List[4].lead_monthname;
+            this.chartOptions2 = {
+      
+              series: [  
+              {
+                name: 'Enquiry Count',
+                data: [this.month1, this.month2,this.month3,this.month4,this.month5,],
+              },
+            ],
+            chart: {
+              fontFamily: 'inherit',
+              type: 'bar',
+              height: '350',
+              toolbar: {
+                show: false,
+              },
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '40%',
+                borderRadius: 3,
+              },
+            },
+            legend: {
+              show: false,
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent'],
+            },
+            xaxis: {
+              categories: [this.monthname1,this.monthname2,this.monthname3,this.monthname4,this.monthname5],
+              axisBorder: {
+                show: false,
+              },
+              axisTicks: {
+                show: false,
+              },
+              labels: {
+                style: {
+                  colors: '#000',
+                  fontSize: '12px',
+                },
+              },
+            },
+            yaxis: {
+              labels: {
+                style: {
+                  colors: '#000',
+                  fontSize: '12px',
+                },
+              },
+            },
+            fill: {
+              type: 'solid',
+            },
+            states: {
+              normal: {
+                filter: {
+                  type: 'none',
+                  value: 0,
+                },
+              },
+              hover: {
+                filter: {
+                  type: 'none',
+                  value: 0,
+                },
+              },
+              active: {
+                allowMultipleDataPointsSelection: false,
+                filter: {
+                  type: 'none',
+                  value: 0,
+                },
+              },
+            },
+            
+            colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+            grid: {
+              padding: {
+                top: 10,
+              },
+              borderColor: '#e6ccb2',
+              strokeDashArray: 4,
+              yaxis: {
+                lines: {
+                  show: true,
+                },
+              },
+            },
+            };
+            }
+            else if (this.getenquirychart_List.length == 6) {
+              this.month1 = Number(this.getenquirychart_List[0].lead_count);
+              this.month2 = Number(this.getenquirychart_List[1].lead_count);
+              this.month3 = Number(this.getenquirychart_List[2].lead_count);
+              this.month4 = Number(this.getenquirychart_List[3].lead_count);
+              this.month5 = Number(this.getenquirychart_List[4].lead_count);
+              this.month6 = Number(this.getenquirychart_List[5].lead_count);
+              this.monthname1 = this.getenquirychart_List[0].lead_monthname;
+              this.monthname2 = this.getenquirychart_List[1].lead_monthname;
+              this.monthname3 = this.getenquirychart_List[2].lead_monthname;
+              this.monthname4 = this.getenquirychart_List[3].lead_monthname;
+              this.monthname5 = this.getenquirychart_List[4].lead_monthname;
+              this.monthname6 = this.getenquirychart_List[5].lead_monthname;
+              this.chartOptions2 = {
+        
+                series: [  
+                {
+                  name: 'Enquiry Count',
+                  data: [this.month1, this.month2,this.month3,this.month4,this.month5,this.month6,],
+                },
+              ],
+              chart: {
+                fontFamily: 'inherit',
+                type: 'bar',
+                height: '350',
+                toolbar: {
+                  show: false,
+                },
+              },
+              plotOptions: {
+                bar: {
+                  horizontal: false,
+                  columnWidth: '40%',
+                  borderRadius: 3,
+                },
+              },
+              legend: {
+                show: false,
+              },
+              dataLabels: {
+                enabled: false,
+              },
+              stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent'],
+              },
+              xaxis: {
+                categories: [this.monthname1,this.monthname2,this.monthname3,this.monthname4,this.monthname5,this.monthname6],
+                axisBorder: {
+                  show: false,
+                },
+                axisTicks: {
+                  show: false,
+                },
+                labels: {
+                  style: {
+                    colors: '#000',
+                    fontSize: '12px',
+                  },
+                },
+              },
+              yaxis: {
+                labels: {
+                  style: {
+                    colors: '#000',
+                    fontSize: '12px',
+                  },
+                },
+              },
+              fill: {
+                type: 'solid',
+              },
+              states: {
+                normal: {
+                  filter: {
+                    type: 'none',
+                    value: 0,
+                  },
+                },
+                hover: {
+                  filter: {
+                    type: 'none',
+                    value: 0,
+                  },
+                },
+                active: {
+                  allowMultipleDataPointsSelection: false,
+                  filter: {
+                    type: 'none',
+                    value: 0,
+                  },
+                },
+              },
+              
+              colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+              grid: {
+                padding: {
+                  top: 10,
+                },
+                borderColor: '#e6ccb2',
+                strokeDashArray: 4,
+                yaxis: {
+                  lines: {
+                    show: true,
+                  },
+                },
+              },
+              };
+              }
+  }); 
+}
+
+else{
+  var api = 'MarketingReport/GetSelectEnquiryChartReportSummary';
+  
+  let params ={
+    from_date:this.from_date,
+    to_date:this.to_date
+  }
+  this.service.getparams(api,params).subscribe((result:any) => {
+  this.response_data = result;
+  this.getselectenquirychart_List = this.response_data.getselectenquirychart_List; 
+  
+  // this.chartOptions2.xaxis.categories = this.getselectenquirychart_List.map((entry: { lead_count: any }) => entry.lead_count);
+  // this.chartOptions2.series[0].data = this.getselectenquirychart_List.map((entry: { month1: any }) => entry.month1);
+  if(this.getselectenquirychart_List == null) {
+    debugger
+    this.noleadstatus = 'Lead Not Available...';
+    this.show = true;
+    this.emptyFlag1=true;
+    this.chartOptions2 = {
+    
+      series: [  
+      {
+        name: 'Enquiry Count',
+        data: [],
+      },
+    ],
+    chart: {
+      fontFamily: 'inherit',
+      type: 'bar',
+      height: '350',
+      toolbar: {
+        show: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '40%',
+        borderRadius: 3,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent'],
+    },
+    xaxis: {
+      categories: [],
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '12px',
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '12px',
+        },
+      },
+    },
+    fill: {
+      type: 'solid',
+    },
+    states: {
+      normal: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      hover: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      active: {
+        allowMultipleDataPointsSelection: false,
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+    },
+    
+    colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+    grid: {
+      padding: {
+        top: 10,
+      },
+      borderColor: '#e6ccb2',
+      strokeDashArray: 4,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    };
+  }
+  else if (this.getselectenquirychart_List.length == 0) {
+    debugger
+    this.noleadstatus = 'Lead Not Available...';
+    this.show = true;
+    this.emptyFlag1=true;
+    this.chartOptions2 = {
+    
+      series: [  
+      {
+        name: 'Enquiry Count',
+        data: [],
+      },
+    ],
+    chart: {
+      fontFamily: 'inherit',
+      type: 'bar',
+      height: '350',
+      toolbar: {
+        show: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '40%',
+        borderRadius: 3,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent'],
+    },
+    xaxis: {
+      categories: [],
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '12px',
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '12px',
+        },
+      },
+    },
+    fill: {
+      type: 'solid',
+    },
+    states: {
+      normal: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      hover: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      active: {
+        allowMultipleDataPointsSelection: false,
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+    },
+    
+    colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+    grid: {
+      padding: {
+        top: 10,
+      },
+      borderColor: '#e6ccb2',
+      strokeDashArray: 4,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    };
+  }
+  else if (this.getselectenquirychart_List.length == 1) {
+      this.Month1 = Number(this.getselectenquirychart_List[0].lead_count);
+      this.Monthname1 = this.getselectenquirychart_List[0].lead_monthname;
+      // this.year = this.getselectenquirychart_List[0].year;
+      this.chartOptions2 = {
+    
+        series: [  
+        {
+          name: 'Enquiry Count',
+          data: [this.Month1,],
+        },
+      ],
+      chart: {
+        fontFamily: 'inherit',
+        type: 'bar',
+        height: '350',
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '40%',
+          borderRadius: 3,
+        },
+      },
+      legend: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories: [this.Monthname1,],
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          style: {
+            colors: '#000',
+            fontSize: '12px',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: '#000',
+            fontSize: '12px',
+          },
+        },
+      },
+      fill: {
+        type: 'solid',
+      },
+      states: {
+        normal: {
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+        hover: {
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+        active: {
+          allowMultipleDataPointsSelection: false,
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+      },
+      
+      colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+      grid: {
+        padding: {
+          top: 10,
+        },
+        borderColor: '#e6ccb2',
+        strokeDashArray: 4,
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
+      };
+  }
+  else if (this.getselectenquirychart_List.length == 2) {
+    this.chartOptions2.xaxis.categories = this.getselectenquirychart_List.map((entry: { lead_count: any }) => entry.lead_count);
+    this.Month1 = Number(this.getselectenquirychart_List[0].lead_count);
+    this.Month2 = Number(this.getselectenquirychart_List[1].lead_count);
+    this.Monthname1 = this.getselectenquirychart_List[0].lead_monthname;
+    this.Monthname2 = this.getselectenquirychart_List[1].lead_monthname;
+    this.chartOptions2 = {
+
+      series: [  
+      {
+        name: 'Enquiry Count',
+        data: [this.Month1, this.Month2,],
+      },
+    ],
+    chart: {
+      fontFamily: 'inherit',
+      type: 'bar',
+      height: '350',
+      toolbar: {
+        show: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '40%',
+        borderRadius: 3,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent'],
+    },
+    xaxis: {
+      categories: [this.Monthname1,this.Monthname2],
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '12px',
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#000',
+          fontSize: '12px',
+        },
+      },
+    },
+    fill: {
+      type: 'solid',
+    },
+    states: {
+      normal: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      hover: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      active: {
+        allowMultipleDataPointsSelection: false,
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+    },
+    
+    colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+    grid: {
+      padding: {
+        top: 10,
+      },
+      borderColor: '#e6ccb2',
+      strokeDashArray: 4,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+    };
+    }
+    else if (this.getselectenquirychart_List.length == 3) {
+      this.chartOptions2.xaxis.categories = this.getselectenquirychart_List.map((entry: { lead_count: any }) => entry.lead_count);
+      this.Month1 = Number(this.getselectenquirychart_List[0].lead_count);
+      this.Month2 = Number(this.getselectenquirychart_List[1].lead_count);
+      this.Month3 = Number(this.getselectenquirychart_List[1].lead_count);
+      this.Monthname1 = this.getselectenquirychart_List[0].lead_monthname;
+      this.Monthname2 = this.getselectenquirychart_List[1].lead_monthname;
+      this.Monthname3 = this.getselectenquirychart_List[1].lead_monthname;
+      this.chartOptions2 = {
+  
+        series: [  
+        {
+          name: 'Enquiry Count',
+          data: [this.Month1, this.Month2,this.Month3,],
+        },
+      ],
+      chart: {
+        fontFamily: 'inherit',
+        type: 'bar',
+        height: '350',
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '40%',
+          borderRadius: 3,
+        },
+      },
+      legend: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories: [this.Monthname1,this.Monthname2,this.Monthname2,],
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          style: {
+            colors: '#000',
+            fontSize: '12px',
+          },
+        },
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: '#000',
+            fontSize: '12px',
+          },
+        },
+      },
+      fill: {
+        type: 'solid',
+      },
+      states: {
+        normal: {
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+        hover: {
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+        active: {
+          allowMultipleDataPointsSelection: false,
+          filter: {
+            type: 'none',
+            value: 0,
+          },
+        },
+      },
+      
+      colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+      grid: {
+        padding: {
+          top: 10,
+        },
+        borderColor: '#e6ccb2',
+        strokeDashArray: 4,
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
+      };
+      }
+      else if (this.getselectenquirychart_List.length == 4) {
+        this.chartOptions2.xaxis.categories = this.getselectenquirychart_List.map((entry: { lead_count: any }) => entry.lead_count);
+        this.Month1 = Number(this.getselectenquirychart_List[0].lead_count);
+        this.Month2 = Number(this.getselectenquirychart_List[1].lead_count);
+        this.Month3 = Number(this.getselectenquirychart_List[1].lead_count);
+        this.Month4 = Number(this.getselectenquirychart_List[1].lead_count);
+        this.Monthname1 = this.getselectenquirychart_List[0].lead_monthname;
+        this.Monthname2 = this.getselectenquirychart_List[1].lead_monthname;
+        this.Monthname3 = this.getselectenquirychart_List[1].lead_monthname;
+        this.Monthname4 = this.getselectenquirychart_List[1].lead_monthname;
+        this.chartOptions2 = {
+    
+          series: [  
+          {
+            name: 'Enquiry Count',
+            data: [this.Month1, this.Month2,this.Month3,this.Month4,],
+          },
+        ],
+        chart: {
+          fontFamily: 'inherit',
+          type: 'bar',
+          height: '350',
+          toolbar: {
+            show: false,
+          },
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '40%',
+            borderRadius: 3,
+          },
+        },
+        legend: {
+          show: false,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: [this.Monthname1,this.Monthname2,this.Monthname3,this.Monthname4,],
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '12px',
+            },
+          },
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#000',
+              fontSize: '12px',
+            },
+          },
+        },
+        fill: {
+          type: 'solid',
+        },
+        states: {
+          normal: {
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+          hover: {
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+          active: {
+            allowMultipleDataPointsSelection: false,
+            filter: {
+              type: 'none',
+              value: 0,
+            },
+          },
+        },
+        
+        colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+        grid: {
+          padding: {
+            top: 10,
+          },
+          borderColor: '#e6ccb2',
+          strokeDashArray: 4,
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        };
+        }
+        else if (this.getselectenquirychart_List.length == 5) {
+          this.chartOptions2.xaxis.categories = this.getselectenquirychart_List.map((entry: { lead_count: any }) => entry.lead_count);
+          this.Month1 = Number(this.getselectenquirychart_List[0].lead_count);
+          this.Month2 = Number(this.getselectenquirychart_List[1].lead_count);
+          this.Month3 = Number(this.getselectenquirychart_List[1].lead_count);
+          this.Month4 = Number(this.getselectenquirychart_List[1].lead_count);
+          this.Month5 = Number(this.getselectenquirychart_List[1].lead_count);
+          this.Monthname1 = this.getselectenquirychart_List[0].lead_monthname;
+          this.Monthname2 = this.getselectenquirychart_List[1].lead_monthname;
+          this.Monthname3 = this.getselectenquirychart_List[1].lead_monthname;
+          this.Monthname4 = this.getselectenquirychart_List[1].lead_monthname;
+          this.Monthname5 = this.getselectenquirychart_List[1].lead_monthname;
+          this.chartOptions2 = {
+      
+            series: [  
+            {
+              name: 'Enquiry Count',
+              data: [this.Month1, this.Month2, this.Month3, this.Month4, this.Month5,],
+            },
+          ],
+          chart: {
+            fontFamily: 'inherit',
+            type: 'bar',
+            height: '350',
+            toolbar: {
+              show: false,
+            },
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+              columnWidth: '40%',
+              borderRadius: 3,
+            },
+          },
+          legend: {
+            show: false,
+          },
+          dataLabels: {
+            enabled: false,
+          },
+          stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent'],
+          },
+          xaxis: {
+            categories: [this.Monthname1,this.Monthname2,this.Monthname3,this.Monthname4,this.Monthname5,],
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              style: {
+                colors: '#000',
+                fontSize: '12px',
+              },
+            },
+          },
+          yaxis: {
+            labels: {
+              style: {
+                colors: '#000',
+                fontSize: '12px',
+              },
+            },
+          },
+          fill: {
+            type: 'solid',
+          },
+          states: {
+            normal: {
+              filter: {
+                type: 'none',
+                value: 0,
+              },
+            },
+            hover: {
+              filter: {
+                type: 'none',
+                value: 0,
+              },
+            },
+            active: {
+              allowMultipleDataPointsSelection: false,
+              filter: {
+                type: 'none',
+                value: 0,
+              },
+            },
+          },
+          
+          colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+          grid: {
+            padding: {
+              top: 10,
+            },
+            borderColor: '#e6ccb2',
+            strokeDashArray: 4,
+            yaxis: {
+              lines: {
+                show: true,
+              },
+            },
+          },
+          };
+          }
+          else if (this.getselectenquirychart_List.length == 6) {
+            this.chartOptions2.xaxis.categories = this.getselectenquirychart_List.map((entry: { lead_count: any }) => entry.lead_count);
+            this.Month1 = Number(this.getselectenquirychart_List[0].lead_count);
+            this.Month2 = Number(this.getselectenquirychart_List[1].lead_count);
+            this.Month3 = Number(this.getselectenquirychart_List[1].lead_count);
+            this.Month4 = Number(this.getselectenquirychart_List[1].lead_count);
+            this.Month5 = Number(this.getselectenquirychart_List[1].lead_count);
+            this.Month6 = Number(this.getselectenquirychart_List[1].lead_count);
+            this.Monthname1 = this.getselectenquirychart_List[0].lead_monthname;
+            this.Monthname2 = this.getselectenquirychart_List[1].lead_monthname;
+            this.Monthname3 = this.getselectenquirychart_List[1].lead_monthname;
+            this.Monthname4 = this.getselectenquirychart_List[1].lead_monthname;
+            this.Monthname5 = this.getselectenquirychart_List[1].lead_monthname;
+            this.Monthname6 = this.getselectenquirychart_List[1].lead_monthname;
+            this.chartOptions2 = {
+        
+              series: [  
+              {
+                name: 'Enquiry Count',
+                data: [this.Month1, this.Month2,this.Month3,this.Month4,this.Month5,this.Month6,],
+              },
+            ],
+            chart: {
+              fontFamily: 'inherit',
+              type: 'bar',
+              height: '350',
+              toolbar: {
+                show: false,
+              },
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '40%',
+                borderRadius: 3,
+              },
+            },
+            legend: {
+              show: false,
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent'],
+            },
+            xaxis: {
+              categories: [this.Monthname1,this.Monthname2,this.Monthname3,this.Monthname4,this.Monthname5,this.Monthname6,],
+              axisBorder: {
+                show: false,
+              },
+              axisTicks: {
+                show: false,
+              },
+              labels: {
+                style: {
+                  colors: '#000',
+                  fontSize: '12px',
+                },
+              },
+            },
+            yaxis: {
+              labels: {
+                style: {
+                  colors: '#000',
+                  fontSize: '12px',
+                },
+              },
+            },
+            fill: {
+              type: 'solid',
+            },
+            states: {
+              normal: {
+                filter: {
+                  type: 'none',
+                  value: 0,
+                },
+              },
+              hover: {
+                filter: {
+                  type: 'none',
+                  value: 0,
+                },
+              },
+              active: {
+                allowMultipleDataPointsSelection: false,
+                filter: {
+                  type: 'none',
+                  value: 0,
+                },
+              },
+            },
+            
+            colors: ['#9D76C1', '#f1841e', '#047beb', '#e63423'],
+            grid: {
+              padding: {
+                top: 10,
+              },
+              borderColor: '#e6ccb2',
+              strokeDashArray: 4,
+              yaxis: {
+                lines: {
+                  show: true,
+                },
+              },
+            },
+            };
+            }
+}); 
+}
+// this.NgxSpinnerService.show();
+  }
+
+  onSearchClick(){
+   
+    var url = 'MarketingReport/GetSelectedEnquirymainReportSummary';
+    let params ={
+      from_date:this.from_date,
+      to_date:this.to_date
+    }
+  this.service.getparams(url,params).subscribe((result:any) => {
+  this.response_data = result;
+  this.EnquiryReportMainSummary_list = this.response_data.EnquiryReportMainSummary_list;
+}); 
+this.GetEnquiryChartReportSummary();
+this.GetCustomerToLeadReport();
+  }
+
+  GetCustomerToLeadReport(){
+    
+    if(this.from_date == null && this.to_date == null){
+    var url = 'MarketingReport/GetCustomerToLeadChartReportSummary';
+    this.service.get(url).subscribe((result:any) => {
+      this.response_data = result;
+      this.getCustomerToLeadChartchart_List = this.response_data.getCustomerToLeadChartchart_List; 
+    if(this.getCustomerToLeadChartchart_List == null) {
+      
+      this.noleadstatus = 'Lead Not Available...';
+      this.show = true;
+      this.emptyFlag=true;
+    }
+    else if (this.getCustomerToLeadChartchart_List.length == 0) {
+      
+      this.noleadstatus = 'Lead Not Available...';
+      this.show = true;
+      this.emptyFlag=true;
+    }
+    else if (this.getCustomerToLeadChartchart_List.length == 1) {
+      
+    this.Customer = this.getCustomerToLeadChartchart_List[0].customercount;
+    this.Lead = this.getCustomerToLeadChartchart_List[0].leadcount;
+    // const Customer = this.getCustomerToLeadChartchart_List.map((entry: { customercount: any; }) => entry.customercount);
+    // const Lead = this.getCustomerToLeadChartchart_List.map((entry: { leadcount: any; }) => entry.leadcount);
+    this.month_lead = this.getCustomerToLeadChartchart_List[0].month;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [this.Customer,],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [this.Lead,],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [this.month_lead],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 2) {
+    
+    this.Customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+    this.Customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+    this.Lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+    this.Lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+    this.month_lead = this.getCustomerToLeadChartchart_List[0].month;
+    this.month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [this.Customer,this.Customer1,],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [this.Lead,this.Lead1,],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [this.month_lead,this.month_lead1,],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 3) {
+    
+    // this.chartOptions.xaxis.categories = this.getCustomerToLeadChartchart_List.map((entry: { customercount: any }) => entry.customercount);
+    // this.chartOptions.xaxis.categories = this.getCustomerToLeadChartchart_List.map((entry: { leadcount: any }) => entry.leadcount);
+    // this.chartOptions.xaxis.categories = this.getCustomerToLeadChartchart_List.map((entry: { month: any }) => entry.month);
+    this.Customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+    this.Customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+    this.Customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+    this.Lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+    this.Lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+    this.Lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+    this.month_lead = this.getCustomerToLeadChartchart_List[0].month;
+    this.month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+    this.month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [this.Customer,this.Customer1,this.Customer2,],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [this.Lead,this.Lead1,this.Lead2,],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [this.month_lead,this.month_lead1,this.month_lead2,],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 4) {
+    
+    this.Customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+    this.Customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+    this.Customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+    this.Customer3 = Number(this.getCustomerToLeadChartchart_List[3].customercount);
+    this.Lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+    this.Lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+    this.Lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+    this.Lead3 = Number(this.getCustomerToLeadChartchart_List[3].leadcount);
+    this.month_lead = this.getCustomerToLeadChartchart_List[0].month;
+    this.month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+    this.month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+    this.month_lead3 = this.getCustomerToLeadChartchart_List[3].month;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [this.Customer,this.Customer1,this.Customer2,this.Customer3,],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [this.Lead,this.Lead1,this.Lead2,this.Lead3,],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [this.month_lead,this.month_lead1,],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 5) {
+    
+    this.Customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+    this.Customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+    this.Customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+    this.Customer3 = Number(this.getCustomerToLeadChartchart_List[3].customercount);
+    this.Customer4 = Number(this.getCustomerToLeadChartchart_List[4].customercount);
+    this.Lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+    this.Lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+    this.Lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+    this.Lead3 = Number(this.getCustomerToLeadChartchart_List[3].leadcount);
+    this.Lead4 = Number(this.getCustomerToLeadChartchart_List[4].leadcount);
+    this.month_lead = this.getCustomerToLeadChartchart_List[0].month;
+    this.month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+    this.month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+    this.month_lead3 = this.getCustomerToLeadChartchart_List[3].month;
+    this.month_lead4 = this.getCustomerToLeadChartchart_List[4].month;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [this.Customer,this.Customer1,this.Customer2,this.Customer3,this.Customer4,],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [this.Lead,this.Lead1,this.Lead2,this.Lead3,this.Lead4,],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [this.month_lead,this.month_lead1,this.month_lead2,this.month_lead3,this.month_lead4,],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 6) {
+    
+    this.Customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+    this.Customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+    this.Customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+    this.Customer3 = Number(this.getCustomerToLeadChartchart_List[3].customercount);
+    this.Customer4 = Number(this.getCustomerToLeadChartchart_List[4].customercount);
+    this.Customer5 = Number(this.getCustomerToLeadChartchart_List[5].customercount);
+    this.Lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+    this.Lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+    this.Lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+    this.Lead3 = Number(this.getCustomerToLeadChartchart_List[3].leadcount);
+    this.Lead4 = Number(this.getCustomerToLeadChartchart_List[4].leadcount);
+    this.Lead5 = Number(this.getCustomerToLeadChartchart_List[5].leadcount);
+    this.month_lead = this.getCustomerToLeadChartchart_List[0].month;
+    this.month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+    this.month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+    this.month_lead3 = this.getCustomerToLeadChartchart_List[3].month;
+    this.month_lead4 = this.getCustomerToLeadChartchart_List[4].month;
+    this.month_lead5 = this.getCustomerToLeadChartchart_List[5].month;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [this.Customer,this.Customer1,this.Customer2,this.Customer3,this.Customer4,this.Customer5,],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [this.Lead,this.Lead1,this.Lead2,this.Lead3,this.Lead4,this.Lead5,],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [this.month_lead,this.month_lead1,this.month_lead2,this.month_lead3,this.month_lead4,this.month_lead5,],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  }); 
+}
+else{
+  
+  var url = 'MarketingReport/GetCustomerToLeadChartReportsearchSummary';
+  let params ={
+    from_date:this.from_date,
+    to_date:this.to_date
+  }
+  this.service.getparams(url,params).subscribe((result:any) => {
+  this.response_data = result;
+  this.getCustomerToLeadChartchart_List = this.response_data.getCustomerToLeadChartchart_List; 
+  if(this.getCustomerToLeadChartchart_List == null) {
+    
+    this.noleadstatus = 'Lead Not Available...';
+    this.show = true;
+    this.emptyFlag=true;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 0) {
+    
+    this.noleadstatus = 'Lead Not Available...';
+    this.show = true;
+    this.emptyFlag=true;
+    this.chartOptions = {
+      series: [
+        {
+          name: "Enquiry From sales",
+          data: [],
+        },
+        {
+          name: "Enquiry From Marketing",
+          data: [],
+        }
+      ],
+      chart: {
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "month",
+        categories: [],
+      },
+      legend: {
+        show: false,
+      },
+    };
+  }
+  else if (this.getCustomerToLeadChartchart_List.length == 1) {
+    
+  this.customer = this.getCustomerToLeadChartchart_List[0].customercount;
+  this.lead = this.getCustomerToLeadChartchart_List[0].leadcount;
+  // const Customer = this.getCustomerToLeadChartchart_List.map((entry: { customercount: any; }) => entry.customercount);
+  // const Lead = this.getCustomerToLeadChartchart_List.map((entry: { leadcount: any; }) => entry.leadcount);
+  this.Month_lead = this.getCustomerToLeadChartchart_List[0].month;
+  this.chartOptions = {
+    series: [
+      {
+        name: "Enquiry From sales",
+        data: [this.customer,],
+      },
+      {
+        name: "Enquiry From Marketing",
+        data: [this.lead,],
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: "smooth"
+    },
+    xaxis: {
+      type: "month",
+      categories: [this.Month_lead],
+    },
+    legend: {
+      show: false,
+    },
+  };
+}
+else if (this.getCustomerToLeadChartchart_List.length == 2) {
+  
+  this.customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+  this.customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+  this.lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+  this.lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+  this.Month_lead = this.getCustomerToLeadChartchart_List[0].month;
+  this.Month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+  this.chartOptions = {
+    series: [
+      {
+        name: "Enquiry From sales",
+        data: [this.customer,this.customer1,],
+      },
+      {
+        name: "Enquiry From Marketing",
+        data: [this.lead,this.lead1,],
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: "smooth"
+    },
+    xaxis: {
+      type: "month",
+      categories: [this.Month_lead,this.Month_lead1,],
+    },
+    legend: {
+      show: false,
+    },
+  };
+}
+else if (this.getCustomerToLeadChartchart_List.length == 3) {
+  
+  // this.chartOptions.xaxis.categories = this.getCustomerToLeadChartchart_List.map((entry: { customercount: any }) => entry.customercount);
+  // this.chartOptions.xaxis.categories = this.getCustomerToLeadChartchart_List.map((entry: { leadcount: any }) => entry.leadcount);
+  // this.chartOptions.xaxis.categories = this.getCustomerToLeadChartchart_List.map((entry: { month: any }) => entry.month);
+  this.customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+  this.customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+  this.customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+  this.lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+  this.lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+  this.lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+  this.Month_lead = this.getCustomerToLeadChartchart_List[0].month;
+  this.Month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+  this.Month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+  this.chartOptions = {
+    series: [
+      {
+        name: "Enquiry From sales",
+        data: [this.customer,this.customer1,this.customer2,],
+      },
+      {
+        name: "Enquiry From Marketing",
+        data: [this.lead,this.lead1,this.lead2,],
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: "smooth"
+    },
+    xaxis: {
+      type: "month",
+      categories: [this.Month_lead,this.Month_lead1,this.Month_lead2,],
+    },
+    legend: {
+      show: false,
+    },
+  };
+}
+else if (this.getCustomerToLeadChartchart_List.length == 4) {
+  
+  this.customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+  this.customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+  this.customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+  this.customer3 = Number(this.getCustomerToLeadChartchart_List[3].customercount);
+  this.lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+  this.lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+  this.lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+  this.lead3 = Number(this.getCustomerToLeadChartchart_List[3].leadcount);
+  this.Month_lead = this.getCustomerToLeadChartchart_List[0].month;
+  this.Month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+  this.Month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+  this.Month_lead3 = this.getCustomerToLeadChartchart_List[3].month;
+  this.chartOptions = {
+    series: [
+      {
+        name: "Enquiry From sales",
+        data: [this.customer,this.customer1,this.customer2,this.customer3,],
+      },
+      {
+        name: "Enquiry From Marketing",
+        data: [this.lead,this.lead1,this.lead2,this.lead3,],
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: "smooth"
+    },
+    xaxis: {
+      type: "month",
+      categories: [this.Month_lead,this.Month_lead1,this.Month_lead2,this.Month_lead3,],
+    },
+    legend: {
+      show: false,
+    },
+  };
+}
+else if (this.getCustomerToLeadChartchart_List.length == 5) {
+  
+  this.customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+  this.customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+  this.customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+  this.customer3 = Number(this.getCustomerToLeadChartchart_List[3].customercount);
+  this.customer4 = Number(this.getCustomerToLeadChartchart_List[4].customercount);
+  this.lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+  this.lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+  this.lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+  this.lead3 = Number(this.getCustomerToLeadChartchart_List[3].leadcount);
+  this.lead4 = Number(this.getCustomerToLeadChartchart_List[4].leadcount);
+  this.Month_lead = this.getCustomerToLeadChartchart_List[0].month;
+  this.Month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+  this.Month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+  this.Month_lead3 = this.getCustomerToLeadChartchart_List[3].month;
+  this.Month_lead4 = this.getCustomerToLeadChartchart_List[4].month;
+  this.chartOptions = {
+    series: [
+      {
+        name: "Enquiry From sales",
+        data: [this.customer,this.customer1,this.customer2,this.customer3,this.customer4,],
+      },
+      {
+        name: "Enquiry From Marketing",
+        data: [this.lead,this.lead1,this.lead2,this.lead3,this.lead4,],
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: "smooth"
+    },
+    xaxis: {
+      type: "month",
+      categories: [this.Month_lead,this.Month_lead1,this.Month_lead2,this.Month_lead3,this.Month_lead4,],
+    },
+    legend: {
+      show: false,
+    },
+  };
+}
+else if (this.getCustomerToLeadChartchart_List.length == 6) {
+  
+  this.customer = Number(this.getCustomerToLeadChartchart_List[0].customercount);
+  this.customer1 = Number(this.getCustomerToLeadChartchart_List[1].customercount);
+  this.customer2 = Number(this.getCustomerToLeadChartchart_List[2].customercount);
+  this.customer3 = Number(this.getCustomerToLeadChartchart_List[3].customercount);
+  this.customer4 = Number(this.getCustomerToLeadChartchart_List[4].customercount);
+  this.customer5 = Number(this.getCustomerToLeadChartchart_List[5].customercount);
+  this.lead = Number(this.getCustomerToLeadChartchart_List[0].leadcount);
+  this.lead1 = Number(this.getCustomerToLeadChartchart_List[1].leadcount);
+  this.lead2 = Number(this.getCustomerToLeadChartchart_List[2].leadcount);
+  this.lead3 = Number(this.getCustomerToLeadChartchart_List[3].leadcount);
+  this.lead4 = Number(this.getCustomerToLeadChartchart_List[4].leadcount);
+  this.lead5 = Number(this.getCustomerToLeadChartchart_List[5].leadcount);
+  this.Month_lead = this.getCustomerToLeadChartchart_List[0].month;
+  this.Month_lead1 = this.getCustomerToLeadChartchart_List[1].month;
+  this.Month_lead2 = this.getCustomerToLeadChartchart_List[2].month;
+  this.Month_lead3 = this.getCustomerToLeadChartchart_List[3].month;
+  this.Month_lead4 = this.getCustomerToLeadChartchart_List[4].month;
+  this.Month_lead5 = this.getCustomerToLeadChartchart_List[5].month;
+  this.chartOptions = {
+    series: [
+      {
+        name: "Enquiry From sales",
+        data: [this.customer,this.customer1,this.customer2,this.customer3,this.customer4,this.customer5,],
+      },
+      {
+        name: "Enquiry From Marketing",
+        data: [this.lead,this.lead1,this.lead2,this.lead3,this.lead4,this.lead5,],
+      }
+    ],
+    chart: {
+      height: 350,
+      type: "area",
+      toolbar: {
+        show: false,
+      },
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: "smooth"
+    },
+    xaxis: {
+      type: "month",
+      categories: [this.Month_lead,this.Month_lead1,this.Month_lead2,this.Month_lead3,this.Month_lead4,this.Month_lead5,],
+    },
+    legend: {
+      show: false,
+    },
+  };
+}
+}); 
+}
+  
+  }
+
+  onrefreshclick(){
+    this.from_date = null!;
+    this.to_date = null!;
+    this.ngOnInit();
+  }
+
+  popmodal( Month: string,Year: string){
+    this.Month = Month;
+    this.Year = this.EnquiryReportMainSummary_list[0].Year;
+
+    var url = 'MarketingReport/GetEnquirysubReportSummary';
+    let params = {
+      Month : Month,
+      Year : Year
+    }
+    this.service.getparams(url,params).subscribe((result:any)=>{
+  this.response_data = result;
+  this.EnquirysubReportSummary_list = this.response_data.EnquirysubReportSummary_list;
+}); 
+  }
+
+  
+}

@@ -1,0 +1,46 @@
+import { Component } from '@angular/core';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+@Component({
+  selector: 'app-pmr-mst-termsconditionssummary',
+  templateUrl: './pmr-mst-termsconditionssummary.component.html',
+  styleUrls: ['./pmr-mst-termsconditionssummary.component.scss']
+})
+export class PmrMstTermsconditionssummaryComponent {
+  template_list: any[] = [];
+  responsedata: any;
+
+  constructor(public service :SocketService) {
+    
+    
+  }
+  ngOnInit(): void {
+    this.PmrMstTermsConditionsSummary();}
+
+    PmrMstTermsConditionsSummary(){
+    var url='PmrMstTermsConditions/GetTermsConditionsSummary'
+      
+    this.service.get(url).subscribe((result:any)=>{
+      $('#template_list').DataTable().destroy();
+      this.responsedata=result;
+      this.template_list = this.responsedata.Gettemplate_list;  
+     console.log(this.template_list)
+      setTimeout(()=>{   
+        $('#template_list').DataTable();
+      }, 1);
+    
+   
+  });
+  }
+  
+  onview(params:any){
+
+  }
+
+  onedit(params:any){
+    
+  }
+
+  openModaldelete(parameter: string) {
+  }
+}

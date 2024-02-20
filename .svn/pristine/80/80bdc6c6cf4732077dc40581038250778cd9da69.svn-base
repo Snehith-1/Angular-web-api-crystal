@@ -1,0 +1,67 @@
+Linkedin work Inprogress!!
+<!-- <body>
+
+    <div class="card2">
+
+        <form [formGroup]="LinkedinForm" #form="ngForm">
+            <img src="{{profile_photo}}" alt="Avatar"> 
+
+            <h2 style="margin-left: 260px;margin-top: -90px;">Linked<span>
+                    <i class="bi bi-linkedin"></i>
+                </span></h2>
+                    <br>
+            <div class="text">
+                <h1 style="margin-left: 100px;color:black;margin-top:10px;">{{first_name}}&nbsp;{{last_name}}</h1>
+
+            </div>
+            <br>    <br>    <br>
+            <div class="your-input">
+                <div class="input" style="margin-top:0px;">
+
+                    <label style="font-size: 16px;"><b>Post Content&nbsp;<span style="color:red">*</span></b></label>
+
+                    <br>
+                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                        <textarea formControlName="body_content" type="text" pattern="^(?!\s*$).+" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     body_content.invalid && body_content.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="Enter Entity Name" pattern="^(?!\s*$).+" name="body_content" required
+                            rows="3"></textarea>
+
+                    </div>
+                    <div *ngIf="body_content.invalid && (body_content.dirty || body_content.touched)">
+                        <div *ngIf="body_content.errors?.['required'] || body_content.errors?.['whitespace']">
+                            <span style="color:red;">Caption is required.</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <br>
+            <div class="text-center">
+                <button (click)="onsubmit()" [disabled]="LinkedinForm.invalid" [ngClass]="{
+                'primary-button': !LinkedinForm.invalid,
+                'secondary-button': LinkedinForm.invalid
+              }" data-bs-dismiss="modal">
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Post
+                </button>
+
+
+            </div>
+        </form>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+<br><br><br><br><br><br><br><br><br><br><br> -->

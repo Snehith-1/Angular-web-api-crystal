@@ -1,0 +1,155 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface ICampaingService {
+  base_url: string;
+  access_token: string;
+  workspace_id: string;
+  access_token_edit: string;
+  base_url_edit: string;
+  workspace_id_edit: string
+}
+@Component({
+  selector: 'app-crm-smm-campaignsettings',
+  templateUrl: './crm-smm-campaignsettings.component.html',
+  styleUrls: ['./crm-smm-campaignsettings.component.scss']
+})
+export class CrmSmmCampaignsettingsComponent {
+  services: any;
+  parameterValue: any;
+  leadbank_list: any[] = [];
+  parameterValue1: any;
+  reactiveForm: any;
+  reactiveFormEdit!: FormGroup;
+  campaignserv_list: any[] = [];
+  campaignser_list: any[] = [];
+  campaignservice_list: any[] = [];
+  shopifycampaignservice_list:any[]=[];
+  NgxSpinnerService: any;
+  mailtemplateview_list: any;
+  access_token: any;
+  base_url: any;
+  workspace_id: any;
+  responsedata: any;
+  CampaingService!: ICampaingService;
+  datas: any;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+    this.CampaingService = {} as ICampaingService;
+  }
+
+  ngOnInit(): void {
+    // Form values for Add popup/////
+    this.GetWhatsappSummary();
+    this.GetShopifySummary();
+    this.reactiveForm = new FormGroup({
+
+      access_token: new FormControl(this.CampaingService.access_token, [
+
+        Validators.required,
+
+
+      ]),
+
+      base_url: new FormControl(this.CampaingService.base_url, [
+
+        Validators.required,
+
+
+      ]),
+      workspace_id: new FormControl(this.CampaingService.workspace_id, [
+
+        Validators.required,
+
+
+      ]),
+
+    });
+    this.reactiveFormEdit = new FormGroup({
+
+      access_token_edit: new FormControl(this.CampaingService.access_token_edit, [
+
+        Validators.required,
+
+        Validators.pattern('^[A-Za-z0-9 ]+$') // Allow letters, numbers, and spaces
+
+      ]),
+
+      base_url_edit: new FormControl(this.CampaingService.base_url_edit, [
+        Validators.required,
+        Validators.pattern('[A-Za-z0-9]+')
+
+      ]),
+      workspace_id_edit: new FormControl(this.CampaingService.workspace_id_edit, [
+
+        Validators.required,
+
+        Validators.pattern('^[A-Za-z0-9 ]+$') // Allow letters, numbers, and spaces
+
+      ]),
+
+
+    });
+
+
+  }
+
+  onupdate() {
+    var url = 'CampaignService/PostCampaignService'
+    let param = {
+      base_url: this.datas.base_url
+
+    }
+    
+  }
+
+
+ 
+  GetWhatsappSummary() {
+    var api = 'CampaignService/GetWhatsappSummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.campaignservice_list = this.responsedata.campaignservice_list;
+      
+      console.log(this.campaignservice_list)
+    });
+  }
+
+  GetShopifySummary() {
+    var api = 'CampaignService/GetShopifySummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.campaignserv_list = this.responsedata.shopifycampaignservice_list;
+      
+      console.log(this.campaignserv_list)
+    });
+  }
+
+  GetMailSummary() {
+    var api = 'CampaignService/GetMailSummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.campaignser_list = this.responsedata.mailcampaignservice_list;
+      
+      console.log(this.campaignser_list)
+    });
+  }
+
+  GetMailView(temp_mail_gid: any) {
+    this.NgxSpinnerService.show();
+    var url = 'MailCampaign/MailTemplateView';
+
+    this.service.get(url).subscribe((result: any) => {
+      this.campaignservice_list = result.campaignservice_list;
+      this.access_token = this.campaignservice_list[0].access_token;
+      this.base_url = this.campaignservice_list[0].base_url
+      this.workspace_id = this.campaignservice_list[0].workspace_id;
+
+    });
+  }
+
+}

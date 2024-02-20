@@ -1,0 +1,80 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+@Component({
+  selector: 'app-pmr-trn-grnqcchecker',
+  templateUrl: './pmr-trn-grnqcchecker.component.html',
+  styleUrls: ['./pmr-trn-grnqcchecker.component.scss']
+})
+export class PmrTrnGrnqccheckerComponent {
+  GetGrnQcChecker_list : any;
+  GetGrnQcChecker_lists : any;
+  file: any;
+  reactiveForm!: FormGroup;
+  vendor: any;
+  responsedata: any;
+  grn_gid: any;
+  grninward: any;
+  grngid: any;
+  journal_refno : any;
+  grn_remarks : any;
+  grn_reference: any;
+
+  constructor(private router:ActivatedRoute,public service :SocketService  ) { 
+
+  }
+  ngOnInit(): void {
+    
+    debugger
+    
+        this.grninward= this.router.snapshot.paramMap.get('grn_gid');
+        const secretKey = 'storyboarderp';
+        const deencryptedParam = AES.decrypt(this.grninward,secretKey).toString(enc.Utf8);
+        console.log(deencryptedParam)
+        this.GetPmrTrnGrnQcchecker(deencryptedParam);    
+      }
+      GetPmrTrnGrnQcchecker(grn_gid: any) {
+        var url='PmrTrnGrnQcchecker/GetPmrTrnGrnQcchecker'
+        let param = {
+          grn_gid : grn_gid
+        }
+        this.service.getparams(url,param).subscribe((result:any)=>{
+        this.  GetGrnQcChecker_list = result.GetGrnQcChecker_list;
+        //console.log(this.employeeedit_list)
+    
+      });
+
+      this.grninward= this.router.snapshot.paramMap.get('grn_gid');
+        const secretKey = 'storyboarderp';
+        const deencryptedParam = AES.decrypt(this.grninward,secretKey).toString(enc.Utf8);
+        console.log(deencryptedParam)
+        this.GetPmrTrnGrnQccheckerpo(deencryptedParam);    
+      }
+      GetPmrTrnGrnQccheckerpo(grn_gid: any) {
+        var url='PmrTrnGrnQcchecker/GetPmrTrnGrnQccheckerpo'
+        let param = {
+          grn_gid : grn_gid
+        }
+        this.service.getparams(url,param).subscribe((result:any)=>{
+        this.  GetGrnQcChecker_lists = result.GetGrnQcChecker_lists;
+        //console.log(this.employeeedit_list)
+    
+      });
+      
+    
+      }
+      
+    
+    
+  
+  onChange2(event: any) {
+    this.file = event.target.files[0];
+
+  }
+  public validate(): void {}
+  
+
+}

@@ -1,0 +1,36 @@
+----------------------
+Showing toast message 
+----------------------
+step 1: 
+import the Package: npm i ngx-toastr --save
+ 
+step 2:
+angular.json (file) : Styles>> add>> "node_modules/ngx-toastr/toastr.css"
+
+
+Import the following in app.module.ts
+
+
+>>import{BrowserAnimationsModule} from '@angular/platform-browser/animations'
+>>import { ToastrModule } from 'ngx-toastr';
+
+@import[
+  ToastrModule.forRoot(),// for global call
+  BrowserAnimationsModule,
+]
+>>Import the toaster for the particaular page
+import { ToastrService } from 'ngx-toastr';
+constructor >> Add>>  private ToastrService: ToastrService
+
+ex: this.ToastrService.success('message')
+
+  
+To Use Toast Message
+---------------------
+  
+  show toast               show
+  show successful toast >> success 
+  show error toast      >> error
+  show info toast       >> info
+  show warning toast    >> warning
+   

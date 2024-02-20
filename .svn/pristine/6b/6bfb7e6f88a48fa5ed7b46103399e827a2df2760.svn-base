@@ -1,0 +1,868 @@
+.card-header {
+    background-image: linear-gradient(to right, #2429e0, #39ffff, #2429e0);
+    border-radius: 0px;
+}
+
+.sec_1 {
+    background-image: linear-gradient(to right, #b583fc, #d4b9fa, #d4b9fa, #b583fc);
+    text-align: center;
+    width: 260px;
+    border-left: 15px solid #5f02bc;
+
+    .card-body i {
+        color: #5f02bc;
+        font-size: 25px;
+    }
+}
+
+.sec_2 {
+    background-image: linear-gradient(to right, #fd8587, #fdbabb, #fdbabb, #fd8587);
+    text-align: center;
+    width: 260px;
+    border-left: 15px solid #fd4b4e;
+
+    .card-body i {
+        color: #fd4b4e;
+        font-size: 25px;
+    }
+}
+
+.sec_3 {
+    background-image: linear-gradient(to right, #61b4f9, #a8d4f8, #a8d4f8, #61b4f9);
+    text-align: center;
+    width: 260px;
+    border-left: 15px solid #1787e3;
+
+    .card-body i {
+        color: #1787e3;
+        font-size: 25px;
+    }
+}
+
+.sec_4 {
+    background-image: linear-gradient(to right, #1BCFB4, #80f7e5, #80f7e5, #1BCFB4);
+    text-align: center;
+    width: 260px;
+    border-left: 15px solid #22a793;
+
+    .card-body i {
+        color: #22a793;
+        font-size: 25px;
+    }
+}
+
+.sec_5 {
+    background-image: linear-gradient(to right, #f8b447, #fadaa7, #fadaa7, #f8b447);
+    text-align: center;
+    width: 260px;
+    border-left: 15px solid #f79a05;
+
+    .card-body i {
+        color: #f79a05;
+        font-size: 25px;
+    }
+}
+
+.sec_6 {
+    background-image: linear-gradient(to right, #fc92f1, #f9cff5, #f9cff5, #fc92f1);
+    text-align: center;
+    width: 260px;
+    border-left: 15px solid #f936e5;
+
+    .card-body i {
+        color: #f936e5;
+        font-size: 25px;
+    }
+}
+
+.card-heading h6 {
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.panel {
+    background-image: linear-gradient(to top, #b0bea5, #D6E8DB, #D6E8DB, #b0bea5);
+    border-radius: 6px;
+    height: 256px;
+
+    .panel-heading {
+        background-color: #99A98F;
+        height: 45px;
+        text-align: center;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        h4 {
+            padding-top: 15px;
+            color: #ffffff;
+        }
+    }
+
+    .panel-body {
+        text-align: center;
+
+        img {
+            margin: 40px 0 0 0;
+        }
+
+        p {
+            font-style: italic;
+            font-size: 13px;
+            font-weight: bold;
+        }
+    }
+}
+
+.chart-card {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .chart-head {
+        background-color: #1572A1;
+        height: 35px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        p {
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+        }
+    }
+
+    .chart-body {
+        border: #1572A1 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+}
+
+.card1 {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .card-head {
+        background-color: #2196f3;
+        height: 60px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        .main-head {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .sub-head {
+            font-size: 11px;
+            color: #ffffff;
+            text-align: left;
+            margin-top: -8px;
+        }
+
+        .head-right {
+            text-align: right;
+            margin: -48px 20px 0px 0px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    }
+
+    .card-body {
+        height: 180px;
+        border: #2196f3 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        .body-left {
+            font-size: 13px;
+            text-align: left;
+            margin: -8px 0px 0px -20px;
+        }
+
+        .body-right {
+            text-align: right;
+            margin: -20px -10px 0px 0px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .icon {
+            margin-top: 30px;
+
+            i {
+                font-size: 35px;
+            }
+
+            .text {
+                text-align: left;
+                margin: -8px 0px 0px -10px;
+                font-size: 11px;
+            }
+
+            .success {
+                text-align: left;
+                margin: 8px 0px 0px -10px;
+                color: #4caf50;
+                font-weight: bold;
+            }
+        }
+
+        .submit-button {
+            text-align: right;
+            margin: 20px -10px 0 0;
+
+            .btn-primary {
+                background-color: #2196f3 !important;
+            }
+
+            i {
+                margin-top: -2px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.card2 {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .card-head {
+        background-color: #3f51b5;
+        height: 60px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        .main-head {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .sub-head {
+            font-size: 11px;
+            color: #ffffff;
+            text-align: left;
+            margin-top: -8px;
+        }
+
+        .right-icon {
+            text-align: right;
+            margin: -50px 19px 0 0;
+            i {
+                font-size: 35px;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .card-body {
+        height: 180px;
+        border: #3f51b5 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        .body-left {
+            font-size: 13px;
+            text-align: left;
+            margin: -8px 0px 0px -20px;
+        }
+
+        .body-right {
+            text-align: right;
+            margin: -20px -10px 0px 0px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .icon {
+            margin-top: 30px;
+
+            i {
+                font-size: 35px;
+            }
+        }
+
+        .submit-button {
+            text-align: right;
+            margin: 20px -10px 0 0;
+
+            .btn-primary {
+                background-color: #3f51b5 !important;
+            }
+
+            i {
+                margin-top: -2px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.card3 {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .card-head {
+        background-color: #6a1b9a;
+        height: 60px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        .main-head {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .sub-head {
+            font-size: 11px;
+            color: #ffffff;
+            text-align: left;
+            margin-top: -8px;
+        }
+
+        .right-icon {
+            text-align: right;
+            margin: -50px 19px 0 0;
+            i {
+                font-size: 35px;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .card-body {
+        height: 180px;
+        border: #6a1b9a 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        .body-left {
+            font-size: 13px;
+            text-align: left;
+            margin: -8px 0px 0px -20px;
+        }
+
+        .body-right {
+            text-align: right;
+            margin: -20px -10px 0px 0px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .icon {
+            margin-top: 30px;
+
+            i {
+                font-size: 35px;
+            }
+        }
+
+        .submit-button {
+            text-align: right;
+            margin: 20px -10px 0 0;
+
+            .btn-primary {
+                background-color: #6a1b9a !important;
+            }
+
+            i {
+                margin-top: -2px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.card4 {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .card-head {
+        background-color: #78909c;
+        height: 60px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        .main-head {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .sub-head {
+            font-size: 11px;
+            color: #ffffff;
+            text-align: left;
+            margin-top: -8px;
+        }
+
+        .right-icon {
+            text-align: right;
+            margin: -50px 19px 0 0;
+            i {
+                font-size: 35px;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .card-body {
+        height: 180px;
+        border: #78909c 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        .body-left {
+            font-size: 13px;
+            text-align: left;
+            margin: -8px 0px 0px -20px;
+        }
+
+        .body-right {
+            text-align: right;
+            margin: -20px -10px 0px 0px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .icon {
+            margin-top: 30px;
+
+            i {
+                font-size: 35px;
+            }
+        }
+
+        .submit-button {
+            text-align: right;
+            margin: 20px -10px 0 0;
+
+            .btn-primary {
+                background-color: #78909c !important;
+            }
+
+            i {
+                margin-top: -2px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.card5 {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .card-head {
+        background-color: #009688;
+        height: 60px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        .main-head {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .sub-head {
+            font-size: 11px;
+            color: #ffffff;
+            text-align: left;
+            margin-top: -8px;
+        }
+
+        .right-icon {
+            text-align: right;
+            margin: -50px 19px 0 0;
+            i {
+                font-size: 35px;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .card-body {
+        height: 180px;
+        border: #009688 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        .body-left {
+            font-size: 13px;
+            text-align: left;
+            margin: -8px 0px 0px -20px;
+        }
+
+        .body-right {
+            text-align: right;
+            margin: -20px -10px 0px 0px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .icon {
+            margin-top: 30px;
+
+            i {
+                font-size: 35px;
+            }
+        }
+
+        .submit-button {
+            text-align: right;
+            margin: 20px -10px 0 0;
+
+            .btn-primary {
+                background-color: #009688 !important;
+            }
+
+            i {
+                margin-top: -2px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.card6 {
+    border-radius: 6px;
+    width: 100%;
+    margin-left: -9.5px;
+
+    .card-head {
+        background-color: #00bcd4;
+        height: 60px;
+        padding: 8px 0 0 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        .main-head {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .sub-head {
+            font-size: 11px;
+            color: #ffffff;
+            text-align: left;
+            margin-top: -8px;
+        }
+
+        .head-right {
+            text-align: right;
+            margin: -48px 20px 0px 0px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    }
+
+    .card-body {
+        height: 180px;
+        border: #00bcd4 1px solid;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+
+        .body-left {
+            font-size: 13px;
+            text-align: left;
+            margin: -8px 0px 0px -20px;
+        }
+
+        .body-right {
+            text-align: right;
+            margin: -20px -10px 0px 0px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .icon {
+            margin-top: 30px;
+
+            i {
+                font-size: 35px;
+            }
+        }
+
+        .submit-button {
+            text-align: right;
+            margin: 20px -10px 0 0;
+
+            .btn-primary {
+                background-color: #00bcd4 !important;
+            }
+
+            i {
+                margin-top: -2px;
+            }
+
+            .btn-text {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.iattendancepopup {
+    width: 350px;
+
+    .modal-header{
+        background-color: #2196f3;
+        height: 50px;
+    }   
+
+    .modal-title{
+        color: #ffffff;
+    }
+   
+    .iattendancepopupbody {        
+        .para {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }    
+}
+
+.loginpopup {
+    width: 350px;
+
+    .modal-header{
+        background-color: #3f51b5;
+        height: 50px;
+    }   
+
+    .modal-title{
+        color: #ffffff;
+    }
+   
+    .loginpopupbody {
+        text-align: left;
+        .login-input {
+            width: 130px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    
+        .inputfield {
+            width: 280px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }
+}
+
+.logoutpopup {
+    width: 350px;
+
+    .modal-header{
+        background-color: #6a1b9a;
+        height: 50px;
+    }   
+
+    .modal-title{
+        color: #ffffff;
+    }
+   
+    .logoutpopupbody {
+        text-align: left;
+
+        .logout-input {
+            width: 130px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    
+        .inputfield {
+            width: 280px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }    
+}
+
+.odpopup {
+    width: 350px;
+
+    .modal-header{
+        background-color: #78909c;
+        height: 50px;
+    }   
+
+    .modal-title{
+        color: #ffffff;
+    }
+   
+    .odpopupbody {       
+
+        .oddate-input {
+            width: 280px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+
+        .od-input {
+            width: 130px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    
+        .inputfield {
+            width: 280px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }    
+}
+
+.applycompoffpopup {
+    width: 350px;
+
+    .modal-header{
+        background-color: #009688;
+        height: 50px;
+    }   
+
+    .modal-title{
+        color: #ffffff;
+    }
+   
+    .applycompoffbody {
+
+        .compoff-input {
+            width: 130px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    
+        .inputfield {
+            width: 280px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }
+}
+
+.permissionpopup {
+    width: 350px;
+
+    .modal-header{
+        background-color: #00bcd4;
+        height: 50px;
+    }   
+
+    .modal-title{
+        color: #ffffff;
+    }
+   
+    .permissionpopupbody {       
+
+        .permissiondate-input {
+            width: 280px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+
+        .permission-input {
+            width: 130px;
+            height: 30px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    
+        .inputfield {
+            width: 280px;
+            padding: 8px;
+            border: 1px #c2c2c2 solid;
+            border-radius: 6px;
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }    
+}

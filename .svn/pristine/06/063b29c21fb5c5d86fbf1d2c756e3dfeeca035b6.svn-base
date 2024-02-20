@@ -1,0 +1,37 @@
+﻿
+using ems.inventory.DataAccess;
+using ems.inventory.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web;
+using ems.inventory.DataAccess;
+
+namespace ems.inventory.Controllers
+{
+
+    [RoutePrefix("api/ImsTrnOpeningStock")]
+    [Authorize]
+    public class ImsTrnOpeningStockController : ApiController
+    {
+
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaImsTrnOpeningStock objDaInventory = new DaImsTrnOpeningStock();
+        // Module Summary
+        [ActionName("GetImsTrnOpeningstockSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetImsTrnOpeningstockSummary()
+        {
+            MdlImsTrnOpeningStock values = new MdlImsTrnOpeningStock();
+            objDaInventory.DaGetImsTrnOpeningstockSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+    }
+}

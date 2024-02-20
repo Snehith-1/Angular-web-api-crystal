@@ -1,0 +1,429 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">
+                Direct Invoice
+                <i class="bi bi-arrow-left-square-fill float-end fs-1 me-6" (click)="back()"></i>
+            </h3>
+        </div>
+    </div>
+
+    <div class="card m-3">
+        <form [formGroup]="directinvoiceform">
+            <div class="card_heading">
+                <h6>Invoice Details</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Invoice Ref No</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="direct_invoice_refno" [ngStyle]="{'border-color': directinvoicerefnoControl.invalid && directinvoicerefnoControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicerefnoControl.invalid && (directinvoicerefnoControl.dirty || directinvoicerefnoControl.touched)">
+                        <div *ngIf="directinvoicerefnoControl.invalid && directinvoicerefnoControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicerefnoControl.hasError('required')" class="text-red ms-3 fs-5">* Invoice ref.no is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Invoice Date</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="direct_invoice_date" [ngStyle]="{'border-color': directinvoicedateControl.invalid && directinvoicedateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicedateControl.invalid && (directinvoicedateControl.dirty || directinvoicedateControl.touched)">
+                        <div *ngIf="directinvoicedateControl.invalid && directinvoicedateControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicedateControl.hasError('required')" class="text-red ms-3 fs-5">* Invoice date is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Invoice Type</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="direct_invoice_type">
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Payment Term (In Days)</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <select name="" id="" class="form-select form-select-solid mt-2 mb-3 mb-lg-0 bg-white border-secondary form-select-lg custom-input select2" formControlName="direct_invoice_payterm">
+                                        <option value="">Select</option>
+                                        <option value="0">0 Days</option>
+                                        <option value="7">7 Days</option>
+                                        <option value="15">15 Days</option>
+                                        <option value="30">30 Days</option>
+                                        <option value="45">45 Days</option>
+                                        <option value="60">60 Days</option>
+                                        <option value="90">90 Days</option>
+                                        <option value="120">120 Days</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Due Date</b>
+                                <input type="date" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="direct_invoice_due_date">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card_heading mt-6">
+                <h6>Branch Details</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Branch</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2" formControlName="direct_invoice_branchgid">
+                            <option value="" disabled selected>Select Branch</option>
+                            <option *ngFor="let branch of branch_list" [value]="branch.branch_gid">{{branch.branch_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Vendor Ref. No.</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="direct_invoice_ven_ref_no">
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Vendor Name</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="direct_invoice_ven_name" (change)="OnChangeVendor()" [ngStyle]="{'border-color': directinvoicevennameControl.invalid && directinvoicevennameControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicevennameControl.invalid && (directinvoicevennameControl.dirty || directinvoicevennameControl.touched)">
+                            <option value="" disabled selected>Select Vendor Name</option> 
+                            <option *ngFor="let vendor of vendor_list" [value]="vendor.vendorgid">{{vendor.vendorcompanyname}}</option>
+                        </select>
+                        <div *ngIf="directinvoicevennameControl.invalid && directinvoicevennameControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicevennameControl.hasError('required')" class="text-red ms-3 fs-5">* Vendor name is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Vendor Contact Person</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="direct_invoice_ven_contact_person" [ngStyle]="{'border-color': directinvoicevenconperControl.invalid && directinvoicevenconperControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicevenconperControl.invalid && (directinvoicevenconperControl.dirty || directinvoicevenconperControl.touched)">
+                            <option value="" disabled selected>Select Contact Person</option>
+                            <option *ngFor="let vendor of vendorlist" [value]="vendor.vendorgid">{{vendor.vendorcontact}}</option>
+                        </select>
+                        <div *ngIf="directinvoicevenconperControl.invalid && directinvoicevenconperControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicevenconperControl.hasError('required')" class="text-red ms-3 fs-5">* Vendor contact person is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Vendor Phone No</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="direct_invoice_ph_no">
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Vendor Address</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="direct_invoice_ven_address"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Remarks</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="direct_invoice_remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card_heading mt-6">
+                <h6>Purchase Details</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Currency</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="direct_invoice_currencygid" (change)="OnChangeCurrency()" [ngStyle]="{'border-color': directinvoicecurrencyControl.invalid && directinvoicecurrencyControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicecurrencyControl.invalid && (directinvoicecurrencyControl.dirty || directinvoicecurrencyControl.touched)">
+                            <option value="" disabled selected>Select Currency</option>
+                            <option *ngFor="let currency of currency_list" [value]="currency.currencyexchange_gid">{{currency.currency_code}}</option>
+                        </select>
+                        <div *ngIf="directinvoicecurrencyControl.invalid && directinvoicecurrencyControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicecurrencyControl.hasError('required')" class="text-red ms-3 fs-5">* Currency is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Exchange Rate</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="direct_invoice_exchange_rate" [ngStyle]="{'border-color': directinvoiceexchangerateControl.invalid && directinvoiceexchangerateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoiceexchangerateControl.invalid && (directinvoiceexchangerateControl.dirty || directinvoiceexchangerateControl.touched)">
+                        <div *ngIf="directinvoiceexchangerateControl.invalid && directinvoiceexchangerateControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoiceexchangerateControl.hasError('required')" class="text-red ms-3 fs-5">* Exchange rate is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Purchase Type</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="direct_invoice_account_gid" [ngStyle]="{'border-color': directinvoicepurtypeControl.invalid && directinvoicepurtypeControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicepurtypeControl.invalid && (directinvoicepurtypeControl.dirty || directinvoicepurtypeControl.touched)">
+                            <option value="" disabled selected>Select Purchase Type</option>
+                            <option *ngFor="let purchase of purchasetype_list" [value]="purchase.account_gid">{{purchase.purchasetype_name}}</option>
+                        </select>
+                        <div *ngIf="directinvoicepurtypeControl.invalid && directinvoicepurtypeControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicepurtypeControl.hasError('required')" class="text-red ms-3 fs-5">* Purchase type is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Priority</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                            <input class="form-check-input mt-4" type="radio" value="Low" name="low_priority">
+                            <label class="form-check-label text-gray-700 text-nowrap mt-4 ms-4" for="direct_invoice_low_priority">Low</label>
+                
+                            <input class="form-check-input ms-10 mt-4" type="radio" value="High" name="high_priority">
+                            <label class="form-check-label text-gray-700 text-nowrap mt-4 ms-4" for="direct_invoice_high_priority">High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card_heading mt-6">
+                <h6>Product Details</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Amount</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="direct_invoice_amount" [(ngModel)]="direct_invoice_amount" (input)="finaltotal()" [ngStyle]="{'border-color': directinvoiceamountControl.invalid && directinvoiceamountControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoiceamountControl.invalid && (directinvoiceamountControl.dirty || directinvoiceamountControl.touched)">
+                        <div *ngIf="directinvoiceamountControl.invalid && directinvoiceamountControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoiceamountControl.hasError('required')" class="text-red ms-3 fs-5">* Amount is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 1</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2" formControlName="direct_invoice_taxname1" (change)="taxAmount1()">
+                                        <option value="" disabled selected>Select Tax</option>
+                                          <option *ngFor="let taxname of tax_list" [value]="taxname.tax_gid">{{taxname.tax_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control" placeholder="0.00" readonly style="text-align: right; background-color: #e9e7e7; height: 38px;" formControlName="direct_invoice_taxamount1" [(ngModel)] = "taxamount1" (input)="taxAmount1()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 2</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2" formControlName="direct_invoice_taxname2" (change)="taxAmount2()">
+                                        <option value="" disabled selected>Select Tax</option>
+                                          <option *ngFor="let taxname of tax_list" [value]="taxname.tax_gid">{{taxname.tax_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control" placeholder="0.00" readonly style="text-align: right; background-color: #e9e7e7; height: 38px;" formControlName="direct_invoice_taxamount2" [(ngModel)]="taxamount2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Total</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="direct_invoice_total" [(ngModel)]="direct_invoice_total">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Description</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="direct_invoice_description" [ngStyle]="{'border-color': directinvoicedescriptionControl.invalid && directinvoicedescriptionControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoicedescriptionControl.invalid && (directinvoicedescriptionControl.dirty || directinvoicedescriptionControl.touched)"></textarea>
+                        <div *ngIf="directinvoicedescriptionControl.invalid && directinvoicedescriptionControl.touched" class="invalid-feedback">
+                            <div *ngIf="directinvoicedescriptionControl.hasError('required')" class="text-red ms-3 fs-5">* Description is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Addon Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_addon_amount" [(ngModel)]="direct_invoice_addon_amount" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Discount Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_discount_amount" [(ngModel)]="direct_invoice_discount_amount" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Freight Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_freight_charges" [(ngModel)]="direct_invoice_freight_charges" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">BuyBack/Scrap Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_buyback_scrap_charges" [(ngModel)]="direct_invoice_buyback_scrap_charges" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2">
+                                        <option value="" disabled selected>Select Extra Addon</option>
+                                        <option *ngFor="let extraaddon of extraaddon_list" [value]="extraaddon.additional_gid" formControlName="direct_invoice_additional_gid">{{extraaddon.additional_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_extra_addon" [(ngModel)]="direct_invoice_extra_addon" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2">
+                                        <option value="" disabled selected>Select Extra Deduction</option>
+                                        <option *ngFor="let extradeduction of extradeduction_list" [value]="extradeduction.discount_gid" formControlName="direct_invoice_discount_gid">{{extradeduction.discount_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_extra_deduction" [(ngModel)]="direct_invoice_extra_deduction" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Round Off :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="direct_invoice_round_off" [(ngModel)]="direct_invoice_round_off" (input)="grandtotal()" style="border: 1px solid; height: 25px; text-align: right;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Grand Total :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red fw-bold bg-secondary" formControlName="direct_invoice_grand_total" [(ngModel)] = "direct_invoice_grand_total" (input)="finaltotal()" readonly style="border: none; height: 25px; text-align: right; width: 119px;"><span class="fw-bold ms-4 text-red">{{currency_name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" m-3>
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4" (click)="directinvoicesubmit()">   
+                        <i class="bi bi-check-square fs-7 me-1"></i>
+                        Confirm
+                    </button>
+        
+                    <button class="btn-primary btn-sm text-white me-4" (click)="back()">
+                        <i class="bi bi-arrow-left-square fs-7 me-1"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

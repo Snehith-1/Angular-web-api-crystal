@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.pmr.Models
+{
+    public class MdlPmrTrnDirectInvoice
+    {
+        public List<GetVendornamedropdown> GetVendornamedropdown { get; set; }
+        public List<GetOnChangeVendor> GetOnChangeVendor { get; set; }
+        public List<GetPurchaseTypedropDown> GetPurchaseTypedropDown { get; set; }
+        public List<GetExtraAddondropDown> GetExtraAddondropDown { get; set; }
+        public List<GetExtraDeductiondropDown> GetExtraDeductiondropDown { get; set; }
+        public List<directsalesinvoicelist> directsalesinvoicelist { get; set; }
+    }
+    public class GetVendornamedropdown : result
+    {
+        public string vendorgid { get; set; }
+        public string vendorcompanyname { get; set; }
+    }
+    public class GetOnChangeVendor : result
+    {
+        public string vendorcontact { get; set; }
+        public string phone { get; set; }
+    }
+    public class GetPurchaseTypedropDown : result
+    {
+        public string account_gid { get; set; }
+        public string purchasetype_name { get; set; }
+    }
+    public class GetExtraAddondropDown : result
+    {
+        public string additional_gid { get; set; }
+        public string additional_name { get; set; }
+    }
+
+    public class GetExtraDeductiondropDown : result
+    {
+        public string discount_gid { get; set; }
+        public string discount_name { get; set; }
+    }
+
+    public class directsalesinvoicelist : result
+    {
+        public DateTime direct_invoice_date { get; set; }
+        public DateTime direct_invoice_due_date { get; set; }
+        public string direct_invoice_addon_amount { get; set; }
+        public string vendor_gid { get; set; }
+        public string direct_invoice_discount_amount { get; set; }
+        public string direct_invoice_grand_total { get; set; }
+        public string direct_invoice_amount { get; set; }
+        public string direct_invoice_payterm { get; set; }
+        public string direct_invoice_remarks { get; set; }
+        public string direct_invoice_currency_code { get; set; }
+        public string direct_invoice_exchange_rate { get; set; }
+        public string direct_invoice_freight_charges { get; set; }
+        public string direct_invoice_extra_addon { get; set; }
+        public string direct_invoice_extra_deduction { get; set; }
+        public string direct_invoice_buyback_scrap_charges { get; set; }
+        public string vendorinvoiceref_no { get; set; }
+        public string branch_gid { get; set; }
+        public string direct_invoice_round_off { get; set; }
+
+    }
+}

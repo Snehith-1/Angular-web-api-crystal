@@ -1,0 +1,1921 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+print
+</name>
+</assembly>
+<members>
+<member name="T:print.My.MyWebExtension">
+ <summary>
+ Module used to define the properties that are available in the My Namespace for Web projects.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:print.My.MyWebExtension.Computer">
+ <summary>
+ Returns information about the host computer.
+ </summary>
+</member>
+<member name="P:print.My.MyWebExtension.User">
+ <summary>
+ Returns information for the current Web user.
+ </summary>
+</member>
+<member name="P:print.My.MyWebExtension.Request">
+ <summary>
+ Returns Request object.
+ </summary>
+</member>
+<member name="P:print.My.MyWebExtension.Response">
+ <summary>
+ Returns Response object.
+ </summary>
+</member>
+<member name="P:print.My.MyWebExtension.Log">
+ <summary>
+ Returns the Asp log object.
+ </summary>
+</member>
+<member name="T:print.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:print.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:print.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:print.appointmentorder">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.appointmentorder.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.crm_trn_opendcadd._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.crm_trn_opnedc">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.crm_trn_opnedc.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.crm_trn_quatationinvoise._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.einvoicedst">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.einvoicedst.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.grninwarddataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.grninwarddataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.hrm_crp_appointmentletter._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.ims_dst_deliveryorder">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ims_dst_deliveryorder.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.ims_trn_directdeliveryorder._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+
+</member>
+<member name="T:print.int_crp_quotationdataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable6DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable6Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdataset.DataTable6RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.DataTable1TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.DataTable2TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.DataTable3TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.DataTable4TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.DataTable5TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.DataTable6TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.UpdateUpdatedRows(print.int_crp_quotationdataset,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.UpdateInsertedRows(print.int_crp_quotationdataset,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.UpdateDeletedRows(print.int_crp_quotationdataset,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.UpdateAll(print.int_crp_quotationdataset)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:print.int_crp_quotationdatasetTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.int_crp_quotationset.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipdataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipdataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslippaydataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslippaydataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable6DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable7DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable6Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable7Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable6RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.payslipsubdataset.DataTable7RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.pay_rpt_payempolyeeslip._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.pay_rpt_paysubreport1">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.pay_rpt_paysubreport1.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pay_rpt_paysubreport1.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pay_rpt_paysubreport1.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.pay_rpt_subreport2">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.pay_rpt_subreport2.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pay_rpt_subreport2.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pay_rpt_subreport2.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.pbl_crp_textilevoucher1.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.pbl_crp_txtilepaymentreceiptpdfword._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:print.pbl_trn_paymentsummaryrpt._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:print.pmr_crp_grnreportcr1._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.pmr_crp_grnreportdataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.pmr_trn_purchaseordersummary._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:print.print1._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.ProformaInvoice">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable6DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable6Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable6RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.ProformaInvoice.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable6DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable7DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable8DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable9DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable10DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable11DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable12DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable6Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable7Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable8Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable9Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable10Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable11Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable12Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable6RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable7RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable8RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable9RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable10RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable11RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.purchaseorder.DataTable12RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.quotationinvoice">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.quotationinvoice.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_paymentreceiptdataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable11DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable6DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable12DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable13DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable14DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable11Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable6Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable12Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable13Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable14Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable11RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable6RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable12RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable13RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.rbl_dst_invoicedataset.DataTable14RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="F:print.rbl_mst_paymentsummaryreceiptrpt._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:print.rbl_trn_proformainvoice._form1">
+<summary>
+form1 control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="T:print.smr_crp_finalinvoice">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable4DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable5DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable6DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable7DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable4Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable5Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable6Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable7Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable4RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable5RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable6RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoice.DataTable7RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable1TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable2TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable3TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable4TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable5TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable6TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.DataTable7TableAdapter">
+<summary>
+Represents the connection and commands used to retrieve and save data.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager">
+<summary>
+TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
+</summary>
+</member>
+<member name="M:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.UpdateUpdatedRows(print.smr_crp_finalinvoice,System.Collections.Generic.List{System.Data.DataRow},System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Update rows in top-down order.
+</summary>
+</member>
+<member name="M:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.UpdateInsertedRows(print.smr_crp_finalinvoice,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Insert rows in top-down order.
+</summary>
+</member>
+<member name="M:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.UpdateDeletedRows(print.smr_crp_finalinvoice,System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Delete rows in bottom-up order.
+</summary>
+</member>
+<member name="M:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.GetRealUpdatedRows(System.Data.DataRow[],System.Collections.Generic.List{System.Data.DataRow})">
+<summary>
+Remove inserted rows that become updated rows after calling TableAdapter.Update(inserted rows) first
+</summary>
+</member>
+<member name="M:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.UpdateAll(print.smr_crp_finalinvoice)">
+<summary>
+Update all changes to the dataset.
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.UpdateOrderOption">
+<summary>
+Update Order Option
+</summary>
+</member>
+<member name="T:print.smr_crp_finalinvoiceTableAdapters.TableAdapterManager.SelfReferenceComparer">
+<summary>
+Used to sort self-referenced table's rows
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.trp_crp_customerinvoice.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice">
+<summary>
+Represents a strongly typed in-memory cache of data.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable1DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable2DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable3DataTable">
+<summary>
+Represents the strongly named DataTable class.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable1Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable2Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable3Row">
+<summary>
+Represents strongly named DataRow class.
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable1RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable2RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+<member name="T:print.trv_crp_customerinvoice.DataTable3RowChangeEvent">
+<summary>
+Row event argument class
+</summary>
+</member>
+</members>
+</doc>

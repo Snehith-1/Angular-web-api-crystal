@@ -1,0 +1,54 @@
+.border-style {
+    border: 1px solid #000000; /* Specify the border style and color */
+    padding: 10px; /* Add padding for better spacing */
+}
+
+/* New Mail Button */ 
+.send-button {
+    background-color: #4fc445; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.send-button:hover {
+    background-color: #34b334; /* Change background color on hover */
+}
+
+.draft-button {
+    background-color: #f0ac47; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.draft-button:hover {
+    background-color: #f09347; /* Change background color on hover */
+}
+
+.back-button {
+    background-color: #009EF7; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.back-button:hover {
+    background-color: #008cff; /* Change background color on hover */
+}
+/* Attachement Button */ 
+.attachement-button {
+    background-color: #06b942e1; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.attachement-button:hover {
+    background-color: #04b63ff1; /* Change background color on hover */
+}
+
+.custom-editor {
+    height: 300px; /* Set the desired height */
+}
+   

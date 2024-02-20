@@ -1,0 +1,9 @@
+.bg-skyblue
+{
+    background-color: #075e54;
+}
+.bg-lightgreen
+{
+    background-color:  #DCF8C6;
+}
+

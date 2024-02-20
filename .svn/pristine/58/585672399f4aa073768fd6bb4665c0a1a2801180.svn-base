@@ -1,0 +1,83 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title"><b>Payment Summary</b></h3> 
+    </div>
+    <br>
+
+    <div class="col me-5">
+        <button title="Add Department" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end" data-bs-toggle="modal" data-bs-target="#myModaladd" (click)="addpayment()">
+          <i class="fas fa-plus"></i> &nbsp;&nbsp;
+          Add Payment</button>
+      </div>
+
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded d-flex">
+            <table id="paymentrpt_list" class="table table-striped table-row-bordered gy-5 gs-7">
+                <thead>
+                    <tr class="fw-bold fs-5 bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Payment Date</th>
+                        <th>Payment Ref No</th>
+                        <th>Vendor Ref.No</th>
+                        <th>Order No</th>
+                        <th>Cost Center</th>
+                        <th>Payment Note</th>
+                        <th>Vendor Name</th>
+                        <th>Payment Mode</th>
+                        <th>Payment Amount</th>
+                        <th>TDS Amount</th>
+                        <th>Paid Amount</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                        </tr>
+                </thead>
+                <tbody> 
+                     <tr *ngFor="let data of paymentrpt_list; let i=index;"> 
+                        <td >{{i+1}}</td>
+                        <td>{{data.payment_date | date:'dd-MM-yyyy'}}</td>
+                        <td>{{data.payment_gid}}</td>
+                        <td>{{data.vendorref_no}}</td>
+                        <td>{{data.purchaseorder_gid}}</td>
+                        <td>{{data.cost_center}}</td>
+                        <td>From Debit Note</td>
+                        <td>{{data.vendor_companyname}}</td>
+                        <td>{{data.payment_mode}}</td>
+                        <td>{{data.payment_amount}}</td>
+                        <td>{{data.tds_amount}}</td>
+                        <td>{{data.paid_amount}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="Detail" type="button" class="btn btn-icon btn-sm bg-primary me-2" data-bs-toggle="modal" data-bs-target="#myModaldetail" (click)="openModaldetail()">
+                                <span class="fa fa-question fs-6" style="color: #ffffff;"></span>
+                              </button>
+                        </td>
+                        <td>{{data.payment_status}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" data-bs-toggle="modal" data-bs-target="#myModalview" (click)="openModalview()">
+                              <span class="fa fa-eye fs-6" style="color: #ffffff;"></span>
+                            </button>
+                            <button title="Cancel" type="button" class="btn btn-icon btn-sm bg-danger me-2" data-bs-toggle="modal" data-bs-target="#myModalcancel" (click)="openModalcancel()">
+                                <span class="fa fa-times fs-6" style="color: #ffffff;"></span>
+                              </button>
+                              <button title="Approval Status" type="button" class="btn btn-icon btn-sm bg-success me-2" data-bs-toggle="modal" data-bs-target="#myModalapproval" (click)="openModalapproval()">
+                                <span class="fa fa-check fs-6" style="color: #ffffff;"></span>
+                              </button>
+                              <button title="Print Cheque" type="button" class="btn btn-icon btn-sm bg-warning me-2" data-bs-toggle="modal" data-bs-target="#myModalprint" (click)="openModalprint()">
+                                <span class="fa fa-print fs-6" style="color: #ffffff;"></span>
+                              </button>
+                              <button title="Payment Advance Slip" type="button" class="btn btn-icon btn-sm bg-danger me-2" data-bs-toggle="modal" data-bs-target="#myModalpayment" (click)="openModalpayment(data.payment_gid)">
+                                <span class="fa-solid fa-file-pdf fs-6" style="color: #ffffff;"></span>
+                              </button>
+                             
+                              <button title="Word" type="button" class="btn btn-icon btn-sm bg-primary me-2" data-bs-toggle="modal" data-bs-target="#myModalword" (click)="openModalword(data.payment_gid)">
+                                <span class="fas fa-file-word fs-6" style="color: #ffffff;"></span>
+                              </button>
+                              </td>
+                      
+                    </tr> 
+                </tbody> 
+            </table>
+        </div> 
+    </div> 
+
+    </div>

@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card">
+        <div class="card-header bg-mail" style="color: white;">
+            <h3 class="card-title"><i class="bi bi-envelope" style="font-size: 20px;"></i>&nbsp;&nbsp;Mail Campaign View</h3>
+            <div style="margin: 13px">
+              
+                <button title="Back"  class="btn-secondary btn-sm text-black me-4 " (click)="onback()"> <i class="bi bi-arrow-left-circle"></i>
+                    Back</button>
+                  
+                    
+            </div>
+      
+        </div>
+    
+    <br />
+    <div class="text-center my-18">
+        <div class="text-center" [innerHTML]="body">
+        </div>
+        <br>
+
+        <!-- <button type="button" class="btn-primary btn-sm text-white me-4" data-bs-toggle="modal"
+            data-bs-target="#myModaladd" style="width: 93px;text-align: center;height: 33px;" (click)="onback()">
+            <i class="bi bi-arrow-left-circle text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Back
+        </button> -->
+    </div>
+</div>
+
+

@@ -1,0 +1,352 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.hrm.Models;
+using MySql.Data.MySqlClient;
+
+
+namespace ems.hrm.DataAccess
+{
+    public class DaShifttype
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+
+        OdbcDataReader objMySqlDataReader;
+        DataTable dt_datatable;
+        int mnResult;
+        string msGetGid, msGetGid1, lsempoyeegid, msgetshift;
+
+        // Module Master Summary
+        public void DaShiftSummary(MdlShiftType values)
+        {
+
+            try
+            {
+                
+           msSQL = " select a.shifttype_gid,a.shifttype_name," +
+                   " group_concat(c.branch_name) as branch_name,status from hrm_mst_tshifttype a " +
+                   " left join hrm_mst_tshifttype2branch b on b.shifttype_gid = a.shifttype_gid " +
+                   " left join hrm_mst_tbranch c on c.branch_gid = b.branch_gid where 1=1 " +
+                   " GROUP BY shifttype_gid ORDER BY shifttype_name ASC";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<shift_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new shift_list
+                        {
+                            shifttype_gid = dt["shifttype_gid"].ToString(),
+                            shifttype_name = dt["shifttype_name"].ToString(),
+                            status = dt["status"].ToString(),
+                        });
+                        values.shift_list = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+            }
+
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+
+        }
+        public void DaGetWeekdaysummary(shifttypeadd_list values)
+        {
+            try
+            {
+                
+
+                msSQL = "select weekday_gid,weekday from hrm_mst_tweekdays";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<weekday_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new weekday_list
+                        {
+                            weekday_gid = dt["weekday_gid"].ToString(),
+                            weekday = dt["weekday"].ToString(),
+
+                        });
+                        values.weekday_list = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+            }
+
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+       
+        }
+        public void Dashiftweekdaystime(string employee_gid, shifttypeadd_list values)
+        {
+
+            try
+            {
+                
+                msGetGid = objcmnfunctions.GetMasterGID("HMSl");
+                msgetshift = objcmnfunctions.GetMasterGID("HSPM");
+
+
+                msSQL = " Insert into hrm_mst_tmasterscheduler( " +
+                    " scheduler_gid," +
+                    " shifttype_gid, " +
+                    " shift_mode," +
+                    " run_time," +
+                    " execute_in," +
+                    " cutoff_time," +
+                    " overnight_flag," +
+                    " In_overnightflag," +
+                    " Out_overnightflag," +
+                    " created_by," +
+                    " created_date " +
+                    " )values( " +
+                    " '" + msGetGid + "'," +
+                     "'" + msgetshift + "', " +
+                    " 'Login', " +
+                    "'" + values.login_scheduler + "'," +
+                    "'" + values.login_scheduler + "'," +
+                    "'" + values.entrycutoff_time + "'," +
+                    "'" + values.overnight_flag + "'," +
+                    "'" + values.inovernight_flag + "'," +
+                    "'" + values.outovernight_flag + "'," +
+                    "'" + employee_gid + "'," +
+                    "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                msSQL = " Insert into hrm_mst_tmasterscheduler( " +
+                    " scheduler_gid," +
+                    " shifttype_gid, " +
+                    " shift_mode," +
+                    " run_time," +
+                    " execute_out," +
+                    " cutoff_time," +
+                    " overnight_flag," +
+                    " In_overnightflag," +
+                    " Out_overnightflag," +
+                    " created_by," +
+                    " created_date " +
+                    " )values( " +
+                    " '" + msGetGid + "'," +
+                     "'" + msgetshift + "', " +
+                    " 'Logout', " +
+                    "'" + values.logout_schedular + "'," +
+                    "'" + values.logout_schedular + "'," +
+                    "'" + values.entrycutoff_time + "'," +
+                    "'" + values.overnight_flag + "'," +
+                    "'" + values.inovernight_flag + "'," +
+                    "'" + values.outovernight_flag + "'," +
+                    "'" + employee_gid + "'," +
+                    "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                msSQL = " insert into hrm_mst_tshifttype (" +
+                    " shifttype_gid, " +
+                    " shifttype_name," +
+                    " grace_time," +
+                    " email_list," +
+                    " created_by," +
+                    " created_date )" +
+                    " values (" +
+                    "'" + msgetshift + "', " +
+                    "'" + values.shift_name + "'," +
+                    "'" + values.grace_time + "'," +
+                    "'" + values.email_list + "'," +
+                    "'" + employee_gid + "'," +
+                    "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                foreach (var data in values.weekday_list)
+                {
+                    string msgetshiftdtl = objcmnfunctions.GetMasterGID("HSDL");
+                    msSQL = " insert into hrm_mst_tshifttypedtl (" +
+                        " shifttypedtl_gid, " +
+                        " shifttypedtl_name, " +
+                        " shifttype_gid, " +
+                        " shift_fromhours, " +
+                        " shift_fromminutes, " +
+                        " OTcutoff_hours, " +
+                        " OTcutoff_minutes, " +
+                        " shift_tohours," +
+                        " created_by, " +
+                        " created_date," +
+                        " shift_tominutes)" +
+                        " values (" +
+                        "'" + msgetshiftdtl + "', " +
+                        "'" + data.weekday + "'," +
+                        "'" + msgetshift + "'," +
+                        "'" + data.logintime.ToString("HH") + "'," +
+                        "'" + data.logintime.ToString("mm") + "'," +
+                        "'" + data.Ot_cutoff.ToString("HH") + "'," +
+                        "'" + data.Ot_cutoff.ToString("mm") + "'," +
+                        "'" + data.logouttime.ToString("HH") + "'," +
+                        "'" + employee_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                        "'" + data.logouttime.ToString("mm") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+                if (mnResult == 1)
+                {
+                    values.status = true;
+                    values.message = "Shift Type Added Sucessfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Shift Type";
+                }
+            }
+
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+
+        }
+
+        public void DaGetshiftTimepopup(string shifttype_gid,  MdlShiftType values)
+        {
+
+            try
+            {
+                
+                msSQL = " select shifttypedtl_gid, shifttypedtl_name, concat(shift_fromhours,':',shift_fromminutes) as start_time, " +
+                " concat(shift_tohours,':',shift_tominutes) as end_time  from hrm_mst_tshifttypedtl where shifttype_gid='" + shifttype_gid + "'";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<Time_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new Time_list
+                        {
+
+                            shifttypedtl_gid = dt["shifttypedtl_gid"].ToString(),
+                            shifttypedtl_name = dt["shifttypedtl_name"].ToString(),
+                            start_time = dt["start_time"].ToString(),
+                            end_time = dt["end_time"].ToString(),
+                        });
+                        values.Time_list = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+            }
+
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+        }
+        public void DaDeleteShift(string shifttype_gid, MdlShiftType values)
+        {
+            try
+            {
+                
+                msSQL = "  delete from hrm_mst_tshifttype where shifttype_gid='" + shifttype_gid + "'  ";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Shift Type Deleted Successfully";
+                }
+                else
+                {
+                    {
+                        values.status = false;
+                        values.message = "Error While Deleting Shift Type";
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+        }
+        public void DaGetshiftActive(string shifttype_gid, MdlShiftType values)
+        {
+            try
+            {
+                
+                msSQL = " update hrm_mst_tshifttype set" +
+                       " status='Y'" +
+                       " where shifttype_gid = '" + shifttype_gid + "'";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Shift Type Activated Successfully";
+                }
+                else
+                {
+                    {
+                        values.status = false;
+                        values.message = "Error While Shift Type Activated";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+
+        }
+        public void DaGetshiftInActive(string shifttype_gid, MdlShiftType values)
+        {
+
+            try
+            {
+                
+                msSQL = " update hrm_mst_tshifttype set" +
+                       " status='N'" +
+                       " where shifttype_gid = '" + shifttype_gid + "'";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Shift Type Inactivated Successfully";
+                }
+                else
+                {
+                    {
+                        values.status = false;
+                        values.message = "Error While Shift Type Inactivated";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                values.status = false;
+
+                objcmnfunctions.LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "***********" + $"DataAccess: {System.Reflection.MethodBase.GetCurrentMethod().Name}" + "***********" + ex.Message.ToString() +
+                 "***********" + ex.Message.ToString() + "*****Query****" + msSQL + "*******Apiref********", "ErrorLog/HR/ " + "Log" + DateTime.Now.ToString("yyyy - MM - dd HH") + ".txt");
+            }
+        }
+    }
+}

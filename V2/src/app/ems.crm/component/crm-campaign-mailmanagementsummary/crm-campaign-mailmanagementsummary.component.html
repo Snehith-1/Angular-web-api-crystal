@@ -1,0 +1,93 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Mail Management Summary</h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+
+    <br>
+    <div> &nbsp; &nbsp;
+
+        <button class="btn-primary btn-sm text-white me-4 mb-2 mt-2" (click)="onadd()">
+
+            <i class="fas fa-plus"></i> &nbsp; Compose Mail </button>
+
+    </div>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+            <table id="mail" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class=" text-white fw-bold fs-8 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Sent Date</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Subject</th>
+                        <th class="text-center">Details</th>
+                        <th>Created By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of mailmanagement; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.created_date}}</td>
+                        <td>{{data.from}}</td>
+                        <td>{{data.to}}</td>
+                        <td>{{data.sub}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="View Details" type="button" (click)="popmodal(data)" data-bs-toggle="modal"
+                                data-bs-target="#myModalUpdateimage" class="btn btn-icon btn-sm bg-question me-2">
+                                <span class="fa-solid fa-question  fs-4"></span>
+                            </button>
+                        </td>
+                        <td>{{data.created_by}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<br>
+
+<div class="modal" id="myModalUpdateimage" data-bs-backdrop="static" data-bs-keyboard="false">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                        class="fas fa-envelope fw-bolder fs-3"></i> &nbsp;&nbsp;Sent Mail Details</h2>
+
+            </div>
+
+            <div class="modal-body">
+
+
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12 "><span class="fw-bold">From </span>
+                    <p class="mt-2">{{from_mail}}</p>
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">To </span>
+                    <p class="mt-2">{{to_mail}}</p>
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"> <span class="fw-bold">Subject
+                    </span>
+                    <p class="mt-2">{{subject}}</p>
+                </div>
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="fw-bold">Body</span>
+                    <div [innerHTML]="body_content"></div>
+                </div>
+
+                <div class="text-center my-4">
+
+
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-arrow-left text-white"></i> &nbsp;Back
+                    </button>&nbsp;
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

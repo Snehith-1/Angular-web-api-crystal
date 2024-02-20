@@ -1,0 +1,55 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms'
+import { EmsEinvoiceRoutingModule } from './ems.einvoice-routing.module';
+import { CrmMstProductComponent } from './componet/crm-mst-product/crm-mst-product.component';
+import { CrmMstProductAddComponent } from './componet/crm-mst-product-add/crm-mst-product-add.component';
+import { CrmMstProductEditComponent } from './componet/crm-mst-product-edit/crm-mst-product-edit.component';
+import { DashboardComponent } from './componet/dashboard/dashboard.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { BodyComponent } from './componet/body/body.component';
+import { SidenavComponent } from './componet/sidenav/sidenav.component';
+import { CrmMstCustomerAddComponent } from './componet/crm-mst-customeradd/crm-mst-customeradd.component';
+import { CrmMstCustomerSummaryComponent } from './componet/crm-mst-customersummary/crm-mst-customersummary.component';
+import { RblTrnTinvoiceComponent } from './componet/rbl-trn-tinvoice/rbl-trn-tinvoice.component';
+import { DataTablesModule } from 'angular-datatables';
+import { RblTrninvoiceaddComponent } from './componet/rbl-trn-invoiceadd/rbl-trn-invoiceadd.component';
+import { CrmMstProductViewComponent } from './componet/crm-mst-product-view/crm-mst-product-view.component';
+import { CrmMstCustomereditComponent } from './componet/crm-mst-customeredit/crm-mst-customeredit.component';
+import { CrmMstCustomerviewComponent } from './componet/crm-mst-customerview/crm-mst-customerview.component';
+import { SysMstBranchComponent } from './componet/sys-mst-branch/sys-mst-branch.component';
+import { RblTrnEinvoiceComponent } from './componet/rbl-trn-einvoice/rbl-trn-einvoice.component';
+import { RblTrnInvoiceeditComponent } from './componet/rbl-trn-invoiceedit/rbl-trn-invoiceedit.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+@NgModule({
+  declarations: [
+    CrmMstProductComponent,
+    CrmMstProductAddComponent,
+    CrmMstProductEditComponent,
+    DashboardComponent,
+    RblTrnEinvoiceComponent,
+    BodyComponent,
+    SidenavComponent,
+    CrmMstCustomerAddComponent,
+    CrmMstCustomerSummaryComponent,
+    RblTrnTinvoiceComponent,
+    RblTrninvoiceaddComponent,
+    CrmMstProductViewComponent,
+    CrmMstCustomereditComponent,
+    SysMstBranchComponent,
+    CrmMstCustomerviewComponent,
+    RblTrnInvoiceeditComponent
+  ],
+  imports: [
+    CommonModule,
+    EmsEinvoiceRoutingModule,
+    NgApexchartsModule,
+    FormsModule,
+    DataTablesModule,
+    NgSelectModule,
+    ReactiveFormsModule,
+  ]
+})
+export class EmsEinvoiceModule { }

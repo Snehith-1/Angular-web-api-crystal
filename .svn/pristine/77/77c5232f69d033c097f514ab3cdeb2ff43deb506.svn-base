@@ -1,0 +1,367 @@
+<div class="card">
+    <div class="card-header bg-mail" style="color: white;">
+        <h3 class="card-title"><i class="bi bi-chat-left-dots" style="font-size: 20px;"></i>&nbsp;&nbsp;SMS Campaign
+        </h3>
+        <div style="margin: 13px">
+
+            <button title="Create Template" data-bs-toggle="modal" data-bs-target="#myModaladd"
+                class="btn-secondary btn-sm text-black me-4 "> <i class="bi bi-plus-circle-fill fs-3"></i>&nbsp;
+                Create New Campaign</button>
+
+
+        </div>
+
+    </div>
+
+    <br>
+    <div class="row d-flex flex-wrap m-4 justify-content-center">
+
+        <div class=" col-md-3 col-sm-3 ">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-violet">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Campaign Count</h5>
+
+                            <h4 class="my-1 text-info">{{campaigncount}}</h4>
+
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+                                class="bi bi-calendar3"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+            <div class="cardHead1 radius-10 border-start border-0 border-3 border-violet">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary"> Sent Count</h5>
+
+                            <h4 class="my-1 text-info">5</h4>
+
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i
+                                class="bi bi-chat-left-text"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="smscampaignlist" class="table table-striped table-row-bordered border-bottom gs-7">
+            <thead>
+                <tr class="fw-bolder fs-5 text-nowrap bg-mail text-white align-middle">
+
+                    <th>S.No</th>
+                    <th>Created Date</th>
+                    <th>Campaign Title </th>
+                    <th>Created By</th>
+                    <!-- <th>Viewed Count</th> -->
+
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of smscampaignlist; let i=index;" class="align-middle">
+                    <td>{{i+1}}</td>
+                    <td>{{data.created_date}}</td>
+                    <td>{{data.campagin_title}}</td>
+                    <td>{{data.created_by}}</td>
+
+                    <td class="text-center text-nowrap">
+                        <button title="Send SMS" type="button"  (click)="onsend(data.id)" class="btn btn-icon btn-sm bg-sent me-2"  ><span class="bi bi-send text-white  fs-6"></span></button>
+                        <button title="Edit" type="button" (click)="openModaledit(data)"   data-bs-toggle="modal" data-bs-target="#myModaledit"  class="btn btn-icon btn-sm bg-edit me-2" ><span class="fa-solid fa-pencil text-white  fs-6"></span></button>                        
+                        <button title="View" type="button" (click)="openModalview(data)"  data-bs-toggle="modal" data-bs-target="#myModalview" class="btn btn-icon btn-sm bg-view me-2"  ><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                        <button title="Delete" type="button"  (click)="openModaldelete(data.id)" data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>      
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- The Modal ADD -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal modal-xl" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-color">
+                    <div>
+                        <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Add Campaign Details</h2>
+                    </div>
+                </div>
+
+                <!-- Modal body -->
+
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="font-bold"><b>Campaign Title</b><span style="color:red"> *</span></span>
+                                <input formControlName="campaign_title" type="text" class="form-control" [ngStyle]="{
+                              'border-color':
+                              campaign_title.invalid && campaign_title.touched
+                                  ? 'red'
+                                  : 'rgb(209, 209, 209)'
+                            }" pattern="^(?!\s*$).+" name="campaign_title" required />
+                                <div *ngIf="campaign_title.invalid && (campaign_title.dirty || campaign_title.touched)">
+                                    <div *ngIf="campaign_title.errors?.['required']">
+                                        <span style="color:red;">Campaign Title is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <!-- Adjust the height as needed -->
+                               <br>
+                               <span class="font-bold"><b>Campaign Description</b><span style="color:red" >*<br></span></span>
+                               <textarea formControlName="campaign_title" rows="6" type="text" class="form-control" #myInput
+                                   [maxlength]="maxChar" [ngStyle]="{
+                                       'border-color': campaign_title.invalid && campaign_title.touched
+                                           ? 'red'
+                                           : 'rgb(209, 209, 209)'
+                                   }" pattern="^(?!\s*$).+" name="campaign_title" required ></textarea>
+                               <div *ngIf="campaign_title.invalid && (campaign_title.dirty || campaign_title.touched)">
+                                   <div *ngIf="campaign_title.errors?.['required']">
+                                       <span style="color:red;">Campaign Description is required.</span>
+                                   </div>
+                               </div>
+                               <label class="nopadding clrlbl">
+                                   Characters Remaining: {{myInput.value.length}} /{{maxChar}}</label>
+                           </div>
+                            <!-- <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="d-flex flex-row m-6 mt-0">
+
+                                    <div class="col" style="margin-left: -17px;">
+                                        <br>
+                                        <span class="font-bold"><b>Campaign Content</b><span style="color:red">
+                                                *</span></span>
+                                        <div class="col-lg-12 fv-row mt-2">
+                                            <angular-editor [config]="config" [ngStyle]="{
+                                            'border-color':
+                                            campaign_message.invalid && campaign_message.touched
+                                                ? 'red'
+                                                : 'rgb(209, 209, 209)'
+                                          }" pattern="^(?!\s*$).+" formControlName="campaign_message"></angular-editor>
+                                            <div
+                                                *ngIf="campaign_message.invalid && (campaign_message.dirty || campaign_message.touched)">
+                                                <div *ngIf="campaign_message.errors?.['required']">
+                                                    <span style="color:red;">Campaign Content is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div> -->
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal Edit -->
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+    <div class="modal modal-xl" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-color">
+                    <div>
+                        <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Edit Campaign Details</h2>
+                    </div>
+                </div>
+
+                <!-- Modal body -->
+
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="font-bold"><b>Campaign Title</b><span style="color:red"> *</span></span>
+                                <input formControlName="campaign_titleedit" type="text" class="form-control" [ngStyle]="{
+                              'border-color':
+                              campaign_titleedit.invalid && campaign_titleedit.touched
+                                  ? 'red'
+                                  : 'rgb(209, 209, 209)'
+                            }" pattern="^(?!\s*$).+" name="campaign_titleedit" required />
+                                <div *ngIf="campaign_titleedit.invalid && (campaign_titleedit.dirty || campaign_titleedit.touched)">
+                                    <div *ngIf="campaign_titleedit.errors?.['required']">
+                                        <span style="color:red;">Campaign Title is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="d-flex flex-row m-6 mt-0">
+
+                                    <div class="col" style="margin-left: -17px;">
+                                        <br>
+                                        <span class="font-bold"><b>Campaign Content</b><span style="color:red">
+                                                *</span></span>
+                                        <div class="col-lg-12 fv-row mt-2">
+                                            <angular-editor [config]="config" [ngStyle]="{
+                                            'border-color':
+                                            campaign_messageedit.invalid && campaign_messageedit.touched
+                                                ? 'red'
+                                                : 'rgb(209, 209, 209)'
+                                          }" pattern="^(?!\s*$).+" formControlName="campaign_messageedit"></angular-editor>
+                                            <div
+                                                *ngIf="campaign_messageedit.invalid && (campaign_messageedit.dirty || campaign_messageedit.touched)">
+                                                <div *ngIf="campaign_messageedit.errors?.['required']">
+                                                    <span style="color:red;">Campaign Content is required.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onupdate()" [disabled]="reactiveFormEdit.invalid" [ngClass]="{
+                'primary-button': !reactiveFormEdit.invalid,
+                'secondary-button': reactiveFormEdit.invalid
+              }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal View -->
+<form [formGroup]="reactiveFormView" #form="ngForm">
+    <div class="modal modal-xl" id="myModalview" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-color">
+                    <div>
+                        <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">View Campaign Details</h2>
+                    </div>
+                </div>
+
+                <!-- Modal body -->
+
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span class="font-bold"><b>Campaign Title</b><span style="color:red"> *</span></span>
+                                <input formControlName="campaign_title" class="form-control" readonly type="text"  name="campaign_title" required />
+                               
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="d-flex flex-row m-6 mt-0">
+
+                                    <div class="col" style="margin-left: -17px;">
+                                        <br>
+                                        <span class="font-bold"><b>Campaign Content</b><span style="color:red">
+                                                *</span></span>
+                                        <div class="col-lg-12 fv-row mt-2">
+                                            <angular-editor [config]="config" readonly  formControlName="campaign_message"></angular-editor>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <!-- <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                    </button> &nbsp;&nbsp; -->
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center my-4">
+            <h2><b>Are you sure?</b></h2>
+            <br>
+            <p style="display: block;">Do You Want To Delete the Record ?</p><br>
+          <div class="text-center my-4">
+            <button class="btn-primary btn-sm text-white me-2"  data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Close
+                </button>&nbsp;
+            <button class="btn-danger btn-sm text-white me-4"  (click)="ondelete()"  data-bs-dismiss="modal" >          
+                <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+            </button>
+           
+    
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,72 @@
+
+<div class="card">
+    <div class="card-header bg-mail" style="color: white;">
+        <h3 class="card-title"><i class="bi bi-envelope" style="font-size: 20px;"></i>&nbsp;&nbsp;Mail Campaign Status</h3>
+        <div style="margin: 13px">
+          
+            <button title="Back"  class="btn-secondary btn-sm text-black me-4 " (click)="onback()"> <i class="bi bi-arrow-left-circle"></i>
+                Back</button>
+              
+                
+        </div>
+  
+    </div> 
+
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        
+
+        <table id="mailtemplatesendsummary_list" class="table table-striped table-row-bordered border-bottom gs-7">
+            <thead>
+                <tr class="fw-bolder fs-5 text-nowrap bg-mail text-white align-middle">
+                    
+                    <th>S.No</th>
+                    <!-- <th>Name </th> -->
+                    <th>Email Address</th>
+                    <th>Send Status</th>
+                    <th>Read Status</th>
+                    <th>Date</th>
+
+
+                </tr>
+            </thead>
+            <tbody id="Inbox" #Inbox>
+                
+              <tr *ngFor="let data of mailtemplatesendsummary_list; let i=index;">
+
+                    <td>{{i+1}}</td>
+                    <td >
+                        <a class="d-flex align-items-center text-gray-900">
+
+                            <span class="fw-semibold ">{{data.to_mail}}</span>
+                        </a>
+                    </td>
+                    <td >
+                        <div class=" text-gray-900 " >
+                            <span class="fw-bold">{{data.status_delivery}}</span>
+                        </div>
+                    </td>
+                    
+                    <td >
+                        <div class=" text-gray-900 " >
+                            <span class="fw-bold">{{data.status_open}}</span>
+                        </div>
+                    </td>
+                    <td class="">
+                        <span class="fw-semibold ">{{data.date}}</span>
+                    </td>
+
+                </tr> 
+                
+
+            </tbody>
+        </table>
+        <!-- <div class="text-center my-4">
+        
+
+            <button type="button" class="btn-primary btn-sm text-white me-4" data-bs-toggle="modal"
+                data-bs-target="#myModaladd" style="width: 93px;text-align: center;height: 33px;" (click)="onback()">
+                <i class="bi bi-arrow-left-circle text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Back
+            </button>
+        </div> -->
+    </div>
+</div>

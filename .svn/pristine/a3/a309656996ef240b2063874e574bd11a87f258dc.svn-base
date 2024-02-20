@@ -1,0 +1,157 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../../environments/environment.development';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+
+@Component({
+  selector: 'app-crm-mst-product-add',
+  templateUrl: './crm-mst-product-add.component.html',
+  styleUrls: ['./crm-mst-product-add.component.scss']
+})
+export class CrmMstProductAddComponent implements OnInit, OnDestroy {
+  // KeenThemes mock, change it to:
+
+  producttype_list: any[] = [];
+  productgroup_list: any[] = [];
+  productunitclass_list: any[] = [];
+  productunit_list: any[] = [];
+  rbo_status: any[] = [];
+  productform: FormGroup | any;
+  hasError?: boolean;
+  returnUrl?: string;
+  submitted = false;
+
+
+  // private fields
+  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  responsedata: any;
+  result: any;
+
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: SocketService,
+    private ToastrService: ToastrService,
+  ) 
+  {
+    this.productform = new FormGroup({
+      producttype_name: new FormControl('', Validators.required),
+      productgroup_name:new FormControl('', Validators.required),
+      productuomclass_name:new FormControl('', Validators.required),
+      productuom_name:new FormControl('',Validators.required),
+      product_code:new FormControl('',Validators.required),
+      product_name:new FormControl('',Validators.required),
+      product_desc:new FormControl('',Validators.required),
+      mrp:new FormControl('',Validators.required),
+      cost_price:new FormControl('',Validators.required),
+      hsn_code:new FormControl('',Validators.required),
+      hsn_desc:new FormControl('',Validators.required),
+
+
+    });
+  }
+  ngOnDestroy(): void {
+
+  }
+  ngOnInit(): void {
+
+    var api = 'EinvoiceProduct/Getproductgroupdropdown';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.productgroup_list = this.responsedata.Getproductgroupdropdown;
+      
+    });
+
+    var api = 'EinvoiceProduct/Getproducttypedropdown';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.producttype_list = this.responsedata.Getproducttypedropdown;
+    });
+
+    var api = 'EinvoiceProduct/Getproductunitclassdropdown';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.productunitclass_list = this.responsedata.Getproductunitclassdropdown;
+    });
+
+    var api = 'EinvoiceProduct/Getproductunitdropdown';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.productunit_list = this.responsedata.Getproductunitdropdown;
+    });
+  }
+
+  get producttypecontrol() {
+    return this.productform.get('producttype_name');
+  }
+  get productgroupcontrol(){
+    return this.productform.get('productgroup_name');
+
+  }
+  get mrpControl() {
+    return this.productform.get('mrp');
+  }
+  get productcodecontrol() {
+    return this.productform.get('product_code');
+  }
+  get productunitclasscontrol(){
+    return this.productform.get('productuomclass_name');
+
+  }
+
+  get productunitscontrol(){
+    return this.productform.get('productuom_name');
+
+  }
+  get productnamecontrol() {
+    return this.productform.get('product_name');
+  }
+  get costpricecontrol() {
+    return this.productform.get('cost_price');
+  }
+  get hsncodeControl() {
+    return this.productform.get('hsn_code');
+  }
+
+  onadd() {
+    debugger
+    var api = 'EinvoiceProduct/GetProductCodeCheck';
+    this.service.post(api, this.productform.value).subscribe((result: any) => {
+      this.responsedata = result;
+      //this.productgroup_list = this.responsedata.Getproductgroupdropdown;
+      
+    });
+ if(this.responsedata.status==true)
+ {
+  this.ToastrService.warning("Product Code Already Exist")
+
+ }
+ else
+ {
+    var api = 'EinvoiceProduct/PostProduct';
+    this.service.post(api, this.productform.value).subscribe((result: any) => {
+          this.responsedata = result;
+          this.router.navigate(['einvoice/CrmMstProduct']);
+        }
+      ,(error: any) => {
+        if (error.status === 401)
+          this.router.navigate(['pages/401'])
+        else if (error.status === 404)
+          this.router.navigate(['pages/404'])
+      });
+    
+  }
+}
+  
+  redirecttolist(){
+    this.router.navigate(['/einvoice/CrmMstProduct']);
+
+  }
+
+}

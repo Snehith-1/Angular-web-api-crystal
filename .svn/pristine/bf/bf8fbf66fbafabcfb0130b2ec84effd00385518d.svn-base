@@ -1,0 +1,11 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise" [fullScreen] = "true"><br>
+<p style="color:white"  >Loading... </p>
+</ngx-spinner>
+
+<div *ngIf="router.url == '/auth/login' || router.url == '/auth/401' || router.url == '/auth/404' ||  router.url == '/auth/500'">
+    <router-outlet></router-outlet>
+</div>
+<div *ngIf="router.url != '/auth/login' && router.url != '/auth/401' && router.url != '/auth/404' &&  router.url != '/auth/500'">
+    <app-layout></app-layout>
+</div>
+

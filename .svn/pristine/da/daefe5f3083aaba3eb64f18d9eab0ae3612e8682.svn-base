@@ -1,0 +1,387 @@
+<div class="card " style="border: 1px solid rgb(185, 184, 184);">
+
+    <div class="card-header bg-skyblue">
+        <h3 class="card-title " style="color: white;"><i class="fab fa-whatsapp"
+                style="color: white; font-size: 20px;"></i>
+            &nbsp; Chats </h3>
+            <div style="margin: 13px; ">
+                <!-- <button class="btn-secondary" type="button" data-kt-element="filter" data-bs-target="#mydropdown"
+                    data-bs-toggle="modal" style="margin-right:20px; border:1px solid rgb(211, 208, 208)">
+                    <i class="fa-solid fa-filter fs-4" style="color: rgb(163, 153, 153); font-size: 20px;"></i>&nbsp;Filter
+                </button> -->
+                <button type="button" class="btn-secondary" data-bs-toggle="modal" data-bs-target="#myModaladd"><i
+                        class="bi bi-plus-circle-fill"></i> &nbsp;
+                    Create contact
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign"
+                    class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                    </i>&nbsp;Back</button>
+            </div>
+    </div>
+    <div id="kt_app_content" class="app-content flex-column-fluid" style="max-height: 400px;">
+        <div id="kt_app_content_container" class="app-container container-xxl" style="margin-top: -30px;">
+            <div class="d-flex flex-column flex-lg-row">
+                <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
+                    <!---contact card header---->
+                    <div class="card card-flush bg-white" style="min-height: 400px; margin-left:-30px;">
+                        <div class="card-header pt-7" id="kt_chat_contacts_header">
+                            <form class="w-100 position-relative " autocomplete="off">
+                                <input type="text" class="form-control form-control-solid px-13" name="search"
+                                    [(ngModel)]="searchText" placeholder="Search by username or number" />
+                                <br />
+                                <div *ngFor="let data of count_list; let i=index;">
+                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                        data.contact_count}} contacts</span>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="card-body pt-5" id="kt_chat_contacts_body"
+                            style="max-height: 290px; overflow-y: auto;">
+                            <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_toolbar, #kt_app_toolbar, #kt_footer, #kt_app_footer, #kt_chat_contacts_header"
+                                data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_contacts_body"
+                                data-kt-scroll-offset="5px">
+                                <!-- contact card body -->
+                                <div *ngFor="let data of whatsapp_list; let i=index;"
+                                    (click)="showResponsiveOutput(data.whatsapp_gid)" [hidden]="!matchesSearch(data)">
+                                    <!-- Update the matchesSearch function to filter the displayed items -->
+                                    <div class="d-flex flex-stack py-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px symbol-circle bg-secondary">
+                                                <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                                    data.first_letter}}</span>
+                                            </div>
+                                            <div class="ms-5">
+                                                <a href="#"
+                                                    class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{
+                                                    data.displayName }}</a>
+                                                <div class="fw-semibold text-muted">{{ data.value }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-end ms-2">
+                                            <span class="text-muted fs-7 mb-1">{{data.last_seen}}</span>
+                                            <div *ngIf="data.read_flag > 0">
+                                                <span
+                                                    class="badge badge-success rounded-pill text-white ">{{data.read_flag}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed d-none"></div>
+                                </div>
+                                <!-- *******************-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5">
+                    <!----message card header-->
+                    <div class="card bg-secondary" id="kt_chat_messenger"
+                        style="max-height: 360px; min-height: 400px; margin-right: -30px; margin-left: -10px;">
+                        <div class="card-header" id="kt_chat_messenger_header">
+
+                            <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                <div class="card-title">
+                                    <div class="symbol symbol-35px symbol-circle bg-white" *ngIf="i === 0">
+                                        <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                            data.first_letter}}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-center flex-column me-3" *ngIf="i === 0">
+                                        <a href="#" class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1"
+                                            style="margin-left: 10px;">{{data.displayName}}</a>
+                                        <div class="mb-0 lh-1">
+                                            <span class="badge badge-success badge-circle w-10px h-10px me-1"
+                                                style="margin-left: 15px;"></span>
+                                            <span class="fs-7 fw-semibold text-muted"
+                                                style="margin-left: 5px;">Active</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Message card body-->
+                        <div class="card-body bg-message" id="kt_chat_messenger_body"
+                            style=" max-height: 300px; overflow-y: auto;">
+                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages" id="kt_chat_messenger_body"
+                            data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                data-kt-scroll-offset="5px">
+                                <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                    <div *ngIf="data.direction === 'incoming'"
+                                        class="d-flex justify-content-start mb-10">
+                                        <div class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="p-5 rounded bg-white text-dark fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text">{{data.message_text}}</div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="data.direction === 'outgoing'" class="d-flex justify-content-end mb-10">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="p-5 rounded bg-lightgreen text-dark fw-semibold mw-lg-400px text-end"
+                                                data-kt-element="message-text">{{data.message_text}}</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!------Message card footer------->
+                        <form [formGroup]="reactiveMessageForm" #form="ngForm">
+                            <div class="card-footer pt-4" id="kt_chat_messenger_footer" style="padding: 0;">
+                                <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+                                    <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                        <input type="hidden" [formControlName]="'identifierValue'"
+                                            [value]="data.identifierValue" />
+                                    </div>
+
+
+                                    <button title="Attach Files" type="button" class="btn btn-icon btn-sm btn-attach me-2"
+                                        onclick="document.getElementById('fileInput').click()">
+                                        <i class="fas fa-paperclip fw-bolder fs-3"></i>
+                                    </button>
+
+                                    <input (change)="onChange1($event)" type="file" id="fileInput"
+                                        name="file" style="display: none;" />
+                                    <input style="width: 300%;" (change)="onChange1($event)" accept=".xlsx, .xls"
+                                        type="file" id="fileInput2" name="fName" style="display: none;" />
+
+                                    <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                        <button title="Attach Templates" type="button"
+                                            class="btn btn-icon btn-sm bg-temp me-2" data-kt-element="template"
+                                            data-bs-target="#template" data-bs-toggle="modal"
+                                            (click)="poptemplatemodal(data.identifierValue)" *ngIf="i === 0">
+                                            <i class="fas fa-plus fw-bolder fs-3"></i>
+                                        </button>
+                                    </div>
+
+                                    <input formControlName="sendtext" type="text" style="width:80%;" class="
+                                form-control form-control-lg form-control-solid
+                                custom-input
+                                mb-1 mb-lg-0
+                                bg-white
+                                custom-input
+                              " placeholder="Type a message" name="sendtext" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                        <button title="Send" type="button" class="btn btn-icon btn-sm bg-skyblue me-2"
+                                            (click)="onMessagesent(data.identifierValue, data.contact_id)"
+                                            *ngIf="i === 0">
+                                            <i class="fas fa-paper-plane fs-3"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!--center nav -->
+        </div>
+    </div>
+</div>
+<!-- The Modal ADD -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;Create new contact</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row"><span class="font-bold"><b>Display Name</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="displayName" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     displayName.invalid && displayName.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="displayName" required />
+                        </div>
+                    </div>
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['required']">
+                            <span style="color:red;">Customer name is required.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <span class="font-bold"><b>Mobile Number</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-2 col-2 col-md-1 col-sm-2 fv-row mt-2">
+                            <select class="form-control form-control-lg custom-input bg-white">
+                                <option value="+91">+91</option>
+                                <option value="+44">+44</option>
+                                <!-- You can add more country codes if needed -->
+                            </select>
+                        </div>
+                        <div class="col-lg-10 col-10 col-md-11 col-sm-10 fv-row mt-2">
+                            <input type="text" id="mobile" name="mobile" formControlName="value"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                                [ngStyle]="{ 'border-color': value.invalid && value.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                                pattern="^\+91\d{10}$" placeholder="" maxlength="13" autocomplete="off">
+                            <div *ngIf="value.errors?.['pattern']" class="error-text">Mobile contains 10 numbers starts
+                                with +91.</div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button (click)="onsubmit()" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Filter dropdown -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="mydropdown" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width: 250px; max-height: 600px; margin-top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-white"
+                    style="border-bottom: 1px solid rgb(173, 173, 173);">
+                    <h2 style="margin-top:10px;color:rgb(3, 2, 2);font-weight: bold;">
+                        &nbsp;&nbsp;Filter Options
+                    </h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <span class="font-bold"><b>Status</b></span>
+                        <ng-select style="width: 100%;" formControlName="moving_stage"
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="Select option">
+                            <ng-option value="1">New</ng-option>
+                            <ng-option value="3">Prospect</ng-option>
+                            <ng-option value="4">Potential</ng-option>
+                            <ng-option value="5">Drop</ng-option>
+                            <ng-option value="6">Customer</ng-option>
+                        </ng-select>
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                        <div class="col-lg-6 col-md-6 col-sm-6 fv-row mt-2">
+                            <span class="font-bold"><b>View Type</b></span>
+                            <div class="d-flex justify-content-start mt-4 ms-2">
+                                <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                            ">
+                                    <input class="form-check-input" type="radio" name="contact" checked="checked"
+                                        formControlName="contact" value="all_contact" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="kt_builder_header_content_menu">All Contacts</label>
+                                </div>
+                                <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                              ms-10
+                            ">
+                                    <input class="form-check-input" type="radio" name="contact"
+                                        formControlName="contact" value="my_contact" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="kt_builder_header_content_page-title">My Contact</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br /><br />
+                    <div class="text-center my-4">
+                        <button [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Apply
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<!-- Template Popup -->
+<form [formGroup]="reactiveMessageForm" #form="ngForm">
+    <div class="modal" id="template" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width: 250px; max-height: 600px; margin-top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-white"
+                    style="border-bottom: 1px solid rgb(173, 173, 173);">
+                    <h2 style="margin-top: 10px; color: rgb(3, 2, 2); font-weight: bold;">&nbsp;&nbsp;Templates</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="max-height: 250px; overflow-y: auto; ">
+                    <!-- contact card body -->
+                    <div *ngFor="let data of whatsappMessagetemplatelist; let i=index;"
+                        (click)="passprojectid(data.id,data.version)">
+                        <div class="d-flex flex-stack py-4">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-5">
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{data.p_name
+                                        }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed d-none"></div>
+                    </div>
+                    <div class="text-center my-4">
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,24 @@
+<div class="card card-bordered">
+    <div class="card-shadow-sm i-card">
+        <form [formGroup]="attendanceform" (ngSubmit)="signin()" (ngSubmit)="punchin()">
+            <div class="card1">
+                <label for="">Location </label>
+                <input type="text" id="" name="" formControlName="location">
+            </div>
+    
+            <div class="date_time">
+                <p>{{ Time | date: " hh:mm:ss a"}}</p>
+            </div>
+    
+            <div>
+                <p class="para"><b>Please click Punch In to mark your attendance ! </b></p>
+            </div>
+    
+            <div class="text-center submit-button">
+                <button type="button" class="btn-success text-white me-2" (click)="signin()" (click)="punchin()">      
+                    <i class="bi bi-check-square fs-5"></i>&nbsp; {{bname}}  </button>&nbsp;
+                <button type="button" class="btn-danger" (click)="redirecttolist()">Back </button>
+            </div>
+        </form>
+    </div>
+</div>

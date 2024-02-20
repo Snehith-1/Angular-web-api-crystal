@@ -1,0 +1,831 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.crm.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Net;
+using System.Configuration;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using static OfficeOpenXml.ExcelErrorValue;
+
+namespace ems.crm.DataAccess
+{
+    public class DaWhatsapp
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, Status, lstemplate_gid, lsp_name;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        int mnResult6;
+
+
+        public result dacreatecontact(mdlCreateContactInput values, string user_gid)
+        {
+            int i = 0;
+            result objresult = new result();
+            Rootobject objRootobject = new Rootobject();
+            string contactjson = "{\"displayName\":\"" + values.displayName + "\",\"identifiers\":[{\"key\":\"phonenumber\",\"value\":\"" + values.value + "\"}],\"firstName\":\"" + values.firstName + "\",\"gender\":\"" + values.gender + "\",\"lastName\":\"" + values.lastName + "\"}";
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+            var request = new RestRequest(ConfigurationManager.AppSettings["messagebirdcontact"].ToString(), Method.POST);
+            request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+            request.AddParameter("application/json", contactjson, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            var responseoutput = response.Content;
+            objRootobject = JsonConvert.DeserializeObject<Rootobject>(responseoutput);
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                msSQL = "insert into crm_smm_whatsapp(id,wkey,wvalue,displayName,firstName,lastName,gender,created_date,created_by)values(" +
+                        "'" + objRootobject.id + "'," +
+                        "'" + values.key + "'," +
+                        "'" + values.value + "'," +
+                        "'" + values.displayName + "'," +
+                        "'" + values.firstName + "'," +
+                        "'" + values.lastName + "'," +
+                        "'" + values.gender + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                        "'" + user_gid + "')";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    objresult.status = true;
+                    objresult.message = "Contact created successfully!";
+                }
+                else
+                {
+                    objresult.message = "Error occured while adding contact!";
+                }
+            }
+            else
+            {
+                objresult.status = false;
+                objresult.message = "Error occured while posting contact!!";
+            }
+            return objresult;
+        }
+        public result daCreateProject(mdlCreateTemplateInput values, string user_gid)
+        {
+            int i = 0;
+            result objresult = new result();
+            createProject objcreateProject = new createProject();
+            string contactjson = "{\"type\":\"" + values.type + "\",\"name\":\"" + values.name + "\",\"description\":\"" + values.description + "\"}";
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+            var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/projects", Method.POST);
+            request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+            request.AddParameter("application/json", contactjson, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            var responseoutput = response.Content;
+            objcreateProject = JsonConvert.DeserializeObject<createProject>(responseoutput);
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                msSQL = "insert into crm_smm_whatsapptemplate(id,p_type,p_name,description,created_date,created_by)values(" +
+                        "'" + objcreateProject.id + "'," +
+                        "'" + objcreateProject.type + "'," +
+                        "'" + objcreateProject.name + "'," +
+                        "'" + objcreateProject.description + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                        "'" + user_gid + "')";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    objresult.status = true;
+                    objresult.message = "Project created successfully!";
+                }
+                else
+                {
+                    objresult.message = "Error occured while adding Project!";
+                }
+            }
+            else
+            {
+                objresult.status = false;
+                objresult.message = "Error occured while posting Project!!";
+            }
+            return objresult;
+        }
+
+
+
+
+        public result daCreateTemplate(mdlCreateTemplateInput1 values, string user_gid)
+        {
+            int i = 0;
+            result objresult = new result();
+            createtemplate objcreatetemplate = new createtemplate();
+            string contactjson = "{\"defaultLocale\":\"en\",\"genericContent\":[],\"platformContent\":[{\"platform\":\"whatsapp\"," +
+                "\"locale\":\"en\",\"blocks\":[{\"type\":\"text\",\"role\":\"body\",\"text\":{\"text\":\"" + values.body + "\"},\"id\":\"cbA0XdmkFDAbJiGfS41kK9\"}," +
+                "{\"type\":\"text\",\"role\":\"footer\",\"text\":{\"text\":\"" + values.footer + "\"}," +
+                "\"id\":\"lA0CtTqaNO2zFz9p_Uoxo7\"}],\"type\":\"text\",\"channelGroupIds\":[\"a6c2eefa-2796-40df-b500-29e4e9b738d2\"]}]," +
+                "\"supportedPlatforms\":[\"whatsapp\"],\"deployments\":[{\"key\":\"whatsappTemplateName\"," +
+                "\"platform\":\"whatsapp\",\"value\":\"test\"},{\"key\":\"whatsappCategory\",\"platform\":\"whatsapp\",\"value\":\"" + values.value1 + "\"}," +
+                "{\"key\":\"whatsappAllowCategoryChange\",\"platform\":\"whatsapp\",\"value\":\"" + values.category_change + "\"}]}";
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+            string projectId = values.projectId;
+            var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/projects/" + values.projectId + "/channel-templates", Method.POST);
+            request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+            request.AddParameter("application/json", contactjson, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            var responseoutput = response.Content;
+            objcreatetemplate = JsonConvert.DeserializeObject<createtemplate>(responseoutput);
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                msSQL = " update  crm_smm_whatsapptemplate  set " +
+          " template_id = '" + objcreatetemplate.id + "'," +
+          " template_body = '" + objcreatetemplate.platformContent[i].blocks[i].text.text + "' where id='" + values.projectId + "'  ";
+
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    objresult.status = true;
+                    objresult.message = "Template created successfully!";
+                }
+                else
+                {
+                    objresult.message = "Error occured while adding Template!";
+                }
+            }
+            else
+            {
+                objresult.status = false;
+                objresult.message = "Error occured while posting Template!!";
+            }
+            return objresult;
+        }
+        public result DaWhatsappSend(sendmessage values, string user_gid)
+        {
+            int i = 0;
+            Result objsendmessage = new Result();
+
+            result objresult = new result();
+            if (values.projectId != null)
+            {
+                string contactjson = "{\"receiver\":{\"contacts\":[{\"identifierValue\":\"" + values.identifierValue + "\",\"identifierKey\":\"phonenumber\"}]},\"template\":{\"projectId\":\"" + values.projectId + "\",\"version\":\"" + values.version + "\",\"locale\":\"en\"}}";
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+                var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/channels/c21b849f-5e1a-49d2-a7dc-414a96b19391/messages", Method.POST);
+                request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+                request.AddParameter("application/json", contactjson, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+                string waresponse = response.Content;
+                objsendmessage = JsonConvert.DeserializeObject<Result>(waresponse);
+
+                if (response.StatusCode == HttpStatusCode.Accepted)
+                {
+                    msSQL = "insert into crm_trn_twhatsappmessages(" +
+                             "message_id," +
+                             "contact_id," +
+                             "direction," +
+                             "type," +
+                             "message_text," +
+                             "content_type," +
+                              "project_id," +
+                             "version_id," +
+                             "status," +
+                             "created_date)" +
+                             "values(" +
+                             "'" + objsendmessage.id + "'," +
+                             "'" + objsendmessage.receiver.contacts[0].id + "'," +
+                             "'" + objsendmessage.direction + "'," +
+                            "'" + objsendmessage.body.type + "',";
+                    if (objsendmessage.body.type == "text")
+                    {
+                        msSQL += "'" + objsendmessage.body.text.text.Replace("'", "\\'") + "'," +
+                                 "null,";
+                    }
+                    else if (objsendmessage.body.type == "list")
+                    {
+                        msSQL += "'" + objsendmessage.body.list.text.Replace("'", "\\'") + "'," +
+                                 "null,";
+                    }
+                    else if (objsendmessage.body.type == "image")
+                    {
+                        msSQL += "'" + objsendmessage.body.image.images[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                 "null,";
+                    }
+                    else
+                    {
+                        msSQL += "'" + objsendmessage.body.file.files[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                 "'" + objsendmessage.body.file.files[0].contentType.Replace("'", "\\'") + "',";
+                    }
+                    msSQL += "'" + objsendmessage.template.projectId + "'," +
+                             "'" + objsendmessage.template.version + "'," +
+                             "'" + objsendmessage.status + "'," +
+                             "'" + objsendmessage.createdAt.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        objresult.status = true;
+                        objresult.message = "Delivered!";
+                    }
+                    else
+                    {
+                        objresult.message = "Failed!";
+                    }
+                }
+                else
+                {
+                    objresult.status = false;
+                    objresult.message = "Sending failed";
+                }
+            }
+            else
+            {
+                Servicewindow objsendmessage1 = new Servicewindow();
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+                var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/channels/c21b849f-5e1a-49d2-a7dc-414a96b19391/contacts/" + values.contact_id, Method.GET);
+                request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+                IRestResponse response1 = client.Execute(request);
+                string waresponse1 = response1.Content;
+                objsendmessage1 = JsonConvert.DeserializeObject<Servicewindow>(waresponse1);
+                if (objsendmessage1.serviceWindowExpireAt != null)
+                {
+                    string contactjson = "{\"receiver\":{\"contacts\":[{\"identifierValue\":\"" + values.identifierValue + "\",\"identifierKey\":\"phonenumber\"}]},\"body\":{\"type\":\"text\",\"text\":{\"text\":\"" + values.sendtext + "\"}}}";
+
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    var client1 = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+                    var request1 = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/channels/c21b849f-5e1a-49d2-a7dc-414a96b19391/messages", Method.POST);
+                    request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+                    request.AddParameter("application/json", contactjson, ParameterType.RequestBody);
+                    IRestResponse response2 = client.Execute(request);
+                    string waresponse = response2.Content;
+                    objsendmessage = JsonConvert.DeserializeObject<Result>(waresponse);
+
+                    if (response1.StatusCode == HttpStatusCode.Accepted)
+                    {
+                        msSQL = "insert into crm_trn_twhatsappmessages(" +
+                                 "message_id," +
+                                 "contact_id," +
+                                 "direction," +
+                                 "type," +
+                                 "message_text," +
+                                 "content_type," +
+                                 "status," +
+                                 "created_date)" +
+                                 "values(" +
+                                 "'" + objsendmessage.id + "'," +
+                                 "'" + objsendmessage.receiver.contacts[0].id + "'," +
+                                 "'" + objsendmessage.direction + "'," +
+                                "'" + objsendmessage.body.type + "',";
+                        if (objsendmessage.body.type == "text")
+                        {
+                            msSQL += "'" + objsendmessage.body.text.text.Replace("'", "\\'") + "'," +
+                                     "null,";
+                        }
+                        else if (objsendmessage.body.type == "list")
+                        {
+                            msSQL += "'" + objsendmessage.body.list.text.Replace("'", "\\'") + "'," +
+                                     "null,";
+                        }
+                        else if (objsendmessage.body.type == "image")
+                        {
+                            msSQL += "'" + objsendmessage.body.image.images[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                     "null,";
+                        }
+                        else
+                        {
+                            msSQL += "'" + objsendmessage.body.file.files[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                     "'" + objsendmessage.body.file.files[0].contentType.Replace("'", "\\'") + "',";
+                        }
+                        msSQL += "'" + objsendmessage.status + "'," +
+                                 "'" + objsendmessage.createdAt.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult == 1)
+                        {
+                            objresult.status = true;
+                            objresult.message = "Delivered!";
+                        }
+                        else
+                        {
+                            objresult.message = "Failed!";
+                        }
+                    }
+                    else
+                    {
+                        objresult.status = false;
+                        objresult.message = "Service Window closed";
+                    }
+                }
+                else
+                {
+                    objresult.status = false;
+                    objresult.message = "Service Window closed";
+                }
+            }
+
+            return objresult;
+        }
+
+        public result DaGetContactConversation()
+        {
+            result objresult = new result();
+
+            int i = 0;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://nest.messagebird.com");
+            var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/channels/c21b849f-5e1a-49d2-a7dc-414a96b19391/messages", Method.GET);
+            request.AddHeader("Authorization", "AccessKey Fy6vn2D4ULht0eYCXpUKzUquOxK2hANBIr8X");
+            request.AddQueryParameter("limit", "99");
+            IRestResponse responseAddress = client.Execute(request);
+            string address_erpid = responseAddress.Content;
+            string errornetsuiteJSON = responseAddress.Content;
+            whatsmessagelist2 objMdlWhatsappMessageResponse = new whatsmessagelist2();
+            objMdlWhatsappMessageResponse = JsonConvert.DeserializeObject<whatsmessagelist2>(errornetsuiteJSON);
+            fnLoadWhatsappConversations(objMdlWhatsappMessageResponse, null);
+            return objresult;
+        }
+
+        public void fnLoadWhatsappConversations(whatsmessagelist2 objMdlWhatsappMessageResponse, string pageToken)
+        {
+            int i = 0;
+            foreach (var item in objMdlWhatsappMessageResponse.results)
+            {
+                msSQL = "select message_id from crm_trn_twhatsappmessages where message_id ='" + objMdlWhatsappMessageResponse.results[i].id + "'";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                if (objODBCDatareader.HasRows == false)
+                {
+                    msSQL = "insert into crm_trn_twhatsappmessages(" +
+                        "message_id," +
+                        "contact_id," +
+                        "identifiervalue," +
+                        "direction," +
+                        "type," +
+                        "message_text," +
+                        "content_type," +
+                        "status," +
+                        "created_date)" +
+                        "values(" +
+                        "'" + objMdlWhatsappMessageResponse.results[i].id + "',";
+                    if (objMdlWhatsappMessageResponse.results[i].direction == "outgoing")
+                        msSQL += "'" + objMdlWhatsappMessageResponse.results[i].receiver.contacts[0].id + "'," +
+                            "'" + objMdlWhatsappMessageResponse.results[i].receiver.contacts[0].identifierValue + "',";
+                    else
+                        msSQL += "'" + objMdlWhatsappMessageResponse.results[i].sender.contact.id + "',";
+                    msSQL += "'" + objMdlWhatsappMessageResponse.results[i].direction + "'," +
+                            "'" + objMdlWhatsappMessageResponse.results[i].body.type + "',";
+                    if (objMdlWhatsappMessageResponse.results[i].body.type == "text")
+                    {
+                        msSQL += "'" + objMdlWhatsappMessageResponse.results[i].body.text.text.Replace("'", "\\'") + "'," +
+                                 "null,";
+                    }
+                    else if (objMdlWhatsappMessageResponse.results[i].body.type == "list")
+                    {
+                        msSQL += "'" + objMdlWhatsappMessageResponse.results[i].body.list.text.Replace("'", "\\'") + "'," +
+                                 "null,";
+                    }
+                    else if (objMdlWhatsappMessageResponse.results[i].body.type == "image")
+                    {
+                        msSQL += "'" + objMdlWhatsappMessageResponse.results[i].body.image.images[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                 "null,";
+                    }
+                    else
+                    {
+                        msSQL += "'" + objMdlWhatsappMessageResponse.results[i].body.file.files[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                 "'" + objMdlWhatsappMessageResponse.results[i].body.file.files[0].contentType.Replace("'", "\\'") + "',";
+                    }
+                    msSQL += "'" + objMdlWhatsappMessageResponse.results[i].status + "'," +
+                             "'" + objMdlWhatsappMessageResponse.results[i].createdAt.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://nest.messagebird.com");
+            var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/channels/c21b849f-5e1a-49d2-a7dc-414a96b19391/messages", Method.GET);
+            request.AddHeader("Authorization", "AccessKey Fy6vn2D4ULht0eYCXpUKzUquOxK2hANBIr8X");
+            request.AddQueryParameter("limit", "99");
+            request.AddQueryParameter("pageToken", pageToken);
+            IRestResponse responseAddress = client.Execute(request);
+            string repsonse = responseAddress.Content;
+            whatsmessagelist2 objMdlWhatsappMessageResponse1 = new whatsmessagelist2();
+            objMdlWhatsappMessageResponse1 = JsonConvert.DeserializeObject<whatsmessagelist2>(repsonse);
+            if (!String.IsNullOrEmpty(objMdlWhatsappMessageResponse1.nextPageToken))
+                fnLoadWhatsappConversations(objMdlWhatsappMessageResponse1, objMdlWhatsappMessageResponse1.nextPageToken);
+
+
+        }
+
+        public result DaGetTemplate()
+        {
+            result objresult = new result();
+            msSQL = "truncate crm_smm_whatsapptemplate";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult == 1)
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://nest.messagebird.com");
+                var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/projects", Method.GET);
+                request.AddHeader("Authorization", "AccessKey Fy6vn2D4ULht0eYCXpUKzUquOxK2hANBIr8X");
+                IRestResponse response = client.Execute(request);
+                IRestResponse responseAddress = client.Execute(request);
+                string errornetsuiteJSON = responseAddress.Content;
+                Templatelist objMdlWhatsappTemplate = new Templatelist();
+                objMdlWhatsappTemplate = JsonConvert.DeserializeObject<Templatelist>(errornetsuiteJSON);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    foreach (var item in objMdlWhatsappTemplate.results)
+                    {
+
+                        if (item.activeResourceId != null)
+                        {
+                            msSQL = "insert into crm_smm_whatsapptemplate(" +
+                                    "project_id," +
+                                    "version_id," +
+                                    "p_type," +
+                                    "p_name," +
+                                    "created_date," +
+                                    "updated_date )" +
+                                    "values(" +
+                                    "'" + item.id + "'," +
+                                    "'" + item.activeResourceId + "'," +
+                                    "'" + item.type + "'," +
+                                    "'" + item.name + "'," +
+                                    "'" + item.createdAt.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                                    "'" + item.updatedAt.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    objresult.status = false;
+                    objresult.message = "template receive failed";
+                }
+            }
+            return objresult;
+        }
+
+        public void DaGetContact(MdlWhatsapp values)
+        {
+            msSQL = "SELECT SUBSTRING(displayName, 1, 1) AS first_letter,displayName,Wvalue,id," +
+                           " (SELECT COUNT(read_flag) FROM crm_trn_twhatsappmessages WHERE contact_id = id  AND direction = 'incoming' AND read_flag = 'N') AS count," +
+                           " (SELECT CASE WHEN DATE(created_date) = CURDATE() THEN TIME_FORMAT(created_date, '%h:%i %p') " +
+                           " WHEN DATE(created_date) = CURDATE() - INTERVAL 1 DAY THEN 'Yesterday'  ELSE DATE_FORMAT(created_date, '%d/%m/%y') END AS formatted_date" +
+                           " FROM crm_trn_twhatsappmessages WHERE contact_id = id ORDER BY created_date DESC LIMIT 1) AS last_seen " +
+                           " FROM crm_smm_whatsapp ORDER BY CASE WHEN last_seen REGEXP '^[0-9]{2}:[0-9]{2} [APMapm]{2}$' THEN 1 WHEN last_seen = 'Yesterday' THEN 2 ELSE 3 END, last_seen DESC";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<whatscontactlist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new whatscontactlist
+                    {
+                        whatsapp_gid = dt["id"].ToString(),
+                        displayName = dt["displayName"].ToString(),
+                        value = dt["Wvalue"].ToString(),
+                        first_letter = dt["first_letter"].ToString(),
+                        read_flag = dt["count"].ToString(),
+                        last_seen = dt["last_seen"].ToString(),
+                    });
+                    values.whatscontactlist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetMessage(MdlWhatsapp values, string whatsapp_gid)
+        {
+
+            msSQL = "update crm_trn_twhatsappmessages set read_flag = 'Y' where contact_id ='" + whatsapp_gid + "' and direction='incoming'";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            msSQL = "SELECT a.message_id,a.contact_id,a.created_date,a.direction, a.message_text,a.type,a.status," +
+                    " CONCAT(DATE_FORMAT(a.created_date, '%e %b %y, '), DATE_FORMAT(a.created_date, '%h:%i %p')) AS time," +
+                    " b.wvalue AS identifierValue,SUBSTRING(b.displayName, 1, 1) AS first_letter, b.displayName" +
+                    " FROM crm_trn_twhatsappmessages a LEFT JOIN crm_smm_whatsapp b ON b.id = a.contact_id" +
+                    " WHERE  contact_id = '"+ whatsapp_gid + "'ORDER BY a.created_date ASC, time ASC";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<whatsmessagelist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new whatsmessagelist
+                    {
+                        displayName = dt["displayName"].ToString(),
+                        first_letter = dt["first_letter"].ToString(),
+                        message_text = dt["message_text"].ToString(),
+                        type = dt["type"].ToString(),
+                        status = dt["status"].ToString(),
+                        time = dt["time"].ToString(),
+                        direction = dt["direction"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        message_id = dt["message_id"].ToString(),
+                        identifierValue = dt["identifierValue"].ToString(),
+                        contact_id = dt["contact_id"].ToString(),
+                    });
+                    values.whatsmessagelist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetMessageTemplatesummary(MdlWhatsapp values)
+        {
+            msSQL = " select project_id,p_type,p_name,created_date,version_id from crm_smm_whatsapptemplate";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<whatsappMessagetemplatelist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new whatsappMessagetemplatelist
+                    {
+                        id = dt["project_id"].ToString(),
+                        p_type = dt["p_type"].ToString(),
+                        p_name = dt["p_name"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        version = dt["version_id"].ToString(),
+                    });
+                    values.whatsappMessagetemplatelist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        public void DaGetContactCount(MdlWhatsapp values)
+        {
+            msSQL = "select count(*) as count  from crm_smm_whatsapp";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<contactcount_list1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new contactcount_list1
+                    {
+                        contact_count1 = dt["count"].ToString(),
+
+                    });
+                    values.contactcount_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetcampaign(MdlWhatsapp values)
+        {
+            msSQL = "select project_id,version_id,p_type,p_name,description,created_date,updated_date  FROM crm_smm_whatsapptemplate where project_id is not NULL";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<whatsappCampaign>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new whatsappCampaign
+                    {
+                        project_id = dt["project_id"].ToString(),
+                        version_id = dt["version_id"].ToString(),
+                        p_type = dt["p_type"].ToString(),
+                        p_name = dt["p_name"].ToString(),
+                        description = dt["description"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        updated_date = dt["updated_date"].ToString(),
+                        
+                    });
+                    values.whatsappCampaign = getModuleList;
+                }
+
+                dt_datatable.Dispose();
+            }
+        }
+
+
+
+        //whatsapp delete//
+        public void DaDeleteCampaign(string template_gid, whatsappCampaign values)
+        {
+
+            {
+                msSQL = "delete from crm_smm_whatsapptemplate where template_gid='" + template_gid + "'  ";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Deleted Successfully!!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Deleting!!";
+                }
+
+            }
+        }
+
+        //msSQL = "select * from crm_smm_whatsapptemplate where leadbank_region='" + template_gid + "'";
+        //    objODBCDatareader = objdbconn.GetDataReader(msSQL);
+
+        //    if (objODBCDatareader.HasRows)
+        //    {
+        //        values.status = false;
+        //        values.message = "Campaign already used hence can't be deleted!!";
+        //    }
+        //    else
+
+        public void DaGetlog(MdlWhatsapp values)
+        {
+            string msSQL = "select wvalue,displayName,b.identifiervalue,b.status,b.direction,b.created_date from crm_smm_whatsapp a left join crm_trn_twhatsappmessages b on b.contact_id = a.id ORDER BY date(b.created_date) DESC, a.created_date DESC";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<log>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new log
+                    {
+                        wvalue = dt["wvalue"].ToString(),
+                        displayName = dt["displayName"].ToString(),
+                        identifiervalue = dt["identifiervalue"].ToString(),
+                        status = dt["status"].ToString(),
+                        direction = dt["direction"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                    });
+                    values.log = getModuleList;
+                }
+
+                dt_datatable.Dispose();
+            }
+        }
+
+
+
+
+        public result dabulkMessageSend(mdlBulkMessageList values)
+        {
+            result result = new result();
+            Result objsendmessage = new Result();
+            msSQL = "select version_id from crm_smm_whatsapptemplate where project_id = '" + values.project_id + "'";
+            string version_id = objdbconn.GetExecuteScalar(msSQL);
+            foreach (var item in values.contacts_list)
+            {
+                try
+                {
+                    string contactjson = "{\"receiver\":{\"contacts\":[{\"identifierValue\":\"" + item.value + "\",\"identifierKey\":\"phonenumber\"}]},\"template\":{\"projectId\":\"" + values.project_id + "\",\"version\":\"" + version_id + "\",\"locale\":\"en\"}}";
+
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    var client = new RestClient(ConfigurationManager.AppSettings["messagebirdbaseurl"].ToString());
+                    var request = new RestRequest("/workspaces/8f60b013-65ac-4db2-ad01-e9d0ee7c0d5d/channels/c21b849f-5e1a-49d2-a7dc-414a96b19391/messages", Method.POST);
+                    request.AddHeader("authorization", ConfigurationManager.AppSettings["messagebirdaccesskey"].ToString());
+                    request.AddParameter("application/json", contactjson, ParameterType.RequestBody);
+                    IRestResponse response = client.Execute(request);
+                    string waresponse = response.Content;
+                    objsendmessage = JsonConvert.DeserializeObject<Result>(waresponse);
+
+                    if (response.StatusCode == HttpStatusCode.Accepted)
+                    {
+                        msSQL = "insert into crm_trn_twhatsappmessages(" +
+                                 "message_id," +
+                                 "contact_id," +
+                                 "direction," +
+                                 "type," +
+                                 "message_text," +
+                                 "content_type," +
+                                  "project_id," +
+                                 "version_id," +
+                                 "status," +
+                                 "created_date)" +
+                                 "values(" +
+                                 "'" + objsendmessage.id + "'," +
+                                 "'" + objsendmessage.receiver.contacts[0].id + "'," +
+                                 "'" + objsendmessage.direction + "'," +
+                                "'" + objsendmessage.body.type + "',";
+                        if (objsendmessage.body.type == "text")
+                        {
+                            msSQL += "'" + objsendmessage.body.text.text.Replace("'", "\\'") + "'," +
+                                     "null,";
+                        }
+                        else if (objsendmessage.body.type == "list")
+                        {
+                            msSQL += "'" + objsendmessage.body.list.text.Replace("'", "\\'") + "'," +
+                                     "null,";
+                        }
+                        else if (objsendmessage.body.type == "image")
+                        {
+                            msSQL += "'" + objsendmessage.body.image.images[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                     "null,";
+                        }
+                        else
+                        {
+                            msSQL += "'" + objsendmessage.body.file.files[0].mediaUrl.Replace("'", "\\'") + "'," +
+                                     "'" + objsendmessage.body.file.files[0].contentType.Replace("'", "\\'") + "',";
+                        }
+                        msSQL += "'" + objsendmessage.template.projectId + "'," +
+                                 "'" + objsendmessage.template.version + "'," +
+                                 "'" + objsendmessage.status + "'," +
+                                 "'" + objsendmessage.createdAt.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult == 1)
+                        {
+                            result.status = true;
+                            result.message = "Delivered!";
+                        }
+                        else
+                        {
+                            result.message = "Failed!";
+                            LogForAudit("*******Date*****" + DateTime.Now.ToString("yyyy - MM - dd HH: mm:ss") + "*****Query****" + msSQL + "*******Apiref********dabulkMessageSend");
+                            LogForAudit("");
+                        }
+                    }
+                    else
+                    {
+                        result.status = false;
+                        result.message = "Sending failed";
+                        LogForAudit("Error Occured while sending message to " + item.value + " project ID : " + values.project_id + "*******Apiref********dabulkMessageSend");
+                        LogForAudit("Error: " + response.Content);
+                        LogForAudit("");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogForAudit("Exception Occured while sending message to " + item.value + " project ID : " + values.project_id + "*******Apiref********dabulkMessageSend");
+                    LogForAudit("Exception: " + ex.Message.ToString());
+                    LogForAudit("");
+                }
+            }
+            return result;
+        }
+        public void LogForAudit(string strVal)
+        {
+            try
+            {
+                string lspath = ConfigurationManager.AppSettings["file_path"] + "/erpdocument/WhatsApp/ErrorLog/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                if ((!System.IO.Directory.Exists(lspath)))
+                    System.IO.Directory.CreateDirectory(lspath);
+
+                lspath = lspath + @"\" + DateTime.Now.ToString("yyyy-MM-dd HH") + ".txt";
+
+                System.IO.StreamWriter sw = new System.IO.StreamWriter(lspath, true);
+                sw.WriteLine(strVal);
+                sw.Close();
+
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        //WhatsappMessageCount//
+        public void DaGetWhatsappMessageCount(MdlWhatsapp values)
+        {
+            msSQL = "SELECT COUNT(*) AS Total_messages,COUNT(CASE WHEN direction = 'incoming' THEN 1 END) AS Received_messages,COUNT(CASE WHEN direction = 'outgoing' THEN 1 END) AS Sent_messages FROM crm_trn_twhatsappmessages";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<whatsappmessagescount>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new whatsappmessagescount
+                    {
+
+                        Total_messages = dt["Total_messages"].ToString(),
+                        Received_messages = dt["Received_messages"].ToString(),
+                        Sent_messages = dt["Sent_messages"].ToString(),
+                    });
+                    values.whatsappmessagescount = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+       
+    }
+}

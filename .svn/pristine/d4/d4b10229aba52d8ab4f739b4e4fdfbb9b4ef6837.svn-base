@@ -1,0 +1,830 @@
+import { Component,OnInit,ElementRef,ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Subscription, timer } from "rxjs";
+import { map, share } from "rxjs/operators";
+import { DatePipe } from '@angular/common';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+interface IWatsapp {
+  //sourceedit_name: any;
+  leadbank_gid: string;
+  created_date: string;
+  customer_name: string;
+  displayName: string;
+  mobile: string;
+  created_by: string;
+  computedDisplayName: string;
+  email: string;
+  first_letter: string;
+  key: string;
+  value: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  identifierValue: string;
+  type: string;
+  sendtext: string;
+
+}
+interface IMailform {
+  mail_from: string;
+  sub: string;
+  to: string;
+  body: string;
+  bcc: any;
+  cc: any;
+  reply_to: any;
+
+
+
+}
+
+@Component({
+  selector: 'app-crm-trn-overallview',
+  templateUrl: './crm-trn-overallview.component.html',
+  styleUrls: ['./crm-trn-overallview.component.scss']
+})
+
+export class CrmTrnOverallviewComponent {
+
+  @ViewChild ('Inbox') tableRef!: ElementRef;
+  time = new Date();
+  rxTime = new Date();
+  intervalId:any;
+  subscription!: Subscription;
+  currentDayName: string;
+  fromDate:any; toDate:any;
+
+  search: string = '';
+  response_data: any;
+  mailmanagement: any[] = [];
+  reactiveForm!: FormGroup;
+  parameterValue1: any;
+  mailsummary_list: any;
+  mail: any;
+  from_mail: any;
+  to_mail: any;
+  subject: any;
+  body_content: any;
+  mailcount_list: any[] = [];
+  responsedata: any;
+  filteredData: any;
+  clicktotal_count:any;
+  deliverytotal_count:any;
+  opentotal_count:any;
+  searchTerm: string = '';
+  searchResults: string[] = [];
+  searchText: any;
+  items = [];
+  currentPage: number = 1;
+  pageSize: number = 50;
+  mailevent_list: any;
+  whatsappmessage_list: any[] = [];
+  whatsapp_list: any[] = [];
+  count_list: any[] = [];
+  reactiveMessageForm!: FormGroup;
+  leadbank!: IWatsapp;
+  file: any;
+
+  leadbank_gid: any;
+  mailid_list: any[] = [];
+  mailform!: IMailform;
+
+  branchList: any[] = [];
+  designation_list: any[] = [];
+  country_list2: any[] = []; 
+  leadorderdetails_list: any[] = [];
+  leadquotationdetails_list: any[] = [];
+  leadinvoicedetails_list: any[] = [];
+  leadcountdetails_list: any[] = [];
+  messagecount_list: any;
+  message_count: any;
+  mail_sent:any;
+  sentmailcount_list:any;
+  lspage: any;
+  leadbasicdetailslist: any[] = [];
+  leaddocumentdetail_list: any[] = [];
+  id: any;
+  mailopen: boolean = true;
+  mailreply:boolean=true;
+  mailview_list: any;
+  body: any;
+  created_date: any;
+  created_time:any;
+
+  
+
+  matchesSearch(item: any): boolean {
+    const searchString = this.searchText.toLowerCase();
+    return item.displayName.toLowerCase().includes(searchString) || item.value.toLowerCase().includes(searchString);
+  }
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService,private datePipe: DatePipe,private NgxSpinnerService: NgxSpinnerService) { 
+    this.leadbank = {} as IWatsapp;
+    this.mailform = {} as IMailform;
+    const today = new Date();
+    this.currentDayName = today.toLocaleDateString('en-US', { weekday: 'long' });
+
+  }
+
+  ngOnInit(): void {
+    this.GetMailSummary();
+    this.GetMailEventCount();
+    this.GetMailEventClick();
+    this.GetMailEventDelivery();
+    this.GetMailEventOpen();
+   
+    const secretKey = 'storyboarderp';
+    const leadbank_gid = this.route.snapshot.paramMap.get('leadbank_gid');
+    this.leadbank_gid = leadbank_gid;
+    const deencryptedParam = AES.decrypt(this.leadbank_gid, secretKey).toString(enc.Utf8);
+    const lspage = this.route.snapshot.paramMap.get('lspage');
+    this.lspage = lspage;
+    const deencryptedParam1 = AES.decrypt(this.lspage, secretKey).toString(enc.Utf8);
+    
+    this.lspage = deencryptedParam1;
+
+    var url = 'Leadbank360/GetLeadBasicDetails'
+    let param = {
+      leadbank_gid: deencryptedParam
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.responsedata = result;
+      this.leadbasicdetailslist = this.responsedata.leadbasicdetails_list;
+      // console.log(this.responsedata.leadbasicdetails_list,'leadbasicdetails_list');
+    });
+
+    var url = 'Leadbank360/GetLeadDocumentDetails'
+    let params = {
+      leadbank_gid: deencryptedParam
+    }
+    this.service.getparams(url, params).subscribe((result: any) => {
+      this.responsedata = result;
+      this.leaddocumentdetail_list = this.responsedata.leaddocumentdetails;
+    });
+    
+    this.GetOrderDetailsSummary(deencryptedParam);
+    this.GetQuotationDetailsSummary(deencryptedParam);
+    this.GetInvoiceDetailsSummary(deencryptedParam);
+    this.GetLeadCountDetails(deencryptedParam);
+    this.GetWhatsappMessageSummary(deencryptedParam);
+    this.GetWhatsappSummary(deencryptedParam)
+
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate()-1);
+    // console.log(yesterday);
+    this.fromDate = this.datePipe.transform(yesterday, 'dd-MM-yyyy');
+    this.toDate=this.datePipe.transform(new Date(), 'dd-MM-yyyy');
+    // console.log(this.fromDate); 
+
+    this.intervalId = setInterval(() => {
+      this.time = new Date();
+    }, 1000);
+
+    // Using RxJS Timer
+    this.subscription = timer(0, 1000)
+      .pipe(
+        map(() => new Date()),
+        share()
+      )
+      .subscribe(time => {
+        let hour = this.rxTime.getHours();
+        let minuts = this.rxTime.getMinutes();
+        let seconds = this.rxTime.getSeconds();
+        //let a = time.toLocaleString('en-US', { hour: 'numeric', hour12: true });
+        let NewTime = hour + ":" + minuts + ":" + seconds
+        // console.log(NewTime);
+        this.rxTime = time;
+      });
+
+    this.reactiveForm = new FormGroup({
+
+      customer_name: new FormControl(this.leadbank.customer_name, [
+        Validators.required,
+      ]),
+      displayName: new FormControl(this.leadbank.displayName, [
+        Validators.required,
+      ]),
+      mobile: new FormControl(''),
+      value: new FormControl(this.leadbank.value, [
+        Validators.required,
+      ]),
+      gender: new FormControl(''),
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+
+      mail_from: new FormControl(this.mailform.mail_from, [
+        Validators.required,
+      ]),
+      sub: new FormControl(this.mailform.sub, [
+        Validators.required,
+      ]),
+
+      file: new FormControl(''),
+      body: new FormControl(''),
+      bcc: new FormControl(''),
+      cc: new FormControl(''),
+      reply_to: new FormControl(''),
+      to: new FormControl(this.mailform.to, [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+        // emailValidator(),
+      ]),
+    });
+
+
+    this.reactiveMessageForm = new FormGroup({
+      identifierValue: new FormControl(''),
+      type: new FormControl(''),
+      sendtext: new FormControl(''),
+    })
+
+   
+
+    var url6 = 'SocialMedia/GetMessageCount'
+    this.service.get(url6).subscribe((result,) => {
+  
+      this.messagecount_list = result;
+      this.message_count = this.messagecount_list.messagecount_list[0].message_count;  
+    });
+
+    var url10 = 'SocialMedia/GetSentCount'
+    this.service.get(url10).subscribe((result,) => {
+  
+      this.sentmailcount_list = result;
+      this.mail_sent = this.sentmailcount_list.sentmailcount_list[0].mail_sent;
+  
+    });
+
+  }
+
+  GetOrderDetailsSummary(deencryptedParam: any) {
+    // console.log(deencryptedParam,'testleadbank_gid');
+    var url = 'Leadbank360/GetLeadOrderDetails'
+    let param = {
+      leadbank_gid: deencryptedParam
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      // $('#leadorderdetails_list').DataTable().destroy();
+      this.responsedata = result;
+      this.leadorderdetails_list = this.responsedata.leadorderdetailslist;
+       setTimeout(() => {
+        $('#leadorderdetails_list').DataTable();
+      }, 1);
+      // console.log(this.responsedata.leadorderdetailslist,'leadorderdetails_list'); 
+    });
+  }
+
+  GetQuotationDetailsSummary(deencryptedParam: any) {
+    var url = 'Leadbank360/GetLeadQuotationDetails'
+    let param = {
+      leadbank_gid: deencryptedParam
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      // $('#leadquotationdetails_list').DataTable().destroy();
+      this.responsedata = result;
+      this.leadquotationdetails_list = this.responsedata.leadquotationdetailslist;
+      setTimeout(() => {
+        $('#leadquotationdetails_list').DataTable();
+      }, 1);
+      // console.log(this.responsedata.leadquotationdetailslist,'leadquotationdetails_list'); 
+    });
+  }
+  GetLeadCountDetails(deencryptedParam:any){
+  var url = 'Leadbank360/GetLeadCountDetails'
+  let param = {
+    leadbank_gid: deencryptedParam
+  }
+  this.service.getparams(url, param).subscribe((result: any) => {
+    this.responsedata = result;
+    this.leadcountdetails_list = this.responsedata.leadcountdetails;
+    // console.log(this.responsedata.leadcountdetails,'leadcountdetails_list'); 
+  });
+}
+  GetInvoiceDetailsSummary(deencryptedParam: any) {
+    var url = 'Leadbank360/GetLeadInvoiceDetails'
+    let param = {
+      leadbank_gid: deencryptedParam
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      $('#leadinvoicedetails_list').DataTable().destroy();
+      this.responsedata = result;
+      this.leadinvoicedetails_list = this.responsedata.leadinvoicedetailslist;
+      setTimeout(() => {
+        $('#leadinvoicedetails_list').DataTable();
+      }, 1);
+      // console.log(this.responsedata.leadinvoicedetailslist,'leadinvoicedetails_list'); 
+    });
+  }
+
+  GetMailSummary() {
+    
+    this.id = localStorage.getItem("mailaddress")
+    let params = {
+      mailaddress: this.id
+    }
+
+    var api = 'MailCampaign/GetIndividualMailSummary';
+    this.service.getparams(api, params).subscribe((result: any) => {
+      $('#mail').DataTable().destroy();
+
+      this.response_data = result;
+      this.mailsummary_list = this.response_data.mailsummary_list;
+      this.filteredData = this.mailsummary_list
+      setTimeout(() => {
+        $('#mail').DataTable();
+      }, 1);
+    });
+
+  }
+  GetMailEventCount(){
+    var api2 = 'MailCampaign/GetMailEventCount'
+    this.service.get(api2).subscribe((result:any) => {
+    this.mailcount_list = result.mailcount_list; 
+    this.clicktotal_count=this.mailcount_list[0].clicktotal_count;
+    this.opentotal_count=this.mailcount_list[0].opentotal_count;
+    this.deliverytotal_count=this.mailcount_list[0].deliverytotal_count;
+    });}
+    GetMailEventOpen() {
+      var api = 'MailCampaign/GetMailEventOpen'
+      this.service.get(api).subscribe((result: any) => {
+        this.response_data = result;
+        this.mailevent_list = this.response_data.mailevent_list;
+      });
+    }
+    GetMailEventClick() {
+      var api = 'MailCampaign/GetMailEventClick'
+      this.service.get(api).subscribe((result: any) => {
+        this.response_data = result;
+        this.mailevent_list = this.response_data.mailevent_list;
+      });
+    }
+    GetMailEventDelivery() {
+      var api = 'MailCampaign/GetMailEventDelivery'
+      this.service.get(api).subscribe((result: any) => {
+        this.response_data = result;
+        this.mailevent_list = this.response_data.mailevent_list;
+      });
+    }
+    onbackmail(){
+      window.location.reload();
+  
+    }
+    viewpage(mailmanagement_gid: any) {
+      this.mailopen=!this.mailopen;
+      this.NgxSpinnerService.show();
+      var url = 'MailCampaign/GetMailView';
+      let param = {
+        mailmanagement_gid: mailmanagement_gid
+      }
+      this.service.getparams(url, param).subscribe((result: any) => {
+        this.mailview_list = result.mailsummary_list;
+        this.from_mail = this.mailview_list[0].mail_from;
+        this.to_mail = this.mailview_list[0].to;
+        this.subject = this.mailview_list[0].sub;
+        this.body = this.mailview_list[0].body;
+        this.created_date = this.mailview_list[0].created_date;
+        this.created_time = this.mailview_list[0].created_time;
+        this.NgxSpinnerService.hide();
+        
+      });
+    }
+    onreply(){
+      this.mailreply=!this.mailreply;
+      
+    }
+    config: AngularEditorConfig = {
+      editable: true,
+    spellcheck: true,
+    height: '120px',
+    minHeight: '0rem',
+    width: '630px',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+  
+    };
+
+    GetWhatsappMessageSummary(deencryptedParam:any) {
+      var url = 'Leadbank360/GetWhatsappLeadMessage'
+      let param = {
+        leadbank_gid: deencryptedParam
+      }
+      this.service.getparams(url, param).subscribe((result: any) => {
+        $('#whatsmessagelist').DataTable().destroy();
+        this.responsedata = result;
+        this.whatsappmessage_list = this.responsedata.leadwhatsmessagelist;
+        //console.log(this.source_list)
+  
+      });
+    }
+  
+    GetWhatsappSummary(deencryptedParam:any) {
+      var url = 'Leadbank360/GetWhatsappLeadContact'
+      let param = {
+        leadbank_gid: deencryptedParam
+      }
+      var url = 'Leadbank360/GetWhatsappLeadContact'
+      this.service.getparams(url, param).subscribe((result: any) => {
+        $('#whatsnamelist').DataTable().destroy();
+        this.responsedata = result;
+        this.whatsapp_list = this.responsedata.leadwhatscontactlist;
+        //console.log(this.source_list)
+  
+      });
+    }
+  
+  
+    showResponsiveOutput(gid: string) {
+      console.log('Clicked with gid:', gid);
+      this.GetWhatsappMessageSummary(gid);
+    }
+
+    GetContactCount() {
+      var url = 'Whatsapp/GetContactCount'
+      this.service.get(url).subscribe((result: any) => {
+        $('#count_list').DataTable().destroy();
+        this.responsedata = result;
+        this.count_list = this.responsedata.contactcount_list;
+        //console.log(this.source_list)
+  
+      });
+    }
+
+    onclose() {
+      this.reactiveForm.reset();
+    }
+    
+    onChange1(event: any) {
+      this.file = event.target.files[0];
+  
+    }
+    
+    isDropdownOpen = false;
+
+    sendMessage() {
+      // Add your send message logic here
+    }
+    poptemplatemodal() {
+    }
+    toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }
+    get mail_from() {
+      return this.reactiveForm.get('mail_from')!;
+    }
+    get to() {
+      return this.reactiveForm.get('to')!;
+    }
+    get sub() {
+      return this.reactiveForm.get('sub')!;
+    }
+    get reply_to() {
+      return this.reactiveForm.get('reply_to')!;
+    }
+    get cc() {
+      return this.reactiveForm.get('cc')!;
+    }
+    get bcc() {
+      return this.reactiveForm.get('bcc')!;
+    }
+    get schedule_time() {
+      return this.reactiveForm.get('bcc')!;
+    }
+
+    public onadd(): void {
+      console.log(this.reactiveForm.value)
+  
+      this.mailform = this.reactiveForm.value;
+      // this.service.Profileupload(this.reactiveForm.value).subscribe(result => {  
+      //   this.responsedata=result;
+      // });   
+      if (this.mailform.mail_from != null && this.mailform.sub != null && this.mailform.to != null) {
+        //let formData = new FormData();
+        // if (this.file != null && this.file != undefined) {
+  
+  
+  
+        // formData.append("file", this.file, this.file.name);
+        // formData.append("mail_from", this.mailform.mail_from);
+        // formData.append("sub", this.mailform.sub);
+        // formData.append("to", this.mailform.to);
+        // formData.append("body", this.mailform.body);
+        // formData.append("bcc", this.mailform.to);
+        // formData.append("cc", this.mailform.body);
+        // formData.append("reply_to", this.mailform.body);
+  
+  
+  
+  
+        //console.log(this.file)
+        //   var api7 = 'Mailmanagement/mailmanagementupload'
+        //   //console.log(this.file)
+        //   this.service.postfile(api7, formData).subscribe((result: any) => {
+  
+        //     if (result.status == true) {
+        //       this.ToastrService.warning(result.message)
+        //     }
+        //     else {
+        //       window.scrollTo({
+  
+        //         top: 0, // Code is used for scroll top after event done
+  
+        //       });
+        //       this.route.navigate(['/crm/CrmCampaignMailmanagementsummary']);
+        //       this.ToastrService.success("Mail sent Successfully")
+        //     }
+        //   });
+  
+        // }
+        // else {
+        var api7 = 'MailCampaign/MailSend'
+        //console.log(this.file)
+        this.service.post(api7, this.mailform).subscribe((result: any) => {
+  
+          if (result.status == false) {
+            window.scrollTo({
+  
+              top: 0, // Code is used for scroll top after event done
+  
+            });
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            window.scrollTo({
+  
+              top: 0, // Code is used for scroll top after event done
+  
+            });
+            // this.route.navigate(['/crm/CrmTrn360view']);
+            this.ToastrService.success(result.message)
+          }
+          this.responsedata = result;
+        });
+      }
+  
+      else {
+        window.scrollTo({
+  
+          top: 0, // Code is used for scroll top after event done
+  
+        });
+        this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+      }
+  
+      // console.info('Name:', this.employee);
+      return;
+  
+  
+    }
+
+    get customer_name() {
+      return this.reactiveForm.get('customer_name')!;
+    }
+    get mobile() {
+      return this.reactiveForm.get('mobile')!;
+    }
+    get value() {
+      return this.reactiveForm.get('mobile')!;
+    }
+    get firstName() {
+      return this.reactiveForm.get('customer_name')!;
+    }
+    get lastName() {
+      return this.reactiveForm.get('mobile')!;
+    }
+    get displayName() {
+      return this.reactiveForm.get('mobile')!;
+    }
+    get identifierValue() {
+      return this.reactiveMessageForm.get('identifierValue')!;
+    }
+
+    onChange2(event: any) {
+      this.file = event.target.files[0];
+      // var api='Employeelist/EmployeeProfileUpload'
+      // //console.log(this.file)
+      //   this.service.EmployeeProfileUpload(api,this.file).subscribe((result:any) => {
+      //     this.responsedata=result;
+      //   });
+    }
+  
+    public onsubmit(leadbank_gid:any): void {
+      let param = {
+        leadbank_gid: leadbank_gid
+      }
+      this.reactiveForm.value.param = param;
+      if (this.reactiveForm.value.displayName != null && this.reactiveForm.value.value != null) {
+  
+        for (const control of Object.keys(this.reactiveForm.controls)) {
+          this.reactiveForm.controls[control].markAsTouched();
+        }
+        this.reactiveForm.value;
+        var url = 'Leadbank360/CreateContact'
+        this.service.post(url, this.reactiveForm.value).subscribe((result: any) => {
+          if (result.status == false) {
+            window.scrollTo({
+              top: 0, // Code is used for scroll top after event done
+            });
+            this.reactiveForm.get("displayName")?.setValue(null);
+            this.reactiveForm.get("value")?.setValue(null);
+            this.ToastrService.warning(result.message)
+            this.reactiveForm.reset();
+          }
+          else {
+            window.scrollTo({
+              top: 0, // Code is used for scroll top after event done
+            });
+            this.reactiveForm.get("displayName")?.setValue(null);
+            this.reactiveForm.get("value")?.setValue(null);
+            this.ToastrService.success(result.message)
+            this.reactiveForm.reset();
+          }
+          this.reactiveForm.reset();
+        });
+      }
+      else {
+        window.scrollTo({
+          top: 0, // Code is used for scroll top after event done
+        });
+        this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+      }
+    }
+
+    // Message send //
+  public onMessagesent(gid:string, id: string): void {
+    this.reactiveMessageForm.value.identifierValue = gid;
+    this.reactiveMessageForm.value.contact_id = id;
+    if (this.reactiveMessageForm.value.sendtext != null) {
+
+      const identifierValue = this.reactiveMessageForm?.get('identifierValue')?.value;
+
+      this.reactiveMessageForm.value;
+      console.log("The passing vaues are"+ this.reactiveMessageForm.value);
+      
+      var url = 'Whatsapp/WhatsappSend'
+      this.service.post(url, this.reactiveMessageForm.value).subscribe((result: any) => {
+        if (result.status == false) {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.warning(result.message)
+          //this.GetWhatsappMessageSummary();
+          this.reactiveMessageForm.reset();
+        }
+        else {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.success(result.message)
+          //this.GetWhatsappMessageSummary();
+          this.reactiveMessageForm.reset();
+        }
+        // this.GetSourceSummary();
+        this.reactiveMessageForm.reset();
+      });
+    }
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+
+  }
+  
+  // onback() {
+  //   this.router.navigate(['/crm/CrmTrnMarketingManagerSummary'])
+
+  // } 
+  onback() {
+    if (this.lspage == 'MM-Total'){
+      this.router.navigate(['/crm/CrmTrnMarketingManagerSummary']);
+    }
+    else if (this.lspage == 'MM-Upcoming') {
+      this.router.navigate(['/crm/CrmTrnUpcomingmarketing']); 
+    } 
+    else if (this.lspage == 'MM-Lapsed') {
+      this.router.navigate(['/crm/CrmTrnLapsedleadmarketing']); 
+    } 
+    else if (this.lspage == 'MM-Longest') {
+      this.router.navigate(['/crm/CrmTrnLongestleadmarketing']); 
+    } 
+    else if (this.lspage == 'MM-New') {
+      this.router.navigate(['/crm/CrmTrnNewmarketing']); 
+    } 
+    else if (this.lspage == 'MM-Prospect') {
+      this.router.navigate(['/crm/CrmTrnProspectmarketing']); 
+    } 
+    else if (this.lspage == 'MM-Potential') {
+      this.router.navigate(['/crm/CrmTrnPotentialmarketing']); 
+    } 
+    else if (this.lspage == 'MM-Customer') {
+      this.router.navigate(['/crm/CrmTrnCustomermarketing']); 
+    } 
+    else if (this.lspage == 'MM-Drop') {
+      this.router.navigate(['/crm/CrmTrnDropmarketing']); 
+    } 
+    else if (this.lspage == 'My-Today') {
+      this.router.navigate(['/crm/CrmTrnMycampaign']); 
+    } 
+    else if (this.lspage == 'My-New') {
+      this.router.navigate(['/crm/CrmTrnNewtask']); 
+    } 
+    else if (this.lspage == 'My-Prospect') {
+      this.router.navigate(['/crm/CrmTrnProspects']); 
+    } 
+    else if (this.lspage == 'My-Potential') {
+      this.router.navigate(['/crm/CrmTrnPotentials']); 
+    } 
+    else if (this.lspage == 'My-Customer') {
+      this.router.navigate(['/crm/CrmTrnCompleted']); 
+    } 
+    else if (this.lspage == 'My-Drop') {
+      this.router.navigate(['/crm/CrmTrnDropleads']); 
+    } 
+    else if (this.lspage == 'My-All') {
+      this.router.navigate(['/crm/CrmTrnAllleads']); 
+    } 
+    else if (this.lspage == 'My-Upcoming') {
+      this.router.navigate(['/crm/CrmTrnUpcomingMeetings']); 
+    } 
+    else {
+      this.router.navigate(['/crm/CrmDashboard']); 
+    }  
+}
+  popmodal(parameter: string) {
+    this.parameterValue1 = parameter
+
+    this.to_mail = this.parameterValue1.to;
+
+    this.from_mail = this.parameterValue1.from;
+
+    this.subject = this.parameterValue1.sub;
+
+    this.body_content = this.parameterValue1.body;
+
+  }
+  //mailsummary_list
+
+  filter(searchTerm: any){
+
+  }
+
+  filterData() {
+    if (this.search) {
+      this.filteredData = this.mailsummary_list.filter((item: { property1: string; property2: string; }) => {
+        return item.property1.toLowerCase().includes(this.search.toLowerCase()) ||
+               item.property2.toLowerCase().includes(this.search.toLowerCase());
+        // Add more conditions for other properties if needed
+      });
+    } else {
+      this.filteredData = this.mailsummary_list;
+    }
+  }
+
+
+
+searchFunction() {
+  const filterValue = this.searchText.toLowerCase();
+  const rows = this.tableRef.nativeElement.getElementsByTagName('tr');
+
+  for (let i = 0; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName('td');
+    let foundMatch = false;
+
+    for (let j = 0; j < cells.length; j++) {
+      const cellText = cells[j].textContent || cells[j].innerText;
+
+      if (cellText.toLowerCase().indexOf(filterValue) > -1) {
+        foundMatch = true;
+        break;
+      }
+    }
+
+    if (foundMatch) {
+      rows[i].style.display = '';
+    } else {
+      rows[i].style.display = 'none';
+    }
+  }
+}
+
+pageChanged(event: any): void {
+  this.currentPage = event;
+}
+countSizes = [5, 10, 20, 50]; // Available count size options
+  selectedCountSize = 5; 
+
+   updatePageSize() {
+    this.pageSize = this.selectedCountSize;
+  }
+ 
+}

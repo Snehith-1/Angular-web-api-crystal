@@ -1,0 +1,79 @@
+﻿using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/CampaignService")]
+    public class CampaignServiceController : ApiController
+    {
+        session_values objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaCampaignService objdacampaignservice = new DaCampaignService();
+
+        [ActionName("GetWhatsappSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetWhatsappSummary()
+        {
+            MdlCampaignService values = new MdlCampaignService();
+            objdacampaignservice.DaGetWhatsappSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("UpdateWhatsappService")]
+        [HttpPost]
+        public HttpResponseMessage UpdateWhatsappService(campaignservice_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdacampaignservice.DaUpdateWhatsappService(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetShopifySummary")]
+        [HttpGet]
+        public HttpResponseMessage GetShopifySummary()
+        {
+            MdlCampaignService values = new MdlCampaignService();
+            objdacampaignservice.DaGetShopifySummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+        [ActionName("GetMailSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetMailSummary()
+        {
+            MdlCampaignService values = new MdlCampaignService();
+            objdacampaignservice.DaGetMailSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("UpdateShopifyService")]
+        [HttpPost]
+        public HttpResponseMessage UpdateShopifyService(shopifyservcie_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdacampaignservice.DaUpdateShopifyService(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("UpdateEmailService")]
+        [HttpPost]
+        public HttpResponseMessage UpdateEmailService(emailservice_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdacampaignservice.DaUpdateEmailService(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+    }
+}

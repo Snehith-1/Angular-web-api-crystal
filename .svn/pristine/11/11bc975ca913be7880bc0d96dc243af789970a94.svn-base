@@ -1,0 +1,133 @@
+.card-header {
+    background-image: linear-gradient(to right, #2429e0, #39ffff, #2429e0);
+    border-radius: 0px;
+}
+
+.back-icon {
+    text-align: right;
+    margin: 10px 35px 0 0;
+
+    i {
+        font-size: 30px;
+        color: #2c1a94;
+        cursor: pointer;
+    }
+}
+
+.leave_1 {
+    background-image: linear-gradient(to bottom, #EF99B4, #eebecd, #eebecd, #EF99B4);
+    text-align: left;
+    width: 260px;
+
+    .card-heading {
+        text-decoration: underline;
+    }
+
+    .card-heading1{
+        font-size: 13px;
+        font-weight: bold;
+
+        .leavecount{
+            color:#fe0206;
+            font-weight: bold;
+        }
+
+        .avlcount {
+            color:#37ad47;
+            font-weight: bold;
+        }
+    }
+
+    .submit-button {
+        text-align: right;
+        margin: 20px -10px 0 0;
+
+        i {
+            margin-top: -2px;
+        }
+
+        .btn-text {
+            font-size: 13px;
+            font-weight: bold;
+        }
+    }
+}
+
+.leave_2 {
+    background-image: linear-gradient(to bottom, #B6A8CA, #c7bdd4, #c7bdd4, #B6A8CA);
+    text-align: left;
+    width: 260px;
+
+    .card-heading {
+        text-decoration: underline;
+    }
+
+    .card-heading1{
+        font-size: 13px;
+        font-weight: bold;
+
+        .leavecount{
+            color:#fe0206;
+            font-weight: bold;
+        }
+
+        .avlcount {
+            color:#37ad47;
+            font-weight: bold;
+        }
+    }
+
+    .submit-button {
+        text-align: right;
+        margin: 20px -10px 0 0;
+
+        i {
+            margin-top: -2px;
+        }
+
+        .btn-text {
+            font-size: 13px;
+            font-weight: bold;
+        }
+    }
+}
+
+.card-header1 {
+    .card-title {
+        margin: 20px;
+        color: #1f24ab;
+    }
+}
+
+.applyleavepopup {
+
+    .modal-header {
+        background-color: #BAB9F5;
+        height: 50px;
+
+        .modal-title {
+            color: #000000;
+        }
+
+        i {
+            cursor: pointer;
+        }
+    }
+
+    .applyleavepopupbody {
+        font-size: 12px;
+
+        .table-responsive {
+
+            th,
+            td {
+                font-size: 12px;
+                width: 1200px;
+            }
+        }
+    }
+
+    .contain {
+        margin: 0 0 15px 0;
+    }
+}

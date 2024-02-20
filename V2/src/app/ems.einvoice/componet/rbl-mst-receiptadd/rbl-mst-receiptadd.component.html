@@ -1,0 +1,115 @@
+<div class="card m-3">
+    <div class="card-header">
+
+        <div class="col">
+            <h3 class="card-title"><b>Add Receipt Summary</b></h3>
+            <i class="bi bi-arrow-left-square-fill float-end fs-1 me-6" (click)="redirecttolist()"></i>
+
+        </div>
+
+        <!-- <div class="col-12 col-lg-4 col-md-4 col-sm-12"><b>Company Name</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  border-secondary bg-white custom-input
+                      " placeholder="" formControlName="" class="form-control">
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <button type="button" class="btn-primary btn-sm text-white w-100">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <button type="button" class="btn-primary btn-sm text-white w-100">All</button>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <button type="button" class="btn-primary btn-sm text-white w-100"
+                    (click)="redirecttolist()">Back</button>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="addreceipt" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class="fw-bolder fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Invoice Reference No</th>
+                        <th>Company</th>
+                        <th>Contact Details</th>
+                        <th>Invoice From</th>
+                        <th>Invoice Status</th>
+                        <th>Invoice Amount</th>
+                        <th>Paid Amount</th>
+                        <th>Outstanding Amount</th>
+                        <th style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of addreceipt; let i=index;" class="align-middle">
+                        <td>{{i+1}}</td>
+                        <td>{{data.invoice_refno}}</td>
+                        <td>{{data.customer_name}}</td>
+                        <td>{{data.contact}}</td>
+                        <td>{{data.invoice_from}}</td>
+                        <td>{{data.invoice_status}}</td>
+                        <td>{{data.invoice_amount}}</td>
+                        <td>{{data.payment_amount}}</td>
+                        <td>{{data.outstanding}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="Make Receipt" type="button" class="btn btn-icon btn-sm bg-info me-2 mt-2"
+                                (click)="makereceipt(data.customer_gid)">
+                                <span class="fa-solid fa-receipt fs-4" style="color: #ffffff;"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

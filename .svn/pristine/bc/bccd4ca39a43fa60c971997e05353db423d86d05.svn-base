@@ -1,0 +1,31 @@
+.card_heading {
+    h6 {
+        background-color: #a3d9f1;
+        height: 25px;
+        padding: 6px;
+    }
+}
+.btn-success {
+    background-color: #50cd89 !important;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.btn-success:hover {
+    background-color: #42ac72 !important;
+}
+
+.btn-success:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+}
+.custom-toast-style {
+    z-index: 10000; /* Set a high z-index value */
+}
+
+
+  

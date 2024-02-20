@@ -1,0 +1,50 @@
+﻿using ems.pmr.DataAccess;
+using ems.pmr.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web;
+using System.Configuration;
+using System.IO;
+
+namespace ems.pmr.Controllers
+{
+    [RoutePrefix("api/PmrTrnGrnInward")]
+    [Authorize]
+    public class PmrTrnGrnInwardController : ApiController
+    {
+
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaPmrTrnGrnInward objpurchase = new DaPmrTrnGrnInward();
+
+        [ActionName("GetGrnInwardSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetGrnInwardSummary()
+        {
+            MdlPmrTrnGrnInward values = new MdlPmrTrnGrnInward();
+            objpurchase.DaGetGrnInwardSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        [ActionName("GetEditGrnInward")]
+        [HttpGet]
+        public HttpResponseMessage GetEditGrnInward( string grn_gid)
+        {
+            MdlPmrTrnGrnInward objresult = new MdlPmrTrnGrnInward();
+            objpurchase.DaGetEditGrnInward(grn_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+      
+        }
+
+
+
+    }
+
+}

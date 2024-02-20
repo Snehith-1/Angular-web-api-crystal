@@ -1,0 +1,197 @@
+<div class="card shadow-sm">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Entity Summary</h3>
+        </div>
+
+        <div class="col me-5">
+            <button title="Add Entity" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end"
+                data-bs-toggle="modal" data-bs-target="#myModaladd">
+                <i class="fas fa-plus"></i> &nbsp;&nbsp;
+                Add Entity</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="entity_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Entity Code </th>
+                        <th>Entity Name</th>
+                        <th>Entity Description</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of entity_list; let i=index;" class="align-middle">
+                        <td>{{i+1}}</td>
+                        <td>{{data.entity_code}}</td>
+                        <td>{{data.entity_name}}</td>
+                        <td>{{data.entity_description}}</td>
+                        <td>{{data.created_date }}</td>
+                        <td>{{data.created_by}}</td>
+                        <td class="text-center text-nowrap">
+
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                                (click)="openModaledit(data)" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                            <button title="Delete" type="button" (click)="openModaldelete(data.entity_gid)"
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal ADD -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal mt-20" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+                    <div>
+                        <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Add Entity Details</h2>
+                    </div>
+                </div>
+
+                <!-- Modal body -->
+
+                <div class="modal-body">
+
+
+                    <div class="row mt-4">
+                        <span class="font-bold"><b>Entity Name</b><span style="color:red"> *</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                            <input formControlName="entity_name" type="text"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                                [ngStyle]="{'border-color': entity_name.invalid && entity_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                placeholder="Enter Entity Name" pattern="^(?!\s*$).+" name="entity_name" required
+                                [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)" />
+                            <div *ngIf="entity_name.invalid && (entity_name.dirty || entity_name.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="entity_name.errors?.['required']">
+                                    <span
+                                        style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Entity
+                                        name is required</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-4">
+                        <label for="exampleFormControlTextarea1" class="form-label"><b>Entity Description</b></label>
+                        <textarea class="form-control" formControlName="entity_description" pattern="^(?!\s*$).+"
+                            placeholder="Enter Entity Description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal Edit -->
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+    <div class="modal mt-20" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+                    <div>
+                        <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Edit Entity Details</h2>
+                    </div>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="row mt-4">
+                        <span class="font-bold"><b>Entity Name</b><span style="color:red"> *</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                            <input formControlName="entityedit_name" type="text"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                                [ngStyle]="{'border-color': entityedit_name.invalid && entityedit_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                placeholder="Enter Entity Name" pattern="^(?!\s*$).+" name="entity_name" required
+                                [class.is-invalid]="entityedit_name.invalid && (entityedit_name.dirty || entityedit_name.touched)" />
+                            <div *ngIf="entityedit_name.invalid && (entityedit_name.dirty || entityedit_name.touched)"
+                                class="invalid-feedback">
+                                <div *ngIf="entityedit_name.errors?.['required']">
+                                    <span
+                                        style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Entity name is required</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label for="exampleFormControlTextarea1" class="form-label"><b>Entity Description</b></label>
+                        <textarea class="form-control" formControlName="entityedit_description" pattern="^(?!\s*$).+"
+                            placeholder="Enter Entity Description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onupdate()" [disabled]="reactiveFormEdit.invalid" [ngClass]="{
+                    'primary-button': !reactiveFormEdit.invalid,
+                    'secondary-button': reactiveFormEdit.invalid
+                  }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- The Modal Delete -->
+<div class="modal mt-20 " id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog del_modal-dialog">
+      <div class="modal-content del_modal-content">
+        <div class="text-center my-4">
+          <h2><b>Are you sure?</b></h2>
+          <p style="display: block;">Do You Want To Delete the Record ?</p>
+          <div class="text-center my-4">
+            <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+              <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+            </button>
+            <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+              <i class="fas fa-close text-white me-2"></i>Close
+            </button>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,204 @@
+import { Component, } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+
+@Component({
+  selector: 'app-smr-rpt-orderreport',
+  templateUrl: './smr-rpt-orderreport.component.html',
+  styleUrls: ['./smr-rpt-orderreport.component.scss']
+})
+
+export class SmrRptOrderreportComponent {
+  chartOptions: any;
+  Date: string;
+  GetOrderForLastSixMonths_List :any;
+  GetOrderDetailSummary :any;
+  reactiveForm: FormGroup | any;
+  responsedata: any;
+  salesteamgrid_list :any;
+  getData: any;
+  salesorder_gid : any;
+  data: any;  
+  parameterValue: any;
+
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService) {
+    this.Date = new Date().toString();
+    
+    
+    
+
+  }
+  
+
+  ngOnInit(): void {
+    
+    this.chartOptions = getChartOptions(350);
+  
+    setInterval(() => {
+      this.Date = new Date().toString();
+    }, 1000);
+  
+    this.GetOrderForLastSixMonths();
+  }
+  GetOrderForLastSixMonths( )
+
+ {
+  debugger
+  var url = 'SmrRptOrderReport/GetOrderForLastSixMonths'
+  this.service.get(url).subscribe((result: any) => {
+    $('#GetOrderForLastSixMonths_List').DataTable().destroy();
+    this.responsedata = result;
+    this.GetOrderForLastSixMonths_List = this.responsedata.GetOrderForLastSixMonths_List;
+    setTimeout(() => {
+      $('#GetOrderForLastSixMonths_List');
+    }, 1);
+
+
+  })
+
+  
+  
+}
+
+ondetail(month: any,year:any) {
+  debugger
+  var url = 'SmrRptOrderReport/GetOrderDetailSummary'
+  let param = {
+    month: month, year: year
+  }
+  this.service.getparams(url, param).subscribe((result: any) => {
+    this.responsedata = result;
+    this.GetOrderDetailSummary = result.GetOrderDetailSummary;
+    console.log(this.GetOrderDetailSummary)
+    setTimeout(() => {
+      $('#GetOrderDetailSummary');
+    }, 1);
+
+  });
+}
+}
+function getChartOptions(height: number) {
+  const labelColor = '#000000';
+  const borderColor = '#e6ccb2';
+  const strokeColor = '#6e0a0a';
+  const color = '#06a813';
+
+  return {
+    chart: {
+      fontFamily: 'inherit',
+      type: 'area',
+      height: 400,
+      toolbar: { show: false },
+      sparkline: { enabled: false },
+    },
+
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      labels: {
+        show: true,
+        style: { colors: labelColor, fontSize: '12px' },
+      },
+      crosshairs: {
+        show: false,
+        position: 'front',
+        stroke: {
+          color: borderColor,
+          width: 1,
+          dashArray: 3,
+        },
+      },
+    },
+
+    series: [
+      {
+        name: 'Total Sales',
+        data: [30000, 45000, 32000, 70000, 40560, 40568, 30456, 45000, 32123, 10345, 60567, 90788],
+      },
+    ],
+
+    legend: {
+      show: false,
+    },
+
+    dataLabels: {
+      enabled: false,
+    },
+
+    fill: {
+      type: 'solid',
+      opacity: 0,
+    },
+
+    stroke: {
+      curve: 'smooth',
+      show: true,
+      width: 3,
+      colors: [strokeColor],
+    },
+
+    yaxis: {
+      labels: {
+        show: true,
+        style: {
+          colors: labelColor,
+          fontSize: '12px',
+        },
+      },
+    },
+
+    states: {
+      normal: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      hover: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      active: {
+        allowMultipleDataPointsSelection: false,
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+    },
+
+    tooltip: {
+      style: {
+        fontSize: '12px',
+      },
+      y: {
+        formatter: function (val: number) {
+          return val;
+        },
+      },
+      marker: {
+        show: false,
+      },
+    },
+
+    colors: ['transparent'],
+    markers: {
+      colors: [color],
+      strokeColors: [strokeColor],
+      strokeWidth: 3,
+    },
+  };
+}
+
+
+
+
+
+
+

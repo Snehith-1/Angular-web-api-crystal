@@ -1,0 +1,373 @@
+<div class="m-3">
+  <form  [formGroup]="reactiveForm" #form="ngForm">
+  
+    
+        <div class="card">
+          <div class="card-header bg-primary card-height55 d-flex justify-content-between align-items-center ">
+
+              <h3 class="fw-bolder text-white"><i class="fas fa-plus fw-bolder fs-3"></i>&nbsp;&nbsp;Add Vendor</h3>
+            <div>
+              <i class="bi bi-arrow-left-square-fill  fs-1  text-black" routerLink="/pmr/PmrMstVendorregister"></i>
+            </div>
+          </div>
+          <div class="d-flex flex-row m-6 flex-wrap">
+<!-- vendor Code textbox design-->
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Vendor Code<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" formControlName="vendor_code" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                  " [ngStyle]="{
+                    'border-color':
+                    vendor_code.invalid && vendor_code.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                  }" placeholder="Vendor Code"  style="height:40px;" name="vendor_code" required />
+                <div *ngIf="
+                vendor_code.invalid &&
+                    (vendor_code.dirty || vendor_code.touched)
+                  " class="text-red">
+                  <div *ngIf="vendor_code.errors?.['required']">
+                    Vendor Code is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<!-- Vendor Company Name textbox design-->
+               <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                     <span class="font-bold">Vendor Company Name<span class="ms-1 text-red">*</span></span>
+                     <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                       <input type="text" formControlName="vendor_companyname" class="
+                           form-control form-control-lg form-control-solid
+                           custom-input
+                           mb-3 mb-lg-0
+                           bg-white
+                           custom-input
+                          " [ngStyle]="{
+                          'border-color':
+                          vendor_companyname.invalid && vendor_companyname.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                      }" placeholder="Vendor Company Name"  style="height:40px;" name="vendor_companyname" required />
+                 <div *ngIf=" vendor_companyname.invalid &&
+                      (vendor_companyname.dirty || vendor_companyname.touched)
+               " class="text-red">
+                  <div *ngIf="vendor_companyname.errors?.['required']">
+                    Vendor Company Name is required.
+                  </div>
+                </div>
+             </div>
+          </div>
+
+
+<!-- Contact Person Name textbox design-->
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">Contact Person Name<span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input type="text" formControlName="contactperson_name" class="
+                  form-control form-control-lg form-control-solid
+                  custom-input
+                  mb-3 mb-lg-0
+                  bg-white
+                  custom-input
+                 " [ngStyle]="{
+                 'border-color':
+                  contactperson_name.invalid && contactperson_name.touched
+                   ? 'red'
+                   : 'rgb(209, 209, 209)'
+                    }" placeholder="Contact Person Name" style="height:40px;" name="contactperson_name" required />
+                     <div *ngIf=" contactperson_name.invalid &&
+                     (contactperson_name.dirty || contactperson_name.touched)
+                        " class="text-red">
+                      <div *ngIf="contactperson_name.errors?.['required']">
+                      Contact Person Name is required.
+                    </div>
+                 </div>
+              </div>
+           </div>      
+      </div>
+
+          <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+ 
+
+            
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Mobile<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-12 col-12 col-md-12 col-sm-12 fv-row mt-2">
+                <ngx-intl-tel-input [cssClass]="'form-control custom-width'"
+                [preferredCountries]="[CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="true"
+                [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                [selectedCountryISO]="CountryISO.UnitedKingdom" [phoneValidation]="true"
+                 name="mobile" [maxLength]="15" formControlName="mobile" style="height:40px;"></ngx-intl-tel-input>
+               
+
+
+
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12" >
+              <span class="font-bold">Email<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+  
+                  <input formControlName="email_address"  type="text" class="
+                  form-control form-control-lg form-control-solid
+                  borderc-secondary
+                  bg-white
+                  custom-input
+                  mb-3 mb-lg-0
+                "   [ngStyle]="{
+                  'border-color':
+                  email.invalid && email.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                }" 
+                placeholder="Email"  style ="height:40px" pattern="^([a-z0-9-]+|[a-z0-9-]+([.][a-z0-9-]+)*)@([a-z0-9-]+\.[a-z]{2,20}(\.[a-z]{2})?|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\]|localhost)$" name="email_address" required />
+              </div>
+              <div *ngIf="
+              email.invalid &&
+                  (email.dirty || email.touched)
+                " class="text-red">
+                <div *ngIf="email.errors?.['required']">
+                  Email is required.
+                </div>
+            </div>
+            <div *ngIf="
+            email.invalid &&
+                (email.dirty || email.touched)
+              " class="text-red">
+              <div *ngIf="email.errors?.['pattern']">
+                Invalid Email!!.
+              </div>
+          </div>
+        </div>
+
+
+
+
+           <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Address I<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <textarea type="text" formControlName="address" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                  " [ngStyle]="{
+                    'border-color':
+                    address.invalid && address.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                  }" placeholder="Address I"  style ="height:40px" name="address" required ></textarea>
+
+
+
+                  
+                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="text-red">
+                  <div *ngIf="address.errors?.['required']">
+                    Address is required.
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+           
+          </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12" >
+              <span class="font-bold">Address II</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+									<textarea formControlName="address2" type="text" class="
+									form-control form-control-lg form-control-solid
+									borderc-secondary
+									bg-white
+									custom-input
+									mb-3 mb-lg-0
+								" placeholder="Address II" style ="height:40px" name="address2" ></textarea>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">City<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" formControlName="city" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                  " [ngStyle]="{
+                    'border-color':
+                    city.invalid && city.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                  }" placeholder="City"  style ="height:40px" name="city" required />
+                <div *ngIf="
+                city.invalid &&
+                    (city.dirty || city.touched)
+                  " class="text-red">
+                  <div *ngIf="city.errors?.['required']">
+                    City is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">State<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" formControlName="state_name" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                  " [ngStyle]="{
+                    'border-color':
+                    state_name.invalid && state_name.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                  }" placeholder="State" style ="height:40px"  name="state_name" required />
+                <div *ngIf="
+                state_name.invalid &&
+                    (state_name.dirty || state_name.touched)
+                  " class="text-red">
+                  <div *ngIf="state_name.errors?.['required']">
+                    State is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12" >
+              <span class="font-bold">Postal code<span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+  
+                  <input formControlName="postal_code" type="numeric" class="
+                  form-control form-control-lg form-control-solid
+                  borderc-secondary
+                  bg-white
+                  custom-input
+                  mb-3 mb-lg-0
+                " [ngStyle]="{
+                  'border-color':
+                  postal.invalid && postal.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                }" 
+                placeholder="Postal code" pattern="[0-9]*" minlength="0" maxlength="6" style ="height:40px"  name="postal_code" required/>
+              </div>
+              <div *ngIf="postal.invalid && (postal.dirty || postal.touched)" class="text-red">
+                <div *ngIf="postal.errors?.['required']">
+                  Postal Code Required.
+                </div>
+
+              </div>
+              <div *ngIf="postal.invalid && (postal.dirty || postal.touched)" class="text-red">
+                <div *ngIf="postal.errors?.['pattern']">
+                  Invalid Postal Code.
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Country<span class="ms-1 text-red">*</span></span>
+              <ng-select formControlName="countryname" [class.is-invalid]="
+              countryname.invalid && (countryname.dirty || countryname.touched)
+                "  [ngClass]="{'invalid-border': countryname.invalid && countryname.touched}" [items]="country_list"  class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                bindLabel="country_name" bindValue="country_gid" style ="height:40px" placeholder="Select an Country"></ng-select>
+              <div *ngIf="
+              countryname.invalid && (countryname.dirty || countryname.touched)
+                " class="invalid-feedback">
+                <div *ngIf="countryname.errors?.['required']">
+                  countryname is required.
+                </div>
+              </div>
+            </div>
+            
+            
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Currency<span class="ms-1 text-red">*</span></span>
+              <ng-select formControlName="currencyname" [class.is-invalid]="
+              currencyname.invalid && (currencyname.dirty || currencyname.touched)
+                "  [ngClass]="{'invalid-border': currencyname.invalid && currencyname.touched}" [items]="currency_list"  class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                bindLabel="currency_code" bindValue="currencyexchange_gid" style ="height:40px" placeholder="Select an currency"></ng-select>
+              <div *ngIf="
+              currencyname.invalid && (currencyname.dirty || currencyname.touched)
+                " class="invalid-feedback">
+                <div *ngIf="currencyname.errors?.['required']">
+                  currencyname is required.
+                </div>
+              </div>
+            </div>       
+      </div>
+   
+         
+          <div class="d-flex flex-row m-6 flex-wrap">
+
+   <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Tax<span class="ms-1 text-red">*</span></span>
+              <ng-select formControlName="taxname" [class.is-invalid]="
+              taxname.invalid && (taxname.dirty || taxname.touched)
+                "  [ngClass]="{'invalid-border': taxname.invalid && taxname.touched}" [items]="tax_list"  class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                bindLabel="tax_name" bindValue="tax_gid" style ="height:40px"  placeholder="Select an Tax"></ng-select>
+              <div *ngIf="
+              taxname.invalid && (taxname.dirty || taxname.touched)
+                " class="invalid-feedback">
+                <div *ngIf="taxname.errors?.['required']">
+                  Tax Name is required.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Fax</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" formControlName="fax_name" class="
+                    form-control form-control-lg form-control-solid borderc-secondary
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                  " [ngStyle]="{
+                    'border-color':
+                    fax_name.invalid && fax_name.touched
+                  }" placeholder="Fax" minlength="0"  style ="height:40px" maxlength="11" pattern="[0-9]*" name="fax_name" />
+               
+              </div>
+            </div>
+
+           
+          </div>
+        </div>
+        <div class="text-center my-4">
+          <button class="btn-sm text-white me-2"  [ngClass]="{
+              'primary-button': !reactiveForm.invalid,
+              'secondary-button': reactiveForm.invalid
+            }" (click)="validate()">
+            <i class="fas fa-check text-white fs-5"></i> &nbsp; Submit
+          </button>
+
+          <!-- <button class="btn-primary btn-sm text-white me-4" routerLink="/pmr/PmrMstVendorregister">
+            <i class="fas fa-arrow-left"></i> &nbsp; Back
+          </button> -->
+        </div>
+      
+  
+  </form>
+</div>

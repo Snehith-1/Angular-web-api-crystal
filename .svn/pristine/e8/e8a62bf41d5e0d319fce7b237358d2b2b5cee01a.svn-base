@@ -1,0 +1,733 @@
+<div class="card card-bordered">
+    <div class="card-header d-flex justify-content-center">
+        <h1 class="card-title fw-bold fs-3">Approve Leave</h1>
+    </div>
+
+    <div class="back-icon">
+        <i class="bi bi-arrow-left-square-fill" (click)="back()"></i>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_1">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa fa-thumbs-up"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body" (click)="toggleApprovalPendingTable()">
+                                    <p class="count">{{count_approvalpending}}</p>
+                                    <p class="content">Approval Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_2">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-square-check"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body" (click)="toggleApprovedTable()">
+                                    <p class="count">{{count_approval}}</p>
+                                    <p class="content">Approved</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_3">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-thumbs-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body" (click)="toggleRejectedTable()">
+                                    <p class="count">{{count_rejected}}</p>
+                                    <p class="content">Rejected</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_4">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body">
+                                    <p class="count">{{count_history}}</p>
+                                    <p class="content">History</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion panel1 mt-6" id="panel1">
+        <div class="accordion-item">
+            <h2 class="accordion-header mt-6" id="headingOne">
+                <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fa fa-thumbs-up me-5"></i>Approval Pending Summary
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" [ngClass]="{ 'show': isApprovalPendingTableOpen }"
+                aria-labelledby="headingOne" data-bs-parent="#panel1">
+                <div class="accordion-body">
+                    <tabset>
+                        <tab heading="Leave">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="leavesummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Leave Type</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>No of Days</th>
+                                                <th>Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of leavesummary; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.username}}</td>
+                                                <td>{{data.leavetype_name}}</td>
+                                                <td>{{data.leave_fromdate}}</td>
+                                                <td>{{data.leave_todate}}</td>
+                                                <td>{{data.leave_noofdays }}</td>
+                                                <td>{{data.leave_reason}}</td>
+                                                <td>{{data.leave_status}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Login Time">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="login" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Login Time</th>
+                                                <th>Login Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of login; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.loginapply_date}}</td>
+                                                <td>{{data.loginattendence_date}}</td>
+                                                <td>{{data.login_time}}</td>
+                                                <td>{{data.login_reason }}</td>
+                                                <td>{{data.login_status}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Logout Time">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="logout" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Logout Time</th>
+                                                <th>Logout Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of logout; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.logoutapply_date}}</td>
+                                                <td>{{data.logoutattendence_date}}</td>
+                                                <td>{{data.logout_time}}</td>
+                                                <td>{{data.logout_reason }}</td>
+                                                <td>{{data.logout_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="OnDuty">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="onduty" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>OD Date</th>
+                                                <th>OD From</th>
+                                                <th>OD To</th>
+                                                <th>OD Duration</th>
+                                                <th>OD Reason</th>
+                                                <th>OD Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of onduty; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.onduty_date}}</td>
+                                                <td>{{data.onduty_from}}</td>
+                                                <td>{{data.onduty_to}}</td>
+                                                <td>{{data.onduty_duration }}</td>
+                                                <td>{{data.onduty_reason}}</td>
+                                                <td>{{data.ondutytracker_status}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="CompOff">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="compoff" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Compoff Applied</th>
+                                                <th>Actual Working</th>
+                                                <th>Compoff Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of compoff; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.Compoff_from}}</td>
+                                                <td>{{data.Compoff_to}}</td>
+                                                <td>{{data.Compoff_reason}}</td>
+                                                <td>{{data.Compoff_status }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Permission">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="permission" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Permission Date</th>
+                                                <th>Permission From</th>
+                                                <th>Permission To</th>
+                                                <th>Duration</th>
+                                                <th>Permission Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of permission; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.permission_date}}</td>
+                                                <td>{{data.permission_from}}</td>
+                                                <td>{{data.permission_to}}</td>
+                                                <td>{{data.permission_duration }}</td>
+                                                <td>{{data.permission_reason}}</td>
+                                                <td>{{data.permission_status }}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion panel2 mt-6" id="panel2">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="fa-solid fa-square-check me-5"></i>Approved Summary
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" [ngClass]="{ 'show': isApprovedTableOpen }"
+                aria-labelledby="headingTwo" data-bs-parent="#panel2">
+                <div class="accordion-body">
+                    <tabset>
+                        <tab heading="Leave">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="leave" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Leave Type</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>No of Days</th>
+                                                <th>Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of leave; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.username}}</td>
+                                                <td>{{data.leavetype_name}}</td>
+                                                <td>{{data.leave_fromdate}}</td>
+                                                <td>{{data.leave_todate}}</td>
+                                                <td>{{data.leave_noofdays }}</td>
+                                                <td>{{data.leave_reason}}</td>
+                                                <td>{{data.leave_status}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Login Time">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="loginsummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Login Time</th>
+                                                <th>Login Reason</th>
+                                                <th>Approval Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of loginsummary; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.loginapply_date}}</td>
+                                                <td>{{data.loginattendence_date}}</td>
+                                                <td>{{data.login_time}}</td>
+                                                <td>{{data.login_reason }}</td>
+                                                <td>{{data.login_status}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Logout Time">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="logoutsummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Logout Time</th>
+                                                <th>Logout Reason</th>
+                                                <th>Approval Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of logoutsummary; let i=index;">
+
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.logoutapply_date}}</td>
+                                                <td>{{data.logoutattendence_date}}</td>
+                                                <td>{{data.logout_time}}</td>
+                                                <td>{{data.logout_reason }}</td>
+                                                <td>{{data.logout_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="OnDuty">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="ondutysummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>OD Date</th>
+                                                <th>OD From</th>
+                                                <th>OD To</th>
+                                                <th>OD Duration</th>
+                                                <th>OD Reason</th>
+                                                <th>OD Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <tr *ngFor="let data of ondutysummary; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.onduty_date}}</td>
+                                                <td>{{data.onduty_from}}</td>
+                                                <td>{{data.onduty_to}}</td>
+                                                <td>{{data.onduty_duration }}</td>
+                                                <td>{{data.onduty_reason}}</td>
+                                                <td>{{data.ondutytracker_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="CompOff">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="compoffsummary"
+                                        class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Compoff Applied</th>
+                                                <th>Actual Working</th>
+                                                <th>Compoff Reason</th>
+                                                <th>Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of compoffsummary; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.Compoff_from}}</td>
+                                                <td>{{data.Compoff_to}}</td>
+                                                <td>{{data.Compoff_reason}}</td>
+                                                <td>{{data.Compoff_status }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Permission">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="permissionsummary"
+                                        class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Permission Date</th>
+                                                <th>Permission From</th>
+                                                <th>Permission To</th>
+                                                <th>Duration</th>
+                                                <th>Permission Reason</th>
+                                                <th>Status</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of permissionsummary; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.permission_date}}</td>
+                                                <td>{{data.permission_from}}</td>
+                                                <td>{{data.permission_to}}</td>
+                                                <td>{{data.permission_duration }}</td>
+                                                <td>{{data.permission_reason}}</td>
+                                                <td>{{data.permission_status }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion panel3 mt-6" id="panel3">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree">
+                    <i class="fa-solid fa-thumbs-down me-5"></i>Rejected Summary
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" [ngClass]="{ 'show': isRejectedTableOpen }"
+                aria-labelledby="headingThree" data-bs-parent="#panel3">
+                <div class="accordion-body">
+                    <tabset>
+                        <tab heading="Leave">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="leavereject" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Approved By</th>
+                                                <th>Leave Type</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>No of Days</th>
+                                                <th>Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of leavereject; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.leave_approvedby}}</td>
+                                                <td>{{data.leavetype_name}}</td>
+                                                <td>{{data.leave_fromdate}}</td>
+                                                <td>{{data.leave_todate}}</td>
+                                                <td>{{data.leave_noofdays }}</td>
+                                                <td>{{data.leave_reason}}</td>
+                                                <td>{{data.leave_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Login Time">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="loginreject" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Login Time</th>
+                                                <th>Login Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of loginreject; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.loginapply_date}}</td>
+                                                <td>{{data.loginattendence_date}}</td>
+                                                <td>{{data.login_time}}</td>
+                                                <td>{{data.login_reason }}</td>
+                                                <td>{{data.login_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Logout Time">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="logoutreject" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Logout Time</th>
+                                                <th>Logout Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of logoutreject; let i=index;">
+
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.logoutapply_date}}</td>
+                                                <td>{{data.logoutattendence_date}}</td>
+                                                <td>{{data.logout_time}}</td>
+                                                <td>{{data.logout_reason }}</td>
+                                                <td>{{data.logout_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="OnDuty">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="ondutyreject" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>OD Date</th>
+                                                <th>OD From</th>
+                                                <th>OD To</th>
+                                                <th>OD Duration</th>
+                                                <th>OD Reason</th>
+                                                <th>OD Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of ondutyreject; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.onduty_date}}</td>
+                                                <td>{{data.onduty_from}}</td>
+                                                <td>{{data.onduty_to}}</td>
+                                                <td>{{data.onduty_duration }}</td>
+                                                <td>{{data.onduty_reason}}</td>
+                                                <td>{{data.ondutytracker_status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="CompOff">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="compoffreject" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Compoff Applied</th>
+                                                <th>Actual Working</th>
+                                                <th>Compoff Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of compoffreject; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.Compoff_from}}</td>
+                                                <td>{{data.Compoff_to}}</td>
+                                                <td>{{data.Compoff_reason}}</td>
+                                                <td>{{data.Compoff_status }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab heading="Permission">
+                            <div class="table-responsive">
+                                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                    <table id="permissionreject"
+                                        class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Permission Date</th>
+                                                <th>Permission From</th>
+                                                <th>Permission To</th>
+                                                <th>Duration</th>
+                                                <th>Permission Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of permissionreject; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data.employee_name}}</td>
+                                                <td>{{data.permission_date}}</td>
+                                                <td>{{data.permission_from}}</td>
+                                                <td>{{data.permission_to}}</td>
+                                                <td>{{data.permission_duration }}</td>
+                                                <td>{{data.permission_reason}}</td>
+                                                <td>{{data.permission_status }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

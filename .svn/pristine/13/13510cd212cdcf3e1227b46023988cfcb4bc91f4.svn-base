@@ -1,0 +1,512 @@
+<div class="m-12">
+
+    <div class="card shadow-lg rounded-top" style="top:-50px;">
+        <div class="card-header bg-primary card-height55">
+            <div class="card-title m-0 ">
+                <h5 class="fw-bolder text-white">Edit Appointment Order</h5>
+            </div>
+        </div>
+
+        <div class="card m-3">
+            <div class="card-header bg-lightblue card-height55">
+                <div class="card-title m-0">
+                    <h4 class="fw-bolder text-blue">Personal Details</h4>
+                </div>
+            </div>
+
+
+            <form [formGroup]="appointmentorderform" #form="ngForm">
+                <input formControlName="appointmentorder_gid" hidden placeholder="Address Line 1" type="text" class="
+                form-control form-control-lg form-control-solid
+                bg-white
+                custom-input
+                mb-3 mb-lg-0
+                borderc-secondary
+              " name="appointmentorder_gid" />
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Branch</b> <span class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                            <select
+                                class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                                formControlName="branch_name">
+                                <option value="">Select Branch</option>
+                                <option *ngFor="let branch of branch_list" [value]="branch.branch_gid">
+                                    {{branch.branch_name}}</option>
+                            </select>
+                            <div *ngIf="branchnamecontrol.invalid && branchnamecontrol.touched">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Appointment Ref No </b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                          form-control form-control-lg form-control-solid
+                          mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                        " placeholder="Appointment Ref No" formControlName="appointmentorder_gid"
+                                class="form-control" />
+                        </div>
+                        <div *ngIf="appointmentrefcontrol.invalid && appointmentrefcontrol.touched">
+                           
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Appointment Date</b> <span
+                            class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="date"
+                                class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                placeholder="DD-MM-YYYY" formControlName="appointment_date" />
+                        </div>
+                    </div>
+                    <div *ngIf="appointmentdatecontrol.invalid && appointmentdatecontrol.touched">
+                       
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>First Name </b><span
+                            class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                          form-control form-control-lg form-control-solid
+                          mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                        " placeholder="First name" formControlName="first_name" class="form-control" />
+                        </div>
+                        <div *ngIf="firstnamecontrol.invalid && firstnamecontrol.touched">
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Last Name </b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                          form-control form-control-lg form-control-solid
+                          mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                        " placeholder="Last name" formControlName="last_name" class="form-control" />
+                        </div>
+                        <div *ngIf="lastnamecontrol.invalid && lastnamecontrol.touched">
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Gender</b>
+                        <div class="d-flex justify-content-start mt-4 ms-2">
+                            <!--begin::Check-->
+                            <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                            ">
+                                <input class="form-check-input" type="radio" name="gender" checked="checked"
+                                    formControlName="gender" value="male" />
+                                <!--begin::Label-->
+                                <label class="form-check-label text-gray-700 text-nowrap"
+                                    for="kt_builder_header_content_menu">Male</label>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Check-->
+                            <!--begin::Check-->
+                            <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                              ms-10
+                            ">
+                                <input class="form-check-input" type="radio" name="gender" formControlName="gender"
+                                    value="female" />
+                                <!--begin::Label-->
+                                <label class="form-check-label text-gray-700 text-nowrap"
+                                    for="kt_builder_header_content_page-title">Female</label>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Check-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Experience</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Experience" formControlName="experience_detail" class="form-control" />
+                        </div>
+                        <div *ngIf="experiencecontrol.invalid && experiencecontrol.touched">
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Date Of Birth</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="date" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="DOB" formControlName="dob" class="form-control" />
+                        </div>
+                        <div *ngIf="dobcontrol.invalid && dobcontrol.touched">
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Mobile</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Mobile Number" formControlName="mobile_number" class="form-control" />
+                        </div>
+                        <div *ngIf="mobilecontrol.invalid && mobilecontrol.touched">
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>E-mail</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input [(ngModel)]="email_address" type="text" formControlName="email_address" class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"  placeholder="Personal Email Address" name="email_address" />
+                            <div class="text-red" *ngIf="reactiveForm.get('email_address')?.hasError('pattern')">
+                                Enter the Valid Email Id 
+                                </div>                       
+                </div>
+                      
+            </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Date Of Joining</b><span
+                            class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="date" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Date Of Joining" formControlName="joiningdate" class="form-control" />
+                        </div>
+                        <div *ngIf="joiningdatecontrol.invalid && joiningdatecontrol.touched">
+                           
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Qualification</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Qualification" formControlName="qualification" class="form-control" />
+                        </div>
+                        <div *ngIf="qualificationcontrol.invalid && qualificationcontrol.touched">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Department</b> <span
+                            class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                            <select
+                                class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                                formControlName="department_name" [(ngModel)]="selecteddepartment">
+                                <option value="">Select Department</option>
+                                <option *ngFor="let department of department_list" [value]="department.department_gid">
+                                    {{department.department_name}}</option>
+                            </select>
+                            <div *ngIf="departmentnamecontrol.invalid && departmentnamecontrol.touched">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Designation</b> <span
+                            class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                            <select
+                                class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                                formControlName="designation_name" [(ngModel)]="selecteddesignation">
+                                <option value="">Select Designation/option>
+                                <option *ngFor="let designation of designation_list"
+                                    [value]="designation.designation_gid">
+                                    {{designation.designation_name}}</option>
+                            </select>
+                            <div *ngIf="designationnamecontrol.invalid && designationnamecontrol.touched">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Salary</b><span class="ms-1 text-red">*</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Salary" formControlName="employee_salary" class="form-control" />
+                        </div>
+                        <div *ngIf="salarycontrol.invalid && salarycontrol.touched">
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Address Details</h4>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-3 mt-5 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                        <div class="card me-lg-3 me-0">
+                            <div class="card-header bg-lightblue card-height55">
+                                <div class="card-title m-0">
+                                    <h5 class="fw-bolder text-blue">Permanent Address</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row m-lg-6 mt-lg-4 m-6 mt-4">
+                                <div class="col">
+                                    <span class="font-bold">Address Line 1</span>
+                                    <div class="col-lg-12 fv-row mt-2">
+                                        <input formControlName="perm_address1" placeholder="Address Line 1" type="text"
+                                            class="
+                                      form-control form-control-lg form-control-solid
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                      borderc-secondary
+                                    " name="permanent_address1" />
+                                    </div>
+                                    <div *ngIf="permaddress1control.invalid && permaddress1control.touched">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row m-6 mt-0">
+                                <div class="col">
+                                    <span class="font-bold">Address Line 2</span>
+                                    <div class="col-lg-12 fv-row mt-2">
+                                        <input formControlName="perm_address2" type="text" placeholder="Address Line 2"
+                                            class="
+                                      form-control form-control-lg form-control-solid
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                      borderc-secondary
+                                    " name="perm_address2" />
+                                    </div>
+                                    <div *ngIf="permaddress2control.invalid && permaddress2control.touched">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                <div class="col-12 col-lg-6 mt-8 mt-lg-0">
+                                    <span class="font-bold">Country</span>
+                                    <div class="col-lg-11 fv-row mt-2">
+                                        <select
+                                            class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                                            formControlName="perm_country" [(ngModel)]="selectedcountry">
+                                            <option value="">Select Country</option>
+                                            <option *ngFor="let country of country_list" [value]="country.country_gid">
+                                                {{country.country}}</option>
+                                        </select>
+                                        <div *ngIf="permcountrycontrol.invalid && permcountrycontrol.touched">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 mt-8 mt-lg-0">
+                                    <span class="font-bold">State</span>
+                                    <div class="col-lg-11 fv-row mt-2">
+                                        <input formControlName="perm_state" type="text" placeholder="State" class="
+                                      form-control form-control-lg form-control-solid
+                                      borderc-secondary
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                    " name="perm_state" />
+                                    </div>
+                                    <div *ngIf="permstatecontrol.invalid && permstatecontrol.touched">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row m-6 mt-0 mb-11 flex-wrap">
+                                <div class="col-12 col-lg-6">
+                                    <span class="font-bold">City</span>
+                                    <div class="col-lg-11 fv-row">
+                                        <input formControlName="perm_city" type="text" placeholder="City" class="
+                                      form-control form-control-lg form-control-solid
+                                      borderc-secondary
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                    " name="perm_city" />
+                                    </div>
+                                    <div *ngIf="permcitycontrol.invalid && permcitycontrol.touched">
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <span class="font-bold">Postal Code</span>
+                                    <div class="col-lg-11 fv-row">
+                                        <input placeholder="Postal" formControlName="perm_pincode" type="text" class="
+                                      form-control form-control-lg form-control-solid
+                                      borderc-secondary
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                    " name="fName" />
+                                    </div>
+                                </div>
+                                <div *ngIf="permpincodecontrol.invalid && permpincodecontrol.touched">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                        <div class="card ms-lg-3 ms-md-3 mt-lg-0 mt-md-0 mt-5 me-0">
+                            <div class="card-header bg-lightblue card-height55">
+                                <div class="card-title m-0">
+                                    <h5 class="fw-bolder text-blue">Temporary Address</h5>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-icon btn-sm bg-primary me-2 mt-3">
+                                        <span class="ki-duotone ki-copy text-white fs-6"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row m-lg-6 mt-lg-4 m-6 mt-4">
+                                <div class="col">
+                                    <span class="font-bold">Address Line 1</span>
+                                    <div class="col-lg-12 fv-row mt-2">
+                                        <input placeholder="Address Line 1" formControlName="temp_address1" type="text"
+                                            class="
+                                      form-control form-control-lg form-control-solid
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                      borderc-secondary
+                                    " name="temp_address1" />
+                                    </div>
+                                    <div *ngIf="tempaddress1control.invalid && tempaddress1control.touched">
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-row m-6 mt-0">
+                                <div class="col">
+                                    <span class="font-bold">Address Line 2</span>
+                                    <div class="col-lg-12 fv-row mt-2">
+                                        <input placeholder="Address Line 2" type="text" formControlName="temp_address2"
+                                            class="
+                                      form-control form-control-lg form-control-solid
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                      borderc-secondary
+                                    " name="temp_address2" />
+                                    </div>
+                                    <div *ngIf="tempaddress2control.invalid && tempaddress2control.touched">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                <div class="col-12 col-lg-6 mt-8 mt-lg-0">
+                                    <span class="font-bold">Country</span>
+                                    <div class="col-lg-11 fv-row mt-2">
+                                        <select
+                                            class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                                            formControlName="temp_country" [(ngModel)]="selectedcountry">
+                                            <option value="">Select Country</option>
+                                            <option *ngFor="let country of country_list1" [value]="country.country_gid">
+                                                {{country.country}}</option>
+                                        </select>
+                                        <div *ngIf="tempcountrycontrol.invalid && tempcountrycontrol.touched">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6 mt-8 mt-lg-0">
+                                    <span class="font-bold">State</span>
+                                    <div class="col-lg-11 fv-row mt-2">
+                                        <input placeholder="City" formControlName="temp_state" type="text" class="
+                                      form-control form-control-lg form-control-solid
+                                      borderc-secondary
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                    " name="fName" />
+                                    </div>
+                                    <div *ngIf="tempstatecontrol.invalid && tempstatecontrol.touched">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row m-6 mt-0 mb-11 flex-wrap">
+                                <div class="col-12 col-lg-6">
+                                    <span class="font-bold">City</span>
+                                    <div class="col-lg-11 fv-row">
+                                        <input placeholder="City" formControlName="temp_city" type="text" class="
+                                      form-control form-control-lg form-control-solid
+                                      borderc-secondary
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                    " name="fName" />
+                                    </div>
+                                    <div *ngIf="tempcitycontrol.invalid && tempcitycontrol.touched">
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <span class="font-bold">Postal Code</span>
+                                    <div class="col-lg-11 fv-row">
+                                        <input placeholder="Postal" formControlName="temp_pincode" type="text" class="
+                                      form-control form-control-lg form-control-solid
+                                      borderc-secondary
+                                      bg-white
+                                      custom-input
+                                      mb-3 mb-lg-0
+                                    " name="fName" />
+                                    </div>
+                                    <div *ngIf="temppincodecontrol.invalid && temppincodecontrol.touched">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="text-center my-4">
+        <button class="btn-success btn-sm text-white me-4" [ngClass]="{
+  'primary-button': !appointmentorderform.invalid,
+  'secondary-button': appointmentorderform.invalid
+}" (click)="validate()">
+            <i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+        </button>
+
+
+
+        <button class="btn-primary btn-sm text-white me-4" routerLink="/hrm/HrmTrnAppointmentorder">
+            <i class="fas fa-arrow-left"></i> &nbsp; Back
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,266 @@
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ApexChart, ApexNonAxisChartSeries, ApexResponsive } from 'ng-apexcharts';
+
+export type ChartOptions1 = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
+
+@Component({
+  selector: 'app-hrm-member-dashboard',
+  templateUrl: './hrm-member-dashboard.component.html',
+  styleUrls: ['./hrm-member-dashboard.component.scss']
+})
+
+export class HrmMemberDashboardComponent {
+
+  chartOptions1: any = {};
+  chartOptions2: any = {};
+  response_data: any;
+
+  DashboardCount_List: any;
+  DashboardQuotationAmt_List: any;
+  noquotation: any;
+  year: any;
+  noquotation_status: any;
+  show = true;
+  Date: string;
+  buttonClicked: boolean | undefined;
+
+  responsedata: any;
+  loginsummary_list: any;
+  logoutsummary_list: any;
+  ondutysummary_list: any;
+  compoffsummary_list: any;
+  permissionsummary_list: any;
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService) {
+    this.Date = new Date().toString();
+    HrmMemberDashboardComponent.constructor(); {
+      setInterval(() => {
+        this.Date = new Date().toString();
+      }, 1000);
+    }
+  }
+
+  ngOnInit(): void {
+    this.chartOptions1 = getChartOptions(350);
+    this.chartOptions2 = getChartOptions1(350);
+
+    setInterval(() => {
+      this.Date = new Date().toString();
+    }, 1000);
+
+    var api = 'hrmTrnDashboard/monthlyAttendence';
+    this.service.get(api).subscribe((result: any) => {
+    this.responsedata = result;
+    this.DashboardCount_List = this.responsedata.last6MonthAttendence_list;
+
+    let totalDays = Number(this.DashboardCount_List[0].totalDays);
+    let countPresent = Number(this.DashboardCount_List[0].countPresent);
+    let countAbsent = Number(this.DashboardCount_List[0].countAbsent);
+    let countLeave = Number(this.DashboardCount_List[0].countLeave);
+    let countholiday = Number(this.DashboardCount_List[0].countholiday);
+    let countWeekOff = Number(this.DashboardCount_List[0].countWeekOff);
+
+    this.chartOptions1 = {
+      series: [totalDays, countPresent, countAbsent, countLeave, countholiday, countWeekOff],
+      chart: {
+        width: 430,
+        type: "pie"
+      },
+      labels: ["Total No.Of Days:", "No.Of Days Present:", "No.Of Days Absent:", "No.Of Days Leave:", "No.Of Days Holiday:", "No.Of Days WeekOff:"],
+      responsive: [
+        {
+          breakpoint: 500,
+          options: {
+            chart: {
+              width: 250,
+  
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+    });    
+
+    var api = 'hrmTrnDashboard/loginSummary';    
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.loginsummary_list = this.responsedata.loginsummary_list;
+      
+      setTimeout(() => {
+        $('#login').DataTable();
+      }, 1);
+    });
+
+    var api = 'hrmTrnDashboard/logoutSummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.logoutsummary_list = this.responsedata.logoutsummary_list;
+
+      setTimeout(() => {
+        $('logout').DataTable();
+      }, 1);
+    });
+
+    var api = 'hrmTrnDashboard/ondutySummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.ondutysummary_list = this.response_data.onduty_details;
+
+      setTimeout(() => {
+        $('onduty').DataTable();
+      }, 1);
+    });
+
+    var api = 'hrmTrnDashboard/compOffSummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.compoffsummary_list = this.responsedata.compoffSummary_details;
+
+      setTimeout(() => {
+        $('Compoff').DataTable();
+      }, 1);
+    });
+
+    var api = 'hrmTrnDashboard/permissionSummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.permissionsummary_list = this.responsedata.permissionSummary_details;
+
+      setTimeout(() => {
+        $('permission').DataTable();
+      }, 1);
+    });
+  }
+
+  punchin() {
+    this.buttonClicked = !this.buttonClicked;
+  }
+  myprofile(){
+    this.router.navigate(['/hrm/Employeeprofile'])
+
+  }
+  myleave() {
+    this.router.navigate(['/hrm/HrmMyLeave'])
+  }
+
+
+  approveleave() {
+    this.router.navigate(['/hrm/HrmApproveLeave'])
+  }
+
+  officecalendar() {
+    this.router.navigate(['/hrm/HrmOfficeCalendar'])
+  }
+
+  companypolicies() {
+    this.router.navigate(['/hrm/HrmTrnCompanyPolicy'])
+  }  
+}
+
+function getChartOptions(height: number) {
+  return {
+    series: [20, 10, 20, 10, 20, 20],
+    chart: {
+      width: 430,
+      type: "pie"
+    },
+    labels: ["Total No.Of Days:", "No.Of Days Present:", "No.Of Days Absent:", "No.Of Days Leave:", "No.Of Days Holiday:", "No.Of Days WeekOff:"],
+    responsive: [
+      {
+        breakpoint: 500,
+        options: {
+          chart: {
+            width: 250,
+
+          },
+          legend: {
+            position: "bottom"
+          }
+        }
+      }
+    ]
+  };
+}
+
+function getChartOptions1(height: number) {
+  const labelColor = '#000';
+  const borderColor = '#e6ccb2';
+  const baseColor = '#89DA59';
+  const secondaryColor = '#FF420E'
+
+  return {
+    chart: {
+      fontFamily: 'inherit',
+      type: 'bar',
+      height: 212,
+      toolbar: {
+        show: false,
+      },
+    },
+
+    colors: [baseColor, secondaryColor, borderColor],
+
+    series: [
+      {
+        name: 'Present',
+        data: [20, 25, 22, 24, 20, 25, 22, 24, 20, 25, 22, 24],
+      },
+      {
+        name: 'Absent',
+        data: [20, 25, 22, 24, 20, 25, 22, 24, 20, 25, 22, 24],
+      },
+    ],
+
+    plotOptions: {
+      bar: {
+        columnWidth: '85%',
+      },
+    },
+
+    dataLabels: {
+      enabled: false,
+    },
+
+    legend: {
+      show: true,
+    },
+
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      axisBorder: { show: false, },
+      axisTicks: { show: false, },
+
+      labels: {
+        style: {
+          colors: labelColor,
+          fontSize: '12px',
+        },
+      },
+    },
+
+    yaxis: {
+      min: 0,
+      max: 30,
+      tickAmount: 3,
+
+      labels: {
+        style: {
+          colors: labelColor,
+          fontSize: '12px',
+        },
+      },
+    },
+  };
+}

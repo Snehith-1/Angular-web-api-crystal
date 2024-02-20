@@ -1,0 +1,131 @@
+<div class="card shadow-sm">
+  <div class="card-title p-5 pb-6 pt-6 rounded-top bg-lightblue" >
+    <h3 class="fw-bolder text-blue text-white"><i class="fa-solid fa-pencil  fs-6"></i> &nbsp;&nbsp;&nbsp;Loan Edit</h3>
+  </div>
+    <div class="mt-6">
+        <!-- Edit Function -->
+        
+        <form [formGroup]="reactiveFormEdit" #form="ngForm">
+         
+        <div class="modal-body">
+          <input class="form-control form-control-lg" formControlName="loan_gid" hidden pattern="^(?!\s*$).+" type="text" placeholder="Enter Loan" aria-label=".form-control-lg example" autocomplete="off" required>      
+        <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Loan Ref. No</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="loan_refnoedit" type="text" style="width:55%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 [ngStyle]="{'border-color': loan_refnoedit.invalid && loan_refnoedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                 placeholder="Enter Loan Ref. No" name="loan_refnoedit" required/>
+              </div>
+              </div>
+
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Employee Name</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="employee_nameedit" type="text" style="width:190%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': employee_nameedit.invalid && employee_nameedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Select Employee Name" pattern="^(?!\s*$).+" name="employee_nameedit" required/>
+                  </div>
+                 
+                </div>
+    
+                
+              </div>
+    
+        
+        
+        
+        </div>
+<br>
+        <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Loan Created Date</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="loan_dateedit" type="text" style="width:55%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 [ngStyle]="{'border-color': loan_dateedit.invalid && loan_dateedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                 placeholder="Enter Loan Created Date" pattern="^(?!\s*$).+" name="loan_dateedit" required/>
+              </div>
+              
+            </div>
+           
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Loan Amount</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="loan_amountedit" type="text" style="width:190%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': loan_amountedit.invalid && loan_amountedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Loan Amount" pattern="^(?!\s*$).+" name="loan_amountedit" required/>
+                  </div>
+                
+                </div>
+    
+                
+              </div>
+            
+          </div>
+<br>
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Paid Amount</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="paid_amountedit" type="text" style="width:55%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 [ngStyle]="{'border-color': paid_amountedit.invalid && paid_amountedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                 placeholder="Enter Paid Amount" pattern="^(?!\s*$).+" name="paid_amountedit" required/>
+              </div>
+             
+            </div>
+
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Balance Amount</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="balance_amtedit" type="text" style="width:190%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': balance_amtedit.invalid && balance_amtedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Balance Amount" pattern="^(?!\s*$).+" name="balance_amtedit" required/>
+                  </div>
+                 </div>
+                </div>
+              </div>
+<br>
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Repayment Amount</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="repay_amtedit" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 [ngStyle]="{'border-color': repay_amtedit.invalid && repay_amtedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                 placeholder="Enter Repayment Amount" pattern="^(?!\s*$).+" name="repay_amtedit" required/>
+              </div>
+             
+            </div>
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Remarks</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="remarksedit" type="text" style="width:190%;" readonly class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': remarksedit.invalid && remarksedit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Remarks" pattern="^(?!\s*$).+" name="remarksedit" required/>
+                  </div>
+                  
+                </div>
+    
+                
+              </div>
+            
+          </div>
+<br>
+          
+           <!-- Modal footer -->
+           <div class="text-center my-4">
+            <button (click)="onupdate()" class="me-4" [disabled]="reactiveFormEdit.invalid" [ngClass]="{'primary-button': !reactiveFormEdit.invalid, 'secondary-button': reactiveFormEdit.invalid}">
+              <i class="bi bi-check-square fs-5"></i>
+                  <span class="ms-3">Update</span>
+            </button>
+            <button class="btn-danger btn-sm text-white me-4" (click)="onback()" >
+              <i class="fas fa-arrow-left"></i>
+              <span class="ms-3">Back</span>
+            </button>
+          </div>
+
+         
+
+
+
+
+      </div>
+     
+      
+      </form>
+      </div>

@@ -1,0 +1,13 @@
+.no-menu-access {
+  background-color: #f8aeb5;  
+  color: white;   
+}
+.no-privileges-button {
+  background-color: #f8aeb5;  
+  border: 2px solid #ff0000;  
+  border-radius: 5px;  
+  padding: 10px 10px;  
+  color: #fff;  
+  font-weight: bold; 
+  cursor: not-allowed;  
+}

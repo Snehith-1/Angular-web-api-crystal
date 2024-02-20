@@ -1,0 +1,229 @@
+<div class="card m-3">
+  <div class="card-header bg-lightblue card-height55">
+    <div class="card-title m-0 ">
+      <h5 class="fw-bolder text-blue">Edit Lead Bank Branch</h5>
+    </div>
+  </div>
+  <br>
+  <form [formGroup]="brancheditform" (ngSubmit)="validate()">
+
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Branch Name</b> <span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" class="form-control form-control-lg form-control-solid 
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Branch Name"
+            formControlName="leadbankbranch_name" name="leadbankbranch_name" autocomplete="on" required [ngClass]="{
+                'invalid-border':
+                brancheditform.get('leadbankbranch_name').invalid &&
+                brancheditform.get('leadbankbranch_name').touched 
+              }" />
+          <div
+            *ngIf="brancheditform.get('leadbankbranch_name').hasError('required') && brancheditform.get('leadbankbranch_name').touched">
+            <div class="error-text">Branch name is required.</div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" formControlName="leadbank_gid">
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <span class="font-bold"><b>Contact Person Name</b><span class="ms-1 text-red">*</span></span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" formControlName="leadbankcontact_name" class="form-control form-control-lg form-control-solid
+                borderc-secondary
+                custom-input
+                mb-3 mb-lg-0
+                bg-white
+                custom-input" placeholder="Contact Person Name" name="leadbankcontact_name" required [ngClass]="{
+                'invalid-border':
+                brancheditform.get('leadbankcontact_name').invalid &&
+                brancheditform.get('leadbankcontact_name').touched 
+              }" />
+          <div
+            *ngIf="brancheditform.get('leadbankcontact_name').hasError('required') && brancheditform.get('leadbankcontact_name').touched">
+            <div class="error-text">Contact Person Name is required.</div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <span class="font-bold"><b>Mobile Number</b></span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" id="mobile" name="mobile" formControlName="mobile" class="form-control form-control-lg form-control-solid
+                borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input" pattern="^[0-9]{10}$"
+            placeholder="Mobile No" required maxlength="10" autocomplete="off" [ngClass]="{
+                'invalid-border':
+                brancheditform.get('mobile').invalid &&
+                brancheditform.get('mobile').touched &&
+                brancheditform.get('mobile').value !== '',
+              }" />
+
+          <div *ngIf="brancheditform.get('mobile').hasError('pattern') && brancheditform.get('mobile').touched">
+            <div class="error-text">Please enter a valid 10-digit Mobile Number.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Email Address</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="Email Address" formControlName="email" [ngClass]="{
+                'invalid-border': brancheditform.get('email').invalid && brancheditform.get('email').touched && brancheditform.get('email').value !== ''
+              }" required />
+          <div *ngIf="brancheditform.get('email').invalid && brancheditform.get('email').touched">
+            <div *ngIf="brancheditform.get('email').hasError('pattern')" class="error-text">Please enter a valid email
+              address.</div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Designation</b> <span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="Designation" formControlName="designation" name="designation" required [ngClass]="{
+                'invalid-border':
+                brancheditform.get('designation').invalid &&
+                brancheditform.get('designation').touched 
+              }" />
+          <div
+            *ngIf="brancheditform.get('designation').hasError('required') && brancheditform.get('designation').touched">
+            <div class="error-text">Designation is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Address Line 1</b> <span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="Address Line 1" formControlName="address1" name="address1" required [ngClass]="{
+                'invalid-border':
+                brancheditform.get('address1').invalid &&
+                brancheditform.get('address1').touched 
+              }" />
+          <div *ngIf="brancheditform.get('address1').hasError('required') && brancheditform.get('address1').touched">
+            <div class="error-text">Address Line 1 is required.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ----------------- -->
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Address Line 2</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" class="
+                  form-control form-control-lg form-control-solid
+                  mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                " placeholder="Address Line 2" formControlName="address2" class="form-control" />
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>City</b> <span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="City" formControlName="city" name="city" required [ngClass]="{
+                'invalid-border':
+                brancheditform.get('city').invalid &&
+                brancheditform.get('city').touched 
+              }" />
+          <div *ngIf="brancheditform.get('city').hasError('required') && brancheditform.get('city').touched">
+            <div class="error-text">City is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>State</b> <span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="State" formControlName="state" name="state" required [ngClass]="{
+                'invalid-border':
+                brancheditform.get('state').invalid &&
+                brancheditform.get('state').touched 
+              }" />
+          <div *ngIf="brancheditform.get('state').hasError('required') && brancheditform.get('state').touched">
+            <div class="error-text">State is required.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ----------------- -->
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Country</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+          <select class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+            formControlName="country_name">
+            <option value="">Select Country Name</option>
+            <option *ngFor="let productunit of country_list" [value]="productunit.leadbank_gid">
+              {{productunit.country_name}}</option>
+
+          </select>
+
+        </div>
+      </div>
+
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Postal code</b> <span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" id="pincode" name="pincode" formControlName="pincode" class="form-control form-control-lg form-control-solid
+                borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input" pattern="^[0-9]{6}$"
+            placeholder="Postal code" required maxlength="6" autocomplete="off" [ngClass]="{
+                'invalid-border':
+                brancheditform.get('pincode').invalid &&
+                brancheditform.get('pincode').touched
+              }" />
+          <div *ngIf="brancheditform.get('pincode').hasError('required') && brancheditform.get('pincode').touched">
+            <div class="error-text">Postal code is required.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Region</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+          <select class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+            formControlName="region_name">
+            <option value="">Select Region Name</option>
+            <option *ngFor="let productunit of region_list" [value]="productunit.leadbank_gid">
+              {{productunit.region_name}}</option>
+
+          </select>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center my-4">
+      <button type="submit" class="btn-success btn-sm text-white me-2">
+        <i class="bi bi-check-square fs-5"></i>&nbsp;Update</button>
+
+      <button class="btn-primary btn-sm text-white me-4" (click)="onback()">
+        <i class="fas fa-arrow-left"></i> &nbsp; Back
+      </button>
+    </div>
+  </form>
+</div>
+<br>

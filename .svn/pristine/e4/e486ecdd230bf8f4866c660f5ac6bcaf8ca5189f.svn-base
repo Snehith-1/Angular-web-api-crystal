@@ -1,0 +1,14 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-smr-rpt-today-salesreport',
+  templateUrl: './smr-rpt-today-salesreport.component.html',
+  styleUrls: ['./smr-rpt-today-salesreport.component.scss']
+})
+export class SmrRptTodaySalesreportComponent {
+  task_list:any;
+  MyenquiryCount_list :any;
+  tax4_list : any;
+
+  openModal1(){};
+}

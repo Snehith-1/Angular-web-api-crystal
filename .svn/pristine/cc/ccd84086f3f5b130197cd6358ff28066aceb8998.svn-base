@@ -1,0 +1,489 @@
+D:\Web\EMS\StoryboardAPI\bin\roslyn\csc.exe
+D:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Web\EMS\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+D:\Web\EMS\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+D:\Web\EMS\StoryboardAPI\bin\roslyn\vbc.exe
+D:\Web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+D:\Web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+D:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.dll.config
+D:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.dll
+D:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.pdb
+D:\Web\EMS\StoryboardAPI\bin\ems.asset.dll
+D:\Web\EMS\StoryboardAPI\bin\EPPlus.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+D:\Web\EMS\StoryboardAPI\bin\Newtonsoft.Json.dll
+D:\Web\EMS\StoryboardAPI\bin\Owin.dll
+D:\Web\EMS\StoryboardAPI\bin\RestSharp.dll
+D:\Web\EMS\StoryboardAPI\bin\Swashbuckle.Core.dll
+D:\Web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+D:\Web\EMS\StoryboardAPI\bin\System.Web.Cors.dll
+D:\Web\EMS\StoryboardAPI\bin\System.Web.Http.dll
+D:\Web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+D:\Web\EMS\StoryboardAPI\bin\WebActivatorEx.dll
+D:\Web\EMS\StoryboardAPI\bin\ems.asset.pdb
+D:\Web\EMS\StoryboardAPI\bin\EPPlus.xml
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.xml
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+D:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Web\EMS\StoryboardAPI\bin\Newtonsoft.Json.xml
+D:\Web\EMS\StoryboardAPI\bin\RestSharp.xml
+D:\Web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+D:\Web\EMS\StoryboardAPI\bin\System.Web.Http.xml
+D:\Web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+D:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csprojResolveAssemblyReference.cache
+D:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+D:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+F:\Web\EMS\StoryboardAPI\bin\roslyn\csc.exe
+F:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Web\EMS\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+F:\Web\EMS\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+F:\Web\EMS\StoryboardAPI\bin\roslyn\vbc.exe
+F:\Web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+F:\Web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+F:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.dll.config
+F:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.dll
+F:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.pdb
+F:\Web\EMS\StoryboardAPI\bin\ems.utilities.dll
+F:\Web\EMS\StoryboardAPI\bin\EPPlus.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+F:\Web\EMS\StoryboardAPI\bin\Newtonsoft.Json.dll
+F:\Web\EMS\StoryboardAPI\bin\Owin.dll
+F:\Web\EMS\StoryboardAPI\bin\RestSharp.dll
+F:\Web\EMS\StoryboardAPI\bin\Spire.Doc.dll
+F:\Web\EMS\StoryboardAPI\bin\Spire.License.dll
+F:\Web\EMS\StoryboardAPI\bin\Spire.Pdf.dll
+F:\Web\EMS\StoryboardAPI\bin\Swashbuckle.Core.dll
+F:\Web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+F:\Web\EMS\StoryboardAPI\bin\System.Web.Cors.dll
+F:\Web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+F:\Web\EMS\StoryboardAPI\bin\WebActivatorEx.dll
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.mshtml.dll
+F:\Web\EMS\StoryboardAPI\bin\ems.utilities.pdb
+F:\Web\EMS\StoryboardAPI\bin\EPPlus.xml
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.xml
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+F:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+F:\Web\EMS\StoryboardAPI\bin\Newtonsoft.Json.xml
+F:\Web\EMS\StoryboardAPI\bin\RestSharp.xml
+F:\Web\EMS\StoryboardAPI\bin\Spire.Doc.xml
+F:\Web\EMS\StoryboardAPI\bin\Spire.License.xml
+F:\Web\EMS\StoryboardAPI\bin\Spire.Pdf.xml
+F:\Web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+F:\Web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+F:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+F:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+G:\Web\EMS\StoryboardAPI\bin\roslyn\csc.exe
+G:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+G:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+G:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+G:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+G:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+G:\Web\EMS\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+G:\Web\EMS\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+G:\Web\EMS\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+G:\Web\EMS\StoryboardAPI\bin\roslyn\vbc.exe
+G:\Web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+G:\Web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+G:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.dll.config
+G:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.dll
+G:\Web\EMS\StoryboardAPI\bin\StoryboardAPI.pdb
+G:\Web\EMS\StoryboardAPI\bin\ems.utilities.dll
+G:\Web\EMS\StoryboardAPI\bin\EPPlus.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+G:\Web\EMS\StoryboardAPI\bin\Newtonsoft.Json.dll
+G:\Web\EMS\StoryboardAPI\bin\Owin.dll
+G:\Web\EMS\StoryboardAPI\bin\RestSharp.dll
+G:\Web\EMS\StoryboardAPI\bin\Spire.Doc.dll
+G:\Web\EMS\StoryboardAPI\bin\Spire.License.dll
+G:\Web\EMS\StoryboardAPI\bin\Spire.Pdf.dll
+G:\Web\EMS\StoryboardAPI\bin\Swashbuckle.Core.dll
+G:\Web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+G:\Web\EMS\StoryboardAPI\bin\System.Web.Cors.dll
+G:\Web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+G:\Web\EMS\StoryboardAPI\bin\WebActivatorEx.dll
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.mshtml.dll
+G:\Web\EMS\StoryboardAPI\bin\ems.utilities.pdb
+G:\Web\EMS\StoryboardAPI\bin\ems.utilities.dll.config
+G:\Web\EMS\StoryboardAPI\bin\EPPlus.xml
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.xml
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+G:\Web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+G:\Web\EMS\StoryboardAPI\bin\Newtonsoft.Json.xml
+G:\Web\EMS\StoryboardAPI\bin\RestSharp.xml
+G:\Web\EMS\StoryboardAPI\bin\Spire.Doc.xml
+G:\Web\EMS\StoryboardAPI\bin\Spire.License.xml
+G:\Web\EMS\StoryboardAPI\bin\Spire.Pdf.xml
+G:\Web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+G:\Web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+G:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.AssemblyReference.cache
+G:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CoreCompileInputs.cache
+G:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CopyComplete
+G:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+G:\Web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+G:\Web\EMS\StoryboardAPI\bin\System.Web.Http.xml
+E:\web\EMS\StoryboardAPI\bin\ApplicationInsights.config
+E:\web\EMS\StoryboardAPI\bin\roslyn\csc.exe
+E:\web\EMS\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\web\EMS\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\web\EMS\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\web\EMS\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+E:\web\EMS\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+E:\web\EMS\StoryboardAPI\bin\roslyn\vbc.exe
+E:\web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+E:\web\EMS\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+E:\web\EMS\StoryboardAPI\bin\StoryboardAPI.dll.config
+E:\web\EMS\StoryboardAPI\bin\StoryboardAPI.dll
+E:\web\EMS\StoryboardAPI\bin\StoryboardAPI.pdb
+E:\web\EMS\StoryboardAPI\bin\EPPlus.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+E:\web\EMS\StoryboardAPI\bin\Newtonsoft.Json.dll
+E:\web\EMS\StoryboardAPI\bin\Owin.dll
+E:\web\EMS\StoryboardAPI\bin\RestSharp.dll
+E:\web\EMS\StoryboardAPI\bin\Spire.Doc.dll
+E:\web\EMS\StoryboardAPI\bin\Spire.License.dll
+E:\web\EMS\StoryboardAPI\bin\Spire.Pdf.dll
+E:\web\EMS\StoryboardAPI\bin\Swashbuckle.Core.dll
+E:\web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+E:\web\EMS\StoryboardAPI\bin\System.Web.Cors.dll
+E:\web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+E:\web\EMS\StoryboardAPI\bin\WebActivatorEx.dll
+E:\web\EMS\StoryboardAPI\bin\Microsoft.mshtml.dll
+E:\web\EMS\StoryboardAPI\bin\ems.utilities.pdb
+E:\web\EMS\StoryboardAPI\bin\ems.utilities.dll.config
+E:\web\EMS\StoryboardAPI\bin\EPPlus.xml
+E:\web\EMS\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.xml
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+E:\web\EMS\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+E:\web\EMS\StoryboardAPI\bin\Newtonsoft.Json.xml
+E:\web\EMS\StoryboardAPI\bin\RestSharp.xml
+E:\web\EMS\StoryboardAPI\bin\Spire.Doc.xml
+E:\web\EMS\StoryboardAPI\bin\Spire.License.xml
+E:\web\EMS\StoryboardAPI\bin\Spire.Pdf.xml
+E:\web\EMS\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+E:\web\EMS\StoryboardAPI\bin\System.Web.Http.xml
+E:\web\EMS\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+E:\web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.AssemblyReference.cache
+E:\web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CoreCompileInputs.cache
+E:\web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CopyComplete
+E:\web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+E:\web\EMS\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+E:\web\New folder\StoryboardAPI\bin\ApplicationInsights.config
+E:\web\New folder\StoryboardAPI\bin\roslyn\csc.exe
+E:\web\New folder\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\web\New folder\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\web\New folder\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\web\New folder\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\web\New folder\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\web\New folder\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\web\New folder\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+E:\web\New folder\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+E:\web\New folder\StoryboardAPI\bin\roslyn\vbc.exe
+E:\web\New folder\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+E:\web\New folder\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+E:\web\New folder\StoryboardAPI\bin\StoryboardAPI.dll.config
+E:\web\New folder\StoryboardAPI\bin\StoryboardAPI.dll
+E:\web\New folder\StoryboardAPI\bin\StoryboardAPI.pdb
+E:\web\New folder\StoryboardAPI\bin\EPPlus.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+E:\web\New folder\StoryboardAPI\bin\Newtonsoft.Json.dll
+E:\web\New folder\StoryboardAPI\bin\Owin.dll
+E:\web\New folder\StoryboardAPI\bin\RestSharp.dll
+E:\web\New folder\StoryboardAPI\bin\Swashbuckle.Core.dll
+E:\web\New folder\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+E:\web\New folder\StoryboardAPI\bin\System.Web.Cors.dll
+E:\web\New folder\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+E:\web\New folder\StoryboardAPI\bin\WebActivatorEx.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.WindowsAzure.Storage.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.mshtml.dll
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Azure.KeyVault.Core.dll
+E:\web\New folder\StoryboardAPI\bin\ems.utilities.pdb
+E:\web\New folder\StoryboardAPI\bin\ems.utilities.dll.config
+E:\web\New folder\StoryboardAPI\bin\EPPlus.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+E:\web\New folder\StoryboardAPI\bin\Newtonsoft.Json.xml
+E:\web\New folder\StoryboardAPI\bin\RestSharp.xml
+E:\web\New folder\StoryboardAPI\bin\Spire.Doc.xml
+E:\web\New folder\StoryboardAPI\bin\Spire.License.xml
+E:\web\New folder\StoryboardAPI\bin\Spire.Pdf.xml
+E:\web\New folder\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+E:\web\New folder\StoryboardAPI\bin\System.Web.Http.xml
+E:\web\New folder\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.WindowsAzure.Storage.pdb
+E:\web\New folder\StoryboardAPI\bin\Microsoft.WindowsAzure.Storage.xml
+E:\web\New folder\StoryboardAPI\bin\Microsoft.Azure.KeyVault.Core.xml
+E:\web\New folder\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.AssemblyReference.cache
+E:\web\New folder\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CoreCompileInputs.cache
+E:\web\New folder\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CopyComplete
+E:\web\New folder\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+E:\web\New folder\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\ApplicationInsights.config
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\csc.exe
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\vbc.exe
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\StoryboardAPI.dll.config
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\StoryboardAPI.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\StoryboardAPI.pdb
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\EPPlus.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Bcl.AsyncInterfaces.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Newtonsoft.Json.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Owin.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\RestSharp.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Swashbuckle.Core.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Buffers.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Memory.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Numerics.Vectors.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Runtime.CompilerServices.Unsafe.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Text.Encodings.Web.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Text.Json.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Threading.Tasks.Extensions.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.ValueTuple.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Web.Cors.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\WebActivatorEx.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.mshtml.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\EPPlus.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Bcl.AsyncInterfaces.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\Newtonsoft.Json.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\RestSharp.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Buffers.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Memory.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Numerics.Vectors.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Runtime.CompilerServices.Unsafe.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Text.Encodings.Web.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Text.Json.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Threading.Tasks.Extensions.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.ValueTuple.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+G:\WEB\EMS_NBFC\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.AssemblyReference.cache
+G:\WEB\EMS_NBFC\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CoreCompileInputs.cache
+G:\WEB\EMS_NBFC\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CopyComplete
+G:\WEB\EMS_NBFC\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+G:\WEB\EMS_NBFC\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+E:\EMS_Ang\StoryboardAPI\bin\ApplicationInsights.config
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\csc.exe
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\vbc.exe
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+E:\EMS_Ang\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+E:\EMS_Ang\StoryboardAPI\bin\StoryboardAPI.dll.config
+E:\EMS_Ang\StoryboardAPI\bin\StoryboardAPI.dll
+E:\EMS_Ang\StoryboardAPI\bin\StoryboardAPI.pdb
+E:\EMS_Ang\StoryboardAPI\bin\EPPlus.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Bcl.AsyncInterfaces.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+E:\EMS_Ang\StoryboardAPI\bin\Newtonsoft.Json.dll
+E:\EMS_Ang\StoryboardAPI\bin\Owin.dll
+E:\EMS_Ang\StoryboardAPI\bin\RestSharp.dll
+E:\EMS_Ang\StoryboardAPI\bin\Swashbuckle.Core.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Buffers.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Memory.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Numerics.Vectors.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Runtime.CompilerServices.Unsafe.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Text.Encodings.Web.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Text.Json.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Threading.Tasks.Extensions.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.ValueTuple.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Web.Cors.dll
+E:\EMS_Ang\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+E:\EMS_Ang\StoryboardAPI\bin\WebActivatorEx.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.mshtml.dll
+E:\EMS_Ang\StoryboardAPI\bin\EPPlus.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Bcl.AsyncInterfaces.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+E:\EMS_Ang\StoryboardAPI\bin\Newtonsoft.Json.xml
+E:\EMS_Ang\StoryboardAPI\bin\RestSharp.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Buffers.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Memory.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Numerics.Vectors.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Runtime.CompilerServices.Unsafe.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Text.Encodings.Web.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Text.Json.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Threading.Tasks.Extensions.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.ValueTuple.xml
+E:\EMS_Ang\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+E:\EMS_Ang\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.AssemblyReference.cache
+E:\EMS_Ang\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CoreCompileInputs.cache
+E:\EMS_Ang\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CopyComplete
+E:\EMS_Ang\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+E:\EMS_Ang\StoryboardAPI\obj\Debug\StoryboardAPI.pdb
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.WindowsAzure.Storage.dll
+E:\EMS_Ang\StoryboardAPI\bin\Microsoft.Azure.KeyVault.Core.dll
+E:\EMS_Ang\StoryboardAPI\bin\ems.utilities.pdb
+E:\EMS_Ang\StoryboardAPI\bin\ems.utilities.dll.config
+E:\EMS_Ang\StoryboardAPI\bin\System.Web.Http.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\ApplicationInsights.config
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\csc.exe
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\System.Collections.Immutable.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\System.Reflection.Metadata.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\vbc.exe
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\VBCSCompiler.exe
+D:\WEB\EMS_Base\StoryboardAPI\bin\roslyn\VBCSCompiler.exe.config
+D:\WEB\EMS_Base\StoryboardAPI\bin\StoryboardAPI.dll.config
+D:\WEB\EMS_Base\StoryboardAPI\bin\StoryboardAPI.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\StoryboardAPI.pdb
+D:\WEB\EMS_Base\StoryboardAPI\bin\EPPlus.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Bcl.AsyncInterfaces.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Cors.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Security.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Web.Infrastructure.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Newtonsoft.Json.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Owin.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\RestSharp.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Swashbuckle.Core.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Buffers.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Memory.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Net.Http.Formatting.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Numerics.Vectors.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Text.Encodings.Web.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Text.Json.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Threading.Tasks.Extensions.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.ValueTuple.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Web.Cors.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Web.Http.WebHost.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\WebActivatorEx.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.WindowsAzure.Storage.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.mshtml.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Azure.KeyVault.Core.dll
+D:\WEB\EMS_Base\StoryboardAPI\bin\ems.utilities.pdb
+D:\WEB\EMS_Base\StoryboardAPI\bin\ems.utilities.dll.config
+D:\WEB\EMS_Base\StoryboardAPI\bin\EPPlus.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Bcl.AsyncInterfaces.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Cors.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Security.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Microsoft.Owin.Security.OAuth.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\Newtonsoft.Json.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\RestSharp.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Buffers.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Memory.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Net.Http.Formatting.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Numerics.Vectors.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Text.Encodings.Web.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Text.Json.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Threading.Tasks.Extensions.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.ValueTuple.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Web.Http.xml
+D:\WEB\EMS_Base\StoryboardAPI\bin\System.Web.Http.WebHost.xml
+D:\WEB\EMS_Base\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.AssemblyReference.cache
+D:\WEB\EMS_Base\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CoreCompileInputs.cache
+D:\WEB\EMS_Base\StoryboardAPI\obj\Debug\StoryboardAPI.csproj.CopyComplete
+D:\WEB\EMS_Base\StoryboardAPI\obj\Debug\StoryboardAPI.dll
+D:\WEB\EMS_Base\StoryboardAPI\obj\Debug\StoryboardAPI.pdb

@@ -1,0 +1,7 @@
+.align {
+    display: flex; /* Use flexbox to arrange elements in a row */
+    flex-direction: row; /* Arrange elements horizontally */
+    justify-content: space-between; /* Space elements evenly along the row */
+    align-items: center; /* Vertically center align items */
+  }
+  

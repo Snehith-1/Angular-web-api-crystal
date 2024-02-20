@@ -1,0 +1,2499 @@
+﻿using ems.sales.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting;
+using System.Web.Http.Routing.Constraints;
+
+namespace ems.sales.DataAccess
+{
+    public class DaSmrTrnQuotation
+    {
+
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader, objODBCDatareader1;
+        OdbcDataReader ds_tsalesorderadd;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lscustomer_code,pricingsheet_refno, roundoff, mssalesorderGID, lsCode, msGetGid, msGetGid1,msgetGid2, msgetGid4,lstype1, lshierarchy_flag, msGetPrivilege_gid, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        string msGetCustomergid, msconGetGID;
+        string lscustomer_name;
+        string lscontact_person, lscustomercontact_gid, lscustomerbranch_name, lscustomercontact_names;
+        string lstmpquotationgid;
+        string lsproductgroup_gid;
+        string lsproductgroup;
+        string lsproductname_gid;
+        string lsproductname;
+        string lsuom_gid;
+        string lsvendor_gid;
+        string lsuom;
+        string lsunitprice;
+        string lsquantity;
+        string lsdiscountpercentage;
+        string lsdiscountamount;
+        string lstax_name1;
+        string lscustomerproduct_code;
+        string lstax_name2;
+        string lstax_name3;
+        string lstaxamount_1;
+        string lstaxamount_2;
+        string lstaxamount_3;
+        string lstotalamount;
+        string lssono, lsprice;
+        string lsdisplay_field, lslocalmarginpercentage, lslocalsellingprice, lsuom_name, lsreqdate_remarks, lsrequired_date;
+        public void DaGetSmrTrnQuotation(MdlSmrTrnQuotation values)
+        {
+            string currency = "INR";
+
+            msSQL = " select distinct d.leadbank_gid,a.quotation_gid, a.customer_gid,a.quotation_referenceno1,ifnull(f.enquiry_gid,'Direct Quotation') as enquiry_gid,f.enquiry_referencenumber,s.source_name,DATE_FORMAT(a.quotation_date, '%d-%b-%Y') as quotation_date,c.user_firstname,a.quotation_type,a.currency_code, " +
+              " case when a.grandtotal_l ='0.00' then format(a.Grandtotal,2) else format(a.grandtotal_l,2) end as Grandtotal," +
+              " case when a.currency_code = '" + currency + "' then a.customer_name " +
+              " when a.currency_code is null then a.customer_name " +
+              " when a.currency_code is not null and a.currency_code <> '" + currency + "' then (a.customer_name) end as customer_name, " +
+              " a.customer_contact_person, a.quotation_status,a.enquiry_gid, " +
+              " case when a.contact_mail is null then concat(e.leadbankcontact_name,'/',e.mobile,'/',e.email) " +
+              " when a.contact_mail is not null then concat(a.customer_contact_person,' / ',a.contact_no,' / ',a.contact_mail) end as contact, " +
+              " a.customer_address " +
+              " from smr_trn_treceivequotation a " +
+              " left join hrm_mst_temployee b on b.employee_gid=a.created_by " +
+              " left join adm_mst_tuser c on b.user_gid= c.user_gid " +
+              " left join crm_trn_tleadbank d on d.leadbank_gid=a.customer_gid " +
+              " left join crm_trn_tcurrencyexchange h on a.currency_code = h.currency_code " +
+              " left join crm_trn_tleadbankcontact e on e.leadbank_gid=d.leadbank_gid " +
+              " left join crm_mst_tsource s on s.source_gid=d.source_gid" +
+              " left join acp_trn_tenquiry f on a.enquiry_gid=f.enquiry_gid " +
+              " where 1=1 order by a.quotation_date desc";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<quotation_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new quotation_list
+                    {
+                        quotation_gid = dt["quotation_gid"].ToString(),
+                        quotation_date = dt["quotation_date"].ToString(),
+                        quotation_referenceno1 = dt["quotation_gid"].ToString(),
+                        enquiry_gid = dt["enquiry_gid"].ToString(),
+                        enquiry_referencenumber = dt["enquiry_referencenumber"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        contact = dt["contact"].ToString(),
+                        quotation_type = dt["quotation_type"].ToString(),
+                        user_firstname = dt["user_firstname"].ToString(),
+                        quotation_status = dt["quotation_status"].ToString(),
+                        Grandtotal = dt["Grandtotal"].ToString(),
+
+
+                    });
+                    values.quotation_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Sales Person
+
+        public void DaGetSalesDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "select concat(c.department_name,' ','/',' ',a.user_firstname,' ',a.user_lastname) as user_name,a.user_gid from adm_mst_tuser a " +
+                " left join hrm_mst_temployee b on a.user_gid=b.user_gid " +
+                " left join hrm_mst_tdepartment c on b.department_gid=c.department_gid where a.user_status='Y' and " +
+                " department_name in('Marketing','Management','Finance') order by a.user_code  asc ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetSalesDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetSalesDropdown
+
+                    {
+                        user_gid = dt["user_gid"].ToString(),
+                        user_name = dt["user_name"].ToString(),
+
+                    });
+                    values.GetSalesDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Currency
+        public void DaGetCurrencyCodeDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "select currencyexchange_gid,currency_code from crm_trn_tcurrencyexchange order by currency_code asc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetCurrencyCodeDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetCurrencyCodeDropdown
+
+                    {
+                        currencyexchange_gid = dt["currencyexchange_gid"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+
+                    });
+                    values.GetCurrencyCodeDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        // Tax 1
+        public void DaGetTaxOnceDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTaxOnceDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTaxOnceDropdown
+
+                    {
+                        tax_gid = dt["tax_gid"].ToString(),
+                        tax_name = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString()
+
+                    });
+                    values.GetTaxOnceDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Tax 2
+        public void DaGetTaxTwiceDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTaxTwiceDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTaxTwiceDropdown
+
+                    {
+                        tax_gid = dt["tax_gid"].ToString(),
+                        tax_name2 = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString()
+
+                    });
+                    values.GetTaxTwiceDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Tax 3
+        public void DaGetTaxThriceDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTaxThriceDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTaxThriceDropdown
+
+                    {
+                        tax_gid = dt["tax_gid"].ToString(),
+                        tax_name3 = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString()
+
+                    });
+                    values.GetTaxThriceDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+
+        // Product
+
+        public void DaGetProductNamesDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "Select product_gid, product_name from pmr_mst_tproduct";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductNamesDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductNamesDropdown
+
+                    {
+                        product_gid = dt["product_gid"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+
+                    });
+                    values.GetProductNamesDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Tax 3
+        public void DaGetTaxFourSDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " SELECT * FROM acp_mst_ttax where delete_flag='N' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTaxFourSDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTaxFourSDropdown
+
+                    {
+                        tax_gid = dt["tax_gid"].ToString(),
+                        tax_name4 = dt["tax_name"].ToString(),
+
+                    });
+                    values.GetTaxFourSDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // On change
+
+
+        public void DaGetOnChangeProductsName(string product_gid, MdlSmrTrnQuotation values)
+
+        {
+            if (product_gid != null)
+
+            {
+                msSQL = " Select a.product_name, a.product_code, b.productuom_gid,b.productuom_name," +
+                        " c.productgroup_name,c.productgroup_gid,a.productuom_gid  from pmr_mst_tproduct a  " +
+                        " left join pmr_mst_tproductuom b on a.productuom_gid = b.productuom_gid  " +
+                        " left join pmr_mst_tproductgroup c on a.productgroup_gid = c.productgroup_gid  " +
+                        " where a.product_gid='" + product_gid + "' ";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<GetProductsCode>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new GetProductsCode
+
+                        {
+
+                            product_name = dt["product_name"].ToString(),
+
+                            product_code = dt["product_code"].ToString(),
+
+                            productuom_name = dt["productuom_name"].ToString(),
+
+                            productgroup_name = dt["productgroup_name"].ToString(),
+
+                            productuom_gid = dt["productuom_gid"].ToString(),
+
+                            productgroup_gid = dt["productgroup_gid"].ToString(),
+
+                        });
+
+                        values.GetProductsCode = getModuleList;
+
+                    }
+
+                }
+
+            }
+
+            else
+
+            {
+
+            }
+
+        }
+
+        // Summary bind
+
+        public void DaGetRaiseSOSummary(string quotation_gid, MdlSmrTrnQuotation values)
+        {
+            msSQL = "select a.quotation_gid,b.leadbank_gid,if (d.customerproduct_code = '&nbsp;',' ',d.customerproduct_code) as customerproduct_code,a.currency_code," +
+                " a.termsandconditions,a.quotation_date as quotation_date,a.quotation_referencenumber,a.quotation_remarks,b.customer_gid,a.branch_gid, " +
+                " a.quotation_referenceno1,a.payment_days,f.product_code,e.branch_name,a.customerbranch_gid,a.freight_terms," +
+                " a.payment_terms,h.currency_code as code,a.exchange_rate,h.currencyexchange_gid,h.exchange_rate as code, " +
+                " a.contact_mail,a.contact_no,concat(a.customerbranch_gid, ' | ', a.customer_contact_person) as contact_person," +
+                " a.customer_address,format(a.Grandtotal_l, 2) as Grandtotal_l,a.tax_name,a.currency_gid,a.exchange_rate as rate," +
+                " a.delivery_days,format(a.Grandtotal, 2) as Grandtotal ,format(a.addon_charge, 2) as addon_charge,format(a.additional_discount," +
+                " 2) as additional_discount, format(sum(d.price), 2) as total_value,a.customer_name, format(a.gst_percentage, 2) as gst_percentage," +
+                " a.tax_gid,format(a.total_amount, 2) as total_amount,format(a.total_price, 2) as total_price, b.leadbank_address1,b.leadbank_address2," +
+                " b.leadbank_city,b.leadbank_state,b.leadbank_pin,a.payment_days,a.delivery_days,a.enquiry_refno,a.salesperson_gid,a.vessel_name,  " +
+                " c.leadbankcontact_name,c.mobile,c.email,format(a.freight_charges, 2) as freight_charges, f.product_name, j.productgroup_name,j.productgroup_gid, " +
+                " k.productuom_gid,k.productuom_name,l.margin_percentage,l.margin_amount,l.selling_price, l.product_requireddate,l.customerproduct_code,l.selling_price," +
+                " l.product_requireddateremarks,l.product_requireddate,l.tax_name, l.tax_amount, l.tax_name2,l.product_price, l.tax_amount2, l.tax_name3,l.tax_amount3,l.qty_quoted,l.price, format(a.buyback_charges, 2)" +
+                " as buyback_charges, format(a.packing_charges, 2) as packing_charges, format(a.roundoff, 2) as roundoff,l.product_requireddateremarks, m.shipping_to,m.start_date, m.end_date, " +
+                " format(a.insurance_charges, 2) as insurance_charges from smr_trn_treceivequotation a " +
+                " left join crm_trn_tleadbank b on b.leadbank_gid = a.customer_gid " +
+                " left join crm_mst_tcustomer g on g.customer_gid = b.customer_gid " +
+                " left join crm_trn_tcurrencyexchange h on h.currencyexchange_gid = g.currency_gid " +
+                " left join crm_trn_tleadbankcontact c on c.leadbank_gid = b.leadbank_gid " +
+                " left join smr_trn_treceivequotationdtl d on d.quotation_gid = a.quotation_gid " +
+                " left join pmr_mst_tproduct f on d.product_gid = f.product_gid " +
+                " left join pmr_mst_tproductgroup j on j.productgroup_gid = j.productgroup_gid " +
+                " left join pmr_mst_tproductuom k on k.productuom_gid = k.productuom_gid " +
+                " left join smr_trn_tsalesorder m on m.salesorder_gid = m.salesorder_gid " +
+                " left join smr_tmp_tsalesorderdtl l on l.tmpsalesorderdtl_gid = l.tmpsalesorderdtl_gid " +
+                " left join hrm_mst_tbranch e on e.branch_gid = a.branch_gid " +
+                " where  a.quotation_status not in ('Cancelled','Quotation Amended') and a.quotation_gid='" + quotation_gid + "'  group by a.quotation_gid ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetSummaryList>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetSummaryList
+                    {
+                        quotation_gid = dt["quotation_gid"].ToString(),
+                        salesorder_date = dt["quotation_date"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        quotation_referenceno1 = dt["quotation_gid"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        so_referencenumber = dt["enquiry_refno"].ToString(),
+                        customercontact_names = dt["contact_person"].ToString(),
+                        customer_mobile = dt["contact_no"].ToString(),
+                        customer_email = dt["contact_mail"].ToString(),
+                        so_remarks = dt["quotation_remarks"].ToString(),
+                        shipping_to = dt["shipping_to"].ToString(),
+                        customer_address = dt["customer_address"].ToString(),
+                        payment_terms = dt["payment_terms"].ToString(),
+                        freight_terms = dt["freight_terms"].ToString(),
+                        start_date = dt["start_date"].ToString(),
+                        end_date = dt["end_date"].ToString(),
+                        exchange_rate = dt["exchange_rate"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+                        user_name = dt["salesperson_gid"].ToString(),
+                        addon_charge = dt["addon_charge"].ToString(),
+                        additional_discount = dt["additional_discount"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        buyback_charges = dt["buyback_charges"].ToString(),
+                        qty_quoted = dt["qty_quoted"].ToString(),
+                        margin_percentage = dt["margin_percentage"].ToString(),
+                        margin_amount = dt["margin_amount"].ToString(),
+                        product_price = dt["product_price"].ToString(),
+                        tax_amount = dt["tax_amount"].ToString(),
+                        tax_amount2 = dt["tax_amount2"].ToString(),
+                        tax_amount3 = dt["tax_amount3"].ToString(),
+                        tax_name = dt["tax_name"].ToString(),
+                        tax_name2 = dt["tax_name2"].ToString(),
+                        tax_name3 = dt["tax_name3"].ToString(),
+                        total_price = dt["total_price"].ToString(),
+                        insurance_charges = dt["insurance_charges"].ToString(),
+                        freight_charges = dt["freight_charges"].ToString(),
+                        packing_charges = dt["packing_charges"].ToString(),
+                        roundoff = dt["roundoff"].ToString(),
+                        product_requireddate = dt["product_requireddate"].ToString(),
+                        product_requireddateremarks = dt["product_requireddateremarks"].ToString(),
+                        selling_price = dt["selling_price"].ToString(),
+                        Grandtotal = dt["Grandtotal"].ToString(),
+
+
+
+
+
+                    });
+                    values.SO_list = getModuleList;
+                }
+
+            }
+            dt_datatable.Dispose();
+
+        }
+
+        // branch
+
+        public void DaGetBranchDt(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "select branch_gid,branch_name from hrm_mst_tbranch";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBranchDropdowns>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBranchDropdowns
+
+                    {
+                        branch_gid = dt["branch_gid"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+
+                    });
+                    values.GetBranchDt = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        //Customer
+        public void DaGetCustomerDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " Select distinct a.leadbank_gid, a.leadbank_name " +
+                " from crm_trn_tleadbank a ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetCustomerDropdowns>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetCustomerDropdowns
+
+                    {
+                        customer_gid = dt["leadbank_gid"].ToString(),
+                        customer_name = dt["leadbank_name"].ToString(),
+
+                    });
+                    values.GetCustomerDt = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Contact
+        public void DaGetPersonDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "select concat(c.department_name,' ','/',' ',a.user_firstname,' ',a.user_lastname) as user_name,a.user_gid from adm_mst_tuser a " +
+                " left join hrm_mst_temployee b on a.user_gid=b.user_gid " +
+                " left join hrm_mst_tdepartment c on b.department_gid=c.department_gid where a.user_status='Y' and " +
+                " department_name in('Marketing','Management','Finance') order by a.user_code  asc ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetPersonDropdowns>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetPersonDropdowns
+
+                    {
+                        user_gid = dt["user_gid"].ToString(),
+                        user_name = dt["user_name"].ToString(),
+
+                    });
+                    values.GetPersonDt = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetCurrencyDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "select currencyexchange_gid,currency_code from crm_trn_tcurrencyexchange order by currency_code asc";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetCurrencyDropdowns>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetCurrencyDropdowns
+
+                    {
+                        currencyexchange_gid = dt["currencyexchange_gid"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+
+                    });
+                    values.GetCurrencyDt = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        //Product
+        public void DaGetProductDtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = "Select product_gid, product_name from pmr_mst_tproduct";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductDropdowns>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductDropdowns
+
+                    {
+                        product_gid = dt["product_gid"].ToString(),
+                        productname = dt["product_name"].ToString(),
+
+                    });
+                    values.GetProductDt = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Tax 1
+        public void DaGetTax1Dtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTax1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTax1
+
+                    {
+                        tax_gid = dt["tax_gid"].ToString(),
+                        tax_name = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString()
+                    });
+                    values.GetTax1Dtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Tax 2
+        public void DaGetTax2Dtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTax2>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTax2
+
+                    {
+                        tax_gid2 = dt["tax_gid"].ToString(),
+                        tax_name2 = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString()
+
+                    });
+                    values.GetTax2Dtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Tax 3
+        public void DaGetTax3Dtl(MdlSmrTrnQuotation values)
+        {
+
+
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTax3>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTax3
+
+                    {
+                        tax_gid3 = dt["tax_gid"].ToString(),
+                        tax_name3 = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString()
+
+                    });
+                    values.GetTax3Dtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        //OnChange based on Customer Name
+
+        public void DaGetOnChangeCustomeName(string customer_gid, MdlSmrTrnQuotation values)
+        {
+
+            if (customer_gid != null)
+            {
+                msSQL = "select customer_gid,concat(customercontact_name) as contact_person , concat(address1, ' ', address2) as customer_address from crm_mst_tcustomercontact " +
+                " where customer_gid='" + customer_gid + "' ";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+
+                var getModuleList = new List<GetCustomerNames>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new GetCustomerNames
+                        {
+
+                            customer_gid = dt["customer_gid"].ToString(),
+                            customercontact_names = dt["contact_person"].ToString(),
+                            customer_address = dt["customer_address"].ToString(),
+
+                        });
+                        values.CustomerNames = getModuleList;
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+
+        // Temp Summary
+
+        public void DaGetTemporarySummary(string employee_gid, MdlSmrTrnQuotation values)
+        {
+            double grand_total = 0.00;
+
+            msSQL = " select " +
+                    " tmpsalesorderdtl_gid," +
+                    " salesorder_gid," +
+                    " product_gid," +
+                    " productgroup_gid," +
+                    " productgroup_name," +
+                    " if(customerproduct_code='&nbsp;',' ',customerproduct_code) as customerproduct_code," +
+                    " product_name," +
+                    " display_field, " +
+                    " product_price," +
+                    " qty_quoted," +
+                    " margin_percentage," +
+                    " margin_amount," +
+                    " uom_gid," +
+                    " uom_name," +
+                    " price," +
+                    " tax_name," +
+                    " tax_name2," +
+                    " tax_name3," +
+                    " tax1_gid, " +
+                    " tax2_gid, " +
+                    " tax3_gid, " +
+                    " tax_amount," +
+                    " tax_amount2," +
+                    " tax_amount3, " +
+                    " margin_percentage," +
+                    " margin_amount," +
+                    " vendor_gid," +
+                    " slno," +
+                    "product_code," +
+                    " product_requireddate ," +
+                    "product_requireddateremarks, " +
+                    " tax_percentage," +
+                    " tax_percentage2," +
+                    " tax_percentage3," +
+                    " selling_price," +
+                    " order_type " +
+                    "product_total" +
+                    " from smr_tmp_tsalesorderdtl" +
+                    " where employee_gid='" + employee_gid + "'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTemporarysummary>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    grand_total += double.Parse(dt["price"].ToString());
+                    getModuleList.Add(new GetTemporarysummary
+
+                    {
+                        tmpsalesorderdtl_gid = dt["tmpsalesorderdtl_gid"].ToString(),
+                        salesorder_gid = dt["salesorder_gid"].ToString(),
+                        product_gid = dt["product_gid"].ToString(),
+                        productgroup_gid = dt["productgroup_gid"].ToString(),
+                        customerproduct_code = dt["customerproduct_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        product_price = dt["product_price"].ToString(),
+                        quantity = dt["qty_quoted"].ToString(),
+                        discountpercentage = dt["margin_percentage"].ToString(),
+                        discountamount = dt["margin_amount"].ToString(),
+                        productuom_gid = dt["uom_gid"].ToString(),
+                        productuom_name = dt["uom_name"].ToString(),
+                        selling_price = dt["selling_price"].ToString(),
+                        totalamount = dt["price"].ToString(),
+                        tax_name = dt["tax_name"].ToString(),
+                        tax_name2 = dt["tax_name2"].ToString(),
+                        tax_name3 = dt["tax_name3"].ToString(),
+                        slno = dt["slno"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_requireddate = dt["product_requireddate"].ToString(),
+                        productrequireddate_remarks = dt["product_requireddateremarks"].ToString(),
+                        tax_amount = dt["tax_amount"].ToString(),
+                        tax_amount2 = dt["tax_amount2"].ToString(),
+                        tax_amount3 = dt["tax_amount3"].ToString(),
+                        grand_total = dt["product_total"].ToString()
+
+                    });
+                    values.temp_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+            values.grand_total = grand_total;
+        }
+
+        public void DaGetProductAdd(string employee_gid, summarys_lists values)
+
+        {
+
+            msGetGid = objcmnfunctions.GetMasterGID("VSDT");
+            msSQL = "select product_name from pmr_mst_tproduct where product_gid='" + values.product_gid + "'";
+            string lsproductName = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = "Select productgroup_gid from pmr_mst_tproductgroup where productgroup_name='" + values.productgroup_name + "'";
+            string lsproductgroupgid = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = "select productuom_gid from pmr_mst_tproductuom where productuom_name='" + values.productuom_name + "'";
+            string lsproductuomgid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select tax_name from acp_mst_ttax where tax_gid='" + values.tax_name + "'";
+            string lstaxname1 = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = "select tax_name from acp_mst_ttax where tax_gid='" + values.tax_name2 + "'";
+            string lstaxname2 = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = "select tax_name from acp_mst_ttax where tax_gid='" + values.tax_name3 + "'";
+            string lstaxname3 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select percentage from acp_mst_ttax where tax_gid='" + values.tax_name + "'";
+            string lspercentage1 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select percentage from acp_mst_ttax where tax_gid='" + values.tax_name2 + "'";
+            string lspercentage2 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select percentage from acp_mst_ttax where tax_gid='" + values.tax_name3 + "'";
+            string lspercentage3 = objdbconn.GetExecuteScalar(msSQL);
+
+
+
+            msSQL = " insert into smr_tmp_tsalesorderdtl( " +
+               " tmpsalesorderdtl_gid," +
+               " salesorder_gid," +
+               " employee_gid," +
+               " product_gid," +
+               " productgroup_gid," +
+               " productgroup_name," +
+               " customerproduct_code," +
+               " product_name," +
+               " display_field," +
+               " product_price," +
+               " qty_quoted," +
+               " uom_gid," +
+               " uom_name," +
+               " price," +
+               " tax_name," +
+               " tax_name2," +
+               " tax_name3," +
+               " tax_amount," +
+               " tax_amount2," +
+               " tax_amount3," +
+               " tax_percentage,tax_percentage2,tax_percentage3, " +
+               " tax1_gid,tax2_gid,tax3_gid, " +
+               " margin_percentage," +
+               " margin_amount," +
+               " selling_price," +
+               " vendor_gid," +
+               " product_requireddate , " +
+               " product_requireddateremarks, " +
+               " product_code " +
+               ")values(" +
+               "'" + msGetGid + "'," +
+               "'" + values.quotation_gid + "'," +
+               "'" + employee_gid + "'," +
+               "'" + values.product_gid + "'," +
+               "'" + lsproductgroupgid + "'," +
+               "'" + values.productgroup_name + "'," +
+               "'" + values.customerproduct_code + "'," +
+               "'" + lsproductName + "'," +
+               "'" + values.display_field + "'," +
+               "'" + values.unitprice + "'," +
+               "'" + values.quantity + "'," +
+               "'" + lsproductuomgid + "'," +
+               "'" + values.productuom_name + "'," +
+               "'" + values.totalamount + "'," +
+               "'" + lstaxname1 + "'," +
+               "'" + lstaxname2 + "'," +
+               "'" + lstaxname3 + "'," +
+               "'" + values.tax_amount + "'," +
+               "'" + values.tax_amount2 + "'," +
+               "'" + values.tax_amount3 + "'," +
+               "'" + lspercentage1 + "'," +
+               "'" + lspercentage2 + "'," +
+               "'" + lspercentage3 + "'," +
+               "'" + values.tax_gid + "'," +
+               "'" + values.tax_gid2 + "'," +
+               "'" + values.tax_gid3 + "'," +
+               "'" + values.discountpercentage + "'," +
+               "'" + values.discountamount + "'," +
+               "'" + values.selling_price + "'," +
+               "'" + values.vendor_gid + "'," +
+             " '" + values.product_requireddate + "', " +
+            "'" + values.product_requireddateremarks + "', " +
+             " '" + values.product_code + "')";
+
+
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Product Added Successfully";
+            }
+
+            else
+            {
+                values.status = false;
+                values.message = "Error While Adding Product";
+            }
+
+        }
+        //Terms And Condition Dropdown
+
+        public void DaGetTermsandConditions(MdlSmrTrnQuotation values)
+        {
+            msSQL = "  select a.template_gid, c.template_name, c.template_content from adm_trn_ttemplate2module a " +
+             " left join adm_mst_tmodule b on a.module_gid = b.module_gid " +
+             " left join adm_mst_ttemplate c on a.template_gid = c.template_gid " +
+             " left join adm_mst_ttemplatetype d on c.templatetype_gid = d.templatetype_gid " +
+             " where a.module_gid = 'SMR' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTandCDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTandCDropdown
+                    {
+                        template_gid = dt["template_gid"].ToString(),
+                        template_name = dt["template_name"].ToString(),
+                        termsandconditions = dt["template_content"].ToString()
+                    });
+                    values.GetTermsandConditions = getModuleList;
+                }
+            }
+        }
+        public void DaGetOnChangeTerms(string template_gid, MdlSmrTrnQuotation values)
+        {
+            if (template_gid != null)
+            {
+                msSQL = " select a.template_gid, c.template_name, c.template_content from adm_trn_ttemplate2module a " +
+               " left join adm_mst_tmodule b on a.module_gid = b.module_gid " +
+               " left join adm_mst_ttemplate c on a.template_gid = c.template_gid " +
+               " left join adm_mst_ttemplatetype d on c.templatetype_gid = d.templatetype_gid " +
+               " where a.module_gid = 'SMR' and c.template_gid = '" + template_gid + "' ";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<GetTermDropdown>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new GetTermDropdown
+                        {
+                            template_gid = dt["template_gid"].ToString(),
+                            template_name = dt["template_name"].ToString(),
+                            termsandconditions = dt["template_content"].ToString(),
+                        });
+                        values.terms_list = getModuleList;
+                    }
+                }
+            }
+        }
+        // on change
+        public void DaGetOnChangeCustomerDtls(string customercontact_gid, MdlSmrTrnQuotation values)
+        {
+
+            if (customercontact_gid != null)
+            {
+                msSQL = " select a.customercontact_gid,concat(a.address1,'   ',a.city,'   ',a.state) as address1,ifnull(a.address2,'') as address2,ifnull(a.city,'') as city, " +
+                " ifnull(a.state,'') as state,ifnull(a.country_gid,'') as country_gid,ifnull(a.zip_code,'') as zip_code, " +
+                " ifnull(a.mobile,'') as mobile,a.email,ifnull(b.country_name,'') as country_name,a.customerbranch_name,concat(customerbranch_name,' | ',a.customercontact_name) as " +
+                " customercontact_names, c.leadbank_gid " +
+                " from crm_mst_tcustomercontact a " +
+                " left join crm_trn_tleadbank c on a.customer_gid=c.customer_gid " +
+                " left join adm_mst_tcountry b on a.country_gid=b.country_gid " +
+                " where c.leadbank_gid='" + customercontact_gid + "'";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+
+                var getModuleList = new List<GetCustomerDetl>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new GetCustomerDetl
+                        {
+                            customercontact_names = dt["customercontact_names"].ToString(),
+                            branch_name = dt["customerbranch_name"].ToString(),
+                            country_name = dt["country_name"].ToString(),
+                            email = dt["email"].ToString(),
+                            mobile = dt["mobile"].ToString(),
+                            zip_code = dt["zip_code"].ToString(),
+                            country_gid = dt["country_gid"].ToString(),
+                            state = dt["state"].ToString(),
+                            city = dt["city"].ToString(),
+                            address2 = dt["address2"].ToString(),
+                            address1 = dt["address1"].ToString(),
+                            customercontact_gid = dt["customercontact_gid"].ToString(),
+                            customer_gid = dt["leadbank_gid"].ToString(),
+
+                        });
+                        values.GetCustomerdetls = getModuleList;
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        // Temp Summary
+        public void DaGetTempProductsSummary(string employee_gid, MdlSmrTrnQuotation values)
+        {
+            double total_amount = 0.00;
+
+            msSQL = " Select a.tmpquotationdtl_gid, a.slno,a.tax_name, a.tax_name2,e.vendor_companyname,a.customerproduct_code, a.tax_name3,a.tax1_gid, a.tax2_gid,  a.tax3_gid,a.tax_amount, a.tax_amount2, " +
+                " a.tax_amount3, c.productgroup_name,d.productuom_name,a.quotationdtl_gid,a.quotation_gid,a.product_gid,a.productgroup_gid,a.productgroup_name,a.product_name,  " +
+                "  format(a.product_price,2) as product_price ,a.product_code,a.qty_quoted,a.product_remarks,a.uom_gid,  " +
+                 "  a.uom_name,a.payment_days,a.delivery_period,format(a.price,2) as price ,a.display_field,a.product_status, " +
+                " format(a.discount_percentage,2)as margin_percentage,format(a.discount_amount,2)as margin_amount,format(a.selling_price,2) as selling_price,date_format(a.product_requireddate,'%d-%m-%Y') as product_requireddate,a.productrequireddate_remarks from smr_tmp_treceivequotationdtl a  " +
+                " left join pmr_mst_tproduct b on a.product_gid=b.product_gid " +
+                 " left join pmr_mst_tproductgroup c on a.productgroup_gid=c.productgroup_gid  " +
+                 " left join pmr_mst_tproductuom d on b.productuom_gid=d.productuom_gid " +
+                 " left join acp_mst_tvendor e on a.vendor_gid=e.vendor_gid  " +
+                 " where a.created_by='" + employee_gid + "' and b.delete_flag='N' order by a.slno asc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<tempsummary_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    total_amount += double.Parse(dt["price"].ToString());
+                    getModuleList.Add(new tempsummary_list
+                    {
+                        tmpquotationdtl_gid = dt["tmpquotationdtl_gid"].ToString(),
+                        customerproduct_code = dt["customerproduct_code"].ToString(),
+                        qty_requested = dt["qty_quoted"].ToString(),
+                        product_requireddate = dt["product_requireddate"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        selling_price = dt["selling_price"].ToString(),
+                        product_gid = dt["product_gid"].ToString(),
+                        tax_gid = dt["tax1_gid"].ToString(),
+                        tax2_gid = dt["tax2_gid"].ToString(),
+                        tax3_gid = dt["tax3_gid"].ToString(),
+                        tax_name = dt["tax_name"].ToString(),
+                        tax_name2 = dt["tax_name2"].ToString(),
+                        tax_name3 = dt["tax_name3"].ToString(),
+                        tax_amount = dt["tax_amount"].ToString(),
+                        tax_amount2 = dt["tax_amount2"].ToString(),
+                        tax_amount3 = dt["tax_amount3"].ToString(),
+                        product_requireddateremarks = dt["productrequireddate_remarks"].ToString(),
+                        slno = dt["slno"].ToString(),
+                        margin_percentage = dt["margin_percentage"].ToString(),
+                        margin_amount = dt["margin_amount"].ToString(),
+                        product_price = dt["product_price"].ToString(),
+                        price = dt["price"].ToString()
+
+
+                    });
+                    values.prodsummary_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+            values.total_amount = total_amount;
+        }
+
+        // Product Submit for Add Quotation
+
+        public void DaPostAddProduct(string employee_gid, summaryprod_list values)
+        {
+
+            msGetGid1 = objcmnfunctions.GetMasterGID("VQDT");
+            msGetGid = objcmnfunctions.GetMasterGID("VQNP");
+
+            msSQL = "select product_gid from pmr_mst_tproduct where product_name='" + values.product_name + "'";
+            string lsproductgid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select productuom_gid from pmr_mst_tproductuom where productuom_name='" + values.productuom_name + "'";
+            string lsproductuomgid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "Select productgroup_gid from pmr_mst_tproductgroup where productgroup_name='" + values.productgroup_name + "'";
+            string lsproductgroupgid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select tax_name from acp_mst_ttax where tax_gid='" + values.tax_name + "'";
+            string lstaxname = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select tax_name from acp_mst_ttax where tax_gid='" + values.tax_name2 + "'";
+            string lstaxname2 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select tax_name from acp_mst_ttax where tax_gid='" + values.tax_name3 + "'";
+            string lstaxname3 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select percentage from acp_mst_ttax where tax_gid='" + values.tax_name + "'";
+            string lspercentage1 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select percentage from acp_mst_ttax where tax_gid='" + values.tax_name2 + "'";
+            string lspercentage2 = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select percentage from acp_mst_ttax where tax_gid='" + values.tax_name3 + "'";
+            string lspercentage3 = objdbconn.GetExecuteScalar(msSQL);
+            int i = 0;
+
+            msSQL = " insert into smr_tmp_treceivequotationdtl( " +
+                    " tmpquotationdtl_gid," +
+                    " quotation_gid," +
+                    " product_gid," +
+                    " product_code," +
+                    " customerproduct_code," +
+                    " productgroup_gid," +
+                    " productgroup_name," +
+                    " product_name," +
+                    " display_field," +
+                    " product_price," +
+                    " qty_quoted," +
+                    " discount_percentage," +
+                    " discount_amount," +
+                    " uom_gid," +
+                    " uom_name," +
+                    " price," +
+                    " created_by," +
+                    " selling_price, " +
+                    " tax_name, " +
+                    " tax_name2, " +
+                    " tax_name3, " +
+                    " tax1_gid, " +
+                    " tax2_gid, " +
+                    " tax3_gid, " +
+                    " vendor_gid, " +
+                    " slno, " +
+                    " product_requireddate," +
+                    " productrequireddate_remarks, " +
+                    " quotation_type, " +
+                    " tax_percentage," +
+                    " tax_percentage2," +
+                    " tax_percentage3," +
+                    " tax_amount, " +
+                    " tax_amount2, " +
+                    " tax_amount3 " +
+                    " ) values( " +
+                    "'" + msGetGid1 + "'," +
+                    "'" + msGetGid + "'," +
+                    "'" + lsproductgid + "'," +
+                    "'" + values.product_code + "'," +
+                    "'" + values.customerproduct_code + "'," +
+                    "'" + lsproductgroupgid + "'," +
+                    "'" + values.productgroup_name + "'," +
+                    "'" + values.product_name + "', " +
+                    "'" + values.display_field + "', " +
+                    "'" + values.unitprice + "', " +
+                    "'" + values.qty_quoted + "', " +
+                    "'" + values.discountpercentage + "', " +
+                    "'" + values.discountamount + "', " +
+                    "'" + lsproductuomgid + "', " +
+                    "'" + values.productuom_name + "', " +
+                    "'" + values.totalamount + "', " +
+                    "'" + employee_gid + "', " +
+                    "'" + values.selling_price + "', " +
+                    "'" + lstaxname + "', " +
+                    "'" + lstaxname2 + "', " +
+                    "'" + lstaxname3 + "', " +
+                    "'" + values.tax_gid + "', " +
+                    "'" + values.tax2_gid + "', " +
+                    "'" + values.tax3_gid + "', " +
+                    "'" + values.vendor_gid + "', " +
+                    "'" + i + 1 + "', " +
+                    "'" + values.product_requireddate + "', " +
+                    "'" + values.product_requireddateremarks + "'," +
+                    "'" + values.quotation_type + "'," +
+                    "'" + lspercentage1 + "'," +
+                    "'" + lspercentage2 + "'," +
+                    "'" + lspercentage3 + "'," +
+                    "'" + values.tax_amount + "', " +
+                    "'" + values.tax_amount2 + "', " +
+                    "'" + values.tax_amount3 + "') ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+
+            {
+                values.status = true;
+                values.message = "Product Added Successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Adding Product";
+            }
+
+        }
+
+        public void DaGetDeleteQuotationProductSummary(string tmpquotationdtl_gid, summaryprod_list values)
+        {
+
+
+            msSQL = "select price from smr_tmp_treceivequotationdtl " +
+                    " where tmpquotationdtl_gid='" + tmpquotationdtl_gid + "'";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows == true)
+
+            {
+                lsprice = objODBCDatareader["price"].ToString();
+            }
+
+            msSQL = " delete from smr_tmp_treceivequotationdtl " +
+                    " where tmpquotationdtl_gid='" + tmpquotationdtl_gid + "'";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult != 0)
+
+            {
+                values.status = true;
+                values.message = "Product Deleted Successfully!";
+
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Deleting The Product!";
+
+
+            }
+        }
+        public void DaPostQuotationToOrder(string employee_gid, string user_gid, MdlSmrTrnQuotation values)
+        {
+
+            msSQL = " select customer_gid from crm_mst_tcustomer where customer_name='" + values.customer_name + "'";
+            string lscustomergid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select branch_gid from hrm_mst_tbranch where branch_name='" + values.branch_name + "'";
+            string lsbranchgid = objdbconn.GetExecuteScalar(msSQL);
+
+
+
+
+
+            //msSQL = " select * from smr_tmp_tsalesorderdtl " + " where employee_gid='" + employee_gid + "'";
+            //objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            //if (objODBCDatareader.HasRows == false)
+            //{
+            //    values.message = "Please add atleast one product to raise sales order";
+            //    objODBCDatareader.Close();
+            //    objdbconn.CloseConn();
+            //    return;
+            //}
+            //objODBCDatareader.Close();
+            msSQL = " select a.customer_gid from crm_mst_tcustomer a" +
+                " left join crm_trn_tleadbank l on l.customer_gid=a.customer_gid" +
+                " where l.leadbank_gid='" + values.customer_name + "' and a.customer_gid is not null  ";
+            string lscustomer_gid = objdbconn.GetExecuteScalar(msSQL);
+            if (lscustomer_gid != null || lscustomer_gid != "")
+            {
+
+                msGetCustomergid = objcmnfunctions.GetMasterGID("BCRM");
+                msSQL = " Select leadbank_id, leadbank_name from crm_trn_tleadbank " + " where leadbank_gid = '" + lscustomer_gid + "'";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                if (objODBCDatareader.HasRows == true)
+                {
+                    lscustomer_code = objODBCDatareader["leadbank_id"].ToString();
+                    lscustomer_name = objODBCDatareader["leadbank_name"].ToString();
+                    msSQL = " INSERT INTO crm_mst_tcustomer " +
+                        " (customer_gid, " + " customer_id, " +
+                        " customer_name, " + " company_website, " +
+                        " customer_code," + " customer_address," +
+                        " customer_address2," + " customer_city," +
+                        " customer_state," + " customer_pin," +
+                        " main_branch," +
+                        " created_by, " +
+                        " created_date, " +
+                        " customer ," +
+                        " status, " +
+                        " created_flag)" +
+                        " values ( " + "'" + msGetCustomergid + "'," +
+                        "'" + objODBCDatareader["leadbank_id"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_name"].ToString() + "'," +
+                        "'" + objODBCDatareader["company_website"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_code"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_address1"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_address2"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_city"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_state"].ToString() + "'," +
+                        "'" + objODBCDatareader["leadbank_pin"].ToString() + "'," +
+                        "'" + objODBCDatareader["main_branch"].ToString() + "'," +
+                        "'" + user_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                        "'Y'," +
+                        " 'Active', " +
+                        "'" + objODBCDatareader["created_flag"].ToString() + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                    if (mnResult == 1)
+                    {
+                        msSQL = " Select * from crm_trn_tleadbankcontact " + " where leadbank_gid = '" + values.customer_gid + "'";
+                        objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                        if (objODBCDatareader.HasRows == true)
+                        {
+                            while (objODBCDatareader.Read())
+                            {
+                                msconGetGID = objcmnfunctions.GetMasterGID("BCCM");
+                                msSQL = " INSERT INTO crm_mst_tcustomercontact " +
+                                    " (customercontact_gid," +
+                                    " customer_gid," +
+                                    " customercontact_name," +
+                                    " email," +
+                                    " mobile," +
+                                    " designation," +
+                                    " did_number," +
+                                    " created_date," +
+                                    " created_by," +
+                                    " address1, " +
+                                    " address2, " +
+                                    " state, " +
+                                    " country_gid, " +
+                                    " city, " +
+                                    " region, " +
+                                    " zip_code, " +
+                                    " customerbranch_name, " +
+                                    " main_contact)" +
+                                    " values( " + "'" + msconGetGID + "'," +
+                                    "'" + msGetCustomergid + "'," +
+                                    "'" + objODBCDatareader["leadbankcontact_name"].ToString() + "'," +
+                                    "'" + objODBCDatareader["email"].ToString() + "'," +
+                                    "'" + objODBCDatareader["mobile"].ToString() + "'," +
+                                    "'" + objODBCDatareader["designation"].ToString() + "'," +
+                                    "'" + objODBCDatareader["did_number"].ToString() + "'," +
+                                    "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                                    "'" + user_gid + "'," +
+                                    "'" + objODBCDatareader["address1"].ToString().Replace("'", "\'").Trim() + "'," +
+                                    "'" + objODBCDatareader["address2"].ToString().Replace("'", "\'") + "'," +
+                                    "'" + objODBCDatareader["state"].ToString().Replace("'", "\'") + "'," +
+                                    "'" + objODBCDatareader["country_gid"].ToString() + "'," +
+                                    "'" + objODBCDatareader["city"].ToString().Replace("'", "\'") + "'," +
+                                    "'" + objODBCDatareader["region_name"].ToString().Replace("'", "\'") + "'," +
+                                    "'" + objODBCDatareader["pincode"].ToString() + "', " +
+                                    "'" + objODBCDatareader["leadbankbranch_name"].ToString().Replace("'", "\'") + "', " +
+                                    "'" + objODBCDatareader["main_contact"].ToString() + "')";
+                                mnResult2 = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                if (mnResult2 == 1)
+                                {
+                                    msSQL = " update crm_trn_tleadbankcontact set" + " customercontact_gid = '" + msconGetGID + "'" + " where leadbankcontact_gid = '" + objODBCDatareader["leadbankcontact_gid"].ToString() + "'";
+                                    mnResult5 = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    if (mnResult5 == 0)
+                                    {
+                                        objcmnfunctions.LogForAudit(" Some Error Occurred While Inserting CustomerContact Details " + msSQL);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            objODBCDatareader.Close();
+
+            objdbconn.OpenConn();
+            mssalesorderGID = objcmnfunctions.GetMasterGID("VSOP");
+
+            msSQL = "select distinct type from smr_trn_tsalesorderdtl where salesorder_gid='" + mssalesorderGID + "' ";
+            string lstypes = objdbconn.GetExecuteScalar(msSQL);
+
+
+            string ADDON = (values.addon_charge);
+            string ADD_DISCIOUNT = (values.discountamount);
+            string grandtotal = (values.totalamount);
+            double lslocalgrandtotal = Convert.ToDouble(grandtotal);
+            double lslocaladdon = Convert.ToDouble(ADDON);
+            double lslocaladditionaldiscount = Convert.ToDouble(ADD_DISCIOUNT);
+            double Total_Price = Convert.ToDouble((values.producttotalprice));
+            double Total_Amount = Convert.ToDouble((values.finaltotal));
+
+
+            if (values.salesorder_gid != "New Ref.No")
+                values.salesorder_gid = values.salesorder_gid;
+            else
+                values.salesorder_gid = objcmnfunctions.GetMasterGID("SO");
+
+            string ls_referenceno = values.salesorder_gid;
+
+            if (values.tax_amount == "")
+                values.tax_amount = "0.00";
+            if (values.freight_charges == "")
+                values.freight_charges = "0.00";
+            if (values.buyback_charges == "")
+                values.buyback_charges = "0.00";
+            if (values.packing_charges == "")
+                values.packing_charges = "0.00";
+            if (values.insurance_charges == "")
+                values.insurance_charges = "0.00";
+            msSQL = " select customercontact_gid,customer_contact_person,customerbranch_gid from smr_trn_treceivequotation where quotation_gid='" + values.quotation_gid + "'";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows == true)
+            {
+                lscustomercontact_gid = objODBCDatareader["customercontact_gid"].ToString();
+                lscontact_person = objODBCDatareader["customer_contact_person"].ToString();
+                lscustomerbranch_name = objODBCDatareader["customerbranch_gid"].ToString();
+            }
+            msSQL = " insert  into smr_trn_tsalesorder (" +
+                " salesorder_gid ," +
+                " branch_gid ," +
+                " salesorder_date," +
+                " customer_gid," +
+                " customer_name," +
+                " customer_contact_gid," +
+                " customer_contact_person," +
+                " customer_address," +
+                " customer_email, " +
+                " customer_mobile, " +
+                " customerbranch_gid," +
+                " created_by," +
+                " so_referencenumber," +
+                " so_remarks," +
+                " so_referenceno1, " +
+                " payment_days, " +
+                " delivery_days, " +
+                " Grandtotal, " +
+                " termsandconditions, " +
+                " salesorder_status, " +
+                " addon_charge_l, " +
+                " additional_discount_l, " +
+                " addon_charge, " +
+                " additional_discount, " +
+                " updated_addon_charge, " +
+                " updated_additional_discount, " +
+                " grandtotal_l, " +
+                " currency_code, " +
+                " currency_gid, " +
+                " exchange_rate, " +
+                " shipping_to, " +
+                " freight_terms, " +
+                " payment_terms, " +
+                " gst_amount," +
+                " tax_gid," +
+                " total_price," +
+                " total_amount," +
+                " vessel_name," +
+                " salesperson_gid," +
+                " quotation_gid, " +
+                " roundoff, " +
+                " start_date, " +
+                " end_date ," +
+                " freight_charges," +
+                " buyback_charges," +
+                " packing_charges," +
+                " insurance_charges " +
+                ")values(" +
+                " '" + mssalesorderGID + "'," +
+                " '" + lsbranchgid + "'," +
+                " '" + values.salesorder_date + "'," +
+                " '" + lscustomergid + "'," +
+                " '" + values.customer_name + "'," +
+                " '" + lscustomercontact_gid + "'," +
+                " '" + lscontact_person + "'," +
+                " '" + values.customer_address + "'," +
+                " '" + values.customer_email + "'," +
+                " '" + values.customer_mobile +
+                "'," + " '" + lscustomerbranch_name + "'," +
+                " '" + employee_gid + "'," +
+                " '" + values.quotation_gid + "'," +
+                " '" + values.remarks + "'," +
+                " '" + (ls_referenceno) + "'," +
+                " '" + values.payment_days + "'," +
+                " '" + values.delivery_days + "'," +
+                " '" + grandtotal + "'," +
+                " '" + values.termsandcondition + "'," +
+                " 'Approved'," +
+                " '" + lslocaladdon + "'," +
+                " '" + lslocaladditionaldiscount + "'," +
+                " '" + values.addon_charge + "', " +
+                " '" + values.additional_discount + "', " +
+                " '" + values.addon_charge + "', " +
+                " '" + values.additional_discount + "', " +
+                " '" + lslocalgrandtotal + "'," +
+                " '" + values.currency_code + "'," +
+                " '" + values.currency_gid + "'," +
+                " '" + values.exchange_rate + "'," +
+                " '" + values.shipping_to + "'," +
+                "'" + values.freight_terms + "'," +
+                "'" + values.payment_terms + "',";
+            if (values.tax_amount == "")
+            {
+                msSQL += "'0.00',";
+            }
+            else
+            {
+                msSQL += "'" + values.tax_amount + "',";
+            }
+            msSQL += " '" + values.tax_gid + "'," +
+                " '" + Total_Price + "'," +
+                " '" + Total_Amount + "'," +
+                " '" + values.vessel + "'," +
+                " '" + values.salesperson + "'," +
+                " '" + values.quotation_gid + "'," +
+            " '" + values.roundoff + "'," +
+                " '" + values.start_date + "'," +
+                " '" + values.end_date.ToString() + "'," +
+                " '" + values.freight_charges + "'," +
+                " '" + values.buyback_charges + "'," +
+                " '" + values.freight_charges + "'," +
+                " '" + values.insurance_charges + "')";
+
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult == 0)
+            {
+                objcmnfunctions.LogForAudit("Error occurred while inserting Salesorder" + msSQL);
+                values.message = "Error occurred while inserting Salesorder";
+                objdbconn.CloseConn();
+                return;
+            }
+            else
+            {
+                msSQL = " insert  into acp_trn_torder (" +
+                    " salesorder_gid ," +
+                    " branch_gid ," +
+                    " salesorder_date," +
+                    " customer_gid," +
+                    " customer_name," +
+                    " customer_contact_person," +
+                    " customer_contact_gid," +
+                    " customerbranch_gid," +
+                    " customer_address," +
+                    " customer_email, " +
+                    " customer_mobile, " +
+                    " created_by," +
+                    " so_referencenumber," +
+                    " so_remarks," +
+                    " so_referenceno1, " +
+                    " payment_days, " +
+                    " delivery_days, " +
+                    " Grandtotal, " +
+                    " termsandconditions, " +
+                    " salesorder_status, " +
+                    " addon_charge, " +
+                    " additional_discount, " +
+                    " addon_charge_l, " +
+                    " additional_discount_l, " +
+                    " grandtotal_l, " +
+                    " currency_code, " +
+                    " currency_gid, " +
+                    " exchange_rate, " +
+                    " updated_addon_charge, " +
+                    " updated_additional_discount, " +
+                    " shipping_to, " +
+                    " campaign_gid, " +
+                    " vessel_name," +
+                    " quotation_gid, " +
+                    " roundoff, " +
+                    " salesperson_gid ," +
+                    " freight_charges," +
+                    " buyback_charges," +
+                    " packing_charges," +
+                    " insurance_charges" + ")values(" +
+                    " '" + mssalesorderGID + "'," +
+                    " '" + lsbranchgid + "'," +
+                    " '" + values.salesorder_date + "'," +
+                    " '" + lscustomergid + "'," +
+                    " '" + values.customer_name + "'," +
+                    " '" + lscustomercontact_gid + "'," +
+                    " '" + lscontact_person + "'," +
+                    " '" + values.customerbranch_gid + "'," +
+                    " '" + values.customer_address + "'," +
+                    " '" + values.customer_email + "'," +
+                     " '" + values.customer_mobile + "'," +
+                    " '" + employee_gid + "'," +
+                    " '" + values.quotation_gid + "'," +
+                     " '" + values.remarks + "'," +
+                     " '" + (ls_referenceno) + "'," +
+                    " '" + values.payment_days + "'," +
+                    " '" + values.delivery_days + "'," +
+                    " '" + grandtotal + "'," +
+                    " '" + values.termsandcondition + "'," +
+                    " 'Approved'," +
+                    " '" + values.addon_charge + "', " +
+                    " '" + values.additional_discount + "', " +
+                    " '" + values.addon_charge + "', " +
+                    " '" + values.additional_discount + "', " +
+                    " '" + lslocalgrandtotal + "'," +
+                    " '" + values.currency_code + "'," +
+                    " '" + values.currency_gid + "'," +
+                    " '" + values.exchange_rate + "'," +
+                    " '" + values.addon_charge + "', " +
+                    " '" + values.additional_discount + "', " +
+                    "'" + values.shipping_to + "'," +
+                    "'" + values.currency_gid + "'," +
+                    " '" + values.vessel + "'," +
+                    " '" + values.quotation_gid + "'," +
+                    " '" + values.roundoff + "'," +
+                    " '" + values.salesperson + "'," +
+                    " '" + values.freight_charges + "'," +
+                    " '" + values.buyback_charges + "'," +
+                    " '" + values.freight_charges + "'," +
+                    " '" + values.insurance_charges + "')";
+
+
+                mnResult2 = objdbconn.ExecuteNonQuerySQL(msSQL);
+            }
+
+            if (mnResult2 == 1)
+            {
+
+                msSQL = " select " + " tmpsalesorderdtl_gid," +
+                    " salesorder_gid," +
+                    " product_gid," +
+                    " productgroup_gid," +
+                    " productgroup_name," +
+                    " if(customerproduct_code='&nbsp;',' ',customerproduct_code) as customerproduct_code," +
+                    " product_name," +
+                    " display_field, " +
+                    " product_price," +
+                    " qty_quoted," +
+                    " margin_percentage," +
+                    " margin_amount," +
+                    " uom_gid," +
+                    " uom_name," +
+                    " price," +
+                    " tax_name," +
+                    " tax_name2," +
+                    " tax_name3," +
+                    " tax1_gid, " +
+                    " tax2_gid, " +
+                    " tax3_gid, " +
+                    " tax_amount," +
+                    " tax_amount2," +
+                    " tax_amount3, " +
+                    " margin_percentage," +
+                    " margin_amount," +
+                    " vendor_gid," +
+                    " slno," +
+                    " product_requireddate ,product_requireddateremarks, " +
+                    " tax_percentage," +
+                    " tax_percentage2," +
+                    " tax_percentage3," +
+                    " selling_price, order_type " +
+                    " from smr_tmp_tsalesorderdtl" +
+                    " where employee_gid='" + user_gid + "'";
+
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<summarys_lists>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new summarys_lists
+                        {
+                            quotation_gid = dt["tmpsalesorderdtl_gid"].ToString(),
+                            productgroup_gid = dt["productgroup_gid"].ToString(),
+                            productgroup_name = dt["productgroup_name"].ToString(),
+                            customerproduct_code = dt["customerproduct_Code"].ToString(),
+                            product_gid = dt["product_gid"].ToString(),
+
+                            vendor_gid = dt["vendor_gid"].ToString(),
+                            product_name = dt["product_name"].ToString(),
+                            productuom_gid = dt["uom_gid"].ToString(),
+                            productuom_name = dt["uom_name"].ToString(),
+                            price = dt["product_price"].ToString(),
+                            quantity = dt["qty_quoted"].ToString(),
+
+                            discountpercentage = dt["margin_percentage"].ToString(),
+                            discountamount = dt["margin_amount"].ToString(),
+                            tax_name = dt["tax_name"].ToString(),
+                            tax_name2 = dt["tax_name2"].ToString(),
+                            tax_name3 = dt["tax_name3"].ToString(),
+                            tax_amount = dt["tax_amount"].ToString(),
+                            tax_amount2 = dt["tax_amount2"].ToString(),
+                            tax_amount3 = dt["tax_amount3"].ToString(),
+                            totalamount = dt["price"].ToString(),
+
+                            display_field = dt["display_field"].ToString(),
+                            selling_price = dt["selling_price"].ToString(),
+                            slno = dt["slno"].ToString(),
+                            product_requireddateremarks = dt["product_requireddateremarks"].ToString(),
+                            product_requireddate = dt["product_requireddate"].ToString(),
+
+
+                        });
+                        values.summarys_lists = getModuleList;
+
+
+
+                        string mssalesorderGID1;
+                        int i = 0;
+                        mssalesorderGID1 = objcmnfunctions.GetMasterGID("VSDC");
+                        if (mssalesorderGID1 == "E")
+                            mssalesorderGID1 = "Need sequence code for VSDC";
+                        msSQL = " insert into smr_trn_tsalesorderdtl (" +
+                            " salesorderdtl_gid ," +
+                            " salesorder_gid," +
+                            " product_gid ," +
+                            " productgroup_gid," +
+                            " productgroup_name," +
+                            " customerproduct_Code," +
+                            " product_name," +
+                            " display_field," +
+                            " product_price," +
+                            " qty_quoted," +
+                            " margin_percentage," +
+                            " margin_amount," +
+                            " tax_amount ," +
+                            " uom_gid," +
+                            " uom_name," +
+                            " price," +
+                            " tax_name," +
+                            " tax_name2," +
+                            " tax_name3," +
+                            " tax1_gid," +
+                            " tax2_gid," +
+                            " tax3_gid," +
+                            " tax_amount2," +
+                            " tax_amount3," +
+                            " tax_amount_l ," +
+                            " tax_amount2_l," +
+                            " tax_amount3_l," +
+                            " discount_amount_l, " +
+                            " product_price_l, " +
+                            " price_l, " +
+                            " salesorder_refno," +
+                            " vendor_gid," +
+                            " slno," +
+                            " product_requireddate, " +
+                             " product_requireddateremarks, " +
+                            " selling_price" +
+                            ")values(" +
+                            " '" + mssalesorderGID1 + "'," +
+                            " '" + mssalesorderGID + "'," +
+                            " '" + values.product_gid + "'," +
+                            " '" + values.productgroup_gid + "'," +
+                            " '" + values.productgroup_name + "'," +
+                            " '" + values.customerproduct_code + "'," +
+                            " '" + values.product_name + "'," +
+                            " '" + values.display_field + "'," +
+                            " '" + values.selling_price + "'," +
+                            " '" + values.quantity + "'," +
+                            " '" + values.discountpercentage + "'," +
+                            " '" + values.discountamount + "'," +
+                            " '" + values.tax_amount + "'," +
+                            " '" + values.uom_gid + "'," +
+                            " '" + values.productuom_name + "'," +
+                            " '" + values.totalamount + "'," +
+                            " '" + values.tax_name + "'," +
+                            " '" + values.tax_name2 + "'," +
+                            " '" + values.tax_name3 + "'," +
+                            " '" + values.tax_gid + "'," +
+                            " '" + values.tax2_gid + "'," +
+                            " '" + values.tax3_gid + "'," +
+                            " '" + values.tax_amount2 + "'," +
+                            " '" + values.tax_amount3 + "'," +
+                            " '" + values.tax_amount + "'," +
+                            " '" + values.tax_amount2 + "'," +
+                            " '" + values.tax_amount3 + "'," +
+                            " '" + values.discountamount + "'," +
+                            " '" + values.selling_price + "'," +
+                            " '" + values.totalamount + "'," +
+                            " '" + ls_referenceno + "'," +
+                            " '" + values.vendor_gid + "'," +
+                            " '" + i + 1 + "',";
+                        if (values.product_requireddate == null || values.product_requireddate == "")
+                        {
+                            msSQL += "null, ";
+
+                        }
+                        else
+                        {
+                            msSQL += " '" + values.product_requireddate + "', ";
+                        }
+
+                        msSQL += "'" + values.product_requireddateremarks + "'," +
+                            " '" + values.selling_price + "')";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult == 0)
+                        {
+
+                            objcmnfunctions.LogForAudit("Error occurred while Inserting into Salesorderdtl" + msSQL);
+                            values.message = "Error occurred while Insertion";
+                            objdbconn.CloseConn();
+                            return;
+                        }
+                        else
+                        {
+                            msSQL = " insert into acp_trn_torderdtl (" +
+                                " salesorderdtl_gid ," +
+                                " salesorder_gid," +
+                                " product_gid ," +
+                                " productgroup_gid," +
+                                " productgroup_name," +
+                                " customerproduct_code," +
+                                " product_name," +
+                                " display_field," +
+                                " product_price," +
+                                " qty_quoted," +
+                                " discount_percentage," +
+                                " discount_amount," +
+                                " tax_amount ," +
+                                " uom_gid," +
+                                " uom_name," +
+                                " price," +
+                                " tax_name," +
+                                " tax_name2," +
+                                " tax_name3," +
+                                " tax1_gid," +
+                                " tax2_gid," +
+                                " tax3_gid," +
+                                " tax_amount2," +
+                                " tax_amount3," +
+                                " tax_amount_l ," +
+                                " tax_amount2_l," +
+                                " tax_amount3_l," +
+                                " discount_amount_l, " +
+                                " product_price_l, " +
+                                " price_l, " +
+                                " vendor_gid, " +
+                                " slno, " +
+                                " product_requireddate, " +
+                                " product_requireddateremarks, " +
+                                " salesorder_refno" +
+                                ")values(" +
+                                " '" + mssalesorderGID1 + "'," +
+                                " '" + mssalesorderGID + "'," +
+                                " '" + values.product_gid + "'," +
+                            " '" + values.productgroup_gid + "'," +
+                            " '" + values.productgroup_name + "'," +
+                            " '" + values.customerproduct_code + "'," +
+                            " '" + values.product_name + "'," +
+                            " '" + values.display_field + "'," +
+                            " '" + values.selling_price + "'," +
+                            " '" + values.quantity + "'," +
+                            " '" + values.discountpercentage + "'," +
+                            " '" + values.discountamount + "'," +
+                            " '" + values.tax_amount + "'," +
+                            " '" + values.uom_gid + "'," +
+                            " '" + values.productuom_name + "'," +
+                            " '" + values.totalamount + "'," +
+                            " '" + values.tax_name + "'," +
+                            " '" + values.tax_name2 + "'," +
+                            " '" + values.tax_name3 + "'," +
+                            " '" + values.tax_gid + "'," +
+                            " '" + values.tax2_gid + "'," +
+                            " '" + values.tax3_gid + "'," +
+                            " '" + values.tax_amount2 + "'," +
+                            " '" + values.tax_amount3 + "'," +
+                            " '" + values.tax_amount + "'," +
+                            " '" + values.tax_amount2 + "'," +
+                            " '" + values.tax_amount3 + "'," +
+                            " '" + values.discountamount + "'," +
+                            " '" + values.selling_price + "'," +
+                            " '" + values.totalamount + "'," +
+                            " '" + values.vendor_gid + "'," +
+                            " '" + i + 1 + "',";
+                            if (values.product_requireddate == null || values.product_requireddate == "")
+                            {
+                                msSQL += "null, ";
+
+                            }
+                            else
+                            {
+                                msSQL += " '" + values.product_requireddate + "', ";
+                            }
+
+                            msSQL += "'" + values.product_requireddateremarks + "'," +
+                                " '" + values.quotation_gid + "')";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        }
+                    }
+                }
+                dt_datatable.Dispose();
+                objdbconn.CloseConn();
+                if (mnResult == 1)
+                {
+                    objdbconn.OpenConn();
+
+                    msSQL = "select distinct type from smr_trn_tsalesorderdtl where salesorder_gid='" + mssalesorderGID + "' ";
+                    objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                    if (objODBCDatareader.HasRows == true)
+                    {
+                        while (objODBCDatareader.Read())
+                        {
+                            if (string.IsNullOrWhiteSpace(lstypes))
+                            {
+                                lstypes = objODBCDatareader["type"].ToString();
+                            }
+                            else
+                            {
+                                if (lstypes == objODBCDatareader["type"].ToString())
+                                {
+                                    lstypes = objODBCDatareader["type"].ToString();
+                                }
+                                else
+                                {
+                                    lstypes = "Both";
+                                }
+                            }
+                        }
+                        msSQL = " update smr_trn_tsalesorder set so_type='" + lstype1 + "' where salesorder_gid='" + mssalesorderGID + "' ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        msSQL = " update acp_trn_torder set so_type='" + lstype1 + "' where salesorder_gid='" + mssalesorderGID + "' ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                    objODBCDatareader.Close();
+                    msSQL = " delete from smr_tmp_tsalesorderdtl " +
+                        " where employee_gid='" + employee_gid + "'";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                }
+                if (mnResult != 0)
+
+                {
+                    values.status = true;
+                    values.message = "Sales Order Raised Successfully!";
+
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Sales Order!";
+
+
+                }
+
+
+            }
+        }
+        // Overall submit for Direct Quotation
+
+        public void DaPostDirectQuotation(string employee_gid, Post_List values)
+        {
+            msSQL = " select * from smr_tmp_treceivequotationdtl " +
+                     " where created_by='" + employee_gid + "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Select one Product to Raise Quotation";
+            }
+
+            msGetGid = objcmnfunctions.GetMasterGID("VQDC");
+            if (msGetGid == "E")
+            {
+                values.status = true;
+                values.message = "Create Sequence Code VQDC for Raise Enquiry";
+            }
+            if (values.tax_amount == "")
+            {
+                msSQL += "'0.00',";
+            }
+            else
+            {
+                msSQL += "'" + values.tax_amount + "',";
+            }
+
+
+            if (msGetGid == "New Ref.No")
+                {
+                    msGetGid = ("quotation_gid");
+                }
+                else
+                {
+                    msGetGid = objcmnfunctions.GetMasterGID("VQDC");
+
+                }
+
+            msSQL = " select customerbranch_name from crm_mst_tcustomercontact where customercontact_gid=  '" + values.customercontact_gid + "'";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            lscustomercontact_names = values.customercontact_names;
+            string lsquotation_status = "Approved";
+            string lsadditional_discount_l = "0.00";
+            string lsaddon_charge_l = "0.00";
+            string lsgrandtotal_l = "0.00";
+            string lsproducttotalamount = "0.00";
+            string lsgst_percentage = "0.00";
+            if (objODBCDatareader.HasRows == true)
+            {
+              //  lscustomercontact_names = objODBCDatareader["customercontact_name"].ToString();
+                lscustomerbranch_name = objODBCDatareader["customerbranch_name"].ToString();
+            }
+            msSQL = " insert  into smr_trn_treceivequotation (" +
+                     " quotation_gid ," +
+                     " quotation_referencenumber ," +
+                     " branch_gid ," +
+                     " quotation_date," +
+                     " customer_gid," +
+                     " customer_name," +
+                     " customerbranch_gid," +
+                     " customercontact_gid," +
+                     " customer_contact_person," +
+                     " created_by," +
+                     " quotation_remarks," +
+                     " quotation_referenceno1, " +
+                     " payment_days, " +
+                     " delivery_days, " +
+                     " Grandtotal, " +
+                     " termsandconditions, " +
+                     " quotation_status, " +
+                     " contact_no, " +
+                     " customer_address, " +
+                     " contact_mail, " +
+                     " addon_charge, " +
+                     " additional_discount, " +
+                     " addon_charge_l, " +
+                     " additional_discount_l, " +
+                     " grandtotal_l, " +
+                     " currency_code, " +
+                     " exchange_rate, " +
+                     " currency_gid, " +
+                     " total_amount," +
+                     " gst_percentage," +
+                     " tax_gid," +
+                     " salesperson_gid," +
+                     " vessel_name, " +
+                     " freight_terms, " +
+                     " payment_terms," +
+                     " tax_name," +
+                     " pricingsheet_gid, " +
+                     " pricingsheet_refno, " +
+                     " roundoff, " +
+                     " total_price, " +
+                     " freight_charges," +
+                     " buyback_charges," +
+                     " packing_charges," +
+                     " insurance_charges " +
+                     ") values ( " +
+                     " '" + msGetGid + "'," +
+                      " '" + msGetGid + "'," +
+                     " '" + values.branch_name + "'," +
+                     " '" + values.quotation_date + "'," +
+                     " '" + values.customer_gid + "'," +
+                     " '" + values.customer_name + "'," +
+                     " '" + lscustomerbranch_name + "'," +
+                     " '" + values.customercontact_gid + "'," +
+                     " '" + lscustomercontact_names + "'," +
+                     " '" + employee_gid + "'," +
+                     " '" + values.quotation_remarks + "'," +
+                     " '" + values.quotation_referenceno1 + "'," +
+                     " '" + values.payment_days + "'," +
+                     " '" + values.delivery_days + "'," +
+                     "'" + values.grandtotal + "', " +
+                     " '" + values.termsandconditions + "'," +
+                     " '" + lsquotation_status + "'," +
+                     " '" + values.mobile + "'," +
+                     " '" + values.address1 + "'," +
+                     " '" + values.email + "'," +
+                     "'" + values.addoncharge + "'," +
+                     "'" + values.additional_discount + "'," +
+                     "'" + lsaddon_charge_l + "'," +
+                     "'" + lsadditional_discount_l + "'," +
+                     "'" + lsgrandtotal_l + "', " +
+                     "'" + values.currencyexchange_gid + "'," +
+                     "'" + values.exchange_rate + "'," +
+                     "'" + values.currency_code + "'," +
+                     "'" + values.total_amount + "'," +
+                     "'" + lsgst_percentage + "', " +
+                     "'" + values.tax4_gid + "'," +
+                     "'" + values.user_name + "'," +
+                     "'" + values.vessel_name + "'," +
+                     "'" + values.freight_terms + "'," +
+                     "'" + values.payment_terms + "'," +
+                     "'" + values.tax_name4 + "', " +
+                     "'" + values.pricingsheet_gid + "', ";
+
+            if (values.pricingsheet_refno == "")
+            {
+                msSQL += "'0.00',";
+            }
+            else
+            {
+                msSQL += "'" + values.pricingsheet_refno + "',";
+            }
+            if (values.roundoff == "")
+            {
+                msSQL += "'0.00',";
+            }
+            else
+            {
+                msSQL += "'" + values.roundoff + "',";
+            }
+            msSQL += "'" + lsproducttotalamount + "'," +
+                      "'" + values.freightcharges + "'," +
+                      "'" + values.buybackcharges + "'," +
+                      "'" + values.packing_charges + "'," +
+                      "'" + values.insurance_charges + "')";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult == 0)
+            {
+                values.status = false;
+                values.message = "Error Occured while inserting Quotation";
+            }
+
+            else
+            {
+                msSQL = " select " +
+                      " tmpquotationdtl_gid," +
+                      " quotation_gid," +
+                      " product_gid," +
+                      " productgroup_gid," +
+                      " productgroup_name," +
+                      " customerproduct_code," +
+                      " product_name," +
+                      " product_code," +
+                      " display_field," +
+                      " product_price," +
+                      " qty_quoted," +
+                      " format(discount_percentage,2) as margin_percentage," +
+                      " format(discount_amount,2) as margin_amount, " +
+                      " uom_gid," +
+                      " uom_name," +
+                      " selling_price," +
+                      " format(price,2) as price," +
+                       " tax_name, " +
+                       " tax_name2, " +
+                       " tax_name3, " +
+                       " tax1_gid, " +
+                       " tax2_gid, " +
+                       " tax3_gid, " +
+                       " slno, " +
+                       " product_requireddate,productrequireddate_remarks, " +
+                       " tax_percentage," +
+                       " tax_percentage2," +
+                       " tax_percentage3," +
+                       " vendor_gid, " +
+                       " tax_amount, " +
+                       " tax_amount2, " +
+                       " tax_amount3 " +
+                       " from smr_tmp_treceivequotationdtl  where created_by='" + employee_gid + "'";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<Post_List>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new Post_List
+                        {
+
+                            tmpquotationdtl_gid = dt["tmpquotationdtl_gid"].ToString(),
+                            quotation_gid = dt["quotation_gid"].ToString(),
+                            product_gid = dt["product_gid"].ToString(),
+                            productgroup_gid = dt["productgroup_gid"].ToString(),
+                            customerproduct_code = dt["customerproduct_code"].ToString(),
+                            product_name = dt["product_name"].ToString(),
+                            product_price = dt["product_price"].ToString(),
+                            quantity = dt["qty_quoted"].ToString(),
+                            discountpercentage = dt["margin_percentage"].ToString(),
+                            discountamount = dt["margin_amount"].ToString(),
+                            productuom_gid = dt["uom_gid"].ToString(),
+                            productuom_name = dt["uom_gid"].ToString(),
+                            selling_price = dt["selling_price"].ToString(),
+                            tax_name = dt["tax_name"].ToString(),
+                            tax_name2 = dt["tax_name2"].ToString(),
+                            tax_name3 = dt["tax_name3"].ToString(),
+                            slno = dt["slno"].ToString(),
+                            product_requireddate = dt["product_requireddate"].ToString(),
+                            productrequireddate_remarks = dt["productrequireddate_remarks"].ToString(),
+                            tax_amount = dt["tax_amount"].ToString(),
+                            tax_amount2 = dt["tax_amount2"].ToString(),
+                            tax_amount3 = dt["tax_amount3"].ToString(),
+                            price = dt["price"].ToString(),
+
+                        });
+
+
+
+                        if (dt["product_requireddate"].ToString() == null || DBNull.Value.Equals(dt["product_requireddate"].ToString()))
+                        {
+                            msSQL += "null,";
+                        }
+                        else
+                        {
+                            string formattedDate = dt["product_requireddate"].ToString();
+                            msSQL += "'" + formattedDate + "',";
+                        }
+                        msSQL += "'" + dt["display_field"].ToString() + "')";
+
+
+                        msgetGid2 = objcmnfunctions.GetMasterGID("VQDC");
+                        if (msgetGid2 == "E")
+                        {
+                            values.status = true;
+                            values.message = "Create Sequence Code PPDC for Sales Enquiry Details";
+                        }
+
+
+                        msSQL = "insert into smr_trn_treceivequotationdtl (" +
+                                " quotationdtl_gid ," +
+                                " quotation_gid," +
+                                " product_gid ," +
+                                " customerproduct_code," +
+                                " productgroup_gid," +
+                                " productgroup_name," +
+                                " product_name," +
+                                " product_code," +
+                                " display_field," +
+                                " product_price," +
+                                " qty_quoted," +
+                                " discount_percentage," +
+                                " discount_amount," +
+                                " selling_price," +
+                                " uom_gid," +
+                                " uom_name," +
+                                " price," +
+                                " tax_name," +
+                                " tax_name2, " +
+                                " tax_name3, " +
+                                " tax1_gid, " +
+                                " tax2_gid, " +
+                                " tax3_gid, " +
+                                " tax_percentage," +
+                                " tax_percentage2," +
+                                " tax_percentage3," +
+                                " vendor_gid , " +
+                                " slno," +
+                                " product_requireddate, " +
+                                " productrequireddate_remarks, " +
+                                " tax_amount, tax_amount2, tax_amount3 " +
+                                ")values(" +
+                                " '" + msgetGid2 + "'," +
+                                " '" + msGetGid + "'," +
+                                " '" + dt["product_gid"].ToString() + "'," +
+                                " '" + dt["customerproduct_code"].ToString() + "'," +
+                                " '" + dt["productgroup_gid"].ToString() + "'," +
+                                " '" + dt["productgroup_name"].ToString() + "'," +
+                                " '" + dt["product_name"].ToString() + "'," +
+                                " '" + dt["product_code"].ToString() + "'," +
+                                " '" + dt["display_field"].ToString() + "'," +
+                                " '" + dt["product_price"].ToString() + "'," +
+                                " '" + dt["qty_quoted"].ToString() + "'," +
+                                " '" + dt["margin_percentage"].ToString() + "'," +
+                                " '" + dt["margin_amount"].ToString().Replace(",", "").Trim() + "'," +
+                                " '" + dt["selling_price"].ToString() + "'," +
+                                " '" + dt["uom_gid"].ToString() + "'," +
+                                " '" + values.producttotalamount + "'," +
+                                " '" + values.producttotalamount + "'," +
+                                " '" + dt["tax_name"].ToString() + "'," +
+                                " '" + dt["tax_name2"].ToString() + "'," +
+                                " '" + dt["tax_name3"].ToString() + "'," +
+                                " '" + dt["tax1_gid"].ToString() + "'," +
+                                " '" + dt["tax2_gid"].ToString() + "'," +
+                                " '" + dt["tax3_gid"].ToString() + "'," +
+                                " '" + dt["tax_percentage"].ToString() + "'," +
+                                " '" + dt["tax_percentage2"].ToString() + "'," +
+                                " '" + dt["tax_percentage3"].ToString() + "'," +
+                                " '" + dt["vendor_gid"].ToString() + "'," +
+                                " '" + dt["slno"] + "', ";
+
+                        if (dt["product_requireddate"].ToString() == null || DBNull.Value.Equals(dt["product_requireddate"].ToString()))
+                        {
+                            msSQL += "null,";
+                        }
+                        else
+                        {
+                            string formattedDate = dt["product_requireddate"].ToString();
+                            msSQL += "'" + formattedDate + "',";
+                        }
+                        msSQL += " '" + dt["productrequireddate_remarks"].ToString() + "'," +
+                                 " '" + dt["tax_amount"].ToString() + "'," +
+                                 " '" + dt["tax_amount2"].ToString() + "'," +
+                                 " '" + dt["tax_amount3"].ToString() + "')";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult == 0)
+                        {
+                            values.status = false;
+                            values.message = "Error occured while Inserting into Quotationdtl";
+                        }
+                    }
+                }
+
+                //msSQL = " delete from smr_trn_treceivequotation where quotation_gid='" + msGetGid + "' ";
+                //mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+               
+                msSQL = "select distinct quotation_type from smr_tmp_treceivequotationdtl where created_by='" + employee_gid + "' ";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                if (objODBCDatareader.HasRows == true)
+                {
+                    lstype1 = "Both";
+                   
+                 }
+                          
+                 else
+                 {
+                    lstype1 = objODBCDatareader["quotation_type"].ToString();
+                  }
+                        
+                         
+
+
+                msSQL = " update smr_trn_treceivequotation set quotation_type='" + lstype1 + "' where quotation_gid='" + msGetGid + "' ";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            }
+
+
+            msSQL = " delete from smr_tmp_treceivequotationdtl " +
+                    " where created_by='" + employee_gid + "'";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult == 0)
+            {
+                values.status = false;
+                values.message = "Error occured while Inserting into Temp Data";
+            }
+
+               
+                    msgetGid4 = objcmnfunctions.GetMasterGID("PODC");
+                    {
+                        msSQL = " insert into smr_trn_tapproval ( " +
+                                " approval_gid, " +
+                                " approved_by, " +
+                                " approved_date, " +
+                                " submodule_gid, " +
+                                " qoapproval_gid " +
+                                " ) values ( " +
+                                "'" + msgetGid4 + "'," +
+                                " '" + employee_gid + "'," +
+                                "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                                "'SMRSMRQAP'," +
+                                "'" + msGetGid + "') ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                        if (mnResult == 0)
+                        {
+                            values.status = false;
+                        }
+                    
+                
+
+                    msSQL = "select approval_flag from smr_trn_tapproval where submodule_gid='SMRSMRQAP' and qoapproval_gid='" + msGetGid + "' ";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                    if (objODBCDatareader.HasRows == false)
+                    {
+                        msSQL = " Update smr_trn_treceivequotation Set " +
+                               " quotation_status = 'Approved', " +
+                               " approved_by = '" + employee_gid + "', " +
+                               " approved_date = '" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+                               " where quotation_gid = '" + msGetGid + "'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                    else
+                    {
+                        msSQL = "select approved_by from smr_trn_tapproval where submodule_gid='SMRSMRQAP' and qoapproval_gid='" + msGetGid + "'";
+                    objODBCDatareader1 = objdbconn.GetDataReader(msSQL);
+                    if (objODBCDatareader1.RecordsAffected == 1)
+                    {
+                        msSQL = " update smr_trn_tapproval set " +
+                       " approval_flag = 'Y', " +
+                       " approved_date = '" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+                       " where approved_by = '" + employee_gid + "'" +
+                       " and qoapproval_gid = '" + msGetGid + "' and submodule_gid='SMRSMRQAP'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        msSQL = " Update smr_trn_treceivequotation Set " +
+                               " quotation_status = 'Approved', " +
+                       " approved_by = '" + employee_gid + "', " +
+                       " approved_date = '" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+                       " where quotation_gid = '" + msGetGid + "'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                    else if (objODBCDatareader1.RecordsAffected > 1)
+                    {
+                        msSQL = " update smr_trn_tapproval set " +
+                               " approval_flag = 'Y', " +
+                               " approved_date = '" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+                               " where approved_by = '" + employee_gid + "'" +
+                               " and quotation_gid = '" + msGetGid + "' and submodule_gid='SMRSMRQAP'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                        }
+                    }
+
+                    if (mnResult != 0)
+                    {
+                        values.status = true;
+                        values.message = "Quotation Raised Successfully!";
+                    }
+                    else
+                    {
+                        values.status = false;
+                        values.message = "Error While Raising Quotation!";
+                    }
+                }
+        public void DaGetViewQuotationSummary(string quotation_gid, MdlSmrTrnQuotation values)
+        {
+            msSQL = " select a.quotation_gid,a.currency_code,a.vessel_name,a.freight_terms,a.payment_terms,concat(a.customerbranch_gid,' | ',a.customer_contact_person)as contact_person,a.salesperson_gid,a.termsandconditions,date_format(a.quotation_date,'%d-%m-%Y') as quotation_date,a.customerenquiryref_number,a.quotation_remarks, " +
+                    " a.quotation_referenceno1,a.payment_days,f.product_code,e.branch_name,h.currency_code as code,a.exchange_rate," +
+                    " a.contact_mail,a.contact_no,a.customer_address,format(a.Grandtotal_l,2) as Grandtotal_l," +
+                    " a.delivery_days,format(a.Grandtotal,2) as Grandtotal ,format(a.addon_charge,2) as addon_charge,format(a.additional_discount,2) as additional_discount," +
+                    " format(sum(d.price),2) as total_value,a.customer_name, format(a.gst_percentage,2)as gst_percentage,a.tax_gid,i.tax_name,format(a.total_amount,2)as total_amount,format(a.total_price,2) as total_price, " +
+                    " b.leadbank_address1,b.leadbank_address2,b.leadbank_city,b.leadbank_state,b.leadbank_pin,a.payment_days,a.delivery_days,d.slno,d.product_price, " +
+                    " c.leadbankcontact_name,c.mobile,c.email,a.pricingsheet_refno,concat(j.user_code,' ','/',' ',j.user_firstname,' ',j.user_lastname) as user_firstname, " +
+                    " format(a.freight_charges,2)as freight_charges,format(a.buyback_charges,2)as buyback_charges, " +
+                    " format(a.packing_charges,2)as packing_charges,format(a.insurance_charges,2)as insurance_charges,d.margin_percentage, " +
+                    " d.slno,d.productgroup_name,d.customerproduct_code,d.display_field,d.product_name,d.uom_name,d.margin_amount,d.tax_amount,d.tax_amount2,d.tax_amount3," +
+                    " d.uom_name,d.qty_quoted,d.selling_price,d.discount_percentage,d.tax_name,d.tax_name2,d.tax_name3,d.price,cast(date_format(d.product_requireddate,'%d-%m-%Y')as char) as product_requireddate, " +
+                    " format(a.roundoff,2)as roundoff from smr_trn_treceivequotation a " +
+                    " left join crm_trn_tleadbank b on b.leadbank_gid=a.customer_gid" +
+                    " left join crm_mst_tcustomer g on g.customer_gid=b.customer_gid" +
+                    " left join crm_trn_tcurrencyexchange h on h.currencyexchange_gid=g.currency_gid" +
+                    " left join crm_trn_tleadbankcontact c on c.leadbank_gid=b.leadbank_gid " +
+                    " left join smr_trn_treceivequotationdtl d on d.quotation_gid=a.quotation_gid " +
+                    " left join pmr_mst_tproduct f on d.product_gid=f.product_gid " +
+                    " left join hrm_mst_tbranch e on e.branch_gid=a.branch_gid" +
+                    " left join acp_mst_ttax i on i.tax_gid = a.tax_gid " +
+                    " left join adm_mst_tuser j on j.user_gid  = a.salesperson_gid " +
+                    " where a.quotation_gid='" + quotation_gid + "' group by a.quotation_gid ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetSummaryList>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetSummaryList
+                    {
+
+
+                        customerenquiryref_number = dt["customerenquiryref_number"].ToString(),
+                        quotation_date = dt["quotation_date"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        contact_person = dt["contact_person"].ToString(),
+                        contact_no = dt["contact_no"].ToString(),
+                        contact_mail = dt["contact_mail"].ToString(),
+                        customer_address = dt["customer_address"].ToString(),
+                        quotation_remarks = dt["quotation_remarks"].ToString(),
+                        user_firstname = dt["user_firstname"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+                        exchange_rate = dt["exchange_rate"].ToString(),
+                        freight_terms = dt["freight_terms"].ToString(),
+                        payment_terms = dt["payment_terms"].ToString(),
+                        slno = dt["slno"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        customerproduct_code = dt["customerproduct_code"].ToString(),
+                        display_field = dt["display_field"].ToString(),
+                        productuom_name = dt["uom_name"].ToString(),
+                        qty_quoted = dt["qty_quoted"].ToString(),
+                        selling_price = dt["selling_price"].ToString(),
+                        discount_percentage = dt["discount_percentage"].ToString(),
+                        tax_name = dt["tax_name"].ToString(),
+                        tax_name2 = dt["tax_name2"].ToString(),
+                        tax_name3 = dt["tax_name3"].ToString(),
+                        price = dt["price"].ToString(),
+                        product_requireddate = dt["product_requireddate"].ToString(),
+                        payment_days = dt["payment_days"].ToString(),
+                        delivery_days = dt["delivery_days"].ToString(),
+                        total_price = dt["total_price"].ToString(),
+                        total_amount = dt["total_amount"].ToString(),
+                        addon_charge = dt["addon_charge"].ToString(),
+                        additional_discount = dt["additional_discount"].ToString(),
+                        freight_charges = dt["freight_charges"].ToString(),
+                        buyback_charges = dt["buyback_charges"].ToString(),
+                        packing_charges = dt["packing_charges"].ToString(),
+                        insurance_charges = dt["insurance_charges"].ToString(),
+                        roundoff = dt["roundoff"].ToString(),
+                        Grandtotal = dt["Grandtotal"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_price = dt["product_price"].ToString(),
+                        margin_percentage = dt["margin_percentage"].ToString(),
+                        margin_amount = dt["margin_amount"].ToString(),
+                        tax_amount = dt["tax_amount"].ToString(),
+                        tax_amount2 = dt["tax_amount2"].ToString(),
+                        tax_amount3 = dt["tax_amount3"].ToString(),
+
+                    });
+                    values.SO_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetOnchangeCurrency(string currencyexchange_gid, MdlSmrTrnQuotation values)
+        {
+            msSQL = " select currencyexchange_gid,currency_code,exchange_rate from crm_trn_tcurrencyexchange " +
+                " where currencyexchange_gid='" + currencyexchange_gid + "'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetOnchangecurrency>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetOnchangecurrency
+                    {
+
+                        exchange_rate = dt["exchange_rate"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+                    });
+                    values.GetOnchangecurrency = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetProductdetails(string quotation_gid, MdlSmrTrnQuotation values)
+        {
+            msSQL = "select customerproduct_code,product_code,product_name,qty_quoted from smr_trn_treceivequotationdtl where quotation_gid='" + quotation_gid + "'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<productlist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new productlist
+                    {
+
+                        product_code = dt["product_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        qty_quoted = dt["qty_quoted"].ToString(),
+                    });
+                    values.product_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+    }
+
+}
+    

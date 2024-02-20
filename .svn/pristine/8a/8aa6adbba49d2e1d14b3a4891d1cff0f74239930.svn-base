@@ -1,0 +1,161 @@
+﻿using ems.pmr.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using static ems.pmr.Models.MdlPmrTrnGrnInward;
+using System.Net;
+
+namespace ems.pmr.DataAccess
+{
+    public class DaPmrTrnGrnInward
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, maGetGID, lsvendor_code, msUserGid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        public void DaGetGrnInwardSummary(MdlPmrTrnGrnInward values)
+        {
+            msSQL = " select distinct a.grn_gid,a.grn_gid as grnrefno,a.dc_no, a.grn_status, a.vendor_gid, a.grn_flag, a.invoice_flag,f.costcenter_name, " +
+            " CASE when a.invoice_flag <> 'IV Pending' then a.invoice_flag " +
+            " else a.grn_flag end as 'overall_status', " +
+            " date(a.grn_date)  as grn_date, c.vendor_companyname,a.purchaseorder_gid,format(d.total_amount,2) as po_amount,a.created_date, " +
+            " case when group_concat(distinct e.purchaserequisition_referencenumber)=',' then '' " +
+            " when group_concat(distinct e.purchaserequisition_referencenumber) <> ',' then group_concat(distinct e.purchaserequisition_referencenumber) end  as refrence_no " +
+            " from pmr_trn_tgrn a " +
+            " left join pmr_trn_tgrndtl b on a.grn_gid = b.grn_gid   " +
+            " left join acp_mst_tvendor c on a.vendor_gid = c.vendor_gid " +
+            " left join pmr_trn_tpurchaseorder d on d.purchaseorder_gid=a.purchaseorder_gid" +
+            " left join pmr_trn_tpurchaserequisition e on e.purchaserequisition_gid=d.purchaserequisition_gid" +
+            " left join pmr_mst_tcostcenter f on d.costcenter_gid=f.costcenter_gid " +
+            " where 0 = 0  group by a.grn_gid order by date(a.grn_date) desc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetGrnInward_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetGrnInward_lists
+                    {
+
+                        grn_gid = dt["grn_gid"].ToString(),
+                        grn_date = dt["grn_date"].ToString(),
+                        grnrefno = dt["grnrefno"].ToString(),
+                        refrence_no = dt["refrence_no"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        costcenter_name = dt["costcenter_name"].ToString(),
+                        po_amount = dt["po_amount"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        invoice_flag = dt["invoice_flag"].ToString(),
+                        dc_no = dt["dc_no"].ToString(),
+
+                    });
+                    values.GetGrnInward_lists = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetEditGrnInward(string grn_gid, MdlPmrTrnGrnInward values)
+        {
+             msSQL = "  SELECT DISTINCT a.grn_gid,DATE_FORMAT(a.grn_date, '%d-%m-%Y %h:%i:%s %p') AS grn_date,a.vendor_contact_person,a.checkeruser_gid,a.purchaseorder_list," +
+                     " a.grn_remarks,a.grn_reference,a.grn_receipt,a.grn_status,DATE_FORMAT(a.dc_date, '%d-%m-%Y %h:%i:%s %p') AS dc_date,DATE_FORMAT(a.invoice_date, '%d-%m-%Y %h:%i:%s %p') AS invoice_date, " +
+                    "  a.invoice_refno,a.dc_no, CASe WHEN a.invoice_flag <> 'IV Pending' THEN a.invoice_flag ELSE a.grn_flag END AS overall_status," +
+                    " a.reject_reason,CONCAT(b.user_firstname, ' - ', d.department_name) AS user_firstname,a.grn_gid,a.purchaseorder_gid,e.grndtl_gid, " +
+                    " FORMAT(e.qty_rejected, 2) AS qty_rejected,e.qc_remarks,e.product_remarks,FORMAT(e.qty_delivered, 2) AS qty_received, " +
+                    " FORMAT(e.qty_grnadjusted, 2) AS qty_grnadjusted,h.productgroup_name,DATE_FORMAT(j.purchaseorder_date, '%d-%m-%Y') AS purchaseorder_date,i.vendor_gid, " +
+                    " i.vendor_companyname,FORMAT(k.qty_ordered, 2) AS qty_ordered,l.productuom_gid,m.location_name,n.bin_number," +
+                    " i.contact_telephonenumber,i.email_id,CONCAT(f.address1, '', f.address2) AS address,e.product_gid,e.product_code,e.product_name, " +
+                    " i.vendor_gid,i.vendor_companyname, format(k.qty_ordered, 2) as qty_ordered,l.productuom_gid,m.location_name,n.bin_number, "+
+                    "  i.contact_telephonenumber,i.email_id,concat(f.address1, '', f.address2) as address , e.product_gid, e.product_code, e.product_name,  e.productuom_name ," +
+                    " e.productuom_name,CONCAT(p.user_firstname, ' ', p.user_lastname) AS user_checkername,a.checkeruser_gid,a.approved_by, " +
+                    "  p.user_gid,CONCAT(q.user_firstname, ' ', q.user_lastname) AS user_approvedby,a.priority, " +
+                   " CASE WHEN a.priority = 'N' THEN 'Low' ELSE 'High' END AS priority_n FROM pmr_trn_tgrn a  " +
+                    " left join adm_mst_tuser b on a.user_gid = b.user_gid "+
+                    " left join hrm_mst_temployee c on c.user_gid = b.user_gid  "+
+                    " left join hrm_mst_tdepartment d on c.department_gid = d.department_gid "+
+                    " left join acp_mst_tvendor i on i.vendor_gid = a.vendor_gid "+
+                    " left  join adm_mst_taddress f on i.address_gid = f.address_gid   "+
+                    " left join pmr_trn_tgrndtl e on a.grn_gid = e.grn_gid  "+
+                    " left join pmr_mst_tproduct g on e.product_gid = g.product_gid   "+
+                    " left join pmr_mst_tproductgroup h on h.productgroup_gid = g.productgroup_gid   "+
+                  "  left join pmr_trn_tpurchaseorder j on a.purchaseorder_gid = j.purchaseorder_gid  "+
+                  "  left join pmr_trn_tpurchaseorderdtl k on k.purchaseorderdtl_gid = e.purchaseorderdtl_gid   "+
+                  " left join pmr_mst_tproductuom l on e.uom_gid = l.productuom_gid    "+
+                  " left join ims_mst_tlocation m on e.location_gid = m.location_gid  "+
+                  " left join ims_mst_tbin n on e.bin_gid = n.bin_gid" +
+                  "  left join adm_mst_tuser p on p.user_gid = a.checkeruser_gid " +
+                  " left join adm_mst_tuser q on q.user_gid = a.approved_by " +
+                   " where a.grn_gid = '" + grn_gid + "' group by a.grn_gid";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetEditGrnInward_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetEditGrnInward_lists
+                    {
+                        grn_gid = dt["grn_gid"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        grn_date = dt["grn_date"].ToString(),
+                        vendor_contact_person = dt["vendor_contact_person"].ToString(),
+                        contact_telephonenumber = dt["contact_telephonenumber"].ToString(),
+                        email_id = dt["email_id"].ToString(),
+                        address = dt["address"].ToString(), 
+                        purchaseorder_list = dt["purchaseorder_list"].ToString(),
+                        reject_reason = dt["reject_reason"].ToString(),
+                        grn_remarks = dt["grn_remarks"].ToString(),
+                        dc_date = dt["dc_date"].ToString(),
+                        grn_reference = dt["grn_reference"].ToString(),
+                        dc_no = dt["dc_no"].ToString(),
+                        invoice_refno = dt["invoice_refno"].ToString(),
+                        invoice_date = dt["invoice_date"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        productuom_gid = dt["productuom_gid"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        qty_ordered = dt["qty_ordered"].ToString(),
+                        qty_received = dt["qty_received"].ToString(),
+                        qty_grnadjusted = dt["qty_grnadjusted"].ToString(),
+                        qty_rejected = dt["qty_rejected"].ToString(),
+                        product_remarks = dt["product_remarks"].ToString(),
+                        qc_remarks = dt["qc_remarks"].ToString(),
+                        location_name = dt["location_name"].ToString(),
+                        bin_number = dt["bin_number"].ToString(),
+                        user_checkername = dt["user_checkername"].ToString(),
+                        user_approvedby = dt["user_approvedby"].ToString(),
+                        priority_n = dt["priority_n"].ToString(),
+
+
+
+
+
+
+
+
+
+
+                    });
+
+                   values.GetEditGrnInward_lists = getModuleList;
+
+
+
+                }
+
+
+            }
+            dt_datatable.Dispose();
+        }
+       
+    }
+}

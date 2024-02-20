@@ -1,0 +1,84 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-whatsapp" style="color: white;">
+        <h3 class="card-title"> <i class="fa-solid fa-calendar-check text-white fs-2"></i> &nbsp;
+            Campaign Log </h3>
+            <div style="margin: 13px">
+            <div class="col me-5">
+              <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign" class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                <i class="path1"></i>
+                <i class="path2"></i>
+            </i>&nbsp;Back</button>
+              <!-- <button class="btn-primary btn-sm text-white me-4" style="margin-left: 800px;" (click)="redirecttolist()">
+                  <i class="ki-duotone ki-entrance-right fs-5">
+                      <i class="path1"></i>
+                      <i class="path2"></i>
+                  </i>&nbsp;Back</button> -->
+            </div>
+  </div>
+    </div>
+   
+  <!-- <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" ><span class="fa-solid fa-eye text-white  fs-6"></span></button> -->
+  
+  <div class="table-responsive">
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+      <table  id="log" class="table table-striped table-row-bordered border-bottom gs-7">
+        <thead>
+          <tr class=" text-white fw-bold fs-6 text-nowrap bg-whatsapp">
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Mobile No</th>
+            <th>Source</th>
+            <th>Customer Type</th>
+            <th>Lead Status</th>
+            <th>Direction</th>
+            <th>Status</th>
+            <th>Date</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+       <tr *ngFor="let data of log; let i=index;" class="align-middle">
+            <td>{{i+1}}</td>
+           <td style="white-space: nowrap;">{{data.displayName}}</td>
+
+           <td style="white-space: nowrap;">{{data.identifiervalue}}</td>
+           <td style="white-space: nowrap;">{{data.source_name}}</td>
+                        <td style="white-space: nowrap;">{{data.customer_type}}</td>
+                        <td>
+                            <span *ngIf="data.lead_status === 'Assigned' "><label class="ms-3" class="badge bg-secondary text-black ">Assigned</label></span>
+                            
+                            <span *ngIf="data.lead_status === 'Not Assigned'" ><label class="ms-3" class="badge bg-Warning text-white ">Not Assigned</label></span>
+                            
+                          </td>
+
+           <td>
+            <span *ngIf="data.direction === 'incoming' "><label class="ms-3" class="badge bg-success text-white ">Incoming</label></span>
+            
+            <span *ngIf="data.direction === 'outgoing'" ><label class="ms-3" class="badge bg-primary text-white ">Outgoing</label></span>
+            
+          </td>
+          <td>
+            <span *ngIf="data.status === 'accepted'"><label class="ms-3" class="badge bg-success text-white ">Delivered</label></span>
+            <span *ngIf="data.status === 'delivered'"><label class="ms-3" class="badge bg-success text-white ">Delivered</label></span>
+            <span *ngIf="data.status === 'sending_failed'" ><label class="ms-3" class="badge bg-danger text-white ">Sending Failed</label></span>
+          </td>
+                               <!-- <td style="white-space: nowrap;">{{data.status}}</td> -->
+                               <td style="white-space: nowrap;">{{(data.created_date) }}</td>
+
+                               <!-- <script>
+                               function formatDate(isoDate) {
+                                 const options = { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+                                 const date = new Date(isoDate);
+                                 return date.toLocaleString('en-US', options);
+                               }
+                               </script> -->
+         
+        
+      </tr> 
+        </tbody>
+      </table>
+    </div>
+  </div>  
+  
+  <br>
+  

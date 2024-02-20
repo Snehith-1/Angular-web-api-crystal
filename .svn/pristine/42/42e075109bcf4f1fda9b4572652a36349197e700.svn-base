@@ -1,0 +1,244 @@
+<div class="card">
+
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Blood Group</h3>
+        </div>
+
+        <div class="col me-5">
+            <button title="Add Blood Group" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end"
+                data-bs-toggle="modal" (click)="openaddpopup()" data-bs-target="#Adblood">
+                <i class="fas fa-plus me-5"></i>Add Blood Group
+            </button>
+        </div>
+    </div>
+
+    <div class="modal top fade" id="Adblood" data-bs-backdrop='static' tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content" data-bs-backdrop='static'>
+                <form [formGroup]="BldAddForm" #form="ngForm" (ngSubmit)="createeAddForm()">
+                    <div class=" bg-primary rounded-top">
+                        <h3 class="p-4 pt-5 text-white "><i class="fas fa-plus "></i> &nbsp;&nbsp; Add Blood Group </h3>
+                    </div>
+
+                    <div class="modal-body">
+
+
+                        <div class="col-12 col-lg-11 col-md-6 col-sm-12 ms-5 mb-5"> <span class="font-bold required"
+                                required="">Blood Group</span>
+                            <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input [(ngModel)]="txt_blood_add" formControlName="txt_blood_add" type="text" class="form-control form-control-lg form-control-solid bg-white custom-input
+                                  mb-3 mb-lg-0 "
+                                    [ngStyle]="{ 'border-color': BldAddForm.get('txt_blood_add')?.hasError('required') && BldAddForm.get('txt_blood_add')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                                    placeholder="Enter Blood Group" pattern="^(?!\s*$).+" />
+                                <div *ngIf="BldAddForm.get('txt_blood_add')?.hasError('required') && BldAddForm.get('txt_blood_add')?.touched || BldAddForm.get('txt_blood_add')?.hasError('pattern') "
+                                    class="text-red">
+                                    Blood group name is required.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center my-4">
+                            <button type="submit" class="btn-success btn-sm text-white me-2" data-bs-dismiss="modal"
+                                [disabled]="BldAddForm.invalid" (click)="createeAddForm()">
+                                <i class="fas fa-check text-white fs-5 me-3"></i>
+                                Submit
+                            </button>
+
+                            <button type="button" class="btn-danger text-white" data-bs-dismiss="modal">
+                                <i class="fa fa-close fs-5 text-center"></i>
+                                Close
+                            </button>
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded mt-2">
+            <table id="bloodsummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class=" text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Blood Group</th>
+                        <th>Created By</th>
+                        <th>Created Date</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of bloodgroup_list; let i=index;" class="align-middle">
+                        <td>{{i+1}}</td>
+                        <td>{{data.bloodgroup_name}}</td>
+                        <td>{{data.created_by}}</td>
+                        <td>{{data.created_date}}</td>
+                        <td [ngSwitch]="data.status">
+                            <label *ngSwitchCase="'Active'" class="badge bg-success text-white ">Active</label>
+                            <label *ngSwitchCase="'Inactive'" class="badge bg-warning text-white ">Inactive</label>
+                        </td>
+                        <td [ngSwitch]="data.status" class="text-center text-nowrap">
+                            <button title="Edit" type="button" [disabled]="data.status === 'Inactive'"
+                                class="btn btn-icon btn-sm bg-etdark me-2" data-bs-toggle="modal"
+                                data-bs-target="#editmodal" (click)="editbloodgroup(data.bloodgroup_gid)"><span
+                                    class="fa-solid fa-pencil text-white fs-6"></span></button>
+                            <button *ngSwitchCase="'Active'" title="Status" type="button"
+                                class="btn btn-icon btn-sm bg-stssuccess me-2" data-bs-target="#update_modal"
+                                data-bs-toggle="modal" (click)="Status_update(data.bloodgroup_gid)"><span
+                                    class="bi-hand-thumbs-up-fill text-white fs-6"></span></button>
+                            <button *ngSwitchCase="'Inactive'" title="Status" type="button"
+                                class="btn btn-icon btn-sm bg-warning me-2" data-bs-target="#update_modal"
+                                data-bs-toggle="modal" (click)="Status_update(data.bloodgroup_gid)"><span
+                                    class="bi-hand-thumbs-down-fill text-white fs-6"></span></button>
+                            <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2"
+                                (click)="delete(data.bloodgroup_gid)" data-bs-toggle="modal"
+                                data-bs-target="#bloodgroupdelete"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal top fade" tabindex="-1" id="editmodal" data-bs-backdrop='static'>
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content " data-bs-backdrop='static'>
+            <div class="modal-header bg-primary mb-5">
+                <h3 class="modal-title text-white"><i class="fa-solid fa-pen-to-square fs-2"></i> &nbsp;&nbsp; Edit
+                    Blood Group</h3>
+            </div>
+            <form [formGroup]="bldeditForm" (ngSubmit)="update()">
+
+
+                <div class="col-12 col-lg-11 col-md-6 col-sm-12 ms-5 mb-5"> <span class="font-bold required" required="">Blood Group</span>
+                    <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2" >         
+                        <input [(ngModel)]="editFormData.txteditblood_group" formControlName="txteditblood_group" type="text" class="form-control form-control-lg form-control-solid bg-white custom-input
+                          mb-3 mb-lg-0 "
+                          [ngStyle]="{ 'border-color': bldeditForm.get('txteditblood_group')?.hasError('required') && bldeditForm.get('txteditblood_group')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                          placeholder="Enter Blood Group" pattern="^(?!\s*$).+" />
+                          <div *ngIf="bldeditForm.get('txteditblood_group')?.hasError('required') && bldeditForm.get('txteditblood_group')?.touched || bldeditForm.get('txteditblood_group')?.hasError('pattern') " class="text-red">
+                          Blood group is required.
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="text-center mb-10">
+                    <button type="submit" class="btn-success text-white" data-bs-dismiss="modal"
+                        [disabled]="bldeditForm.invalid">
+                        <i class="fas fa-check text-white fs-5"></i>
+                        Update
+                    </button> &nbsp; &nbsp;
+                    <button type="button" class="btn-danger text-white" data-bs-dismiss="modal">
+                        <i class="fa fa-close fs-5 text-center"></i>
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Status Update -->
+<div class="modal fade" id="update_modal" data-bs-backdrop='static' tabindex="-1" aria-labelledby="statuschangeLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header bg-primary ">
+                <h4 class="modal-title text-white"><i class="bi bi-hand-thumbs-up-fill fs-3"></i>&nbsp;&nbsp; Status
+                </h4>
+            </div>
+            <form [formGroup]="stsform">
+                <div class="modal-body">
+                    <div class="mb-3 text-start">
+                        <label><b>Blood Group</b></label> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                        &nbsp;&nbsp;
+                        {{statusFormData.txtblood_group}}
+                    </div>
+                    <div class="d-flex justify-content-start mt-4">
+                        <label><b>Status</b></label>
+                        <div class="form-check ps-20 ms-10 ">
+                            <input value="Y" type="radio" formControlName="rbo_status"
+                                [(ngModel)]="statusFormData.rbo_status" data-toggle="toggle">
+                            <label class=" ms-3" for="flexRadioDefault1">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input value="N" type="radio" formControlName="rbo_status"
+                                [(ngModel)]="statusFormData.rbo_status" data-toggle="toggle" checked>
+                            <label class=" ms-3" for="flexRadioDefault2">
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
+                    <br>
+    
+                    <label for="exampleFormControlTextarea2" class="required fw-bold">Remarks </label>
+                    <textarea class="form-control rounded-0 mt-3 textarea-resize-none" ng-trim="true"
+                        id="exampleFormControlTextarea2" pattern="^(\S+\s*)*(?!\s).*$" formControlName="txtremarks"
+                        [(ngModel)]="statusFormData.txtremarks" rows="3"></textarea>
+                </div>
+
+                <div class="text-center contain">
+                    <button type="button" class=" btn-success" (click)="update_status()" data-bs-dismiss="modal"
+                        [disabled]="stsform.invalid"> <i class="fas fa-check"></i>&nbsp;&nbsp;Update</button> &nbsp;
+                    <button type="button" class=" btn-danger" (click)="close()" data-bs-dismiss="modal"><i
+                            class="fa fa-close fs-5 text-center"></i> &nbsp;&nbsp;Close</button>
+                    <br /><br>
+                    <div class="table-responsive ms-5 me-5">
+                        <div class="table">
+                            <table class="table table-hover ">
+                                <thead>
+                                    <tr class="tableheading bg-lightblue fw-bold">
+                                        <th>S.No</th>
+                                        <th>Status</th>
+                                        <th>Updated By</th>
+                                        <th>Updated Date</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of bloodgroupinactivelog_list; let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td [ngSwitch]="data.status">
+                                            <label *ngSwitchCase="'Active'">Active</label>
+                                            <label *ngSwitchCase="'Inactive'">Inactive</label>
+                                        </td>
+                                        <td>{{data.updated_by}}</td>
+                                        <td>{{data.updated_date}}</td>
+                                        <td>{{data.remarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="bloodgroupdelete" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h4 class="w-100  fw-bolder fs-1 mt-5">Are you sure?</h4>
+                <p class="fw-bold fs-5 mt-4">Do You Want To Delete The Record ?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-danger" data-bs-dismiss="modal"  (click)="ondelete()"
+                    >Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

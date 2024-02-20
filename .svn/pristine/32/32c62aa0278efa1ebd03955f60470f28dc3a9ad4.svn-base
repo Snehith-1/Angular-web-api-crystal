@@ -1,0 +1,47 @@
+<div class="card shadow-sm">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+          <h3 class="card-title">Delivery Acknowledgement Summary</h3>
+        </div>
+        <div class="col me-5">
+          <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal"
+            data-bs-target="#myModaladd" routerLink="/ims/ImsTrnAddDeliveryorder">
+            RAISE DO ACKNOWLEDGEMENT	
+          </button>
+        </div>
+      </div> 
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded table-responsive">
+          <table id="doacknowledgement_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+            <thead>
+              <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                <th>S.NO </th>
+                <th>DO Date</th>
+                <th>DO Reference .No</th>
+                <th>Customer  </th>
+                <th>Contact Details </th>
+                <th>Status </th>
+                <th>Delivery Details</th>
+                <th>Delivery By</th>
+                <th>Delivery Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of doacknowledgement_list; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{data.directorder_date}}</td>
+                <td>{{data.customer_name}}</td> 
+                <td>{{data.contactdetails}}</td>
+                <td>{{data.branch_name}}</td>         
+                <td>{{data.contact}}</td>
+                <td>{{data.user_firstname}}</td>
+                <td>{{data.salesorder_status}}</td>
+    >
+           
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    

@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-crm-trn-newmarketing',
+  templateUrl: './crm-trn-newmarketing.component.html',
+  styleUrls: ['./crm-trn-newmarketing.component.scss']
+})
+export class CrmTrnNewmarketingComponent {
+
+}

@@ -1,0 +1,122 @@
+<div class="card m-3"  style="height: 490px;">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue"><i
+              class="fas fa-pencil fw-bolder fs-3"></i>  Edit Product</h5>
+        </div>
+    </div>
+  
+    <form [formGroup]="productform" #form="ngForm">
+      <input formControlName="shopify_productid" hidden
+      placeholder="Address Line 1"  type="text" class="
+          form-control form-control-lg form-control-solid
+          bg-white
+          custom-input
+          mb-3 mb-lg-0
+          borderc-secondary
+        " name="shopify_productid" />
+      
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+
+
+      
+
+            <div></div></div>
+
+        
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Type<span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " formControlName="product_type"class="form-control"
+                        [ngClass]="{'invalid-border': product_type.invalid && product_type.touched}" />
+                </div>
+                <div *ngIf="product_type.invalid && (product_type.dirty || product_type.touched)">
+                    <div *ngIf="product_type.errors?.['required']">
+                        <span style="color:red;">product Type required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Name<span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " formControlName="product_name" class="form-control"
+                        [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}" />
+                </div>
+                <div *ngIf="product_name.invalid && (product_name.dirty || product_name.touched)">
+                    <div *ngIf="product_name.errors?.['required']">
+                        <span style="color:red;">product name required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Product Description
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  "  formControlName="product_desc" class="form-control" />
+                </div>
+            </div>
+           
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">Vendor
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " formControlName="vendor" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-6 col-sm-12">Status
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                        <input class="form-check-input" type="radio" name="product_status" id="active"
+                            formControlName="product_status" value="active">
+                        <label class="form-check-label text-gray-700 text-nowrap" for="active">Active</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="product_status" formControlName="product_status"
+                            value="draft" id="draft">
+                        <label class="form-check-label text-gray-700 text-nowrap" for="draft">Draft</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="product_status" formControlName="product_status"
+                            value="archived" id="archived">
+                        <label class="form-check-label text-gray-700 text-nowrap" for="archived">Archived</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br><br><br>
+  <div class="text-center my-4">
+  <button class="btn-sm text-white me-2" [disabled]="productform.invalid" [ngClass]="{
+    'primary-button': !productform.invalid,
+    'secondary-button': productform.invalid
+  }" (click)="validate()">
+  <i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+  </button>
+  
+  
+   
+    <button class="btn-primary btn-sm text-white me-4" routerLink="/crm/CrmSmmShopifycustomer">
+      <i class="fas fa-arrow-left"></i> &nbsp; Back
+    </button>
+        </div>
+      </form>
+  
+  </div>
+  
+  
+    
+  

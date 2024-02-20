@@ -1,0 +1,500 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using System.Data.Odbc;
+using System.Data;
+using System.Web;
+using OfficeOpenXml;
+using System.Configuration;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Net.Mail;
+using RestSharp;
+using Newtonsoft.Json;
+using System.Web.Services.Description;
+using static OfficeOpenXml.ExcelErrorValue;
+using System.Web.Http.Results;
+
+
+namespace ems.crm.DataAccess
+{
+    public class DaTelegram
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        private OdbcDataReader objodbcDataReader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, lsupload_path, lsupload_type, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+
+        int mnResult6;
+
+        public telegramlist DaGetTelegram()
+        {
+
+            result objresult = new result();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            string requestAddressURL = "https://api.telegram.org/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/getChat?chat_id=@MYSOFTWAREDEVLEOPERGROUP";
+            var clientAddress = new RestClient(requestAddressURL);
+            var requestAddress = new RestRequest(Method.GET);
+            IRestResponse responseAddress = clientAddress.Execute(requestAddress);
+            string address_erpid = responseAddress.Content;
+            string errornetsuiteJSON = responseAddress.Content;
+            telegramlist objMdlTelegramMessageResponse = new telegramlist();
+            objMdlTelegramMessageResponse = JsonConvert.DeserializeObject<telegramlist>(errornetsuiteJSON);
+            if (responseAddress.StatusCode == HttpStatusCode.OK)
+            {
+                msSQL = "truncate crm_smm_telegramdetails" ;
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    msSQL = "insert into crm_smm_telegramdetails(" +
+                                         "id," +
+                                         "telegram_type," +
+                                         "page_name," +
+                                         "page_link," +
+                                         "bot_name," +
+                                         "created_date)" +
+                                         "values(" +
+                                         "'" + objMdlTelegramMessageResponse.result.id + "'," +
+                                       " 'Channel', " +
+                                         "'" + objMdlTelegramMessageResponse.result.title + "'," +
+                                        "'" + objMdlTelegramMessageResponse.result.invite_link + "'," +
+                                         "'" + objMdlTelegramMessageResponse.result.username + "'," +
+                                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        objresult.status = true;
+                        objresult.message = "Delivered!";
+                    }
+                    else
+                    {
+                        objresult.message = "Failed!";
+                    }
+
+
+                }
+
+            }
+            return objMdlTelegramMessageResponse;
+
+
+
+        }
+        public void DaGetTelegramdetails(telegramlist values)
+        {
+            msSQL = " select * from crm_smm_telegramdetails";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                values.telegram_gid = objodbcDataReader["telegram_gid"].ToString();
+                values.id = objodbcDataReader["id"].ToString();
+                values.title = objodbcDataReader["page_name"].ToString();
+                values.invite_link = objodbcDataReader["page_link"].ToString();
+                values.bot_name = objodbcDataReader["bot_name"].ToString();
+            }
+
+            objodbcDataReader.Close();
+
+          
+        }
+        public void DaTelegramUpload(HttpRequest httpRequest, string user_gid, result objResult)
+        {
+            //uploadimageproductcategorycreationSummary objdocumentmodel = new uploadimageproductcategorycreationSummary();
+            HttpFileCollection httpFileCollection;
+            string lsfilepath = string.Empty;
+            string lsdocument_gid = string.Empty;
+            MemoryStream ms_stream = new MemoryStream();
+            string document_gid = string.Empty;
+            string lscompany_code = string.Empty;
+            HttpPostedFile httpPostedFile;
+
+            string lspath, lspath1;
+            string msGetGid;
+
+            msSQL = " SELECT a.company_code FROM adm_mst_tcompany a ";
+            lscompany_code = objdbconn.GetExecuteScalar(msSQL);
+            string telegram_caption = httpRequest.Form[0];
+            //path = ConfigurationManager.AppSettings["file_path"] + "/erp_documents" + "/" + lscompany_code + "/" + "OSD/ServiceReqDocument/" + DateTime.Now.Year + "/" + DateTime.Now.Month;
+
+            MemoryStream ms = new MemoryStream();
+            lspath = ConfigurationManager.AppSettings["imgfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "Telegram/post/" + DateTime.Now.Year + "/" + DateTime.Now.Month;
+
+            {
+                if ((!System.IO.Directory.Exists(lspath)))
+                    System.IO.Directory.CreateDirectory(lspath);
+            }
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    string lsfirstdocument_filepath = string.Empty;
+                    httpFileCollection = httpRequest.Files;
+                    for (int i = 0; i < httpFileCollection.Count; i++)
+                    {
+                        string msdocument_gid = objcmnfunctions.GetMasterGID("UPLF");
+                        httpPostedFile = httpFileCollection[i];
+                        string FileExtension = httpPostedFile.FileName;
+                        //string lsfile_gid = msdocument_gid + FileExtension;
+                        string lsfile_gid = msdocument_gid;
+                        string lscompany_document_flag = string.Empty;
+                        FileExtension = Path.GetExtension(FileExtension).ToLower();
+                        lsfile_gid = lsfile_gid + FileExtension;
+                        Stream ls_readStream;
+                        ls_readStream = httpPostedFile.InputStream;
+                        ls_readStream.CopyTo(ms);
+
+                        lspath = ConfigurationManager.AppSettings["imgfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "Telegram/post/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                        string status;
+                        status = objcmnfunctions.uploadFile(lspath + msdocument_gid, FileExtension);
+                       
+                        ms.Close();
+                        lspath = "erpdocument" + "/" + lscompany_code + "/" + "Telegram/post/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                        lspath1 = "/assets/media/images/erpdocument" + "/" + lscompany_code + "/" + "Telegram/post/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + msdocument_gid + FileExtension;
+
+                        string final_path = ConfigurationManager.AppSettings["imgfile_path"] + lspath + msdocument_gid + FileExtension;
+
+                        if (FileExtension == ".jpg" | FileExtension == ".png" | FileExtension == ".jpeg" | FileExtension == ".gif" | FileExtension == ".jfif" | FileExtension == ".JPG" | FileExtension == ".JPEG" | FileExtension == ".JIFF" | FileExtension == ".TIFF" | FileExtension == ".PNG" | FileExtension == ".GIF" | FileExtension == ".JFIF")
+                        {
+
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                            var client = new RestClient("https://api.telegram.org");
+                            var request = new RestRequest("/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/sendPhoto?chat_id=@MYSOFTWAREDEVLEOPERGROUP&caption=" + telegram_caption + "", Method.POST);
+                            request.AlwaysMultipartFormData = true;
+                            request.AddFile("photo", final_path);
+                            IRestResponse response = client.Execute(request);
+
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                msSQL = " insert into crm_smm_ttelegram(" +
+                          " message_content," +
+                         " upload_path," +
+                          " upload_type," +
+                          " created_by," +
+                          " created_date)" +
+                                " values(" +
+                                " '" + telegram_caption + "',"+
+                                " '" + lspath1 + "',"+
+                                "'Image'," ;
+                                msSQL += "'" + user_gid + "'," +
+                                         "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                if(mnResult !=0)
+                                {
+                                objResult.status = true;
+                                objResult.message = "Posted in Telegram Successfully !!";
+                                }
+                                else
+                                {
+                                    objResult.status = false;
+                                    objResult.message = "Error While Storage in Local Path !!";
+                                }
+                            }
+                            else
+                            {
+                                objResult.status = false;
+                                objResult.message = "Error While Posting in Telegram !!";
+                            }
+                        }
+
+
+                        else if (FileExtension == ".mp4" | FileExtension == ".MP4" | FileExtension == ".avi" | FileExtension == ".mkv" | FileExtension == ".wmv" | FileExtension == ".mov" | FileExtension == ".WebM" | FileExtension == ".flv" | FileExtension == ".hevc" | FileExtension == ".vpg")
+
+                        {
+
+                            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                            var client = new RestClient("https://api.telegram.org");
+                            var request = new RestRequest("/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/sendVideo?chat_id=@MYSOFTWAREDEVLEOPERGROUP&caption=" + telegram_caption + "", Method.POST);
+                            request.AlwaysMultipartFormData = true;
+                            request.AddFile("video", final_path);
+                            IRestResponse response = client.Execute(request);
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                msSQL = " insert into crm_smm_ttelegram(" +
+                         " message_content," +
+                        " upload_path," +
+                         " upload_type," +
+                         " created_by," +
+                         " created_date)" +
+                               " values(" +
+                               " '" + telegram_caption + "'," +
+                               " '" + lspath1 + "'," +
+                               "'Video',";
+                                msSQL += "'" + user_gid + "'," +
+                                         "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                if (mnResult != 0)
+                                {
+                                    objResult.status = true;
+                                    objResult.message = "Posted in Telegram Successfully !!";
+                                }
+                                else
+                                {
+                                    objResult.status = false;
+                                    objResult.message = "Error While Storage in Local Path !!";
+                                }
+                            }
+                            else
+                            {
+                                objResult.status = false;
+                                objResult.message = "Error While Posting in Telegram !!";
+                            }
+
+                        }
+
+
+
+                    }
+                }
+                else
+                {
+                    objResult.status = false;
+                    objResult.message = "Error While Posting in Telegram !!";
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.status = false;
+                objResult.message = ex.ToString();
+            }
+            //return true;
+
+        }
+        public void DaTelegrammessage(string user_gid, message_list values, result objResult)
+        {
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://api.telegram.org");
+                var request = new RestRequest("/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/sendMessage?chat_id=@MYSOFTWAREDEVLEOPERGROUP&text=" + values.telegram_caption + "", Method.POST);
+                IRestResponse response = client.Execute(request);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    msSQL = " insert into crm_smm_ttelegram(" +
+                            " upload_type," +
+                           " message_content," +
+                           " created_by," +
+                           " created_date)" +
+                           " values(" +
+                           " 'Text', " +
+                           " '" + values.telegram_caption + "',";
+                    msSQL += "'" + user_gid + "'," +
+                             "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    objResult.status = true;
+                    objResult.message = "Posted in Telegram Successfully !!";
+                }
+                else
+                {
+                    objResult.status = false;
+                    objResult.message = "Error While Posting in Telegram !!";
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.status = false;
+                objResult.message = ex.ToString();
+            }
+        }
+        public void DaGetTelegramImage(MdlTelegram values)
+        {
+
+            msSQL = "select (select ifnull(count(upload_type),0) from crm_smm_ttelegram where upload_type='Image') as image_count,(select ifnull(count(upload_type),0) " +
+                 "from crm_smm_ttelegram where upload_type='Video') as video_count,(select ifnull(count(upload_type),0) from crm_smm_ttelegram where upload_type='Text') as text_count ;";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                values.image_count = objodbcDataReader["image_count"].ToString();
+                values.video_count = objodbcDataReader["video_count"].ToString();
+                values.text_count = objodbcDataReader["text_count"].ToString();
+    
+            }
+
+            objodbcDataReader.Close();
+
+            msSQL = "  select * from crm_smm_ttelegram  order by id desc";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<telegramsummary_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new telegramsummary_list
+                    {
+                        id = dt["id"].ToString(),
+                        upload_path = dt["upload_path"].ToString(),
+                        telegram_caption = dt["message_content"].ToString(),
+                        upload_type = dt["upload_type"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+
+
+                    });
+                    values.telegramsummary_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+
+        }
+        public void DaTelegramrepostupload( telegramsummary_list values, string user_gid, result objResult)
+        {
+            string lspath, lspath1;
+
+            int count = 0;
+            msSQL = " select upload_path,upload_type from crm_smm_ttelegram" +
+               "  where id='" + values.image_id + "' ";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows)
+            {
+                lsupload_path = objODBCDatareader["upload_path"].ToString();
+                lsupload_type = objODBCDatareader["upload_type"].ToString();
+
+            objODBCDatareader.Close();
+
+            lspath = ConfigurationManager.AppSettings["telegram_repost"]  + lsupload_path;
+
+            if (lsupload_type == "Image")
+            {
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://api.telegram.org");
+                var request = new RestRequest("/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/sendPhoto?chat_id=@MYSOFTWAREDEVLEOPERGROUP&caption=" + values.telegram_caption + "", Method.POST);
+                request.AlwaysMultipartFormData = true;
+                request.AddFile("photo", lspath);
+                IRestResponse response = client.Execute(request);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    msSQL = " insert into crm_smm_ttelegram(" +
+              " message_content," +
+             " upload_path," +
+              " upload_type," +
+              " created_by," +
+              " created_date)" +
+                    " values(" +
+                    " '" + values.telegram_caption + "'," +
+                    " '" + lsupload_path + "'," +
+                    "'Image',";
+                    msSQL += "'" + user_gid + "'," +
+                             "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult != 0)
+                    {
+                        objResult.status = true;
+                        objResult.message = "Posted in Telegram Successfully !!";
+                    }
+                    else
+                    {
+                        objResult.status = false;
+                        objResult.message = "Error While Storage in Local Path !!";
+                    }
+                }
+                else
+                {
+                    objResult.status = false;
+                    objResult.message = "Error While Posting in Telegram !!";
+                }
+            }
+
+
+            else if (lsupload_type == "Video")
+
+            {
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://api.telegram.org");
+                var request = new RestRequest("/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/sendVideo?chat_id=@MYSOFTWAREDEVLEOPERGROUP&caption=" + values.telegram_caption + "", Method.POST);
+                request.AlwaysMultipartFormData = true;
+                request.AddFile("video", lsupload_path);
+                IRestResponse response = client.Execute(request);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    msSQL = " insert into crm_smm_ttelegram(" +
+             " message_content," +
+            " upload_path," +
+             " upload_type," +
+             " created_by," +
+             " created_date)" +
+                   " values(" +
+                   " '" + values.telegram_caption + "'," +
+                   " '" + lsupload_path + "'," +
+                   "'Video',";
+                    msSQL += "'" + user_gid + "'," +
+                             "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult != 0)
+                    {
+                        objResult.status = true;
+                        objResult.message = "Posted in Telegram Successfully !!";
+                    }
+                    else
+                    {
+                        objResult.status = false;
+                        objResult.message = "Error While Storage in Local Path !!";
+                    }
+                }
+                else
+                {
+                    objResult.status = false;
+                    objResult.message = "Error While Posting in Telegram !!";
+                }
+
+            }
+
+                else if (lsupload_type == "Text")
+
+                {
+
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    var client = new RestClient("https://api.telegram.org");
+                    var request = new RestRequest("/bot6684855132:AAGm3867vW-kITkULJWPPimqdG6TdCCqt7M/sendMessage?chat_id=@MYSOFTWAREDEVLEOPERGROUP&text=" + values.telegram_caption + "", Method.POST);
+                    IRestResponse response = client.Execute(request);
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        msSQL = " insert into crm_smm_ttelegram(" +
+                 " message_content," +
+                 " upload_type," +
+                 " created_by," +
+                 " created_date)" +
+                       " values(" +
+                       " '" + values.telegram_caption + "'," +
+                       "'Text',";
+                        msSQL += "'" + user_gid + "'," +
+                                 "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult != 0)
+                        {
+                            objResult.status = true;
+                            objResult.message = "Posted in Telegram Successfully !!";
+                        }
+                        else
+                        {
+                            objResult.status = false;
+                            objResult.message = "Error While Storage in Local Path !!";
+                        }
+                    }
+                    else
+                    {
+                        objResult.status = false;
+                        objResult.message = "Error While Posting in Telegram !!";
+                    }
+
+                }
+            }
+
+        }
+            
+      
+    }
+}

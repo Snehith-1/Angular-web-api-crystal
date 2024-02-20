@@ -1,0 +1,1138 @@
+-------------------------------------------------Menu Previlege scripts-------------------------------------------------
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `module_link`, `menu_level`, `module_name`, `status`, `breadcrumb_name`, `approval_limit`,
+ `module_flag`, `lw_flag`) VALUES ('MKTECM', 'MKT', 'MKTECM', 'ems_crm/crm_transaction.aspx#', '2', 'e-Commerce', '1', 'e-Commerce', 'N', 'N', 'Y');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1007' WHERE module_gid='MKTCMP' ;
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1004' WHERE module_gid ='MKTECM';
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1005' WHERE module_gid ='MKTLED';
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1006' WHERE module_gid ='MKTMCN';
+ 
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1008' WHERE module_gid ='MKTPDT';
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1009' WHERE module_gid ='MKTMEX';
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1010' WHERE module_gid ='MKTMRD';
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `display_order`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, 
+`breadcrumb_name`, `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMJD', 'MKTECM', 'MKTECMJD', '1801', '/crm/Crmjustdial', '3', 'Just Dial', '1', 'Just Dial', 'Just Dial',
+ 'N', 'N', 'Y');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `display_order`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, 
+`breadcrumb_name`, `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMIM', 'MKTECM', 'MKTECMIM', '1802', '/crm/Crmindiamart', '3', 'IndiaMART', '1', 'IndiaMART', 'IndiaMART',
+ 'N', 'N', 'Y');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `display_order`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, 
+`breadcrumb_name`, `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMTI', 'MKTECM', 'MKTECMTI', '1803', '/crm/Crmtradeindia', '3', 'TradeIndia', '1', 'TradeIndia', 'TradeIndia', 
+'N', 'N', 'Y');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `display_order`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, 
+`breadcrumb_name`, `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMWS', 'MKTECM', 'MKTECMWS', '1804', '/crm/Crmwebsite', '3', 'Website', '1', 'Website', 'Website', 'N', 'N', 'Y');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_name` = 'Whatsapp', `group_type` = 'Whatsapp ', `breadcrumb_name` = 'Whatsapp ' WHERE (`module_gid` = 'MKTMCNWA');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_name` = 'Email ', `group_type` = 'Email ', `breadcrumb_name` = 'Email ' WHERE (`module_gid` = 'MKTMCNEC');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_name` = 'Shopify ', `group_type` = 'Shopify ', `breadcrumb_name` = 'Shopify ' WHERE (`module_gid` = 'MKTMCNSC');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, `breadcrumb_name`,
+ `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTMCNSMS', 'MKTMCN', 'MKTMCNSMS', '/crm/CrmSmmSms', '3', 'SMS', '1', 'SMS', 'SMS', 'N', 'N', 'Y');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1804' WHERE (`module_gid` = 'MKTMCNSMS');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, `breadcrumb_name`,
+ `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMAZ', 'MKTECM', 'MKTECMAZ', '/crm/Crmamazon', '3', 'Amazon', '1', 'Amazon', 'Amazon', 'N', 'N', 'Y');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, `breadcrumb_name`,
+ `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMFK', 'MKTECM', 'MKTECMFK', '/crm/Crmflipkart', '3', 'Flipkart', '1', 'Flipkart', 'Flipkart', 'N', 'N', 'Y');
+
+INSERT INTO `boba_tea`.`adm_mst_tmodule` (`module_gid`, `module_gid_parent`, `module_code`, `module_link`, `menu_level`, `module_name`, `status`, `group_type`, `breadcrumb_name`,
+ `approval_limit`, `module_flag`, `lw_flag`) VALUES ('MKTECMMS', 'MKTECM', 'MKTECMMS', '/crm/Crmmeesho', '3', 'Meesho', '1', 'Meesho', 'Meesho', 'N', 'N', 'Y');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1805' WHERE (`module_gid` = 'MKTECMFK');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1806' WHERE (`module_gid` = 'MKTECMAZ');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '1807' WHERE (`module_gid` = 'MKTECMMS');
+
+-------------------------------------------------Menu Previlege scripts-------------------------------------------------
+
+------------------------------------------------Pathmanaban----------------------------------------------------
+
+CREATE TABLE `crm_smm_facebookpage` (
+
+  `facebookpage_gid` int(11) NOT NULL AUTO_INCREMENT,
+
+  `facebookmain_gid` varchar(64) DEFAULT NULL,
+
+  `post_id` varchar(1000) DEFAULT NULL,
+
+  `post_type` varchar(64) DEFAULT NULL,
+
+  `post_url` longtext,
+
+  `permalink_url` longtext,
+
+  `caption` longtext,
+
+  `views_count` varchar(1000) DEFAULT NULL,
+
+  `postcreated_time` datetime DEFAULT NULL,
+
+  PRIMARY KEY (`facebookpage_gid`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1
+
+CREATE TABLE `crm_smm_facebookdetails` (
+
+  `facebook_gid` int(11) NOT NULL AUTO_INCREMENT,
+
+  `id` varchar(256) DEFAULT NULL,
+
+  `facebook_type` varchar(64) DEFAULT NULL,
+
+  `page_category` varchar(256) DEFAULT NULL,
+
+  `page_link` longtext,
+
+  `user_name` varchar(64) DEFAULT NULL,
+
+  `first_name` varchar(64) DEFAULT NULL,
+
+  `last_name` varchar(64) DEFAULT NULL,
+
+  `email` varchar(256) DEFAULT NULL,
+
+  `birthday` varchar(64) DEFAULT NULL,
+
+  `gender` varchar(12) DEFAULT NULL,
+
+  `age_range` varchar(256) DEFAULT NULL,
+
+  `profile_picture` longtext,
+
+  `friends_count` varchar(256) DEFAULT NULL,
+
+  `hometown_location` varchar(256) DEFAULT NULL,
+
+  `current_location` varchar(256) DEFAULT NULL,
+
+  `created_date` datetime DEFAULT NULL,
+
+  PRIMARY KEY (`facebook_gid`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=469 DEFAULT CHARSET=latin1
+
+CREATE TABLE `crm_smm_facebookpagedtl` (
+
+  `facebookpagedtl_gid` int(11) NOT NULL AUTO_INCREMENT,
+
+  `facebookmain_gid` varchar(64) DEFAULT NULL,
+
+  `post_type` varchar(64) DEFAULT NULL,
+
+  `post_id` varchar(1000) DEFAULT NULL,
+
+  `commentmessage_id` varchar(1000) DEFAULT NULL,
+
+  `comment_message` longtext,
+
+  `comment_time` datetime DEFAULT NULL,
+
+  PRIMARY KEY (`facebookpagedtl_gid`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1
+
+INSERT INTO `boba_tea`.`adm_mst_tsequence` (`sequence_gid`, `sequence_code`, `sequence_name`, `sequence_format`, `sequence_curval`, `sequence_flag`, `branch_flag`, `department_flag`, `year_flag`, `month_flag`, `location_flag`, `finyear`, `carry_forward`) VALUES ('FB202311280000', 'FB', 'Facebook Account', '4', '0', 'N', 'N', 'N', 'N', 'N', 'N', '2023', 'N');
+CREATE TABLE `crm_smm_telegramdetails` (
+  `telegram_gid` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(256) DEFAULT NULL,
+  `telegram_type` varchar(64) DEFAULT NULL,
+  `page_name` varchar(256) DEFAULT NULL,
+  `page_link` longtext,
+  `bot_name` varchar(64) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`telegram_gid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `sref` = '/crm/CrmSmmFacebookPage' WHERE (`module_gid` = 'MKTMCNFB');
+DROP table crm_smm_ttelegramservice;
+alter table crm_smm_ttelegram
+modify column upload_path longtext;
+alter table crm_smm_ttelegram
+modify column message_content longtext;
+
+CREATE TABLE `crm_smm_tlinkedindtl` (
+
+  `linkedin_gid` int(20) unsigned NOT NULL AUTO_INCREMENT,
+
+  `message_content` longtext,
+
+  `upload_type` varchar(64) DEFAULT NULL,
+
+  `created_date` datetime DEFAULT NULL,
+
+  `created_by` varchar(64) DEFAULT NULL,
+
+  `updated_date` datetime DEFAULT NULL,
+
+  `updated_by` varchar(64) DEFAULT NULL,
+
+  PRIMARY KEY (`linkedin_gid`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `crm_smm_tlinkedinusersetails` (
+
+  `linkedin_gid` int(20) unsigned NOT NULL AUTO_INCREMENT,
+
+  `upload_path` longtext,
+
+  `created_date` datetime DEFAULT NULL,
+
+  `created_by` varchar(64) DEFAULT NULL,
+
+  `first_name` varchar(500) DEFAULT NULL,
+
+  `last_name` varchar(500) DEFAULT NULL,
+
+  `type` varchar(100) DEFAULT NULL,
+
+  PRIMARY KEY (`linkedin_gid`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+
+alter table crm_smm_tfacebookservice
+add column page_id varchar(64) DEFAULT NULL after s_no;
+
+------------------------------------------------Pathmanaban----------------------------------------------------
+
+------------------------------------------------Praveen----------------------------------------------------
+CREATE TABLE `crm_smm_whatsapp` (
+  `whatsapp_gid` int(11) NOT NULL AUTO_INCREMENT,
+  `leadbank_gid` varchar(100) DEFAULT NULL,
+  `leadbankcontact_gid` varchar(100) DEFAULT NULL,
+  `id` varchar(256) DEFAULT NULL,
+  `wkey` varchar(64) DEFAULT NULL,
+  `wvalue` varchar(64) DEFAULT NULL,
+  `displayName` varchar(64) DEFAULT NULL,
+  `firstName` varchar(64) DEFAULT NULL,
+  `lastName` varchar(64) DEFAULT NULL,
+  `gender` varchar(64) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`whatsapp_gid`)
+)
+CREATE TABLE `crm_smm_whatsapptemplate` (
+  `project_id` varchar(256) NOT NULL,
+  `template_id` longtext,
+  `version_id` varchar(256) DEFAULT NULL,
+  `p_type` varchar(256) DEFAULT NULL,
+  `p_name` varchar(256) DEFAULT NULL,
+  `template_body` longtext,
+  `footer` longtext,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`project_id`)
+)
+
+CREATE TABLE `crm_trn_twhatsappmessages` (
+  `message_id` varchar(100) NOT NULL,
+  `contact_id` varchar(100) DEFAULT NULL,
+  `direction` varchar(10) DEFAULT NULL,
+  `type` varchar(32) DEFAULT NULL,
+  `message_text` longtext,
+  `content_type` varchar(100) DEFAULT NULL,
+  `message_media` varchar(100) DEFAULT NULL,
+  `project_id` varchar(100) DEFAULT NULL,
+  `version_id` varchar(124) DEFAULT NULL,
+  `status` varchar(32) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `identifiervalue` varchar(64) DEFAULT NULL,
+  `read_flag` char(1) DEFAULT 'N',
+  PRIMARY KEY (`message_id`)
+)
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `sref` = '/crm/CrmSmmWhatsappcampaign' WHERE (`module_gid` = 'MKTMCNWA');
+
+alter table crm_smm_whatsapp add column leadbankcontact_gid varchar (100) after leadbank_gid ;
+
+alter table crm_smm_whatsapp add column leadbank_gid varchar (100) after whatsapp_gid ;
+
+ALTER TABLE crm_trn_twhatsappmessages CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+
+alter table crm_smm_whatsapp add column updated_by varchar(100);
+  alter table crm_smm_whatsapp add column updated_date datetime DEFAULT NULL;
+    alter table crm_smm_whatsapp add column customer_type varchar(100);
+	
+	INSERT INTO `boba_tea`.`adm_mst_tsequence` (`sequence_gid`, `sequence_code`, `sequence_name`, `sequence_format`, `sequence_curval`, `sequence_flag`, `branch_flag`, `department_flag`, `year_flag`, `month_flag`, `location_flag`, `company_code`, `delimeter`, `runningno_prefix`, `finyear`, `carry_forward`) VALUES ('SSQM2312200001', 'CO', 'Customer Code', '4', '0', 'Y', 'N', 'N', 'N', 'N', 'N', 'CC', '-', '', '2023', 'N');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_flag` = 'N' WHERE (`sequence_gid` = 'SSQM2312200001');
+
+
+
+------------------------------------------------Praveen----------------------------------------------------
+
+------------------------------------------------Snehith----------------------------------------------------
+  
+alter table crm_trn_tleadbank add column shopify_id varchar(1020) default null;
+
+CREATE TABLE `crm_trn_tshopifycustomer` (
+
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+`shopify_id` varchar(1128) DEFAULT NULL, 
+
+   `first_name` varchar(1128) DEFAULT NULL, 
+
+   `last_name` varchar(1128) DEFAULT NULL,
+
+    `email` varchar(1128) DEFAULT NULL,
+
+`orders_count` varchar(1128) DEFAULT NULL,
+
+`last_order_id` varchar(1128) DEFAULT NULL,
+
+  `total_spent`  varchar(1128) DEFAULT NULL,
+
+  `email_state`  varchar(1128) DEFAULT NULL,
+
+  `default_company`  varchar(1128) DEFAULT NULL,
+
+  `default_address1`  varchar(1128) DEFAULT NULL,
+
+  `default_address2`  varchar(1128) DEFAULT NULL,
+
+  `default_city`  varchar(1128) DEFAULT NULL,
+
+  `default_country`  varchar(1128) DEFAULT NULL,
+
+  `default_countrycode`  varchar(1128) DEFAULT NULL,
+
+  `default_zip`  varchar(1128) DEFAULT NULL,
+
+  `default_phone`  varchar(1128) DEFAULT NULL,
+
+    `created_by` varchar(64) DEFAULT NULL,  
+
+    `created_date` datetime DEFAULT NULL,
+PRIMARY KEY (`id`)
+
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
+
+
+select * from adm_mst_tmodule where module_gid='MKT';
+
+UPDATE adm_mst_tmodule SET `sref` = '/crm/CrmDashboard' WHERE (`module_gid` = 'MKT');
+
+
+alter table pmr_mst_tproduct add column shopify_productid varchar(1020) default null;
+alter table pmr_mst_tproduct add column vendor_name varchar(1020) default null;
+alter table pmr_mst_tproduct add column inventory_quantity varchar(1020) default null;
+alter table pmr_mst_tproduct add column old_inventory_quantity varchar(1020) default null;
+alter table pmr_mst_tproduct add column variant_id varchar(1020) default null;
+alter table pmr_mst_tproduct add column price varchar(1020) default null;
+alter table pmr_mst_tproduct add column compare_at_price varchar(1020) default null;
+alter table pmr_mst_tproduct add column grams varchar(1020) default null;
+alter table crm_mst_tcustomer add column shopify_id varchar(1020) default null;
+
+ALTER TABLE crm_trn_tshopifycustomer    
+MODIFY default_address1   longtext;  
+ALTER TABLE crm_trn_tshopifycustomer    
+MODIFY  default_address2  longtext;
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `sref` = '/crm/CrmSmmSmscampaign/' WHERE (`module_gid` = 'MKTMCNSMS');
+
+CREATE TABLE `crm_smm_tsmscampaign` (
+   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+   `campagin_title` varchar(1128) DEFAULT NULL,
+   `campagin_message` longtext DEFAULT NULL,
+   `created_by` varchar(64) DEFAULT NULL,
+   `created_date` datetime DEFAULT NULL,
+   `updated_date` datetime DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+`campaign_flag` varchar(64) DEFAULT NULL,
+   PRIMARY KEY (`id`)
+)
+
+alter table crm_smm_shopify_service add column  updated_by varchar(64);
+alter table crm_smm_shopify_service add column  updated_date datetime;
+alter table crm_smm_whatsapp_service add column  updated_by varchar(64);
+alter table crm_smm_whatsapp_service add column  updated_date datetime;
+alter table crm_smm_mail_service add column  updated_by varchar(64);
+alter table crm_smm_mail_service add column  updated_date datetime;
+
+CREATE TABLE `crm_smm_ttelegramservice` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `bot_id` varchar(1000) DEFAULT NULL,
+  `chat_id` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+   `updated_date` datetime DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+);
+CREATE TABLE `crm_smm_tlinkedinservice` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+   `updated_date` datetime DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+);
+ 
+CREATE TABLE `crm_smm_tfacebookservice` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+   `updated_date` datetime DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+alter table adm_mst_tcompany add column shopify_flag varchar(64);
+UPDATE adm_mst_tcompany SET shopify_flag = 'N' ;
+
+alter table smr_trn_tsalesorder add column shopify_orderid varchar(256);
+alter table smr_trn_tsalesorderdtl add column shopify_lineitemid varchar(256);
+alter table smr_trn_tsalesorderdtl add column shopify_orderid varchar(256);
+ 
+CREATE TABLE `crm_smm_tshopifyproduct` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+   `shopify_productid` varchar(1128) DEFAULT NULL,
+   `product_name` varchar(3064) DEFAULT NULL,
+   `vendor_name` varchar(1020) DEFAULT NULL,
+   `inventory_quantity` varchar(1020) DEFAULT NULL,
+   `old_inventory_quantity` varchar(1020) DEFAULT NULL,
+   `variant_id` varchar(1020) DEFAULT NULL,
+   `price` varchar(1020) DEFAULT NULL,
+   `pricompare_at_pricece` varchar(1020) DEFAULT NULL,
+   `compare_at_price` varchar(1020) DEFAULT NULL,
+   `grams` varchar(1020) DEFAULT NULL,
+   `product_image` varchar(1128) DEFAULT '../../images/no_preview.jpg',
+   `mrp_price` varchar(10120) DEFAULT NULL,
+   `product_gid` varchar(16) NOT NULL DEFAULT '',
+   `productgroup_gid` varchar(64) DEFAULT NULL,
+   `productuom_gid` varchar(64) DEFAULT NULL,
+   `productuomclass_gid` varchar(64) DEFAULT NULL,
+   `product_code` varchar(200) DEFAULT NULL,
+   `producttype_gid` varchar(64) DEFAULT NULL,
+   `status` varchar(16) DEFAULT NULL,
+   `bom_flag` char(1) DEFAULT '',
+   `qty_standardbom` double DEFAULT '0',
+   `qty_standardbyproduct` double DEFAULT '0',
+   `batch_flag` char(1) DEFAULT 'N',
+   `created_by` varchar(32) DEFAULT NULL,
+   `created_date` datetime DEFAULT NULL,
+   `type_gid` varchar(64) DEFAULT NULL,
+   `make_gid` varchar(64) DEFAULT NULL,
+   `grade_gid` varchar(64) DEFAULT NULL,
+   `reorder_level` varchar(8) DEFAULT NULL,
+   `size` varchar(64) DEFAULT NULL,
+   `width` varchar(64) DEFAULT NULL,
+   `length` varchar(64) DEFAULT NULL,
+   `guage` varchar(64) DEFAULT NULL,
+   `fliptype` varchar(64) DEFAULT NULL,
+   `product_desc` varchar(2000) DEFAULT NULL,
+   `serial_flag` varchar(64) DEFAULT '0',
+   `branch_gid` varchar(64) DEFAULT NULL,
+   `department_gid` varchar(64) DEFAULT NULL,
+   `assigned_flag` varchar(64) DEFAULT 'N',
+   `custodian_flag` char(1) DEFAULT NULL,
+   `document_flag` char(1) DEFAULT NULL,
+   `stockable` varchar(64) DEFAULT 'N',
+   `item_no` varchar(64) DEFAULT NULL,
+   `count` int(10) unsigned DEFAULT '0',
+   `account_gid` varchar(64) DEFAULT NULL,
+   `moq` double DEFAULT '0',
+   `product_price` decimal(13,2) DEFAULT '0.00',
+   `cost_price` decimal(13,2) DEFAULT '0.00',
+   `avg_lead_time` varchar(64) DEFAULT NULL,
+   `product_status` varchar(45) DEFAULT NULL,
+   `margin_percentage` decimal(13,2) DEFAULT '0.00',
+   `margin_amount` decimal(13,2) DEFAULT '0.00',
+   `name` varchar(64) DEFAULT NULL,
+   `content_type` varchar(64) DEFAULT NULL,
+   `data` longblob,
+   `batchtracking_flag` varchar(45) DEFAULT 'N',
+   `serialtracking_flag` varchar(45) DEFAULT 'N',
+   `warrentytracking_flag` varchar(45) DEFAULT 'N',
+   `expirytracking_flag` varchar(45) DEFAULT 'N',
+   `delete_flag` char(2) NOT NULL DEFAULT 'N',
+   `purchasewarrenty_flag` varchar(45) NOT NULL DEFAULT 'N',
+   `currency_code` varchar(45) DEFAULT NULL,
+   `hsn_number` varchar(128) DEFAULT NULL,
+   `gstproducttax_percentage` varchar(64) DEFAULT NULL,
+   `product_weight` double(13,2) DEFAULT NULL,
+   `updated_by` varchar(64) DEFAULT NULL,
+   `updated_date` datetime DEFAULT NULL,
+   `currency` varchar(45) DEFAULT NULL,
+   `customerproduct_code` varchar(45) DEFAULT NULL,
+   `subgroup_gid` varchar(64) DEFAULT NULL,
+   `subgroup_name` varchar(64) DEFAULT NULL,
+   `productsubgroup_gid` varchar(45) DEFAULT NULL,
+   `producttype_name` varchar(45) DEFAULT NULL,
+   `ratecontract_flag` varchar(45) DEFAULT NULL,
+   `asset_images` varchar(1128) DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   KEY `ind_productgroupgid` (`productgroup_gid`),
+   KEY `ind_productuomgid` (`productuom_gid`),
+   KEY `ind_productuomclassgid` (`productuomclass_gid`),
+   KEY `ind_producttypegid` (`producttype_gid`),
+   KEY `ind_typegid` (`type_gid`),
+   KEY `ind_makegid` (`make_gid`),
+   KEY `ind_gradegid` (`grade_gid`),
+   KEY `ind_branchgid` (`branch_gid`),
+   KEY `ind_departmentgid` (`department_gid`),
+   KEY `ind_productcode` (`product_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+alter table crm_smm_tshopifyproduct add column product_type varchar(256);
+
+
+ 
+CREATE TABLE `cmr_smm_tshopifysalesorder` (
+
+   `salesorder_gid` varchar(64) NOT NULL,
+
+   `branch_gid` varchar(64) DEFAULT NULL,
+
+   `account_gid` varchar(45) DEFAULT NULL,
+
+   `salesorder_date` datetime DEFAULT NULL,
+
+   `customer_gid` varchar(64) DEFAULT NULL,
+
+   `customer_contact_person` varchar(512) DEFAULT NULL,
+
+   `customer_address` text,
+
+   `so_referencenumber` varchar(512) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+
+   `so_remarks` longtext,
+
+   `total_amount` double DEFAULT '0',
+
+   `payment_days` varchar(16) DEFAULT NULL,
+
+   `delivery_days` varchar(16) DEFAULT NULL,
+
+   `salesorder_status` varchar(32) DEFAULT NULL,
+
+   `created_by` varchar(16) DEFAULT NULL,
+
+   `created_date` datetime DEFAULT NULL,
+
+   `updated_by` varchar(64) DEFAULT NULL,
+
+   `updated_date` datetime DEFAULT NULL,
+
+   `termsandconditions` text,
+
+   `so_referenceno1` varchar(64) DEFAULT NULL,
+
+   `Grandtotal` varchar(45) DEFAULT NULL,
+
+   `customer_name` text,
+
+   `salesorder_advance` double(13,2) DEFAULT '0.00',
+
+   `so_type` varchar(45) DEFAULT NULL,
+
+   `executeorder_flag` varchar(45) DEFAULT 'EO Pending',
+
+   `invoice_flag` varchar(45) DEFAULT 'Invoice Pending',
+
+   `salesorder_remarks` longtext,
+
+   `salesorder_flag` varchar(45) DEFAULT 'EO Pending',
+
+   `addon_charge` double DEFAULT '0',
+
+   `additional_discount` double DEFAULT '0',
+
+   `despatch_status` varchar(45) DEFAULT 'Approved',
+
+   `updated_advance` double(13,2) DEFAULT '0.00',
+
+   `received_amount` double(13,2) DEFAULT '0.00',
+
+   `invoice_amount` double(13,2) DEFAULT '0.00',
+
+   `updated_addon_charge` double DEFAULT '0',
+
+   `updated_additional_discount` double DEFAULT '0',
+
+   `cst_number` varchar(260) DEFAULT NULL,
+
+   `addon_charge_l` double(13,2) DEFAULT '0.00',
+
+   `additional_discount_l` double(13,2) DEFAULT '0.00',
+
+   `grandtotal_l` double(13,2) DEFAULT '0.00',
+
+   `currency_code` varchar(45) DEFAULT NULL,
+
+   `exchange_rate` double(13,2) DEFAULT '0.00',
+
+   `currency_gid` varchar(64) DEFAULT NULL,
+
+   `approved_by` varchar(60) DEFAULT NULL,
+
+   `approved_date` datetime DEFAULT NULL,
+
+   `renewal_date` datetime DEFAULT NULL,
+
+   `renewal_description` text,
+
+   `customer_email` varchar(128) DEFAULT NULL,
+
+   `customer_mobile` varchar(45) DEFAULT NULL,
+
+   `renewal_gid` varchar(64) DEFAULT NULL,
+
+   `reference_gid` varchar(64) DEFAULT NULL,
+
+   `customer_contact_gid` varchar(64) DEFAULT NULL,
+
+   `renewal_status` varchar(64) DEFAULT NULL,
+
+   `pinvoice_amount` double(13,2) DEFAULT '0.00',
+
+   `approval_remarks` text,
+
+   `shipping_to` text,
+
+   `freight_terms` varchar(128) DEFAULT NULL,
+
+   `payment_terms` varchar(128) DEFAULT NULL,
+
+   `customerbranch_gid` varchar(64) DEFAULT NULL,
+
+   `commit_advance` double(13,2) DEFAULT '0.00',
+
+   `otp_password` varchar(45) DEFAULT NULL,
+
+   `advance_wht` double(13,2) DEFAULT '0.00',
+
+   `updated_advancewht` double(13,2) DEFAULT '0.00',
+
+   `advanceapproval_flag` char(1) DEFAULT 'N',
+
+   `campaign_gid` varchar(45) DEFAULT 'No Campaign',
+
+   `agreement_flag` varchar(45) NOT NULL DEFAULT 'N',
+
+   `marketingexecutive_gid` varchar(45) DEFAULT NULL,
+
+   `marketingexecutiveteam_gid` varchar(45) DEFAULT NULL,
+
+   `start_date` date DEFAULT NULL,
+
+   `end_date` date DEFAULT NULL,
+
+   `order_note` longtext,
+
+   `gst_amount` double DEFAULT '0',
+
+   `tax_name` varchar(45) DEFAULT NULL,
+
+   `tax_gid` varchar(45) DEFAULT NULL,
+
+   `total_price` double(13,2) DEFAULT NULL,
+
+   `vessel_gid` varchar(45) DEFAULT NULL,
+
+   `vessel_name` varchar(45) DEFAULT NULL,
+
+   `salesperson_gid` varchar(45) DEFAULT NULL,
+
+   `costcenter_gid` varchar(64) DEFAULT NULL,
+
+   `quotation_gid` varchar(64) DEFAULT NULL,
+
+   `roundoff` double DEFAULT '0',
+
+   `progressive_flag` varchar(45) DEFAULT 'N',
+
+   `advanceamount_bank` double DEFAULT '0',
+
+   `advancewhtbase_currency` double DEFAULT '0',
+
+   `freight_charges` float(13,2) DEFAULT '0.00',
+
+   `buyback_charges` float(13,2) DEFAULT '0.00',
+
+   `packing_charges` float(13,2) DEFAULT '0.00',
+
+   `insurance_charges` float(13,2) DEFAULT '0.00',
+
+   `mawb_no` varchar(45) DEFAULT NULL,
+
+   `hawb_no` varchar(64) DEFAULT NULL,
+
+   `invoice_no` varchar(64) DEFAULT NULL,
+
+   `sb_no` varchar(64) DEFAULT NULL,
+
+   `flight_no` varchar(64) DEFAULT NULL,
+
+   `pkgs` varchar(64) DEFAULT NULL,
+
+   `gr_wt` varchar(64) DEFAULT NULL,
+
+   `ch_wt` varchar(64) DEFAULT NULL,
+
+   `igm_no` varchar(64) DEFAULT NULL,
+
+   `igm_date` datetime DEFAULT NULL,
+
+   `assesable_amount` varchar(64) DEFAULT NULL,
+
+   `cbm` varchar(64) DEFAULT NULL,
+
+   `lfrom` varchar(64) DEFAULT NULL,
+
+   `lto` varchar(64) DEFAULT NULL,
+
+   `be_date` datetime DEFAULT NULL,
+
+   `dutyamount` varchar(64) DEFAULT NULL,
+
+   `mawb_date` datetime DEFAULT NULL,
+
+   `hawb_date` datetime DEFAULT NULL,
+
+   `buyer_name` text,
+
+   `buyer_address` text,
+
+   `buy_email` varchar(45) DEFAULT NULL,
+
+   `buy_mobile` varchar(45) DEFAULT NULL,
+
+   `airline_charges` varchar(45) DEFAULT NULL,
+
+   `direct_shipment` char(2) DEFAULT 'Y',
+
+   `branch_name` varchar(128) DEFAULT NULL,
+
+   `businessunit_gid` varchar(64) DEFAULT NULL,
+
+   `description` text,
+
+   `others` text,
+
+   `flight_date` datetime DEFAULT NULL,
+
+   `businessunit_name` varchar(45) DEFAULT NULL,
+
+   `consignee_to` varchar(128) DEFAULT NULL,
+
+   `customerref_no` varchar(256) DEFAULT NULL,
+
+   `supplier_name` varchar(512) DEFAULT NULL,
+
+   `supplier_address` text,
+
+   `buyer_gid` varchar(45) DEFAULT NULL,
+
+   `supplier_gid` varchar(45) DEFAULT NULL,
+
+   `agent_gid` varchar(45) DEFAULT NULL,
+
+   `shipper_address` longtext,
+
+   `consignee_address` longtext,
+
+   `shopify_orderid` varchar(256) DEFAULT NULL,
+
+   PRIMARY KEY (`salesorder_gid`),
+
+   KEY `Index_2` (`branch_gid`,`customer_gid`),
+
+   KEY `Index_3` (`tax_gid`),
+
+   KEY `id_currency_gid` (`currency_gid`),
+
+   KEY `id_salesperson_gid` (`salesperson_gid`),
+
+   KEY `id_quotation_gid` (`quotation_gid`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `cmr_smm_tshopifysalesorderdtl` (
+
+   `salesorderdtl_gid` varchar(64) NOT NULL,
+
+   `salesorder_gid` varchar(64) NOT NULL,
+
+   `product_gid` varchar(64) DEFAULT NULL,
+
+   `productgroup_gid` varchar(64) DEFAULT NULL,
+
+   `productgroup_name` varchar(512) DEFAULT NULL,
+
+   `product_name` varchar(3064) DEFAULT NULL,
+
+   `product_price` double DEFAULT '0',
+
+   `qty_quoted` double DEFAULT '0',
+
+   `discount_percentage` double DEFAULT '0',
+
+   `discount_amount` double DEFAULT '0',
+
+   `tax_percentage` double DEFAULT '0',
+
+   `tax_amount` double DEFAULT '0',
+
+   `product_remarks` longtext,
+
+   `uom_gid` varchar(64) DEFAULT NULL,
+
+   `uom_name` varchar(45) DEFAULT NULL,
+
+   `payment_days` int(10) unsigned DEFAULT '0',
+
+   `delivery_period` int(10) unsigned DEFAULT '0',
+
+   `price` double DEFAULT '0',
+
+   `display_field` text,
+
+   `tax_name` varchar(45) DEFAULT NULL,
+
+   `tax_name2` varchar(45) DEFAULT NULL,
+
+   `tax_name3` varchar(45) DEFAULT NULL,
+
+   `tax_percentage2` double DEFAULT '0',
+
+   `tax_percentage3` double DEFAULT '0',
+
+   `tax_amount2` double DEFAULT '0',
+
+   `tax_amount3` double DEFAULT '0',
+
+   `salesorder_refno` varchar(65) DEFAULT NULL,
+
+   `product_delivered` int(10) unsigned DEFAULT '0',
+
+   `qty_executed` int(10) unsigned DEFAULT '0',
+
+   `tax_amount_l` double(13,2) DEFAULT '0.00',
+
+   `tax_amount2_l` double(13,2) DEFAULT '0.00',
+
+   `tax_amount3_l` double(13,2) DEFAULT '0.00',
+
+   `discount_amount_l` double(13,2) DEFAULT '0.00',
+
+   `product_price_l` double(13,2) DEFAULT '0.00',
+
+   `price_l` double(13,2) DEFAULT '0.00',
+
+   `tax1_gid` varchar(45) DEFAULT NULL,
+
+   `tax2_gid` varchar(45) DEFAULT NULL,
+
+   `tax3_gid` varchar(45) DEFAULT NULL,
+
+   `margin_percentage` double DEFAULT '0',
+
+   `margin_price` double DEFAULT '0',
+
+   `margin_amount` double DEFAULT '0',
+
+   `selling_price` double DEFAULT '0',
+
+   `vendor_gid` varchar(64) DEFAULT NULL,
+
+   `slno` int(11) DEFAULT NULL,
+
+   `againstpo_flag` char(1) DEFAULT 'N',
+
+   `vendor_price` varchar(45) DEFAULT NULL,
+
+   `product_requireddate` date DEFAULT NULL,
+
+   `type` varchar(45) DEFAULT NULL,
+
+   `delivery_quantity` double DEFAULT '0',
+
+   `customerproduct_code` varchar(64) DEFAULT NULL,
+
+   `created_by` varchar(64) DEFAULT NULL,
+
+   `created_date` datetime DEFAULT NULL,
+
+   `updated_by` varchar(64) DEFAULT NULL,
+
+   `updated_date` datetime DEFAULT NULL,
+
+   `product_requireddateremarks` longtext,
+
+   `mrp` double DEFAULT NULL,
+
+   `foreign_currency` varchar(45) DEFAULT NULL,
+
+   `foreign_amount` double DEFAULT NULL,
+
+   `exchange_rate` double DEFAULT NULL,
+
+   `product_code` varchar(45) DEFAULT NULL,
+
+   `currency_gid` varchar(45) DEFAULT NULL,
+
+   `shopify_lineitemid` varchar(256) DEFAULT NULL,
+
+   `shopify_id` varchar(256) DEFAULT NULL,
+
+   `shopify_orderid` varchar(256) DEFAULT NULL,
+
+   PRIMARY KEY (`salesorderdtl_gid`),
+
+   KEY `Index_2` (`salesorder_gid`,`product_gid`,`productgroup_gid`,`uom_gid`),
+
+   KEY `id_tax1gid` (`tax1_gid`),
+
+   KEY `id_tax2gid` (`tax2_gid`),
+
+   KEY `id_tax3gid` (`tax3_gid`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ 
+alter table cmr_smm_tshopifysalesorder  add column shopifyorder_number varchar(256);
+alter table  crm_smm_tshopifyproduct add column inventory_item_id varchar(256);
+ alter table smr_trn_tsalesorder add column shopifyorder_number varchar(256);
+alter table smr_trn_tsalesorder add column shopifycustomer_id varchar(256);
+alter table rbl_trn_tinvoice add column shopifyorder_number varchar(256);
+alter table rbl_trn_tinvoice add column shopify_orderid varchar(256);
+alter table rbl_trn_tinvoicedtl add column shopify_lineitemid varchar(256);
+alter table rbl_trn_tinvoicedtl add column shopify_orderid varchar(256);
+alter table ims_trn_tstock add column shopify_productid varchar(256);
+
+alter table smr_trn_tsalesorderdtl add column shopify_productid varchar(256);
+alter table rbl_trn_tinvoice add column shopifycustomer_id varchar(256);
+alter table rbl_trn_tinvoicedtl add column shopify_productid varchar(256);
+alter table crm_smm_tshopifyproduct add column weight_unit varchar(256);
+alter table crm_smm_tshopifyproduct add column weight varchar(256);
+alter table pmr_mst_tproduct add column inventory_item_id varchar(256);
+alter table crm_smm_tshopifyproduct add column option1 varchar(256);
+alter table pmr_mst_tproduct add column inventory_item_id varchar(256);
+alter table crm_smm_tshopifyproduct add column option1 varchar(256);
+alter table pmr_mst_tproduct add column option1 varchar(256);
+
+CREATE TABLE `crm_smm_tshopifylocation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `location_id` varchar(1000) DEFAULT NULL,
+  `name` varchar(1000) DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+   `updated_date` datetime DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1
+ 
+ 
+------------------------------------------------Snehith----------------------------------------------------
+
+
+
+------------------------------------------------vishwa----------------------------------------------------
+CREATE TABLE `crm_smm_mailmanagement` (
+  `mailmanagement_gid` varchar(256) NOT NULL,
+  `from_mail` varchar(64) DEFAULT NULL,
+  `to_mail` varchar(64) DEFAULT NULL,
+  `bcc` longtext,
+  `cc` longtext,
+  `reply_to` longtext,
+  `sub` longtext,
+  `body` longtext,
+  `image_path` varchar(1128) DEFAULT NULL,
+  `created_by` varchar(32) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `direction` varchar(10) DEFAULT 'outgoing',
+  `transmission_id` varchar(32) DEFAULT NULL,
+  `status_delivery` varchar(16) DEFAULT NULL,
+  `status_open` varchar(16) DEFAULT NULL,
+  `status_click` varchar(16) DEFAULT NULL,
+  `scheduled_time` datetime DEFAULT NULL,
+  `schedule_id` varchar(32) DEFAULT NULL,
+  `temp_mail_gid` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`mailmanagement_gid`)
+) 
+
+CREATE TABLE `temp_crm_smm_mailmanagement` (
+  `temp_mail_gid` varchar(32) NOT NULL,
+  `sub` longtext,
+  `body` longtext,
+  `created_by` varchar(32) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `image_path` varchar(1128) DEFAULT NULL,
+  `from_mail` varchar(64) DEFAULT NULL,
+  `bcc` longtext,
+  `cc` longtext,
+  `reply_to` longtext,
+  `template_name` varchar(86) DEFAULT NULL,
+  PRIMARY KEY (`temp_mail_gid`)
+)
+
+
+DELIMITER $$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ins_incoming_mail`(
+
+	in customer_email varchar(512),
+
+	in reply_email varchar(512),
+
+    in mail_subject varchar(512),
+
+    in mail_html longtext)
+
+BEGIN
+
+declare mailmanagement_gid varchar(20);
+
+set mailmanagement_gid = (select boba_tea.fn_getgid('MILC', ''));
+
+INSERT INTO crm_smm_mailmanagement ( 
+
+                        mailmanagement_gid,  
+
+                        to_mail,  
+
+                        reply_to,  
+
+                        sub,  
+
+                        body,  
+
+                        direction,
+
+                        created_date)  
+
+                        VALUES ( 
+
+                        mailmanagement_gid,  
+
+                        customer_email,  
+
+                        reply_email,  
+
+                        mail_subject,  
+
+                        mail_html,  
+
+                        'incoming',
+
+                        now());
+
+END$$
+
+DELIMITER ;
+
+CREATE TABLE `crm_smm_mailmanagement` (
+  `mailmanagement_gid` varchar(256) NOT NULL,
+  `from_mail` varchar(64) DEFAULT NULL,
+  `to_mail` varchar(64) DEFAULT NULL,
+  `bcc` longtext,
+  `cc` longtext,
+  `reply_to` longtext,
+  `sub` longtext,
+  `body` longtext,
+  `image_path` varchar(1128) DEFAULT NULL,
+  `created_by` varchar(32) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `direction` varchar(10) DEFAULT 'outgoing',
+  `transmission_id` varchar(32) DEFAULT NULL,
+  `status_delivery` varchar(16) DEFAULT NULL,
+  `status_open` varchar(16) DEFAULT NULL,
+  `status_click` varchar(16) DEFAULT NULL,
+  `scheduled_time` datetime DEFAULT NULL,
+  `schedule_id` varchar(32) DEFAULT NULL,
+  `temp_mail_gid` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`mailmanagement_gid`)
+) 
+
+CREATE TABLE `temp_crm_smm_mailmanagement` (
+  `temp_mail_gid` varchar(32) NOT NULL,
+  `sub` longtext,
+  `body` longtext,
+  `created_by` varchar(32) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `image_path` varchar(1128) DEFAULT NULL,
+  `from_mail` varchar(64) DEFAULT NULL,
+  `bcc` longtext,
+  `cc` longtext,
+  `reply_to` longtext,
+  `template_name` varchar(86) DEFAULT NULL,
+  PRIMARY KEY (`temp_mail_gid`)
+)
+
+alter table crm_smm_mail_service add column receiving_domain varchar(64);
+alter table crm_smm_mail_service add column sending_domain varchar(64);
+UPDATE `boba_tea`.`crm_smm_mail_service` SET `sending_domain` = 'reply.vcidex.com', `receiving_domain` = 'receive.vcidex.com' WHERE (`s_no` = '1');
+
+------------------------------------------------Vishwa----------------------------------------------------
+
+------------------------------------------------Vijai----------------------------------------------------
+
+CREATE TABLE `crm_smm_mail_service` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(1000) DEFAULT NULL,
+  `base_url` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+CREATE TABLE `crm_smm_whatsapp_service` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(1000) DEFAULT NULL,
+  `base_url` varchar(1000) DEFAULT NULL,
+  `workspace_id` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1
+
+CREATE TABLE `crm_smm_shopify_service` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `access_token` varchar(1000) DEFAULT NULL,
+  `shopify_store_name` varchar(1000) DEFAULT NULL,
+  `store_month_year` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+alter table crm_smm_mailmanagement add column `read_flag` char(1) DEFAULT 'N';
+alter table crm_smm_mailmanagement add column   `leadbank_gid` varchar(100) DEFAULT NULL
+
+
+------------------------------------------------Vijai----------------------------------------------------
+
+------------------------------------------------Suresh----------------------------------------------------
+
+------------------------------------------------Suresh----------------------------------------------------
+
+--------------------------------------------------Logapriya------------------------------------------------------
+
+UPDATE adm_mst_tmodule SET sref = '/crm/CrmTrnRetailerRegisterLead' WHERE (module_gid = 'MKTLEDLAD');
+UPDATE adm_mst_tmodule SET sref = '/crm/CrmTrnRetailerLeadBank' WHERE (module_gid = 'MKTLEDLDB');
+
+--------------------------------------------------Logapriya------------------------------------------------------
+
+------------------------------------------------Mohana-----------------------------------------------------
+
+insert into crm_mst_tleadstage (leadstage_gid,leadstage_name,is_fixed) values ('4','Potential','Y');
+alter table crm_trn_tlead2campaign add column call_count varchar(45) after schedule_priority;
+
+------------------------------------------------Mohana----------------------------------------------------
+
+--------------------------------------------------Kavya--------------------------------------------------
+
+------------------------------------------------Kavya----------------------------------------------------
+
+
+
+
+
+
+

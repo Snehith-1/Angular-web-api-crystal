@@ -1,0 +1,39 @@
+.align {
+    display: flex; /* Use flexbox to arrange elements in a row */
+    flex-direction: row; /* Arrange elements horizontally */
+    justify-content: space-between; /* Space elements evenly along the row */
+    align-items: center; /* Vertically center align items */
+  }
+  
+
+
+/* Add this CSS in your global CSS file or component-specific CSS */
+.table-container {
+    width: 100%; /* Adjust the width as needed */
+    overflow-x: auto; /* Add horizontal scrollbar when content overflows */
+    white-space: nowrap; /* Prevent line breaks for table cells */
+  }
+  
+  .table-content {
+    width: auto; /* Allow content to exceed container width */
+  }
+  
+  .table-header {
+    font-size: 12px;
+    /* Adjust any other styling as needed */
+  }
+  
+  /* Adjust the cell width for your specific table as needed */
+  .table-header th {
+    width: 100px;
+  }
+  .background-color1{
+    background: rgb(2, 159, 203);
+    background: radial-gradient(circle, rgb(105, 214, 253) 0%, rgb(86, 183, 218) 100%); 
+}
+.card-header {
+  background-color: skyblue;
+
+}
+  
+  

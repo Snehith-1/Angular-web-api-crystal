@@ -1,0 +1,513 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Marketing Team Summary</h3>
+        </div>
+
+        <div class="col me-5">
+            <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal"
+                data-bs-target="#myModaladd">
+                <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp; Add Marketing Team
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3"style=" cursor: not-allowed;">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkgreen"style="background-color:#F5F5F5;">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Team Count</h5>
+                            <div *ngFor="let data of LeadBankCountList">
+                                <h4 class="my-1 text-info">{{data.team_count}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto">
+                            <i class="bi bi-asterisk"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3"style=" cursor: not-allowed;">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-brown"style="background-color:#F5F5F5;">
+
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Assigned</h5>
+                            <div *ngFor="let LeadBank_Distributor of LeadBankCountList">
+                                <h4 class="my-1 text-info">{{LeadBank_Distributor.assigned_count}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto"><i
+                                class="bi bi-arrow-up-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-3"style=" cursor: not-allowed;">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3  border-violet"style="background-color:#F5F5F5;">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Unassigned</h5>
+                            <div *ngFor="let LeadBank_Retailer of LeadBankCountList">
+                                <h4 class="my-1 text-info">{{LeadBank_Retailer.unassigned_count}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+                                class="bi bi-calendar3"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3"
+        style=" cursor: not-allowed;">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkorange "style="background-color:#F5F5F5;">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Total Leads</h5>
+                            <div *ngFor="let RegisterLeadCount_total of LeadBankCountList">
+                                <h4 class="my-1 text-info">{{RegisterLeadCount_total.total_count}}</h4>
+                            </div>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-purple text-white ms-auto"><i
+                                class="bi bi-browser-edge"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="team_list1" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <!-- <th></th> -->
+                        <th style="width:2%">S.No</th>
+                        <th>Branch </th>
+                        <th>Team</th>
+                        <th>Description</th>
+                        <th>No.Of.Lead Assigned</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of team_list1; let i=index;">
+                        <!-- <td (click)="ondetail(data.campaign_gid)" (click)="data.isExpand = !data.isExpand">
+                            <i *ngIf="!data.isExpand" class="bi-chevron-right"></i>
+                            <i *ngIf="data.isExpand" class="bi-chevron-up"></i>
+                        </td> -->
+                        <td>{{i+1}}</td>
+                        <td>{{data.branch}}</td>
+                        <td>{{data.team_name}}</td>
+                        <td>{{data.description}}</td>
+                        <td>{{data.assigned_total}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="Edit" (click)="openModaledit(data)" data-bs-toggle="modal" type="button"
+                                data-bs-target="#myedit" class="btn btn-icon btn-sm bg-edit me-2"><span
+                                    class="fa fa-pencil text-white  fs-6"></span>
+                            </button>
+                            <button title="Assign Employee" (click)="openModalemployee(data)" data-bs-toggle="modal"
+                                type="button" data-bs-target="#myModalemployee" class="btn btn-icon btn-sm  me-2"
+                                style="background-color:rgb(76, 33, 220);"><i class="fa fa-users"
+                                    style="font-size:16px;"></i>
+                            </button>
+
+                            <button title="Assign Manager" (click)="openModalmanager(data)" data-bs-toggle="modal"
+                                type="button" data-bs-target="#myModalmanager" class="btn btn-icon btn-sm  me-2"
+                                style="background-color:rgb(11, 118, 151);"><i class="bi bi-person-fill"
+                                    style="font-size:16px;"></i>
+                            </button>
+                            <!-- <button title="Assign Employee" data-bs-toggle="modal" type="button"
+                                data-bs-target="#onilne3" class="btn btn-icon btn-sm bg-info me-2"><span
+                                    class="fa fa-users text-white  fs-6"></span>
+                            </button>
+                            <button title="Assign Manager" data-bs-toggle="modal" type="button"
+                                data-bs-target="#onilne3" class="btn btn-icon btn-sm bg-warning me-2"><span
+                                    class="fa fa-user-tie text-white  fs-6"></span>
+                            </button> -->
+                            <button title="Expand" (click)="onexpand(data.campaign_gid)" type="button"
+                                class="btn btn-icon btn-sm bg-edit me-2 "
+                                style="background-color:rgb(19, 103, 172);"><span
+                                    class="fa fa-expand text-white fs-6"></span>
+                            </button>
+                            <button title="Delete" data-bs-toggle="modal" (click)="openModaldelete(data.campaign_gid)"
+                                type="button" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa fa-trash text-white  fs-6"></span>
+                            </button>
+                        </td>
+                        <td *ngIf="data.isExpand">
+                            <br> <br> <br>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- //add// -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;Add Marketing Team</h2>
+
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="row"><span class="font-bold"><b>Team Name</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="team_name" type="text" class="
+                                         form-control form-control-lg form-control-solid
+                                         custom-input
+                                         mb-3 mb-lg-0
+                                         bg-white
+                                         custom-input
+                                       " [ngStyle]="{
+                                         'border-color':
+                                         team_name.invalid && team_name.touched
+                                             ? 'red'
+                                             : 'rgb(209, 209, 209)'
+                                       }" pattern="^(?!\s*$).+" name="team_name" required />
+                        </div>
+                    </div>
+                    <div *ngIf="team_name.invalid && (team_name.dirty || team_name.touched)">
+                        <div *ngIf="team_name.errors?.['required']">
+                            <span style="color:red;">Team Name is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="team_name.invalid && (team_name.dirty || team_name.touched)">
+                        <div *ngIf="team_name.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"><b>Description</b></label>
+                        <textarea class="form-control" formControlName="description" pattern="^(?![\s\n]*$)[\s\S]+$"
+                            id="exampleFormControlTextarea1" rows="3" style="resize: none;"></textarea>
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Branch</b><span class="ms-1 text-red">*</span></span>
+
+                        <ng-select style=" width: 455px;" formControlName="branch" [class.is-invalid]="
+                            branch.invalid && (branch.dirty || branch.touched)"
+                            [ngClass]="{'invalid-border': branch.invalid && branch.touched}" [items]="branch_list"
+                            required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            bindLabel="branch_name" bindValue="branch_gid" placeholder="--Select Branch--"></ng-select>
+                        <div *ngIf="
+                        branch.invalid && (branch.dirty || branch.touched)
+                          " class="invalid-feedback">
+                            <div *ngIf="branch.errors?.['required']">
+                                Branch is required.
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Team Manager</b><span class="ms-1 text-red">*</span></span>
+
+                        <ng-select style=" width: 455px;" formControlName="team_manager" [class.is-invalid]="
+                            team_manager.invalid && (team_manager.dirty || team_manager.touched)"
+                            [ngClass]="{'invalid-border': team_manager.invalid && team_manager.touched}"
+                            [items]="team_list" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            bindLabel="team_manager" bindValue="employee_gid"
+                            placeholder="--Select Team Manager--"></ng-select>
+                        <div *ngIf="
+                        team_manager.invalid && (team_manager.dirty || team_manager.touched)
+                          " class="invalid-feedback">
+                            <div *ngIf="team_manager.errors?.['required']">
+                                Team Manager is required.
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row"><span class="font-bold"><b>Team Mail Id</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="mail_id" type="text" class="
+                                                 form-control form-control-lg form-control-solid
+                                                 custom-input
+                                                 mb-3 mb-lg-0
+                                                 bg-white
+                                                 custom-input
+                                               " [ngStyle]="{
+                                                 'border-color':
+                                                 mail_id.invalid && mail_id.touched
+                                                     ? 'red'
+                                                     : 'rgb(209, 209, 209)'
+                                               }"
+                                pattern="^([a-z0-9-]+|[a-z0-9-]+([.][a-z0-9-]+)*)@([a-z0-9-]+\.[a-z]{2,20}(\.[a-z]{2})?|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\]|localhost)$"
+                                name="mail_id" required />
+                        </div>
+
+                    </div>
+                    <div *ngIf="mail_id.invalid && (mail_id.dirty || mail_id.touched)">
+                        <div *ngIf="mail_id.errors?.['required']">
+                            <span style="color:red;">Team MailId is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="mail_id.invalid && (mail_id.dirty ||mail_id .touched)">
+                        <div *ngIf="mail_id.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                                                    'primary-button': !reactiveForm.invalid,
+                                                    'secondary-button': reactiveForm.invalid
+                                                    }" data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- //edit// -->
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+    <div class="modal" id="myedit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-edit fw-bolder fs-3"></i> &nbsp;&nbsp;Edit Marketing Team</h2>
+
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="row"><span class="font-bold"><b>Team Name</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="team_name_edit" type="text" class="
+                                         form-control form-control-lg form-control-solid
+                                         custom-input
+                                         mb-3 mb-lg-0
+                                         bg-white
+                                         custom-input
+                                       " [ngStyle]="{
+                                         'border-color':
+                                         team_name_edit.invalid && team_name_edit.touched
+                                             ? 'red'
+                                             : 'rgb(209, 209, 209)'
+                                       }" pattern="^(?!\s*$).+" name="team_name_edit" required />
+                        </div>
+                    </div>
+                    <div *ngIf="team_name_edit.invalid && (team_name_edit.dirty || team_name_edit.touched)">
+                        <div *ngIf="team_name_edit.errors?.['required']">
+                            <span style="color:red;">Team Name is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="team_name_edit.invalid && (team_name_edit.dirty || team_name_edit.touched)">
+                        <div *ngIf="team_name_edit.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label"><b>Description</b></label>
+                        <textarea class="form-control" formControlName="description_edit" pattern="^(?!\s*$).+"
+                            id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <br>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Branch</b><span class="ms-1 text-red">*</span></span>
+
+                        <ng-select style=" width: 455px;" formControlName="branch_edit" [(ngModel)]="selectedBranch"
+                            [class.is-invalid]="
+                        branch_edit.invalid && (branch_edit.dirty || branch_edit.touched)"
+                            [ngClass]="{'invalid-border': branch_edit.invalid && branch_edit.touched}"
+                            [items]="branch_list" required
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="branch_name"
+                            bindValue="branch_gid" placeholder="--Select Branch--"></ng-select>
+                        <div *ngIf="
+                        branch_edit.invalid && (branch_edit.dirty || branch_edit.touched)
+                          " class="invalid-feedback">
+                            <div *ngIf="branch_edit.errors?.['required']">
+                                Branch is required.
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div class="row"><span class="font-bold"><b>Team MailId</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="mail_id_edit" type="text" class="
+                                                 form-control form-control-lg form-control-solid
+                                                 custom-input
+                                                 mb-3 mb-lg-0
+                                                 bg-white
+                                                 custom-input
+                                               " [ngStyle]="{
+                                                 'border-color':
+                                                 mail_id_edit.invalid && mail_id_edit.touched
+                                                     ? 'red'
+                                                     : 'rgb(209, 209, 209)'
+                                               }"
+                                pattern="^([a-z0-9-]+|[a-z0-9-]+([.][a-z0-9-]+)*)@([a-z0-9-]+\.[a-z]{2,20}(\.[a-z]{2})?|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\]|localhost)$"
+                                name="mail_id_edit" required />
+                        </div>
+
+                    </div>
+                    <div *ngIf="mail_id_edit.invalid && (mail_id_edit.dirty || mail_id_edit.touched)">
+                        <div *ngIf="mail_id_edit.errors?.['required']">
+                            <span style="color:red;">Team MailId is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="mail_id_edit.invalid && (mail_id_edit.dirty ||mail_id_edit .touched)">
+                        <div *ngIf="mail_id_edit.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button (click)="onupdate()" [disabled]="reactiveFormEdit.invalid" [ngClass]="{
+                                                    'primary-button': !reactiveFormEdit.invalid,
+                                                    'secondary-button': reactiveFormEdit.invalid
+                                                    }" data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- //delete// -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //employee// -->
+<div class="modal modal-lg" id="myModalemployee" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="bi bi-people"
+                        style="font-size:20px;"></i> &nbsp;&nbsp;Assign Employee to Team</h2>
+
+            </div>
+
+            <div class="text-center my-4">
+                <span> <span style="font-weight:bolder;font-size:16px;">Team</span><span
+                        style="color:red;">&nbsp;&nbsp;{{teamname}}</span></span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bolder;font-size:16px;">Branch</span><span
+                        style="color:red;">&nbsp;&nbsp;{{branch_name}}</span></span>
+            </div>
+            <div class="container-fluid">
+
+                <dual-list [sort]="keepSorted" [source]="source" [key]="key" [key1]="key1" [display]="display"
+                    [filter]="filter" [(destination)]="confirmed" height="265px" [format]="format"
+                    [disabled]="disabled"></dual-list>
+
+            </div>
+            <div class="text-center my-4">
+
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <!-- <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //manager// -->
+<div class="modal modal-lg" id="myModalmanager" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="bi bi-person-add"
+                        style="font-size:20px;font-weight:bolder;"></i>&nbsp;&nbsp;Assign Manager to Team</h2>
+
+            </div>
+            <div class="text-center my-4">
+                <span> <span style="font-weight:bolder;font-size:16px;">Team</span><span
+                        style="color:red;">&nbsp;&nbsp;{{teamname}}</span></span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-weight:bolder;font-size:16px;">Branch</span><span
+                        style="color:red;">&nbsp;&nbsp;{{branch_name}}</span></span>
+            </div>
+            <div class="container-fluid">
+
+                <manager-list [sort1]="keepSorted1" [source1]="source1" [key2]="key2" [key3]="key3"
+                    [display1]="display1" [filter1]="filter1" [(destination)]="confirmed1" height="265px"
+                    [format1]="format1" [disabled1]="disabled1"></manager-list>
+
+            </div>
+            <div class="text-center my-4">
+
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <!-- <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

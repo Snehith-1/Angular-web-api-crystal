@@ -1,0 +1,153 @@
+.head
+{
+    background: rgb(9,9,121);
+background: linear-gradient(90deg, rgba(9,9,121,0.18828781512605042) 8%, rgba(0,212,255,1) 100%);
+}
+.height
+{
+  
+  height: 80px;
+}
+
+.iconleft{
+  margin-left: 5px;
+}
+.header1
+  {
+    background: rgb(97,212,255);
+background: linear-gradient(111deg, rgba(97,212,255,0.8689600840336135) 5%, rgba(148,233,193,0.5048144257703081) 100%);
+  }
+
+  .bg-gradient-darkblue {
+     
+    background: #00a0fd;
+ 
+    background: -webkit-linear-gradient(45deg, #aedaf3, #00aaff)!important;
+ 
+    background: linear-gradient(45deg, #9ff8f4, #00a2ff)!important;
+ 
+  }
+.card-body12 {
+    // width: 160px;
+    height: 36px;  
+  }
+  .cardHead {
+  
+    position: relative;
+  
+    display: flex;
+  
+    flex-direction: column;
+  
+    min-width: 0;
+  
+    word-wrap: break-word;
+  
+    padding: 18px;
+  
+    background-clip: border-box;
+  
+    border: 0px solid rgba(0, 0, 0, 0);
+  
+    border-radius: .25rem;
+  
+    margin-bottom: 1.0rem;
+  
+    
+  
+    transition: all .3s ease-in-out;
+  
+    background-color: white;
+  
+  }
+  
+  .radius-10 {
+    border-radius: 20px !important;
+  }
+  
+  .cardHead:hover{
+  
+    box-shadow: rgb(20, 1, 1) 0px 19px 43px;
+  
+    transform: translate3d(0px, -2px, 0px);
+  
+    cursor:pointer;
+  
+    pointer-events: auto;
+  
+  }
+  
+   
+  
+  .widgets-icons-2 {
+  
+    width: 30px;
+  
+    height: 30px;
+  
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    background-color: #ededed;
+  
+    font-size: 23px;
+  
+    border-radius: 8px;
+  
+  }
+  
+  .rounded-circle {
+  
+    border-radius: 50%!important;
+  
+  }
+  
+  .ms-auto {
+  
+    margin-left: 0px;
+  
+  }
+  
+   
+  
+  .bg-gradient-info {
+  
+    background: #17ead9;
+  
+    background: -webkit-linear-gradient(45deg, #17ead9, #6078ea)!important;
+  
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
+  
+  }
+  
+   
+  
+  .bg-gradient-Tp {
+  
+    background: rgb(118, 18, 148);
+  
+    background: -webkit-linear-gradient(45deg, #f8dbed, rgb(175, 8, 108))!important;
+  
+    background: linear-gradient(45deg, #fab2e9, #c91271)!important;
+  
+  }
+  .bg-gradient-PP {
+  
+    background: rgb(22, 18, 148);
+  
+    background: -webkit-linear-gradient(45deg, #dcdbf8, rgb(14, 8, 175))!important;
+  
+    background: linear-gradient(45deg, #b4b2fa, #1212c9)!important;
+  
+  }
+
+  
+  
+  .border-order {
+ 
+    border-left: 5px solid  rgba(7, 181, 255, 0.733)!important;
+   
+  }

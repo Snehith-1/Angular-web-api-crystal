@@ -1,0 +1,160 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ems.pmr.Models;
+using ems.utilities.Functions;
+using System.Data.Odbc;
+using System.Data;
+//using System.Web;
+//using OfficeOpenXml;
+using System.Configuration;
+using System.IO;
+//using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Net.Mail;
+using static System.Net.Mime.MediaTypeNames;
+using System.Web.UI.WebControls;
+using System.Text;
+namespace ems.pmr.DataAccess
+{
+    public class DaPblTrnPaymentRpt
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+       
+        public void DaGetPaymentRptSummary(MdlPblTrnPaymentRpt values)
+        {
+            msSQL = " select a.payment_gid,a.payment_date,a.vendor_gid,a.payment_remarks,a.payment_total,a.payment_status,a.user_gid, " +
+                    " date_format(a.created_date,'%d-%m-%y') as created_date,a.payment_reference,a.purchaseorder_gid,a.advance_total,a.payment_mode,a.bank_name,a.branch_name, " +
+                    " concat(a.cheque_no,a.dd_no)as cheque_no,a.city_name,a.currency_code,a.exchange_rate,a.tds_amount,a.tdscalculated_finalamount," +
+                    " a.priority,a.priority_remarks,a.approved_by,a.approved_date,a.reject_reason,a.bank_gid,a.payment_from, " +
+                    " a.addon_amount,a.additional_discount,a.additional_gid,a.discount_gid,b.*,c.* " +
+                    " from acp_trn_tpayment a " +
+                    " left join acp_trn_tpaymentdtl c on a.payment_gid=c.payment_gid " +
+                    " left join acp_mst_tvendor b on b.vendor_gid=a.vendor_gid ";
+                  dt_datatable = objdbconn.GetDataTable(msSQL);
+                  var getModuleList = new List<paymentrpt_list>();
+                  if (dt_datatable.Rows.Count != 0)
+                     {
+                       foreach (DataRow dt in dt_datatable.Rows)
+                          {
+                             getModuleList.Add(new paymentrpt_list
+                             {
+                                 payment_gid = dt["payment_gid"].ToString(),
+                                 payment_date = dt["payment_date"].ToString(),
+                                 vendor_gid = dt["vendor_gid"].ToString(),
+                                 payment_remarks = dt["payment_remarks"].ToString(),
+                                 payment_total = dt["payment_total"].ToString(),
+                                 payment_status = dt["payment_status"].ToString(),
+                                 user_gid = dt["user_gid"].ToString(),
+                                 created_date = dt["created_date"].ToString(),
+                                 payment_reference = dt["payment_reference"].ToString(),
+                                 purchaseorder_gid = dt["purchaseorder_gid"].ToString(),
+                                 advance_total = dt["advance_total"].ToString(),
+                                 payment_mode = dt["payment_mode"].ToString(),
+                                 bank_name = dt["bank_name"].ToString(),
+                                 branch_name = dt["branch_name"].ToString(),
+                                 cheque_no = dt["cheque_no"].ToString(),
+                                 city_name = dt["city_name"].ToString(),
+                                 currency_code = dt["currency_code"].ToString(),
+                                 exchange_rate = dt["exchange_rate"].ToString(),
+                                 tds_amount = dt["tds_amount"].ToString(),
+                                 tdscalculated_finalamount = dt["tdscalculated_finalamount"].ToString(),
+                                 priority = dt["priority"].ToString(),
+                                 priority_remarks = dt["priority_remarks"].ToString(),
+                                 approved_by = dt["approved_by"].ToString(),
+                                 approved_date = dt["approved_date"].ToString(),
+                                 reject_reason = dt["reject_reason"].ToString(),
+                                 bank_gid = dt["bank_gid"].ToString(),
+                                 addon_amount = dt["addon_amount"].ToString(),
+                                 additional_discount = dt["additional_discount"].ToString(),
+                                 additional_gid = dt["additional_gid"].ToString(),
+                                 discount_gid = dt["discount_gid"].ToString(),
+                                 
+                             });
+                    values.paymentrptlist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+}
+}public void DaGetPayablesummary (payable_tile values)
+        {
+            msSQL = "select count(invoice_gid) as total_count, " +
+                "(select count(invoice_status)as cancel_invoice  from acp_trn_tinvoice where invoice_status='IV Canceled') as cancel_invoice ," +
+                    "(select count(invoice_status) as pending_count  from acp_trn_tinvoice where invoice_status = 'IV Work In Progress') as pending_count " +
+                    " from acp_trn_tinvoice";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader != null)
+            {
+                objODBCDatareader.Read();
+
+    }
+}
+                values.total_count = objODBCDatareader["total_count"].ToString();
+                values.cancel_invoice = objODBCDatareader["cancel_invoice"].ToString();
+                values.pending_count = objODBCDatareader["pending_count"].ToString();
+                
+
+                objODBCDatareader.Close();
+            }
+            msSQL = "select count(*) as 'Product_count' from pmr_mst_tproduct where 1=1";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader != null)
+            {
+                objODBCDatareader.Read();
+                values.product_count = objODBCDatareader["Product_count"].ToString();
+                objODBCDatareader.Close();
+            }
+            msSQL = "select count(*) as 'vendor_count' from acp_mst_tvendor where 1=1";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader != null)
+            {
+                objODBCDatareader.Read();
+                values.vendor_count = objODBCDatareader["vendor_count"].ToString();
+                objODBCDatareader.Close();
+            }
+
+            return;
+        }
+        public void Dainvoicesummary(MdlPblTrnPaymentRpt values)
+        {
+            msSQL = "select invoice_gid,invoice_refno,format(invoice_amount,2) as invoice_amount, invoice_reference, CASE when payment_flag <> 'PY Pending' then payment_flag " +
+         "  else invoice_flag end as 'overall_status', invoice_date, payment_date, " +
+           "  case when replace(invoice_status,'IV','Invoice') = 'IV Approved' then 'IV Completed' else replace(invoice_status, 'IV', 'Invoice') end as invoice_status " +
+           " from acp_trn_tinvoice a group by invoice_refno order by date(invoice_date) desc,invoice_date asc, invoice_gid desc,invoice_gid desc limit 5 ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<payablesummary_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new payablesummary_list
+                    {
+                       
+                        invoice_gid = dt["invoice_gid"].ToString(),
+                        invoice_date = Convert.ToDateTime(dt["invoice_date"].ToString()),
+                        invoice_refno = dt["invoice_refno"].ToString(),
+                        payment_date= dt["payment_date"].ToString(),
+                        invoice_reference = dt["invoice_reference"].ToString(),                        
+                        
+                        invoice_amount = dt["invoice_amount"].ToString(),
+                        invoice_status = dt["invoice_status"].ToString(),
+                        overall_status = dt["overall_status"].ToString(),
+                    });
+                    values.payablesummary_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    }
+}

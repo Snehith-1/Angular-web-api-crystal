@@ -1,0 +1,46 @@
+Loader --->Spinner
+------------------
+step 1: npm install ngx-spinner --save  
+step 2:
+In angular.json >> add spinner type Css >>"node_modules/ngx-spinner/animations/ball-spin-clockwise.css" //same name given in app.component.html to get the type
+step 3:
+In app.module.ts add the following 
+1. import { NgxSpinnerModule } from 'ngx-spinner'; //spinner
+2. import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // it is needed ,already exist in file then no need to add
+
+3.CUSTOM_ELEMENTS_SCHEMA 
+
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+ imports[
+
+ BrowserAnimationsModule,
+ NgxSpinnerModule.forRoot({type:'ball-spin-clockwise'})
+ ]
+ schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  
+ step 4:
+  
+ In app.component.html
+  
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise" [fullScreen] = "true"><br>
+<p style="color:white" >Loading... </p>
+</ngx-spinner> //Customise Your spinner
+ 
+ step 5: Implements in page by the following way:
+ 
+ import { NgxSpinnerService } from 'ngx-spinner';
+ constructor(private NgxSpinnerService: NgxSpinnerService) 
+  
+// Add the Spinner where you want by adding the following function call:
+  
+  example:
+  
+  ngOnInit() {
+     this.NgxSpinnerService.show(); //Loading start
+     API call...
+     this.NgxSpinnerService.hide(); //Loading stop
+    }
+ 
+
+ 

@@ -1,0 +1,359 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Region Summary</h3>
+    </div>
+    <br>
+    <div> &nbsp; &nbsp;
+        <!-- ADD Function -->
+        <button type="button" class="btn-primary btn-sm text-white me-4" data-bs-toggle="modal"
+            data-bs-target="#myModaladd">
+            <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp; Add Region
+        </button>
+    </div>
+    <br>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="region_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Region Code </th>
+                        <th>Region Name</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of region_list; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.region_code}}</td>
+                        <td>{{data.region_name}}</td>
+                        <td class="text-center text-nowrap">
+
+                            <button title="Edit" (click)="openModaledit(data)" type="button" data-bs-toggle="modal"
+                                data-bs-target="#myModaledit" class="btn btn-icon btn-sm bg-success me-2"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                            <button title="Delete" type="button" (click)="openModaldelete(data.region_gid)"
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- add -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;Add Region Details</h2>
+
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="row"><span class="font-bold"><b>Region Code</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                                         -->
+                            <input formControlName="region_code" type="text" class="
+                                         form-control form-control-lg form-control-solid
+                                         custom-input
+                                         mb-3 mb-lg-0
+                                         bg-white
+                                         custom-input
+                                       " [ngStyle]="{
+                                         'border-color':
+                                         region_code.invalid && region_code.touched
+                                             ? 'red'
+                                             : 'rgb(209, 209, 209)'
+                                       }" placeholder="Enter Region Code" pattern="^(?!\s*$).+" name="region_code"
+                                required />
+                        </div>
+                    </div>
+                    <div *ngIf="region_code.invalid && (region_code.dirty || region_code.touched)">
+                        <div *ngIf="region_code.errors?.['required']">
+                            <span style="color:red;">Region Code is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="region_code.invalid && (region_code.dirty || region_code.touched)">
+                        <div *ngIf="region_code.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row"><span class="font-bold"><b>Region Name</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                                             -->
+                            <input formControlName="region_name" type="text" class="
+                                             form-control form-control-lg form-control-solid
+                                             custom-input
+                                             mb-3 mb-lg-0
+                                             bg-white
+                                             custom-input
+                                           " [ngStyle]="{
+                                             'border-color':
+                                             region_name.invalid && region_name.touched
+                                                 ? 'red'
+                                                 : 'rgb(209, 209, 209)'
+                                           }" placeholder="Enter Region Name" pattern="^(?!\s*$).+" name="region_name"
+                                required />
+                        </div>
+
+                    </div>
+                    <div *ngIf="region_name.invalid && (region_name.dirty || region_name.touched)">
+                        <div *ngIf="region_name.errors?.['required']">
+                            <span style="color:red;">Region Name is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="region_name.invalid && (region_name.dirty || region_name.touched)">
+                        <div *ngIf="region_name.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row"><span class="font-bold"><b>City Name</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                                                 -->
+                            <input formControlName="city_name" type="text" class="
+                                                 form-control form-control-lg form-control-solid
+                                                 custom-input
+                                                 mb-3 mb-lg-0
+                                                 bg-white
+                                                 custom-input
+                                               " [ngStyle]="{
+                                                 'border-color':
+                                                 city_name.invalid && city_name.touched
+                                                     ? 'red'
+                                                     : 'rgb(209, 209, 209)'
+                                               }" placeholder="Enter City Name" pattern="^(?!\s*$).+" name="city_name"
+                                required />
+                        </div>
+
+                    </div>
+                    <div *ngIf="city_name.invalid && (city_name.dirty || city_name.touched)">
+                        <div *ngIf="city_name.errors?.['required']">
+                            <span style="color:red;">City Name is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="city_name.invalid && (city_name.dirty ||city_name .touched)">
+                        <div *ngIf="city_name.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                                                    'primary-button': !reactiveForm.invalid,
+                                                    'secondary-button': reactiveForm.invalid
+                                                    }" data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+    <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                        class="fas fa-pencil fw-bolder fs-3"></i> &nbsp;&nbsp;Edit Region Details</h2>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row"><span class="font-bold"><b>Region Code</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input [readonly]="isReadOnly"  formControlName="region_code_edit" type="" class="
+                                             form-control form-control-lg form-control-solid
+                                             custom-input
+                                             mb-3 mb-lg-0
+                                             bg-white
+                                             custom-input
+                                           " [ngStyle]="{
+                                             'border-color':
+                                             region_code_edit.invalid && region_code_edit.touched
+                                                 ? 'red'
+                                                 : 'rgb(209, 209, 209)'
+                                           }" placeholder="Enter Region Code" pattern="^(?!\s*$).+"
+                                name="region_code_edit" required />
+                        </div>
+                    </div>
+                    <div *ngIf="region_code_edit.invalid && (region_code_edit.dirty || region_code_edit.touched)">
+                        <div *ngIf="region_code_edit.errors?.['required']">
+                            <span style="color:red;">Region Code is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="region_code_edit.invalid && (region_code_edit.dirty || region_code_edit.touched)">
+                        <div *ngIf="region_code_edit.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row"><span class="font-bold"><b>Region Name</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input formControlName="region_name_edit" type="text" class="
+                                                 form-control form-control-lg form-control-solid
+                                                 custom-input
+                                                 mb-3 mb-lg-0
+                                                 bg-white
+                                                 custom-input
+                                               " [ngStyle]="{
+                                                 'border-color':
+                                                 region_name_edit.invalid && region_name_edit.touched
+                                                     ? 'red'
+                                                     : 'rgb(209, 209, 209)'
+                                               }" placeholder="Enter Region Name" pattern="^(?!\s*$).+"
+                                name="region_name_edit" required />
+                        </div>
+
+                    </div>
+                    <div *ngIf="region_name_edit.invalid && (region_name_edit.dirty || region_name_edit.touched)">
+                        <div *ngIf="region_name_edit.errors?.['required']">
+                            <span style="color:red;">Region Name is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="region_name_edit.invalid && (region_name_edit.dirty || region_name_edit.touched)">
+                        <div *ngIf="region_name_edit.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format.</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row"><span class="font-bold"><b>City Name</b><span
+                        class="ms-1 text-red">*</span></span>
+                <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                    <input formControlName="city_name_edit" type="text" class="
+                                         form-control form-control-lg form-control-solid
+                                         custom-input
+                                         mb-3 mb-lg-0
+                                         bg-white
+                                         custom-input
+                                       " [ngStyle]="{
+                                         'border-color':
+                                         city_name_edit.invalid && city_name_edit.touched
+                                             ? 'red'
+                                             : 'rgb(209, 209, 209)'
+                                       }" placeholder="Enter City Name" pattern="^(?!\s*$).+"
+                        name="City_name_edit" required />
+                </div>
+
+            </div>
+        
+            <div *ngIf="city_name_edit.invalid && (city_name_edit.dirty || city_name_edit.touched)">
+                <div *ngIf="city_name_edit.errors?.['required']">
+                    <span style="color:red;">City Name is required.</span>
+                </div>
+            </div>
+            <div *ngIf="city_name_edit.invalid && (city_name_edit.dirty || city_name_edit.touched)">
+                <div *ngIf="city_name_edit.errors?.['pattern']">
+                    <span style="color:red;">Invalid Format.</span>
+                </div>
+            </div>
+
+
+
+                    <br>
+
+                    <!-- <div class="row"><span class="font-bold"><b>City Name</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <input formControlName="city_name_edit" type="text" class="
+                                                     form-control form-control-lg form-control-solid
+                                                     custom-input
+                                                     mb-3 mb-lg-0
+                                                     bg-white
+                                                     custom-input
+                                                   " [ngStyle]="{
+                                                     'border-color':
+                                                     city_name_edit.invalid && city_name_edit.touched
+                                                         ? 'red'
+                                                         : 'rgb(209, 209, 209)'
+                                                   }" placeholder="Enter City Name" pattern="^(?!\s*$).+"
+                                name="city_name_edit" required />
+                        </div>
+
+                    </div>
+                    <div *ngIf="city_name_edit.invalid && (city_name_edit.dirty || city_name_edit.touched)">
+                        <div *ngIf="city_name_edit.errors?.['required']">
+                            <span style="color:red;">City Name is required.</span>
+                        </div>
+                    </div>
+                    <br> -->
+
+
+                    <div class="text-center my-4">
+                        <button (click)="onupdate()" [disabled]="reactiveFormEdit.invalid" [ngClass]="{
+                                                    'primary-button': !reactiveFormEdit.invalid,
+                                                    'secondary-button': reactiveFormEdit.invalid
+                                                     }" data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                        </button> &nbsp;&nbsp;
+                        <button (click)="onclose()" class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+                <p style="display: block;">Do You Want To Delete the Record ?</p><br>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>

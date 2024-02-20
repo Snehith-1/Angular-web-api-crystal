@@ -1,0 +1,24 @@
+.align {
+    display: flex; /* Use flexbox to arrange elements in a row */
+    flex-direction: row; /* Arrange elements horizontally */
+    justify-content: space-between; /* Space elements evenly along the row */
+    align-items: center; /* Vertically center align items */
+  }
+  .btn-success {
+    background-color: #50cd89 !important;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.btn-success:hover {
+    background-color: #42ac72 !important;
+}
+
+.btn-success:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+}

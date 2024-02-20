@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-smr-trn-customerenquiry-summary',
+  templateUrl: './smr-trn-customerenquiry-summary.component.html',
+  styleUrls: ['./smr-trn-customerenquiry-summary.component.scss']
+})
+export class SmrTrnCustomerenquirySummaryComponent {
+
+}

@@ -1,0 +1,181 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+
+  
+@Component({
+  selector: 'app-ims-trn-raise-deliveryorder',
+  templateUrl: './ims-trn-raise-deliveryorder.component.html',
+  styleUrls: ['./ims-trn-raise-deliveryorder.component.scss']
+})
+export class ImsTrnRaiseDeliveryorderComponent {
+  showInput: boolean = false;
+  inputValue: string = ''
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '25rem',
+    minHeight: '5rem',
+    width: '975px',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+
+    defaultParagraphSeparator: 'p',
+
+    defaultFontName: 'Arial',
+
+
+
+  };
+
+
+  deliveryform: FormGroup | any;
+  template_content : FormGroup |any;
+  productform: FormGroup | any;
+  raisedeliveryorder_list: any;
+  branch_list : any [] = [];
+  customer_list: any [] = [];
+  contact_list: any [] = [];
+  sales_list: any [] = [];
+  currency_list: any [] = [];
+  product_list: any [] = [];
+  productgroup_list: any [] = [];
+  productname_list: any [] = [];
+  tax_list: any [] = [];
+  POproductlist: any [] = [];
+  totalamount: any;
+  taxamount3: any;
+  mdlTaxName3: any;
+  taxamount2: any;
+  taxamount1: any;
+  discountamount: any;
+  discountpercentage: any;
+  quantity: any;
+  deliveryorder: any;
+  raisedelivery_list :any
+  response_data :any
+  parameter: any;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService,  private route: ActivatedRoute,private router: ActivatedRoute) {
+   
+  }
+
+  ngOnInit(): void {
+    
+
+  this.deliveryform = new FormGroup ({
+  salesorder_gid: new FormControl(''),
+  salesorder_date: new FormControl(''),
+  customer_branch: new FormControl(''),
+  branch_gid: new FormControl(''),
+  so_referencenumber: new FormControl(''),
+  customer_gid: new FormControl(''),
+  customer_name: new FormControl(''),
+  customer_address_so : new FormControl(''),
+  customer_contact_gid: new FormControl(''),
+  customercontact_names: new FormControl(''),
+  customer_mobile: new FormControl(''),
+  customer_email: new FormControl(''),
+  customer_address: new FormControl(''),
+  dc_number : new FormControl(''),
+  customer_mode : new FormControl(''),
+  customer_city:new FormControl(''),
+  productgroup_gid: new FormControl(''),
+  productgroup_name: new FormControl(''),
+  customerproduct_code: new FormControl(''),
+  product_code: new FormControl(''),
+  product_gid: new FormControl(''),
+  product_name: new FormControl(''),
+  display_field: new FormControl(''),
+  template_content : new FormControl(''),
+  qty_quoted: new FormControl(''),
+  product_uom: new FormControl(''),
+  product_requireddate: new FormControl(''),
+  product_requireddateremarks: new FormControl(''),
+  reamark : new FormControl(''),
+  available_quantity : new FormControl(''),
+  product_delivered : new FormControl(''),
+
+  
+    
+    });
+
+
+debugger
+  this.deliveryorder = this.route.snapshot.paramMap.get('salesorder_gid');
+
+     const secretKey = 'storyboarderp';
+ 
+     const deencryptedParam = AES.decrypt(this.deliveryorder, secretKey).toString(enc.Utf8);
+ 
+     this.GetRaiseDeliveryorderSummary(deencryptedParam);
+     this.GetProductdelivery(deencryptedParam);
+
+   
+ 
+}
+  
+ 
+  GetRaiseDeliveryorderSummary(salesorder_gid: any) {
+    debugger
+        var url = 'ImsTrnDeliveryorderSummary/GetRaiseDeliveryorderSummary'
+    
+        let param = {
+    
+          salesorder_gid: salesorder_gid
+        }
+        this.service.getparams(url, param).subscribe((result: any) => {
+    debugger;
+          this.raisedeliveryorder_list = result.raisedelivery_list;
+          this.deliveryform.get("salesorder_gid")?.setValue(this.raisedeliveryorder_list[0].salesorder_gid);
+          this.deliveryform.get("salesorder_date")?.setValue(this.raisedeliveryorder_list[0].salesorder_date);
+          this.deliveryform.get("customer_branch")?.setValue(this.raisedeliveryorder_list[0].customer_branch);
+          this.deliveryform.get("customer_name")?.setValue(this.raisedeliveryorder_list[0].customer_name);
+          this.deliveryform.get("so_referencenumber")?.setValue(this.raisedeliveryorder_list[0].so_referencenumber);
+          this.deliveryform.get("customercontact_names")?.setValue(this.raisedeliveryorder_list[0].customercontact_names);
+          this.deliveryform.get("customer_mobile")?.setValue(this.raisedeliveryorder_list[0].customer_mobile);
+          this.deliveryform.get("customer_email")?.setValue(this.raisedeliveryorder_list[0].customer_email);       
+          this.deliveryform.get("customer_address")?.setValue(this.raisedeliveryorder_list[0].customer_address_so);
+          this.deliveryform.get("customer_address_so")?.setValue(this.raisedeliveryorder_list[0].customer_address_so);
+          this.deliveryform.get("productgroup_name")?.setValue(this.raisedeliveryorder_list[0].productgroup_name);
+          this.deliveryform.get("customerproduct_code")?.setValue(this.raisedeliveryorder_list[0].customerproduct_code);
+          this.deliveryform.get("product_code")?.setValue(this.raisedeliveryorder_list[0].product_code);
+          this.deliveryform.get("product_name")?.setValue(this.raisedeliveryorder_list[0].product_name);
+          this.deliveryform.get("display_field")?.setValue(this.raisedeliveryorder_list[0].display_field);
+          this.deliveryform.get("uom_name")?.setValue(this.raisedeliveryorder_list[0].uom_name);
+          this.deliveryform.get("available_quantity")?.setValue(this.raisedeliveryorder_list[0].available_quantity);
+          this.deliveryform.get("qty_quoted")?.setValue(this.raisedeliveryorder_list[0].qty_quoted);
+          this.deliveryform.get("product_delivered")?.setValue(this.raisedeliveryorder_list[0].product_delivered);
+         
+        
+        });
+      }
+    
+      GetProductdelivery(salesorder_gid :any){
+
+        debugger
+        
+        var api = 'ImsTrnDeliveryorderSummary/GetProductdelivery';
+        let param = {
+    
+          salesorder_gid: salesorder_gid
+        }
+        this.service.getparams(api,param).subscribe((result:any) => {
+          this.raisedeliveryorder_list = result.raisedelivery_list;
+          setTimeout(()=>{  
+            $('#raisedelivery_list').DataTable();
+          }, 1);
+        });
+      
+      }
+      
+      onadd() {}
+}
+
+
+
+
+

@@ -1,0 +1,220 @@
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+
+interface IEmployee {
+  password: string;
+  confirmpassword: string;
+  showPassword: boolean;
+  employee_gid:string;
+  user_code:string;
+  confirmusercode:string;
+ 
+}
+
+@Component({
+  selector: 'app-pmr-trn-vendorregister-summary',
+  templateUrl: './pmr-trn-vendorregister-summary.component.html',
+  styleUrls: ['./pmr-trn-vendorregister-summary.component.scss']
+})
+export class PmrTrnVendorregisterSummaryComponent {
+  reactiveFormReset!: FormGroup;
+  reactiveFormUpdateUserCode!: FormGroup;
+  responsedata: any;
+  reset_list: any[] = [];
+  employee_list: any[] = [];
+  parameterValuecode: any;
+   parameterValueReset: any;
+   employee!: IEmployee;
+   usercode:any;
+   user_firstname:any;
+   branch:any;
+   department:any;
+   designation:any;
+   parameterValue: any;
+  
+  constructor(public service :SocketService,private route:Router,private ToastrService: ToastrService) {
+    this.employee = {} as IEmployee;
+  }
+ 
+ 
+  ngOnInit(): void {
+    this.reactiveFormReset = new FormGroup({
+
+      password: new FormControl(this.employee.password, [
+        Validators.required,
+      ]),
+      confirmpassword: new FormControl(''),
+      employee_gid: new FormControl(''),
+
+    });
+    this.reactiveFormUpdateUserCode = new FormGroup({
+
+      user_code: new FormControl(this.employee.user_code, [
+        Validators.required,
+      ]),
+      confirmusercode: new FormControl(''),
+      employee_gid: new FormControl(''),
+
+    });
+   this.GetVendorregisterSummary();
+  } 
+  GetVendorregisterSummary(){
+  var api1='PmrMstVendorRegister/GetVendorregisterSummary'
+    
+  this.service.get(api1).subscribe((result:any)=>{
+    $('#employee_list').DataTable().destroy();
+    this.responsedata=result;
+    this.employee_list = this.responsedata.Getvendor_lists;  
+   console.log(this.employee_list)
+    setTimeout(()=>{   
+      $('#employee_list').DataTable();
+    }, 1);
+  
+ 
+});
+}
+  get password() {
+    return this.reactiveFormReset.get('password')!;
+  }
+  get user_code() {
+    return this.reactiveFormUpdateUserCode.get('user_code')!;
+  }
+  userpassword(password:any) {
+    this.reactiveFormReset.get("confirmpassword")?.setValue(password.value);
+  }
+  updateusercode(user_code:any) {
+    console.log(user_code.value)
+    this.reactiveFormUpdateUserCode.get("confirmusercode")?.setValue(user_code.value);
+  }
+  openModalUpdateCode(parameter: string) {
+    
+  }
+  openModalReset(parameter: string) {
+   
+
+  }
+  
+  onview(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.route.navigate(['/pmr/PmrTrnVendorregisterView',encryptedParam]) 
+  }
+  onedit(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.route.navigate(['/pmr/PmrTrnVendorregisterEdit',encryptedParam]) 
+  }
+  onaddinfo(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.route.navigate(['/pmr/PmrMstVendorAdditionalinformation',encryptedParam]) 
+  }
+  onclose() {
+    this.reactiveFormReset.reset();
+
+  }
+  oncloseupdatecode() {
+    this.reactiveFormUpdateUserCode.reset();
+
+  }
+  onupdatereset(){
+    //console.log(this.reactiveFormReset.value)
+
+    if (this.reactiveFormReset.value.password != null && this.reactiveFormReset.value.password != '') {
+      for (const control of Object.keys(this.reactiveFormReset.controls)) {
+        this.reactiveFormReset.controls[control].markAsTouched();
+      }
+      
+
+   
+      var url = 'Vendorlist/Getresetpassword'
+
+      this.service.post(url,this.reactiveFormReset.value).pipe().subscribe((result:any)=>{
+        this.responsedata=result;
+        if(result.status ==false){
+          this.ToastrService.warning(result.message)
+        
+        }
+        else{
+          this.ToastrService.success(result.message)
+          this.GetVendorregisterSummary();
+        }
+       
+    }); 
+
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+    this.reactiveFormReset.reset();
+  }
+  onupdateusercode(){
+    if (this.reactiveFormUpdateUserCode.value.user_code != null && this.reactiveFormUpdateUserCode.value.user_code != '') {
+      for (const control of Object.keys(this.reactiveFormUpdateUserCode.controls)) {
+        this.reactiveFormUpdateUserCode.controls[control].markAsTouched();
+      }
+      
+
+   
+      var url = 'Vendorlist/Getupdateusercode'
+
+      this.service.post(url,this.reactiveFormUpdateUserCode.value).pipe().subscribe((result:any)=>{
+        this.responsedata=result;
+        if(result.status ==false){
+          this.ToastrService.warning(result.message)
+         
+        }
+        else{
+          this.ToastrService.success(result.message)
+          this.GetVendorregisterSummary();
+        }
+       
+    }); 
+
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+    this.reactiveFormUpdateUserCode.reset();
+  }
+
+  openModaldelete(parameter: string) {
+    this.parameterValue = parameter
+  
+  }
+  ondelete() {
+    debugger
+    console.log(this.parameterValue);
+    var url = 'PmrMstVendorRegister/VendorRegisterSummaryDelete'
+    let param = {
+      vendorregister_gid : this.parameterValue 
+    }
+    this.service.getparams(url,param).subscribe((result: any) => {
+      if(result.status ==false){
+        this.ToastrService.warning(result.message)
+      }
+      else{
+        this.ToastrService.success(result.message)
+      }
+      this.GetVendorregisterSummary();
+    
+  
+  
+    });
+  }
+  onattach(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.route.navigate(['/pmr/PmrMstVendorRegisterDocument',encryptedParam]) 
+  }
+  
+}

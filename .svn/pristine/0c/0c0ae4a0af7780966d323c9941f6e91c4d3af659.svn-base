@@ -1,0 +1,129 @@
+﻿using ems.pmr.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using static System.Net.Mime.MediaTypeNames;
+using System.Web.Http.Results;
+using static ems.pmr.Models.addgrn_lists;
+using System.Web.UI.WebControls;
+using System.Diagnostics.Eventing.Reader;
+
+namespace ems.pmr.DataAccess
+{
+    public class DaPmrDashboard
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+      
+
+        public void DaGetPurchaseLiabilityReportChart(MdlPmrDashboard values)
+        {
+            msSQL = "select distinct sum(a.total_amount) as total_amount,sum(j.invoice_amount) as invoice_amount,sum(j.payment_amount) as payment_amount,sum(j.invoice_amount- j.payment_amount)" +
+                " as outstanding_amount,cast(MONTHNAME(a.purchaseorder_date)as char) as purchasemonth,DATE_FORMAT(purchaseorder_date, '%b-%Y')  as purchaseorder_date " +
+                " from pmr_trn_tpurchaseorder a" +
+                " left join acp_trn_tpo2invoice i on i.purchaseorder_gid=a.purchaseorder_gid" +
+                " left join acp_trn_tinvoice j on j.invoice_gid=i.invoice_gid" +
+                " where a.purchaseorder_flag ='PO Approved' and a.purchaseorder_date < Now() " +
+               // "  AND YEAR(a.purchaseorder_date) = 2018 " +
+                " AND a.purchaseorder_date >= DATE_SUB(NOW(), INTERVAL 6 MONTH)" +
+                " group by DATE_FORMAT(purchaseorder_date, '%b-%Y') desc";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetPurchaseLiability_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetPurchaseLiability_List
+                    {
+
+                        total_amount = dt["total_amount"].ToString(),
+                        invoice_amount = dt["invoice_amount"].ToString(),
+                        payment_amount = dt["payment_amount"].ToString(),
+                        outstanding_amount = dt["outstanding_amount"].ToString(),
+                        purchasemonth = dt["purchaseorder_date"].ToString(),
+                       
+                    });
+                    values.GetPurchaseLiability_List = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // GetPurchaseCount
+        public void DaGetPurchaseCount(MdlPmrDashboard values)
+        {
+            msSQL = " select count(vendor_gid) as total_vendor from acp_mst_tvendor";
+            values.total_vendor = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select count(a.product_gid) as total_product from pmr_mst_tproduct a ";
+               // " left join pmr_mst_tproducttype b on a.producttype_gid=b.producttype_gid " +
+               //"  where a.producttype_gid=b.producttype_gid group by a.producttype_gid; ";
+            values.total_product = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select count(purchaseorder_gid) as pototalcount from pmr_trn_tpurchaseorder; ";
+            values.pototalcount = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select count(invoice_gid) as invctotalcount from acp_trn_tinvoice ";
+            values.invctotalcount = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select count(grn_gid) as grntotalcount from pmr_trn_tgrn ";
+            values.grntotalcount = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select count(payment_gid) as total_payment from acp_trn_tpayment ";
+            values.total_payment = objdbconn.GetExecuteScalar(msSQL);
+        }
+
+
+        //GetInvoiceCount
+
+        public void DaGetInvoiceCount(MdlPmrDashboard values)
+        {
+            msSQL = "select count(invoice_gid) as total_invoice, " +
+                    " (select count(invoice_status)as cancel_invoice  from acp_trn_tinvoice where invoice_status='IV Canceled') as cancel_invoice ," +
+                    " (select count(invoice_status) as pending_invoice  from acp_trn_tinvoice where invoice_status = 'IV Work In Progress') as pending_invoice, " +
+                    " (select count(invoice_status) as completed_invoice  from acp_trn_tinvoice where invoice_status = 'IV Completed') as completed_invoice " +
+                    " from acp_trn_tinvoice";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows)
+            {
+                objODBCDatareader.Read();
+                values.total_invoice = objODBCDatareader["total_invoice"].ToString();
+                values.cancelled_invoice = objODBCDatareader["cancel_invoice"].ToString();
+                values.pending_invoice = objODBCDatareader["pending_invoice"].ToString();
+                values.completed_invoice = objODBCDatareader["completed_invoice"].ToString();
+            }
+            objODBCDatareader.Close();
+        }
+
+        //GetPaymentCount
+
+        public void DaGetPaymentCount(MdlPmrDashboard values)
+        {
+            msSQL = " select count(payment_gid) as total_payment, " +
+                    " (select count(payment_status) as cancelled_payment  from acp_trn_tpayment where payment_status = 'Payment Cancelled' or payment_status = 'PY Canceled') as cancelled_payment , " +
+                    " (select count(payment_status) as pending_payment  from acp_trn_tpayment where payment_status = 'PY Approved') as pending_payment, " +
+                    " (select count(payment_status) as completed_payment  from acp_trn_tpayment where payment_status = 'Payment Done') as completed_payment " +
+                    " from acp_trn_tpayment; ";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows)
+            {
+                objODBCDatareader.Read();
+                values.total_payment = objODBCDatareader["total_payment"].ToString();
+                values.cancelled_payment = objODBCDatareader["cancelled_payment"].ToString();
+                values.pending_payment = objODBCDatareader["pending_payment"].ToString();
+                values.completed_payment = objODBCDatareader["completed_payment"].ToString();
+            }
+            objODBCDatareader.Close();
+        }
+    }
+}

@@ -1,0 +1,245 @@
+<!--begin::Content-->
+<div id="kt_app_content" class="app-content flex-column-fluid">
+
+    <!--begin::Content container-->
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <!--begin::Inbox App - Messages -->
+        <div class="d-flex flex-column flex-lg-row">
+            <!--begin::Sidebar-->
+            <div class="d-none d-lg-flex flex-column flex-lg-row-auto w-100 w-lg-275px" data-kt-drawer="true"
+                data-kt-drawer-name="inbox-aside" data-kt-drawer-activate="{default: true, lg: false}"
+                data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start"
+                data-kt-drawer-toggle="#kt_inbox_aside_toggle">
+                <!--begin::Sticky aside-->
+                <div class="card card-flush mb-0" data-kt-sticky="true" data-kt-sticky-name="inbox-aside-sticky"
+                    data-kt-sticky-offset="{default: false, xl: '100px'}" data-kt-sticky-width="{lg: '275px'}"
+                    data-kt-sticky-left="auto" data-kt-sticky-top="100px" data-kt-sticky-animation="false"
+                    data-kt-sticky-zindex="95">
+                    <!--begin::Aside content-->
+                    <style>
+                        .card-body.sticky-sidebar {
+                            position: sticky;
+                            top: auto;
+                            height: 386px;
+                        }
+                    </style>
+                    <div class="card-body sticky-sidebar shadow-lg bg-white ">
+                        <a routerLink="/crm/CrmSmmComposemail"
+                            class="btn bi bi-plus mail-button text-white fw-bold w-100 mb-8"> Compose Mail</a>
+                        <!--end::Button-->
+                        <!--begin::Menu-->
+                        
+                        <div
+                            class="menu menu-column menu-rounded menu-state-bg menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary mb-10">
+
+                            <div class="menu-item mb-3">
+                                <!--begin::Sent-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="ki-duotone ki-send fs-2 me-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="menu-title fw-bold">Sent</span>
+                                    <span class="badge badge-light-primary">{{deliverytotal_count}}</span>
+
+                                </span>
+                                <!--end::Sent-->
+                            </div>
+
+                            <div class="menu-item mb-3">
+                                <!--begin::Draft-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="ki-duotone ki-file fs-2 me-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="menu-title fw-bold">Draft</span>
+
+                                </span>
+                                <!--end::Draft-->
+                            </div>
+                            <!--end::Menu item-->
+                            <div class="menu-item mb-3">
+                                <!--begin::schedule-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="ki-duotone ki-time fs-2 me-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="menu-title fw-bold">Schedule</span>
+
+                                </span>
+                                <!--end::schedule-->
+                            </div>
+                            <div class="menu-item mb-3">
+                                <!--begin::Open-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="ki-duotone ki-book-open fs-2 me-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="menu-title fw-bold">Open</span>
+                                    <span class="badge badge-light-primary">{{opentotal_count}}</span>
+
+                                </span>
+                                <!--end::Open-->
+                            </div>
+                            <div class="menu-item mb-3">
+                                <!--begin::Click-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="ki-duotone ki-click fs-2 me-3">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                        </i>
+                                    </span>
+                                    <span class="menu-title fw-bold">Click</span>
+                                    <span class="badge badge-light-primary">{{clicktotal_count}}</span>
+
+
+                                </span>
+                                <!--end::Click-->
+                            </div>
+
+
+
+
+                            <!--end::Menu item-->
+                        </div>
+                        <!--end::Menu-->
+
+                    </div>
+                    <!--end::Aside content-->
+                </div>
+                <!--end::Sticky aside-->
+            </div>
+            <!--end::Sidebar-->
+            <!--begin::Content-->
+            <div class="flex-lg-row-fluid ms-xl-7 ms-xl-100 ">
+
+                <!--begin::Card-->
+                <div class="card shadow-lg bg-white">
+                    
+                    <div class="table-responsive">
+                        <div class="row ms-3 mt-3 d-flex align-items-center">
+                            <div class="col">
+                                <div>
+                                    Show
+                                    <select [(ngModel)]="selectedCountSize" (ngModelChange)="updatePageSize()">
+                                        <option *ngFor="let size of countSizes" [value]="size">{{ size }}</option>
+                                    </select>
+                                    entries
+                                </div>
+                            </div>
+                       
+                            <div class="col me-5">
+                                <div class="search-bar-container">
+                                    <input type="text" class="form-control form-control-solid px-13 " name="search "
+                                        [(ngModel)]="searchText" placeholder="Search Mail" (input)="searchFunction()" />
+                                </div>
+                                
+                            </div>
+                          </div>
+                        <div class="card card-body m-3  p-3 mb-5 bg-white rounded"
+                            style=" max-height: 290px; overflow-y: auto;">
+                            <table id="call_list" #call_list class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                <thead>
+                                    <tr class="fw-bold fs-6 text-nowrap bg-lightblue text-blue">
+                                        <th>Mail Address</th>
+                                        <th>Mail Details </th>
+                                        <th>Status</th>
+                                        <th>Last Updated</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="Inbox" #Inbox>
+                                    <tr
+                                        *ngFor="let data of mailsummary_list | paginate: { itemsPerPage: pageSize, currentPage: currentPage };">
+
+
+                                        <td class="w-150px w-md-175px">
+                                            <a (click)="viewpage(data.mailmanagement_gid)"
+                                                class="d-flex align-items-center text-gray-900">&nbsp;
+
+                                                <!--begin::Name-->
+                                                <span class="fw-semibold">{{data.to}}</span>
+                                                <!--end::Name-->
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="text-gray-900 gap-1">
+                                                <!--begin::Heading-->
+                                                <a class="text-gray-900">
+                                                    <span class="fw-bold">{{data.sub}}</span> 
+                                                    
+                                                    <div class="fw-semibold limited-line" [innerHTML]="data.body"></div>
+                                                     
+                                                    <!-- <span class="fw-semibold limited-line">lorem</span> -->
+                                                </a>
+                                                <!--end::Heading-->
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" text-gray-900 " style="width: 90px;">
+                                                <span class="fw-bold">{{data.status_open}}</span>
+                                            </div>
+                                        </td>
+                                        <td class="">
+                                            <span class="fw-semibold ">{{data.created_date}}</span>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+
+
+                        <div class="row ms-3 mt-3 d-flex align-items-center">
+                            <div class="col">
+                                <div>Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ (currentPage * pageSize) <
+                                        mailsummary_list.length ? (currentPage * pageSize) : mailsummary_list.length }}
+                                        of {{ mailsummary_list.length }} entries </div>
+
+                                </div>
+
+                                <div class="col me-5">
+                                    <div class="float-end">
+
+                                        <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Previous"
+                                            nextLabel="Next">
+                                        </pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::Inbox App - Messages -->
+        </div>
+        <!--end::Content container-->
+    </div><br><br>
+    <!--end::Content-->
+    

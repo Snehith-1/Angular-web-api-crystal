@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>F:\Publish_NBFC\Build\2023-09-05(2)</_PublishTargetUrl>
+    <History>True|2023-09-05T17:10:04.3867489Z;True|2023-09-04T15:14:44.3016607+00:00;True|2023-09-04T13:36:28.6992683+00:00;True|2023-09-01T11:21:20.6217634+00:00;True|2023-08-31T19:57:58.2345176+00:00;True|2023-08-31T14:26:48.0113640+00:00;True|2023-08-30T10:47:11.0439627+00:00;True|2023-08-30T10:43:08.9330548+00:00;True|2023-08-30T10:40:09.5792662+00:00;True|2023-08-29T16:42:44.3058016+00:00;True|2023-04-04T08:45:38.2906284+00:00;True|2022-11-24T07:14:14.8462564+00:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>09/21/2021 18:29:40</publishTime>
+    </File>
+    <File Include="bin/ApplicationInsights.config">
+      <publishTime>08/29/2023 16:00:30</publishTime>
+    </File>
+    <File Include="bin/ems.asset.dll">
+      <publishTime>04/17/2022 15:14:11</publishTime>
+    </File>
+    <File Include="bin/ems.ecms.dll">
+      <publishTime>04/08/2022 12:59:00</publishTime>
+    </File>
+    <File Include="bin/ems.iasn.dll">
+      <publishTime>03/01/2022 13:04:57</publishTime>
+    </File>
+    <File Include="bin/ems.idas.dll">
+      <publishTime>02/28/2022 17:31:02</publishTime>
+    </File>
+    <File Include="bin/ems.its.dll">
+      <publishTime>12/15/2021 16:49:22</publishTime>
+    </File>
+    <File Include="bin/ems.lgl.dll">
+      <publishTime>04/17/2022 15:14:38</publishTime>
+    </File>
+    <File Include="bin/ems.master.dll">
+      <publishTime>04/16/2022 16:53:12</publishTime>
+    </File>
+    <File Include="bin/ems.osd.dll">
+      <publishTime>03/21/2022 16:51:24</publishTime>
+    </File>
+    <File Include="bin/ems.rsk.dll">
+      <publishTime>03/04/2022 17:12:25</publishTime>
+    </File>
+    <File Include="bin/ems.system.dll">
+      <publishTime>03/29/2022 18:25:08</publishTime>
+    </File>
+    <File Include="bin/ems.utilities.dll">
+      <publishTime>09/05/2023 17:09:10</publishTime>
+    </File>
+    <File Include="bin/ems.utilities.dll.config">
+      <publishTime>08/29/2023 16:00:30</publishTime>
+    </File>
+    <File Include="bin/ems.utilities.pdb">
+      <publishTime>09/05/2023 17:09:10</publishTime>
+    </File>
+    <File Include="bin/EPPlus.dll">
+      <publishTime>08/29/2023 16:01:01</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Azure.KeyVault.Core.dll">
+      <publishTime>08/29/2023 16:00:32</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Bcl.AsyncInterfaces.dll">
+      <publishTime>10/18/2022 16:19:40</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>08/29/2023 16:01:06</publishTime>
+    </File>
+    <File Include="bin/Microsoft.mshtml.dll">
+      <publishTime>08/28/2023 00:36:29</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Cors.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
+      <publishTime>04/05/2022 19:04:14</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Microsoft.WindowsAzure.Storage.dll">
+      <publishTime>08/29/2023 16:00:32</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>08/29/2023 16:01:08</publishTime>
+    </File>
+    <File Include="bin/Owin.dll">
+      <publishTime>08/29/2023 16:01:09</publishTime>
+    </File>
+    <File Include="bin/RestSharp.dll">
+      <publishTime>08/29/2023 16:01:10</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>08/29/2023 16:01:07</publishTime>
+    </File>
+    <File Include="bin/Select.Html.dep">
+      <publishTime>11/25/2021 09:30:42</publishTime>
+    </File>
+    <File Include="bin/Select.Pdf.dll">
+      <publishTime>11/25/2021 09:30:42</publishTime>
+    </File>
+    <File Include="bin/Select.Tools.dep">
+      <publishTime>11/25/2021 09:30:42</publishTime>
+    </File>
+    <File Include="bin/Spire.Doc.dll">
+      <publishTime>08/29/2023 16:00:47</publishTime>
+    </File>
+    <File Include="bin/Spire.License.dll">
+      <publishTime>08/29/2023 16:00:47</publishTime>
+    </File>
+    <File Include="bin/Spire.Pdf.dll">
+      <publishTime>08/29/2023 16:00:47</publishTime>
+    </File>
+    <File Include="bin/StoryboardAPI.dll">
+      <publishTime>09/05/2023 17:10:03</publishTime>
+    </File>
+    <File Include="bin/StoryboardAPI.pdb">
+      <publishTime>09/05/2023 17:10:03</publishTime>
+    </File>
+    <File Include="bin/Swashbuckle.Core.dll">
+      <publishTime>08/29/2023 16:01:31</publishTime>
+    </File>
+    <File Include="bin/System.Buffers.dll">
+      <publishTime>08/29/2023 16:00:51</publishTime>
+    </File>
+    <File Include="bin/System.Memory.dll">
+      <publishTime>05/08/2022 03:31:02</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>08/29/2023 16:01:05</publishTime>
+    </File>
+    <File Include="bin/System.Numerics.Vectors.dll">
+      <publishTime>08/29/2023 16:00:52</publishTime>
+    </File>
+    <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
+      <publishTime>08/29/2023 16:00:54</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encodings.Web.dll">
+      <publishTime>08/29/2023 16:00:55</publishTime>
+    </File>
+    <File Include="bin/System.Text.Json.dll">
+      <publishTime>08/29/2023 16:00:58</publishTime>
+    </File>
+    <File Include="bin/System.Threading.Tasks.Extensions.dll">
+      <publishTime>08/29/2023 16:00:59</publishTime>
+    </File>
+    <File Include="bin/System.ValueTuple.dll">
+      <publishTime>08/29/2023 16:01:00</publishTime>
+    </File>
+    <File Include="bin/System.Web.Cors.dll">
+      <publishTime>08/29/2023 16:01:04</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>08/29/2023 16:01:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>08/29/2023 16:01:06</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="bin/WebActivatorEx.dll">
+      <publishTime>08/29/2023 16:01:34</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>09/21/2021 18:29:42</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>08/29/2023 16:00:34</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>08/29/2023 16:00:33</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>09/05/2023 17:10:03</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

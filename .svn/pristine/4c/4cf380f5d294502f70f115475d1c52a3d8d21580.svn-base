@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Commission Payout Add</h3>
+        </div>
+        <form [formGroup]="prodForm">
+            <div class="table-responsive">
+                <div class="mx-3 p-3 pt-0 pb-0 mt-5 bg-white rounded">
+                    <table id="commissionpayoutadd_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                                <th>S.No</th>
+                                <th>Invoice Number</th>
+                                <th>Invoice Date</th>
+                                <th>Customer Type</th>
+                                <th>Customer</th>                                
+                                <th>Sales Team</th>
+                                <th>Sales Person</th>
+                                <th class="text-end">Invoice Amount</th>
+                                <th class="text-end">Total Payable Commission</th>
+                                <th class="text-end">Paid Commission</th>
+                                <!-- <th class="text-end">Balance Payable Commission</th> -->
+                                <th class="text-end">Commission</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of commissionpayoutadd_list; let i=index;" class="align-middle">
+                                <td>{{i+1}}</td>
+                                <td>{{data.invoice_refno}}</td>
+                                <td>{{data.invoice_date}}</td>
+                                <td>{{data.customer_type}}</td>
+                                <td>{{data.customer_name}}</td>                                
+                                <td>{{data.campaign_title}}</td>                                
+                                <td>{{data.user_firstname}}</td>
+                                <td class="text-end">{{data.invoice_amount}}</td>
+                                <td class="text-end">{{data.payable_commission}}</td>
+                                <td class="text-end">{{data.commission_amount}}</td>
+                                <!-- <td class="text-end">{{ data.payable_commission - data.commission_amount | number:'1.2-2' }}</td> -->
+                                <td class="text-end">
+                                    <input type="text" class="form-control custom-input borderc-secondary bg-white"
+                                           formControlName="commission_amount_{{i}}" placeholder="0.00"
+                                            />
+                                           
+                                </td>
+                                <td>
+                                    <button title="Update" type="button" (click)="onupdate(i)"
+                                    class="btn btn-icon btn-sm bg-primary me-1">
+                                <span class="fa-solid fa-arrow-up text-white fs-6"></span>
+                            </button>
+                            
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="text-center my-4">
+                <!-- <button class="btn-success btn-sm text-white me-4" data-bs-dismiss="modal">
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                </button> &nbsp;&nbsp; -->
+                <button class="btn-primary btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onback()">
+                    <i class="fas fa-arrow-left text-white"></i> &nbsp;Back
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">E-Way Summary</h3>
+        </div>
+    </div>
+
+    <div class="col me-5">
+        <button title="Ewaybill Invoice Summary" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end" (click)="ewayinvoicesummary()">Raise E-way Bill</button>
+    </div>
+
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="eway" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Ewaybill Ref. No</th>
+                        <th>Invoice Ref. No</th>
+                        <th>Transporter Name</th>
+                        <th>Transport Mode</th>
+                        <th>Transport Doc No</th>
+                        <th>Vehicle Number</th>
+                        <th>Vehicle Type</th>
+                        <th style="text-align: right;">Invoice Amount</th>
+                        <th>Created On</th>
+                        <th style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of ewaybillsummarylist; let i=index;" class="align-middle">
+                        <td>{{i+1}}</td>
+                        <td>{{data.ewaybill_refno}}</td>
+                        <td>{{data.invoice_refno}}</td>
+                        <td>{{data.transporter_name}}</td>
+                        <td>{{data.transport_mode }}</td>
+                        <td>{{data.transport_doc_no}}</td>
+                        <td>{{data.vehicle_no}}</td>
+                        <td>{{data.vehicle_type}}</td>
+                        <td style="text-align: right;">{{data.invoice_amount}}</td>
+                        <td>{{data.created_date | date: 'dd-MM-yyyy'}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="viewewaybill(data.ewaybill_gid)">
+                                <span class="fa-solid fa-eye fs-6" style="color: #ffffff;"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

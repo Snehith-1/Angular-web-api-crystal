@@ -1,0 +1,87 @@
+﻿using ems.sales.DataAccess;
+using ems.sales.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.sales.Controllers
+{
+    [RoutePrefix("api/SmrTrnCustomerEnquiry")]
+    [Authorize]
+    public class SmrTrnCustomerEnquiryController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaSmrTrnCustomerEnquiry objsales = new DaSmrTrnCustomerEnquiry();
+
+        //summary
+        [ActionName("GetCustomerEnquirySummary")]
+        [HttpGet]
+        public HttpResponseMessage GetCustomerEnquirySummary()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetCustomerEnquirySummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+        //Lead DropDown
+        [ActionName("GetLeadDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetLeadDtl()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetLeadDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Update Close
+        [ActionName("GetUpdatedCloseEnquiry")]
+        [HttpPost]
+        public HttpResponseMessage GetUpdatedCloseEnquiry(GetCusEnquiry values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetUpdatedCloseEnquiry(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Team DropDown
+        [ActionName("GetTeamDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTeamDtl()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetTeamDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Employee DropDown
+        [ActionName("GetEmployeeDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetEmployeeDtl()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetEmployeeDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Update Reassign
+        [ActionName("GetUpdatedReAssignEnquiry")]
+        [HttpPost]
+        public HttpResponseMessage GetUpdatedReAssignEnquiry(GetCusEnquiry values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetUpdatedReAssignEnquiry(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+    }
+}

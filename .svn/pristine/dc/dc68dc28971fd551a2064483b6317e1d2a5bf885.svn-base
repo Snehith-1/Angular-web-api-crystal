@@ -1,0 +1,116 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ActivatedRoute } from '@angular/router';
+import { AES, enc } from 'crypto-js';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+export class IContactList {
+  contacts_list: string[] = [];
+  project_id: string = "";
+}
+
+@Component({
+  selector: 'app-crm-mst-wabulkmessage',
+  templateUrl: './crm-mst-wabulkmessage.component.html',
+  styleUrls: ['./crm-mst-wabulkmessage.component.scss']
+})
+export class CrmMstWabulkmessageComponent implements OnInit {
+  responsedata: any;
+  contacts_list: any[] = [];
+  selection = new SelectionModel<IContactList>(true, []);
+  CurObj: IContactList = new IContactList();
+  pick: Array<any> = [];
+  cboTemplate: any;
+  templateList: any;
+  bulkMessageForm: FormGroup | any;
+  templateview_list: any;
+
+  ngOnInit(): void {
+    this.getContactList();
+    this.gettemplateList();
+  }
+  constructor(private formBuilder: FormBuilder, private route: Router, private router: Router, private ToastrService: ToastrService, public service: SocketService, private NgxSpinnerService: NgxSpinnerService) {
+    this.bulkMessageForm = new FormGroup({
+      cboTemplate: new FormControl(null, Validators.required),
+      id:new FormControl()
+    })
+  }
+  getContactList() {
+    this.NgxSpinnerService.show();
+    var url = 'Whatsapp/GetContact'
+    this.service.get(url).subscribe((result: any) => {
+      $('#whatsnamelist').DataTable().destroy();
+      this.contacts_list = result.whatscontactlist;
+      setTimeout(() => {
+        $('#whatsnamelist').DataTable();
+      }, 1);
+      this.NgxSpinnerService.hide();
+    });
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.contacts_list.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.contacts_list.forEach((row: IContactList) => this.selection.select(row));
+  }
+  onsend(): void {
+    this.pick = this.selection.selected
+    this.CurObj.contacts_list = this.pick
+    this.CurObj.project_id = this.cboTemplate
+    if (this.CurObj.project_id == undefined) {
+      this.ToastrService.warning("Kindly select a template to send")
+      return;
+    }
+    if (this.CurObj.contacts_list.length == 0) {
+      this.ToastrService.warning("Kindly select atleast 1 contact")
+      return;
+    }
+    this.NgxSpinnerService.show();
+    var url = 'Whatsapp/bulkMessageSend'
+    this.service.post(url, this.CurObj).subscribe((result: any) => {
+      this.NgxSpinnerService.hide();
+      this.selection.clear();
+      this.cboTemplate = ""
+    });
+  }
+
+  gettemplateList() {
+    this.NgxSpinnerService.show();
+    var url = 'Whatsapp/GetMessageTemplatesummary'
+    this.service.get(url).subscribe((result: any) => {
+      this.NgxSpinnerService.hide();
+      $('#template_list').DataTable().destroy();
+      this.templateList = result.whatsappMessagetemplatelist;
+      setTimeout(() => {
+        $('#template_list').DataTable();
+      }, 1);
+    });
+  }
+  redirecttolist() {
+    this.router.navigate(['/crm/CrmSmmWhatsappcampaign']);
+
+  }
+  marketingteam() {
+    let id = this.bulkMessageForm.get("cboTemplate")?.value;
+    let params = {
+      project_id: id
+    }
+    var url = 'Whatsapp/GetTemplatepreview'
+    this.service.getparams(url, params).subscribe((result: any) => {
+      this.responsedata = result;
+      this.templateview_list = this.responsedata.Gettemplateview_list;
+    });
+  }
+
+}

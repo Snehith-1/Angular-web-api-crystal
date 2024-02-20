@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e4a864df-b1f4-4795-ac10-e86a65078bd2/resourceGroups/vcxangularuigroup/providers/Microsoft.Web/sites/vcxangularui",
+    "appService.deploySubpath": "dist"
+}

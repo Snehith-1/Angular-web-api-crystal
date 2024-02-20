@@ -1,0 +1,369 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">
+                Advance Receipt
+                <i class="bi bi-arrow-left-square-fill float-end fs-1 me-6" (click)="back()"></i>
+            </h3>
+        </div>
+    </div>
+
+    <div class="card m-3">
+        <form [formGroup]="proformaadvancerptform">
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <input hidden type="text" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary" name="invoice_gid" formControlName="invoice_gid"/>
+                
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Proforma Invoice Ref. No.</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_invoice_ref_no" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Proforma Invoice Date</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_invoice_date" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Order Ref. No.</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_order_ref_no" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Order Date</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_order_date" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-12">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Company Name</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_company_name" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Contact Person</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_contact_person" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Contact Number</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_contact_no" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Email Address</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_email_address" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Company Address</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">                        
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input text-red" formControlName="proforma_advrpt_company_address" readonly></textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Department</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_advrpt_department" readonly>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Order Reference</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input text-red" formControlName="proforma_advrpt_order_reference" readonly></textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Remarks</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input text-red" formControlName="proforma_advrpt_remarks" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <div class="card card-body m-0 shadow-lg p-3 mb-5 bg-white rounded mt-7">
+                    <table id="product" class="table table-striped table-row-bordered gy-4 gs-2">
+                        <thead class="table_head">
+                            <tr class="text-white fw-bold fs-5 text-nowrap text-blue align-middle">
+                                <th>S.No</th>
+                                <th>Product Group</th>
+                                <th>Product & Description</th>
+                                <th>Unit</th>
+                                <th style="text-align: center;">Quantity</th>
+                                <th style="text-align: right;">Unit Price</th>
+                                <th style="text-align: right;">Discount (%)</th>
+                                <th style="text-align: right; width: 100px;">Tax</th>
+                                <th style="text-align: right;">Need by Date</th>
+                                <th style="text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of productdata_list; let i=index;" class="align-middle">
+                                <td>{{i+1}}</td>
+                                <td>{{data.productgroup_name}}</td>
+                                <td>{{data.product_name}}</td>
+                                <td>{{data.uom_name}}</td>
+                                <td style="text-align: center;">{{data.qty_invoice}}</td>
+                                <td style="text-align: right;">{{data.product_price}}</td>
+                                <td style="text-align: right;">{{data.discount_amount}}</td>
+                                <td style="text-align: right;">{{data.tax_percentage}} - {{data.tax_amount}}</td>
+                                <td style="text-align: right;">date</td>
+                                <td class="fw-bold" style="text-align: right;">{{data.product_total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Payment :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary fw-bold fs-5" formControlName="proforma_advrpt_payment" style="border: none; height: 25px; width: 70px; text-align: center;" readonly><span class="fw-bold ms-4 text-red">Days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Delivery Period :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary fw-bold fs-5" formControlName="proforma_advrpt_delivery_period" style="border: none; height: 25px; width: 70px; text-align: center;"><span class="fw-bold ms-4 text-red" readonly>Days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Net Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_net_amount" style="border: none; height: 25px; width: 150px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Order Ref. No. :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_order_refno" style="border: none; height: 25px; width: 150px; text-align: center;" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Add On Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_addon_charges" style="border: none; height: 25px; width: 150px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Additional Discount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_additional_discount" style="border: none; height: 25px; width: 150px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">With Hold Tax :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 bg-white" formControlName="proforma_advrpt_hold_with_tax" style="height: 25px; width: 150px; text-align: right;"><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Grand Total :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_grand_total" style="border: none; width: 150px; height: 25px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Existing Advance :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_existing_advance" style="border: none; width: 150px; height: 25px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Outstanding Advance Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 text-red bg-secondary" formControlName="proforma_advrpt_outstanding_adv_amount" style="border: none; width: 150px; height: 25px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-2">Advance :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="fw-bold fs-5 bg-white" formControlName="proforma_advrpt_advance" style="height: 25px; width: 150px; text-align: right;"><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold fs-5 mt-4">Payment Mode</label><span class="ms-1 text-red">*</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="proforma_advrpt_payment_mode" [ngStyle]="{'border-color': proformaadvrptpaymentControl.invalid && proformaadvrptpaymentControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="proformaadvrptpaymentControl.invalid && (proformaadvrptpaymentControl.dirty || proformaadvrptpaymentControl.touched)">
+                                        <option value="" disabled selected>Select Payment mode</option>
+                                        <option *ngFor="let payment_type of modeofpayment_list" [value]="payment_type.modeofpayment_gid">{{payment_type.payment_type}}</option>
+                                    </select>
+                                    <div *ngIf="proformaadvrptpaymentControl.invalid && proformaadvrptpaymentControl.touched" class="invalid-feedback">
+                                        <div *ngIf="proformaadvrptpaymentControl.hasError('required')" class="text-red ms-3 fs-5">* Payment mode is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card_heading mt-20">
+                <h6>Terms and Condition:</h6>
+            </div>
+            <div class="d-flex flex-row flex-wrap m-2">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                  <textarea type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 border-secondary bg-white custom-input" formControlName="proforma_advrpt_termsandconditions"></textarea>
+                </div>
+            </div>
+
+            <div class="card" m-3>
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4" (click)="AdvrptProformaInvoiceSubmit()">
+                        <i class="bi bi-check-square fs-7 me-1"></i>
+                        Confirm
+                    </button>
+        
+                    <button class="btn-primary btn-sm text-white me-4" (click)="back()">
+                        <i class="bi bi-arrow-left-square fs-7 me-1"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

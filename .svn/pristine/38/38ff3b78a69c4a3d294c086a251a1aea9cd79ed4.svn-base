@@ -1,0 +1,36 @@
+<div class="card m-20 ">
+    <form [formGroup]="reactiveForm" #form="ngForm">
+        <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-1">
+                <h5 class="fw-bolder text-blue">VENDOR EXCEL FILE IMPORT</h5>
+            </div>
+        </div>
+        <div class="align-items-center">
+        <div class=" col-lg-6 justify-content-center align-items-center ms-12 my-4">
+            <div class="col-12 col-lg-12 col-md-6 col-sm-12 p-10 m-30 d-flex align-items-center"><b>Select An Excel To
+                    Import <span style="color: red;">*</span></b>
+                <div class="col-lg-4 col-12 col-md-11 col-sm-11 fv-row mt-2 ms-12">
+                    <input style="width: 300%;" (change)="onChange1($event)" accept=".xlsx, .xls"
+                                        type="file" #fileInput class="
+                                  form-control form-control-lg form-control-solid bg-white
+                                  mb-3 mb-lg-0  borderc-secondary custom-input
+                                " name="fName" />
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="text-center my-4">
+            <button type="submit" class="btn-success btn-sm text-white me-2" (click)="importexcel()">
+                <i class="bi bi-check-square fs-5"></i>&nbsp;Upload</button>
+            <button class="btn-primary btn-sm text-white me-4 mt-3-center" (click)="onback()">
+                <i class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back
+            </button>
+            <button class="btn-warning btn-sm text-white me-4 mt-3-center" (click)="downloadfileformat()">
+                <i class="fas fa-arrow-down"></i>&nbsp;Download File Format
+            </button>
+        </div>
+    </form>
+</div>

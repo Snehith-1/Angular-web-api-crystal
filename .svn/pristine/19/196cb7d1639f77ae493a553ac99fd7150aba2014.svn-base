@@ -1,0 +1,207 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+interface IEntity {
+  department_name: string;
+  department_code: string;
+  department_gid: string;
+  department_prefix: string;
+  employee_gid: string;
+  department_name_edit: string;
+  department_code_edit: string;
+  department_manager_edit: string;
+  department_prefix_edit: string;
+}
+
+
+@Component({
+  selector: 'app-sys-mst-department',
+  templateUrl: './sys-mst-department.component.html',
+  styleUrls: ['./sys-mst-department.component.scss']
+})
+export class SysMstDepartmentComponent {
+  reactiveForm!: FormGroup;
+  reactiveFormEdit!: FormGroup;
+  responsedata: any;
+  parameterValue: any;
+  parameterValue1: any;
+  department_list: any[] = [];
+  department!: IEntity;
+  GetDepartmentAddDropdowns: any[] = [];
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+    this.department = {} as IEntity;
+  }
+  ngOnInit(): void {
+    this.GetDepartmentSummary();
+    // Form values for Add popup/////
+    this.reactiveForm = new FormGroup({
+      department_name: new FormControl(this.department.department_name, [
+        Validators.required,
+
+      ]),
+      department_code: new FormControl(this.department.department_code, [
+        Validators.required,
+
+      ]),
+      
+      department_prefix: new FormControl(''),
+      employee_gid: new FormControl(''),
+      department_gid: new FormControl(''),
+
+      
+    });
+    this.reactiveFormEdit = new FormGroup({
+
+      department_name_edit: new FormControl(this.department.department_name_edit, [
+        Validators.required,]),
+      department_code_edit: new FormControl(this.department.department_code_edit, [
+        Validators.required,]),
+      
+      department_prefix_edit: new FormControl(this.department.department_prefix_edit, []),
+      department_gid: new FormControl(''),
+      employee_gid: new FormControl(''),
+
+
+    });
+    var url = 'Department/GetDepartmentAddDropdown';
+    this.service.get(url).subscribe((result: any) => {
+      this.GetDepartmentAddDropdowns = result.GetDepartmentAddDropdown;
+    
+    });
+  }
+  GetDepartmentSummary() {
+    var url = 'Department/GetDepartmentSummary'
+    this.service.get(url).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.department_list = this.responsedata.department_list;
+      setTimeout(() => {
+        $('#department').DataTable();
+      }, );
+
+
+    });
+  }
+
+  get department_name() {
+    return this.reactiveForm.get('department_name')!;
+  }
+  get department_code() {
+    return this.reactiveForm.get('department_code')!;
+  }
+ 
+  get department_prefix() {
+    return this.reactiveForm.get('department_prefix')!;
+  }
+
+  get department_name_edit() {
+    return this.reactiveFormEdit.get('department_name_edit')!;
+  }
+  get department_code_edit() {
+    return this.reactiveFormEdit.get('department_code_edit')!;
+  }
+  
+  get department_prefix_edit() {
+    return this.reactiveFormEdit.get('department_prefix_edit')!;
+  }
+  public onsubmit(): void {
+
+    if (this.reactiveForm.value.department_name != null && this.reactiveForm.value.department_name != '')
+
+    if (this.reactiveForm.value.department_code != null && this.reactiveForm.value.department_code != '')
+      {
+
+          // for (const control of Object.keys(this.reactiveForm.controls)) {
+          //   this.reactiveForm.controls[control].markAsTouched();
+          // }
+          this.reactiveForm.value;
+          var url = 'Department/PostDepartment'
+          this.service.postparams(url, this.reactiveForm.value).subscribe((result: any) => {
+
+            if (result.status == false) {
+              this.ToastrService.warning(result.message)
+              this.GetDepartmentSummary();  
+            }
+            else {
+              this.reactiveForm.get("department_gid")?.setValue(null);
+
+              this.reactiveForm.get("department_name")?.setValue(null);
+              this.reactiveForm.get("department_code")?.setValue(null);
+              this.reactiveForm.get("department_prefix")?.setValue(null);
+
+              this.ToastrService.success(result.message)
+
+
+              this.GetDepartmentSummary();
+
+            }
+
+          });
+
+        }
+        else {
+          this.ToastrService.warning('result.message')
+        }
+  }
+  openModaledit(parameter: string) {
+    this.parameterValue1 = parameter
+    this.reactiveFormEdit.get("department_name_edit")?.setValue(this.parameterValue1.department_name);
+    this.reactiveFormEdit.get("department_code_edit")?.setValue(this.parameterValue1.department_code);
+    this.reactiveFormEdit.get("department_prefix_edit")?.setValue(this.parameterValue1.department_prefix);
+    this.reactiveFormEdit.get("department_gid")?.setValue(this.parameterValue1.department_gid);
+
+  }
+  ////////////Update popup////////
+  public onupdate(): void {
+    debugger
+    if (this.reactiveFormEdit.value.department_name_edit != null && this.reactiveFormEdit .value.department_name_edit != '')
+
+     {
+          for (const control of Object.keys(this.reactiveFormEdit.controls)) {
+            this.reactiveFormEdit.controls[control].markAsTouched();
+          }
+          this.reactiveFormEdit.value;
+
+          var url = 'Department/getUpdatedDepartment'
+
+          this.service.postparams(url, this.reactiveFormEdit.value).pipe().subscribe(result => {
+            this.responsedata = result;
+            if (result.status == false) {
+              this.ToastrService.warning(result.message)
+              this.GetDepartmentSummary();
+            }
+            else {
+              this.ToastrService.success(result.message)
+              this.GetDepartmentSummary();
+            }
+
+          });
+
+     }
+  }
+  
+  ////////Delete popup////////
+  openModaldelete(parameter: string) {
+    this.parameterValue = parameter
+
+  }
+  ondelete() {
+    console.log(this.parameterValue);
+    var url = 'Department/DeleteDepartment'
+    this.service.getid(url, this.parameterValue).subscribe((result: any) => {
+      if (result.status == false) {
+        this.ToastrService.warning(result.message)
+      }
+      else {
+        this.ToastrService.success(result.message)
+      }
+      this.GetDepartmentSummary();
+
+    });
+
+  }
+  onclose() {
+    this.reactiveForm.reset();
+  }
+}

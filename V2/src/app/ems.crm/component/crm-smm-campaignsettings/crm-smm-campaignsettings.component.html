@@ -1,0 +1,1016 @@
+<div style="padding-bottom: 50px;">
+    <div class="card shadow-lg rounded-top" style="height: 490px;">
+        <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+            <h3 class="fw-bolder text-white"><i class="fa-solid fa-gear fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp; Configuration
+                Settings</h3>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-8 fs-6">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_5"
+                                    style="color: #009EF7">Shopify</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_4"
+                                    style="color: #009EF7">WhatsApp</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6"
+                                    style="color: #009EF7">Email</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_7"
+                                    style="color: #009EF7">Facebook</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8"
+                                    style="color: #009EF7">Linkedin</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9"
+                                    style="color: #009EF7">Telegram</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_10"
+                                    style="color: #009EF7">SMS</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_11"
+                                    style="color: #009EF7">Instagram</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_12"
+                                    style="color: #009EF7">Customer Type</a>
+                            </li>
+                        </ul>
+
+                        <form [formGroup]="reactiveFormShopify" #form="ngForm">
+                            <div class="tab-content" id="myTabContent">
+                                <!--Shopify-->
+                                <div class="tab-pane fade show active ms-5" id="kt_tab_pane_5" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <div class="modal-body">
+                                                <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                                    <h2 class="text-center" style="margin-top:-35px;"><i
+                                                            class="fa-brands fa-shopify"
+                                                            style="font-size:20px;font-weight: bolder;background-color: white;color:#e47cca;"></i>&nbsp;
+                                                        Shopify API Credentials</h2>
+                                                        <!-- <div> -->
+                                                            <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                                <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                                    <input class="form-check-input" type="radio"  [(ngModel)]="shopifystatus" id="Yes"
+                                                                        formControlName="shopify_status" value="Y">
+                                                                    <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                                </div>
+                                                                <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                                    <input class="form-check-input" type="radio"
+                                                                    [(ngModel)]="shopifystatus" formControlName="shopify_status"
+                                                                        value="N" id="No">
+                                                                    <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                                </div>
+                                                            </div>
+                                                        <!-- </div> -->
+                                                    <input formControlName="shopify_id" type="text" hidden class="
+                                                                    form-control form-control-lg form-control-solid
+                                                                    bg-white
+                                                                    custom-input
+                                                                    mb-3 mb-lg-0
+                                                                    borderc-secondary" name="shopify_id" />
+                                                    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="shopifystatus == 'Y'">
+                                                            <span class="font-bold">Shopify Store Name<span
+                                                                    class="ms-1 text-red">*</span></span>
+                                                            <input formControlName="shopify_store_name" type="text"
+                                                                class="
+                                                                    form-control form-control-lg form-control-solid
+                                                                    bg-white
+                                                                    custom-input
+                                                                    mb-3 mb-lg-0
+                                                                    borderc-secondary " [ngStyle]="{
+                                                                        'border-color':
+                                                                        shopify_store_name.invalid && shopify_store_name.touched
+                                                                            ? 'red'
+                                                                            : 'rgb(209, 209, 209)'
+                                                                      }" name="shopify_store_name" />
+                                                        </div>
+                                                        <div
+                                                            *ngIf="shopify_store_name.invalid && (shopify_store_name.dirty || shopify_store_name.touched)">
+                                                            <div *ngIf="shopify_store_name.errors?.['required']">
+                                                                <span style="color:red;">Store Name is required.</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="shopifystatus == 'Y'">
+                                                            <span class="font-bold">Store Month and Year<span
+                                                                    class="ms-1 text-red">*</span></span>
+
+                                                            <input formControlName="store_month_year" type="text" class="
+                                                                      form-control form-control-lg form-control-solid
+                                                                      bg-white
+                                                                      custom-input
+                                                                      mb-3 mb-lg-0
+                                                                      borderc-secondary " [ngStyle]="{
+                                                                          'border-color':
+                                                                          store_month_year.invalid && store_month_year.touched
+                                                                              ? 'red'
+                                                                              : 'rgb(209, 209, 209)'
+                                                                        }" name="store_month_year" />
+
+                                                        </div>
+                                                        <div
+                                                            *ngIf="store_month_year.invalid && (store_month_year.dirty || store_month_year.touched)">
+                                                            <div *ngIf="store_month_year.errors?.['required']">
+                                                                <span style="color:red;">Store Month and year is
+                                                                    required.</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="shopifystatus == 'Y'">
+                                                            <span class="font-bold">Access Token<span
+                                                                    class="ms-1 text-red">*</span></span>
+                                                            <input formControlName="shopify_accesstoken" type="text"
+                                                                class="
+                                                                form-control form-control-lg form-control-solid
+                                                                bg-white
+                                                                custom-input
+                                                                mb-3 mb-lg-0
+                                                                borderc-secondary " [ngStyle]="{
+                                                                    'border-color':
+                                                                    shopify_accesstoken.invalid && shopify_accesstoken.touched
+                                                                        ? 'red'
+                                                                        : 'rgb(209, 209, 209)'
+                                                                  }" name="shopify_accesstoken" />
+
+                                                        </div>
+                                                        <div
+                                                            *ngIf="shopify_accesstoken.invalid && (shopify_accesstoken.dirty || shopify_accesstoken.touched)">
+                                                            <div *ngIf="shopify_accesstoken.errors?.['required']">
+                                                                <span style="color:red;">Access Token is
+                                                                    required.</span>
+                                                            </div>
+                                                        </div>
+                                                    </div><br>
+                                                    <!-- <div class="card border borderc-secondary"> -->
+                                                        <div *ngIf="shopifystatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Shopify Details</div>
+
+                                                    <!-- </div> -->
+                                                    <!-- <h5  class="note" *ngIf="shopifystatus == 'N'">Note: Kindly Enable To Add Shopify Details</h5> -->
+                                                    <div class="text-center my-4 mt-7">
+
+                                                        <button (click)="onshopifyupdate()"
+                                                            [disabled]="reactiveFormShopify.invalid" [ngClass]="{
+                                                        'primary-button': !reactiveFormShopify.invalid,
+                                                        'secondary-button': reactiveFormShopify.invalid
+                                                         }">
+                                                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                        </button>
+                                                    </div>
+<div *ngIf="shopifystatus == 'N'"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Whatsapp-->
+                                <div class="row tab-pane fade ms-5 " id="kt_tab_pane_4" role="tabpanel" style="padding-bottom: 50px;">
+
+                                    <form [formGroup]="reactiveFormWhatsapp" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i class="fa-brands fa-whatsapp"
+                                                    style="font-size:20px;font-weight: bolder;color:#57e234;background-color: white;"></i>&nbsp;
+                                                Whatsapp API Credentials</h2>
+                                                <!-- <div style="padding-left: 540px;"> -->
+                                                    <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                            <input class="form-check-input" type="radio"  [(ngModel)]="whatsappstatus" id="Yes"
+                                                                formControlName="whatsapp_status" value="Y">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                            <input class="form-check-input" type="radio"
+                                                            [(ngModel)]="whatsappstatus" formControlName="whatsapp_status"
+                                                                value="N" id="No">
+                                                            <label style="font-weight: bolder;font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                        </div>
+                                                    </div>
+                                                <!-- </div> -->
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                                <input formControlName="whatsapp_id" type="text" hidden class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary" name="whatsapp_id" />
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngif="whatsappstatus == 'Y'">
+                                                    <span class="font-bold">Workspace ID<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="workspace_id" type="text" class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            workspace_id.invalid && workspace_id.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="workspace_id" />
+                                                </div>
+                                                <div
+                                                    *ngIf="workspace_id.invalid && (workspace_id.dirty || workspace_id.touched)">
+                                                    <div *ngIf="workspace_id.errors?.['required']">
+                                                        <span style="color:red;">Workspace ID is required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="whatsappstatus == 'Y'">
+                                                    <span class="font-bold">Channel ID<span
+                                                            class="ms-1 text-red">*</span></span>
+
+                                                    <input formControlName="channel_id" type="text" class="
+                                                          form-control form-control-lg form-control-solid
+                                                          bg-white
+                                                          custom-input
+                                                          mb-3 mb-lg-0
+                                                          borderc-secondary " [ngStyle]="{
+                                                              'border-color':
+                                                              channel_id.invalid && channel_id.touched
+                                                                  ? 'red'
+                                                                  : 'rgb(209, 209, 209)'
+                                                            }" name="channel_id" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="channel_id.invalid && (channel_id.dirty || channel_id.touched)">
+                                                    <div *ngIf="channel_id.errors?.['required']">
+                                                        <span style="color:red;">Channel ID is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="whatsappstatus == 'Y'">
+                                                    <span class="font-bold">Access Token<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="whatsapp_accesstoken" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        whatsapp_accesstoken.invalid && whatsapp_accesstoken.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="whatsapp_accesstoken" />
+
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="whatsappstatus == 'Y'">
+                                                    <span class="font-bold">Channel Group ID<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="channelgroup_id" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        channelgroup_id.invalid && channelgroup_id.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="channelgroup_id" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="channelgroup_id.invalid && (channelgroup_id.dirty || channelgroup_id.touched)">
+                                                    <div *ngIf="channelgroup_id.errors?.['required']">
+                                                        <span style="color:red;">Access Token is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="whatsappstatus == 'Y'">
+                                                    <span class="font-bold">Channel Name<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="channel_name" type="text" class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            channel_name.invalid && channel_name.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="channel_name" />
+                                                </div>
+                                                <div
+                                                    *ngIf="channel_name.invalid && (channel_name.dirty || channel_name.touched)">
+                                                    <div *ngIf="channel_name.errors?.['required']">
+                                                        <span style="color:red;">Channel Name is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="whatsappstatus == 'Y'">
+                                                    <span class="font-bold">Mobile Number<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="mobile_number" type="text" class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            mobile_number.invalid && mobile_number.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="mobile_number" />
+                                                </div>
+                                                <div
+                                                    *ngIf="mobile_number.invalid && (mobile_number.dirty || mobile_number.touched)">
+                                                    <div *ngIf="mobile_number.errors?.['required']">
+                                                        <span style="color:red;">Mobile Number is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="whatsappstatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Whatsapp Details</div>
+                                            <!-- <h5  class="note1" style="background-color: #cefcc3;" *ngIf="whatsappstatus == 'N'">Note: Kindly Enable To Add Whatsapp Details</h5> -->
+                                            <div class="text-center my-4">
+                                                <button (click)="onwhatsappupdate()"
+                                                    [disabled]="reactiveFormWhatsapp.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormWhatsapp.invalid,
+                                            'secondary-button': reactiveFormWhatsapp.invalid
+                                             }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- mail starts -->
+                                <div class="row tab-pane fade ms-5" id="kt_tab_pane_6" role="tabpanel">
+                                    <form [formGroup]="reactiveFormEmail" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i
+                                                    class="fa-solid fa-envelope"
+                                                    style="font-size:20px;font-weight: bolder;background-color:white;color:rgb(211, 72, 72);"></i>
+                                                &nbsp;Email API Credentials</h2>
+                                                <!-- <div style="padding-left: 540px;"> -->
+                                                    <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                            <input class="form-check-input" type="radio"  [(ngModel)]="emailstatus" id="Yes"
+                                                                formControlName="email_status" value="Y">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                            <input class="form-check-input" type="radio"
+                                                            [(ngModel)]="emailstatus" formControlName="email_status"
+                                                                value="N" id="No">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                        </div>
+                                                    </div>
+                                                <!-- </div> -->
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+
+                                                <input formControlName="email_id" type="text" hidden class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary" name="email_id" />
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="emailstatus == 'Y'">
+                                                    <span class="font-bold">Base URL<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="mail_base_url" type="text" class="
+                                                            form-control form-control-lg form-control-solid
+                                                            bg-white
+                                                            custom-input
+                                                            mb-3 mb-lg-0
+                                                            borderc-secondary " [ngStyle]="{
+                                                                'border-color':
+                                                                mail_base_url.invalid && mail_base_url.touched
+                                                                    ? 'red'
+                                                                    : 'rgb(209, 209, 209)'
+                                                              }" name="mail_base_url" />
+                                                </div>
+                                                <div
+                                                    *ngIf="mail_base_url.invalid && (mail_base_url.dirty || mail_base_url.touched)">
+                                                    <div *ngIf="mail_base_url.errors?.['required']">
+                                                        <span style="color:red;">Base URL is required.</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="emailstatus == 'Y'">
+                                                    <span class="font-bold">Access Token<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="mail_access_token" type="text" class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            mail_access_token.invalid && mail_access_token.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="mail_access_token" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="mail_access_token.invalid && (mail_access_token.dirty || mail_access_token.touched)">
+                                                    <div *ngIf="mail_access_token.errors?.['required']">
+                                                        <span style="color:red;">Access Token is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="emailstatus == 'Y'">
+                                                    <span class="font-bold">Email Userame<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="email_username" type="text" class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary " [ngStyle]="{
+                                                    'border-color':
+                                                    email_username.invalid && email_username.touched
+                                                        ? 'red'
+                                                        : 'rgb(209, 209, 209)'
+                                                  }" name="email_username" />
+                                                </div>
+                                                <div
+                                                    *ngIf="email_username.invalid && (email_username.dirty || email_username.touched)">
+                                                    <div *ngIf="email_username.errors?.['required']">
+                                                        <span style="color:red;"> Email Userame is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="emailstatus == 'Y'">
+                                                    <span class="font-bold">Sending Email Address<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="sending_domain" type="text" class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary " [ngStyle]="{
+                                                    'border-color':
+                                                    sending_domain.invalid && sending_domain.touched
+                                                        ? 'red'
+                                                        : 'rgb(209, 209, 209)'
+                                                }" name="sending_domain" placeholder="<emailname>@<sending domain name>" />
+                                                </div>
+                                                <div
+                                                    *ngIf="sending_domain.invalid && (sending_domain.dirty || sending_domain.touched)">
+                                                    <div *ngIf="sending_domain.errors?.['required']">
+                                                        <span style="color:red;">Sending Email Address is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="emailstatus == 'Y'">
+                                                    <span class="font-bold">Receiving Email Address<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="receiving_domain" type="text" class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary " [ngStyle]="{
+                                                    'border-color':
+                                                    receiving_domain.invalid && receiving_domain.touched
+                                                        ? 'red'
+                                                        : 'rgb(209, 209, 209)'
+                                                  }" name="receiving_domain" placeholder="<emailname>@<receiving domain name>" />
+                                                </div>
+                                                <div
+                                                    *ngIf="receiving_domain.invalid && (receiving_domain.dirty || receiving_domain.touched)">
+                                                    <div *ngIf="receiving_domain.errors?.['required']">
+                                                        <span style="color:red;">Receiving Email Address is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <!-- <h5 class="note" style="background-color: rgb(250, 160, 160);"*ngIf="emailstatus == 'N'">Note: Kindly Enable To Add Email Details</h5> -->
+                                            <div *ngIf="emailstatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Email Details</div>
+                                            <div class="text-center my-4">
+
+                                                <button (click)="onemailupdate()" [disabled]="reactiveFormEmail.invalid"
+                                                    [ngClass]="{
+                                            'primary-button': !reactiveFormEmail.invalid,
+                                            'secondary-button': reactiveFormEmail.invalid
+                                             }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Facebook -->
+                                <div class="row tab-pane fade ms-5" id="kt_tab_pane_7" role="tabpanel">
+                                    <form [formGroup]="reactiveFormFacebook" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i class="fa-brands fa-facebook"
+                                                    style="font-size:20px;font-weight: bolder;background-color:white;color:rgb(72, 109, 211);"></i>
+                                                &nbsp;Facebook API Credentials</h2>
+                                                <!-- <div style="padding-left: 540px;"> -->
+                                                    <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                            <input class="form-check-input" type="radio"  [(ngModel)]="facebookstatus" id="Yes"
+                                                                formControlName="facebook_status" value="Y">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                            <input class="form-check-input" type="radio"
+                                                            [(ngModel)]="facebookstatus" formControlName="facebook_status"
+                                                                value="N" id="No">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                        </div>
+                                                    </div>
+                                                <!-- </div> -->
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+
+                                                <input formControlName="facebook_id" type="text" hidden class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary" name="facebook_id" />
+
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="facebookstatus == 'Y'">
+                                                    <span class="font-bold">Access Token<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="facebook_access_token" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        facebook_access_token.invalid && facebook_access_token.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="facebook_access_token" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="facebook_access_token.invalid && (facebook_access_token.dirty || facebook_access_token.touched)">
+                                                    <div *ngIf="facebook_access_token.errors?.['required']">
+                                                        <span style="color:red;">Access Token is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="facebookstatus == 'Y'">
+                                                    <span class="font-bold">Page ID<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="facebook_page_id" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        facebook_page_id.invalid && facebook_page_id.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="facebook_page_id" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="facebook_page_id.invalid && (facebook_page_id.dirty || facebook_page_id.touched)">
+                                                    <div *ngIf="facebook_page_id.errors?.['required']">
+                                                        <span style="color:red;">Page ID
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!-- <h5 class="note1" style="background-color: rgb(179, 198, 248);" *ngIf="facebookstatus == 'N'">Note: Kindly Enable To Add Facebook Details</h5> -->
+                                            <div *ngIf="facebookstatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Facebook Details</div>
+                                            <div class="text-center my-4">
+
+                                                <button (click)="onfacebookupdate()"
+                                                    [disabled]="reactiveFormFacebook.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormFacebook.invalid,
+                                            'secondary-button': reactiveFormFacebook.invalid
+                                             }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <!--LinkedIn-->
+                                <div class="row tab-pane fade ms-5" id="kt_tab_pane_8" role="tabpanel">
+                                    <form [formGroup]="reactiveFormLinkedin" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i class="fa-brands fa-linkedin"
+                                                    style="font-size:20px;font-weight: bolder;background-color:white ;color:#0077b5;"></i>
+                                                &nbsp;Linkedin API Credentials</h2>
+                                                <!-- <div style="padding-left: 540px;"> -->
+                                                    <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                            <input class="form-check-input" type="radio"  [(ngModel)]="linkedinstatus" id="Yes"
+                                                                formControlName="linkedin_status" value="Y">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                            <input class="form-check-input" type="radio"
+                                                            [(ngModel)]="linkedinstatus" formControlName="linkedin_status"
+                                                                value="N" id="No">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                        </div>
+                                                    </div>
+                                                <!-- </div> -->
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+
+                                                <input formControlName="linkedin_id" type="text" hidden class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary" name="linkedin_id" />
+
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="linkedinstatus == 'Y'">
+                                                    <span class="font-bold">Access Token<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="linkedin_access_token" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        linkedin_access_token.invalid && linkedin_access_token.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="linkedin_access_token" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="linkedin_access_token.invalid && (linkedin_access_token.dirty || linkedin_access_token.touched)">
+                                                    <div *ngIf="linkedin_access_token.errors?.['required']">
+                                                        <span style="color:red;">Access Token is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                            </div><br>
+                                            <!-- <h5 class="note1" style="background-color: rgb(179, 198, 248);" *ngIf="linkedinstatus == 'N'">Note: Kindly Enable To Add Linkedin Details</h5> -->
+                                            <div *ngIf="linkedinstatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Linkedin Details</div>
+                                            <div class="text-center my-4">
+
+                                                <button (click)="onlinkedinupdate()"
+                                                    [disabled]="reactiveFormLinkedin.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormLinkedin.invalid,
+                                            'secondary-button': reactiveFormLinkedin.invalid
+                                             }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--Telegram-->
+                                <div class="row tab-pane fade ms-5" id="kt_tab_pane_9" role="tabpanel">
+                                    <form [formGroup]="reactiveFormTelegram" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i class="fa-brands fa-telegram"
+                                                    style="font-size:20px;font-weight: bolder;background-color:white;color:#0088CC;"></i>
+                                                &nbsp;Telegram API Credentials</h2>
+                                                <!-- <div style="padding-left: 540px;"> -->
+                                                    <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                            <input class="form-check-input" type="radio"  [(ngModel)]="telegramstatus" id="Yes"
+                                                                formControlName="telegram_status" value="Y">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                            <input class="form-check-input" type="radio"
+                                                            [(ngModel)]="telegramstatus" formControlName="telegram_status"
+                                                                value="N" id="No">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                        </div>
+                                                    </div>
+                                                <!-- </div> -->
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+
+                                                <input formControlName="telegram_id" type="text" hidden class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary" name="telegram_id" />
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="telegramstatus != 'N'">
+                                                    <span class="font-bold">Bot ID<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="bot_id" type="text" class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            bot_id.invalid && bot_id.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="bot_id" />
+                                                </div>
+                                                <div *ngIf="bot_id.invalid && (bot_id.dirty || bot_id.touched)">
+                                                    <div *ngIf="bot_id.errors?.['required']">
+                                                        <span style="color:red;">Bot ID is required.</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="telegramstatus != 'N'">
+                                                    <span class="font-bold">Chat ID<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="chat_id" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        chat_id.invalid && chat_id.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="chat_id" />
+
+                                                </div>
+                                                <div *ngIf="chat_id.invalid && (chat_id.dirty || chat_id.touched)">
+                                                    <div *ngIf="chat_id.errors?.['required']">
+                                                        <span style="color:red;">Chat ID is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                            </div><br>
+                                            <!-- <h5 class="note1" style="background-color: rgb(179, 198, 248);" *ngIf="telegramstatus == 'N'">Note: Kindly Enable To Add Telegram Details</h5> -->
+                                            <div *ngIf="telegramstatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Telegram Details</div>
+
+                                            <div class="text-center my-4">
+
+                                                <button (click)="ontelegramupdate()"
+                                                    [disabled]="reactiveFormTelegram.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormTelegram.invalid,
+                                            'secondary-button': reactiveFormTelegram.invalid
+                                             }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <!--SMS-->
+                                <div class="row tab-pane fade ms-5" id="kt_tab_pane_10" role="tabpanel">
+                                    <h3 class="text-center"><i class="fa-solid fa-message"
+                                            style="font-size:20px;font-weight: bolder;background-color:white;color:#0a6bc0;margin-top: 10px;"></i>
+                                        &nbsp;SMS Coming Soon....</h3>
+                                    <!-- <form [formGroup]="reactiveFormTelegram" #form="ngForm">
+                                    <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                        <h2 class="text-center" style="margin-top:-35px;"><i class="bi bi-chat-left-dots"
+                                            style="font-size:20px;font-weight: bolder;background-color:white;color:#0088CC;"></i> &nbsp;Telegram API Credentials</h2>
+                                        <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+                                            
+                                            <input formControlName="telegram_id" type="text" hidden
+                                            class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary"  name="telegram_id" />
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"  >
+                                                <span class="font-bold">Bot ID<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <input formControlName="bot_id" type="text"
+                                                    class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            bot_id.invalid && bot_id.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="bot_id" />
+                                            </div>
+                                            <div
+                                                *ngIf="bot_id.invalid && (bot_id.dirty || bot_id.touched)">
+                                                <div *ngIf="bot_id.errors?.['required']">
+                                                    <span style="color:red;">Bot ID is required.</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <span class="font-bold">Chat ID<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <input formControlName="chat_id" type="text"
+                                                    class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        chat_id.invalid && chat_id.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="chat_id" />
+
+                                            </div>
+                                            <div
+                                                *ngIf="chat_id.invalid && (chat_id.dirty || chat_id.touched)">
+                                                <div *ngIf="chat_id.errors?.['required']">
+                                                    <span style="color:red;">Chat ID is
+                                                        required.</span>
+                                                </div>
+                                            </div>
+                                        </div><br>
+                                        <div class="text-center my-4">
+
+                                            <button (click)="ontelegramupdate()"
+                                                [disabled]="reactiveFormTelegram.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormTelegram.invalid,
+                                            'secondary-button': reactiveFormTelegram.invalid
+                                             }">
+                                                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                            </button>
+                                        </div>
+                                    </div>
+                            </form> -->
+
+                                </div>
+                                <!--Instagram-->
+                                <div class="row tab-pane fade ms-5" id="kt_tab_pane_11" role="tabpanel">
+                                    <form [formGroup]="reactiveFormInstagram" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i
+                                                    class="fab fa-instagram" id="insta"></i>
+                                                &nbsp;Instagram API Credentials</h2>
+                                                <!-- <div style="padding-left: 540px;"> -->
+                                                    <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                                            <input class="form-check-input" type="radio"  [(ngModel)]="instagramstatus" id="Yes"
+                                                                formControlName="instagram_status" value="Y">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                                        </div>
+                                                        <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                                            <input class="form-check-input" type="radio"
+                                                            [(ngModel)]="instagramstatus" formControlName="instagram_status"
+                                                                value="N" id="No">
+                                                            <label style="font-weight: bolder; font-size: 13px;" class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                                        </div>
+                                                    </div>
+                                                <!-- </div> -->
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+
+                                                <input formControlName="instagram_id" type="text" hidden class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary" name="instagram_id" />
+
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" *ngIf="instagramstatus == 'Y'">
+                                                    <span class="font-bold">Access Token<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="instagram_access_token" type="text" class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        instagram_access_token.invalid && instagram_access_token.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="instagram_access_token" />
+
+                                                </div>
+                                                <div
+                                                    *ngIf="instagram_access_token.invalid && (instagram_access_token.dirty || instagram_access_token.touched)">
+                                                    <div *ngIf="instagram_access_token.errors?.['required']">
+                                                        <span style="color:red;">Access Token is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <br>
+                                            <!-- <h5 class="note1" *ngIf="instagramstatus == 'N'">Note: Kindly Enable To Add Instagram Details</h5> -->
+                                            <div *ngIf="instagramstatus == 'N'" class="text-center fw-bold fs-3 ">Note: Kindly Enable To Add Instagram Details</div>
+                                            <div class="text-center my-4">
+
+                                                <button (click)="oninstagramupdate()"
+                                                    [disabled]="reactiveFormInstagram.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormInstagram.invalid,
+                                            'secondary-button': reactiveFormInstagram.invalid
+                                             }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            <!--Customer Type-->
+                            <div class="row tab-pane fade ms-5" id="kt_tab_pane_12" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <div class="modal-body">
+                                            <form [formGroup]="reactiveFormCustomerType" #form="ngForm">
+                                            <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                                <h2 class="text-center" style="margin-top:-35px;"><i
+                                                        class="fa-solid fa-users"
+                                                        style="font-size:20px;font-weight: bolder;background-color: white;color:#160672;"></i>&nbsp;
+                                                    Customer Type</h2>
+                                                    <br/>
+                                                <!-- <input formControlName="shopify_id" type="text" hidden class="
+                                                                form-control form-control-lg form-control-solid
+                                                                bg-white
+                                                                custom-input
+                                                                mb-3 mb-lg-0
+                                                                borderc-secondary" name="shopify_id" /> -->
+                                                <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                       
+                                                        <input formControlName="corporate_name" type="text"
+                                                            class="
+                                                                form-control form-control-lg form-control-solid
+                                                                bg-white
+                                                                custom-input
+                                                                mb-3 mb-lg-0
+                                                                borderc-secondary " [ngStyle]="{
+                                                                    'border-color':
+                                                                    corporate_name.invalid && corporate_name.touched
+                                                                        ? 'red'
+                                                                        : 'rgb(209, 209, 209)'
+                                                                  }" name="corporate_name" />
+                                                    </div>   
+                                                                                                 
+                                                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">                                                          
+                                                        <br/>      
+                                                        <input formControlName="retailer_name" type="text" class="
+                                                                  form-control form-control-lg form-control-solid
+                                                                  bg-white
+                                                                  custom-input
+                                                                  mb-3 mb-lg-0
+                                                                  borderc-secondary " [ngStyle]="{
+                                                                      'border-color':
+                                                                      retailer_name.invalid && retailer_name.touched
+                                                                          ? 'red'
+                                                                          : 'rgb(209, 209, 209)'
+                                                                    }" name="retailer_name" />
+
+                                                    </div>  
+                                                    <br/>                                                     
+                                                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">                                                           
+                                                        <br/>  
+                                                        <input formControlName="distributor_name" type="text"
+                                                            class="
+                                                            form-control form-control-lg form-control-solid
+                                                            bg-white
+                                                            custom-input
+                                                            mb-3 mb-lg-0
+                                                            borderc-secondary " [ngStyle]="{
+                                                                'border-color':
+                                                                corporate_name.invalid && corporate_name.touched
+                                                                    ? 'red'
+                                                                    : 'rgb(209, 209, 209)'
+                                                              }" name="corporate_name" />
+
+                                                    </div>
+                                                  
+                                                </div><br>
+                                                <div class="text-center my-4">
+                                                    <button (click)="oncustomertypeupdate()"
+                                                        [disabled]="reactiveFormCustomerType.invalid" [ngClass]="{
+                                                    'primary-button': !reactiveFormCustomerType.invalid,
+                                                    'secondary-button': reactiveFormCustomerType.invalid
+                                                     }">
+                                                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                    </button>
+                                                </div>
+
+
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>

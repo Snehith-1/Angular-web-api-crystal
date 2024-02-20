@@ -1,0 +1,42 @@
+import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+@Component({
+  selector: 'app-crm-trn-leadbankview',
+  templateUrl: './crm-trn-leadbankview.component.html',
+  styleUrls: ['./crm-trn-leadbankview.component.scss']
+})
+export class CrmTrnLeadbankviewComponent {
+  leadbank: any;
+  leadbankedit_list:any;
+  
+  constructor(private formBuilder: FormBuilder,private route:Router,private router:ActivatedRoute,public service :SocketService) { }
+
+  ngOnInit(): void {
+   const leadbank_gid =this.router.snapshot.paramMap.get('leadbank_gid');
+    // console.log(termsconditions_gid)
+    this.leadbank= leadbank_gid;
+ 
+    const secretKey = 'storyboarderp';
+
+    const deencryptedParam = AES.decrypt(this.leadbank,secretKey).toString(enc.Utf8);
+    console.log(deencryptedParam)
+    this.GetleadbankviewSummary(deencryptedParam);        
+       
+  }
+  GetleadbankviewSummary(leadbank_gid: any) {
+    var url='Leadbank/GetleadbankviewSummary'
+    let param = {
+      leadbank_gid : leadbank_gid 
+    }
+    this.service.getparams(url,param).subscribe((result:any)=>{
+    this.leadbankedit_list = result.leadbank_list;
+    //console.log(this.leadbankedit_list)
+
+      
+    });
+  }
+}

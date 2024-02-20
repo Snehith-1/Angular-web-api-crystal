@@ -1,0 +1,17 @@
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-smr-trn-customerenquiryedit',
+  templateUrl: './smr-trn-customerenquiryedit.component.html',
+  styleUrls: ['./smr-trn-customerenquiryedit.component.scss']
+})
+export class SmrTrnCustomerenquiryeditComponent {
+  cuseditform: FormGroup | any;
+  customer_list: any [] = [];
+  products_list: any [] = [];
+
+
+
+  onadd(){}
+}

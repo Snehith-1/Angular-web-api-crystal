@@ -1,0 +1,28 @@
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+@Component({
+  selector: 'app-hrm-member-myleave',
+  templateUrl: './hrm-member-myleave.component.html',
+  styleUrls: ['./hrm-member-myleave.component.scss']
+})
+export class HrmMemberMyleaveComponent {
+
+  radioSelected: any;
+  leaveperiod: any;  
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService) {}
+  leavePeriod() {
+
+    this.leaveperiod = this.radioSelected;
+    console.log(this.radioSelected);
+  }
+
+  back() {
+    this.router.navigate(['/hrm/HrmMemberDashboard'])
+  }
+
+}

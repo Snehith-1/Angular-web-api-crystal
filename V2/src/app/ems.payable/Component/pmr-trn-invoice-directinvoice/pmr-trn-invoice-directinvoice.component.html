@@ -1,0 +1,558 @@
+<div class="card">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary mt-8">
+        <h3 class="fw-bolder text-white">
+            <i class="fw-bolder fs-3 me-4"></i>Direct Invoice
+        </h3>
+    </div>
+
+
+    <div class="card m-3">
+        <form [formGroup]="directinvoiceform">
+
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Invoice Details</h4>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Invoice Ref No</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="direct_invoice_refno" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input mb-3 mb-lg-0" placeholder="Invoice ref number" pattern="^[a-zA-Z0-9]+$" name="direct_invoice_refno" [ngStyle]="{'border-color': directinvoicerefnoControl.invalid && directinvoicerefnoControl.touched ? 'red' : 'rgb(209, 209, 209)'}" [ngClass]="{'invalid-border': directinvoicerefnoControl.get('direct_invoice_refno')?.invalid && directinvoicerefnoControl.get('direct_invoice_refno')?.touched}"/>
+                            
+                        <div *ngIf="directinvoicerefnoControl.invalid && directinvoicerefnoControl.touched">
+                            <div *ngIf="directinvoicerefnoControl.hasError('required')" class="text-red">Invoice  is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Invoice Date</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" formControlName="direct_invoice_date" class="form-control form-control-lg form-control-solid date-picker custom-input mb-3 mb-lg-0 bg-white custom-input mb-3 mb-lg-0" placeholder="DD-MM-YYYY" name="direct_invoice_date" [ngStyle]="{'border-color': directinvoicedateControl.invalid && directinvoicedateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" [ngClass]="{'invalid-border': directinvoicedateControl.get('direct_invoice_date')?.invalid && directinvoicedateControl.get('direct_invoice_date')?.touched}"/>
+                            <div *ngIf="directinvoicedateControl.invalid && directinvoicedateControl.touched">
+                                <div *ngIf="directinvoicedateControl.hasError('required')" class="text-red">Invoice refno is required</div>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Invoice Date</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                      <input type="date" class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 bg-white custom-input" placeholder="DD-MM-YYYY" formControlName="invoicedate" [ngStyle]="{'border-color': directinvoicedateControl.invalid && directinvoicedateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" [ngClass]="{'invalid-border': directinvoicedateControl.get('direct_invoice_refno')?.invalid && directinvoicedateControl.get('direct_invoice_refno')?.touched}" pattern="^(?!\s*$).+"/>
+                      <div *ngIf="directinvoicedateControl.invalid && directinvoicedateControl.touched">
+                        <div *ngIf="directinvoicedateControl.hasError('required')" class="text-red">Invoice date is required</div>
+                      </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Invoice Date</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <input type="date" class="form-control form-control-lg form-control-solid date-picker 
+                        mb-3 mb-lg-0 bg-white custom-input" placeholder="DD-MM-YYYY"
+                            formControlName="direct_invoice_date" [ngStyle]="{'border-color': directinvoiceform.invalid &&
+                         directinvoiceform.touched ? 'red' : 'rgb(209, 209, 209)'}"/>
+                        <div *ngIf="directinvoiceform.get('direct_invoice_date').hasError('required') && directinvoiceform.get('direct_invoice_date')?.touched" class="text-red">Invoice date is required
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Invoice Type</span>
+                    <div class="col-lg-10 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 
+                        mb-lg-0 borderc-secondary" formControlName="direct_invoice_type" readonly>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Payment Term (In Days)</span>
+                    
+                        <ng-select class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" 
+                        formControlName="direct_invoice_payterm" [(ngModel)]="direct_invoice_payterm"
+                            placeholder="Select option">
+                            <ng-option value="0">0 Days</ng-option>
+                            <ng-option value="7">7 Days</ng-option>
+                            <ng-option value="15">15 Days</ng-option>
+                            <ng-option value="35">35 Days</ng-option>
+                            <ng-option value="45">45 Days</ng-option>
+                            <ng-option value="60">60 Days</ng-option>
+                            <ng-option value="90">90 Days</ng-option>
+                            <ng-option value="120">120 Days</ng-option>
+
+                        </ng-select>
+
+
+
+
+                        <!-- <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                    formControlName="direct_invoice_ven_name" [(ngModel)]="direct_invoice_ven_name"
+                                    bindLabel="vendorcompanyname" bindValue="vendorgid"
+                                    [items]="vendor_list" (change)="OnChangeVendor()" [class.is-invalid]="directinvoiceform.get('direct_invoice_ven_name')?.invalid &&
+                                    (directinvoiceform.get('direct_invoice_ven_name')?.dirty || directinvoiceform.get('direct_invoice_ven_name')?.touched)" 
+                                    [ngClass]="{'invalid-border': directinvoiceform.get('direct_invoice_ven_name')?.invalid &&
+                                        directinvoiceform.get('direct_invoice_ven_name')?.touched}" placeholder="Select an option"></ng-select> -->
+                    
+                </div>
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold required">Due Date</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <input type="date" class="form-control form-control-lg form-control-solid date-picker 
+                        mb-3 mb-lg-0 borderc-secondary bg-white custom-input" placeholder="DD-MM-YYYY"
+                            formControlName="direct_invoice_due_date"
+                            [ngStyle]="{ 'border-color': directinvoiceform.get('direct_invoice_due_date')?.hasError('required')
+                         && directinvoiceform.get('direct_invoice_due_date')?.touched ? 'red' : 'rgb(209, 209, 209)' }" />
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Branch Details</h4>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span><span class="font-bold required">Branch</span></span>
+                    <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                        formControlName="direct_invoice_branchgid" [(ngModel)]="direct_invoice_branchgid"
+                        bindLabel="branch_name" bindValue="branch_gid" [items]="branch_list"
+                        [class.is-invalid]="directinvoiceform.get('direct_invoice_branchgid')?.invalid &&
+                       (directinvoiceform.get('direct_invoice_branchgid')?.dirty || directinvoiceform.get('direct_invoice_branchgid')?.touched)" [ngClass]="{'invalid-border': directinvoiceform.get('direct_invoice_branchgid')?.invalid &&
+                        directinvoiceform.get('direct_invoice_branchgid')?.touched}"
+                        placeholder="Select an option"></ng-select>
+
+                </div>
+
+
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Vendor Ref. No.</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="direct_invoice_ven_ref_no" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 
+                       mb-lg-0 borderc-secondary" placeholder="vendor ref no" />
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold required">Vendor Name</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            formControlName="direct_invoice_ven_name" [(ngModel)]="direct_invoice_ven_name"
+                            bindLabel="vendorcompanyname" bindValue="vendorgid" [items]="vendor_list"
+                            (change)="OnChangeVendor()"
+                            [class.is-invalid]="directinvoiceform.get('direct_invoice_ven_name')?.invalid &&
+                       (directinvoiceform.get('direct_invoice_ven_name')?.dirty || directinvoiceform.get('direct_invoice_ven_name')?.touched)"
+                            [ngClass]="{'invalid-border': directinvoiceform.get('direct_invoice_ven_name')?.invalid &&
+                        directinvoiceform.get('direct_invoice_ven_name')?.touched}"
+                            placeholder="Select an option"></ng-select>
+
+                        <div *ngIf="directinvoiceform.get('direct_invoice_ven_name')?.hasError('required') && 
+                            directinvoiceform.get('direct_invoice_ven_name')?.touched" class="text-red">Vendor Name is
+                            required.</div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+
+
+
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span><span class="font-bold required">Vendor Contact Person</span></span>
+                    <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                        formControlName="direct_invoice_ven_contact_person"
+                        [(ngModel)]="direct_invoice_ven_contact_person" bindLabel="vendorcontact"
+                        bindValue="vendorcontact" [items]="vendorlist"
+                        [class.is-invalid]="directinvoiceform.get('direct_invoice_ven_contact_person')?.invalid &&
+                           (directinvoiceform.get('direct_invoice_ven_contact_person')?.dirty || directinvoiceform.get('direct_invoice_ven_contact_person')?.touched)"
+                        [ngClass]="{'invalid-border': directinvoiceform.get('direct_invoice_ven_contact_person')?.invalid &&
+                            directinvoiceform.get('direct_invoice_ven_contact_person')?.touched}"
+                        placeholder="Select an option"></ng-select>
+
+                    <div *ngIf="directinvoiceform.get('direct_invoice_ven_contact_person')?.hasError('required') &&
+                            directinvoiceform.get('direct_invoice_ven_contact_person')?.touched " class="text-red">
+                        Vendor contact person is required</div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Vendor Phone No</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text"
+                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 
+                            bg-secondary border-secondary custom-input"
+                            formControlName="direct_invoice_ph_no" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Vendor Address</span>
+                    <div class="col-lg-10 col-10 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="3"
+                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 
+                        bg-secondary border-secondary custom-input"
+                            formControlName="direct_invoice_ven_address" readonly></textarea>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Remarks</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="3"
+                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input"
+                            formControlName="direct_invoice_remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Purchase Details</h4>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Currency</span><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            formControlName="direct_invoice_currencygid" [(ngModel)]="direct_invoice_currencygid"
+                            bindLabel="currency_code" bindValue="currencyexchange_gid" [items]="currency_list"
+                            [class.is-invalid]="directinvoiceform.get('direct_invoice_currencygid')?.invalid &&
+                           (directinvoiceform.get('direct_invoice_currencygid')?.dirty || directinvoiceform.get('direct_invoice_currencygid')?.touched)"
+                            [ngClass]="{'invalid-border': directinvoiceform.get('direct_invoice_currencygid')?.invalid &&
+                            directinvoiceform.get('direct_invoice_currencygid')?.touched}"
+                            (change)="OnChangeCurrency()" placeholder="Select an option"></ng-select>
+
+                        <div *ngIf="directinvoiceform.get('direct_invoice_currencygid')?.hasError('required') &&
+                            directinvoiceform.get('direct_invoice_currencygid')?.touched " class="text-red">Currency is
+                            required</div>
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Purchase Type</span><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            formControlName="direct_invoice_account_gid" [(ngModel)]="direct_invoice_account_gid"
+                            bindLabel="purchasetype_name" bindValue="account_gid" [items]="purchasetype_list"
+                            [class.is-invalid]="directinvoiceform.get('direct_invoice_account_gid')?.invalid &&
+                          (directinvoiceform.get('direct_invoice_account_gid')?.dirty || directinvoiceform.get('direct_invoice_account_gid')?.touched)"
+                            [ngClass]="{'invalid-border': directinvoiceform.get('direct_invoice_account_gid')?.invalid &&
+                           directinvoiceform.get('direct_invoice_account_gid')?.touched}" (change)="OnChangeCurrency()"
+                            placeholder="Select an option"></ng-select>
+
+                        <div *ngIf="directinvoiceform.get('direct_invoice_account_gid')?.hasError('required') &&
+                           directinvoiceform.get('direct_invoice_account_gid')?.touched " class="text-red">Purchase
+                            type is required</div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 ml-10"><span class="font-bold">Priority</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                            <input class="form-check-input mt-4" type="radio" value="Low"
+                                formControlName="direct_invoice_priority">
+                            <label class="form-check-label text-gray-700 text-nowrap mt-4 ms-4">Low</label>
+
+                            <input class="form-check-input ms-10 mt-4" type="radio" value="High"
+                                formControlName="direct_invoice_priority">
+                            <label class="form-check-label text-gray-700 text-nowrap mt-4 ms-4">High</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Exchange Rate</span><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text"
+                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input"
+                            formControlName="direct_invoice_exchange_rate" readonly [ngStyle]="{'border-color': directinvoiceexchangerateControl.invalid && directinvoiceexchangerateControl.
+                         touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="directinvoiceexchangerateControl.invalid &&
+                           (directinvoiceexchangerateControl.dirty || directinvoiceexchangerateControl.touched)">
+                        <div *ngIf="directinvoiceform.get('direct_invoice_exchange_rate')?.hasError('required') &&
+                        directinvoiceform.get('direct_invoice_exchange_rate')?.touched " class="text-red">Exchange Rate
+                            is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Product Details</h4>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><span class="font-bold">Amount</span><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <input type="text"
+                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input"
+                            style="text-align: right;" formControlName="direct_invoice_amount"
+                            [(ngModel)]="direct_invoice_amount" (input)="finaltotal()"
+                            [ngStyle]="{'border-color': directinvoiceamountControl.invalid && directinvoiceamountControl.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                            pattern="^(?!\s*$).+"
+                            [class.is-invalid]="directinvoiceamountControl.invalid && (directinvoiceamountControl.dirty || directinvoiceamountControl.touched)">
+                        <div *ngIf="directinvoiceamountControl.invalid && directinvoiceamountControl.touched"
+                            class="invalid-feedback">
+                            <div *ngIf="directinvoiceamountControl.hasError('required')" class="text-red ms-3 fs-5">*
+                                Amount is required</div>
+                            <div *ngIf="directinvoiceamountControl.hasError('pattern')" class="text-red ms-3 fs-5">* It
+                                accepts only digits</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><span class="font-bold">Tax 1</span>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <ng-select formControlName="direct_invoice_taxname1"
+                                        [(ngModel)]="direct_invoice_taxname11" (change)="taxAmount1()"
+                                        bindLabel="tax_name" bindValue="tax_gid" [items]="tax_list"
+                                        placeholder="Select an option"></ng-select>
+                                    <!-- <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2" formControlName="direct_invoice_taxname1" (change)="taxAmount1()">
+
+                                        <option value="" disabled selected>Select Tax</option>
+                                          <option *ngFor="let taxname of tax_list" [value]="taxname.tax_gid">{{taxname.tax_name}}</option>
+                                    </select> -->
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control bg-secondary" placeholder="0.00" readonly
+                                        style="text-align: right; height: 38px;"
+                                        formControlName="direct_invoice_taxamount1" [(ngModel)]="taxamount1"
+                                        (input)="taxAmount1()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><span class="font-bold">Tax 2</span>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <ng-select [(ngModel)]="direct_invoice_taxname22"
+                                        formControlName="direct_invoice_taxname2" (change)="taxAmount2()"
+                                        bindLabel="tax_name" bindValue="tax_gid" [items]="tax_list"
+                                        placeholder="Select an option"></ng-select>
+                                    <!-- <select class="form-select form-select-solid bg-white border-secondary form-select-lg custom-input select2" formControlName="direct_invoice_taxname2" (change)="taxAmount2()">
+                                        <option value="" disabled selected>Select Tax</option>
+                                          <option *ngFor="let taxname of tax_list" [value]="taxname.tax_gid">{{taxname.tax_name}}</option>
+                                    </select> -->
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control bg-secondary" placeholder="0.00" readonly
+                                        style="text-align: right; height: 38px;"
+                                        formControlName="direct_invoice_taxamount2" [(ngModel)]="taxamount2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><span class="font-bold">Total</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text"
+                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input"
+                            formControlName="direct_invoice_total" [(ngModel)]="direct_invoice_total" readonly
+                            style="text-align: right;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Description</span><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="3"
+                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input"
+                            formControlName="direct_invoice_description"
+                            [ngStyle]="{'border-color': directinvoicedescriptionControl.invalid && directinvoicedescriptionControl.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                            pattern="^(?!\s*$).+"
+                            [class.is-invalid]="directinvoicedescriptionControl.invalid && (directinvoicedescriptionControl.dirty || directinvoicedescriptionControl.touched)"></textarea>
+                        <div *ngIf="directinvoicedescriptionControl.invalid && directinvoicedescriptionControl.touched"
+                            class="invalid-feedback">
+                            <div *ngIf="directinvoicedescriptionControl.hasError('required')"
+                                class="text-red ms-3 fs-5">* Description is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <label class="col-sm-6 col-form-label fw-bolder">Addon Amount :</label>
+                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                            formControlName="direct_invoice_addon_amount" [(ngModel)]="direct_invoice_addon_amount"
+                            (input)="grandtotal()">
+                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <label class="col-sm-6 col-form-label fw-bolder">Discount Amount:</label>
+                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                            formControlName="direct_invoice_discount_amount"
+                            [(ngModel)]="direct_invoice_discount_amount" (input)="grandtotal()">
+                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <label class="col-sm-6 col-form-label fw-bolder">Freight Charges:</label>
+                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                            formControlName="direct_invoice_freight_charges"
+                            [(ngModel)]="direct_invoice_freight_charges" (input)="grandtotal()">
+                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <label class="col-sm-6 col-form-label fw-bolder">BuyBack/Scrap Charges:</label>
+                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                            formControlName="direct_invoice_buyback_scrap_charges"
+                            [(ngModel)]="direct_invoice_buyback_scrap_charges" (input)="grandtotal()">
+                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                    </div>
+                </div>
+
+
+
+                <div class="justify-content-end">
+                    <div class="d-flex row justify-content-end mt-2">
+                        <div class="col-md-3">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="col-12 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                            <ng-select [(ngModel)]="direct_invoice_additional_gid" 
+                                                formControlName="direct_invoice_additional_gid"
+                                                bindLabel="additional_name" bindValue="additional_gid"
+                                                [items]="extraaddon_list" placeholder="Select an option"
+                                               ></ng-select>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3  d-flex ">
+                                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                                            formControlName="direct_invoice_extra_addon"
+                                            [(ngModel)]="direct_invoice_extra_addon" (input)="grandtotal()">
+                                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="d-flex row justify-content-end mt-2">
+                        <div class="col-md-3">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                <div class="d-flex flex-row flex-wrap">
+                                    <div class="col-12 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                            <ng-select [(ngModel)]="direct_invoice_discount_gid"
+                                                formControlName="direct_invoice_discount_gid" bindLabel="discount_name"
+                                                bindValue="discount_gid" [items]="extradeduction_list"
+                                                placeholder="Select an option"></ng-select>
+                                          
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 d-flex">
+                                        <input type="text" class="form-control ml-2"
+                                            style="width:100px; text-align: right;"
+                                            formControlName="direct_invoice_extra_deduction"
+                                            [(ngModel)]="direct_invoice_extra_deduction" (input)="grandtotal()">
+                                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <label class="col-sm-6 col-form-label fw-bolder">Round Off:</label>
+                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                            formControlName="direct_invoice_round_off" [(ngModel)]="direct_invoice_round_off"
+                            (input)="grandtotal()">
+                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                    </div>
+                </div>
+
+
+
+                <div class="d-flex row justify-content-end mt-2 mb-10">
+                    <div class="col-md-3 d-flex align-items-center">
+                        <label class="col-sm-6 col-form-label fw-bolder">Grand Total:</label>
+                        <input type="text" class="form-control" style="width:100px; text-align: right;"
+                            formControlName="direct_invoice_grand_total" [(ngModel)]="direct_invoice_grand_total"
+                            (input)="grandtotal()" readonly>
+                        <span style=" color:  rgb(0, 0, 80);font-weight: bold;">{{currency_name}}</span>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="card" m-3>
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4"
+                     (click)="directinvoicesubmit(($event))">
+                     <i class="fas fa-check fs-5"></i>
+                        Confirm
+                    </button>
+
+                    <button class="btn-primary btn-sm text-white me-4" (click)="back()">
+                        <i class="fas fa-arrow-left fs-5"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

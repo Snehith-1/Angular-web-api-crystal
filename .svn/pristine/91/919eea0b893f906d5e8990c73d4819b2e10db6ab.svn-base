@@ -1,0 +1,211 @@
+
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Employee Summary</h3> 
+    </div>
+    <br>
+    <div>  &nbsp;  &nbsp; 
+        <!-- ADD Function -->
+        <button title="Add Employee" class="btn-primary btn-sm text-white me-4" routerLink="/hrm/HrmMstEmployeeadd">
+            <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;
+            Add Employee</button>  
+    </div> 
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="employee_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Entity</th>
+                        <th>Branch</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                        <th>Employee Code</th>
+                        <th>Employee Name</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of employee_list; let i=index;"> 
+                        <td >{{i+1}}</td>
+                        <td>{{data.entity_name}}</td>
+                        <td>{{data.branch_name}}</td>
+                        <td>{{data.department_name}}</td>
+                        <td>{{data.designation_name}}</td>
+                        <td>{{data.user_code}}</td>
+                        <td>{{data.user_name}}</td>
+                        <td>{{data.user_status}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.employee_gid)" ><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.employee_gid)"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                            <button title="Rest Password" type="button" (click)="openModalReset(data)"   data-bs-toggle="modal" data-bs-target="#myModalRest" class="btn btn-icon btn-sm bg-warning me-2"><span class="fa-solid fa-lock text-white  fs-6"></span></button>   
+                            <button title="Update User Code" type="button" (click)="openModalUpdateCode(data)"   data-bs-toggle="modal" data-bs-target="#myModalUpdateusercode" class="btn btn-icon btn-sm bg-info me-2"><span class="fa-solid bi bi-arrow-clockwise  fs-6"></span></button>  
+                        </td>
+                    </tr>
+                </tbody> 
+            </table>
+        </div> 
+    </div> 
+</div>
+<!-- The Modal Reset-->
+<form  [formGroup]="reactiveFormReset" #form="ngForm">
+    <div class="modal" id="myModalRest"  data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="fas fa-lock fw-bolder fs-3"></i> &nbsp;&nbsp;Reset Password</h2>
+    
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body" >
+                <input class="form-control form-control-lg" formControlName="employee_gid" hidden pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required >
+                <label ><b>Employee Code</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{usercode}}</span></label>
+                <br>
+                <label ><b>Employee Name</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{user_firstname}}</span></label>
+                <br>
+
+                <div >
+                    <label for="password" class="form-label"><b>Password<span style="color:red"> *</span></b></label>
+                    <div class="input-group input-group-sm has-validation" >
+                      <input  [type]="employee.showPassword ? 'text' : 'password'" id="password"  (change)="userpassword(password)" formControlName="password" class="
+                            form-control form-control-lg form-control-solid
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " [ngStyle]="{
+                            'border-color':
+                            password.invalid && password.touched
+                                ? 'red'
+                                : 'rgb(209, 209, 209)'
+                          }" placeholder="Enter Password" name="password" required />
+                          <button type="button" style="margin-left:0px;background-color: #008CBA;" class="btn btn-outline-secondary" (click)="employee.showPassword = !employee.showPassword">
+                            <i class="bi" [ngClass]="{'bi-eye-fill': !employee.showPassword, 'bi-eye-slash-fill': employee.showPassword}"></i>
+                          </button>
+                       
+                      <!-- <input placeholder="Enter User Password" [type]="employee.showPassword ? 'text' : 'password'" id="password"  name="password" formControlName="password" (change)="userpassword(password)" required minlength="1" class="form-control form-control-sm"  [class.is-invalid]="password.invalid && (password.dirty || password.touched)"> -->
+                    
+                      
+                    </div>
+                    <div *ngIf="
+                    password.invalid &&
+                        (password.dirty || password.touched)
+                      " class="text-red">
+                      <div *ngIf="password.errors?.['required']">
+                        Password is required.
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                <div class="mb-2">
+                    <label for="exampleFormControlTextarea1" class="form-label"><b>Confirm User Password</b></label>
+               
+                  <input placeholder="Confirm User Password" type="password" readonly id="confirmpassword"  name="confirmpassword" style="width:100%;" formControlName="confirmpassword"  class="form-control form-control-sd"  >
+
+                </div>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="text-center my-4">
+                <button   (click)="onupdatereset()" [disabled]="reactiveFormReset.invalid" [ngClass]="{
+                    'primary-button': !reactiveFormReset.invalid,
+                    'secondary-button': reactiveFormReset.invalid
+                  }" data-bs-dismiss="modal">          
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                </button> &nbsp;&nbsp;
+                <button class="btn-danger btn-sm text-white me-4"  (click)="onclose()" data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Close
+                </button>
+            </div>
+    
+            </div>
+        </div>
+    </div>
+    </form>
+<!-- The Modal Update User code-->
+<form  [formGroup]="reactiveFormUpdateUserCode" #form="ngForm">
+    <div class="modal" id="myModalUpdateusercode"  data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<span class="fa-solid bi bi-arrow-clockwise  fs-12" ></span> &nbsp;&nbsp;Update User Code</h2>
+    
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body" >
+                <input class="form-control form-control-lg" formControlName="employee_gid" hidden pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required >
+                <label ><b>Employee Code</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{usercode}}</span></label>
+                <br>
+                <label ><b>Employee Name</b>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{user_firstname}}</span></label>
+                <br>
+                <label ><b>Branch</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{branch}}</span></label>
+                <br>
+                <label ><b>Designation</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{designation}}</span></label>
+                <br>
+                <label ><b>Designation</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red" >{{department}}</span></label>
+                <br>
+                <div >
+                    <label for="user_code" class="form-label"><b>New User Code<span style="color:red"> *</span></b></label>
+                    <div class="input-group input-group-sm has-validation" >
+                      <input  type="text" id="user_code"  (change)="updateusercode(user_code)" formControlName="user_code" class="
+                            form-control form-control-lg form-control-solid
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " [ngStyle]="{
+                            'border-color':
+                            user_code.invalid && user_code.touched
+                                ? 'red'
+                                : 'rgb(209, 209, 209)'
+                          }" placeholder="New User Code" name="user_code" required />
+                          
+                       
+                      <!-- <input placeholder="Enter User Password" [type]="employee.showPassword ? 'text' : 'password'" id="password"  name="password" formControlName="password" (change)="userpassword(password)" required minlength="1" class="form-control form-control-sm"  [class.is-invalid]="password.invalid && (password.dirty || password.touched)"> -->
+                    
+                      
+                    </div>
+                    <div *ngIf="
+                    user_code.invalid &&
+                        (user_code.dirty || user_code.touched)
+                      " class="text-red">
+                      <div *ngIf="user_code.errors?.['required']">
+                        User Code is required.
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                <div class="mb-2">
+                    <label for="exampleFormControlTextarea1" class="form-label"><b>Confirm User Code</b></label>
+               
+                  <input placeholder="Confirm User Password" type="text" readonly id="confirmusercode"  name="confirmusercode" style="width:100%;" formControlName="confirmusercode"  class="form-control form-control-sd"  >
+
+                </div>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="text-center my-4">
+                <button   (click)="onupdateusercode()" [disabled]="reactiveFormUpdateUserCode.invalid" [ngClass]="{
+                    'primary-button': !reactiveFormUpdateUserCode.invalid,
+                    'secondary-button': reactiveFormUpdateUserCode.invalid
+                  }" data-bs-dismiss="modal">          
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                </button> &nbsp;&nbsp;
+                <button class="btn-danger btn-sm text-white me-4"  (click)="oncloseupdatecode()" data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Close
+                </button>
+            </div>
+    
+            </div>
+        </div>
+    </div>
+    </form>

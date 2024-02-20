@@ -1,0 +1,134 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.inventory.Models
+{
+    public class MdlImsTrnDeliveryordersummary
+    {
+        public List<adddeliveryorder_list> adddeliveryorder_list { get; set; }
+        public List<deliveryorder_list> deliveryorder_list { get; set; }
+        public List<raisedelivery_list> raisedelivery_list { get; set; }
+        public List<OutstandingQty_list> OutstandingQty_list { get; set; }
+        public List<IssuedQty_list> IssuedQty_list { get; set; }
+        public string product_gid { get; set; }
+        public string uom_gid { get; set; }
+        public string branch_gid { get; set; }
+
+
+    }
+    public class MdlImsTrnDeliveryorder : result
+    {
+        public string deliveryorder_date { get; set; }
+        public string directorder_refno { get; set; }
+        public string customerid { get; set; }
+        public string branchsales_gid { get; set; }
+        public string customer_branchname { get; set; }
+        public string customer_name { get; set; }
+        public string customer_contactperson { get; set; }
+        public string contact_no { get; set; }
+        public string customer_address { get; set; } 
+        public string termsandcondition { get; set; }
+        public string dcno { get; set; }
+        public string modeofdespatch { get; set; }
+        public string trackerid { get; set; }
+        public string directorder_date { get; set; }
+        public string shipping_to { get; set; }
+        public string emailid { get; set; } 
+        public string salesorder_gid { get; set; }
+        public string customer_gid { get; set; }
+        public string grandtotalamount { get; set; }
+    }
+    public class deliveryorder_list : result
+    {
+        public string directorder_date { get; set; }
+        public string directorder_refno { get; set; }
+        public string so_referenceno1 { get; set; }
+        public string customer_name { get; set; }
+        public string contact { get; set; }
+        public string branch_name { get; set; }
+        public string salesorder_status { get; set; }
+       
+        
+            
+    }
+
+    public class adddeliveryorder_list : result
+    {
+        public string salesorder_date { get; set; }
+        public string salesorder_gid { get; set; }
+        public string so_referenceno1 { get; set; }
+        public string customer_name { get; set; }
+        public string contact { get; set; }
+        public string branch_name { get; set; }
+        public string salesorder_status { get; set; }
+
+
+    } 
+    public class OutstandingQty_list : result
+    {
+        public string outstanding_qty { get; set; }
+        public string product_name { get; set; }
+        public string productuom_name { get; set; }
+        public string display_field { get; set; }
+        public string product_gid { get; set; }
+        public string uom_gid { get; set; }
+        public string branch_gid { get; set; }
+        public string created_date { get; set; }
+        public string stock_gid { get; set; }
+        public string reference_gid { get; set; }
+        public string stock_qty { get; set; }
+     
+      
+
+
+    }
+    public class raisedelivery_list : result
+    {
+        
+        public string customer_address_so { get; set; }
+        public string customer_mobile { get; set; }
+        public string customercontact_names { get; set; }
+        public string salesorder_date { get; set; }
+        public string customer_email { get; set; }    
+        public string customer_address{ get; set; }
+        public string so_referencenumber { get; set; }
+        public string salesorder_gid { get; set; }
+        public string customer_name { get; set; }
+        public string customer_branch { get; set; }  
+        public string salesorderdtl_gid { get; set; } 
+        public string productgroup_name { get; set; } 
+        public string customerproduct_code { get; set; } 
+        public string product_code { get; set; }
+        public string product_name { get; set; }
+        public string display_field { get; set; }
+        public string uom_name { get; set; }
+        public string available_quantity { get; set; }
+        public string qty_quoted { get; set; }
+        public string product_delivered { get; set; }
+        public string product_requireddate { get; set; }
+
+    
+
+
+
+    }
+    public class IssuedQty_list : result
+    {
+        public string txtstocktotal { get; set; }
+        public string lbloutstanding_qty { get; set; }
+        public double txtissuedqty { get; set; }
+        public double lblstock_qty { get; set; }
+        public string stock_gid { get; set; }
+        public double salesorderdtl_gid { get; set; }
+        public double mrdtl_gid { get; set; }
+        public double display_field { get; set; }
+        public string product_gid { get; set; }
+        public string uom_gid { get; set; }
+        public string branch_gid { get; set; }
+        public List<OutstandingQty_list> OutstandingQty_list { get; set; }
+
+
+    }
+}

@@ -1,0 +1,31 @@
+.clickable-text {
+    color: initial; /* Set the initial text color */
+    cursor: pointer; /* Change the cursor to a pointer on hover */
+    transition: color 0.2s; /* Add a smooth transition for color change */
+}
+
+.clickable-text:hover {
+    color: blue; /* Change the text color to blue when hovered */
+}
+
+
+.del_modal-dialog {
+    margin-top: 200px;
+    
+    .del_modal-content{
+        height: 200px;
+        width: 350px;
+
+        h2 {
+            margin-top: 20px;
+        }
+        
+        p {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+}

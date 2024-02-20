@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card">
+        <div class="card-header bg-mail" style="color: white;">
+            <h3 class="card-title"><i class="fa-solid fa-eye" style="font-size: 20px;"></i>&nbsp;&nbsp;{{template_name}}
+            </h3>
+            <div style="margin: 13px">
+
+                <button title="Back" class="btn-secondary btn-sm text-black me-4 " (click)="onback()"> <i
+                        class="fas fa-arrow-left"></i>
+                    Back</button>
+
+
+            </div>
+
+        </div><br>
+
+
+        <div class="row">
+            <div class="col">
+                <span
+                    class="fw-bold text-gray-900 text-hover-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject:
+                </span>
+                <a href="#" class=" text-gray-900 text-hover-primary"> {{sub}}</a>
+
+            </div>
+            <div class="col text-end">
+                <span class="fw-bold text-gray-900 text-hover-primary text-end me-3 mt-1">Created Date:</span>
+                <a href="#" class=" text-gray-900 text-hover-primary me-3">{{created_date}}</a>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="outer-container">
+            <div class="inner-container" [innerHTML]="body">
+                <!-- Content goes here -->
+            </div>
+            <br>
+        </div>
+
+
+
+    </div>

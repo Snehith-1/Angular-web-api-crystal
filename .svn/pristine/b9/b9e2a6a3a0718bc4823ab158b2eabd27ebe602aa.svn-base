@@ -1,0 +1,53 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-primary">
+        <h3 class="card-title"><b>Employee Probation Management</b></h3>
+        <div class="card-toolbar">
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="employee" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class=" text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Branch</th>
+                        <th>Department </th>
+                        <th>Designation </th>
+                        <th>Employee Code</th>
+                        <th>Employee Name</th>
+                        <th>Gender</th>
+                        <th>Joining Date</th>
+                        <th>Probationary Until</th>
+                        <th>Probation Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of employees; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.branch_name}}</td>
+                        <td>{{data.department_name}}</td>
+                        <td>{{data.designation_name}}</td>
+                        <td>{{data.user_code}}</td>
+                        <td>{{data.user_name}}</td>
+                        <td>{{data.employee_gender}}</td>
+                        <td>{{data.employee_joiningdate}}</td>
+                        <td>{{data.probationary_until}}</td>
+                        <td>{{data.probation_status}}</td>
+
+                        <td class="text-center text-nowrap">
+                            <button title="History" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                                (click)="onhistory(data.employee_gid)"><span class="fas fa-book"></span></button>
+                            <button title="Leave Update" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                                (click)="onleaveupdate(data.employee_gid)"><span
+                                    class="fa-solid bi bi-arrow-clockwise fs-6"></span></button>
+
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,494 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.pmr.Models;
+
+namespace ems.pmr.DataAccess
+{
+    public class DaPmrTrnPurchaseOrder
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+
+        public void DaGetPurchaseOrderSummary(MdlPmrTrnPurchaseOrder values)
+        {
+
+
+            msSQL = " select /*+ MAX_EXECUTION_TIME(600000) */ distinct h.costcenter_name,a.purchaseorder_gid, " +
+                " if(a.manualporef_no is null,a.purchaseorder_gid, " +
+                " if(a.manualporef_no='',a.purchaseorder_gid, " +
+                " if(a.manualporef_no=a.purchaseorder_gid,a.purchaseorder_gid,concat(a.purchaseorder_gid,'/',a.manualporef_no)))) " +
+                " as porefno, " +
+                " a.purchaseorder_remarks,a.purchaseorder_status, format(a.total_amount,2) as total_amount,Date_add(a.purchaseorder_date,Interval delivery_days day) as ExpectedPODeliveryDate ," +
+                " format(a.total_amount,2) as paymentamount, " +
+                " a.purchaseorder_date ,a.vendor_status," +
+                " CASE when a.invoice_flag <> 'IV Pending' then a.invoice_flag" +
+                " when a.grn_flag <> 'GRN Pending' then a.grn_flag" +
+                " else a.purchaseorder_flag end as 'overall_status'," +
+                " a.purchaseorder_flag, a.grn_flag, a.invoice_flag," +
+                " (case when a.currency_code is null then b.vendor_companyname" +
+                " when a.currency_code is not null then" +
+                " concat(b.vendor_companyname,'/',a.currency_code) end)  as vendor_companyname, c.branch_name, " +
+                " case when group_concat(distinct purchaserequisition_referencenumber)=',' then '' " +
+                " when group_concat(distinct purchaserequisition_referencenumber) <> ',' then group_concat(distinct purchaserequisition_referencenumber) end  as refrence_no, " +
+                " bscc_flag,po_type from pmr_trn_tpurchaseorder a" +
+                " left join  acp_mst_tvendor b on b.vendor_gid = a.vendor_gid" +
+                " left join hrm_mst_tbranch c on c.branch_gid = a.branch_gid" +
+                " left join adm_mst_tuser d on d.user_gid = a.created_by" +
+                " left join hrm_mst_temployee e on e.user_gid = d.user_gid" +
+                " left join adm_mst_tmodule2employee  f on f.employee_gid = e.employee_gid" +
+                " left join pmr_mst_tcostcenter h on h.costcenter_gid=a.costcenter_gid" +
+                " left join pmr_Trn_tpr2po i on i.purchaseorder_gid=a.purchaseorder_gid" +
+                " left join pmr_Trn_tpurchaserequisition j on j.purchaserequisition_gid=i.purchaserequisition_gid " +
+                " where 1=1 and a.workorderpo_flag='N'  and a.purchaseorder_status <>'PO Amended'group by a.purchaseorder_gid order by a.purchaseorder_gid ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetPurchaseOrder_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetPurchaseOrder_lists
+                    {
+
+                        purchaseorder_gid = dt["purchaseorder_gid"].ToString(),
+                        purchaseorder_date = dt["purchaseorder_date"].ToString(),
+                        ExpectedPODeliveryDate = dt["ExpectedPODeliveryDate"].ToString(),
+                        porefno = dt["porefno"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        costcenter_name = dt["costcenter_name"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        total_amount = dt["total_amount"].ToString(),
+                        purchaseorder_status = dt["purchaseorder_status"].ToString(),
+                        vendor_status = dt["vendor_status"].ToString(),
+                        paymentamount = dt["paymentamount"].ToString(),
+                    });
+                    values.GetPurchaseOrder_lists = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+
+
+        }
+        public void DaGetBranch(MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " Select branch_name,branch_gid " +
+                    " from hrm_mst_tbranch ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBranch>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBranch
+                    {
+                        branch_name = dt["branch_name"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+                    });
+                    values.GetBranch = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetVendor(MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " Select vendor_companyname,vendorregister_gid " +
+                    " from acp_mst_tvendorregister where blacklist_flag<>'Y'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetVendor>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetVendor
+                    {
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        vendor_gid = dt["vendorregister_gid"].ToString(),
+                    });
+                    values.GetVendor = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetDispatchToBranch(MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " Select branch_name,branch_gid " +
+                    " from hrm_mst_tbranch ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetDispatchToBranch>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetDispatchToBranch
+                    {
+                        dispatch_name = dt["branch_name"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+                    });
+                    values.GetDispatchToBranch = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetCurrency(MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " select distinct a.currencyexchange_gid,a.currency_code from  crm_trn_tcurrencyexchange a " +
+                   " left join acp_mst_tvendor b on a.currencyexchange_gid = b.currencyexchange_gid ";
+            dt_datatable = objdbconn.GetDataTable(msSQL, "crm_trn_tcurrencyexchange");
+
+            var getModuleList = new List<GetCurrency>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetCurrency
+                    {
+                        currency_code = dt["currency_code"].ToString(),
+                        currencyexchange_gid = dt["currencyexchange_gid"].ToString(),
+                    });
+                    values.GetCurrency = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetTax(MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " select tax_name,tax_gid,percentage from acp_mst_ttax where active_flag='Y' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTax>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTax
+                    {
+                        tax_gid = dt["tax_gid"].ToString(),
+                        tax_name1 = dt["tax_name"].ToString(),
+                        tax_name2 = dt["tax_name"].ToString(),
+                        tax_name3 = dt["tax_name"].ToString(),
+                        percentage = dt["percentage"].ToString(),
+                    });
+                    values.GetTax = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetProductCode(MdlPmrTrnPurchaseOrder values)
+        {
+
+            msSQL = " Select product_code,product_gid " +
+                   " from pmr_mst_tproduct ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductCode>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductCode
+                    {
+                        product_gid = dt["product_gid"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                    });
+                    values.GetProductCode = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+
+        }
+        public void DaGetViewPurchaseOrderSummary(string purchaseorder_gid, MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " select a.purchaseorder_gid, a.purchaserequisition_gid,a.purchaseorder_remarks,a.tax_amount,y.tax_name, "+
+                    " case when a.exchange_rate is null then '1' else a.exchange_rate end as exchange_rate, "+
+                     " a.purchaserequisition_gid, a.quotation_gid, a.branch_gid,a.ship_via,a.payment_terms,a.delivery_location,a.freight_terms, "+
+                     " date_format(a.purchaseorder_date, '%d-%m-%y') as purchaseorder_date , "+
+                     " a.vendor_address,a.shipping_address, a.vendor_contact_person,a.created_by,a.priority,a.priority_remarks, " + " case when a.priority = 'N' then 'Low' else 'High' end as priority_n, "+
+                     " CASE when a.invoice_flag<> 'IV Pending' then a.invoice_flag " +
+                     " when a.grn_flag<> 'GRN Pending' then a.grn_flag " +
+                     " else a.purchaseorder_flag end as 'overall_status', a.approver_remarks, " +
+                     " a.purchaseorder_reference,format(a.total_amount, 2) as total_amount , " +
+                     " a.vendor_emailid, a.vendor_faxnumber, a.vendor_contactnumber, " +
+                     " a.termsandconditions, a.payment_term, " +
+                     " b.vendor_companyname, g.user_firstname as approved_by, " +
+                     " concat(c.user_firstname, ' - ', e.department_name) as user_firstname, " +
+                     " d.employee_emailid, d.employee_mobileno, f.branch_name,format(a.discount_percentage, 2) as discount_percentage, " +
+                     " format(a.discount_amount, 2) as discount_amount, format(a.tax_percentage, 2) as tax_percentage, " +
+                     " format(a.tax_amount, 2) as tax_amount,format(a.addon_amount, 2) as addon_amount,format(a.roundoff, 2) as roundoff, " +
+                     " concat_ws('-', h.costcenter_name, h.costcenter_gid) as costcenter_name,format(h.budget_available, 2) as budget_available,h.costcenter_gid, " +
+                     " a.payment_days,a.tax_gid,a.delivery_days,a.freightcharges,a.freighttax_amount,a.buybackorscrap,a.manualporef_no ,z.branch_name as deliverytobranch," +
+                     " format(a.packing_charges, 2) as packing_charges, format(a.insurance_charges, 2) as insurance_charges ," +
+                     " i.purchaseorderdtl_gid, i.product_gid, " +
+                    " i.product_price, i.qty_ordered,i.needby_date," +
+                    " format(i.discount_percentage, 2) as discount_percentage , " +
+                    " format(i.discount_amount, 2) as discount_amount , " +
+                    " format(i.tax_percentage, 2) as tax_percentage, " +
+                    " format(i.tax_percentage2, 2) as tax_percentage2, " +
+                    " format(i.tax_percentage3, 2) as tax_percentage3, " +
+                    " format(i.tax_amount, 2) as tax_amount, " +
+                    " format(i.tax_amount2, 2) as tax_amount2, " +
+                    " format(i.tax_amount3, 2) as tax_amount3, " +
+                  " i.qty_Received, i.qty_grnadjusted, " +
+                  " i.product_remarks, format((qty_ordered * i.product_price), 2) as product_totalprice, " +
+                  " format((((qty_ordered * i.product_price) - i.discount_amount) + i.tax_amount + i.tax_amount2 + i.tax_amount3), 2) " +
+                  " as product_total, i.product_code, (i.product_name) as product_name," +
+                  " k.productgroup_name, i.productuom_name,i.purchaseorder_gid,i.display_field_name, m.currency_code " +
+                    " from pmr_trn_tpurchaseorder a " +
+                    " left join acp_mst_tvendor b on a.vendor_gid = b.vendor_gid " +
+                    " left join adm_mst_tuser c on c.user_gid = a.created_by " +
+                    " left join hrm_mst_temployee d on d.user_gid = c.user_gid " +
+                    " left join hrm_mst_tdepartment e on e.department_gid = d.department_gid " +
+                    " left join hrm_mst_tbranch f on d.branch_gid = f.branch_gid " +
+                    " left join hrm_mst_tbranch z on a.deliverytobranch_gid = z.branch_gid " +
+                    " left join acp_mst_ttax y on a.tax_gid = y.tax_gid " +
+                     " left join adm_mst_tuser g on g.user_gid = a.approved_by " +
+                     " left join pmr_mst_tcostcenter h on h.costcenter_gid = a.costcenter_gid " +
+                    " left join pmr_trn_tpurchaseorderdtl i ON a.purchaseorder_gid = i.purchaseorder_gid " +
+                      " left join pmr_mst_tproduct j on i.product_gid = j.product_gid " +
+                      " left join pmr_mst_tproductgroup k on j.productgroup_gid = k.productgroup_gid " +
+                      " left join pmr_mst_tproductuom l on i.uom_gid = l.productuom_gid " +
+                      " left join crm_trn_tcurrencyexchange m on a.currency_code = m.currency_code " +
+                      " where a.purchaseorder_gid = '" + purchaseorder_gid + "' group by a.purchaseorder_gid ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetViewPurchaseOrder>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetViewPurchaseOrder
+                    {
+                        purchaseorder_gid = dt["purchaseorder_gid"].ToString(),
+                        manualporef_no = dt["manualporef_no"].ToString(),
+                        purchaseorder_date = dt["purchaseorder_date"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        deliverytobranch = dt["deliverytobranch"].ToString(),
+                        vendor_contactnumber = dt["vendor_contactnumber"].ToString(),
+                        vendor_contact_person = dt["vendor_contact_person"].ToString(),
+                        vendor_faxnumber = dt["vendor_faxnumber"].ToString(),
+                        vendor_emailid = dt["vendor_emailid"].ToString(),
+                        vendor_address = dt["vendor_address"].ToString(),
+                        exchange_rate = dt["exchange_rate"].ToString(),
+                        ship_via = dt["ship_via"].ToString(),
+                        payment_terms = dt["payment_terms"].ToString(),
+                        freight_terms = dt["freight_terms"].ToString(),
+                        delivery_location = dt["delivery_location"].ToString(),
+                        priority_n = dt["priority_n"].ToString(),
+                        priority_remarks = dt["priority_remarks"].ToString(),
+                        tax_amount = dt["tax_amount"].ToString(),
+                        shipping_address = dt["shipping_address"].ToString(),
+                        purchaseorder_reference = dt["purchaseorder_reference"].ToString(),
+                        purchaseorder_remarks = dt["purchaseorder_remarks"].ToString(),
+                        discount_percentage = dt["discount_percentage"].ToString(),
+                        tax_gid = dt["tax_gid"].ToString(),
+                        packing_charges = dt["packing_charges"].ToString(),
+                        insurance_charges = dt["insurance_charges"].ToString(),
+                        payment_days = dt["payment_days"].ToString(),
+                        addon_amount = dt["addon_amount"].ToString(),
+                        buybackorscrap = dt["buybackorscrap"].ToString(),
+                        roundoff = dt["roundoff"].ToString(),
+                        total_amount = dt["total_amount"].ToString(),
+                        discount_amount = dt["discount_amount"].ToString(),
+                        freighttax_amount = dt["freighttax_amount"].ToString(),
+                        termsandconditions = dt["termsandconditions"].ToString(),
+                        delivery_days = dt["delivery_days"].ToString(),
+                        tax_amount2 = dt["tax_amount2"].ToString(),
+                        tax_amount3 = dt["tax_amount3"].ToString(),
+                        approver_remarks = dt["approver_remarks"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        product_price = dt["product_price"].ToString(),
+                        qty_ordered = dt["qty_ordered"].ToString(),
+                        qty_Received = dt["qty_ordered"].ToString(),
+                        qty_grnadjusted = dt["qty_ordered"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+
+
+
+                    }) ;
+
+                    values.GetViewPurchaseOrder = getModuleList;
+
+                }
+
+            }
+            dt_datatable.Dispose();
+
+
+
+
+
+        }
+
+
+      
+        public void DaGetOnChangeBranch(string branch_gid, MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " select branch_name,concat(address1,'\n',postal_code) as address1,city,state, postal_code from hrm_mst_tbranch  " +
+                     " where branch_gid  ='" + branch_gid + "' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBranch>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBranch
+                    {
+                        branch_name = dt["branch_name"].ToString(),
+                        address1 = dt["address1"].ToString(),
+                        city = dt["city"].ToString(),
+                        state = dt["state"].ToString(),
+                        postal_code = dt["postal_code"].ToString(),
+
+
+                    });
+                    values.GetBranch = getModuleList;
+                }
+            }
+        }
+
+        public void DaGetOnChangeVendor(string vendor_gid, MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = "  select b.address1, b.address2, b.city, b.state, b.postal_code, b.fax,a.contactperson_name, a.vendor_companyname,d.payment_terms, " +
+               " a.contact_telephonenumber, c.country_name,a.email_id,a.currencyexchange_gid from acp_mst_tvendorregister a " +
+                 " left join adm_mst_taddress b on b.address_gid = a.address_gid " +
+                 " left join adm_mst_tcountry c on c.country_gid = b.country_gid" + 
+                 "  left join acp_mst_tvendor d on d.vendorregister_gid = a.vendorregister_gid  " +
+                     " where a.vendorregister_gid  ='" + vendor_gid + "' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetVendor>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetVendor
+                    {
+
+                        address1 = dt["address1"].ToString(),
+                        address2 = dt["address2"].ToString(),
+                        city = dt["city"].ToString(),
+                        state = dt["state"].ToString(),
+                        postal_code = dt["postal_code"].ToString(),
+                        fax = dt["fax"].ToString(),
+                        contactperson_name = dt["contactperson_name"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        contact_telephonenumber = dt["contact_telephonenumber"].ToString(),
+                        country_name = dt["country_name"].ToString(),
+                        email_id = dt["email_id"].ToString(),
+                        currencyexchange_gid = dt["currencyexchange_gid"].ToString(),
+
+
+                    });
+                    values.GetVendor = getModuleList;
+                }
+            }
+        }
+        public void DaGetOnChangeProductCode(string product_code, MdlPmrTrnPurchaseOrder values)
+        {
+            if (product_code != null)
+            {
+                msSQL = " Select a.product_name, a.product_code, b.productuom_gid,b.productuom_name,c.productgroup_name  from pmr_mst_tproduct a  " +
+                 " left join pmr_mst_tproductuom b on a.productuom_gid = b.productuom_gid  " +
+                " left join pmr_mst_tproductgroup c on a.productgroup_gid = c.productgroup_gid  " +
+            " where a.product_code='" + product_code + "' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+
+            var getModuleList = new List<GetProductCode>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductCode
+                    {
+                        product_name = dt["product_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+
+                    });
+                    values.GetProductCode = getModuleList;
+                }
+            }
+            }
+            else
+            {
+
+            }
+        }
+        public void DaGetOnChangeProductName(string product_gid, MdlPmrTrnPurchaseOrder values)
+        {
+
+            if (product_gid!=null)
+            {
+                msSQL = " Select a.product_name, a.product_code, b.productuom_gid,b.productuom_name,c.productgroup_name,c.productgroup_gid  from pmr_mst_tproduct a  " +
+                     " left join pmr_mst_tproductuom b on a.productuom_gid = b.productuom_gid  " +
+                    " left join pmr_mst_tproductgroup c on a.productgroup_gid = c.productgroup_gid  " +
+                " where a.product_gid='" + product_gid + "' ";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+
+                var getModuleList = new List<GetProductCode>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new GetProductCode
+                        {
+                            product_name = dt["product_name"].ToString(),
+                            product_code = dt["product_code"].ToString(),
+                            productuom_name = dt["productuom_name"].ToString(),
+                            productgroup_name = dt["productgroup_name"].ToString(),
+
+                        });
+                        values.GetProductCode = getModuleList;
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+     
+
+
+        public void DaGetProduct(MdlPmrTrnPurchaseOrder values)
+        {
+            msSQL = " Select product_gid, product_name from pmr_mst_tproduct  " +
+                    " order by product_name asc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProduct>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProduct
+                    {
+                        product_gid = dt["product_gid"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                    });
+                    values.GetProduct = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    
+}
+}

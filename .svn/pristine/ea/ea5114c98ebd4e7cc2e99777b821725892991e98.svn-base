@@ -1,0 +1,193 @@
+<div class="card m-3">
+
+<div class="card-header bg-lightblue card-height55">
+    <div class="card-title m-0 ">
+        <h5 class="fw-bolder text-blue">Edit Lead Bank</h5>
+    </div>
+</div>
+<br>
+<form [formGroup]="contacteditform" #form="ngForm">
+    <input formControlName="leadbank_gid" hidden
+    placeholder="Address Line 1"  type="text" class="
+        form-control form-control-lg form-control-solid
+        bg-white
+        custom-input
+        mb-3 mb-lg-0
+        borderc-secondary
+      " name="leadbank_gid" />
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+        
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">Branch Name <span class="ms-1 text-red">*</span></span>
+
+          <ng-select formControlName="leadbankbranch_name"  [(ngModel)]="selectedBranch" [class.is-invalid]="
+          leadbankbranch_name.invalid && (leadbankbranch_name.dirty || leadbankbranch_name.touched)
+            " [ngClass]="{'invalid-border': leadbankbranch_name.invalid && leadbankbranch_name.touched}"  [items]="branch_list" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+            bindLabel="leadbankbranch_name" bindValue="leadbank_gid" placeholder="Select an option"></ng-select>
+          <div *ngIf="
+          leadbankbranch_name.invalid && (leadbankbranch_name.dirty || leadbankbranch_name.touched)
+            " class="invalid-feedback">
+            <div *ngIf="leadbankbranch_name.errors?.['required']">
+                Branch Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Contact Person Name</b> <span class="ms-1 text-red">*</span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+              " placeholder="Contact Person Name" formControlName="leadbankcontact_name" class="form-control" />
+            </div>
+            <div *ngIf="leadbankcontact_name.invalid && leadbankcontact_name.touched">
+                <div *ngIf="leadbankcontact_name.hasError('required')"style="color:red;">Contact Person Name is required
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Mobile Number</b> <span class="ms-1 text-red">*</span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                form-control form-control-lg form-control-solid
+                mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+              " placeholder="mobile" formControlName="mobile" class="form-control" />
+            </div>
+            <div *ngIf="mobile.invalid && mobile.touched">
+                <div *ngIf="mobile.hasError('required')"style="color:red;">Mobile Number required                            
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+        
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Email Address</b> <span class="ms-1 text-red">*</span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+              " placeholder="Email Address" formControlName="email" class="form-control" />
+            </div>
+            <div *ngIf="email.invalid && email.touched">
+                <div *ngIf="email.hasError('required')"style="color:red;">Email Address is required
+                </div>
+            </div>
+            </div>
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Designation</b> <span class="ms-1 text-red">*</span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+              " placeholder="Designation" formControlName="designation" class="form-control" />
+            </div>
+            <div *ngIf="designation.invalid && designation.touched">
+                <div *ngIf="designation.hasError('required')"style="color:red;">Designation is required
+                </div>
+                </div>
+            </div>
+            <div class="row col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold"><b>Fax</b> <span class="ms-1 text-red">*</span></span>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Country" formControlName="fax_area_code" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Area Code" formControlName="fax_country_code" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="" formControlName="fax" class="form-control" />
+                  
+                </div>
+            </div>
+            <div *ngIf="fax_area_code.invalid && fax_area_code.touched">
+                <div *ngIf="fax_area_code.hasError('required')"style="color:red;">Fax required                            
+                </div>
+                </div>
+            </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+        
+            <div class="row col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold"><b>Telephone No I</b> <span class="ms-1 text-red">*</span></span>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Country" formControlName="country_code1" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Area Code" formControlName="area_code1" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="" formControlName="phone1" class="form-control" />
+                  
+                </div>
+            </div>
+
+
+                <div *ngIf="country_code1.invalid && country_code1.touched">
+                    <div *ngIf="country_code1.hasError('required')"style="color:red;">Telephone no is required
+                    </div>
+                </div>
+                <div class="row col-14 col-lg-4 col-md-6 col-sm-12" style="margin-left: 10px;"> <span class="font-bold"><b>Telephone No II</b> <span class="ms-1 text-red">*</span></span>
+                    <div class="col-sm-4">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid
+                        mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                      " placeholder="Country" formControlName="country_code2" class="form-control" />
+                      
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid
+                        mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                      " placeholder="Area Code" formControlName="area_code2" class="form-control" />
+                      
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid
+                        mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                      " placeholder="" formControlName="phone2" class="form-control" />
+                      
+                    </div>
+                </div>
+          
+            </div>
+            <br>
+            <div class="text-center my-4">
+                <button class="btn-sm text-white me-2" [disabled]="contacteditform.invalid" [ngClass]="{
+                  'primary-button': !contacteditform.invalid,
+                  'secondary-button': contacteditform.invalid
+                }" (click)="validate()">
+                <i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+              </button>
+              
+                
+                 
+              <button class="btn-primary btn-sm text-white me-4"(click)="redirecttolist()">
+                <i class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back</button>
+                      </div>
+</form>
+
+
+
+</div>

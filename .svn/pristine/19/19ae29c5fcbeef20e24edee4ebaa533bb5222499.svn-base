@@ -1,0 +1,47 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Cash Book</h3> 
+    </div>
+    <br>
+  
+      
+        <div class="table-responsive">
+            <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                <table id="CashBook_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                    <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Branch Code </th>
+                        <th>Branch Name</th>
+                        <th>GL Code</th>
+                        <th>Opening Balance</th>
+                        <th>Closing Amount</th>
+                        <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr *ngFor="let data of CashBook_list; let i=index;"> 
+                            <td >{{i+1}}</td>
+                            <td>{{data.branch_code}}</td>
+                            <td>{{data.branch_name}}</td>
+                            <td>{{data.gl_code}}</td>
+                            <td>{{data.openning_balance}}</td>
+                            <td>{{data.closing_amount}}</td>                                           
+                            <td class="text-center text-nowrap">
+                              
+                                <button class="link-button" (click)="onselect(data.branch_gid)">
+                                    <span></span>Select 
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button class="link-button" (click)="onclick(data.branch_gid)" >
+                                    <span></span>Edit 
+                                </button>
+                              
+                             </td>
+                        </tr>
+                    </tbody> 
+                </table>
+            </div> 
+        </div> 
+    </div>
+    
+    

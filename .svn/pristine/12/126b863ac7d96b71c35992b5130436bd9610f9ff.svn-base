@@ -1,0 +1,65 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,  ValidationErrors,
+  AbstractControl,
+  ValidatorFn } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+@Component({
+  selector: 'app-crm-socail-media-dashboard',
+  templateUrl: './crm-socail-media-dashboard.component.html',
+  styleUrls: ['./crm-socail-media-dashboard.component.scss']
+})
+export class CrmSocailMediaDashboardComponent {
+  shopifyproductcount: any;
+shopifycustomercount: any;
+shopifyordercount: any;
+product_count: any;
+customer_count: any;
+ order_count:any;
+ shopifystorename:any;
+ store_name:any;
+  
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+   
+  }
+  ngOnInit(): void {
+   
+    var url1 = 'SocialMedia/GetShopifyProductCount'
+  this.service.get(url1).subscribe((result,) => {
+
+    this.shopifyproductcount = result;
+    this.product_count = this.shopifyproductcount.count;
+  
+    console.log('product',this.product_count)
+
+  });
+  var url2 = 'SocialMedia/GetShopifyOrderCount'
+  this.service.get(url2).subscribe((result,) => {
+
+    this.shopifyordercount = result;
+    this.order_count = this.shopifyordercount.count;
+  
+    console.log('order',this.order_count)
+
+  });
+  var url3 = 'SocialMedia/GetShopifyCustomerCount'
+  this.service.get(url3).subscribe((result,) => {
+
+    this.shopifycustomercount = result;
+    this.customer_count = this.shopifycustomercount.count;
+  
+    console.log('customer',this.customer_count)
+
+  });
+
+  var url4 = 'SocialMedia/GetShopifyStoreName'
+  this.service.get(url4).subscribe((result,) => {
+
+    this.shopifystorename = result;
+    this.store_name = this.shopifystorename.shop.name;
+  
+    console.log('customer',this.customer_count)
+
+  });
+}
+}

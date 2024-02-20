@@ -1,0 +1,158 @@
+﻿using ems.payroll.Models;
+using ems.system.Models;
+using ems.utilities.Functions;
+using Microsoft.SqlServer.Server;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Odbc;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Web;
+using static OfficeOpenXml.ExcelErrorValue;
+using static System.Collections.Specialized.BitVector32;
+
+
+namespace ems.payroll.DataAccess
+{
+    public class DaEmployeeBankDetails
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+
+        OdbcDataReader objodbcDataReader;
+        DataTable dt_datatable;
+        int mnResult;
+        string msGetGid, msGetGid1, lsempoyeegid;
+
+        // Module Master Summary
+        public void DaGetEmployeeBankDetailsSummary(MdlPayTrnEmployeeBankDetails values)
+        {
+            msSQL = " Select distinct a.user_gid,c.useraccess, " +
+                    " a.user_code,concat(a.user_firstname,a.user_lastname) as empname, " +
+                    " d.designation_name,c.designation_gid,c.employee_gid,e.branch_name, " +
+                    " c.department_gid,c.branch_gid, e.branch_name, g.department_name " +
+                    " FROM adm_mst_tuser a " +
+                    " left join hrm_mst_temployee c on a.user_gid = c.user_gid " +
+                    " left join adm_mst_tdesignation d on c.designation_gid = d.designation_gid " +
+                    " left join hrm_mst_tbranch e on c.branch_gid = e.branch_gid " +
+                    " left join hrm_mst_tdepartment g on g.department_gid = c.department_gid " +
+                    " left join hrm_trn_temployeetypedtl h on c.employee_gid=h.employee_gid ";
+            
+                    dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<employeebankdetails_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new employeebankdetails_list
+                    {
+                        user_gid = dt["user_gid"].ToString(),
+                        user_code = dt["user_code"].ToString(),
+                        employee_gid = dt["employee_gid"].ToString(),
+                        empname = dt["empname"].ToString(),
+                        designation_gid = dt["designation_gid"].ToString(),
+                        designation_name = dt["designation_name"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        department_gid = dt["department_gid"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                      
+                    });
+                    values.employeebankdetails_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        public void DaPostEmployeeBankDetails(string user_gid, employeebankdetails_list values)
+        {
+
+            msSQL = "update hrm_mst_temployee set" +
+                    " pf_no='" + values.pf_no + "'," +
+                   " pan_no = '" + values.pan_no + "'," +
+                   " esi_no = '" + values.esi_no + "'," +
+                   " ac_no = '" + values.bankacc_no + "'," +
+                   " bank = '" + values.bank_name + "'," +
+                   " uan_no = '" + values.uan_no + "'," +
+                   " bank_code = '" + values.bankcode_no + "'," +
+                   " updated_by = '" + user_gid + "'," +
+                   " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' " +
+                   "where employee_gid='" + values.employee_gid + "'  ";
+
+                   mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult == 1)
+            {
+                values.status = true;
+                values.message = "Bank Details Updated Successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Update Bank Details";
+            }
+        }
+
+
+
+        public void DaGetBankDtl(MdlPayTrnEmployeeBankDetails values)
+            {
+            msSQL = "select bank_name From acc_mst_tallbank";
+            
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBankdropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBankdropdown
+                    {
+
+                        bank_name = dt["bank_name"].ToString(),
+                    });
+                    values.GetBankDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetBankdetails( string employee_gid, MdlPayTrnEmployeeBankDetails values)
+        {
+            msSQL = "select bank,pf_no,esi_no,ac_no,bank_code,pan_no,uan_no from hrm_mst_temployee where employee_gid = '" + employee_gid + "' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBank>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBank
+                    {
+                       
+                        bank = dt["bank"].ToString(),
+                        pf_no = dt["pf_no"].ToString(),
+                        esi_no = dt["esi_no"].ToString(),
+                        bank_code = dt["bank_code"].ToString(),
+                        pan_no = dt["pan_no"].ToString(),
+                        uan_no = dt["uan_no"].ToString(),
+                        ac_no = dt["ac_no"].ToString(),
+                    });
+                    values.GetBank = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+    }
+
+}

@@ -1,0 +1,137 @@
+﻿using ems.hrm.DataAccess;
+using ems.hrm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web;
+
+
+namespace ems.hrm.Controllers
+{
+    [RoutePrefix("api/HrmTrnAdmincontrol")]
+    [Authorize]
+    public class HrmTrnAdmincontrolController  : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaHrmTrnAdmincontrol objdaemployeelist = new DaHrmTrnAdmincontrol();
+
+        [ActionName("GetEmployeedtlSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetEmployeedtlSummary()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetEmployeedtlSummary(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getbranchdropdown")]
+        [HttpGet]
+
+        public HttpResponseMessage Getbranchdropdown()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetbranchdropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+
+        [ActionName("PostEmployeedetails")]
+        [HttpPost]
+        public HttpResponseMessage PostEmployeedetails(employee_lists values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objdaemployeelist.DaPostEmployeedetails(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getentitydropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getentitydropdown()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetentitydropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getdepartmentdropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getdepartmentdropdown()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetdepartmentdropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getdesignationdropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getdesignationdropdown()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetdesignationdropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("Getcountrydropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getcountrydropdown()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetcountrydropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+        [ActionName("Getcountry2dropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getcountry2dropdown()
+        {
+            MdlHrmTrnAdmincontrol values = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetcountry2dropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+        [ActionName("GetEditEmployeeSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetEditEmployeeSummary(string employee_gid)
+        {
+            MdlHrmTrnAdmincontrol objresult = new MdlHrmTrnAdmincontrol();
+            objdaemployeelist.DaGetEditEmployeeSummary(employee_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+        [ActionName("Getresetpassword")]
+        [HttpPost]
+        public HttpResponseMessage Getresetpassword(employee_lists values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objdaemployeelist.DaGetresetpassword(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getupdateusercode")]
+        [HttpPost]
+        public HttpResponseMessage Getupdateusercode(employee_lists values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objdaemployeelist.DaGetupdateusercode(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+
+
+        [ActionName("UpdateEmployeedetails")]
+        [HttpPost]
+        public HttpResponseMessage UpdateEmployeedetails(employee_lists values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objdaemployeelist.DaUpdateEmployeedetails(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+    }
+}

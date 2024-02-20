@@ -1,0 +1,51 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-smr-trn-salesorder-summary',
+  templateUrl: './smr-trn-salesorder-summary.component.html',
+  styleUrls: ['./smr-trn-salesorder-summary.component.scss']
+})
+export class SmrTrnSalesorderSummaryComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  salesorder_list: any[] = [];
+  getData: any;
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService) {
+  }
+    
+  
+  ngOnInit(): void {
+    debugger
+    this.GetSmrTrnSalesordersummary();
+}
+//// Summary Grid//////
+GetSmrTrnSalesordersummary( )
+
+ {
+  debugger
+  var url = 'SmrTrnSalesorder/GetSmrTrnSalesordersummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#salesorder_list').DataTable().destroy();
+    this.responsedata = result;
+    this.salesorder_list = this.responsedata.salesorder_list;
+    setTimeout(() => {
+      $('#salesorder_list').DataTable();
+    }, 1);
+
+
+  })
+  
+  
+}
+add(){
+  this.router.navigate(['/smr/SmrTrnRaiseSalesOrder'])
+} 
+  openModaledit(){}
+  openModaldelete(){}
+  onattach(){}
+  openModalshop(){}
+}

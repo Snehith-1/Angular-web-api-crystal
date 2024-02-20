@@ -1,0 +1,20 @@
+    
+.ng-select .ng-select-container{
+  height: 33px !important;
+  border-radius: 9px !important;
+  border: 1px solid #d8d8d9;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder {
+  top: 9px !important;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+  padding: 4px !important;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder{
+  padding-left: 10.725px !important;
+  color: #a9a7bf !important;
+  font-weight: 420!important;
+}

@@ -1,0 +1,1058 @@
+﻿using ems.payroll.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Globalization;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System.Drawing;
+using System.Security.Permissions;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+
+namespace ems.payroll.DataAccess
+{
+    public class DaPayTrnSalaryManagement
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL, msSQL1, msSQL2 = string.Empty;
+
+        OdbcDataReader objodbcDataReader, objodbcDataReader1, objodbcDataReader2, objodbcDataReader3;
+        DataTable dt_datatable, dt_datatable2;
+        int mnResult, noofdays, daysinmonth1;
+        string msGetGid, msGetGid1, msgetsalary_gid, lsempoyeegid, start_month, start_year, end_month, end_year, exit_date, days1;
+        string lsflag, ls_gid, lssalarycomponent_gid, lscomponentgroup_gid;
+        double earn_salarycomponent_amount, earned_salarycomponent_amount_employer;
+        double lsdeduction, lsaddition;
+        // Module Summary
+        public void DaEmployeeSalaryManagement(MdlPayTrnSalaryManagement values)
+        {
+            msSQL = " select a.salary_gid, c.month, c.sal_year, b.user_gid,concat(b.user_firstname,'-',b.user_lastname) as user_name, " +
+                    " a.leave_taken, a.lop_days as lop, a.month_workingdays,format(sum(a.earned_net_salary),2) as earned_net_salary ,format(sum(a.net_salary),2) as net_salary, a.generated_by, a.generated_on ,count(a.employee_gid) as totalemployee" +
+                     " from pay_trn_tsalmonth c " +
+                      " left join pay_trn_tsalary a on a.month=c.month and a.year=c.sal_year " +
+                     " left join hrm_mst_temployee d on a.employee_gid=d.employee_gid " +
+                     " left join adm_mst_tuser b on a.generated_by=b.user_gid group by c.month,c.sal_year  " +
+                     " order by c.sal_year desc,MONTH(STR_TO_DATE(substring(c.month,1,3),'%b')) desc ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<employeesalary_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new employeesalary_list
+                    {
+                        salary_gid = dt["salary_gid"].ToString(),
+                        month = dt["month"].ToString(),
+                        year = dt["sal_year"].ToString(),
+                        Workingdays = dt["month_workingdays"].ToString(),
+                        generated_by = dt["user_name"].ToString(),
+                        totalemployee = dt["totalemployee"].ToString(),
+                        net_salary = dt["net_salary"].ToString(),
+                        earned_net_salary = dt["earned_net_salary"].ToString(),
+
+
+                    });
+                    values.employeesalarylist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaAdditionalsubsummary(string salary_gid, MdlPayTrnSalaryManagement values)
+        {
+            msSQL = " select a.salary_gid,(c.componentgroup_name) as salarycomponent_name,b.salarycomponent_percentage," +
+                            " format(b.earned_salarycomponent_amount,2)As earned_salarycomponent_amount" +
+                            "  from pay_trn_tsalary a" +
+                            " left join pay_trn_tsalarydtl b on a.salary_gid=b.salary_gid" +
+                            " left join pay_mst_tsalarycomponent c on b.salarycomponent_gid=c.salarycomponent_gid " +
+                            " where a.salary_gid ='" + salary_gid + "' and b.salarygradetype='Addition' and c.primecomponent_flag='N'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<addsummary1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new addsummary1
+                    {
+                        salary_gid = dt["salary_gid"].ToString(),
+                        salarycomponent_name = dt["salarycomponent_name"].ToString(),
+                        earned_amount = dt["earned_salarycomponent_amount"].ToString(),
+
+                    });
+                    values.addsummary1 = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaDeductsubsummary(string salary_gid, MdlPayTrnSalaryManagement values)
+        {
+            msSQL = " select a.salary_gid,(c.componentgroup_name) as salarycomponent_name,b.salarycomponent_percentage," +
+                            " format(b.earned_salarycomponent_amount,2)As earned_salarycomponent_amount" +
+                            "  from pay_trn_tsalary a" +
+                            " left join pay_trn_tsalarydtl b on a.salary_gid=b.salary_gid" +
+                            " left join pay_mst_tsalarycomponent c on b.salarycomponent_gid=c.salarycomponent_gid " +
+                            " where a.salary_gid ='" + salary_gid + "' and b.salarygradetype='Deduction' and c.primecomponent_flag='N'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<addsummary1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new addsummary1
+                    {
+                        salary_gid = dt["salary_gid"].ToString(),
+                        salarycomponent_name = dt["salarycomponent_name"].ToString(),
+                        earned_amount = dt["earned_salarycomponent_amount"].ToString(),
+
+                    });
+                    values.addsummary1 = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+
+        public void DaGetEmployeeSelect(string month, string year, MdlPayTrnSalaryManagement values)
+        {
+            int monthNumber = DateTime.ParseExact(month, "MMMM", CultureInfo.CurrentCulture).Month;
+
+            // SQL query to select data from the database
+            string msSQL = "SELECT start_day, end_day, month_interval FROM pay_mst_tpayrollconfig";
+
+            // Execute the SQL query and retrieve data
+            DataTable dt_datatable1 = objdbconn.GetDataTable(msSQL);
+
+            if (dt_datatable1.Rows.Count > 0)
+            {
+                DataRow objrow = dt_datatable1.Rows[0];
+                string startDay = objrow["start_day"].ToString();
+                string endDay = objrow["end_day"].ToString();
+                string monthInterval = objrow["month_interval"].ToString();
+
+                string lsinterval = monthInterval;
+                string lsstartday = startDay;
+                string lsendday = endDay;
+
+                if (lsinterval == "current")
+                {
+                    start_month = monthNumber.ToString();
+                    if (start_month.Length == 1)
+                    {
+                        start_month = "0" + start_month;
+                    }
+                    end_month = start_month;
+                    start_year = year;
+                    end_year = year;
+
+                    int totaldays1 = DateTime.DaysInMonth(int.Parse(start_year), int.Parse(start_month));
+
+                    if (int.Parse(lsendday) > totaldays1)
+                    {
+                        lsendday = totaldays1.ToString();
+                    }
+                }
+                else
+                {
+                    end_month = monthNumber.ToString();
+                    if (end_month.Length == 1)
+                    {
+                        end_month = "0" + end_month;
+                    }
+                    string end_year = year;
+
+                    // -----------------------to get start date-------------------'
+                    string lsstring = lsendday + "-" + end_month + "-" + end_year;
+                    DateTime tempdate = DateTime.ParseExact(lsstring.Replace("-", ""), "ddMMyyyy", null);
+                    tempdate = tempdate.AddMonths(-1);
+                    start_year = tempdate.Year.ToString();
+                    start_month = tempdate.Month.ToString();
+
+                    if (start_month.Length == 1)
+                    {
+                        start_month = "0" + start_month;
+                    }
+                }
+
+                string lsstartdate = lsstartday + "-" + start_month + "-" + start_year;
+                string lsenddate = lsendday + "-" + end_month + "-" + end_year;
+
+                DateTime startdate = DateTime.ParseExact(lsstartdate.Replace("-", ""), "ddMMyyyy", null);
+                DateTime enddate = DateTime.ParseExact(lsenddate.Replace("-", ""), "ddMMyyyy", null);
+
+                int totaldays = (int)(enddate - startdate).TotalDays;
+                totaldays = totaldays + 1;
+                noofdays = totaldays;
+
+
+
+                msSQL = "Select /*+ MAX_EXECUTION_TIME(300000) */ distinct b.employee_gid,a.user_code,concat(ifnull(a.user_firstname,''),' ',ifnull(a.user_lastname,'')) as employee_name, " +
+                        "d.designation_name ,c.employee_gid,e.branch_name,MONTH(STR_TO_DATE(substring(monthname(c.employee_joiningdate),1,3),'%b')) as joiningmonth_number," +
+                        "c.department_gid, c.branch_gid, g.department_name " +
+                        "FROM pay_trn_temployee2salarygradetemplate b " +
+                        "left join  pay_trn_temployee2salarygradetemplatedtl x on b.employee2salarygradetemplate_gid=x.employee2salarygradetemplate_gid " +
+                        "inner join hrm_mst_temployee c on b.employee_gid = c.employee_gid " +
+                        "inner join adm_mst_tdesignation d on c.designation_gid = d.designation_gid " +
+                        "inner join hrm_mst_tbranch e on c.branch_gid = e.branch_gid " +
+                        "inner join hrm_mst_tdepartment g on g.department_gid = c.department_gid " +
+                        "left join hrm_trn_temployeetypedtl h on c.employee_gid=h.employee_gid " +
+                        "inner join adm_mst_tuser a on c.user_gid=a.user_gid  " +
+                        "left join hrm_trn_texitemployee y on c.employee_gid=y.employee_gid " +
+                        "left join  pay_trn_temployeepayrun z on c.employee_gid=z.employee_gid " +
+                        "where 1=1  and b.employee_gid not in( select employee_gid from pay_mst_tassignemployee2wages) " +
+                        " and b.employee_gid not in(select employee_gid from pay_mst_ttailormaster) and " +
+                        " b.employee_gid not in( select employee_gid from pay_mst_tassignemployee2nonmanagement)  and ((c.exit_date>='" + startdate.ToString("yyyy-MM-dd") + "' and c.exit_date<='" + enddate.ToString("yyyy-MM-dd") + "') or c.exit_date is null) " +
+                        "  and c.employee_joiningdate<='" + enddate.ToString("yyyy-MM-dd") + "'   and c.employee_gid not in (select e.employee_gid from " +
+                        " pay_trn_temployeepayrun e where e.month='" + month + "' " +
+                        " and e.year='" + year + "' and e.employee_select='Y')  " +
+                        " or c.employee_gid in ( select v.employee_gid from hrm_mst_temployee v " +
+                        " where v.exit_date>'" + enddate.ToString("yyyy-MM-dd") + "')  group by  b.employee_gid order by e.branch_name,a.user_code,b.basic_salary asc ";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<GetEmployeeSelect>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new GetEmployeeSelect
+                        {
+                            employee_gid = dt["employee_gid"].ToString(),
+                            user_code = dt["user_code"].ToString(),
+                            employee_name = dt["employee_name"].ToString(),
+                            designation_name = dt["designation_name"].ToString(),
+                            branch_name = dt["branch_name"].ToString(),
+                            joiningmonth_number = dt["joiningmonth_number"].ToString(),
+                            department_gid = dt["department_gid"].ToString(),
+                            branch_gid = dt["branch_gid"].ToString(),
+                            department_name = dt["department_name"].ToString(),
+                        });
+                        values.GetEmployeeSelect = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+
+
+            }
+        }
+
+
+
+
+
+
+        public void DaGetpayrunsummary(string month, string year, MdlPayTrnSalaryManagement values)
+        {
+
+            msSQL = " select a.salary_gid, a.employee_gid,c.user_code,concat(c.user_firstname,' ',c.user_lastname)as employee_name,b.branch_gid,a.month,a.year," +
+                    " d.branch_name,e.department_name as department,a.leave_taken,a.lop_days as lop,a.leave_salary as leave_wage,a.ot_hours,a.ot_rate,f.designation_name, " +
+                    " format(a.basic_salary,2)as basic_salary , format(a.earned_basic_salary,2)as earned_basic_salary ,b.user_gid," +
+                    " format(a.gross_salary,2)as gross_salary , format(a.earned_gross_salary,2)as earned_gross_salary ,a.public_holidays,round(a.permission_wage) as permission_wage, " +
+                    " format(a.net_salary,2)As net_salary , format(a.earned_net_salary,2)As earned_net_salary , a.actual_month_workingdays,a.month_workingdays" +
+                    " from pay_trn_tsalary a" +
+                    " left join hrm_mst_temployee b on a.employee_gid=b.employee_gid" +
+                    " left join adm_mst_tuser c on b.user_gid=c.user_gid" +
+                    " left join hrm_mst_tbranch d on b.branch_gid=d.branch_gid" +
+                    " left join hrm_mst_tdepartment e on b.department_gid=e.department_gid" +
+                    " left join adm_mst_tdesignation f on b.designation_gid=f.designation_gid " +
+                    " where  a.month='" + month + "' and a.year='" +year + "' and a.payrun_flag='Y'  " +
+                    "  group by a.salary_gid order by b.employee_gid";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<payrunviewlist>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new payrunviewlist
+                        {
+                            salary_gid = dt["salary_gid"].ToString(),
+                            employee_gid = dt["employee_gid"].ToString(),
+                            user_code = dt["user_code"].ToString(),
+                            employee_name = dt["employee_name"].ToString(),
+                            branch_gid = dt["branch_gid"].ToString(),
+                            month = dt["month"].ToString(),
+                            year = dt["year"].ToString(),
+                            branch_name = dt["branch_name"].ToString(),
+                            department = dt["department"].ToString(),
+                            leave_taken = dt["leave_taken"].ToString(),
+                            lop = dt["lop"].ToString(),
+                            leave_wage = dt["leave_wage"].ToString(),
+                            ot_hours = dt["ot_hours"].ToString(),
+                            ot_rate = dt["ot_rate"].ToString(),
+                            designation_name = dt["designation_name"].ToString(),
+                            basic_salary = dt["basic_salary"].ToString(),
+                            earned_basic_salary = dt["earned_basic_salary"].ToString(),
+                            user_gid = dt["user_gid"].ToString(),
+                            gross_salary = dt["gross_salary"].ToString(),
+                            earned_gross_salary = dt["earned_gross_salary"].ToString(),
+                            public_holidays = dt["public_holidays"].ToString(),
+                            permission_wage = dt["permission_wage"].ToString(),
+                            net_salary = dt["net_salary"].ToString(),
+                            earned_net_salary = dt["earned_net_salary"].ToString(),
+                            actual_month_workingdays = dt["actual_month_workingdays"].ToString(),
+                            month_workingdays = dt["month_workingdays"].ToString(),
+                        });
+                        values.payrunviewlist = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+
+
+            
+        }
+
+        public void DaPostforpayrun(GetEmployeelist values)
+        {
+            foreach (var data in values.detailsdtl_list)
+            {
+                msSQL = " select exit_date from hrm_trn_texitemployee where monthname(exit_date)= '" + values.month + "'  " +
+                    " and year(exit_date)= '" + values.year + "' and employee_gid= '" + data.employee_gid + "'  ";
+
+            DataTable dt_datatable1 = objdbconn.GetDataTable(msSQL);
+            if (dt_datatable1.Rows.Count > 0)
+            {
+                DataRow objrow = dt_datatable1.Rows[0];
+                exit_date = objrow["exit_date"].ToString();
+
+                msSQL = "select * from hrm_trn_tattendance where attendance_date >'" + exit_date + "' " +
+                        " and employee_gid='" + data.employee_gid + "' ";
+                dt_datatable2 = objdbconn.GetDataTable(msSQL);
+                if (dt_datatable2.Rows.Count > 0)
+                {
+                    msSQL = " delete from hrm_trn_tattendance where employee_gid='" + data.employee_gid + "' and attendance_date>'" + exit_date + "' ";
+
+                }
+            }
+
+            msSQL = "select * from pay_trn_temployeepayrun where employee_gid='" + data.employee_gid + "' and month='" + values.month + "' and year='" + values.year + "' ";
+            DataTable dt_datatable3 = objdbconn.GetDataTable(msSQL);
+                if (dt_datatable3.Rows.Count > 0)
+                {
+                    msSQL = " update pay_trn_temployeepayrun set month_workingdays='" + noofdays + "',employee_select='Y' where employee_gid='" + data.employee_gid + "' " +
+                            " and month = '" + values.month + "' and year='" + values.year + "' ";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+                else
+                {
+                    msGetGid = objcmnfunctions.GetMasterGID("EMPP");
+
+                    msSQL = " insert into pay_trn_temployeepayrun ( " +
+                                " employeepayrun_gid, " +
+                                " employee_gid, " +
+                                " month, " +
+                                " year, " +
+                                " month_workingdays, " +
+                                " employee_select, " +
+                                " employee_source " +
+                                " ) Values ( " +
+                          " '" + msGetGid + "'," +
+                          " '" + data.employee_gid + "'," +
+                          " '" + values.month + "'," +
+                          " '" + values.year + "'," +
+                          " '" + noofdays + "'," +
+                          " '" + "Y" + "'," +
+                          " '" + "Employee_select" + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+
+
+            }
+
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Employee Selected Successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error Occured While selecting employee";
+            }
+        }
+
+        public void DaUpdatemonthlypayrun(string user_gid, Getmonthlypayrun values)
+        {
+
+            int monthNumber = DateTime.ParseExact(values.month, "MMMM", CultureInfo.CurrentCulture).Month;
+
+            // SQL query to select data from the database
+            string msSQL = "SELECT start_day, end_day, month_interval FROM pay_mst_tpayrollconfig";
+
+            // Execute the SQL query and retrieve data
+            DataTable dt_datatable1 = objdbconn.GetDataTable(msSQL);
+
+            if (dt_datatable1.Rows.Count > 0)
+            {
+                DataRow objrow = dt_datatable1.Rows[0];
+                string startDay = objrow["start_day"].ToString();
+                string endDay = objrow["end_day"].ToString();
+                string monthInterval = objrow["month_interval"].ToString();
+
+                string lsinterval = monthInterval;
+                string lsstartday = startDay;
+                string lsendday = endDay;
+
+                if (lsinterval == "current")
+                {
+                    start_month = monthNumber.ToString();
+                    if (start_month.Length == 1)
+                    {
+                        start_month = "0" + start_month;
+                    }
+                    end_month = start_month;
+                    start_year = values.year;
+                    end_year = values.year;
+
+                    int totaldays1 = DateTime.DaysInMonth(int.Parse(start_year), int.Parse(start_month));
+
+                    if (int.Parse(lsendday) > totaldays1)
+                    {
+                        lsendday = totaldays1.ToString();
+                    }
+                }
+                else
+                {
+                    end_month = monthNumber.ToString();
+                    if (end_month.Length == 1)
+                    {
+                        end_month = "0" + end_month;
+                    }
+                    string end_year = values.year;
+
+                    // -----------------------to get start date-------------------'
+                    string lsstring = lsendday + "-" + end_month + "-" + end_year;
+                    DateTime tempdate = DateTime.ParseExact(lsstring.Replace("-", ""), "ddMMyyyy", null);
+                    tempdate = tempdate.AddMonths(-1);
+                    start_year = tempdate.Year.ToString();
+                    start_month = tempdate.Month.ToString();
+
+                    if (start_month.Length == 1)
+                    {
+                        start_month = "0" + start_month;
+                    }
+                }
+
+
+                string lsstartdate = start_year + "-" + start_month + "-" + lsstartday;
+                string lsenddate = end_year + "-" + end_month + "-" + lsendday;
+
+                DateTime startdate = DateTime.ParseExact(lsstartdate.Replace("-", ""), "yyyyMMdd", null);
+                DateTime enddate = DateTime.ParseExact(lsenddate.Replace("-", ""), "yyyyMMdd", null);
+            }
+            foreach (var data in values.employeeleave_list)
+                {
+
+                    msSQL = " select salary_gid,year from pay_trn_tsalary where month='" + values.month + "' and year='" + values.year + "' group by generated_on ";
+                    DataTable dt_datatable5 = objdbconn.GetDataTable(msSQL);
+                    DataRow dt1 = dt_datatable5.Rows[0];
+                    string year1 = dt1["year"].ToString();
+                  
+
+                    msSQL1 = " select a.employee2salarygradetemplate_gid,b.employee2salarygradetemplatedtl_gid,a.basic_salary,a.gross_salary," +
+                            " a.net_salary,b.salarycomponent_name,b.componentgroup_gid,b.componentgroup_name,a.ctc, " +
+                            " b.salarycomponent_amount, b.salarygradetype, ifnull(b.othercomponent_type,' ') as othercomponent_type,b.affect_in,b.salarycomponent_amount_employer," +
+                            " b.primecomponent_flag  from pay_trn_temployee2salarygradetemplate a " +
+                            " left join pay_trn_temployee2salarygradetemplatedtl b on a.employee2salarygradetemplate_gid=b.employee2salarygradetemplate_gid " +
+                            " where  a.employee_gid='" + data.employee_gid + "' ";
+                    objodbcDataReader1 = objdbconn.GetDataReader(msSQL1);
+                    if (objodbcDataReader1.HasRows == true)
+                    {
+                        string lssalary_gid = objodbcDataReader1["employee2salarygradetemplate_gid"].ToString();
+                        string basic_salary = objodbcDataReader1["basic_salary"].ToString();
+                        string grosssalary = objodbcDataReader1["gross_salary"].ToString();
+                        string net_salary = objodbcDataReader1["net_salary"].ToString();
+                        string ctc = objodbcDataReader1["ctc"].ToString();
+                        double basicsalary = double.Parse(basic_salary);
+                        int month_workingdays = int.Parse(data.totaldays);
+
+                        double actual_leave_rate = (basicsalary * 1.5) / month_workingdays;
+
+                        double leavecount = double.Parse(data.leavecount);
+                        double leave_rate = (basicsalary * leavecount) / month_workingdays;
+
+                        int monthworkingdays = int.Parse(data.salary_days);
+                        double earned_basic_salary = (basicsalary / month_workingdays) * monthworkingdays;
+
+                       
+                        double lslopdays = double.Parse(data.adjusted_lop);
+
+                        double lop = double.Parse(data.absent);
+                        double lop_amount = (basicsalary / month_workingdays) * lslopdays;
+
+                        double lsactual_month_workingdays = month_workingdays - lop;
+
+                       double earned_gross_salary = earned_basic_salary;
+
+                        
+                        if (monthNumber >= 1 || monthNumber <= 12)
+                        {
+                            int year2 = int.Parse(year1);
+                            int[] array = (IsLeapYear(year2) ? DaysToMonth366 : DaysToMonth365);
+                            daysinmonth1 = array[monthNumber] - array[monthNumber - 1];
+
+                        }
+
+
+
+                        msSQL = "select * from pay_trn_tsalary where employee_gid='" + data.employee_gid + "' and month='" + values.month + "' and year='" + values.year + "' ";
+                        DataTable dt_datatable3 = objdbconn.GetDataTable(msSQL);
+                        
+                        if (dt_datatable3.Rows.Count > 0)
+                        {
+                            DataRow dt = dt_datatable3.Rows[0];
+                            string lssalarygid = dt["salary_gid"].ToString();
+                    
+                            double lsadvance = 0;
+
+
+                            msSQL = " update pay_trn_tsalary set basic_salary='" + basic_salary + "', " +
+                                " gross_salary='" + grosssalary + "', " +
+                                " net_salary='" + net_salary + "', " +
+                                " earned_basic_salary='" + earned_basic_salary + "', " +
+                                " actual_month_workingdays='" + lsactual_month_workingdays + "', " +
+                                " actual_leave_salary='" + actual_leave_rate + "', " +
+                                " leave_taken='" + data.leavecount + "', " +
+                                " leave_salary='" + leave_rate + "', " +
+                                " lop_days='" + lslopdays + "', " +
+                                " worked_days='" + data.month_workingdays + "', " +
+                                " advance='" + lsadvance + "', " +
+                                " weekoff_days='" +data.weekoffcount + "', " +
+                                " public_holidays='" + data.holidaycount + "', " +
+                                " leave_generated_flag='Y', " +
+                                " ctc='" + ctc + "', " +
+                                " month_workingdays='" + data.totaldays + "' " +
+                                " where salary_gid='" + lssalarygid + "'";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                        }
+                        else { 
+                         string msgetsalary_gid = objcmnfunctions.GetMasterGID("PSLT");
+                        msSQL = " insert into pay_trn_tsalary(" +
+                                " salary_gid, " +
+                                " month, " +
+                                " year, " +
+                                " employee_gid, " +
+                                " basic_salary, " +
+                                " gross_salary, " +
+                                " net_salary, " +
+                                " earned_basic_salary, " +
+                                " actual_month_workingdays, " +
+                                " actual_leave_salary, " +                        
+                                " leave_taken, " +
+                                " leave_salary, " +
+                                " lop_days, " +
+                                " worked_days, " +
+                                " weekoff_days, " +
+                                " public_holidays," +
+                                " leave_generated_flag, " +
+                                " generated_by, " +
+                                " generated_on, " +
+                                " ctc, " +
+                                " payrun_date, " +
+                                " month_workingdays) " +
+                                " values( " +
+                                "'" + msgetsalary_gid + "', " +
+                                "'" + values.month + "', " +
+                                "'" + values.year + "', " +
+                                "'" + data.employee_gid + "', " +
+                                "'" + basic_salary + "', " +
+                                "'" + grosssalary + "', " +
+                                "'" + net_salary + "', " +
+                                "'" + earned_basic_salary + "', " +
+                                "'" + lsactual_month_workingdays + "', " +
+                                "'" + actual_leave_rate + "', " +
+                                "'" + data.leavecount+ "', " +
+                                "'" + leave_rate + "', " +
+                                 "'" + data.adjusted_lop + "', " +
+                                "'" + data.month_workingdays + "', " +
+                                "'" + data.weekoff_days + "', " +
+                                "'" + data.holidaycount + "', " + 
+                                " 'Y', " +
+                                " '" + user_gid + "', " +
+                                " '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                                " '" + ctc + "', " +
+                                " '" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                                "'" + data.totaldays + "') ";
+                        ls_gid = msgetsalary_gid;
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        }
+                    msSQL = "update pay_trn_temployeepayrun set leave_generate_flag='Y' where employee_gid='" + data.employee_gid + "' and month='" + values.month + "' and year='" + values.year + "' ";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult != 0)
+
+                        {
+                        dt_datatable1 = objdbconn.GetDataTable(msSQL1);
+                        foreach (DataRow row in dt_datatable1.Rows)
+                        { 
+                            if (row["employee2salarygradetemplatedtl_gid"].ToString() != "")
+                            {
+                                msSQL = " select c.lop_flag,c.salarycomponent_gid,c.componentgroup_gid,c.componentgroup_name,c.statutory_flag from pay_mst_tsalarycomponent c  " +
+                                      " inner join pay_trn_temployee2salarygradetemplatedtl b on c.salarycomponent_gid =b.salarycomponent_gid " +
+                                      " where b.employee2salarygradetemplate_gid='" + lssalary_gid + "' ";
+                                objodbcDataReader2 = objdbconn.GetDataReader(msSQL);
+                                if (objodbcDataReader2.HasRows == true)
+                                {
+                                    lsflag = objodbcDataReader2["lop_flag"].ToString();
+                                    lssalarycomponent_gid = objodbcDataReader2["salarycomponent_gid"].ToString();
+                                    lscomponentgroup_gid = objodbcDataReader2["componentgroup_gid"].ToString();
+                                    string lsstatutory_flag = objodbcDataReader2["statutory_flag"].ToString();
+                                }
+                                if (lsflag == "N") {
+                                   
+                                     string earn_salarycomponent1_amount = row["salarycomponent_amount"].ToString();
+                                     string earned_salarycomponent1_amount_employer = row["salarycomponent_amount_employer"].ToString();
+
+                                     earn_salarycomponent_amount = double.Parse(earn_salarycomponent1_amount);
+                                     earned_salarycomponent_amount_employer = double.Parse(earned_salarycomponent1_amount_employer);
+                                }
+                                else {
+                                    string salarycomponent_amount = row["salarycomponent_amount"].ToString();
+                                    double salaryAmount = double.Parse(salarycomponent_amount);
+                                    string salarycomponent_amount_employer = row["salarycomponent_amount_employer"].ToString();
+                                    double salarycomponent_emp_amt = double.Parse(salarycomponent_amount_employer);
+
+                                    earn_salarycomponent_amount = (salaryAmount / month_workingdays) * monthworkingdays;
+                                    earned_salarycomponent_amount_employer = (salarycomponent_emp_amt / month_workingdays) * monthworkingdays;
+                                     }
+
+                            string lsgradetype = row["salarygradetype"].ToString();
+                            string othercomponent_type = row["othercomponent_type"].ToString();
+
+                            if(lsgradetype == "Addition")
+                            {
+                               lsaddition = lsaddition + earn_salarycomponent_amount;
+                            }
+                            else
+                            {
+                               lsdeduction = lsdeduction + earn_salarycomponent_amount;
+                            }
+                            if (monthworkingdays == 0)
+                            {
+                                    earn_salarycomponent_amount = 0.0;
+                                    lsaddition = 0.0;
+                                    lsdeduction = 0.0;
+                            }
+                                msSQL2 = " select * from pay_trn_tsalarydtl where salary_gid='" + ls_gid + "' and salarycomponent_gid='" + lssalarycomponent_gid + "' ";
+                                objodbcDataReader3 = objdbconn.GetDataReader(msSQL2);
+                                if (objodbcDataReader3.HasRows == true)
+                                {
+                                    msSQL = " update pay_trn_tsalarydtl set salarygradetype='" + row["salarygradetype"].ToString() + "', " +
+                                            " salarycomponent_name='" + row["salarycomponent_name"].ToString() + "', " +
+                                            " salarycomponent_gid='" + lssalarycomponent_gid + "', " +
+                                            " componentgroup_gid='" + lscomponentgroup_gid + "'," +
+                                            "componentgroup_name='" + row["componentgroup_name"].ToString() + "'," +
+                                            " salarycomponent_amount='" + row["salarycomponent_amount"].ToString() + "', " +
+                                            " earned_salarycomponent_amount='" + earn_salarycomponent_amount + "', " +
+                                            " earnedemployer_salarycomponentamount='" + earned_salarycomponent_amount_employer + "', " +
+                                            " othercomponent_type='" + row["othercomponent_type"].ToString() + "', " +
+                                            " affect_in='" + row["affect_in"].ToString() + "' " +
+                                            " where salarydtl_gid='" + objodbcDataReader3["salarydtl_gid"].ToString() + "'";
+                                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                   string  msgetsalary_gid1 = objcmnfunctions.GetMasterGID("EMPF");
+                                    if (row["componentgroup_name"].ToString() =="PF" || row["componentgroup_name"].ToString() == "EPF")
+                                    {
+                                        msSQL = "delete from  pay_trn_employeepf where employee_gid='" + data.employee_gid + "'" +
+                                                " and month='" + values.month + "' and year='" + values.year + "'";
+                                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                                      
+                                        msSQL = " insert into pay_trn_employeepf(" +
+                                                 " employeepf_gid," +
+                                                 " month," +
+                                                 " year," +
+                                                 " employee_gid," +
+                                                 " earnedbasic_salary," +
+                                                 " employeepf_amount," +
+                                                 " actual_month_workingdays," +
+                                                 " lop_days," +
+                                                 " created_by," +
+                                                 " created_date)" +
+                                                 " values(" +
+                                                 "'" + msgetsalary_gid1 + "'," +
+                                                 "'" + values.month+ "'," +
+                                                 "'" + values.year + "'," +
+                                                 "'" + data.employee_gid + "'," +
+                                                 "'" + earned_basic_salary + "'," +
+                                                 "'" + earn_salarycomponent_amount + "'," +
+                                                 "'" + monthworkingdays + "'," +
+                                                 "'" + (month_workingdays - monthworkingdays) + "'," +
+                                                 "'" + user_gid + "'," +
+                                                 "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+
+                                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    }
+                                    
+                                  
+                                }
+                                else 
+                                {
+                                    if (row["componentgroup_name"].ToString() == "PF" || row["componentgroup_name"].ToString() == "EPF")
+                                    {
+                                        msSQL = "delete from  pay_trn_employeepf where employee_gid='" + data.employee_gid + "'" +
+                                                " and month='" + values.month + "' and year='" + values.year + "'";
+                                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                                        string MsGet_PFGid = objcmnfunctions.GetMasterGID("EMPF");
+                                        msSQL = " insert into pay_trn_employeepf(" +
+                                                 " employeepf_gid," +
+                                                 " month," +
+                                                 " year," +
+                                                 " employee_gid," +
+                                                 " earnedbasic_salary," +
+                                                 " employeepf_amount," +
+                                                 " actual_month_workingdays," +
+                                                 " lop_days," +
+                                                 " created_by," +
+                                                 " created_date)" +
+                                                 " values(" +
+                                                 "'" + MsGet_PFGid + "'," +
+                                                 "'" + values.month + "'," +
+                                                 "'" + values.year + "'," +
+                                                 "'" + data.employee_gid + "'," +
+                                                 "'" + earned_basic_salary + "'," +
+                                                 "'" + earn_salarycomponent_amount + "'," +
+                                                 "'" + monthworkingdays + "'," +
+                                                 "'" + (month_workingdays - monthworkingdays) + "'," +
+                                                 "'" + user_gid + "'," +
+                                                 "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+
+                                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    }
+                                    msSQL = "select ifnull(component_percentage,0) from pay_mst_tsalarycomponent where salarycomponent_gid='" + lssalarycomponent_gid + "'";
+                                    string lsPF_per = objdbconn.GetExecuteScalar(msSQL);
+
+                                    string msgetsalarydtl_gid = objcmnfunctions.GetMasterGID("PSLD");
+                                    msSQL = " insert into pay_trn_tsalarydtl( " +
+                                                " salarydtl_gid, " +
+                                                " salary_gid, " +
+                                                " salarygradetype, " +
+                                                " salarycomponent_name, " +
+                                                " salarycomponent_gid, " +
+                                                " componentgroup_gid," +
+                                                " componentgroup_name, " +
+                                                " created_by, " +
+                                                " created_date, " +
+                                                " salarycomponent_amount, " +
+                                                " salarycomponent_percentage," +
+                                                " earned_salarycomponent_amount, " +
+                                                " earnedemployer_salarycomponentamount, " +
+                                                " employersalarycomponent_amount, " +
+                                                " primecomponent_flag," +
+                                                " othercomponent_type, " +
+                                                " affect_in) " +
+                                                " values( " +
+                                                "'" + msgetsalarydtl_gid + "', " +
+                                                "'" + msgetsalary_gid + "', " +
+                                                "'" + row["salarygradetype"].ToString() + "', " +
+                                                "'" + row["salarycomponent_name"].ToString() + "', " +
+                                                "'" + lssalarycomponent_gid + "'," +
+                                                "'" + lscomponentgroup_gid + "'," +
+                                                "'" + row["componentgroup_name"].ToString() + "'," +
+                                                "'" + user_gid + "', " +
+                                                "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', " +
+                                                "'" + row["salarycomponent_amount"].ToString() + "', " +
+                                                "'" + lsPF_per + "'," +
+                                                "'" + earn_salarycomponent_amount + "', " +
+                                                "'" + earned_salarycomponent_amount_employer + "', " +
+                                                "'" + row["salarycomponent_amount_employer"].ToString() + "'," +
+                                                "'" + row["primecomponent_flag"].ToString() + "'," +
+                                                "'" + row["othercomponent_type"].ToString() + "', " +
+                                                "'" + row["affect_in"].ToString() + "')";
+                                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+                                }
+                            }
+                        }
+
+                        msSQL = "select salary_mode from pay_trn_temployee2salarygradetemplate where employee_gid='" + data.employee_gid + "'";
+                        OdbcDataReader objodbcDataReader4 = objdbconn.GetDataReader(msSQL1);
+                        string salary_mode = objdbconn.GetExecuteScalar(msSQL);
+                        if (objodbcDataReader4.HasRows == true)
+                        { 
+                            if(salary_mode == "Basic")
+                            {
+                                earned_gross_salary = earned_gross_salary + lsaddition ;
+                            }
+                            else if(salary_mode == "Gross")
+                            {
+                                earned_gross_salary = lsaddition;
+                            }
+                        }
+                        msSQL = "update pay_trn_employeepf set earned_gross_salary='" + earned_gross_salary + "'  where employee_gid='" + data.employee_gid + "'" +
+                               " and month='" + values.month + "' and year='" + values.month + "'";
+                         mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                        double earned_net_salary = earned_gross_salary - lsdeduction + leave_rate;
+                        double lstakehomeamount = earned_net_salary;
+
+                        msSQL = " update pay_trn_tsalary set " +
+                                " earned_gross_salary='" + earned_gross_salary + "', " +
+                                " earned_net_salary='" + earned_net_salary + "', " +
+                                " takehome_salary='" + lstakehomeamount + "' " +
+                                " where salary_gid='" + ls_gid + "' ";
+                        int mnResult5 = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult5 != 0)
+                        {}
+                        else
+                        {}
+                       }
+                    }
+            }
+
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Monthly Payrun successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error Occured While Monthly Payrun";
+            }
+
+        }
+        
+
+
+        public void DaGetManageLeave(string month, string year, MdlPayTrnSalaryManagement values)
+        {
+            int monthNumber = DateTime.ParseExact(month, "MMMM", CultureInfo.CurrentCulture).Month;
+
+            // SQL query to select data from the database
+            string msSQL = "SELECT start_day, end_day, month_interval FROM pay_mst_tpayrollconfig";
+
+            // Execute the SQL query and retrieve data
+            DataTable dt_datatable1 = objdbconn.GetDataTable(msSQL);
+
+            if (dt_datatable1.Rows.Count > 0)
+            {
+                DataRow objrow = dt_datatable1.Rows[0];
+                string startDay = objrow["start_day"].ToString();
+                string endDay = objrow["end_day"].ToString();
+                string monthInterval = objrow["month_interval"].ToString();
+
+                string lsinterval = monthInterval;
+                string lsstartday = startDay;
+                string lsendday = endDay;
+
+                if (lsinterval == "current")
+                {
+                    start_month = monthNumber.ToString();
+                    if (start_month.Length == 1)
+                    {
+                        start_month = "0" + start_month;
+                    }
+                    end_month = start_month;
+                    start_year = year;
+                    end_year = year;
+
+                    int totaldays1 = DateTime.DaysInMonth(int.Parse(start_year), int.Parse(start_month));
+
+                    if (int.Parse(lsendday) > totaldays1)
+                    {
+                        lsendday = totaldays1.ToString();
+                    }
+                }
+                else
+                {
+                    end_month = monthNumber.ToString();
+                    if (end_month.Length == 1)
+                    {
+                        end_month = "0" + end_month;
+                    }
+                    string end_year = year;
+
+                    // -----------------------to get start date-------------------'
+                    string lsstring = lsendday + "-" + end_month + "-" + end_year;
+                    DateTime tempdate = DateTime.ParseExact(lsstring.Replace("-", ""), "ddMMyyyy", null);
+                    tempdate = tempdate.AddMonths(-1);
+                    start_year = tempdate.Year.ToString();
+                    start_month = tempdate.Month.ToString();
+
+                    if (start_month.Length == 1)
+                    {
+                        start_month = "0" + start_month;
+                    }
+                }
+
+                
+                string lsstartdate = start_year + "-" + start_month + "-" + lsstartday;
+                string lsenddate = end_year + "-" + end_month + "-" + lsendday;
+
+                DateTime startdate = DateTime.ParseExact(lsstartdate.Replace("-", ""), "yyyyMMdd", null);
+                DateTime enddate = DateTime.ParseExact(lsenddate.Replace("-", ""), "yyyyMMdd", null);
+
+                int totaldays = (int)(enddate - startdate).TotalDays;
+                 totaldays = totaldays + 1;
+              
+
+                int noofdays = totaldays;
+                days1 = noofdays.ToString();
+
+                msSQL = " select distinct a.actuallop_days as actual_lop,a.adjusted_lopdays as lop," +
+                    " b.user_gid,b.user_code,concat(ifnull(b.user_firstname, ''), ' ', ifnull(b.user_lastname, '')) as username,a.employee_gid, a.month_workingdays" +
+                    " from pay_trn_temployeepayrun a" +
+                    " left join hrm_mst_temployee c on a.employee_gid = c.employee_gid" +
+                    " left join adm_mst_tuser b on c.user_gid = b.user_gid" +
+                    " left join hrm_trn_temployeetypedtl h on c.employee_gid = h.employee_gid" +
+                    " where a.month = '" + month + "' and a.year ='" + year + "' and a.employee_select = 'Y' and leave_generate_flag = 'N'" +
+                    " group by a.employee_gid order by b.user_code asc ";
+
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<employeeleave_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        msSQL = "select count(attendance_gid) as absent_count"+
+                               "  from hrm_trn_tattendance" +
+                               " where  attendance_type='A' and attendance_date>='" + lsstartdate + "'" +
+                               " and attendance_date<='" + lsenddate + "'" +
+                               " and employee_gid='" + dt["employee_gid"].ToString() + "' ";
+                        string absent_count = objdbconn.GetExecuteScalar(msSQL);
+                        if (absent_count == "")
+                        {
+                            absent_count = "0.0";
+                        }
+                        msSQL = "select count(attendance_gid) as leave_count" +
+                              "  from hrm_trn_tattendance" +
+                              " where  employee_attendance='Leave' and attendance_date>='" + lsstartdate + "'" +
+                              " and attendance_date<='" + lsenddate + "'" +
+                              " and employee_gid='" + dt["employee_gid"].ToString() + "' ";
+                        string leave_count = objdbconn.GetExecuteScalar(msSQL);
+                        if (leave_count == "")
+                        {
+                            leave_count = "0.0";
+                        }
+
+                        msSQL = " select count(attendance_gid) as week_off from hrm_trn_tattendance " +
+                            " where attendance_type='WH' and employee_gid='" + dt["employee_gid"].ToString() + "' " +
+                            " and attendance_date>='" + lsstartdate + "' " +
+                            " and attendance_date<='" + lsenddate + "' ";
+                        string lsweekoff = objdbconn.GetExecuteScalar(msSQL);
+                        if (lsweekoff == "")
+                        {
+                            lsweekoff = "0.0";
+                        }
+
+                        msSQL = " select count(attendance_gid) as holiday from hrm_trn_tattendance " +
+                            " where employee_attendance='Holiday' and employee_gid='" + dt["employee_gid"].ToString() + "' " +
+                            " and attendance_date>='" + lsstartdate + "' " +
+                            " and attendance_date<='" + lsenddate + "' ";
+                        string lsholiday = objdbconn.GetExecuteScalar(msSQL);
+                        if (lsholiday == "")
+                        {
+                            lsholiday = "0.0";
+                        }
+                        msSQL = " select count(attendance_gid) as day_count from hrm_trn_tattendance where employee_gid='" + dt["employee_gid"].ToString() + "' " +
+                             " and attendance_type='P'" +
+                             " and attendance_date>='" + lsstartdate +
+                             "' and attendance_date<='" + lsenddate + "' ";
+                        string presentcount = objdbconn.GetExecuteScalar(msSQL);
+
+                        int presentcount1 =int.Parse(presentcount);
+                        int lsholiday1 = int.Parse(lsholiday);
+                        int lsweekoff1 = int.Parse(lsweekoff);
+                        int leave_count1 = int.Parse(leave_count);
+                        
+                        int salarydays = presentcount1 + lsholiday1 + lsweekoff1 + leave_count1;
+
+
+                        if (presentcount == "")
+                        {
+                            presentcount = "0.0";
+                        }
+
+
+                        getModuleList.Add(new employeeleave_list
+                        {
+                            user_gid = dt["user_gid"].ToString(),
+                            employee_gid = dt["employee_gid"].ToString(),
+                            actual_lop = dt["actual_lop"].ToString(),
+                            adjusted_lop = dt["lop"].ToString(),
+                            user_code = dt["user_code"].ToString(),
+                            username = dt["username"].ToString(),
+                            month_workingdays = presentcount,
+                            absent = absent_count,
+                            salary_days = salarydays.ToString(),
+                            leavecount = leave_count,
+                            holidaycount= lsholiday,
+                            weekoffcount=lsweekoff,
+                            weekoff_days = lsweekoff,
+                            actualworkingdays = presentcount,
+                            totaldays= days1,
+
+
+
+
+                        });
+                        values.employeeleavelist = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+
+            }
+        }
+
+        // public void DagetUpdatedLeave(string user_gid, string month, string year, MdlPayTrnSalaryManagement values)
+
+        //{
+
+        //    msSQL = " update pay_trn_temployeepayrun set leave_generate_flag='Y' " +
+        //            " updated_by='" + user_gid + "'," +
+        //            " updated_date='" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+        //            " where employee_gid='" + lsemployeegid + "' and month= '" + month + "' and year= '" + year + "'";
+        //    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+        //    if (mnResult != 0)
+        //    {
+        //        values.status = true;
+        //        values.message = "Leave Updated Successfully";
+        //    }
+        //    else
+        //    {
+        //        values.status = false;
+        //        values.message = "Error While Updating Leave";
+        //    }
+
+        //}
+
+        public static bool IsLeapYear(int year)
+        {
+            if (year > 1 || year < 9999)
+            {
+                if (year % 4 == 0)
+                {
+                    if (year % 100 == 0)
+                    {
+                        return year % 400 == 0;
+                    }
+
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+        private static readonly int[] DaysToMonth365 = new[]
+   {
+        0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365
+    };
+
+        private static readonly int[] DaysToMonth366 = new[]
+        {
+        0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366
+    };
+
+
+
+    }
+    }
+

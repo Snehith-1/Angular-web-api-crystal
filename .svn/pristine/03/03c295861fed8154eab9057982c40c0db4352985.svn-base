@@ -1,0 +1,384 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.finance.Models;
+
+namespace ems.finance.DataAccess
+{
+    public class DaAccMstBankMasterSummary
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, msGetDlGID2, msGetGid2, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+
+        public void DaGetBankMasterSummary(MdlAccMstBankMasterSummary values)
+        {
+            msSQL = " SELECT distinct a.bank_gid, a.bank_code,b.branch_name,a.bank_name, " +
+                " a.gl_code,a.account_no,a.account_type,a.ifsc_code,a.neft_code,a.swift_code,format(a.openning_balance,2) as openning_balance" +
+                " FROM acc_mst_tbank a " +
+                " left join hrm_mst_tbranch b on b.branch_gid=a.branch_gid " +
+                " where 1=1" + " group by bank_gid asc";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBankMaster_list>();
+
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBankMaster_list
+                    {
+
+                        bank_gid = dt["bank_gid"].ToString(),
+                        bank_code = dt["bank_code"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        bank_name = dt["bank_name"].ToString(),
+                        account_type = dt["account_type"].ToString(),
+                        account_no = dt["account_no"].ToString(),
+                        ifsc_code = dt["ifsc_code"].ToString(),
+                        neft_code = dt["neft_code"].ToString(),
+                        swift_code = dt["swift_code"].ToString(),
+                        openning_balance = dt["openning_balance"].ToString(),
+
+
+                    });
+                    values.GetBankMaster_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetAccountType(MdlAccMstBankMasterSummary values)
+        {
+            msSQL = "select account_gid,account_type " +
+                     " from  acc_mst_tbank   ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetAccountType>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetAccountType
+                    {
+                        account_gid = dt["account_gid"].ToString(),
+                        account_type = dt["account_type"].ToString(),
+                    });
+                    values.GetAccountType = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetAccountGroup(MdlAccMstBankMasterSummary values)
+        {
+            msSQL = "select accountgroup_gid,accountgroup_name " +
+                     " from  acc_mst_tchartofaccount ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetAccountGroup>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetAccountGroup
+                    {
+                        accountgroup_gid = dt["accountgroup_gid"].ToString(),
+                        accountgroup_name = dt["accountgroup_name"].ToString(),
+                    });
+                    values.GetAccountGroup = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetBranchName(MdlAccMstBankMasterSummary values)
+        {
+            msSQL = "select branch_gid,branch_name " +
+                     " from  hrm_mst_tbranch ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetBranchName>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetBranchName
+                    {
+                        branch_gid = dt["branch_gid"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                    });
+                    values.GetBranchName = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaPostBankMaster(string user_gid, GetBankMaster_list values)
+        {
+            msGetGid = objcmnfunctions.GetMasterGID("FATG");
+            msGetGid2 = objcmnfunctions.GetMasterGID("FPCC");
+            msGetGid1 = objcmnfunctions.GetMasterGID("FPCD");
+            msSQL = "select branch_name from  hrm_mst_tbranch where branch_gid ='" + values.branch_name + "'";
+            string lsbranch_name = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select account_type from  acc_mst_tbank where account_gid='" + values.account_type + "'";
+            string lsaccount_type = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select accountgroup_name from  acc_mst_tchartofaccount where accountgroup_gid='" + values.accountgroup_name + "'";
+            string lsaccountgroup_name = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " SELECT bank_code FROM acc_mst_tbank WHERE bank_code='" + values.bank_code + "' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            if (dt_datatable.Rows.Count == 0)
+            {
+                msSQL = " insert into acc_mst_tbank  (" +
+                    " bank_gid, " +
+                    " bank_code, " +
+                    " bank_name, " +
+                    " account_no, " +
+                    " account_type, " +
+                    " ifsc_code, " +
+                    " neft_code, " +
+                    " swift_code, " +
+                    " branch_gid, " +
+                    " account_gid, " +
+                    " created_date, " +
+                    " openning_balance)" +
+                    " values (" +
+                    "'" + msGetGid + "', " +
+                    "'" + values.bank_code + "', " +
+                    "'" + values.bank_name + "'," +
+                    "'" + values.account_no + "'," +
+                    "'" + lsaccount_type + "'," +
+                    "'" + values.ifsc_code + "'," +
+                    "'" + values.neft_code + "'," +
+                    "'" + values.swift_code + "'," +
+                    "'" + values.branch_name + "'," +
+                    "'" + values.account_type + "'," +
+                    "'" + values.created_date + "'," +
+                    "'" + values.openning_balance + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult != 0)
+                {
+                    msSQL = "select accountgroup_gid,accountgroup_name " +
+                         " from  acc_mst_tchartofaccount where  accountgroup_gid = '" + values.accountgroup_name + "'";
+                    string accountgroup_name = objdbconn.GetExecuteScalar(msSQL);
+                    msSQL = " insert into acc_mst_tchartofaccount   " +
+                            " (account_gid, " +
+                            " account_name, " +
+                            " accountgroup_gid, " +
+                            " accountgroup_name," +
+                            " ledger_type," +
+                            " has_child," +
+                            " gl_code," +
+                            " Created_Date, " +
+                            " Created_By) " +
+                            " values (" +
+                            "'" + msGetGid2 + "', " +
+                            "'" + values.bank_name + "'," +
+                            "'" + lsaccountgroup_name + "'," +
+                            "'" + accountgroup_name + "'," +
+                            "'" + 'N' + "'," +
+                            "'" + 'N' + "'," +
+                            "'" + user_gid + "'," +
+                            "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                            "'" + 'Y' + "')";
+                    mnResult1 = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Bank Master";
+
+                }
+
+
+            }
+            if (mnResult != 0)
+            {
+                string date1 = values.created_date;
+                string[] components = date1.Split('-');
+                string year = components[0];
+                string month = components[1];
+                string day = components[2];
+                msSQL = " insert into acc_trn_journalentry    " +
+                        " (journal_gid, " +
+                      " journal_refno, " +
+                      " transaction_code, " +
+                      " transaction_date, " +
+                      " branch_gid," +
+                      " reference_type," +
+                      " reference_gid," +
+                      " transaction_gid, " +
+                      " remarks," +
+                      " journal_year, " +
+                      " journal_month, " +
+                      " journal_day, " +
+                      " transaction_type)" +
+                " values (" +
+                "'" + msGetGid1 + "', " +
+                "'" + values.bank_code + "'," +
+                "'" + values.bank_code + "'," +
+                "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                "'" + values.branch_gid + "'," +
+                "'" + values.bank_name + "'," +
+                "'" + msGetGid + "'," +
+                "'" + msGetGid1 + "'," +
+                "'" + values.remarks + "'," +
+                "'" + day + "'," +
+                "'" + month + "'," +
+                "'" + year + "'," +
+                "'" + "Bank Opening Balance" + "')";
+                mnResult2 = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+            }
+
+            if (mnResult2 != 0)
+            {
+                msGetDlGID2 = objcmnfunctions.GetMasterGID("FPCD");
+
+
+                msSQL = " insert into acc_trn_journalentrydtl " +
+                      " (journaldtl_gid, " +
+                         " journal_gid, " +
+                         " transaction_amount," +
+                         " journal_type, " +
+                         " remarks, " +
+                         " transaction_gid," +
+                         " account_gid) " +
+                        " values (" +
+                        "'" + msGetDlGID2 + "', " +
+                        "'" + msGetGid1 + "'," +
+                        "'" + values.openning_balance + "'," +
+                        "'" + "cr" + "'," +
+                        "'" + values.remarks + "'," +
+                        "'" + msGetGid + "'," +
+                         "'" + msGetGid2 + "')";
+                mnResult3 = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+            }
+
+            if (mnResult3 != 0)
+            {
+                values.status = true;
+                values.message = "Bank Master Added Successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Adding Bank Master";
+            }
+
+        }
+        public void DaGetBankMasterDetail(string bank_gid, MdlAccMstBankMasterSummary values)
+        {
+            msSQL = " SELECT distinct d.branch_name,a.created_date,e.accountgroup_name,e.accountgroup_gid,a.bank_gid," +
+                    " a.bank_code,a.bank_name,a.account_no,a.account_type,a.ifsc_code,a.account_gid," +
+                    " a.neft_code,a.swift_code," +
+                    " format(a.openning_balance,2) as openning_balance,g.journal_refno,g.remarks,a.branch_gid " +
+                    " FROM  acc_mst_tbank a " +
+                    " left join hrm_mst_tbranch d on d.branch_gid=a.branch_gid " +
+                    " left join acc_trn_journalentry g on a.branch_gid=g.branch_gid " +
+                    " left join acc_mst_tchartofaccount e on a.account_gid=e.account_gid " +
+                    " where a.bank_gid = '" + bank_gid + "'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetEditBankMaster_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetEditBankMaster_list
+                    {
+
+                        bank_gid = dt["bank_gid"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+                        account_gid = dt["account_gid"].ToString(),
+                        accountgroup_gid = dt["accountgroup_gid"].ToString(),
+                        bank_code = dt["bank_code"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        bank_name = dt["bank_name"].ToString(),
+                        account_type = dt["account_type"].ToString(),
+                        account_no = dt["account_no"].ToString(),
+                        ifsc_code = dt["ifsc_code"].ToString(),
+                        neft_code = dt["neft_code"].ToString(),
+                        swift_code = dt["swift_code"].ToString(),
+                        openning_balance = dt["openning_balance"].ToString(),
+                        remarks = dt["remarks"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        accountgroup_name = dt["accountgroup_name"].ToString(),
+
+                    });
+                    values.GetEditBankMaster_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaPostBankMasterUpdate(string user_gid, GetEditBankMaster_list values)
+        {
+            msSQL = "select branch_name from  hrm_mst_tbranch where branch_gid ='" + values.branch_gid + "'";
+            string lsbranch_name = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select account_gid from  acc_mst_tbank where bank_gid='" + values.bank_gid + "'";
+            string account_gid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select account_type from  acc_mst_tbank where account_gid='" + account_gid + "'";
+            string lsaccount_type = objdbconn.GetExecuteScalar(msSQL);
+
+            
+
+            msSQL = "select accountgroup_name from  acc_mst_tchartofaccount where accountgroup_gid='" + values.accountgroup_gid + "'";
+            string lsaccountgroup_name = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " UPDATE acc_mst_tbank SET " +
+                  " bank_name ='" + values.bank_name + "'," +
+                  " account_no ='" + values.account_no + "'," +
+                  " account_type ='" + lsaccount_type + "'," +
+                  " ifsc_code ='" + values.ifsc_code + "'," +
+                  " neft_code ='" + values.neft_code + "'," +
+                  " swift_code ='" + values.swift_code + "'," +
+                  " openning_balance ='" + values.openning_balance + "' " +
+                  " WHERE " +
+                  " bank_gid='" + values.accountgroup_gid + "'";
+
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult != 0)
+            {
+                msSQL = " update acc_mst_tchartofaccount set" +
+                        " account_name='" + values.bank_name + "'," +
+                        " Updated_Date='" + DateTime.Now.ToString("yyyy-mm-dd") + "'," +
+                        " Updated_By='" + user_gid + "'," +
+                        " gl_code='" + values.bank_name + "'" +
+                        " where account_gid='" + values.account_gid + "'";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            }
+
+                if (mnResult != 0)
+            {
+
+                values.status = true;
+                values.message = "Bank Master Updated Successfully";
+
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Updating Bank Master ";
+            }
+
+        }
+    }
+}

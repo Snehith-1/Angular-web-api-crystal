@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">
+                Add Proforma Invoice
+                <i class="bi bi-arrow-left-square-fill float-end fs-1 me-6" (click)="back()"></i>
+            </h3>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="addproformainvoice" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class="fw-bolder fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Reference No</th>
+                        <th style="width: 60px;">Order Date</th>
+                        <th>Company</th>
+                        <th>Contact Details</th>
+                        <th>Details</th>
+                        <th style="text-align: right;">Order Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of proformainvoiceaddsummary_list; let i=index;" class="align-middle">
+                        <th title="S.No">{{i+1}}</th>
+                        <th title="Reference No">{{data.directorder_refno}}</th>
+                        <th title="Order Date">{{data.directorder_date | date:'dd-MM-yyyy'}}</th>
+                        <th title="Company">{{data.customer_name}}</th>
+                        <th title="Contact Details">{{data.contact_details}}</th>
+                        <th title="Details" style="text-align: center;"><i class="fas fa-question-circle fs-2"></i></th>
+                        <th title="Order Total" style="text-align: right;">{{data.grandtotal}}</th>
+                        <th title="Status">{{data.status}}</th>
+                        <td title="Action">
+                            <button title="RaiseProformaInvoice" type="button" class="btn btn-icon btn-sm bg-primary" (click)="confirminvoice(data.directorder_gid)">
+                                <span class="fa-solid fa-plus" style="color: #ffffff;"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ImsTrnOpeningstockSummaryComponent } from './Component/ims-trn-openingstock-summary/ims-trn-openingstock-summary.component';
+import { ImsTrnIssuematerialSummaryComponent } from './Component/ims-trn-issuematerial-summary/ims-trn-issuematerial-summary.component';
+import { ImsTrnStockadjustmentSummaryComponent } from './Component/ims-trn-stockadjustment-summary/ims-trn-stockadjustment-summary.component';
+import { ImsTrnDeliveryorderComponent } from './Component/ims-trn-deliveryorder/ims-trn-deliveryorder.component';
+import { ImsTrnRaiseDeliveryorderComponent } from './Component/ims-trn-raise-deliveryorder/ims-trn-raise-deliveryorder.component';
+import { ImsTrnAddDeliveryorderComponent } from './Component/ims-trn-add-deliveryorder/ims-trn-add-deliveryorder.component';
+import { ImsTrnOpeningstockAddComponent } from './Component/ims-trn-openingstock-add/ims-trn-openingstock-add.component';
+import { ImsTrnOpeningstockEditComponent } from './Component/ims-trn-openingstock-edit/ims-trn-openingstock-edit.component';
+const routes: Routes = [
+  {path:'ImsTrnOpeningstockSummary', component: ImsTrnOpeningstockSummaryComponent},
+  {path:'ImsTrnIssuematerialSummary', component: ImsTrnIssuematerialSummaryComponent},
+  {path:'ImsTrnStockadjustmentSummary', component: ImsTrnStockadjustmentSummaryComponent},
+  {path:'ImsTrnRaiseDeliveryorder', component: ImsTrnRaiseDeliveryorderComponent},
+  {path:'ImsTrnDeliveryorder', component: ImsTrnDeliveryorderComponent},
+  {path:'ImsTrnAddDeliveryorder', component: ImsTrnAddDeliveryorderComponent},
+  {path:'ImsTrnOpeningstockAdd', component: ImsTrnOpeningstockAddComponent},
+  {path:'ImsTrnOpeningstockEdit/:stock_gid', component: ImsTrnOpeningstockEditComponent}
+
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class EmsInventoryRoutingModule { }

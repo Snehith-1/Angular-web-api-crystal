@@ -1,0 +1,230 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AES } from 'crypto-js';
+
+import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+interface IProduct {
+  // product_gid:string;
+
+}
+@Component({
+  selector: 'app-crm-mst-productsummary',
+  templateUrl: './crm-mst-productsummary.component.html',
+  styleUrls: ['./crm-mst-productsummary.component.scss']
+})
+export class CrmMstProductsummaryComponent {
+  product!: IProduct;
+  file!: File;
+  image_path:any;
+
+  private unsubscribe: Subscription[] = [];
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  parameterValue: any;
+  product_gid:any;
+  products: any[] = [];
+  response_data :any;
+  constructor(private fb: FormBuilder,private route: ActivatedRoute,private router: Router,private service: SocketService,private ToastrService: ToastrService,) {} 
+  
+
+  ngOnInit(): void {
+    this.GetProductSummary();
+
+    this.reactiveForm = new FormGroup({
+      file: new FormControl(''),
+
+    
+    });
+  }
+  GetProductSummary(){
+
+    var api = 'Product/GetProductSummary';
+    this.service.get(api).subscribe((result:any) => {
+      this.response_data = result;
+      this.products = this.response_data.product_list;
+      setTimeout(()=>{  
+        $('#product').DataTable();
+      }, 1);
+    });
+  
+  }
+  onChange1(event: any) {
+    this.file = event.target.files[0];
+    // var api='Employeelist/EmployeeProfileUpload'
+    // //console.log(this.file)
+    //   this.service.EmployeeProfileUpload(api,this.file).subscribe((result:any) => {
+    //     this.responsedata=result;
+    //   });
+  }
+
+  onChange2(event: any) {
+    this.file = event.target.files[0];
+    // var api='Employeelist/EmployeeProfileUpload'
+    // //console.log(this.file)
+    //   this.service.EmployeeProfileUpload(api,this.file).subscribe((result:any) => {
+    //     this.responsedata=result;
+    //   });
+  }
+  downloadfileformat(){
+    let link = document.createElement("a");
+    link.download = "Product";
+    link.href = "assets/media/Excels/UPLF23092048.xlsx";
+    link.click();
+}
+// downloadImage(product_gid:any) {
+//   var api='Product/downloadImages'
+//   let param = {product_gid : product_gid}
+//         this.service.downloadimage(api,param).subscribe((result:any) => {
+//       this.responsedata = result;
+//       this.image_path = this.responsedata.product_images;
+
+//       if (!this.image_path || this.image_path.length === 0 || !this.image_path[0].product_image || !this.responsedata.product_images[0].name) {
+//         return; // Exit the function if no valid images are available
+//       }
+
+//       const productName = this.responsedata.product_images[0].name;
+//       const link = document.createElement('a');
+//       link.href = this.image_path[0].product_image;
+//       link.download = productName;
+//       link.click();
+//     },
+   
+//   );
+// }
+downloadfile(){
+  let link = document.createElement("a");
+  link.download = "Product.jpg";
+  link.href = "assets/media/images/UPLF23092040.jpg";
+  link.click();
+}
+    onedit(params:any){
+      const secretKey = 'storyboarderp';
+      const param = (params);
+      const encryptedParam = AES.encrypt(param,secretKey).toString();
+      this.router.navigate(['/crm/CrmMstProductEdit',encryptedParam]) 
+    }
+    onview(params:any){
+      const secretKey = 'storyboarderp';
+      const param = (params);
+      const encryptedParam = AES.encrypt(param,secretKey).toString();
+      this.router.navigate(['/crm/CrmMstProductView',encryptedParam]) 
+    }
+    importexcel(){
+      let formData = new FormData();
+      if(this.file !=null &&  this.file != undefined){
+      
+      formData.append("file", this.file,this.file.name);
+
+      var api='Product/ProductUploadExcels'
+
+        this.service.postfile(api,formData).subscribe((result:any) => {
+          this.responsedata=result;
+          if(result.status ==false){
+            this.ToastrService.warning(result.message)
+          }
+          else{
+            this.router.navigate(['/crm/CrmMstProductsummary']);
+            this.ToastrService.success(result.message)
+          }
+        });
+    
+    }
+  }
+  onadd()
+  {
+        this.router.navigate(['/crm/CrmMstProductAdd'])
+
+  }
+  openModaldelete(parameter: string) {
+    this.parameterValue = parameter
+  
+  }
+
+  public onadd1(): void {
+    console.log(this.reactiveForm.value)
+
+    this.product = this.reactiveForm.value;
+   
+      let formData = new FormData();
+      if (this.file != null && this.file != undefined) {
+
+        formData.append("file", this.file, this.file.name);
+       //console.log(this.file)
+        var api7 = 'Product/GetProductImage'
+        //console.log(this.file)
+        this.service.postfile(api7, formData).subscribe((result: any) => {
+
+         
+            this.ToastrService.success("Product Image Uploaded Successfully")
+            // this.router.navigate(['/crm/CrmMstProductsummary']);
+
+
+          // }
+        });
+
+
+      }
+
+
+      this.GetProductSummary();
+
+
+
+  }
+
+ 
+
+
+
+   
+
+  exportExcel() {
+    var api7='Product/GetProductReportExport'
+    //console.log(this.file)
+      this.service.generateexcel(api7).subscribe((result:any) => {
+    this.responsedata=result;
+     var phyPath = this.responsedata.productexport_list[0].lspath1;
+     var relPath = phyPath.split("src");
+      var hosts = window.location.host;
+     var prefix = location.protocol + "//";
+      var str = prefix.concat(hosts,relPath[1]);
+     var link = document.createElement("a");
+     var name = this.responsedata.productexport_list[0].lsname.split('.');
+     link.download = name[0];
+     link.href = str;
+     link.click();
+   });
+   
+  }
+  ondelete() {
+    console.log(this.parameterValue);
+    var url = 'Product/Getdeleteproductdetails'
+    let param = {
+      product_gid : this.parameterValue 
+    }
+    this.service.getparams(url,param).subscribe((result: any) => {
+      if(result.status ==false){
+        this.ToastrService.warning(result.message)
+      }
+      else{
+
+        this.ToastrService.success(result.message)
+
+      }
+      this.GetProductSummary();
+
+  
+  
+    });
+  }
+ 
+
+
+
+
+}
+

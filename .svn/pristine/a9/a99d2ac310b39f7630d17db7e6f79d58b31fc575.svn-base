@@ -1,0 +1,13 @@
+/* Add this CSS in your global CSS file or component-specific CSS */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Add horizontal scrollbar when content overflows */
+    overflow-y: auto;
+    white-space: nowrap; /* Prevent line breaks for table cells */
+  }
+  
+  .table-content {
+    width: auto; /* Allow content to exceed container width */
+  }
+  

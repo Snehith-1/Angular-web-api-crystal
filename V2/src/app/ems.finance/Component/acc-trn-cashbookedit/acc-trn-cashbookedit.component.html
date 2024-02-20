@@ -1,0 +1,235 @@
+<div class="m-12">
+    <form  [formGroup]="reactiveForm" #form="ngForm">
+      <div class="card shadow-lg rounded-top"   style="top:-50px;">
+        <div class="card m-3">
+          <div class="m-3 mt-5 border card">
+            <div class="card-header bg-lightblue card-height55">
+              <div class="card-title m-0">
+                <h5 class="fw-bolder text-blue">EDIT OPENING BALANCE</h5>
+              </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+  <!-- vendor Code textbox design-->
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Branch Code<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input formControlName="branch_code" hidden
+          placeholder="Branch Code"  type="text" class="
+              form-control form-control-lg form-control-solid
+              bg-white
+              custom-input
+              mb-3 mb-lg-0
+              borderc-secondary
+            " name="branch_code" />
+                  <input type="text" formControlName="branch_code" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      branch_code.invalid && branch_code.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="Vendor Code" name="branch_code" required  [readOnly]="true"/>
+                  <div *ngIf="
+                  branch_code.invalid &&
+                      (branch_code.dirty || branch_code.touched)
+                    " class="text-red">
+                    <div *ngIf="branch_code.errors?.['required']">
+                      Vendor Code is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+  <!-- Vendor Company Name textbox design-->
+                 <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                       <span class="font-bold">Branch Name<span class="ms-1 text-red"></span></span>
+                       <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                         <input type="text" formControlName="branch_name" class="
+                             form-control form-control-lg form-control-solid
+                             custom-input
+                             mb-3 mb-lg-0
+                             bg-white
+                             custom-input
+                            " [ngStyle]="{
+                            'border-color':
+                            branch_name.invalid && branch_name.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                        }" placeholder="Branch Name" name="branch_name"pattern="^(?!\s*$).+" required />
+                   <div *ngIf=" branch_name.invalid &&
+                        (branch_name.dirty || branch_name.touched)
+                 " class="text-red">
+                    <div *ngIf="branch_name.errors?.['required']">
+                      Vendor Company Name is required.
+                    </div>
+                    <div *ngIf="branch_name.errors?.['pattern']">
+                      Vendor Company Name is required.
+                    </div>
+                  </div>
+               </div>
+            </div>
+  
+  
+  <!-- Contact Person Name textbox design-->
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Parent Name<span class="ms-1 text-red"></span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <select type="text" formControlName="" class="
+                    form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                     form-select"
+                   placeholder="Parent Name" name="" pattern="^(?!\s*$).+" required >
+                      <option value="CASH ON HAND">CASH ON HAND</option>
+                </select>
+                </div>
+             </div>      
+        </div>
+  
+            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">GL Code<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text" formControlName="gl_code" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      gl_code.invalid && gl_code.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="GL Code" minlength="0" maxlength="10" pattern="^[0-9]{10}$" name="gl_code" required />
+                  <div *ngIf="gl_code.invalid && (gl_code.dirty || gl_code.touched)" class="text-red">
+                    <div *ngIf="gl_code.errors?.['required']">
+                      Contact Number is required.
+                    </div>
+  
+                  </div>
+                  <div *ngIf="gl_code.invalid && (gl_code.dirty || gl_code.touched)" class="text-red">
+                    <div *ngIf="gl_code.errors?.['pattern']">
+                      Invalid Mobile Number!!.
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">EXternal GL Code<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text" formControlName="externalgl_code" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      externalgl_code.invalid && externalgl_code.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="EXternal GL Code" name="externalgl_code" pattern="^(?!\s*$).+" required />
+                  <div *ngIf="externalgl_code.invalid && (externalgl_code.dirty || externalgl_code.touched)" class="text-red">
+                    <div *ngIf="externalgl_code.errors?.['required']">
+                      Address is required.
+                    </div>
+                    <div *ngIf="externalgl_code.errors?.['pattern']">
+                      Address is required.
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Date<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="date" formControlName="transaction_date" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      transaction_date.invalid && transaction_date.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="date" name="transaction_date" pattern="^(?!\s*$).+" required />
+                  <div *ngIf="transaction_date.invalid && (transaction_date.dirty || transaction_date.touched)" class="text-red">
+                    <div *ngIf="transaction_date.errors?.['required']">
+                      Address is required.
+                    </div>
+                    <div *ngIf="transaction_date.errors?.['pattern']">
+                      Address is required.
+                    </div>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Opening Balance<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text" formControlName="openning_balance" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      openning_balance.invalid && openning_balance.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="Opening Balance" name="openning_balance" pattern="^(?!\s*$).+" required />
+                  <div *ngIf="
+                  openning_balance.invalid &&
+                      (openning_balance.dirty || openning_balance.touched)
+                    " class="text-red">
+                    <div *ngIf="openning_balance.errors?.['required']">
+                        openning balance is required.
+                    </div>
+                    <div *ngIf="openning_balance.errors?.['pattern']">
+                        openning balance is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12" >
+                <span class="font-bold">Remarks<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+    
+                    <input formControlName="remarks" type="numeric" class="
+                    form-control form-control-lg form-control-solid
+                    borderc-secondary
+                    bg-white
+                    custom-input
+                    mb-3 mb-lg-0"
+                  placeholder="Remarks" minlength="0" maxlength="6" name="remarks" required/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center my-4">
+            <button class="btn-primary btn-sm text-white me-4" (click)="validate()">
+              <i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+            </button>
+  
+            <button class="btn-primary btn-sm text-white me-4" routerLink="/finance/AccTrnCashbooksummary">
+              <i class="fas fa-arrow-left"></i> &nbsp; Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>

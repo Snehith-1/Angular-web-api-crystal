@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using StoryboardAPI.Models;
+
+namespace ems.sales.Models
+{
+
+    public class MdlSmrDashboard : result
+    {
+        public List<GetSalesPerformanceChart_List> GetSalesPerformanceChart_List { get; set; }        
+        public List<GetSalesOrderCount_List> GetSalesOrderCount_List { get; set; }
+        public List<GetOverallSalesOrderChart_List> GetOverallSalesOrderChart_List { get; set; }
+   
+        public string totalinvoice { get; set; }
+        public string approval_pending { get; set; }
+        public string payment_pending { get; set; }
+        public string approvalpendinginnvoice { get; set; }
+        public string potentialleadcount { get; set; }
+
+    }
+    public class GetSalesPerformanceChart_List : result
+    {
+        public string order_amount { get; set; }
+        public string payment_amount { get; set; }
+        public string invoice_amount { get; set; }
+        public string orderdate { get; set; }
+        public string outstanding_amount { get; set; }
+        public string lsemployee_gid { get; set; }
+        // public string lsemployee_gid_list { get; set; }
+
+    }
+    public class GetSalesOrderCount_List : result
+    {
+        public string total_so { get; set; }
+        public string approved_so { get; set; }
+        public string pending_So { get; set; }
+        public string rejected_so { get; set; }
+        public string work_in_progress { get; set; }
+        public string delivery_done_partial { get; set; }
+        public string advanced_paid { get; set; }
+        public string delivery_completed { get; set; }
+        public string invoice_raised { get; set; }
+        public string totalinvoice { get; set; }
+        public string so_amended { get; set; }
+        public string approval_pending { get; set; }
+        public string payment_pending { get; set; }
+        public string approvalpendinginnvoice { get; set; }
+    }
+    public class GetOverallSalesOrderChart_List : result
+    {
+        public string count_own { get; set; }
+        public string salesorder_status_own { get; set; }
+        public string count_Hierarchy { get; set; }
+        public string salesorder_status_Hierarchy { get; set; }
+        public string do_count_own { get; set; }
+        public string delivery_status_own { get; set; }
+        public string do_count_Hierarchy { get; set; }
+        public string delivery_status_Hierarchy { get; set; }
+        public string payment_day { get; set; }
+        public string amount { get; set; }
+
+    }
+}

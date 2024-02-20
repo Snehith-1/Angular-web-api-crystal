@@ -1,0 +1,41 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { EmsInventoryRoutingModule } from './ems.inventory-routing.module';
+import { ImsTrnOpeningstockSummaryComponent } from './Component/ims-trn-openingstock-summary/ims-trn-openingstock-summary.component';
+import { ImsTrnIssuematerialSummaryComponent } from './Component/ims-trn-issuematerial-summary/ims-trn-issuematerial-summary.component';
+import { ImsTrnStockadjustmentSummaryComponent } from './Component/ims-trn-stockadjustment-summary/ims-trn-stockadjustment-summary.component';
+import { ImsTrnDeliveryorderComponent } from './Component/ims-trn-deliveryorder/ims-trn-deliveryorder.component';
+import { ImsTrnAddDeliveryorderComponent } from './Component/ims-trn-add-deliveryorder/ims-trn-add-deliveryorder.component';
+import { ImsTrnRaiseDeliveryorderComponent } from './Component/ims-trn-raise-deliveryorder/ims-trn-raise-deliveryorder.component';
+import { ImsTrnOpeningstockAddComponent } from './Component/ims-trn-openingstock-add/ims-trn-openingstock-add.component';
+import { ImsTrnOpeningstockEditComponent } from './Component/ims-trn-openingstock-edit/ims-trn-openingstock-edit.component';
+
+
+
+@NgModule({
+  declarations: [
+    ImsTrnOpeningstockSummaryComponent,
+    ImsTrnIssuematerialSummaryComponent,
+    ImsTrnStockadjustmentSummaryComponent,
+    ImsTrnDeliveryorderComponent,
+    ImsTrnAddDeliveryorderComponent,
+    ImsTrnRaiseDeliveryorderComponent,
+
+    ImsTrnOpeningstockAddComponent,
+
+    ImsTrnOpeningstockAddComponent,
+        ImsTrnOpeningstockAddComponent,
+    ImsTrnOpeningstockEditComponent
+
+  ],
+  imports: [
+    CommonModule,
+    EmsInventoryRoutingModule,
+    AngularEditorModule,NgSelectModule,
+    ReactiveFormsModule,FormsModule
+  ]
+})
+export class EmsInventoryModule { }

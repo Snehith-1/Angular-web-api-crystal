@@ -1,0 +1,587 @@
+
+.align {
+    display: flex; /* Use flexbox to arrange elements in a row */
+    flex-direction: row; /* Arrange elements horizontally */
+    align-items: center; /* Vertically center align items */
+    font-size: 13px;
+  }
+ .card-body12 {
+    // width: 160px;
+    height: 36px;  
+  }
+  .cardHead {
+  
+    position: relative;
+  
+    display: flex;
+  
+    flex-direction: column;
+  
+    min-width: 0;
+  
+    word-wrap: break-word;
+  
+    padding: 18px;
+  
+    background-clip: border-box;
+  
+    border: 0px solid rgba(0, 0, 0, 0);
+  
+    border-radius: .25rem;
+  
+    margin-bottom: 1.0rem;
+  
+    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+  
+    transition: all .3s ease-in-out;
+  
+    background-color: white;
+  
+  }
+  
+   
+  
+  .cardHead:hover{
+  
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+  
+    transform: translate3d(0px, -2px, 0px);
+  
+    cursor:pointer;
+  
+    pointer-events: auto;
+  
+  }
+  
+   
+  
+  .widgets-icons-2 {
+  
+    width: 38px;
+  
+    height: 38px;
+  
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    background-color: #ededed;
+  
+    font-size: 27px;
+  
+    border-radius: 10px;
+  
+  }
+  
+  .rounded-circle {
+  
+    border-radius: 50%!important;
+  
+  }
+  
+  .ms-auto {
+  
+    margin-left: 0px;
+  
+  }
+  
+   
+  
+  .bg-gradient-info {
+  
+    background: #17ead9;
+  
+    background: -webkit-linear-gradient(45deg, #17ead9, #6078ea)!important;
+  
+    background: linear-gradient(45deg, #17ead9, #6078ea)!important;
+  
+  }
+  
+   
+  
+  .bg-gradient-violet {
+  
+    background: #510e66;
+  
+    background: -webkit-linear-gradient(45deg, #eadbf8, #85329c)!important;
+  
+    background: linear-gradient(45deg, #e9b2fa, #7e2279)!important;
+  
+  }
+  
+   
+  
+  .bg-gradient-brown {
+  
+    background: #740f0f;
+  
+    background: -webkit-linear-gradient(45deg, #a05518, #c43a3a)!important;
+  
+    background: linear-gradient(45deg, #f2f565, #da3535)!important;
+  
+  }
+  
+   
+  
+  .bg-gradient-darkblue {
+  
+    background: #399C91;
+  
+    background: -webkit-linear-gradient(45deg, #aedaf3, #399C91)!important;
+  
+    background: linear-gradient(45deg, #9ff8f4, #399C91)!important;
+  
+  }
+  
+  .bg-gradient-darkblue {
+  
+    background: #399C91;
+  
+    background: -webkit-linear-gradient(45deg, #aedaf3, #399C91)!important;
+  
+    background: linear-gradient(45deg, #9ff8f4, #399C91)!important;
+  
+  }
+  .bg-gradient-purple {
+  
+    background: #be267a;
+  
+    background: -webkit-linear-gradient(45deg, #f8bceb, #be267a)!important;
+  
+    background: linear-gradient(45deg, #f7bdde, #be267a)!important;
+  
+  }
+  .bg-gradient-darkgreen {
+  
+    background: #B66B1A;
+  
+    background: -webkit-linear-gradient(45deg, #ecd776, #B66B1A)!important;
+  
+    background: linear-gradient(45deg, #eff77e, #B66B1A)!important;
+  
+  }
+  .bg-gradient-darkblues {
+  
+    background: #1E2961;
+  
+    background: -webkit-linear-gradient(45deg, #c0c4f8, #1E2961)!important;
+  
+    background: linear-gradient(45deg, #cfc8f8, #1E2961)!important;
+  
+  }
+  .bg-gradient-darkoranges {
+  
+    background: #ec9b20;
+  
+    background: -webkit-linear-gradient(45deg, #faab6b, #ec9b20)!important;
+  
+    background: linear-gradient(45deg, #ccf8a4, #ec9b20)!important;
+  
+  }
+  .bg-gradient-darkgreens {
+  
+    background: #3F7B33;
+  
+    background: -webkit-linear-gradient(45deg, #47ac6d, #3F7B33)!important;
+  
+    background: linear-gradient(45deg, #c9fc9b, #3F7B33)!important;
+  
+  }
+  
+  .border-orange {
+  
+    border-left: 5px solid  #B66B1A !important;
+  
+  }
+  .border-blue {
+  
+    border-left: 5px solid  #1E2961 !important;
+  
+  }
+  .border-purple {
+  
+    border-left: 5px solid  #ec9b20 !important;
+  
+  }
+  
+  .border-darkgreen {
+  
+    border-left: 5px solid  #3F7B33 !important;
+  
+  }
+  .border-darkblue {
+  
+    border-left: 5px solid  #399C91 !important;
+  
+  }
+  .border-violet {
+  
+    border-left: 5px solid  #764C9B !important;
+  
+  }
+  .border-brown {
+  
+    border-left: 5px solid  #C11C1C !important;
+  
+  }
+  .border-darkorange {
+  
+    border-left: 5px solid  #be267a !important;
+  
+  }
+  .radius-10 {
+    border-radius: 10px !important;
+  }
+  .mail-button {
+    background-color: #009EF7; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+.custom-button {
+  background-color: grey;
+  color: white; /* Icon color */
+}
+
+.bg-grey
+{
+  background-color: rgb(175, 185, 185);
+}
+
+
+
+#kt_chat_contacts_body {
+  max-height: 290px;
+  overflow-y: auto;
+}
+
+#kt_chat_contacts_body::-webkit-scrollbar {
+  width: 6px; /* You can adjust the width to your preference */
+}
+
+#kt_chat_contacts_body::-webkit-scrollbar-thumb {
+  background: #e6e6e6;  /* You can set the color of the scrollbar thumb */
+  border-radius: 10px; /* You can adjust the border radius to your preference */
+  height: 5px;
+}
+
+#kt_chat_messenger_body {
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#kt_chat_messenger_body::-webkit-scrollbar {
+  width: 6px; /* You can adjust the width to your preference */
+}
+
+#kt_chat_messenger_body::-webkit-scrollbar-thumb {
+  background: #e6e6e6; /* You can set the color of the scrollbar thumb */
+  border-radius: 10px; /* You can adjust the border radius to your preference */
+}
+
+#kt_chat_messenger_body::-webkit-scrollbar-track {
+  background: #f1f1f1; /* You can set the background color of the scrollbar track */
+}
+
+.bg-skyblue
+{
+  background-color: #075e54;
+}
+.btn-send
+{
+  background-color: #075e54;
+}
+.btn-sends
+{
+  background-color: #075e54;
+}
+.bg-lightgreen
+{
+  background-color: #d6f1a9;
+}
+
+.bg-pink
+{
+  background-color: rgb(255, 241, 181);
+}
+.nassar:hover {
+  background-color: #b3b3b3;
+}
+
+
+.collapse,
+.collapsing {
+  overflow: auto;
+  // min-height: 80vh;
+}
+.border-style {
+  border: 1px solid #000000; /* Specify the border style and color */
+  padding: 10px; /* Add padding for better spacing */
+}
+
+/* New Mail Button */ 
+.send-button {
+  background-color: #4fc445; /* Set the background color */
+  border: 1px solid #201d1d; /* Add a border for visual separation */
+  color: #333; /* Text color */
+}
+
+/* Hover State */
+.send-button:hover {
+  background-color: #34b334; /* Change background color on hover */
+}
+
+.draft-button {
+  background-color: #f0ac47; /* Set the background color */
+  border: 1px solid #201d1d; /* Add a border for visual separation */
+  color: #333; /* Text color */
+}
+
+/* Hover State */
+.draft-button:hover {
+  background-color: #f09347; /* Change background color on hover */
+}
+
+.back-button {
+  background-color: #009EF7; /* Set the background color */
+  border: 1px solid #201d1d; /* Add a border for visual separation */
+  color: #333; /* Text color */
+}
+
+/* Hover State */
+.back-button:hover {
+  background-color: #008cff; /* Change background color on hover */
+}
+/* Attachement Button */ 
+.attachement-button {
+  background-color: #06b942e1; /* Set the background color */
+  border: 1px solid #201d1d; /* Add a border for visual separation */
+  color: #333; /* Text color */
+}
+
+/* Hover State */
+.attachement-button:hover {
+  background-color: #04b63ff1; /* Change background color on hover */
+}
+
+.custom-editor {
+  height: 300px; /* Set the desired height */
+}
+
+
+.bg-mail
+{
+  background-color: #008ECC;
+}
+
+.bg-mail-chat{
+  background-color: #9ecee2;
+}
+
+.limited-line {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Adjust the number of lines you want to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds an ellipsis (...) to indicate text overflow */
+  max-width: 200px; 
+}
+  // tiles freezing //
+.cardHeadLeads {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  padding: 18px;
+  background-clip: border-box;
+  border: 0px solid rgba(0, 0, 0, 0);
+  border-radius: .25rem;
+  margin-bottom: 1.0rem;
+  box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+  transition: all .3s ease-in-out;
+  background-color: white;
+}
+.border-skyblue {
+  
+  border-left: 5px solid  #0d6efd !important;
+
+}
+.bg-gradient-skyblue {
+
+  background: #0d6efd;
+
+  background: -webkit-linear-gradient(45deg, #686a66, #0d6efd)!important;
+
+  background: linear-gradient(45deg, #686a66, #0d6efd)!important;
+
+}
+.bg-gradient-darkbluess {
+
+  background: #04193a;
+
+  background: -webkit-linear-gradient(45deg, #c7d2fd, #04193a)!important;
+
+  background: linear-gradient(45deg, #c7d2fd, #04193a)!important;
+
+}
+.bg-gradient-reddarkbluess {
+
+  background: #eb0d36;
+
+  background: -webkit-linear-gradient(45deg, #b326df, #ed2c2c)!important;
+
+  background: linear-gradient(45deg, #b326df, #ed2c2c)!important;
+
+}
+.border-redskyblue {
+  
+  border-left: 5px solid  #eb0d36 !important;
+
+}
+.bg-gradient-greendarkbluess {
+
+  background: #25a905;
+
+  background: -webkit-linear-gradient(45deg, #d5fdb1, #25a905)!important;
+
+  background: linear-gradient(45deg, #d5fdb1, #25a905)!important;
+
+}
+.border-lightgreenborder {
+  
+  border-left: 5px solid  #25a905 !important;
+
+}
+.bg-gradient-skydarkbluess {
+
+  background: #646266;
+
+  background: -webkit-linear-gradient(45deg, #86e7f3, #646266)!important;
+
+  background: linear-gradient(45deg, #86e7f3, #646266)!important;
+
+}
+.border-skygreenborder {
+  
+  border-left: 5px solid  #646266 !important;
+
+}
+.bg-gradient-darkbrown {
+
+  background: #561e09;
+
+  background: -webkit-linear-gradient(45deg, #d9dbd7, #561e09)!important;
+
+  background: linear-gradient(45deg, #d9dbd7, #561e09)!important;
+
+}
+.border-darkbrown {
+  
+  border-left: 5px solid  #561e09 !important;
+
+}
+.sampel {
+  position: absolute;
+  background-color: #f3f6f9;
+  border-radius: 6px;
+  width: 160px;
+  left: 2;
+  margin-top: -120px;
+  margin-right: 39px;
+  border: 2px solid #000000;
+}
+
+.notification_list {
+  max-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden
+}
+
+.btn-wts-icon {
+  border-radius: 7px !important;
+  color: #ffffff !important;
+  font-size: 1.1rem !important;
+  font-weight: 630 !important;
+  height: 36px !important;
+  // padding-bottom: 15px !important;
+  // padding-top: 11px !important;
+  transition: 0.3s !important;
+  cursor: pointer;
+  border: none;
+
+}
+
+.fs-default-icon {
+  font-size: 2.55rem !important;
+}
+
+.text-green {
+  color: #50cd89
+}
+
+.nassar:hover {
+  background-color: #b3b3b3;
+}
+
+
+.head-menu-item-btn {
+  font-size: 18px;
+  height: 42px;
+  width: 42px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  margin-left: 5px;
+  outline: 0;
+  color: #495057;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.head-menu-item-btn:hover {
+
+  font-weight: 600;
+  background-color: #d6d6d6;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-box{
+  height:332px;
+  width: 752px;
+  overflow-y: scroll;
+}
+.time{
+    font-style:bold;
+    margin-top: -5px;
+}
+.column{
+margin-right: 150px;
+
+}
+
+
+.ref{
+width:75px;
+
+}

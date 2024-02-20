@@ -1,0 +1,444 @@
+<!-- begin::Add Invoice -->
+<div class="card m-3">
+    <!-- begin::Heading -->
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0">
+            <h5 class="fw-bolder text-blue">ACCOUNTING INVOICE ADD CONFIRM</h5>
+        </div>
+    </div>
+    <!-- end::Heading -->
+
+    <!-- begin:: Invoice Add Form-->
+    <form [formGroup]="addinvoiceform">
+        <div class="d-flex flex-row flex-wrap mt-6 ms-4">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Invoice Number</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px"
+                        class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Auto generated" readonly formControlName="invoice_refno" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Invoice Reference No</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Invoice ref no." readonly formControlName="invoice_gid" class="form-control" />
+                </div>
+            </div>
+
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Invoice Date</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date"
+                        class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="DD-MM-YYYY" formControlName="invoice_date" />
+                </div>
+            </div>
+
+          
+        </div>
+
+        <div class="d-flex flex-row flex-wrap mt-6 ms-4">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Payment Term<span class="ms-1 text-red">*</span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select   formControlName="payment_term" 
+                    [(ngModel)]="payment_term1" placeholder="Select option">
+                       <ng-option value="0">0 Days</ng-option>
+                       <ng-option value="7">7 Days</ng-option>
+                       <ng-option value="15">15 Days</ng-option>
+                       <ng-option value="35">35 Days</ng-option>
+                       <ng-option value="45">45 Days</ng-option>
+                       <ng-option value="60">60 Days</ng-option>
+                       <ng-option value="90">90 Days</ng-option>
+                       <ng-option value="120">120 Days</ng-option>
+                     </ng-select>
+                          
+            </div>
+            <div *ngIf="addinvoiceform.get('payment_term')?.hasError('required') &&
+                         addinvoiceform.get('payment_term')?.touched " 
+                         class="text-red">Payment Term is required</div>
+                             
+            </div>
+                    
+                    
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Due Date</span>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="date"
+                                class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                placeholder="DD-MM-YYYY" formControlName="payment_date" />
+                                <div *ngIf="addinvoiceform.get('payment_date')?.hasError('required') &&
+                         addinvoiceform.get('payment_date')?.touched " 
+                         class="text-red">Due date is required</div>
+                             </div>
+                       </div>
+                       <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Branch</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" style="height:38px;"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                placeholder="Branch" readonly formControlName="branch_name" class="form-control" />
+                        </div>
+                    </div>
+        
+               
+        </div>
+
+
+        <div class="d-flex flex-row flex-wrap mt-6 ms-4">
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">SO Ref No</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 
+                        mb-lg-0 borderc-secondary bg-white custom-input"
+                         readonly formControlName="serviceorder_gid" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">SO Date</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 
+                        mb-lg-0 borderc-secondary bg-white custom-input"
+                         readonly formControlName="serviceorder_date" class="form-control" />
+                </div>
+            </div>
+
+
+
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Company Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" placeholder="Company name" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        [readOnly]="true" formControlName="vendor_companyname" class="form-control" />
+                </div>
+            </div>
+
+           
+        </div>
+        <div class="d-flex flex-row flex-wrap mt-6 ms-4">
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Contact Person Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input text-red"
+                        placeholder="Contact person name" readonly formControlName="contactperson_name"
+                        class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Email Address</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary  bg-white custom-input"
+                        placeholder="Email Address" readonly formControlName="email_id" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Purchase Type<span class="ms-1 text-red" style="height:38px;">*</span></span>
+                
+                <ng-select
+                    class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                    formControlName="purchasetype_name" [items]="purchasetype_list" required [(ngModel)]="purchasetype_name"
+                    class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="purchasetype_name"
+                    bindValue="purchasetype_name" placeholder="Select an option"></ng-select>
+            
+        </div>
+
+
+        </div>
+
+
+        <div class="d-flex flex-row flex-wrap mt-6 ms-4">
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Currency</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 
+                        mb-lg-0 borderc-secondary bg-white custom-input"
+                         readonly formControlName="currency_code" class="form-control" />
+                </div>            
+            </div>
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Exchange Rate</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" style="height:38px;"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 
+                        mb-lg-0 borderc-secondary bg-white custom-input"
+                         readonly formControlName="exchange_rate" class="form-control" />
+                </div>
+            </div>
+
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Remarks</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" rows="3"
+                        class="form-control form-control-lg form-control-solid 
+                        custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        placeholder="Remarks" formControlName="invoice_remarks"
+                         class="form-control"
+                        style="text-align: left;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- end:: Invoice Add Form -->
+
+        <!--Start:: Summary starts -->
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white table-responsive rounded">
+            <table class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Product</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Discount<br> Amount</th>
+                        <th>SO <br>Amount</th>
+                        <th class="text-center">Invoice Amount</th>
+                        <th class="text-center">Tax</th>
+                        <th class="text-center">Total Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!--Product Name product_name-->
+                    <tr *ngFor="let data of invoiceaddcomfirm_list; let i=index;" class="d-flex-wrap">
+                        <td class="align-middle">{{i+1}}</td>
+                        <td class="align-middle">{{data.product_name}}</td>
+                        <td><textarea
+                                 class="form-control form-control form-control-solid custom-input mb-3 mb-0 borderc-secondary bg-white custom-input mt-7" rows="3">{{data.description}}</textarea>
+                        </td>
+                        <td class="align-middle">{{data.quantity}}</td>
+                        <td class="align-middle">{{data.unit_price}}</td>
+                        <td class="align-middle">{{data.discount_amount}}</td>
+                        <td>{{data.total_amount}}</td> <!--SO Amount-->
+
+                        <!-- <Invoice Amount> -->
+                        <td>
+                            <label>
+                                <input style="width: 120px; height: 40px" formControlName="invoice_amount"
+                                    [(ngModel)]="invoice_amount" (input)="prodtotalcal()"
+                                    class="form-control form-control form-control-solid custom-input
+                                       borderc-secondary bg-white custom-input mt-7"
+                                       placeholder="Enter Amount">
+                            </label>
+                        </td>
+
+                        <!--tax-->
+                        <td>
+
+                            <div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="col-lg-12 col-md-12 col-sm-12"><span class="font-bold">Tax 1</span>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                    <ng-select formControlName="taxname1" [(ngModel)]="taxname1"
+                                                    (change)="taxAmount1()"
+                                                    bindLabel="tax_name" bindValue="tax_gid"
+                                                    [items]="tax_list"  placeholder="Select an option"></ng-select>
+                                                    <!-- <select
+                                                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                                                        formControlName="taxname1" (change)="taxAmount1()">
+                                                        <option value="" disabled selected>Select Tax</option>
+                                                        <option *ngFor="let taxname of tax_list"
+                                                            [value]="taxname.tax_gid">{{taxname.tax_name}}</option>
+                                                    </select> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                                    <input type="text" class="form-control" placeholder="0.00" readonly
+                                                        style="text-align: right; height: 38px; background-color: #e9e7e7;"
+                                                        formControlName="taxamount1" [(ngModel)]="taxamount1"
+                                                        input="taxAmount1()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 mt-4"><span class="font-bold">Tax 2</span>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                                                    <ng-select formControlName="taxname2" [(ngModel)]="taxname2"
+                                                    (change)="taxAmount2()"
+                                                    bindLabel="tax_name" bindValue="tax_gid"
+                                                    [items]="tax_list"  placeholder="Select an option"></ng-select>
+                                                    <!-- <select
+                                                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                                                        formControlName="taxname2" (change)="taxAmount2()">
+                                                        <option value="" disabled selected>Select Tax</option>
+                                                        <option *ngFor="let taxname of tax_list"
+                                                            [value]="taxname.tax_gid">{{taxname.tax_name}}</option>
+                                                    </select> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col mt-4">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                                    <input type="text" class="form-control" placeholder="0.00" readonly
+                                                        style="text-align: right; height: 38px; background-color: #e9e7e7;"
+                                                        formControlName="taxamount2" [(ngModel)]="taxamount2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+
+
+                        <!--Total Amount-->
+
+                        <td>
+                            <label>
+                                <input style="width: 120px; height: 40px" formControlName="product_total" readonly
+                                    [(ngModel)]="product_total"
+                                    class="form-control form-control form-control-solid custom-input borderc-secondary bg-white custom-input mt-7 ">
+                            </label>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <!--Summary count starts-->
+
+
+            <div class="card">
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label style="font-size: 13px" class="col-sm-6 col-form-label fw-bolder">Net Amount:</label>
+                      <input type="text" class="form-control"style="width:100px; text-align: right;"
+                      formControlName="product_total"  (input)="prodtotalcal()">
+                      <span class="tbl_spn">INR</span> </div>
+                  </div>
+
+                  <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label style="font-size: 13px" class="col-sm-6
+                       col-form-label fw-bolder">Discount Amount:</label>
+                      <input type="text" class="form-control"style="width:100px; text-align: right;"
+                      formControlName="disc_amount"   [(ngModel)]="disc_amount"
+                      (input)="grandtotalcal()">
+                      <span class="tbl_spn">INR</span> </div>
+                  </div>
+
+                <!-- <div class="d-flex justify-content-end mt-4">
+                    <div class="col-md-4 bg-gray">
+                        <label class="tbl_lab">Discount Amount:</label>
+                        <input type="text" class="tbl_tot_in" formControlName="disc_amount"
+                         [(ngModel)]="disc_amount"
+                            (input)="grandtotalcal()">
+                        <span class="tbl_spn">INR</span>
+                    </div>
+                </div> -->
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label style="font-size: 13px" class="col-sm-6
+                       col-form-label fw-bolder">Addon Amount:</label>
+                      <input type="text" class="form-control"style="width:100px; text-align: right;"
+                      formControlName="addon_amount"   [(ngModel)]="addon_amount"
+                      (input)="grandtotalcal()">
+                      <span class="tbl_spn">INR</span> </div>
+                  </div>
+
+                <!-- <div class="d-flex justify-content-end mt-4">
+                    <div class="col-md-4 bg-gray">
+                        <label class="tbl_lab"> Addon Amount:</label>
+                        <input type="text" class="tbl_tot_in" formControlName="addon_amount"
+                         [(ngModel)]="addon_amount"
+                            (input)="grandtotalcal()">
+                        <span class="tbl_spn">INR</span>
+                    </div>
+                </div> -->
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label style="font-size: 13px" class="col-sm-6
+                       col-form-label fw-bolder">SO Total:</label>
+                      <input type="text" class="form-control"style="width:100px; text-align: right;"
+                      formControlName="outstanding_amount" >
+                      <span class="tbl_spn">INR</span> </div>
+                  </div>
+
+                
+
+                <!-- <div class="d-flex justify-content-end mt-4">
+                    <div class="col-md-4 bg-gray">
+                        <label class="tbl_lab"> SO Total:</label>
+                        <input type="text" class="tbl_tot_in" readonly 
+                        formControlName="outstanding_amount">
+                        <span class="tbl_spn">INR</span>
+                    </div>
+                </div> -->
+
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label style="font-size: 13px" class="col-sm-6
+                       col-form-label fw-bolder">Invoice Amount Already Paid:</label>
+                      <input type="text" class="form-control"style="width:100px; text-align: right;"
+                     readonly>
+                      <span class="tbl_spn">INR</span> </div>
+                  </div>
+
+                <!-- <div class="d-flex justify-content-end mt-4">
+                    <div class="col-md-4 bg-gray">
+                        <label class="tbl_lab">Invoice Amount Already Paid:</label>
+                        <input type="text" class="tbl_tot_in" readonly>
+                        <span class="tbl_spn">INR</span>
+                    </div>
+                </div> -->
+
+
+                <!-- <div class="d-flex justify-content-end mt-4">
+                    <div class="col-md-4 bg-gray">
+                        <label class="tbl_lab">Grand Total:</label>
+                        <input type="text" class="tbl_tot_in" [(ngModel)]="grand_total"
+                         (input)="grandtotalcal()"
+                            formControlName="grand_total">
+                        <span class="tbl_spn">INR</span>
+                    </div>
+                </div> -->
+
+                <div class="d-flex row justify-content-end mt-2">
+                    <div class="col-md-3 d-flex align-items-center">
+                      <label style="font-size: 13px" class="col-sm-6
+                       col-form-label fw-bolder">Grand Total:</label>
+                      <input type="text" class="form-control"style="width:100px; text-align: right;"
+                      [(ngModel)]="grand_total"
+                      (input)="grandtotalcal()"
+                         formControlName="grand_total">
+                      <span class="tbl_spn">INR</span> </div>
+                  </div>
+
+            </div>
+
+            <!--Summary count ends-->
+
+            <div class="text-center my-4">
+                <button class="btn-success btn-sm text-white me-4" (click)="pblinvoicesubmit()" data-bs-dismiss="modal">
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                </button> &nbsp;&nbsp;
+                <button class="btn-danger btn-sm text-white me-4" (click)="close()" data-bs-dismiss="modal">
+                    <i class="fas fa-close text-white"></i> &nbsp;Close
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <!--Start:: Summary ends -->

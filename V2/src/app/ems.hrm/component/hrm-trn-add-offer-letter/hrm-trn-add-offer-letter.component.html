@@ -1,0 +1,324 @@
+<div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white">
+            <i class="fas fa-plus fw-bolder fs-3 me-4"></i>Add Offer Letter
+        </h3>
+    </div>
+
+    <div class="card m-3 border">
+        <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0">
+                <h4 class="fw-bolder text-blue">Personal Details</h4>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="Offerletterform" #form="ngForm">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Branch</span>
+                    <ng-select  class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"formControlName="cbobranch" [(ngModel)]="cbobranch"
+                    [class.is-invalid]="Offerletterform.get('cbobranch')?.invalid && (Offerletterform.get('cbobranch')?.dirty || Offerletterform.get('cbobranch')?.touched)"
+                    [ngClass]="{'invalid-border': Offerletterform.get('cbobranch')?.invalid && Offerletterform.get('cbobranch')?.touched}"
+                    [items]="branchList" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                    bindLabel="branch_name" bindValue="branch_gid" placeholder="Select an option"></ng-select>
+                    <div
+                    *ngIf="Offerletterform.get('cbobranch')?.hasError('required') && Offerletterform.get('cbobranch')?.touched"
+                    class="text-red">
+                    Branch is required.
+                  </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Offer Ref No</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="offer_no"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Ref No" />
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Offer Date</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input [(ngModel)]="Offer_date" type="date"
+                      [ngStyle]="{ 'border-color': Offerletterform.get('Offer_date')?.hasError('required') && Offerletterform.get('Offer_date')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input date-picker"
+                      placeholder="DD-MM-YYYY" required formControlName="Offer_date" />
+                  </div>
+                  <div
+                    *ngIf="Offerletterform.get('Offer_date')?.hasError('required') && Offerletterform.get('Offer_date')?.touched"
+                    class="text-red">
+                     Offer Date is required.
+                  </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">First Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="first_name"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last Name" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Last Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="last_name"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last Name" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Gender</span>
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                        <input type="radio" name="gender" value="male" formControlName="gender">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Male</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm ms-10">
+                        <input type="radio" name="gender" value="female" formControlName="gender">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Female</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Experience</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="Experience"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last Name" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Date Of Birth</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input [(ngModel)]="dob" type="date"
+                      [ngStyle]="{ 'border-color': Offerletterform.get('dob')?.hasError('required') && Offerletterform.get('dob')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input date-picker"
+                      placeholder="DD-MM-YYYY" required formControlName="dob" />
+                  </div>
+                  <div
+                    *ngIf="Offerletterform.get('dob')?.hasError('required') && Offerletterform.get('dob')?.touched"
+                    class="text-red">
+                     Date  of Birth is required.
+                  </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Mobile</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="mobile_number"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last Name" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">E-Mail</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="email_address"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last Name" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Date Of Joining</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input [(ngModel)]="txtemployee_joining_date" type="date"
+                      [ngStyle]="{ 'border-color': Offerletterform.get('txtemployee_joining_date')?.hasError('required') && Offerletterform.get('txtemployee_joining_date')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input date-picker"
+                      placeholder="DD-MM-YYYY" required formControlName="txtemployee_joining_date" />
+                  </div>
+                  <div
+                    *ngIf="Offerletterform.get('txtemployee_joining_date')?.hasError('required') && Offerletterform.get('txtemployee_joining_date')?.touched"
+                    class="text-red">
+                    Employee Joining Date is required.
+                  </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Qualification</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="Qualification"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last qualification" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Department</span>
+                <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                formControlName="department_name" bindLabel="department_name" bindValue="department_gid"
+                [items]="department_list"
+                [class.is-invalid]="Offerletterform.get('department_name')?.invalid && (Offerletterform.get('department_name')?.dirty || Offerletterform.get('department_name')?.touched)"
+                [ngClass]="{'invalid-border': Offerletterform.get('department_name')?.invalid && Offerletterform.get('department_name')?.touched}"
+                placeholder="Select an option" required></ng-select>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Designation</span>
+                    <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                     formControlName="cbodesignation" [(ngModel)]="cbodesignation"
+                  [class.is-invalid]="Offerletterform.get('cbodesignation')?.invalid && (Offerletterform.get('cbodesignation')?.dirty || Offerletterform.get('cbodesignation')?.touched)"
+                  [ngClass]="{'invalid-border':Offerletterform.get('cbodesignation')?.invalid && Offerletterform.get('cbodesignation')?.touched}"
+                  [items]="designationList" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                  bindLabel="designation_name" bindValue="designation_gid" placeholder="Select an option"></ng-select>
+                  <div
+                    *ngIf="Offerletterform.get('cbodesignation')?.hasError('required') && Offerletterform.get('cbodesignation')?.touched"
+                    class="text-red">
+                   Designation is required.
+                  </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Salary</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="Salary"
+                        class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                        placeholder="Last Name" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-3 mt-5 flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <div class="card m-3 border">
+                    <div class="card-header bg-lightblue card-height55">
+                        <div class="card-title m-0">
+                            <h4 class="fw-bolder text-blue">Permanent Address</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 1</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="permanent_address1"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 2</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="permanent_address2"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">City</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="permanent_city"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="City" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Postal Code</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="permanent_postal"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="Postal Code" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">State</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="permanent_state"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="State" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Country</span>
+                        <ng-select class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            formControlName="permanent_country" [(ngModel)]="selectedcountry" bindLabel="country"
+                            bindValue="country_gids" [items]="country_list" placeholder="Select an option"></ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <div class="card m-3 border">
+                    <div class="card-header bg-lightblue card-height55">
+                        <div class="card-title m-0">
+                            <h4 class="fw-bolder text-blue">Temporary Address</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 1</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="temporary_address1"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 2</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="temporary_address2"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">City</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="temporary_city"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="City" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Postal Code</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="temporary_postal"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="Postal Code" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">State</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="temporary_state"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="State" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Country</span>
+                        <ng-select class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                        formControlName="temp_country" [(ngModel)]="selectedcountry" bindLabel="country"
+                        bindValue="country_gids" [items]="country_list" placeholder="Select an option"></ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-header bg-lightblue card-height55" style="border-radius: 0px;">
+            <div class="card-title m-0">
+                <h5 class="fw-bolder text-blue">Terms and Conditions</h5>
+            </div>
+        </div>
+        <ng-select [items]="terms_list" class="custom col-lg-5 m-12 col-12 fv-row mt-2" bindLabel="template_name"
+            [(ngModel)]="mdlTerms" formControlName="template_name" bindValue="template_gid" placeholder="Select an option"
+            (change)="GetOnChangeTerms()"></ng-select>
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <angular-editor [config]="config" formControlName="Offerlettertemplate_content"></angular-editor>
+            </div>
+        </div>
+        
+        <div class="text-center my-4">
+            <button class="btn-success btn-sm text-white me-2" (click)="onsubmit()" [disabled]="Offerletterform.invalid">
+                <i class="fas fa-check text-white fs-5 me-3"></i>&nbsp;Submit
+            </button>
+        
+            <button class="btn-primary btn-sm text-white me-4" routerLink="/hrm/HrmTrnofferletter">
+                <i class="fas fa-arrow-left me-3"></i>Back
+            </button>
+        </div>
+    </form>
+
+</div>

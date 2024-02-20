@@ -1,0 +1,279 @@
+.primary-button {
+    background-color: #42ac72;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px  !important;
+    border-radius: 3px ;
+    border: 0;
+    }
+    
+    .secondary-button {
+    background-color: #50cd89;
+    color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+    }
+
+    .card-body12 {
+        // width: 160px;
+        height: 34px;  
+      }
+      .cardHeadLeads {
+      
+        position: relative;
+      
+        display: flex;
+      
+        flex-direction: column;
+      
+        min-width: 0;
+      
+        word-wrap: break-word;
+      
+        padding: 18px;
+      
+        background-clip: border-box;
+      
+        border: 0px solid rgba(0, 0, 0, 0);
+      
+        border-radius: .25rem;
+      
+        margin-bottom: 1.0rem;
+      
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+      
+        transition: all .3s ease-in-out;
+      
+        background-color: white;
+      
+      }
+      .cardHead {
+      
+        position: relative;
+      
+        display: flex;
+      
+        flex-direction: column;
+      
+        min-width: 0;
+      
+        word-wrap: break-word;
+      
+        padding: 18px;
+      
+        background-clip: border-box;
+      
+        border: 0px solid rgba(0, 0, 0, 0);
+      
+        border-radius: .25rem;
+      
+        margin-bottom: 1.0rem;
+      
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+      
+        transition: all .3s ease-in-out;
+      
+        background-color: white;
+      
+      }
+      
+       
+      
+      .cardHead:hover{
+      
+        box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+      
+        transform: translate3d(0px, -2px, 0px);
+      
+        cursor:pointer;
+      
+        pointer-events: auto;
+      
+      }
+      
+       
+      
+      .widgets-icons-2 {
+      
+        width: 38px;
+      
+        height: 38px;
+      
+        display: flex;
+      
+        align-items: center;
+      
+        justify-content: center;
+      
+        background-color: #ededed;
+      
+        font-size: 27px;
+      
+        border-radius: 10px;
+      
+      }
+      
+      .rounded-circle {
+      
+        border-radius: 50%!important;
+      
+      }
+      
+      .ms-auto {
+      
+        margin-left: 0px;
+      
+      }
+      
+       
+      
+      .bg-gradient-info {
+      
+        background: #17ead9;
+      
+        background: -webkit-linear-gradient(45deg, #17ead9, #6078ea)!important;
+      
+        background: linear-gradient(45deg, #17ead9, #6078ea)!important;
+      
+      }
+      
+       
+      
+      .bg-gradient-violet {
+      
+        background: #510e66;
+      
+        background: -webkit-linear-gradient(45deg, #eadbf8, #85329c)!important;
+      
+        background: linear-gradient(45deg, #e9b2fa, #7e2279)!important;
+      
+      }
+      
+       
+      
+      .bg-gradient-brown {
+      
+        background: #740f0f;
+      
+        background: -webkit-linear-gradient(45deg, #a05518, #c43a3a)!important;
+      
+        background: linear-gradient(45deg, #f2f565, #da3535)!important;
+      
+      }
+      
+       
+      
+      .bg-gradient-darkblue {
+      
+        background: #399C91;
+      
+        background: -webkit-linear-gradient(45deg, #aedaf3, #399C91)!important;
+      
+        background: linear-gradient(45deg, #9ff8f4, #399C91)!important;
+      
+      }
+      
+      .bg-gradient-darkblue {
+      
+        background: #399C91;
+      
+        background: -webkit-linear-gradient(45deg, #aedaf3, #399C91)!important;
+      
+        background: linear-gradient(45deg, #9ff8f4, #399C91)!important;
+      
+      }
+      .bg-gradient-purple {
+      
+        background: #be267a;
+      
+        background: -webkit-linear-gradient(45deg, #f8bceb, #be267a)!important;
+      
+        background: linear-gradient(45deg, #f7bdde, #be267a)!important;
+      
+      }
+      .bg-gradient-darkgreen {
+      
+        background: #B66B1A;
+      
+        background: -webkit-linear-gradient(45deg, #ecd776, #B66B1A)!important;
+      
+        background: linear-gradient(45deg, #eff77e, #B66B1A)!important;
+      
+      }
+      .bg-gradient-darkblues {
+      
+        background: #1E2961;
+      
+        background: -webkit-linear-gradient(45deg, #c0c4f8, #1E2961)!important;
+      
+        background: linear-gradient(45deg, #cfc8f8, #1E2961)!important;
+      
+      }
+      .bg-gradient-darkoranges {
+      
+        background: #ec9b20;
+      
+        background: -webkit-linear-gradient(45deg, #faab6b, #ec9b20)!important;
+      
+        background: linear-gradient(45deg, #ccf8a4, #ec9b20)!important;
+      
+      }
+      .bg-gradient-darkgreens {
+      
+        background: #3F7B33;
+      
+        background: -webkit-linear-gradient(45deg, #47ac6d, #3F7B33)!important;
+      
+        background: linear-gradient(45deg, #c9fc9b, #3F7B33)!important;
+      
+      }
+      
+      .border-orange {
+      
+        border-left: 5px solid  #B66B1A !important;
+      
+      }
+      .border-blue {
+      
+        border-left: 5px solid  #1E2961 !important;
+      
+      }
+      .border-purple {
+      
+        border-left: 5px solid  #ec9b20 !important;
+      
+      }
+      
+      .border-darkgreen {
+      
+        border-left: 5px solid  #3F7B33 !important;
+      
+      }
+      .border-darkblue {
+      
+        border-left: 5px solid  #399C91 !important;
+      
+      }
+      .border-violet {
+      
+        border-left: 5px solid  #764C9B !important;
+      
+      }
+      .border-brown {
+      
+        border-left: 5px solid  #ef3939 !important;
+      
+      }
+      .border-darkorange {
+      
+        border-left: 5px solid  #be267a !important;
+      
+      }
+      .radius-10 {
+        border-radius: 10px !important;
+      }
+      

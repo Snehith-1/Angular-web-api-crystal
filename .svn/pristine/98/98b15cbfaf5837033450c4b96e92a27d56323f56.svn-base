@@ -1,0 +1,233 @@
+<div class="card m-3">
+  <div class="card-header bg-lightblue card-height55">
+    <div class="card-title m-0 ">
+      <h5 class="fw-bolder text-blue">Edit Lead Bank Contact</h5>
+    </div>
+  </div>
+  <br>
+  <form [formGroup]="contacteditform" (ngSubmit)="validate()">
+     
+    
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <b>Branch</b>
+          <span class="ms-1 text-red">*</span>
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <select
+              class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+              formControlName="selectedBranch"
+              [ngClass]="{
+                'invalid-border': contacteditform.get('leadbankbranch_name').touched && contacteditform.get('leadbankbranch_name').hasError('required')
+              }"
+            >
+              <option value="">Select Branch Name</option>
+              <option *ngFor="let productunit of branch_list1" [value]="productunit.leadbank_gid">
+                {{productunit.leadbankbranch_name}}
+              </option>
+            </select>
+            <div
+              *ngIf="contacteditform.get('leadbankbranch_name').hasError('required') && contacteditform.get('leadbankbranch_name').touched"
+              class="error-text"
+            >
+              Branch Name is required.
+            </div>
+          </div>
+        </div>
+        
+      <input type="hidden" formControlName="leadbank_gid">
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <span class="font-bold"><b>Contact Person Name</b><span class="ms-1 text-red">*</span></span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input
+            type="text"
+            formControlName="leadbankcontact_name"
+            class="form-control form-control-lg form-control-solid
+              borderc-secondary
+              custom-input
+              mb-3 mb-lg-0
+              bg-white
+              custom-input"
+            placeholder="Contact Person Name"
+            name="leadbankcontact_name"
+            required
+            [ngClass]="{
+              'invalid-border':
+              contacteditform.get('leadbankcontact_name').invalid &&
+              contacteditform.get('leadbankcontact_name').touched 
+            }"
+          />
+          <div *ngIf="contacteditform.get('leadbankcontact_name').hasError('required') && contacteditform.get('leadbankcontact_name').touched">
+            <div class="error-text">Contact Person Name is required.</div>
+          </div>
+        </div>
+      </div>
+    
+    
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <span class="font-bold"><b>Mobile Number</b><span class="ms-1 text-red">*</span></span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input
+            type="text"
+            id="mobile"
+            name="mobile"
+            formControlName="mobile"
+            class="form-control form-control-lg form-control-solid
+              borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+            pattern="^[0-9]{10}$"
+            placeholder="Mobile No"
+            required
+            maxlength="10"
+            autocomplete="on"
+            [ngClass]="{
+              'invalid-border':
+              contacteditform.get('mobile').invalid &&
+              contacteditform.get('mobile').touched &&
+              contacteditform.get('mobile').value !==' ',
+            }"
+          />
+
+          <div *ngIf="contacteditform.get('mobile').hasError('pattern') && contacteditform.get('mobile').touched">
+            <div class="error-text">Please enter a valid 10-digit Mobile Number.</div>
+          </div>
+
+          <div *ngIf="contacteditform.get('mobile').hasError('required') && contacteditform.get('mobile').touched">
+              <div class="error-text">Mobile Number is required.</div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Email Address</b><span class="ms-1 text-red">*</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="Email Address"
+            formControlName="email"
+            [ngClass]="{
+              'invalid-border': contacteditform.get('email').invalid && contacteditform.get('email').touched && contacteditform.get('email').value !== ''
+            }"
+            required
+          />
+          <div *ngIf="contacteditform.get('email').invalid && contacteditform.get('email').touched">
+            <div *ngIf="contacteditform.get('email').hasError('pattern')" class="error-text">Please enter a valid email address.</div>
+          </div>
+          <div *ngIf="contacteditform.get('email').hasError('required') && contacteditform.get('email').touched">
+              <div class="error-text">Email is required.</div>
+            </div>
+        </div>
+      </div>
+      
+      
+      
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <b>Designation</b> 
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input
+            type="text"
+            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="Designation"
+            formControlName="designation"
+            name="designation"
+            required
+          />
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <b>Fax</b> 
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+              placeholder="Fax"
+              formControlName="fax"
+              name="fax"
+              pattern="^[0-9]{10}$"
+              required
+              maxlength="10"
+            autocomplete="on"
+            [ngClass]="{
+              'invalid-border':
+              contacteditform.get('fax').invalid &&
+              contacteditform.get('fax').touched &&
+              contacteditform.get('fax').value !=='',
+            }"
+            />
+            <div *ngIf="contacteditform.get('fax').hasError('pattern') && contacteditform.get('fax').touched">
+              <div class="error-text">Please enter a valid 10-digit Number.</div>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+
+    <!-- ----------------- -->
+    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <b>Telephone No 1</b> 
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+              placeholder="Telephone No"
+              formControlName="phone1"
+              name="phone1"
+              pattern="^[0-9]{10}$"
+              required
+              maxlength="10"
+            autocomplete="on"
+            [ngClass]="{
+              'invalid-border':
+              contacteditform.get('phone1').invalid &&
+              contacteditform.get('phone1').touched &&
+              contacteditform.get('phone1').value !=='',
+            }"
+            />
+            <div *ngIf="contacteditform.get('phone1').hasError('pattern') && contacteditform.get('phone1').touched">
+              <div class="error-text">Please enter a valid 10-digit Number.</div>
+            </div>
+          </div>
+        </div>
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <b>Telephone No 2</b> 
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input
+              type="text"
+              class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+              placeholder="Telephone No"
+              formControlName="phone2"
+              name="phone2"
+              pattern="^[0-9]{10}$"
+              required
+              maxlength="10"
+            autocomplete="on"
+            [ngClass]="{
+              'invalid-border':
+              contacteditform.get('phone2').invalid &&
+              contacteditform.get('phone2').touched &&
+              contacteditform.get('phone2').value !=='',
+            }"
+            />
+            <div *ngIf="contacteditform.get('phone2').hasError('pattern') && contacteditform.get('phone2').touched">
+              <div class="error-text">Please enter a valid 10-digit Number.</div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="text-center my-4">
+      <button type="submit" class="btn-success btn-sm text-white me-2" >
+        <i class="bi bi-check-square fs-5" ></i>&nbsp;Update</button>
+
+        <button class="btn-primary btn-sm text-white me-4" routerLink="/crm/CrmTrnLeadbanksummary">
+          <i class="fas fa-arrow-left"></i> &nbsp; Back
+        </button>
+    </div>
+  </form>
+</div>
+<br>

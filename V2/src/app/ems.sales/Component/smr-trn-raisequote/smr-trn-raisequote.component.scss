@@ -1,0 +1,115 @@
+.table_head th{
+
+    font-size: 12px;
+  
+}
+.new_table {
+
+    text-align: center;
+
+}
+.lab {
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.in {
+
+    margin-left: 13px;
+
+    width: 100px;
+
+}
+
+ 
+
+.spn {
+
+    margin-left: 5px;
+
+    color: #3f51b5;
+
+    font-weight: bold;
+
+}
+
+ 
+
+ 
+
+.tbl_lab {
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    width: 170px;
+
+}
+
+ 
+
+.tbl_in {
+
+    margin-left: 13px;
+
+    width: 100px;
+
+    text-align: right;
+
+}
+
+ 
+
+.tbl_spn {
+
+    margin-left: 5px;
+
+    color: #3f51b5;
+
+    font-weight: bold;
+
+}
+
+ 
+
+.new_table1 {
+
+    text-align: right;
+
+}
+
+ 
+
+.icon {
+
+    background-color: #009ef7;
+
+    color: white;
+
+    font-weight: bold;
+
+}
+#kt_chat_contacts_body1 {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#kt_chat_contacts_body1::-webkit-scrollbar {
+    width: 8px;
+    /* You can adjust the width to your preference */
+  }
+   
+  #kt_chat_contacts_body1::-webkit-scrollbar-thumb {
+    background: #888;
+    /* You can set the color of the scrollbar thumb */
+    border-radius: 10px;
+    /* You can adjust the border radius to your preference */
+    height: 5px;
+  }

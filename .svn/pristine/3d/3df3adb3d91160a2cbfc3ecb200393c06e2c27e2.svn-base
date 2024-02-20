@@ -1,0 +1,277 @@
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; 
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AES , enc} from 'crypto-js';
+import { ActivatedRoute } from '@angular/router';
+interface IVendor {
+  country_name:string;
+  currency_code:string;
+  vendorregister_gid:string;
+  tax_name:string;
+  state: string;
+  fax: string;
+  city: string;
+  address1: string;
+  contact_telephonenumber: string;
+  vendor_code: string;
+  email_id: string;
+  postal_code: string;
+  address2: string;
+  vendor_companyname: string;
+  contactperson_name: string;
+}
+
+@Component({
+  selector: 'app-pmr-trn-vendorregister-edit',
+  templateUrl: './pmr-trn-vendorregister-edit.component.html',
+  styleUrls: ['./pmr-trn-vendorregister-edit.component.scss']
+})
+export class PmrTrnVendorregisterEditComponent {
+  file!:File;
+  vendor!: IVendor;
+  reactiveForm!: FormGroup;
+  country_list: any[] = [];
+  currency_list: any[] = [];
+  tax_list: any[] = [];
+  responsedata: any;
+  selectedVendorcode:any;
+  vendorregister_gid:any;
+  vendorregisteredit_list:any;
+  constructor(private renderer: Renderer2, private el: ElementRef,public service :SocketService,private ToastrService: ToastrService,private route:Router,private router: ActivatedRoute ) {
+    this.vendor = {} as IVendor;
+  }
+
+  
+  ngOnInit(): void {
+    debugger
+    const vendorregister_gid = this.router.snapshot.paramMap.get('vendorregister_gid');
+    // console.log(termsconditions_gid)
+    this.vendorregister_gid = vendorregister_gid;
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.vendorregister_gid, secretKey).toString(enc.Utf8);
+    console.log(deencryptedParam)
+    this.GetVendorRegisterDetail(deencryptedParam)
+   
+    this.reactiveForm = new FormGroup({
+  
+       
+      state: new FormControl(this.vendor.state, [
+        Validators.required,
+      
+      ]),
+      fax: new FormControl(this.vendor.fax, [
+        Validators.required,
+        
+      ]),
+      city: new FormControl(this.vendor.city, [
+        Validators.required,
+      
+      ]),
+      address1: new FormControl(this.vendor.address1, [
+        Validators.required,
+      ]),
+      vendor_code: new FormControl(this.vendor.vendor_code, [
+        Validators.required,
+      ]),
+      vendor_companyname: new FormControl(this.vendor.vendor_companyname, [
+        Validators.required,
+
+      ]),
+      contact_telephonenumber: new FormControl(this.vendor.contact_telephonenumber, [
+        Validators.required,
+        
+      ]),
+      email_id: new FormControl(this.vendor.email_id, [
+        Validators.required,
+        
+      ]),
+      postal_code: new FormControl(this.vendor.postal_code, [
+        Validators.required,
+        
+      ]),
+      contactperson_name: new FormControl(this.vendor.contactperson_name, [
+        Validators.required,
+        
+      ]),
+      vendorregister_gid: new FormControl(this.vendor.vendorregister_gid),
+      address2: new FormControl(''),
+      country_name : new FormControl(this.vendor.country_name, [
+            Validators.required,        
+            ]),
+            currency_code : new FormControl(this.vendor.currency_code, [
+              Validators.required,    
+              ]),
+              tax_name : new FormControl(this.vendor.tax_name, [
+                Validators.required,    
+              
+                ]),
+ }
+
+    );
+
+
+var api5='PmrMstVendorRegister/Getcountry'
+this.service.get(api5).subscribe((result:any)=>{
+  this.country_list = result.Getcountry;
+});
+
+var api4='PmrMstVendorRegister/Getcurency'
+this.service.get(api4).subscribe((result:any)=>{
+  this.currency_list = result.Getcurency;
+});
+var api3='PmrMstVendorRegister/Gettax'
+this.service.get(api3).subscribe((result:any)=>{
+  this.tax_list = result.Gettax;
+});
+  }
+
+  GetVendorRegisterDetail(vendorregister_gid: any) {
+  debugger
+  var url1='PmrMstVendorRegister/GetVendorRegisterDetail'
+  let param = {
+    vendorregister_gid : vendorregister_gid 
+  }
+  this.service.getparams(url1, param).subscribe((result: any) => {
+    // this.responsedata=result;
+    this.vendorregisteredit_list = result.editvendorregistersummary_list;
+    console.log(this.vendorregisteredit_list)
+    // console.log(this.vendorregisteredit_list[0].vendorregister_gid)
+    // this.selectedVendorcode = this.vendorregisteredit_list[0].vendorregister_gid;
+    this.reactiveForm.get("vendorregister_gid")?.setValue(this.vendorregisteredit_list[0].vendorregister_gid);
+    this.reactiveForm.get("state")?.setValue(this.vendorregisteredit_list[0].state);
+    this.reactiveForm.get("fax")?.setValue(this.vendorregisteredit_list[0].fax);
+    this.reactiveForm.get("city")?.setValue(this.vendorregisteredit_list[0].city);
+    this.reactiveForm.get("address1")?.setValue(this.vendorregisteredit_list[0].address1);
+    this.reactiveForm.get("address2")?.setValue(this.vendorregisteredit_list[0].address2);
+    this.reactiveForm.get("contact_telephonenumber")?.setValue(this.vendorregisteredit_list[0].contact_telephonenumber);
+    this.reactiveForm.get("vendor_code")?.setValue(this.vendorregisteredit_list[0].vendor_code);
+    this.reactiveForm.get("vendor_companyname")?.setValue(this.vendorregisteredit_list[0].vendor_companyname);
+    this.reactiveForm.get("contactperson_name")?.setValue(this.vendorregisteredit_list[0].contactperson_name);
+    this.reactiveForm.get("email_id")?.setValue(this.vendorregisteredit_list[0].email_id);
+    this.reactiveForm.get("postal_code")?.setValue(this.vendorregisteredit_list[0].postal_code);
+    this.reactiveForm.get("address2")?.setValue(this.vendorregisteredit_list[0].address2);
+    this.reactiveForm.get("country_name")?.setValue(this.vendorregisteredit_list[0].country_name);
+    this.reactiveForm.get("currency_code")?.setValue(this.vendorregisteredit_list[0].currency_code);
+    this.reactiveForm.get("tax_name")?.setValue(this.vendorregisteredit_list[0].tax_name);
+ 
+  });
+}
+  onChange2(event:any) {
+    this.file =event.target.files[0];
+
+    }
+  
+    get country_name() {
+      return this.reactiveForm.get('country_name')!;
+    }
+    get currency_code() {
+      return this.reactiveForm.get('currency_code')!;
+    }
+    get tax_name() {
+      return this.reactiveForm.get('tax_name')!;
+    }
+    get country() {
+      return this.reactiveForm.get('country')!;
+    }  
+   
+    get state() {
+      return this.reactiveForm.get('state')!;
+    }
+    get fax() {
+      return this.reactiveForm.get('fax')!;
+    }
+    get city() {
+      return this.reactiveForm.get('city')!;
+    }
+    get address1() {
+      return this.reactiveForm.get('address1')!;
+    }
+    get contact_telephonenumber() {
+      return this.reactiveForm.get('contact_telephonenumber')!;
+    }
+    get vendor_code() {
+      return this.reactiveForm.get('vendor_code')!;
+    }
+    get vendor_companyname() {
+      return this.reactiveForm.get('vendor_companyname')!;
+    }
+    get contactperson_name() {
+      return this.reactiveForm.get('contactperson_name')!;
+    }
+    get postal() {
+      return this.reactiveForm.get('postal_code')!;
+    }
+    get email_id() {
+      return this.reactiveForm.get('email_id')!;
+    }
+    
+
+  
+ 
+    
+    public validate(): void {
+      debugger
+      console.log(this.reactiveForm.value)
+        this.vendor = this.reactiveForm.value;
+        debugger
+        if(   this.vendor.state !=null  && this.vendor.city !=null  && this.vendor.vendor_code !=null &&
+           this.vendor.address1 !=null  && this.vendor.vendor_companyname !=null && this.vendor.contactperson_name !=null
+            && this.vendor.country_name !=null && this.vendor.email_id !=null && this.vendor.postal_code !=null ){
+          let formData = new FormData();
+          if(this.file !=null &&  this.file != undefined){
+
+        formData.append("vendorregister_gid", this.vendor.vendorregister_gid);
+         formData.append("state", this.vendor.state);
+         formData.append("fax", this.vendor.fax);
+         formData.append("city", this.vendor.city);
+         formData.append("address1", this.vendor.address1);
+         formData.append("contact_telephonenumber", this.vendor.contact_telephonenumber);
+         formData.append("vendor_code", this.vendor.vendor_code);
+         formData.append("vendor_companyname", this.vendor.vendor_companyname);
+         formData.append("contactperson_name", this.vendor.contactperson_name);
+         formData.append("email_id", this.vendor.email_id);
+         formData.append("postal_code", this.vendor.postal_code);
+         formData.append("address2", this.vendor.address2);
+         formData.append("country_name", this.vendor.country_name);
+         formData.append("currency_code", this.vendor.currency_code);
+         formData.append("tax_name", this.vendor.tax_name);
+          var api='PmrMstVendorRegister/PostVendorRegisterUpdate'
+         
+            this.service.postfile(api,formData).subscribe((result:any) => {
+              this.responsedata=result;
+              if(result.status ==false){
+                this.ToastrService.warning(result.message)
+              }
+              else{
+                this.route.navigate(['/pmr/PmrMstVendorregister']);
+                this.ToastrService.success(result.message)
+              }
+            });
+        
+        }
+        else{
+          var api7='PmrMstVendorRegister/PostVendorRegisterUpdate'
+      
+            this.service.post(api7,this.vendor).subscribe((result:any) => {
+
+              if(result.status ==false){
+                this.ToastrService.warning(result.message)
+              }
+              else{
+                this.route.navigate(['/pmr/PmrMstVendorregister']);
+                this.ToastrService.success(result.message)
+              }
+              this.responsedata=result;
+            });
+        }
+        }
+        else{
+          this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+        }
+        return;
+      
+
+    }
+}

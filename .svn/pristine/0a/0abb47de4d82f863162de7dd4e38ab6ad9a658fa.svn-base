@@ -1,0 +1,149 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Biometric management </h3>
+    </div>
+    <br>
+    
+
+        <!-- ADD Function
+        <button title="Add Role" class="btn-primary btn-sm text-white me-4 mb-2 mt-2" routerLink="/hrm/HrmMstRoleAdd">
+            <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;
+            Add Role</button> -->
+           
+           
+     
+
+<div class="table-responsive">
+    <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <table id="biometricManagement" class="table table-striped table-row-bordered gy-5 gs-7 ">
+            <thead>
+                <tr class=" text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                    <th>S.No</th>
+                    <th>Branch</th>
+                    <th>Department</th>
+                    <th>Employee Code</th>
+                    <th>Employee Name</th>
+                    <th>Designation</th>
+                    <th>Biometric Id</th>
+                    <th>NFC ID</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody> 
+                <tr *ngFor="let data of biometricManagement; let i=index;">
+                    <td >{{i+1}}</td>
+                    <td>{{data.branch}}</td>
+                    <td>{{data.department}}</td>
+                    <td>{{data.employee_code}}</td>
+                    <td>{{data.employee_name}}</td>
+                    <td>{{data.designation_name}}</td>
+                    <td>{{data.biometric_id}}</td> 
+                    <td>{{data.nfc_id}}</td>
+                    <td>{{data.user_status}}</td> 
+                    <td class="text-center text-nowrap">  
+                        <button title="Add" type="button" class="btn btn-icon btn-sm bg-primary me-2" data-bs-toggle="modal"
+                        (click)="myModalupdate(data)" data-bs-target="#myModaladddetails" style="color: #ffffff;">
+                        <span class="fa-solid fa-add text-white fs-6"></span></button>                
+                 </td>                 
+                </tr>
+            </tbody>            
+        </table>
+    </div>   
+</div>
+</div>
+
+    <div class="modal" id="myModaladddetails" data-bs-backdrop="static" data-bs-keyboard="false">
+        <form [formGroup]="reactiveFormadd" #form="ngForm">
+            <input formControlName="employee_gid" hidden
+            placeholder="Address Line 1"  type="text" class="
+                form-control form-control-lg form-control-solid
+                bg-white
+                custom-input
+                mb-3 mb-lg-0
+                borderc-secondary
+              " name="employee_gid" />
+        <div class="modal-dialog ">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="card-header p-2 pb-3 pt-2 rounded-top bg-primary">
+              <div>
+                <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;"> UPDATE BIOMETRIC STATUS </h2>
+              </div>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Employee Code<span style="color:red">*</span></b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="Employee_Code" type="text"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  custom-input"                   
+                      placeholder="Enter Employee Code" name="employee_Code"/>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Employee Name<span style="color:red">*</span></b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="Employee_Name" type="text"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                      placeholder="Enter Employee Name" />
+                      
+                  </div>
+                </div>
+              </div>
+    
+              <div class="d-flex flex-row mt-4 flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>NFC Code No</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="NFC_Code" type="text"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                      placeholder="Enter NFC Code" />
+                  </div>
+                </div>
+    
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Biometric Id<span style="color:red">*</span></b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="biometric_id" type="text"
+                      class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                      placeholder="Enter Biometric Id" />
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-12 col-lg-3 col-md-6 col-sm-12"><b>Biometric Status</b>
+                  <div class="d-flex justify-content-start mt-4 ms-2">
+                      <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                          <input class="form-check-input" type="radio" name="batchtracker" id="Y"
+                              formControlName="biometric_flag" value="Y">
+                          <label class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                      </div>
+                      <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                          <input class="form-check-input" type="radio" name="batchtracker" formControlName="biometric_flag"
+                              value="N" id="N">
+                          <label class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+         
+                      </div>
+                      
+                  </div>
+              </div>
+         
+             
+              <div class="text-center mt-7 my-4">
+                <button class="me-4" (click)="validate()" [disabled]="reactiveFormadd.invalid"
+                  [ngClass]="{'primary-button': !reactiveFormadd.invalid, 'secondary-button': reactiveFormadd.invalid}" data-bs-dismiss="modal">
+                  <i class="bi bi-check-square fs-5"></i>
+                      <span class="ms-3">Submit</span>
+                </button>
+               <button class="btn-danger btn-sm text-white me-4"  data-bs-dismiss="modal">
+                  <i class="fas fa-close text-white fs-5"></i>
+                  <span class="ms-3">Close</span>
+                </button>
+              </div> 
+            </div>
+          </div>
+        </div>
+    </form>
+      </div>
+  
+
+  
+

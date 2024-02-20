@@ -1,0 +1,187 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ems.system.Models;
+using ems.utilities.Functions;
+using System.Data.Odbc;
+using System.Data;
+using System.Web;
+using OfficeOpenXml;
+using System.Configuration;
+using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Net.Mail;
+
+
+using global::ems.utilities.Functions;
+
+namespace ems.system.DataAccess
+{
+    public class DaDepartment
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objOdbcDataReader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, lsdepartment_code;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+
+        int mnResult6;
+
+        public void DaGetDepartmentSummary(MdlDepartment values)
+        {
+            msSQL = " select  a.department_gid,a.department_code, a.department_prefix, a.department_name,  concat(c.user_firstname,'',c.user_lastname) as department_manager " +
+                    " from hrm_mst_tdepartment a " +
+                    " left join hrm_mst_temployee b on b.employee_gid= a.department_manager " +
+                   " left join adm_mst_tuser c on b.user_gid = c.user_gid" +
+                   " order by department_gid desc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<department_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new department_list
+                    {
+                        department_gid = dt["department_gid"].ToString(),
+                        department_code = dt["department_code"].ToString(),
+                        department_prefix = dt["department_prefix"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        department_manager = dt["department_manager"].ToString()
+
+                    });
+                    values.department_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        public void GetDepartmentAddDropdown(MdlDepartment values)
+        {
+            msSQL = "select b.employee_gid , concat(a.user_firstname,' ',a.user_lastname) as department_manager from adm_mst_tuser a " +
+                " left join hrm_mst_temployee b on b.user_gid=  a.user_gid  ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetDepartmentAddDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetDepartmentAddDropdown
+                    {
+                        employee_gid = dt["employee_gid"].ToString(),
+                        department_manager = dt["department_manager"].ToString(),
+                    });
+                    values.GetDepartmentAddDropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaPostDepartment(string user_gid, department_list values)
+        {
+
+            msSQL = " select department_code from hrm_mst_tdepartment where department_code = '" + values.department_code + "' ";
+            objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objOdbcDataReader.HasRows)
+            {
+                lsdepartment_code = objOdbcDataReader["department_code"].ToString();
+            }
+
+            if (lsdepartment_code != values.department_code)
+            {
+                msGetGid = objcmnfunctions.GetMasterGID("HDPM");
+
+                msSQL = " insert into hrm_mst_tdepartment(" +
+                        " department_gid," +
+                        " department_code," +
+                        " department_prefix," +
+                        " department_name," +
+                        " created_by, " +
+                        " created_date)" +
+                        " values(" +
+                        " '" + msGetGid + "'," +
+                        " '" + values.department_code + "'," +
+                        "'" + values.department_prefix + "'," +
+                        " '" + values.department_name + "',";
+
+
+                msSQL += "'" + user_gid + "'," +
+                         "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Department Added Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Department";
+                }
+            }
+
+            else
+            {
+                values.status = false;
+                values.message = "Same Department Code Already Exist !!";
+            }
+        }
+
+        
+
+            public void DagetUpdatedDepartment(string user_gid, department_list values)
+            {
+
+                msSQL = " update  hrm_mst_tdepartment set " +
+                     " department_gid = '" + values.department_gid + "'," +
+                     "  department_code = '" + values.department_code_edit + "'," +
+                     " department_prefix = '" + values.department_prefix_edit + "'," +
+                     " department_name = '" + values.department_name_edit + "'," +
+                     " updated_by = '" + user_gid + "'," +
+                     " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where department_gid='" + values.department_gid + "'  ";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Department Updated Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Updating Department";
+                }
+            }
+        
+        public void DaDeleteDepartment(string department_gid, department_list values)
+        {
+            msSQL = "  delete from hrm_mst_tdepartment where department_gid='" + department_gid + "'  ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Department Deleted Successfully";
+            }
+            else
+            {
+                {
+                    values.status = false;
+                    values.message = "Error While Deleting Department";
+                }
+            }
+
+
+        }
+
+    }
+}
+

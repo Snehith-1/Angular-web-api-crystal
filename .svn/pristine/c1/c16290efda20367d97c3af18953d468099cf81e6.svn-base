@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  https://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <connectionStrings>
+    <!--<add name="ttcconnection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=travelapp;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />
+    <add name="abcconnection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=abctravel;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />
+    <add name="xyzconnection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=xyztravel;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />
+    <add name="123connection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=123travel;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />
+    <add name="ttsconnection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=trendtravel;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />
+    <add name="ttsconnection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=cubix_holidays;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />
+    <add name="ttsconnection" connectionString="Driver={MySQL ODBC 3.51 Driver};database=cubix_holidays;option=2;port=3306;server=localhost;uid=root;password=vision!8" providerName="System.Data.Odbc" />-->
+    <add name="bobaconnection"
+      connectionString="Driver={MySQL ODBC 5.3 Unicode Driver};database=boba_tea;option=2;port=4565;server=localhost;uid=root;password=vision18"
+      providerName="System.Data.Odbc"/>
+    <add name="vcidexconnection"
+      connectionString="Driver={MySQL ODBC 5.3 Unicode Driver};database=vcidex;option=2;port=4565;server=localhost;uid=root;password=vision18"
+      providerName="System.Data.Odbc"/>
+	 <add name="bobateaconnection"
+      connectionString="Driver={MySQL ODBC 5.3 Unicode Driver};database=bobatea;option=2;port=4565;server=localhost;uid=root;password=vision!8"
+      providerName="System.Data.Odbc"/>
+
+	  <!--<add name="vcidexconnection" connectionString="Driver={MySQL ODBC 5.3 Unicode Driver};database=vcidex;option=2;port=3306;server=localhost;uid=root;password=vision18" providerName="System.Data.Odbc"/>-->
+
+	  <!--<add name="ttsconnection" connectionString="Driver={MySQL ODBC 5.3 Unicode Driver};database=safarsol;option=2;port=6456;server=202.21.32.137;uid=DEV-ERP;password=Vision@18" providerName="System.Data.Odbc" />-->
+  </connectionStrings>
+  <appSettings>
+    <!--<add key="server" value="http://vcxtravelapp.azurewebsites.net/" />-->
+    <add key="server" value="http://localhost/Safarsol_API/Safarsol_API/TravelApp_API/"/>
+    <add key="RUN_VERSION" value="TEST"/>
+  </appSettings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.8" />
+      </system.Web>
+  -->
+  <system.web>
+    <customErrors mode="Off"/>
+    <compilation strict="false" explicit="true" targetFramework="4.8"/>
+    <httpRuntime targetFramework="4.5"/>
+    <sessionState mode="StateServer" timeout="9000"/>
+  </system.web>
+  <system.codedom>
+    <compilers>
+      <compiler language="c#;cs;csharp" extension=".cs"
+        type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+        warningLevel="4" compilerOptions="/langversion:6 /nowarn:1659;1699;1701"/>
+      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb"
+        type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+        warningLevel="4" compilerOptions="/langversion:14 /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+"/>
+    </compilers>
+  </system.codedom>
+  <system.webServer>
+    <directoryBrowse enabled="true"/>
+  </system.webServer>
+</configuration>
+<!--ProjectGuid: 52E9D902-A017-44FB-81E7-115106B331D0-->

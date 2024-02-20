@@ -1,0 +1,69 @@
+<div class="card shadow-sm">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Template</h3>
+        </div>
+
+        <div class="col me-5">
+            <button title="Add Template" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end" routerLink="/system/SysMstTemplateAdd">
+                <i class="fas fa-plus"></i> &nbsp;&nbsp; Add Template
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="template_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Template Name</th>
+                        <th>Template Type</th>
+                        <th style="text-align: center;">Details</th>
+                        <th>Created By</th>                        
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of template_list; let i=index;" class="align-middle">
+                        <td title="S.No">{{i+1}}</td>
+                        <td title="Template Name">{{data.template_name}}</td>
+                        <td title="Template Type">{{data.templatetype_name}}</td>
+                        <td title="Details" style="text-align: center;"><i class="fas fa-question-circle fs-2"></i></td>
+                        <td title="Created By">{{data.created_by}}</td>
+                        <td titile="Action" class="text-center text-nowrap">
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="edittemplate(data.template_gid)">
+                                <span class="fa-solid fa-pencil text-white fs-6"></span>
+                            </button>
+                            <button title="Assign To Module" type="button" class="btn btn-icon btn-sm bg-primary me-2">
+                                <span class="fa-solid fa-file-import text-white fs-6"></span>
+                            </button>
+                            <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2" data-bs-toggle="modal" data-bs-target="#myModaldelete" (click)="openModaldelete(data.template_gid)">
+                                <span class="fa-solid fa-trash fs-6" style="color: #ffffff;"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>  
+</div>
+
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog del_modal-dialog">
+        <div class="modal-content del_modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+                    </button>
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white me-2"></i>Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

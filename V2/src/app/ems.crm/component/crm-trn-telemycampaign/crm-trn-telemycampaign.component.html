@@ -1,0 +1,837 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">        
+        <h3 class="card-title">My Calls</h3>
+    </div>
+    <br>
+    <tabset>
+        <tab heading="New">
+            <div class="table-responsive">
+                <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+                    <table id="new_list" class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+                        <thead>
+                            <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                                <th style="width:2%">S.No</th>
+                                <th>Team </th>
+                                <th>Customer Name</th>
+                                <th>Contact Details</th>
+                                <th>Region/Source</th>
+                                <th>Remarks</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of new_list; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.campaign_title}}</td>
+                                <td>{{data.leadbank_name}}</td>
+                                <td>{{data.contact_details}}</td>
+                                <td>{{data.regionname}}</td>
+                                <td>{{data.remarks}}</td>
+                                <td class="text-center text-nowrap">
+                                    <button (click)="openModal1(data.leadbank_gid)" title="Log" data-bs-toggle="modal"
+                                        type="button" data-bs-target="#mylog1"
+                                        class="btn btn-icon btn-sm bg-success me-2"><span
+                                            class="fa fa-phone text-white  fs-6"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <form [formGroup]="reactiveForm" #form="ngForm">
+                <div class="modal" id="mylog1" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content" style="width: 100%;">
+
+                            <!-- Modal Header -->
+                          
+                            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                                
+                                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                                        class="fas fa-phone fw-bolder fs-3"></i> &nbsp;&nbsp;Log</h2>
+                            </div>
+                           
+                           <!-- Modal body -->
+                         <div class="modal-body ">
+                                <div class="row"><span class="font-bold"><b> Dialed Number</b><span
+                                    class="ms-1 text-red">*</span></span>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                <input formControlName="dialed_number" type="text" class="
+                                             form-control form-control-lg form-control-solid
+                                             custom-input
+                                             mb-3 mb-lg-0
+                                             bg-white
+                                             custom-input
+                                           " [ngStyle]="{
+                                             'border-color':
+                                             dialed_number.invalid && dialed_number.touched
+                                                 ? 'red'
+                                                 : 'rgb(209, 209, 209)'
+                                           }"  required maxlength="10" pattern="^[0-9]{10}$"
+                                    name="dialed_number" required />
+                            </div>
+                        </div>
+                        <div *ngIf="dialed_number.invalid && (dialed_number.dirty || dialed_number.touched)">
+                            <div *ngIf="dialed_number.errors?.['required']">
+                                <span style="color:red;">Dialed Number is required.</span>
+                            </div>
+                        </div>
+                        <br>
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Call Response</b> <span
+                                            class="ms-1 text-red">*</span></span>
+                                    <ng-select style=" width: 455px;" formControlName="call_response"
+                                        [class.is-invalid]="
+                                    call_response.invalid && (call_response.dirty || call_response.touched)"
+                                        [ngClass]="{'invalid-border': call_response.invalid && call_response.touched}"
+                                        required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                        <ng-option value="Select Response">--Select Response--</ng-option>
+                                        <ng-option value="Ringing Not Response (RNR)">Ringing Not Response(RNR)</ng-option>
+                                        <ng-option value="No Answer">No Answer</ng-option>
+                                        <ng-option value="Switched Off">Switched Off</ng-option>
+                                        <ng-option value="Number Does Not Exists">Number Does Not Exists</ng-option>
+                                        <ng-option value="Not Interested">Not Interested</ng-option>
+                                        <ng-option value="Wrong Number">Wrong Number</ng-option>
+                                        <ng-option value="Busy Tone">Busy Tone</ng-option>
+                                        <ng-option value="Appointment(Meeting)">Appointment(Meeting)</ng-option>
+                                        <ng-option value="Call Back After Explanation (CBE)">Call Back After Explanation
+                                            (CBE)</ng-option>
+                                        <ng-option value="Call Back Later (CBL)">Call Back Later (CBL)</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="
+                                    call_response.invalid && (call_response.dirty || call_response.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="call_response.errors?.['required']">
+                                            Call Response is required.
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <br>
+
+                                <div>
+                                    <span class="font-bold"><b>Prospective Percentage(%)</b><span
+                                            class="ms-1 text-red">*</span></span>
+                                    <ng-select style=" width: 455px;" formControlName="prosperctive_percentage"
+                                        [class.is-invalid]="
+                                        prosperctive_percentage.invalid && (prosperctive_percentage.dirty || prosperctive_percentage.touched)"
+                                        [ngClass]="{'invalid-border': prosperctive_percentage.invalid && prosperctive_percentage.touched}"
+                                         class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        >
+                                         <ng-option value="" disabled selected></ng-option> 
+                                       <ng-option value="Select Percentage">--Select Percentage--</ng-option>
+                                        <ng-option value="25">25</ng-option>
+                                        <ng-option value="50">50</ng-option>
+                                        <ng-option value="60">60</ng-option>
+                                        <ng-option value="75">75</ng-option>
+                                        <ng-option value="80">80</ng-option>
+                                        <ng-option value="100">100</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="
+                                    prosperctive_percentage.invalid && (prosperctive_percentage.dirty || prosperctive_percentage.touched)
+                                          " class="invalid-feedback">
+                                        <div *ngIf="prosperctive_percentage.errors?.['required']">
+                                            Prospective Percentage is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Product Name</b><span
+                                            class="ms-1 text-red"></span></span>
+
+                                    <ng-select style=" width: 455px;" formControlName="product_name" [class.is-invalid]="
+                                    product_name.invalid && (product_name.dirty || product_name.touched)"
+                                        [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}"
+                                        [items]="product_list"  (change)="productname()"
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        bindLabel="product_name" bindValue="product_gid"
+                                        ></ng-select>
+                                    <div *ngIf="
+                                    product_name.invalid && (product_name.dirty || product_name.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="product_name.errors?.['required']">
+                                            Product Name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Product Group</b><span
+                                            class="ms-1 text-red"></span></span>
+
+                                    <ng-select style=" width: 455px;" formControlName="productgroup_name"
+                                        [class.is-invalid]="
+                                    productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)"
+                                        [ngClass]="{'invalid-border': productgroup_name.invalid && productgroup_name.touched}"
+                                        [items]="product_group_list" 
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        bindLabel="productgroup_name" bindValue="productgroup_gid"
+                                        ></ng-select>
+                                    <div *ngIf="
+                                    productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="productgroup_name.errors?.['required']">
+                                            Product Group is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label"><b>Call
+                                            Feedback</b></label>
+                                    <textarea style="resize: none;" class="form-control" formControlName="call_feedback" pattern="^(?!\s*$).+"
+                                        id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center my-4">
+                                <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                                                            'primary-button': !reactiveForm.invalid,
+                                                            'secondary-button': reactiveForm.invalid
+                                                             }" data-bs-dismiss="modal">
+                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update Activity
+                                </button> &nbsp;&nbsp;
+                                <button (click)="onclose()" class="btn-danger btn-sm text-white me-4"
+                                    data-bs-dismiss="modal">
+                                    <i class="fas fa-close text-white"></i> &nbsp;Cancel
+                                </button>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </tab>
+        <tab heading="New/Pending Calls">
+
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl  p-3 mb-5 bg-white rounded">
+                    <table id="new_pending_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Team </th>
+                                <th>Customer Name</th>
+                                <th>Contact Details</th>
+                                <th>Region/Source</th>
+                                <th>Remarks</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of new_pending_list; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.campaign_title}}</td>
+                                <td>{{data.leadbank_name}}</td>
+                                <td>{{data.contact_details}}</td>
+                                <td>{{data.regionname}}</td>
+                                <td>{{data.remarks}}</td>
+                                <td class="text-center text-nowrap">
+                                    <button (click)="openModal2(data.leadbank_gid)" title="Log" data-bs-toggle="modal"
+                                        type="button" data-bs-target="#mylog2"
+                                        class="btn btn-icon btn-sm bg-success me-2"><span
+                                            class="fa fa-phone text-white  fs-6"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <form [formGroup]="reactiveForm" #form="ngForm">
+                <div class="modal" id="mylog2" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            
+                            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                                    class="fa fa-phone text-white  fs-6"></i> &nbsp;&nbsp;Log
+                                </h2>
+                            </div>
+                            
+                            <!-- Modal body -->
+                            <div class="modal-body ">
+                                <div class="row"><span class="font-bold"><b> Dialed Number</b><span
+                                    class="ms-1 text-red">*</span></span>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                <input formControlName="dialed_number" type="text" class="
+                                             form-control form-control-lg form-control-solid
+                                             custom-input
+                                             mb-3 mb-lg-0
+                                             bg-white
+                                             custom-input
+                                           " [ngStyle]="{
+                                             'border-color':
+                                             dialed_number.invalid && dialed_number.touched
+                                                 ? 'red'
+                                                 : 'rgb(209, 209, 209)'
+                                           }"  required maxlength="10" pattern="^[0-9]{10}$"
+                                    name="dialed_number" required />
+                            </div>
+                        </div>
+                        <div *ngIf="dialed_number.invalid && (dialed_number.dirty || dialed_number.touched)">
+                            <div *ngIf="dialed_number.errors?.['required']">
+                                <span style="color:red;">Dialed Number is required.</span>
+                            </div>
+                        </div>
+                        <br>
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Call Response</b> <span
+                                            class="ms-1 text-red">*</span></span>
+                                    <ng-select style=" width: 455px;" formControlName="call_response"
+                                        [class.is-invalid]="
+                                    call_response.invalid && (call_response.dirty || call_response.touched)"
+                                        [ngClass]="{'invalid-border': call_response.invalid && call_response.touched}"
+                                        required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        >
+                                        <ng-option value="Select Response">--Select Response--</ng-option>
+                                        <ng-option value="Ringing Not Response (RNR)">Ringing Not Response(RNR)</ng-option>
+                                        <ng-option value="No Answer">No Answer</ng-option>
+                                        <ng-option value="Switched Off">Switched Off</ng-option>
+                                        <ng-option value="Number Does Not Exists">Number Does Not Exists</ng-option>
+                                        <ng-option value="Not Interested">Not Interested</ng-option>
+                                        <ng-option value="Wrong Number">Wrong Number</ng-option>
+                                        <ng-option value="Busy Tone">Busy Tone</ng-option>
+                                        <ng-option value="Appointment(Meeting)">Appointment(Meeting)</ng-option>
+                                        <ng-option value="Call Back After Explanation (CBE)">Call Back After Explanation
+                                            (CBE)</ng-option>
+                                        <ng-option value="Call Back Later (CBL)">Call Back Later (CBL)</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="
+                                    call_response.invalid && (call_response.dirty || call_response.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="call_response.errors?.['required']">
+                                            Call Response is required.
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                                      <div>
+                                    <div class="d-flex flex-row m-6 flex-wrap"></div>
+                                    <span class="font-bold"><b>Prospective Percentage(%)</b><span
+                                            class="ms-1 text-red">*</span></span>
+                                    <ng-select style=" width: 455px;" formControlName="prosperctive_percentage"
+                                        [class.is-invalid]="
+                                        prosperctive_percentage.invalid && (prosperctive_percentage.dirty || prosperctive_percentage.touched)"
+                                        [ngClass]="{'invalid-border': prosperctive_percentage.invalid && prosperctive_percentage.touched}"
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        >
+                                        <!-- <ng-option value="" disabled selected></ng-option> -->
+                                        <ng-option value="Select Percentage">--Select Percentage--</ng-option>
+                                        <ng-option value="25">25</ng-option>
+                                        <ng-option value="50">50</ng-option>
+                                        <ng-option value="60">60</ng-option>
+                                        <ng-option value="75">75</ng-option>
+                                        <ng-option value="80">80</ng-option>
+                                        <ng-option value="100">100</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="
+                                    prosperctive_percentage.invalid && (prosperctive_percentage.dirty || prosperctive_percentage.touched)
+                                          " class="invalid-feedback">
+                                        <div *ngIf="prosperctive_percentage.errors?.['required']">
+                                            Prospective Percentage is required.
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Product Name</b><span
+                                            class="ms-1 text-red"></span></span>
+
+                                    <ng-select style=" width: 455px;" formControlName="product_name" [class.is-invalid]="
+                                    product_name.invalid && (product_name.dirty || product_name.touched)"
+                                        [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}"
+                                        [items]="product_list"  (change)="productname()"
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        bindLabel="product_name" bindValue="product_gid"
+                                        ></ng-select>
+                                    <div *ngIf="
+                                    product_name.invalid && (product_name.dirty || product_name.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="product_name.errors?.['required']">
+                                            Product Name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Product Group</b><span
+                                            class="ms-1 text-red"></span></span>
+
+                                    <ng-select style=" width: 455px;" formControlName="productgroup_name"
+                                        [class.is-invalid]="
+                                    productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)"
+                                        [ngClass]="{'invalid-border': productgroup_name.invalid && productgroup_name.touched}"
+                                        [items]="product_group_list" 
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        bindLabel="productgroup_name" bindValue="productgroup_gid"
+                                        ></ng-select>
+                                    <div *ngIf="
+                                    productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="productgroup_name.errors?.['required']">
+                                            Product Group is required.
+                                        </div>
+                                    </div>
+                                </div>
+                           
+                                <br>
+
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label"><b>Call
+                                            Feedback</b></label>
+                                    <textarea style="resize: none;"class="form-control" style="resize: none;"formControlName="call_feedback" pattern="^(?!\s*$).+"
+                                         id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center my-4">
+                                <button (click)="onsubmit2()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                                                            'primary-button': !reactiveForm.invalid,
+                                                            'secondary-button': reactiveForm.invalid
+                                                             }" data-bs-dismiss="modal">
+                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update Activity
+                                </button> &nbsp;&nbsp;
+                                <button (click)="onclose()" class="btn-danger btn-sm text-white me-4"
+                                    data-bs-dismiss="modal">
+                                    <i class="fas fa-close text-white"></i> &nbsp;Cancel
+                                </button>
+                            </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+            </form>
+        </tab>
+        <tab heading="FollowUp">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="followup_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Team </th>
+                                <th>Customer Name</th>
+                                <th>Contact Details</th>
+                                <th>Region/Source</th>
+                                <!-- <th>Details</th> -->
+                                <th>Remarks</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of followup_list; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.campaign_title}}</td>
+                                <td>{{data.leadbank_name}}</td>
+                                <td>{{data.contact_details}}</td>
+                                <td>{{data.regionname}}</td>
+                                <!-- <td>{{data.details}}</td> -->
+                                <td>{{data.remarks}}</td>
+                                <td class="text-center text-nowrap">
+                                    <button (click)="openModal3(data.leadbank_gid,data.lead2campaign_gid)"
+                                        title="Schedule" data-bs-toggle="modal" type="button"
+                                        data-bs-target="#myschedule" class="btn btn-icon btn-sm bg-dark  me-2"><span
+                                            class="fa fa-calendar text-white  fs-6" ></span>
+                                    </button>
+                                    <button (click)="openModal4(data.leadbank_gid)" title="Log" data-bs-toggle="modal"
+                                        type="button" data-bs-target="#mylog3"
+                                        class="btn btn-icon btn-sm bg-success me-2"><span
+                                            class="fa fa-phone text-white  fs-6"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <form [formGroup]="reactiveForm" #form="ngForm">
+                <div class="modal" id="mylog3" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+
+                            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                                        class="fas fa-phone fw-bolder fs-3"></i> &nbsp;&nbsp;Log
+                                </h2>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row"><span class="font-bold"><b>Dialed Number</b><span
+                                            class="ms-1 text-red">*</span></span>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                        <input formControlName="dialed_number" type="text" class="
+                                                     form-control form-control-lg form-control-solid
+                                                     custom-input
+                                                     mb-3 mb-lg-0
+                                                     bg-white
+                                                     custom-input
+                                                   " [ngStyle]="{
+                                                     'border-color':
+                                                     dialed_number.invalid && dialed_number.touched
+                                                         ? 'red'
+                                                         : 'rgb(209, 209, 209)'
+                                                   }"  required maxlength="10" pattern="^[0-9]{10}$"
+                                            name="dialed_number" required />
+                                    </div>
+                                </div>
+                                <div *ngIf="dialed_number.invalid && (dialed_number.dirty || dialed_number.touched)">
+                                    <div *ngIf="dialed_number.errors?.['required']">
+                                        <span style="color:red;">Dialed Number is required.</span>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Call Response</b> <span
+                                            class="ms-1 text-red">*</span></span>
+                                    <ng-select style=" width: 455px;" formControlName="call_response" 
+                                        [class.is-invalid]="
+                                    call_response.invalid && (call_response.dirty || call_response.touched)"
+                                        [ngClass]="{'invalid-border': call_response.invalid && call_response.touched}"
+                                        required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        >
+                                        <ng-option value="Select Response">--Select Response--</ng-option>
+                                        <ng-option value="Ringing Not Response (RNR)">Ringing Not Response
+                                            (RNR)</ng-option>
+                                        <ng-option value="Not Reachable">Not Reachable</ng-option>
+                                        <ng-option value="Switched Off">Switched Off</ng-option>
+                                        <ng-option value="Number Does Not Exists">Number Does Not Exists</ng-option>
+                                        <ng-option value="Not Interested">Not Interested</ng-option>
+                                        <ng-option value="Wrong Number">Wrong Number</ng-option>
+                                        <ng-option value="Busy Tone">Busy Tone</ng-option>
+                                        <ng-option value="Appointment(Meeting)">Appointment(Meeting)</ng-option>
+                                        <ng-option value="Call Back After Explanation (CBE)">Call Back After Explanation
+                                            (CBE)</ng-option>
+                                        <ng-option value="Call Back Later (CBL)">Call Back Later (CBL)</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="
+                                    call_response.invalid && (call_response.dirty || call_response.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="call_response.errors?.['required']">
+                                            Call Response is required.
+                                        </div>
+                                    </div>
+                                    <!-- <div *ngIf="call_response.invalid && (call_response.dirty || call_response.touched)">
+                                        <div *ngIf="call_response.errors?.['pattern']">
+                                          <span style="color:red;">Invalid Format.</span>
+                                        </div>
+                                      </div> -->
+                                    
+
+                                </div>
+                                <br>
+
+                                <div>
+                                    <span class="font-bold"><b>Prospective Percentage(%)</b><span
+                                            class="ms-1 text-red">*</span></span>
+                                    <ng-select style=" width: 455px;" formControlName="prosperctive_percentage"
+                                        [class.is-invalid]="
+                                        prosperctive_percentage.invalid && (prosperctive_percentage.dirty || prosperctive_percentage.touched)"
+                                        [ngClass]="{'invalid-border': prosperctive_percentage.invalid && prosperctive_percentage.touched}"
+                                         class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        >
+                                        <!-- <ng-option value="" disabled selected></ng-option> -->
+                                        <ng-option value="Select Percentage">--Select Percentage--</ng-option>
+                                        <ng-option value="25">25</ng-option>
+                                        <ng-option value="50">50</ng-option>
+                                        <ng-option value="60">60</ng-option>
+                                        <ng-option value="75">75</ng-option>
+                                        <ng-option value="80">80</ng-option>
+                                        <ng-option value="100">100</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="
+                                    prosperctive_percentage.invalid && (prosperctive_percentage.dirty || prosperctive_percentage.touched)
+                                          " class="invalid-feedback">
+                                        <div *ngIf="prosperctive_percentage.errors?.['required']">
+                                            Prospective Percentage is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Product Name</b><span
+                                            class="ms-1 text-red"></span></span>
+
+                                    <ng-select style=" width: 455px;" formControlName="product_name" [class.is-invalid]="
+                                    product_name.invalid && (product_name.dirty || product_name.touched)"
+                                        [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}"
+                                        [items]="product_list" (change)="productname()"
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        bindLabel="product_name" bindValue="product_gid"
+                                        ></ng-select>
+                                    <div *ngIf="
+                                    product_name.invalid && (product_name.dirty || product_name.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="product_name.errors?.['required']">
+                                            Product Name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Product Group</b><span
+                                            class="ms-1 text-red"></span></span>
+
+                                    <ng-select style=" width: 455px;" formControlName="productgroup_name"
+                                        [class.is-invalid]="
+                                    productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)"
+                                        [ngClass]="{'invalid-border': productgroup_name.invalid && productgroup_name.touched}"
+                                        [items]="product_group_list" 
+                                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                        bindLabel="productgroup_name" bindValue="productgroup_gid"
+                                        ></ng-select>
+                                    <div *ngIf="
+                                    productgroup_name.invalid && (productgroup_name.dirty || productgroup_name.touched)
+                                      " class="invalid-feedback">
+                                        <div *ngIf="productgroup_name.errors?.['required']">
+                                            Product Group is required.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label"><b>Call
+                                            Feedback</b></label>
+                                    <textarea style="resize: none;" class="form-control" formControlName="call_feedback" pattern="^(?!\s*$).+"
+                                         id="exampleFormControlTextarea1"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center my-4">
+                                <button (click)="onsubmit3()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                                                            'primary-button': !reactiveForm.invalid,
+                                                            'secondary-button': reactiveForm.invalid
+                                                             }" data-bs-dismiss="modal">
+                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update Activity
+                                </button> &nbsp;&nbsp;
+                                <button (click)="onclose()" class="btn-danger btn-sm text-white me-4"
+                                    data-bs-dismiss="modal">
+                                    <i class="fas fa-close text-white"></i> &nbsp;Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form [formGroup]="reactiveFormfollow" #form="ngForm">
+                <div class="modal" id="myschedule" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+
+                            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                                    class="fa fa-calendar text-white "></i> &nbsp;&nbsp;Schedule
+                                </h2>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row"><span class="font-bold"><b>Schedule Date</b><span
+                                            class="ms-1 text-red">*</span></span>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                        <input formControlName="schedule_date" type="date" class="
+                                                     form-control form-control-lg form-control-solid
+                                                     custom-input
+                                                     mb-3 mb-lg-0
+                                                     bg-white
+                                                     custom-input
+                                                   " [ngStyle]="{
+                                                     'border-color':
+                                                     schedule_date.invalid && schedule_date.touched
+                                                         ? 'red'
+                                                         : 'rgb(209, 209, 209)'
+                                                   }"  pattern="^(?!\s*$).+"
+                                            name="schedule_date" required />
+                                    </div>
+                                </div>
+                                <div *ngIf="schedule_date.invalid && (schedule_date.dirty || schedule_date.touched)">
+                                    <div *ngIf="schedule_date.errors?.['required']">
+                                        <span style="color:red;">Schedule Date is required.</span>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row"><span class="font-bold"><b>Schedule Time</b><span
+                                            class="ms-1 text-red">*</span></span>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                        <input formControlName="schedule_time" type="time" class="
+                                             form-control form-control-lg form-control-solid
+                                             custom-input
+                                             mb-3 mb-lg-0
+                                             bg-white
+                                             custom-input
+                                           " [ngStyle]="{
+                                             'border-color':
+                                             schedule_time.invalid && schedule_time.touched
+                                                 ? 'red'
+                                                 : 'rgb(209, 209, 209)'
+                                           }"  pattern="^(?!\s*$).+"
+                                            name="schedule_time" required />
+                                    </div>
+                                </div>
+                                <div *ngIf="schedule_time.invalid && (schedule_time.dirty || schedule_time.touched)">
+                                    <div *ngIf="schedule_time.errors?.['required']">
+                                        <span style="color:red;">Schedule Time is required.</span>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                    <span class="font-bold"><b>Schedule Type</b></span>
+                                    <div class="d-flex justify-content-start mt-4 ms-2">
+                                        <!--begin::Check-->
+                                        <div class="
+                                          form-check
+                                          form-check-custom
+                                          form-check-primary
+                                          form-check-solid
+                                          form-check-sm
+                                        ">
+                                            <input class="form-check-input" type="radio" name="schedule_type"
+                                                checked="checked" formControlName="schedule_type" value="Meeting" />
+                                            <!--begin::Label-->
+                                            <label class="form-check-label text-gray-700 text-nowrap"
+                                                for="kt_builder_header_content_menu">Meeting</label>
+                                            <!--end::Label-->
+                                        </div>
+                                        <!--end::Check-->
+                                        <!--begin::Check-->
+                                        <div class="
+                                          form-check
+                                          form-check-custom
+                                          form-check-primary
+                                          form-check-solid
+                                          form-check-sm
+                                          ms-10
+                                        ">
+                                            <input class="form-check-input" type="radio" name="schedule_type"
+                                                formControlName="schedule_type" value="Call" />
+                                            <!--begin::Label-->
+                                            <label class="form-check-label text-gray-700 text-nowrap"
+                                                for="kt_builder_header_content_page-title">Call</label>
+                                            <!--end::Label-->
+                                        </div>
+                                        <!--end::Check-->
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label"><b>Schedule
+                                            Remarks</b></label>
+                                    <textarea  style="resize: none;" class="form-control" formControlName="schedule_remarks"
+                                        pattern="^(?!\s*$).+" 
+                                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <br>
+
+                                <div class="text-center my-4">
+                                    <button (click)="schedule()" [disabled]="reactiveFormfollow.invalid" [ngClass]="{
+                                                                'primary-button': !reactiveFormfollow.invalid,
+                                                                'secondary-button': reactiveFormfollow.invalid
+                                                                 }" data-bs-dismiss="modal">
+                                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Schedule
+                                    </button> &nbsp;&nbsp;
+                                    <button (click)="onclose()" class="btn-danger btn-sm text-white me-4"
+                                        data-bs-dismiss="modal">
+                                        <i class="fas fa-close text-white"></i> &nbsp;Cancel
+                                    </button>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </tab>
+        <tab heading="Prospect">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="closed_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Team </th>
+                                <th>Customer Name</th>
+                                <th>Contact Details</th>
+                                <th>Region/Source</th>
+                                <th>Lead Notes</th>
+                                <th>Schedule Type</th>
+                                <th>Schedule Date</th>
+                                <!-- <th>Schedule Remarks</th> -->
+                                <!-- <th class="text-center">Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of closed_list; let i=index;">
+                                <td>{{i+1}}</td> 
+                                <td>{{data.campaign_title}}</td> 
+                                <td>{{data.leadbank_name}}</td>
+                                <td>{{data.contact_details}}</td>
+                                <td>{{data.regionname}}</td>
+                                <td>{{data.lead_notes}}</td>
+                                <td>{{data.schedule_type}}</td>
+                                <td>{{data.schedule}}</td>
+                                <!-- <td>{{data.schedule_remarks}}</td> -->
+                                <!-- <td class="text-center text-nowrap">
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+        <tab heading="Drop">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="drop_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Team </th>
+                                <th>Customer Name</th>
+                                <th>Contact Details</th>
+                                <th>Region/Source</th>
+                                <th>Drop Stage</th>
+                                <th>Lead Notes</th>
+                                <!-- <th class="text-center">Action</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of drop_list; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.campaign_title}}</td> 
+                                <td>{{data.leadbank_name}}</td>
+                                <td>{{data.contact_details}}</td>
+                                <td>{{data.regionname}}</td>
+                                <td>{{data.lead_base}}</td>
+                                <td>{{data.lead_notes}}</td>
+                                <!-- <td class="text-center text-nowrap"> -->
+                                <!-- </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>

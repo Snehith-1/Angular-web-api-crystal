@@ -1,0 +1,355 @@
+<div class="card " style="border: 1px solid rgb(185, 184, 184);">
+
+    <div class="card-header bg-skyblue">
+        <h3 class="card-title " style="color: white;"><i class="fas fa-comments"
+                style="color: rgb(255, 255, 255); font-size: 24px;"></i>
+
+            &nbsp;Live Chats </h3>
+    </div>
+    <div id="kt_app_content" class="app-content flex-column-fluid" style="max-height: 400px;">
+        <div id="kt_app_content_container" class="app-container container-xxl"
+            style="margin-top: -30px;padding-right:0px !important">
+            <div class="d-flex flex-column flex-lg-row">
+                <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
+                    <!---contact card header---->
+                    <div class="card card-flush bg-white" style="min-height: 400px; margin-left:-30px;">
+                        <div class="card-header pt-7" id="kt_chat_contacts_header">
+                            <form class="w-100 position-relative " autocomplete="off">
+                                <input type="text" class="form-control form-control-solid px-13" name="search"
+                                    [(ngModel)]="searchText" placeholder="Search by username or number" />
+
+                            </form>
+                        </div>
+                        <div class="card-body pt-5" id="kt_chat_contacts_body"
+                            style="max-height: 290px; overflow-y: auto;">
+                            <div class="me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_toolbar, #kt_app_toolbar, #kt_footer, #kt_app_footer, #kt_chat_contacts_header"
+                                data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_contacts_body"
+                                data-kt-scroll-offset="5px">
+                                <!-- contact card body -->
+
+                                <div *ngFor="let data of listof_chat; let i=index;"
+                                    (click)="showResponsiveOutput(data.chat_id)"
+                                    [hidden]="!matchesSearch(data)">
+                                    <!-- Update the matchesSearch function to filter the displayed items    -->
+                                    <div class="d-flex flex-stack py-4 nassar">
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px symbol-circle bg-secondary">
+                                                <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                                    data.first_letter}}</span>
+                                            </div>
+                                            <div class="ms-5">
+                                                <a class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{
+                                                    data.user_name}}</a>
+                                                <div class="fw-semibold text-muted">{{ data.user_mail}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-end ms-2">
+                                            <span
+                                                class="text-muted fs-7 mb-1">{{data.chatted_at}}&nbsp;&nbsp;{{data.chatted_time}}</span>
+                                            <!-- <span class="text-muted fs-7 mb-1">{{data.chatted_at}}</span> -->
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed d-none"></div>
+                                </div>
+                                <!-- *******************-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Default Window-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5 d-flex align-items-center justify-content-center"
+                    *ngIf="chatWindow==='Default'">
+                    <div>
+                        <h3>Kindly select a chat to display messages</h3>
+                    </div>
+                </div>
+                <!--Chat Window-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5" *ngIf="chatWindow==='Chat'">
+                    <!----message card header-->
+                    <div class="card bg-secondary" id="kt_chat_messenger"
+                        style="max-height: 360px; min-height: 400px;margin-left: -10px;">
+                        <div class="card-header row" id="kt_chat_messenger_header">
+
+
+                            <div class=" col card-title">
+                                <div class="symbol symbol-35px symbol-circle bg-white">
+                                    <span
+                                        class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{first_letter}}</span>
+                                </div>
+
+                                <div class="text-nowrap">
+                                    <div class="d-flex justify-content-center flex-column me-3">
+                                        <a href="#" class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1"
+                                            style="margin-left: 10px;">{{user_name}}</a>
+                                        <!-- <div class="mb-0 lh-1">
+                                            <span class="badge badge-success badge-circle w-10px h-10px me-1"
+                                                style="margin-left: 15px;"></span>
+                                            <span class="fs-7 fw-semibold text-muted"
+                                                style="margin-left: 5px;">Active</span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="float-end">
+                                    <button class="head-menu-item-btn m-5" (click)="getfulluserdetails(user_id)"
+                                        title="option">
+                                        <i class="fas fa-info-circle fs-2"></i>
+                                    </button>
+                                    <button class="head-menu-item-btn m-5" (click)="getchatreferesh(chat_id)"
+                                        title="Refresh">
+                                        <i class="fas fa-sync-alt fs-2"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Message card body-->
+
+                        <div class="card-body bg-message" id="kt_chat_messenger_body"
+                            style=" max-height: 300px; overflow-y: auto;">
+                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                id="kt_chat_messenger_body" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                data-kt-scroll-offset="5px">
+
+                                <div *ngFor="let data of viewchat_list; let i=index;">
+
+                                    <div *ngIf="data.user_id == data.author_id"
+                                        class="d-flex justify-content-start mb-10">
+
+                                        <div class="d-flex flex-column align-items-start"
+                                            *ngIf="data.user_id == data.author_id && data.event_type == 'message'">
+                                            <span class="text-muted fs-7 mb-1">{{data.chatted_at}}</span>
+                                            <div class="p-5 rounded bg-white text-BLACK fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text" [innerHTML]="data.message"></div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-start"
+                                            *ngIf="data.event_type == 'file'">
+                                            <span class="text-muted fs-7 mb-1">{{data.chatted_at}}</span>
+                                            <img src="{{data.message}}" alt="" style="width:100px;height:150px;"
+                                                *ngIf="data.ext == 'Image'">
+                                            <video controls style="width:100px;height:150px;"
+                                                *ngIf="data.ext == 'Video'">
+                                                <source src="{{data.message}}">
+                                            </video>
+                                            <div *ngIf="data.ext === 'Document'"
+                                                class="p-5 rounded bg-white text-BLACK fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text">
+                                                <a href="{{data.message}}" download>
+                                                    <span class="material-icons">description</span>
+                                                    <!-- Add an icon before the text -->
+                                                    Document--{{data.image_name}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="data.author_id == data.agent_id"
+                                        class="d-flex justify-content-end mb-10">
+                                        <div  *ngIf="data.author_id == data.agent_id  && data.event_type != 'file'" class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.chatted_at}}</span>
+                                            <div class="p-5 rounded bg-lightgreen text-white fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text" [innerHTML]="data.message"> </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-start"
+                                            *ngIf="data.event_type == 'file'">
+                                            <span class="text-muted fs-7 mb-1">{{data.chatted_at}}</span>
+                                            <img src="{{data.message}}" alt="" style="width:100px;height:150px;"
+                                            *ngIf="data.ext == 'Image'">
+                                            <video controls style="width:100px;height:150px;"
+                                                *ngIf="data.ext == 'Video'">
+                                                <source src="{{data.message}}">
+                                            </video>
+                                            <div *ngIf="data.ext === 'Document'"
+                                                class="p-5 rounded bg-white text-BLACK fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text">
+                                                <a href="{{data.message}}" download>
+                                                    <span class="material-icons">description</span>
+                                                    Document--{{data.image_name}}
+                                                </a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div *ngIf="data.event_type == 'system_message'">
+
+                                        <div
+                                            class="flex-lg-row-fluid ms-lg-7 ms-xl-5 d-flex align-items-center justify-content-center">
+                                            <div>
+                                                <h6>----------------------{{data.chatted_at}}----------------------</h6>
+                                                <h6 [innerHTML]="data.message"></h6>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <form [formGroup]="reactiveMessageForm" (ngSubmit)="onSubmit()" #form="ngForm" >
+                            <div class="card-footer pt-4" id="kt_chat_messenger_footer" style="padding: 0;">
+                                <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                    <div *ngFor="let data of listof_chat; let i=index;">
+                                        <input type="hidden" [formControlName]="'chat_id'"
+                                            [value]="data.chat_id" />
+                                    </div>
+                                    <div>
+                                        <button type="button" title="Upload" class="btn btn-icon btn-sm btn-attach me-2"
+                                            data-bs-toggle="modal" data-bs-target="#myModalUpdatedocument"
+                                           > <i
+                                                class="fas fa-paperclip fw-bolder fs-3"></i></button>
+                                    </div>
+                                    <input formControlName="sendtext" type="text" style="width:80%;" class="
+                                    form-control form-control-lg form-control-solid
+                                    custom-input
+                                    mb-1 mb-lg-0
+                                    bg-white
+                                    custom-input
+                                  " placeholder="Type a message" name="sendtext" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div *ngFor="let data of listof_chat; let i=index;">
+                                        <button title="Send" type="button" class="btn btn-icon btn-sm bg-skyblue me-2"
+                                            (click)="onMessagesent(chat_id)" *ngIf="i === 0">
+                                            <i class="fas fa-paper-plane fs-3"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!--ABOUT Window-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5" *ngIf="chatWindow==='About'">
+                    <div class="card bg-secondary" id="kt_chat_messenger"
+                        style="max-height: 360px; min-height: 400px;margin-left: -10px;">
+                        <div class="card-header row" id="kt_chat_messenger_header" style="overflow:auto;">
+                            <div class=" col card-title">
+                                <div class="text-nowrap">
+                                    <div class="d-flex justify-content-center flex-column me-3">
+                                        <a href="#" class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1"
+                                            style="margin-left: 10px;"><b>About</b></a>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button class="head-menu-item-btn float-end m-5" (click)="backtochat()" title="back">
+                                    <i class="fa-solid fa-chevron-left fs-1"></i>
+                                </button>
+                            </div>
+                            <h1>General Info</h1>
+                            <div class="text-nowrap">
+                                <div class=" col card-title">
+                                    <div class="symbol symbol-35px symbol-circle bg-white">
+                                        <span class="symbol-label  text-danger fs-6 fw-bolder">{{
+                                            first_letter}}</span>
+                                    </div>
+
+                                    <div class="text-nowrap">
+                                        <div class="d-flex justify-content-center flex-column me-3">
+                                            <a href="#"
+                                                class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1"
+                                                style="margin-left: 10px;">{{user_name}}</a>
+                                            <div class="fw-semibold text-muted" style="margin-left: 10px;">{{user_mail}}
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col card-title">
+                                    <i class="fas fa-clock" style="font-size: 1em;margin-left: 7px;"></i>
+                                    <h5 style="margin-left: 15px;">{{created_date}}</h5>
+                                </div>
+                                <div class="col card-title">
+
+                                    <i class="fas fa-location-dot" style="font-size: 1em;margin-left: 8px;"></i>
+                                    <h5 style="margin-left: 15px;">{{location}}</h5>
+                                </div>
+                            </div>
+                            <!-- <h1>Chat info</h1>
+                            <div class="text-nowrap">
+
+                                <div class="col card-title">
+
+                                    <i class="fas fa-globe" style="font-size: 1em;margin-left: 7px;"></i>
+                                    <h5 style="margin-left: 15px;">{{ip_address}}</h5>
+                                </div>
+                                <div class="col card-title">
+                                    <i class="fas fa-user" style="font-size: 1em;margin-left: 8px;"></i>
+                                    <h5 style="margin-left: 15px;">{{user_agent}}</h5>
+                                </div>
+                            </div> -->
+                            <h1>Technology</h1>
+                            <div class="text-nowrap">
+
+                                <div class="col card-title">
+
+                                    <i class="fas fa-globe" style="font-size: 1em;margin-left: 7px;"></i>
+                                    <h5 style="margin-left: 15px;">{{ip_address}}</h5>
+                                </div>
+                                <div class="col card-title">
+                                    <i class="fas fa-user" style="font-size: 1em;margin-left: 8px;"></i>
+                                    <h5 style="margin-left: 15px;">{{user_agent}}</h5>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--center nav -->
+        </div>
+    </div>
+
+    <form [formGroup]="reactiveForm" #form="ngForm">
+        <div class="modal" id="myModalUpdatedocument" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+
+                    <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                        <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                                class="fa-solid fa-file fs-default-icon"></i> &nbsp;&nbsp;Upload Document</h2>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                            <span class="font-bold"><b>Upload Document</b><span class="ms-1 text-red">*</span></span>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input style="width: 300%;" (change)="onChange1($event)" type="file" #fileInput class="
+                              form-control form-control-lg form-control-solid bg-white
+                              mb-3 mb-lg-0  borderc-secondary custom-input
+                            " name="fName" />
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center my-4">
+                            <button type="submit" title="Send" class="btn-success btn-sm text-white me-2"
+                                data-bs-dismiss="modal" (click)="onupload(chat_id)">
+                                <i class="fas fa-paper-plane fs-3"></i>&nbsp;&nbsp;Send1</button>
+
+                            <button class="btn-danger btn-sm text-white me-2" (click)="onclose()"
+                                data-bs-dismiss="modal">
+                                <i class="fas fa-close text-white"></i> &nbsp;Close
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

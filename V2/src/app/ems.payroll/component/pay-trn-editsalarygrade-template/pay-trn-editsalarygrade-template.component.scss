@@ -1,0 +1,8 @@
+.btn-success:hover {
+    background-color: #42ac72 !important;
+}
+
+.btn-success:disabled {
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
+}

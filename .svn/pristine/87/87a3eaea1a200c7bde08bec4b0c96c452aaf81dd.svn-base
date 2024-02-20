@@ -1,0 +1,99 @@
+<main>
+<div  *ngFor="let data of facebookuser_list; let i=index;">
+  <header>
+    <div class="tb">
+      <div class="td" id="logo">
+        <a><i class="fab fa-facebook-square"></i></a>
+      </div>
+
+      <div class="td" id="i-links"  >
+        <div class="tb">
+          <div class="row">
+            <span> <img id="p-link" src={{data.profile_picture}}></span>
+          </div>
+          <span class="td" id="f-name-l">{{data.user_name}}</span>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div id="profile-upper">
+    <div id="profile-banner-image">
+      <img src="" alt="Banner image">
+    </div>
+    <div id="profile-d">
+      <div id="profile-pic">
+        <img src={{data.profile_picture}}>
+
+      </div>
+      <div id="u-name">{{data.user_name}}
+        <button class="btn btn-sm text-white me-4" routerLink="/crm/CrmSmmFacebookPage"
+          style="margin-left:100px;background-color:#385591;">
+          Facebook Page</button>
+        <br>
+        <span><b style="font-size: 16px;color:black;">Friends Count</b> <span style="font-size: 14px;color:blue">&nbsp;
+            {{data.friends_count}}</span></span>
+
+
+      </div>
+
+
+    </div>
+    <div id="black-grd"></div>
+  </div>
+  <br> <br>
+  <tabset style="align-items:center;">
+    <tab heading="Abous Us" style="background-color:white;">
+      <div class="cnt-label">
+        <i style="margin-left: 20px;" class="l-i" id="l-i-i"></i>
+        <span>Intro</span>
+        <br>
+        <span><b style="font-size:18px;margin-left: 20px;">Name :</b> {{data.user_name}}</span>
+        <br>
+        <span><b style="font-size:18px;margin-left: 20px;">Gender :</b>{{data.gender}}</span>
+        <br>
+        <span><b style="font-size:18px;margin-left: 20px;">Email :</b>{{data.email}}</span>
+        <br>
+        <span><b style="font-size:18px;margin-left: 20px;">Home Town :</b>{{data.hometown_name}}</span>
+        <br>
+        <span><b style="font-size:18px;margin-left: 20px;">Present Location :</b>{{data.currentlocation_name}}</span>
+        <br><br><br>
+        <div class="lb-action"></div>
+      </div>
+    </tab>
+
+    <tab heading="Post Image" style="background-color:white;">
+      <br> <br>
+      <div class="image-gallery">
+
+        <div class="image" *ngFor="let imageurl of posts">
+
+          <img [src]="imageurl.full_picture" alt="Image">
+
+        </div>
+
+      </div>
+
+    </tab>
+    <tab heading="Post Video" style="background-color:white;">
+      <div class="video-gallery">
+
+        <div class="video-item" *ngFor="let videourl of videos">
+
+          <video controls>
+
+            <source [src]="videourl.source" type="video/mp4">
+
+
+          </video>
+
+
+        </div>
+
+      </div>
+
+    </tab>
+  </tabset>
+
+</div>
+
+</main>

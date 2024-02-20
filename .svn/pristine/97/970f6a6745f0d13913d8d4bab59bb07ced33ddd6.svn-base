@@ -1,0 +1,21 @@
+.table-responsive {
+    th,  td{
+       font-size: 12.7px ;
+    }
+
+}
+
+.bg-etdark{
+    background-color: #009688 !important;
+  }
+  
+  .btn-etdark:hover {
+    background-color: #00776b !important;  
+  }
+
+  .bg-stssuccess{
+    background-color: #4caf50 !important;
+  }
+  .btn-stssuccess:hover {
+    background-color: #419444 !important;
+  }

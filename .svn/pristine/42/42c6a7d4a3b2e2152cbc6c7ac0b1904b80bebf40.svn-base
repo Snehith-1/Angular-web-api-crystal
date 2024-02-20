@@ -1,0 +1,196 @@
+import { Component, } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+
+@Component({
+  selector: 'app-smr-rpt-quotationreport',
+  templateUrl: './smr-rpt-quotationreport.component.html',
+  styleUrls: ['./smr-rpt-quotationreport.component.scss']
+})
+export class SmrRptQuotationreportComponent {
+  chartOptions: any = {};
+  Date: string;
+  GetQuotationForLastSixMonths_List :any;
+  GetOrderDetailSummary :any;
+  GetQuotationSummary : any;
+  GetOrderForLastSixMonths_List :any;
+  responsedata: any;
+  getData: any;
+  data: any;  
+  quotation_gid: any;
+  parameterValue1: any;
+  parameterValue: any;
+  month:any;
+
+ 
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService) {
+    this.Date = new Date().toString();
+    
+    
+    
+
+  }
+  
+
+  ngOnInit(): void {
+    this.chartOptions = getChartOptions(350);
+    this.GetQuotationReportForLastSixMonths();
+  }
+  GetQuotationReportForLastSixMonths( )
+
+  {
+    debugger
+    var url = 'SmrRptQuotationReport/GetQuotationReportForLastSixMonths'
+    this.service.get(url).subscribe((result: any) => {
+      $('#GetQuotationForLastSixMonths_List').DataTable().destroy();
+      this.responsedata = result;
+      this.GetQuotationForLastSixMonths_List = this.responsedata.GetQuotationForLastSixMonths_List;
+     
+      setTimeout(() => {
+        $('#GetQuotationForLastSixMonths_List');
+      }, 1);
+  
+  
+    })
+  
+    
+    
+  }
+  ondetail(month: any,year:any ,parameter: string,quotation_gid: string) {
+
+    debugger
+    this.parameterValue1 = parameter;
+    this.quotation_gid = parameter;
+    this.month = this.GetQuotationForLastSixMonths_List[0].month;
+    var url = 'SmrRptQuotationReport/GetQuotationDetailSummary'
+    let param = {
+      quotation_gid : quotation_gid ,
+      month: month, year: year
+
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.responsedata = result;
+      this.GetQuotationSummary = result.GetQuotationSummary;
+      console.log(this.GetQuotationSummary)
+      setTimeout(() => {
+        $('#GetQuotationSummary');
+      }, 1);
+  
+    });
+  }
+
+
+}
+
+
+
+function getChartOptions(height: number) {
+  const labelColor = '#000'; 
+  const borderColor = '#e6ccb2';
+  const secondaryColor = '#f1841e'
+  const baseColor1 = '#047beb';
+  const secondaryColor1 = '#e63423'
+  const baseColor = '#19A7CE';  
+
+  return {
+    series: [
+
+      
+      {
+        name: 'Quotation Amount',
+        data: [50303, 60234, 70577, 80980, 60098, 50789, 70800, 60454],
+      },
+    ],
+    chart: {
+      fontFamily: 'inherit',
+      type: 'bar',
+      height: height,
+      toolbar: {
+        show: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '30%',
+        borderRadius: 3,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent'],
+    },
+    xaxis: {
+      categories: [ 'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'],
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      labels: {
+        style: {
+          colors: labelColor,
+          fontSize: '12px',
+        },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: labelColor,
+          fontSize: '12px',
+        },
+      },
+    },
+    fill: {
+      type: 'solid',
+    },
+    states: {
+      normal: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      hover: {
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+      active: {
+        allowMultipleDataPointsSelection: false,
+        filter: {
+          type: 'none',
+          value: 0,
+        },
+      },
+    },
+
+    colors: [baseColor, secondaryColor,baseColor1, secondaryColor1],
+    grid: {
+      padding: {
+        top: 10,
+      },
+      borderColor: borderColor,
+      strokeDashArray: 4,
+      yaxis: {
+        lines: {
+          show: true,
+        },
+      },
+    },
+  };
+
+}

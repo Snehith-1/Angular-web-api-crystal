@@ -1,0 +1,56 @@
+<!-- <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container ms-7" >
+        <a  (click)="toggleCollapse()"><img src="./assets/media/logos/NoQu.png" style="width:30px;height:100%;margin-left:-15px;" alt="Logo"></a>
+        <div class="logo-text" @fadeInOut *ngIf="collapsed"> &nbsp;&nbsp;&nbsp;&nbsp;<img src="./assets/media/logos/storyboardHR.png" style="width:100%;height:100%;margin-left:-26px;" alt="Logo"></div>
+        <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+            <i class="fa fa-times close-icon" style="color: #000; width:100%;height:100%; " ></i>
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+    </div> -->
+    <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+        <div class="logo-container ms-7" >
+        <a  (click)="toggleCollapse()"><img src="./assets/media/logos/vcx.png" style="width:30px;height:100%;margin-left:-15px;" alt="Logo"></a>
+        <div class="logo-text" @fadeInOut *ngIf="collapsed"> &nbsp;&nbsp;&nbsp;&nbsp;<img src="./assets/media/logos/storyboardsystem_menu.png" style="width:100%;height:100%;margin-left:-26px;" alt="Logo"></div>
+        <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+        <i class="fa fa-times close-icon" style="color: #000; width:100%;height:100%; " ></i>
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    <div class="scrollwrap scrollwrap_delayed" >
+        <ul class="sidenav-nav">
+            <li class="sidenav-nav-item" *ngFor="let data of submenu">
+                <a class="sidenav-nav-link" (click)="handleClick(data);toggleCollapse()"
+                    *ngIf="data.sub1menu && data.sub1menu.length > 0"
+                    [ngClass]="getActiveClass(data)"
+                >
+                    <i class="sidenav-link-icon fa-brands fa-elementor"></i>
+                    <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+                        {{data.text}}
+                    </span>
+                    <i *ngIf="data.sub1menu && collapsed" class="menu-collapse-icon"
+                        [ngClass]="!data.expanded ? 'fa fa-angle-right' : 'fa fa-angle-down'"
+                    ></i>
+                </a>
+    
+                <a class="sidenav-nav-link" 
+                    *ngIf="!data.sub1menu || (data.sub1menu && data.sub1menu.length === 0)"
+                    [routerLink]="[data.routeLink]" 
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}"
+                    (click)="shrinkItems(data)"
+                    >
+                    <i class="sidenav-link-icon fa-brands fa-elementor"></i>
+                    <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">
+                        {{data.text}}
+                    </span>
+                </a>
+                <div *ngIf="collapsed && data.sub1menu && data.sub1menu.length > 0">
+                    <layout-sublevel-menu
+                        [data]="data"
+                        [collapsed]="collapsed"
+                        [multiple]="multiple"
+                        [expanded]="data.expanded"
+                    ></layout-sublevel-menu>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-smr-rpt-orderreport',
+  templateUrl: './smr-rpt-orderreport.component.html',
+  styleUrls: ['./smr-rpt-orderreport.component.scss']
+})
+export class SmrRptOrderreportComponent {
+  chartOptions: any = {};
+  GetOrderForLastSixMonths_List :any;
+  GetOrderDetailSummary :any;
+  reactiveForm: FormGroup | any;
+  responsedata: any;
+  salesteam_list : any;
+  salesteamgrid_list :any;
+  getData: any;
+  salesorder_gid : any;
+  data: any;  
+  parameterValue: any;
+
+ 
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService) {
+    
+    
+    
+
+  }
+  
+
+  ngOnInit(): void {
+    this.GetOrderForLastSixMonths();
+  }
+  GetOrderForLastSixMonths( )
+
+ {
+  debugger
+  var url = 'SmrRptOrderReport/GetOrderForLastSixMonths'
+  this.service.get(url).subscribe((result: any) => {
+    $('#GetOrderForLastSixMonths_List').DataTable().destroy();
+    this.responsedata = result;
+    this.GetOrderForLastSixMonths_List = this.responsedata.GetOrderForLastSixMonths_List;
+    setTimeout(() => {
+      $('#GetOrderForLastSixMonths_List');
+    }, 1);
+
+
+  })
+
+  
+  
+}
+
+ondetail(month: any,year:any) {
+  debugger
+  var url = 'SmrRptOrderReport/GetOrderDetailSummary'
+  let param = {
+    month: month, year: year
+  }
+  this.service.getparams(url, param).subscribe((result: any) => {
+    this.responsedata = result;
+    this.GetOrderDetailSummary = result.GetOrderDetailSummary;
+    console.log(this.GetOrderDetailSummary)
+    setTimeout(() => {
+      $('#GetOrderDetailSummary');
+    }, 1);
+
+  });
+}
+openModaledit(){}
+}
+
+
+
+
+
+

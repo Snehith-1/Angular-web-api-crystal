@@ -1,0 +1,183 @@
+<main>
+    <div class="head-content-right">
+      
+        <button class="head-menu-item-btn" title="Back" style="margin-left:1200px;background-color:#009ef7;"  routerLink="/crm/CrmSmmFacebookaccount" >
+            <b><i style="color:white" class="bi bi-arrow-left-circle"></i></b>
+        </button>
+    </div>
+    <header>
+      <div class="tb">
+        <div class="td" id="logo">
+          <a><i class="fab fa-facebook-square"></i></a>
+        </div>
+  
+       
+        <div class="td" id="i-links">
+          <div class="tb">
+    <div class="row">
+            <span> <img id="p-link" src={{picture}}></span>
+          </div>
+          <span class="td" id="f-name-l">{{username}}</span>
+        </div>
+        </div>
+      </div>
+    </header>
+    <div id="profile-upper">
+      <div id="profile-banner-image">
+        <img src={{cover}}  alt="Banner image">
+      </div>
+      <div id="profile-d">
+        <div id="profile-pic">
+          <img src={{picture}}>
+           
+        </div>
+        <div id="u-name">{{username}} 
+            
+                <br>
+            <span><b style="font-size: 16px;color:black;">Followers Count</b> <span style="font-size: 14px;color:blue">&nbsp; {{followers_count}}</span></span>
+            <button class="btn btn-sm text-white me-4"  data-bs-toggle="modal" data-bs-target="#myModalfacebookpost"   style="margin-left:100px;background-color:#385591;">
+              Post</button>
+
+             </div>
+ 
+       
+      </div>
+      <div id="black-grd"></div>
+    </div>
+   <br> <br>
+    <tabset style="align-items:center;">
+        <tab heading="Abous Page" style="background-color:white;"><div class="cnt-label">
+            <i style="margin-left: 20px;"class="l-i" id="l-i-i"></i>
+            <span>Intro</span>
+            <br>
+            <span><b style="font-size:16px;margin-left: 20px;color:black;font-size:bolder;">Page Id :</b><span  style="font-size:16px;">&nbsp;{{id}}</span></span>
+            <br> 
+            <span><b style="font-size:16px;margin-left: 20px;color:black;font-size:bolder;">Page Category :</b><span  style="font-size:16px;">&nbsp;{{category}}</span></span>
+            <br>
+            <span ><b style="font-size:16px;margin-left: 20px;color:black;font-size:bolder;">Name :</b><span style="font-size:16px;">&nbsp; {{username}}</span></span>
+            <br>
+            <span><b style="font-size:16px;margin-left: 20px;color:black;font-size:bolder;">Mobile No :</b><span  style="font-size:16px;">&nbsp;{{phone}}</span></span>
+            <br>
+            
+            <span><b style="font-size:16px;margin-left: 20px;"></b> <a href={{link}} style="color:black;font-size:bolder;" ><b>Invite Link:</b>&nbsp;&nbsp;{{link}}</a><br></span>
+            <div class="lb-action"></div>
+            <br>
+            <br>
+          </div></tab>
+      
+        <tab heading="Post Image" style="background-color:white;"> 
+            <br> <br>
+            <div class="image-gallery">
+
+              <div class="image" *ngFor="let imageurl of posts">
+            
+                <img [src]="imageurl.full_picture" alt="Image">
+            
+              </div>
+            
+            </div>
+
+          </tab>
+        <tab heading="Post Video" style="background-color:white;">
+          
+            <div class="video-gallery">
+
+                <div class="video-item" *ngFor="let videourl of videos">
+              
+                  <video controls>
+              
+                    <source [src]="videourl.source" type="video/mp4">
+              
+              
+                  </video>
+             
+              
+                </div>
+              
+              </div>
+          </tab>
+      </tabset>
+
+    
+  
+  </main>
+  <!-- The Modal ADD -->
+<form  [formGroup]="FacebookImageForm"   #form="ngForm">
+    <div class="modal" id="myModalfacebookpost"  data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+    
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="fas fa-upload fw-bolder fs-3"></i> &nbsp;&nbsp;Facebook Post</h2>
+    
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              
+                        <div class="row"><span class="font-bold"><b>Caption</b><span class="ms-1 text-red" >*</span></span>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+            
+                               
+                                <input formControlName="image_caption" type="text" pattern="^(?!\s*$).+" class="
+                                 form-control form-control-lg form-control-solid
+                                 custom-input
+                                 mb-3 mb-lg-0
+                                 bg-white
+                                 custom-input
+                               " [ngStyle]="{
+                                 'border-color':
+                                 image_caption.invalid && image_caption.touched
+                                     ? 'red'
+                                     : 'rgb(209, 209, 209)'
+                               }" placeholder="Enter Caption"  pattern="^(?!\s*$).+"  name="image_caption" required  />
+                            
+                            </div>
+                             <div *ngIf="image_caption.invalid && (image_caption.dirty || image_caption.touched)">
+                    <div *ngIf="image_caption.errors?.['required']  || image_caption.errors?.['whitespace']">
+                      <span style="color:red;">Caption is required.</span>
+                    </div>
+                  </div>
+                             
+                        </div>
+<br>
+<span class="font-bold"><b>Image/video Only</b></span>
+<br>
+<div class="input-group mb-4" style="margin-left: 12px;width:97%;">
+
+  
+
+    <input class="form-control" accept="image/*, video/*" (change)="onChange2($event)" style="margin-left:-8px;width:30%;"
+
+        type="file" #fileInput />
+
+
+
+       
+
+</div>
+       
+                        
+                        
+              
+             
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="text-center my-4">
+                <button  (click)="onsubmit()" [disabled]="FacebookImageForm.invalid" [ngClass]="{
+                    'primary-button': !FacebookImageForm.invalid,
+                    'secondary-button': FacebookImageForm.invalid
+                  }" data-bs-dismiss="modal">          
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                </button> &nbsp;&nbsp;
+                <button class="btn-danger btn-sm text-white me-4"  (click)="onclose()" data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Close
+                </button>
+            </div>
+    
+            </div>
+        </div>
+    </div>
+    </form>

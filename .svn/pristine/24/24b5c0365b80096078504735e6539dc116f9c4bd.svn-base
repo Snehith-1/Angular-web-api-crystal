@@ -1,0 +1,110 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Marketing Manager Summary</h3>
+    </div>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="marketingmanager_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr   class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th></th>
+                        <th>S.No</th>
+                        <th>Branch</th>
+                        <th>Marketing Team Name</th>
+                        <th>Assigned Employee</th>
+                        <th>Total</th>
+                        <th>New</th>
+                        <th>Followup</th>
+                        <th>Visit</th>
+                        <th>In Progress</th>
+                        <th>Drop</th>
+                        <th>Customer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    <tr  *ngFor="let data of marketingmanager_list; let i=index;">
+                       
+                            <td  (click)="ondetail(data.campaign_gid)"  (click)="data.isExpand = !data.isExpand">
+                                <i *ngIf="!data.isExpand" class="bi-chevron-right"></i>
+                                <i *ngIf="data.isExpand" class="bi-chevron-up"></i>
+                              </td>
+                       
+                       
+                         
+                        <td>{{i+1}}</td>
+                        <td>{{data.branch_name}}</td>
+                        <td>{{data.campaign_title}}</td>
+                        <td>{{data.employeecount}}</td>
+                        <td>{{data.assigned_leads}}</td>
+                        <td>{{data.newleads}}</td>
+                        <td>{{data.followup}}</td>
+                        <td>{{data.visit}}</td>
+                        <td>{{data.prospect}}</td>
+                        <td>{{data.drop_status}}</td>
+                        <td>{{data.customer}}</td>
+                        <br> <br> 
+                     
+                         <td  *ngIf="data.isExpand">
+                        <br> <br> <br> 
+                  
+                        <div class="table-responsive" style="margin-left:-1065px;">
+                            <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                          <table id="managerdetail_list"   class="table table-striped table-row-bordered gy-5 gs-7 ">
+                            <thead >
+                               
+                                    <tr  class="fw-bold fs-5 text-nowrap bg-lightblue text-blue" >
+                                    
+                                        <th>S.No</th>
+                                        <th>Employee Name</th>
+                                        <th>Department</th>
+                                        <th>Total</th>
+                                        <th>New</th>
+                                        <th>Followup</th>
+                                        <th>Visit</th>
+                                        <th>In Progress</th>
+                                        <th>Drop</th>
+                                        <th>Customer</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+               
+                                <tr  *ngFor="let data1 of managerdetail_list; let i=index;" >
+                                    <td>{{i+1}}</td>
+                                    <td>{{data1.user}}</td>
+                                    <td>{{data1.department_name}}</td>
+                                    <td>{{data1.total}}</td>
+                                    <td>{{data1.newleads}}</td>
+                                    <td>{{data1.followup}}</td>
+                                    <td>{{data1.visit}}</td>
+                                    <td>{{data1.prospect}}</td>
+                                    <td>{{data1.drop_status}}</td>
+                                    <td>{{data1.customer}}</td>
+                                    <td class="text-center text-nowrap">
+                                        <a data-bs-toggle="modal" href="#" id="forgot" (click)="onedit(data1)" [hidden]="data1.total  ==='0'" >Schedule/Transfer</a><br> <br>
+            
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                     </td>
+                   
+                    </tr>
+                  
+             
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+ 
+

@@ -1,0 +1,36 @@
+.bg-skyblue {
+    background-color: #075e54;
+}
+
+.bg-lightgreen {
+    background-color: #DCF8C6;
+}
+.bg-mail
+{
+  background-color: #008ECC;
+}
+.cardHead {
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    padding: 18px;
+    background-clip: border-box;
+    border: 0px solid rgba(0, 0, 0, 0);
+    border-radius: .25rem;
+    margin-bottom: 1.0rem;
+    margin-left: 15px;
+    transition: all .3s ease-in-out;
+    background-color:  #ece5dd;
+
+}
+
+.cardHead:hover {
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+    transform: translate3d(0px, -2px, 0px);
+    cursor: pointer;
+    pointer-events: auto;
+
+}

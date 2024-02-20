@@ -1,0 +1,110 @@
+<div class="card">
+    <br />
+    <div class="row ms-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Module Manager</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="bg-white table-responsive rounded" style="padding: 0rem 1rem">
+                <table id="ModuleManagertable" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                    <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                            <th>S.No</th>
+                            <th>Module Code</th>
+                            <th>Module Name</th>
+                            <th>Module Manager</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of Module_list; let i=index;">
+                            <td>{{i+1}}</td>
+                            <td>{{data.module_gid}}</td>
+                            <td>{{data.module_name}}</td>
+                            <td>{{data.module_manager}}</td>
+                            <td class="text-center text-nowrap">
+                                <button title="Assign Manager" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#assignmanagermodal"
+                                    (click)="assignmanagerclick(data.module_gid,data.module_name)"
+                                    class="btn btn-icon btn-sm bg-primary me-2">
+                                    <span class="fa-solid fa-user text-white fs-6"></span>
+
+                                </button>
+
+                                <button title="Assign Employee" type="button"
+                                    (click)="assignemployeeclick(data.module_gid)"
+                                    class="btn btn-icon btn-sm bg-success me-2">
+                                    <span class="fa-solid fa-users text-white  fs-6"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal top fade" id="assignmanagermodal" tabindex="-1" aria-labelledby="kt_modal_1" aria-hidden="true"
+    data-bs-backdrop='static' data-mdb-keyboard="true">
+    <div class="modal-dialog modal-dialog-centered  ">
+        <div class="modal-content ">
+            <div class=" bg-primary rounded-top">
+                <h3 class="p-4 pt-5 text-white "> <i class="fas fa-user fs-5"></i>&nbsp;&nbsp;&nbsp;Assign Manager
+                    <button class="btn-secondary float-end" (click)="clearhierarchyclick()">Clear Hierarchy</button>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="assignManagerSubmit()" [formGroup]="assignmanagerForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label for="exampleFormControlInput1" class="fw-bold mb-1">Module Code</label>
+                            <br />
+                            <p>{{module_code}}</p>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label for="exampleFormControlInput1" class="fw-bold mb-1">Module Name</label>
+                            <br />
+                            <p>{{module_name}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-12 col-md-12 col-sm-12"><span class="font-bold">Module Manager <span
+                                    class="ms-1 text-red">*</span></span>
+                            <ng-select formControlName="cbomodulemanager"
+                                [class.is-invalid]="assignmanagerForm.get('cbomodulemanager')?.invalid && (assignmanagerForm.get('cbomodulemanager')?.dirty || assignmanagerForm.get('cbomodulemanager')?.touched)"
+                                [ngClass]="{'invalid-border': assignmanagerForm.get('cbomodulemanager')?.invalid && assignmanagerForm.get('cbomodulemanager')?.touched}"
+                                [items]="employeelist" required
+                                class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                bindLabel="employee_name" bindValue="employee_gid"
+                                placeholder="Select an option"></ng-select>
+
+                            <div *ngIf="assignmanagerForm.get('cboeditsubfunction')?.hasError('required') && assignmanagerForm.get('cbomodulemanager')?.touched"
+                                class="text-red">
+                                Module Manager is Required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <br />
+                        <button type="submit" class="btn-success text-white" [disabled]="assignmanagerForm.invalid"
+                            data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5"></i>&nbsp;
+                            Submit
+                        </button>
+                        &nbsp;
+                        <button type="button" class="btn-danger" data-bs-dismiss="modal">
+                            <i class="fa fa-close fs-5 text-center"></i>&nbsp;
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

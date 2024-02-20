@@ -1,0 +1,37 @@
+Angular Setup
+
+Step 1 => To check the latest Node Modules:
+          nvm use 18.16.0
+
+Step 2 => To install Angular 16 
+          command: `npm i g @angular/cli@16`
+
+Step 3 => Setup Node Modules:
+
+         To generate node modules run the following command 
+          command :`npm install` or run `npm install --force`
+
+Step 4 => To Run the Application:
+         command : `ng serve`
+
+
+Note:
+ 
+If error message is appeared with 'ng not recognized' do the following steps,
+
+	Reinstall angular(Step 2) with the administrator command promt.
+
+If error message is appeared with 'ng not recognized' ater reinstall angular with administrator command promt do the following steps,
+
+	Install the current stable(LTS) version of node, npm and follow step 2.
+
+
+System dashboard- chart
+  'npm install ng-apexcharts apexcharts' or 'npm install ng-apexcharts apexcharts --force'
+
+
+
+   
+ 
+
+ 

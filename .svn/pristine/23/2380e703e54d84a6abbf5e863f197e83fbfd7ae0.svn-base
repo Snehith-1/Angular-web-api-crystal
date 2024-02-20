@@ -1,0 +1,46 @@
+.del_modal-dialog {
+    margin-top: 200px;
+    
+    .del_modal-content{
+        height: 200px;
+        width: 350px;
+
+        h2 {
+            margin-top: 20px;
+        }
+        
+        p {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+}
+
+.background-color{
+    background: rgb(203, 2, 19);
+    background: radial-gradient(circle, rgb(249, 14, 65) 0%, rgb(177, 73, 78) 100%); 
+}
+.background-color4{
+    background-color: rgb(236 72 153);}
+.background-color2{
+    background: rgb(2, 96, 203);
+    background: radial-gradient(circle, rgb(69, 219, 0) 0%, rgb(73, 177, 78) 100%); 
+}
+.background-color3{
+    background: rgb(156, 2, 203);
+    background: radial-gradient(circle, rgb(185, 39, 198) 0%, rgb(156, 51, 185) 100%); 
+}
+.background-color6{
+  background: #3c9fa7;
+  background: radial-gradient(circle, #47acbe 0%, #4aa5b9 100%); 
+}
+.background-color1{
+    background: rgb(5, 5, 166);
+    background: radial-gradient(circle, rgb(92, 89, 255) 0%, rgb(77, 88, 246) 100%); 
+}
+.bg-info1{
+    background-color: rgb(236 72 153);
+}

@@ -1,0 +1,347 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
+interface IWhatsapp {
+  //sourceedit_name: any;
+
+  created_date: string;
+  customer_name: string;
+  displayName: string;
+  mobile: string;
+  created_by: string;
+  computedDisplayName: string;
+  email: string;
+  first_letter: string;
+  key: string;
+  value: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  identifierValue: string;
+  type: string;
+  sendtext: string;
+
+}
+
+@Component({
+  selector: 'app-crm-smm-watsapp',
+  templateUrl: './crm-smm-watsapp.component.html',
+  styleUrls: ['./crm-smm-watsapp.component.scss']
+})
+export class CrmSmmWatsappComponent implements OnInit {
+  reactiveForm!: FormGroup;
+  reactiveMessageForm!: FormGroup;
+
+  responsedata: any;
+  parameterValue: any;
+  whatsapp_list: any[] = [];
+  whatsappmessage_list: any[] = [];
+  whatsappMessagetemplatelist:any[] = [];
+
+  leadbank!: IWhatsapp;
+  file: any;
+  file1: any;
+  searchText = '';
+  openDiv: boolean = false;
+
+  count_list: any[] = [];
+
+  matchesSearch(item: any): boolean {
+    const searchString = this.searchText.toLowerCase();
+    return item.displayName.toLowerCase().includes(searchString) || item.value.toLowerCase().includes(searchString);
+  }
+
+  constructor(private formBuilder: FormBuilder, private route: Router, private router: Router,
+     private ToastrService: ToastrService, public service: SocketService,
+     private NgxSpinnerService: NgxSpinnerService) {
+    this.leadbank = {} as IWhatsapp;
+  }
+
+  ngOnInit(): void {
+
+    this.GetWhatsappSummary();
+    // this.GetWhatsappMessageSummary1();    
+
+    this.reactiveForm = new FormGroup({
+      customer_name: new FormControl(this.leadbank.customer_name, [
+        Validators.required,
+      ]),
+      displayName: new FormControl(this.leadbank.displayName, [
+        Validators.required,
+      ]),
+      mobile: new FormControl(''),
+      value: new FormControl(this.leadbank.value, [
+        Validators.required,
+      ]),
+      gender: new FormControl(''),
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      file: new FormControl(''),
+
+    });
+
+    this.reactiveMessageForm = new FormGroup({
+      identifierValue: new FormControl(''),
+      type: new FormControl(''),
+      sendtext: new FormControl(''),
+      template_name : new FormControl(''),
+      p_name : new FormControl(''),
+      project_id: new FormControl(),
+      version: new FormControl(''),
+      message_id: new FormControl(''),
+      contact_id : new FormControl(''),
+    });
+
+
+
+    //**Template popup**//
+    var api2 = 'Whatsapp/GetMessageTemplatesummary'
+    this.service.get(api2).subscribe((result: any) => {
+      this.responsedata = result;
+      this.whatsappMessagetemplatelist = result.whatsappMessagetemplatelist;
+    });
+  }
+
+//   GetWhatsappMessageSummary1() {
+//     var url = 'Whatsapp/GetContactConversation'
+//     this.service.get(url).subscribe((result: any) => {
+//       $('#whatsmessagelist').DataTable().destroy();
+//       this.responsedata = result;
+      
+//   });
+// }
+  get customer_name() {
+    return this.reactiveForm.get('customer_name')!;
+  }
+  get mobile() {
+    return this.reactiveForm.get('mobile')!;
+  }
+  get value() {
+    return this.reactiveForm.get('mobile')!;
+  }
+  get firstName() {
+    return this.reactiveForm.get('customer_name')!;
+  }
+  get lastName() {
+    return this.reactiveForm.get('mobile')!;
+  }
+  get displayName() {
+    return this.reactiveForm.get('mobile')!;
+  }
+  get identifierValue() {
+    return this.reactiveMessageForm.get('identifierValue')!;
+  }
+  get template_name() {
+    return this.reactiveMessageForm.get('template_name')!;
+  }
+
+//contact summary//
+  GetWhatsappSummary() {
+    this.NgxSpinnerService.show();
+    var url = 'Whatsapp/GetContact'
+    this.service.get(url).subscribe((result: any) => {
+      $('#whatsnamelist').DataTable().destroy();
+      this.responsedata = result;
+      this.whatsapp_list = this.responsedata.whatscontactlist;
+      this.NgxSpinnerService.hide();
+      //console.log(this.source_list)
+
+    });
+  }
+
+//Message summary//
+  GetWhatsappMessageSummary(whatsapp_gid: any) {
+    this.NgxSpinnerService.show();
+    var url = 'Whatsapp/GetMessage'
+    let param = {
+      whatsapp_gid: whatsapp_gid
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      $('#whatsmessagelist').DataTable().destroy();
+     // window.location.reload()
+      this.responsedata = result;
+      this.whatsappmessage_list = this.responsedata.whatsmessagelist;
+      this.NgxSpinnerService.hide();
+      //console.log(this.source_list)
+    });
+  }
+
+  //Create contact//
+  public onsubmit(): void {
+    if (this.reactiveForm.value.displayName != null && this.reactiveForm.value.value != null) {
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      this.reactiveForm.value;
+      var url = 'Whatsapp/CreateContact'
+      this.service.post(url, this.reactiveForm.value).subscribe((result: any) => {
+        if (result.status == false) {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.reactiveForm.get("displayName")?.setValue(null);
+          this.reactiveForm.get("value")?.setValue(null);
+          this.ToastrService.warning(result.message)
+          this.GetWhatsappSummary();
+          this.reactiveForm.reset();
+        }
+        else {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.reactiveForm.get("displayName")?.setValue(null);
+          this.reactiveForm.get("value")?.setValue(null);
+          this.ToastrService.success(result.message)
+          this.GetWhatsappSummary();
+          this.reactiveForm.reset();
+        }
+        this.GetWhatsappSummary();
+        this.reactiveForm.reset();
+      });
+    }
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+
+  onclose() {
+    this.reactiveForm.reset();
+  }
+
+  
+//Template popup passing identifier value//
+  poptemplatemodal(parameter: string) {
+    this.reactiveMessageForm.get("identifierValue")?.setValue(parameter);
+  }
+
+  //contact to message//
+  showResponsiveOutput(gid: string) {
+    console.log('Clicked with gid:', gid);
+    this.GetWhatsappSummary();
+    this.GetWhatsappMessageSummary(gid);
+    this.GetWhatsappSummary();
+  }
+
+  //template popup pass projectid//
+  passprojectid(id:string,version:string)
+  {
+    console.log('Clicked project Id:', id);
+    console.log('Clicked version id:',version);
+    this.reactiveMessageForm.get("project_id")?.setValue(id);
+    this.reactiveMessageForm.get("version")?.setValue(version);
+    this.onTemplatesent(id);
+  }
+
+  // Message send //
+  public onMessagesent(gid:string, id: string): void {
+    this.reactiveMessageForm.value.identifierValue = gid;
+    this.reactiveMessageForm.value.contact_id = id;
+    if (this.reactiveMessageForm.value.sendtext != null ) {
+        
+      var url = 'Whatsapp/WhatsappSend'
+      this.service.post(url, this.reactiveMessageForm.value).subscribe((result: any) => {
+        if (result.status == false) {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.warning(result.message)
+          //this.GetWhatsappMessageSummary();
+          this.reactiveMessageForm.reset();
+        }
+        else {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.success(result.message)
+          this.reactiveMessageForm.reset();
+        }
+        window.location.reload();
+      });
+    } 
+    
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+   // Template sent //
+   public onTemplatesent(id: any): void {
+    let identifierValue = this.reactiveMessageForm.value.identifierValue;
+    let project_id = id;
+    let param = {
+      identifierValue : identifierValue,
+      project_id:project_id,
+    }
+
+    if (project_id != null ) {
+      this.reactiveMessageForm.value.param = param
+      this.NgxSpinnerService.show();
+
+      var url = 'Whatsapp/WhatsappSend'
+      this.service.post(url, this.reactiveMessageForm.value).subscribe((result: any) => {
+        this.NgxSpinnerService.hide();
+        if (result.status == false) {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.warning(result.message)
+          //this.GetWhatsappMessageSummary();
+        }
+        else {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.success(result.message)
+        }
+        window.location.reload();
+      });
+    } 
+    
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+  attachments(){
+    this.openDiv = !this.openDiv;
+  }
+
+  onChange1(event: any) {
+    this.file = event.target.files[0];
+  }
+  onChange2(event: any) {
+    this.file = event.target.files[0];
+  }
+  public onuploaddocument(): void {
+
+    let formData = new FormData();
+    if (this.file != null && this.file != undefined) {
+      formData.append("file", this.file, this.file.name);
+
+  }
+}
+
+  public onuploadimage(): void {
+    
+let formData = new FormData();
+    if (this.file != null && this.file != undefined) {
+      formData.append("file", this.file, this.file.name);
+      
+  }
+
+  }
+
+}

@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card">
+        <div class="card-header bg-mail" style="color: white;">
+            <h3 class="card-title"><i class="bi bi-eye-fill" style="font-size: 20px;"></i>&nbsp;&nbsp;{{template_name}}</h3>
+            <div style="margin: 13px">
+              
+                <button title="Back"  class="btn-secondary btn-sm text-black me-4 " (click)="onback()"> <i class="bi bi-arrow-left-circle"></i>
+                    Back</button>
+                  
+                    
+            </div>
+      
+        </div><br>
+        
+            
+       <div class="row">
+        <div class="col">
+            <span class="fw-bold text-gray-900 text-hover-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject:  </span>
+            <a href="#" class=" text-gray-900 text-hover-primary"> {{sub}}</a>   
+
+        </div>
+        <div class="col text-end">
+            <span class="fw-bold text-gray-900 text-hover-primary text-end me-3 mt-1">Created Date:</span>
+            <a href="#" class=" text-gray-900 text-hover-primary me-3">{{created_date}}</a>   
+
+        </div>
+      </div>
+        
+        
+
+    <div style="padding: 25px;" class="text-align: left my-5">
+        
+        <div class="text-align: left" [innerHTML]="body">
+        </div>
+        <br>
+    </div>
+</div>
+
+

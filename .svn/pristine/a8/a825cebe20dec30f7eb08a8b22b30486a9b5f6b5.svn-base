@@ -1,0 +1,34 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+@Component({
+  selector: 'app-smr-trn-customerraiseenquiry',
+  templateUrl: './smr-trn-customerraiseenquiry.component.html',
+  styleUrls: ['./smr-trn-customerraiseenquiry.component.scss']
+})
+export class SmrTrnCustomerraiseenquiryComponent {
+  // employee!: IEmployee;
+
+  private unsubscribe: Subscription[] = [];
+  file!:File;
+  cusraiseform: FormGroup | any;
+  responsedata: any;
+  parameterValue: any;
+  customer_list: any;
+  products_list: any;
+  products: any[] = [];
+  response_data :any;
+  NgxSpinnerService: any;
+  uom_list:any;
+  productname_list : any[] = [];
+  productgrp_list : any[] = [];
+  constructor(private fb: FormBuilder,private route: ActivatedRoute,private router: Router,private service: SocketService,private ToastrService: ToastrService,) {} 
+  
+
+  ngOnInit(): void {}
+  onadd(){}
+
+}

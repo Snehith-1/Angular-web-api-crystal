@@ -1,0 +1,299 @@
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import flatpickr from 'flatpickr';
+import { Options } from 'flatpickr/dist/types/options';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AES, enc } from 'crypto-js';
+
+interface ILeadmaster {
+ 
+    company_website: string;
+    phone2: string;
+    phone1: string;
+    fax: string;
+    email: string;
+    leadbank_address1: string;
+    active_flag: string;
+    addtocustomer: string;
+    status: string;
+    region_name: string;
+    source_name: string;
+    country_name: string;
+    leadbank_name: string;
+    categoryindustry_name: string;
+    designation: string;
+    leadbank_state: string;
+    leadbankcontact_name: string;
+    user_code: string;
+    remarks: string;
+    referred_by: string;
+    leadbank_address2: string;
+    leadbank_city: string;
+    leadbank_pin: string;
+    mobile: string;
+  leadbank_gid:string;
+}
+
+@Component({
+  selector: 'app-crm-trn-leadmasteradd',
+  templateUrl: './crm-trn-leadmasteradd.component.html',
+  styleUrls: ['./crm-trn-leadmasteradd.component.scss']
+})
+export class CrmTrnLeadmasteraddComponent implements OnInit {
+  leadmaster!: ILeadmaster;
+  reactiveForm!: FormGroup;
+  //entity_list: any[] = [];
+  source_list: any[] = [];
+  industryList: any[] = [];
+  regionnamelist: any[] = [];
+  
+  country_list: any[] = [];
+  Email_Address: any;
+  responsedata: any;
+  formData: any = {};
+  isSubmitting = false;
+  lspage: any;
+
+
+  constructor(private renderer: Renderer2, private el: ElementRef, public service: SocketService, private ToastrService: ToastrService, private route: Router,private router: ActivatedRoute) {
+    this.leadmaster = {} as ILeadmaster;
+  }
+
+  ngOnInit(): void {
+    const lspage = this.router.snapshot.paramMap.get('lspage');
+
+    this.lspage = lspage;
+
+    const secretKey = 'storyboarderp';
+
+    const deencryptedParam = AES.decrypt(this.lspage, secretKey).toString(enc.Utf8);
+
+    this.lspage = deencryptedParam;
+    console.log("Redirected page:"+ this.lspage);
+    
+    this.reactiveForm = new FormGroup({
+      leadbankcontact_name: new FormControl(this.leadmaster.leadbankcontact_name, [
+        Validators.minLength(1),
+        Validators.maxLength(250)
+ 
+       ]),
+       leadbank_name: new FormControl(this.leadmaster.leadbank_name, [
+         Validators.required,
+       ]),
+       referred_by: new FormControl(this.leadmaster.referred_by, [
+         
+       ]),
+ 
+       leadbank_address2: new FormControl(''),
+       leadbank_state: new FormControl(''),
+       remarks: new FormControl(''),
+       status: new FormControl('Y'),
+       active_flag: new FormControl('Y'),
+       //leadbank_pin: new FormControl(''),
+       leadbank_city: new FormControl(''),
+       
+       region_name: new FormControl(this.leadmaster.region_name, [
+        
+         Validators.minLength(1),
+         Validators.maxLength(250),
+       ]),
+       source_name: new FormControl(this.leadmaster.source_name, [
+        
+         Validators.minLength(1),
+         Validators.maxLength(250),
+       ]),
+ 
+       phone2: new FormControl(this.leadmaster.phone2, [
+         
+         Validators.maxLength(10),
+       ]),
+       phone1: new FormControl(this.leadmaster.phone1, [
+        
+         Validators.maxLength(10),
+       ]),
+       fax: new FormControl(this.leadmaster.fax, [
+       
+         Validators.maxLength(10),
+         Validators.pattern("^[0-9]{10}$")
+       ]),
+ 
+       mobile: new FormControl(this.leadmaster.mobile, [
+         
+         Validators.maxLength(10),
+         Validators.pattern("^[0-9]{10}$")
+       ]),
+       categoryindustry_name: new FormControl(this.leadmaster.categoryindustry_name, [
+         Validators.minLength(1),
+         Validators.maxLength(250),
+       ]),
+       designation: new FormControl(this.leadmaster.designation, [
+        //Validators.pattern("^[A-Za-z\s.-]*$"),
+        Validators.minLength(1),
+         Validators.maxLength(250),
+       ]),
+       country_name: new FormControl(this.leadmaster.country_name, [
+         Validators.minLength(1),
+         Validators.maxLength(250),
+       ]),
+       leadbank_address1: new FormControl(this.leadmaster.leadbank_address1, [
+         Validators.maxLength(1000),
+       ]),
+       email: new FormControl(this.leadmaster.email, [
+         
+         Validators.maxLength(320),
+          Validators.pattern('^([a-z0-9-]+|[a-z0-9-]+([.][a-z0-9-]+)*)@([a-z0-9-]+\.[a-z]{2,20}(\.[a-z]{2})?|\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\]|localhost)$')
+       ]),
+       company_website: new FormControl(this.leadmaster.company_website, [
+        
+         Validators.minLength(1),
+         Validators.maxLength(250),
+         Validators.pattern('^(http(s)?:\/\/)?(www\.)?([a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+)')
+       ]),
+ 
+       leadbank_pin : new FormControl(this.leadmaster.leadbank_pin, [
+       
+         Validators.minLength(6), // Minimum length of 6 characters for Indian postal codes
+         Validators.maxLength(6), // Maximum length of 6 characters for Indian postal codes
+         Validators.pattern('^[1-9][0-9]{5}$'), // Indian postal code pattern
+       ]),
+       
+    });
+
+    var api1 = 'registerlead/GetSourcetypedropdown'
+    this.service.get(api1).subscribe((result: any) => {
+      this.responsedata = result;
+      this.source_list = result.GetSourcetypedropdown;
+      //console.log(this.source_list)
+    });
+
+    var api2 = 'registerlead/Getregiondropdown1'
+    this.service.get(api2).subscribe((result: any) => {
+      this.responsedata = result;
+      this.regionnamelist = result.Getregiondropdown1;
+    });
+
+    var api3 = 'registerlead/Getindustrydropdown'
+    this.service.get(api3).subscribe((result: any) => {
+      this.responsedata = result;
+      this.industryList = result.Getindustrydropdown;
+    });
+
+    var api5 = 'registerlead/Getcountrynamedropdown'
+    this.service.get(api5).subscribe((result: any) => {
+      this.responsedata = result;
+      this.country_list = result.Getcountrynamedropdown;
+    });
+  }
+
+
+  get branchname() {
+    return this.reactiveForm.get('branchname')!;
+  }
+  get categoryindustry_name() {
+    return this.reactiveForm.get('categoryindustry_name')!;
+  }
+  get designation() {
+    return this.reactiveForm.get('designation')!;
+  }
+  get country_name() {
+    return this.reactiveForm.get('country_name')!;
+  }
+  get region_name() {
+    return this.reactiveForm.get('region_name')!;
+  }
+
+  get leadbank_name() {
+    return this.reactiveForm.get('leadbank_name')!;
+  }
+
+  get leadbankcontact_name() {
+    return this.reactiveForm.get('leadbankcontact_name')!;
+  }
+  get referred_by() {
+    return this.reactiveForm.get('referred_by')!;
+  }
+  get mobile() {
+    return this.reactiveForm.get('mobile')!;
+  }
+  get phone1() {
+    return this.reactiveForm.get('phone1')!;
+  }
+  get phone2() {
+    return this.reactiveForm.get('phone2')!;
+  }
+
+  get email() {
+    return this.reactiveForm.get('email')!;
+  }
+
+  get password() {
+    return this.reactiveForm.get('password')!;
+  }
+  get fax() {
+    return this.reactiveForm.get('fax')!;
+  }
+  get company_website() {
+    return this.reactiveForm.get('company_website')!;
+  }
+
+  get addtocustomer() {
+    return this.reactiveForm.get('addtocustomer')!;
+  }
+
+  get status() {
+    return this.reactiveForm.get('status')!;
+  }
+
+  get source_name() {
+    return this.reactiveForm.get('source_name')!;
+  }
+
+  get remarks() {
+    return this.reactiveForm.get('remarks')!;
+  }
+  get leadbank_pin() {
+    return this.reactiveForm.get('leadbank_pin')!;
+  }
+
+  back()
+
+  {
+       if (this.lspage == 'MyLead') {
+        this.route.navigate(['/crm/CrmTrnMycampaign']); // Redirect to page1
+      }  else if (this.lspage == 'Registerlead'){
+        this.route.navigate(['/crm/CrmTrnLeadMasterSummary']);// Redirect to page2
+      }
+  }
+
+  public validate(): void {
+    console.log(this.reactiveForm.value);
+  
+    this.leadmaster = this.reactiveForm.value;
+    
+    if (this.leadmaster.active_flag != null && this.leadmaster.leadbank_name != null) {
+      // Disable the submit button to prevent multiple clicks
+      this.isSubmitting = true;
+  
+      // Continue with form submission logic
+      var api7 = 'registerlead/Postregisterlead'
+      this.service.post(api7, this.leadmaster).subscribe((result: any) => {
+        if (result.status == false) {
+          this.ToastrService.warning(result.message);
+        } else {
+          // Navigating to another page or displaying success message
+          this.route.navigate(['/crm/CrmTrnLeadMasterSummary']);
+          this.ToastrService.success(result.message);
+        }
+        this.responsedata = result;
+        
+        // Re-enable the submit button after form submission is complete
+        this.isSubmitting = false;
+      });
+    } else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ');
+    }
+  }
+}
+

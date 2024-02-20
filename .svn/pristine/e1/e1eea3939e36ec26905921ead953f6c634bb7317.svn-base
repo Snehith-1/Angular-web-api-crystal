@@ -1,0 +1,265 @@
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import flatpickr from 'flatpickr';
+import { Options } from 'flatpickr/dist/types/options';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+interface ILeadbank {
+  company_website: string;
+  phone2: string;
+  phone1: string;
+  fax: string;
+  email: string;
+  leadbank_address1: string;
+  active_flag: string;
+  addtocustomer: string;
+  status: string;
+  region_name: string;
+  source_name: string;
+  country_name: string;
+  leadbank_name: string;
+  categoryindustry_name: string;
+  designation: string;
+  leadbank_state: string;
+  leadbankcontact_name: string;
+  user_code: string;
+  remarks: string;
+  referred_by: string;
+  leadbank_address2: string;
+  leadbank_city: string;
+  leadbank_pin: string;
+  mobile: string;
+}
+
+@Component({
+  selector: 'app-crm-trn-leadbankadd',
+  templateUrl: './crm-trn-leadbankadd.component.html',
+  styleUrls: ['./crm-trn-leadbankadd.component.scss']
+})
+export class CrmTrnLeadbankaddComponent implements OnInit{
+  //file!:File;
+  leadbank!: ILeadbank;
+  reactiveForm!: FormGroup;
+  entity_list: any[] = [];
+  source_list: any[] = [];
+  industryList: any[] = [];
+  regionnamelist: any[] = [];
+  designation_list: any[] = [];
+  country_list: any[] = [];
+  Email_Address: any;
+  responsedata: any;
+
+  constructor(private renderer: Renderer2, private el: ElementRef, public service: SocketService, private ToastrService: ToastrService, private route: Router) {
+    this.leadbank = {} as ILeadbank;
+  }
+
+  ngOnInit(): void {
+    this.reactiveForm = new FormGroup({
+      leadbankcontact_name: new FormControl(this.leadbank.leadbankcontact_name, [
+        Validators.required,
+      ]),
+      leadbank_name: new FormControl(this.leadbank.leadbank_name, [
+        Validators.required,
+      ]),
+      referred_by: new FormControl(this.leadbank.referred_by, [
+        Validators.required,
+      ]),
+
+      leadbank_address2: new FormControl(''),
+      leadbank_state: new FormControl(''),
+      remarks: new FormControl(''),
+      status: new FormControl('Y'),
+      active_flag: new FormControl('Y'),
+      //leadbank_pin: new FormControl(''),
+      leadbank_city: new FormControl(''),
+      addtocustomer: new FormControl('N'),
+      region_name: new FormControl(this.leadbank.region_name, [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250),
+      ]),
+      source_name: new FormControl(this.leadbank.source_name, [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250),
+      ]),
+
+      phone2: new FormControl(this.leadbank.phone2, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+      phone1: new FormControl(this.leadbank.phone1, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+      fax: new FormControl(this.leadbank.fax, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+
+      mobile: new FormControl(this.leadbank.mobile, [
+        Validators.required,
+        Validators.maxLength(10),
+        Validators.pattern("^[0-9]{10}$")
+      ]),
+      categoryindustry_name: new FormControl(this.leadbank.categoryindustry_name, [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      designation: new FormControl(this.leadbank.designation, [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      country_name: new FormControl(this.leadbank.country_name, [
+        Validators.minLength(1),
+      ]),
+      leadbank_address1: new FormControl(this.leadbank.leadbank_address1, [
+        Validators.maxLength(1000),
+      ]),
+      email: new FormControl(this.leadbank.email, [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250), Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+      ]),
+      company_website: new FormControl(this.leadbank.company_website, [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(250),
+        Validators.pattern('^(https?://)?([a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})(/[a-zA-Z0-9%.-]*)*(\\?[a-zA-Z0-9.-_]+=[a-zA-Z0-9.-_]+)*/?$')
+      ]),
+
+      leadbank_pin : new FormControl(this.leadbank.leadbank_pin, [
+        Validators.required,
+        Validators.minLength(6), // Minimum length of 6 characters for Indian postal codes
+        Validators.maxLength(6), // Maximum length of 6 characters for Indian postal codes
+        Validators.pattern('^[0-9]{6}$'), // Indian postal code pattern
+      ]),
+    });
+
+    var api1 = 'Leadbank/Getsourcedropdown'
+    this.service.get(api1).subscribe((result: any) => {
+      this.responsedata = result;
+      this.source_list = result.source_list;
+      //console.log(this.source_list)
+    });
+
+    var api2 = 'Leadbank/Getregiondropdown'
+    this.service.get(api2).subscribe((result: any) => {
+      this.responsedata = result;
+      this.regionnamelist = result.regionname_list;
+    });
+
+    var api3 = 'Leadbank/Getindustrydropdown'
+    this.service.get(api3).subscribe((result: any) => {
+      this.responsedata = result;
+      this.industryList = result.industryname_list;
+    });
+
+    var api5 = 'Leadbank/Getcountrynamedropdown'
+    this.service.get(api5).subscribe((result: any) => {
+      this.responsedata = result;
+      this.country_list = result.country_list;
+    });
+  }
+
+
+  get branchname() {
+    return this.reactiveForm.get('branchname')!;
+  }
+  get categoryindustry_name() {
+    return this.reactiveForm.get('categoryindustry_name')!;
+  }
+  get designation() {
+    return this.reactiveForm.get('designation')!;
+  }
+  get country_name() {
+    return this.reactiveForm.get('country_name')!;
+  }
+  get region_name() {
+    return this.reactiveForm.get('region_name')!;
+  }
+
+  get leadbank_name() {
+    return this.reactiveForm.get('leadbank_name')!;
+  }
+
+  get leadbankcontact_name() {
+    return this.reactiveForm.get('leadbankcontact_name')!;
+  }
+  get referred_by() {
+    return this.reactiveForm.get('referred_by')!;
+  }
+  get mobile() {
+    return this.reactiveForm.get('mobile')!;
+  }
+  get phone1() {
+    return this.reactiveForm.get('phone1')!;
+  }
+  get phone2() {
+    return this.reactiveForm.get('phone2')!;
+  }
+
+  get email() {
+    return this.reactiveForm.get('email')!;
+  }
+
+  get password() {
+    return this.reactiveForm.get('password')!;
+  }
+  get fax() {
+    return this.reactiveForm.get('fax')!;
+  }
+  get company_website() {
+    return this.reactiveForm.get('company_website')!;
+  }
+
+  get addtocustomer() {
+    return this.reactiveForm.get('addtocustomer')!;
+  }
+
+  get status() {
+    return this.reactiveForm.get('status')!;
+  }
+
+  get source_name() {
+    return this.reactiveForm.get('source_name')!;
+  }
+
+  get remarks() {
+    return this.reactiveForm.get('remarks')!;
+  }
+  get leadbank_pin() {
+    return this.reactiveForm.get('leadbank_pin')!;
+  }
+  public validate(): void {
+    console.log(this.reactiveForm.value)
+
+    this.leadbank = this.reactiveForm.value;
+    if (this.leadbank.active_flag != null && this.leadbank.leadbank_name != null) {
+      // let formData = new FormData();
+      //     if(this.file !=null &&  this.file != undefined){
+
+          
+      //     formData.append("file", this.file,this.file.name);
+      //     formData.append("leadbank_name", this.leadbank.leadbank_name);
+   
+      var api7 = 'Leadbank/Postleadbank'
+      this.service.post(api7, this.leadbank).subscribe((result: any) => {
+        if (result.status == false) {
+          this.ToastrService.warning(result.message)
+        }
+        else {
+          this.route.navigate(['/crm/CrmTrnLeadbanksummary']);
+          this.ToastrService.success(result.message)
+        }
+        this.responsedata = result;
+      });
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+    return;
+  }
+}

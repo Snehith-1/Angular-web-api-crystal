@@ -1,0 +1,525 @@
+﻿using ems.payroll.Models;
+using ems.system.DataAccess;
+using ems.system.Models;
+using ems.utilities.Functions;
+using Microsoft.SqlServer.Server;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Database;
+//using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+//using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+//using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+//using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Odbc;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Web;
+using static OfficeOpenXml.ExcelErrorValue;
+using static System.Collections.Specialized.BitVector32;
+
+
+namespace ems.payroll.DataAccess
+{
+    public class DaPayTrnSalaryPayment
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        string msGetloangid;
+        OdbcDataReader objODBCDatareader, objODBCDatareader2;
+        DataTable dt_datatable;
+        int mnResult;
+
+       
+
+        public void DaGetSalaryPaymentSummary(MdlPayTrnSalaryPayment values)
+        {
+           msSQL = " select x.month as payment_month,x.sal_year as payment_year,y.payment_gid, " +
+                   " case when (select a.month_workingdays from pay_trn_tsalary a where x.month=a.month and x.sal_year=a.year group by a.month,a.year) is null then '0' else " +
+                   " (select a.month_workingdays from pay_trn_tsalary a where x.month=a.month and x.sal_year=a.year group by a.month,a.year) end as total_working_days, " + 
+                   " cast(case when (select count(b.employee_gid) as no_of_employee from pay_trn_tsalary b where x.month=b.month and x.sal_year=b.year and b.payrun_flag='Y' group by b.month,b.year) is null then '0' else " + 
+                   " (select count(b.employee_gid) as no_of_employee from pay_trn_tsalary b where x.month=b.month and x.sal_year=b.year and b.payrun_flag='Y' group by b.month,b.year) end as char)as no_of_employee, " + 
+                   " case when (select format(sum(d.earned_net_salary),2) from pay_trn_tsalary d " + 
+                   " where x.month=d.month and x.sal_year=d.year and d.payrun_flag='Y' group by d.month,d.year) is null then 'Not Generated' " + 
+                   " else (select format(sum(d.earned_net_salary),2) " + 
+                   " from pay_trn_tsalary d where x.month=d.month and x.sal_year=d.year and d.payrun_flag='Y' group by d.month,d.year) end as total_salary, " + 
+                   " cast(case when count(distinct y.employee_gid) is null then 'Not Generated' else count(distinct y.employee_gid) end as char)as paid_employee_count, " + 
+                   " case when format(sum(y.net_salary),2) is null then'Not Generated' else  format(sum(net_salary),2) end as salary_disposed, " + 
+                   " case when format(((select sum(f.earned_net_salary) from pay_trn_tsalary f where f.month=x.month and f.year=x.sal_year  and f.payrun_flag='Y' group by f.month,f.year)- " + 
+                   " (select sum(d.net_salary) from pay_trn_tpayment d where d.payment_month=x.month and d.payment_year=x.sal_year " + 
+                   " group by d.payment_month,d.payment_year)),2) is null then 'Not Generated'  else " + " format(((select sum(f.earned_net_salary) from pay_trn_tsalary f where f.month=x.month and f.year=x.sal_year and f.payrun_flag='Y' group by f.month,f.year)- " +
+                   " (select sum(d.net_salary) from pay_trn_tpayment d where d.payment_month=x.month and d.payment_year=x.sal_year " + 
+                   " group by d.payment_month,d.payment_year)),2) end as outstanding_amount " + 
+                   " from pay_trn_tsalmonth x " +
+                   " left join pay_trn_tpayment y on x.month=y.payment_month and x.sal_year=y.payment_year " + 
+                   " group by x.month,x.sal_year  order by x.sal_year desc,MONTH(STR_TO_DATE(substring(x.month,1,3),'%b')) desc ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetPaymentlist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetPaymentlist
+                    {
+                        payment_gid = dt["payment_gid"].ToString(),
+                        payment_month = dt["payment_month"].ToString(),
+                        payment_year = dt["payment_year"].ToString(),
+                        total_working_days = dt["total_working_days"].ToString(),
+                        no_of_employee = dt["no_of_employee"].ToString(),
+                        total_salary = dt["total_salary"].ToString(),
+                        paid_employee_count = dt["paid_employee_count"].ToString(),
+                        salary_disposed = dt["salary_disposed"].ToString(),
+                        outstanding_amount = dt["outstanding_amount"].ToString()
+                       
+
+                    });
+                    values.paymentlist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+         public void DaGetEmployeeBankDtl(MdlPayTrnSalaryPayment values)
+        {
+            msSQL = "select bank_name From acc_mst_tallbank";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetEmployeeBankdropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetEmployeeBankdropdown  
+                    {
+                        bank_name = dt["bank_name"].ToString(),
+                       
+                    });
+                    values.getemployeebankdtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    
+        public void DaGetSalaryPaymentExpand(string month, string year, MdlPayTrnSalaryPayment values)
+        {
+            msSQL = " select date_format(a.payment_date,'%d-%m-%Y') as payment_date,a.payment_month,b.payment_type,a.payment_year, " +
+                            "  case when b.payment_type='Cash' then b.payment_type else concat(a.cheque_bank,'/',b.payment_type) end as modeof_payment, " +
+                            " count( distinct a.employee_gid) as no_of_employees,format(sum(a.net_salary),2) as paid_amount,concat(ifnull(c.user_firstname,''),' ',ifnull(c.user_lastname,'')) as paid_by,  " +
+                            " a.payment_type as modeofpayment_gid,a.cheque_bank,a.payment_gid from pay_trn_tpayment a " +
+                            " left join pay_mst_tmodeofpayment b on a.payment_type=b.modeofpayment_gid " +
+                            " left join adm_mst_tuser c on a.issued_by=c.user_gid " +
+                            " where a.payment_month='" + month + "' and a.payment_year='" + year + "'  group by a.cheque_bank,a.payment_date,a.payment_type ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetPayment>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetPayment
+                    {
+                        payment_gid = dt["payment_gid"].ToString(),
+                        payment_date = dt["payment_date"].ToString(),
+                        paid_amount = dt["paid_amount"].ToString(),
+                        no_of_employees = dt["no_of_employees"].ToString(),
+                        modeof_payment = dt["modeof_payment"].ToString(),
+                        payment_type = dt["payment_type"].ToString(),
+                        paid_by = dt["paid_by"].ToString(),
+                       
+                    });
+                    values.getpayment = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        public void DaGetSalaryPaymentExpand2(string month, string year, string payment_date, string modeof_payment, MdlPayTrnSalaryPayment values)
+        {
+            msSQL = " select f.user_code,concat(ifnull(f.user_firstname,''),' ',ifnull(f.user_lastname,'')) as employee_name,c.branch_name,date_format(a.payment_date, '%d-%m-%Y') as payment_date ,format(a.net_salary,2) as payment_amount, " +
+                    " format(a.net_salary,2) as paid_amount,d.department_name,e.designation_name,g.payment_type,a.payment_gid,a.payment_month,a.payment_year from pay_trn_tpayment a " +
+                    " left join hrm_mst_temployee b on a.employee_gid=b.employee_gid " +
+                    " left join hrm_mst_tbranch c on b.branch_gid=c.branch_gid " +
+                    " left join hrm_mst_tdepartment d on b.department_gid=d.department_gid " +
+                    " left join adm_mst_tdesignation e on b.designation_gid=e.designation_gid " +
+                    " left join adm_mst_tuser f on b.user_gid=f.user_gid " +
+                    " left join pay_mst_tmodeofpayment g on a.payment_type=g.modeofpayment_gid " +
+                    " where a.payment_month='" + month + "' and a.payment_year='" + year + "'  " +
+                    " group by b.employee_gid order by f.user_firstname asc";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetPayment1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetPayment1
+                    {
+                        payment_gid = dt["payment_gid"].ToString(),
+                        payment_date = dt["payment_date"].ToString(),
+                        user_code = dt["user_code"].ToString(),
+                        employee_name = dt["employee_name"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        designation_name = dt["designation_name"].ToString(),
+                        payment_amount = dt["payment_amount"].ToString(),
+                        paid_amount = dt["paid_amount"].ToString(),
+                        payment_type = dt["payment_type"].ToString(),
+
+
+                    });
+                    values.getpayment1 = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+      public void DaGetMakePaymentSummary(string month, string year, string user_gid, MdlPayTrnSalaryPayment values)
+        {
+            string lslimit_amount,lsactual_month_workingdays ,lsemployee_gid, lspaid_amount, lspayable_amount, lsmonthworking_days;
+            double lslimit_amount1, lsoutstanding_amount1=0.0;
+            string lsoutstanding_amount="", lslimit_flag="";
+
+                msSQL = " select f.user_code,actual_month_workingdays,concat(ifnull(f.user_firstname,''),' ',ifnull(f.user_lastname,'')) " +
+                        " as employee_name,c.branch_name,b.branch_gid,b.employee_gid,a.salary_gid," +
+                    " d.department_name,a.earned_net_salary from pay_trn_tsalary a " +
+                    " left join hrm_mst_temployee b on a.employee_gid=b.employee_gid " +
+                    " left join hrm_mst_tbranch c on b.branch_gid=c.branch_gid " +
+                    " left join hrm_mst_tdepartment d on b.department_gid=d.department_gid " +
+                    " left join adm_mst_tuser f on b.user_gid=f.user_gid " +
+                    " where a.month='" + month + "' and a.year='" + year + "'" +
+                    " and a.payrun_flag='Y'  ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetMakePaymentlist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows) 
+                {
+                    lsemployee_gid = dt["employee_gid"].ToString();
+                    lsactual_month_workingdays = dt["actual_month_workingdays"].ToString();
+                    lspayable_amount = dt["earned_net_salary"].ToString();
+                    msSQL = " select sum(a.earned_net_salary) from pay_trn_tsalary a " +
+                    " left join hrm_mst_temployee b on a.employee_gid=b.employee_gid " +
+                    " where b.employee_gid='" + lsemployee_gid + "'  " +
+                    " and a.year<='" + year + "'  and a.payrun_flag='Y' group by b.employee_gid";
+                    lslimit_amount = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " select sum(a.net_salary) as paid_amount from  pay_trn_tpayment a " +
+                    " left join hrm_mst_temployee b on a.employee_gid=b.employee_gid " +
+                    " where b.employee_gid='" + lsemployee_gid + "'   " +
+                    " and a.payment_year<='" + year+ "' group by b.employee_gid";
+                    lspaid_amount = objdbconn.GetExecuteScalar(msSQL);
+                    lslimit_amount1 = double.Parse(lslimit_amount) - double.Parse(lspaid_amount);
+
+                    msSQL = "select * from pay_trn_tpaymentlimit where employee_gid='" + lsemployee_gid + "' and month='" + month + "'" +
+                            " and year='" + year + "' ";
+                    objODBCDatareader = objdbconn.GetDataReader(msSQL);
+
+                    if(objODBCDatareader.HasRows==true) 
+                    {
+                        msSQL = " update pay_trn_tpaymentlimit set limit_amount='" + lslimit_amount + "',paid_amount='" + lspaid_amount + "'," +
+                       " payable_amount='" + lspayable_amount + "',no_of_workeddays='" + lsactual_month_workingdays + "'," +
+                       " outstanding_amount='" + lslimit_amount1 + "'  where employee_gid='" + lsemployee_gid + "' and" +
+                       " month='" + month + "'and year='" + year + "'";
+                       mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                   
+                    msSQL = "select * from pay_trn_tpaymentlimit where employee_gid='"+ lsemployee_gid +  
+                        "' and month='" + month + "'" +
+                        " and year='" + year + "' ";
+                    objODBCDatareader = objdbconn.GetDataReader(msSQL);
+
+                    if(objODBCDatareader.HasRows == true)
+                    {
+                        lsoutstanding_amount = objODBCDatareader["outstanding_amount"].ToString();
+                        lslimit_flag = objODBCDatareader["limit_flag"].ToString();
+                        lsoutstanding_amount1 = double.Parse(lsoutstanding_amount);
+                    }
+                   
+                    else
+                    {
+                        var msgetpamentlimit_gid = objcmnfunctions.GetMasterGID("PAYL");
+                        msSQL = " insert into pay_trn_tpaymentlimit ( " +
+                              " paymentlimit_gid, " +
+                              " salary_gid, " +
+                              " employee_gid, " +
+                              " month, " +
+                              " year, " +
+                              " no_of_workeddays, " +
+                              " empbranch_gid, " +
+                              " limit_amount, " +
+                              " paid_amount, " +
+                              " created_by, " +
+                              " created_date, " +
+                              " payable_amount " +
+                              " ) values ( " +
+                             "'" + msgetpamentlimit_gid + "', " +
+                             "'" + dt["salary_gid"].ToString() + "', " +
+                             "'" + lsemployee_gid + "', " +
+                             "'" + month + "', " +
+                             "'" + year + "', " +
+                             "'" + lsactual_month_workingdays + "', " +
+                             "'" + dt["branch_gid"].ToString() + "', " +
+                             "'" + lslimit_amount + "', " +
+                             "'" + lspaid_amount + "', " +
+                             "'" + user_gid + "', " +
+                             "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                             "'" + lspayable_amount + "' ) ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                    if(lsoutstanding_amount1!=0  && lslimit_flag != "Y")
+                    {
+                        //lsoutstanding_amount1 = lsoutstanding_amount1;
+                    }
+                    else
+                    {
+                        lsoutstanding_amount1 = lslimit_amount1;
+                    }
+                    getModuleList.Add(new GetMakePaymentlist
+                    {
+                        employee_gid = dt["employee_gid"].ToString(),
+                        user_code = dt["user_code"].ToString(),
+                        employee_name = dt["employee_name"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        earned_net_salary = dt["earned_net_salary"].ToString(),
+                        outstanding_amount =double.Parse((lsoutstanding_amount1).ToString("N")),
+                    }) ;
+                    values.makepaymentlist = getModuleList;
+                }
+           
+            
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaPostMakePayment(string user_gid,payment_listdtl values)
+        {
+            double lscount = 0;
+            string lsaccount_no = null;
+            string lspayment_gid = null;
+            string lsemployee_gid = null;
+            double lsupdated_limitamount;
+            string lsnet_salary = "";
+            string lsemployeraccount_gid = null;
+            string lsuser_gid = null;
+            string lsuser_code = null;
+            string lsemployee_accountgid = null;
+            string LSTransactionType = null;
+            string LSReferenceGID = null;
+            string lsemployerbank_code = null;
+            string lsbank_name = null;
+            string lslimit_amount= "";
+            string  lspaid_amount= "";
+           
+            
+            foreach (var dt in values.payment_list)
+            {
+
+
+                msSQL = " select account_gid,bank_code from acc_mst_tbank where bank_gid='" + dt.bank_gid + "'";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+
+
+
+
+                if (objODBCDatareader.HasRows == true)
+                {
+                    lsemployeraccount_gid = objODBCDatareader["account_gid"].ToString();
+                    lsemployerbank_code = objODBCDatareader["bank_code"].ToString();
+
+                }
+
+                //string lsnet_salary;
+
+               
+
+                msSQL = "select ifnull(sum(net_salary),0.00) as net_salary from pay_trn_tpayment where employee_gid='" + dt.employee_gid + "' and payment_month='" + values.month + "' " +
+                        " and payment_year='" + values.year + "'";
+                lsnet_salary = objdbconn.GetExecuteScalar(msSQL);
+
+                msSQL = "select ac_no,user_gid,bank from hrm_mst_temployee where employee_gid='" + dt.employee_gid + "'";
+                objODBCDatareader2 = objdbconn.GetDataReader(msSQL);
+
+                if (objODBCDatareader2.HasRows == true)
+                {
+                    lsaccount_no = objODBCDatareader2["ac_no"].ToString();
+                    lsuser_gid = objODBCDatareader2["user_gid"].ToString();
+                    lsbank_name = objODBCDatareader2["bank"].ToString();
+
+                }
+                msSQL = " select paymentlimit_gid,salary_gid,employee_gid,month,year,limit_amount,empbranch_gid,paid_amount,payable_amount,no_of_workeddays,outstanding_amount from pay_trn_tpaymentlimit where employee_gid='" + dt.employee_gid + "' and month='" + values.month + "' " +
+                        " and year='" + values.year + "' ";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                if(objODBCDatareader.HasRows == true)
+                {
+                    objODBCDatareader.Read();
+                    lslimit_amount = objODBCDatareader["limit_amount"].ToString();
+                    lspaid_amount = objODBCDatareader["paid_amount"].ToString();
+                     string lspaymentlimit_gid = objODBCDatareader["paymentlimit_gid"].ToString();
+                     string lssalary_gid = objODBCDatareader["salary_gid"].ToString();
+                     string lsempbranch_gid = objODBCDatareader["empbranch_gid"].ToString();
+                     string lsno_of_workeddays = objODBCDatareader["no_of_workeddays"].ToString();
+                     string lspayable_amount = objODBCDatareader["payable_amount"].ToString();
+                
+               
+                    
+
+                    double lslimitamount = double.Parse(lslimit_amount);
+                    double lspaidamount = double.Parse(lspaid_amount);
+                
+
+                msSQL = "select ifnull(sum(net_salary),0.00) as net_salary from pay_trn_tpayment " +
+                    " where employee_gid='" + dt.employee_gid + 
+                    "' and payment_month='" + values.month + "' " +
+                    " and payment_year='" + values.year + "'";
+                lsnet_salary = objdbconn.GetExecuteScalar(msSQL);
+
+                lsupdated_limitamount = lslimitamount - double.Parse(lsnet_salary) - double.Parse(dt.earned_net_salary);
+
+                if(lslimitamount < lspaidamount)
+                {
+                    lsemployee_gid = "'" + dt.employee_gid + "'," + lsemployee_gid;
+
+                    continue;
+                }
+                        
+                    
+                string msgetpayment_gid = objcmnfunctions.GetMasterGID("SLPY");
+
+                msSQL = " insert into pay_trn_tpayment ( " +
+                                              " payment_gid, " +
+                                              " salary_gid, " +
+                                              " paymentlimit_gid, " +
+                                              " employee_gid, " +
+                                              " payment_month, " +
+                                              " payment_year, " +
+                                              " no_of_workingdays, " +
+                                              " empbranch_gid, " +
+                                              " payable_amount, " +
+                                              " net_salary, " +
+                                              " payment_date, " +
+                                              " payment_type, " +
+                                              " cheque_bank, " +
+                                              " bank_branch, " +
+                                              " paymentcount_gid, " +
+                                              " payment_flag, " +
+                                              " account_no, " +
+                                              " employee_bankname, " +
+                                              " cheque_number, " +
+                                              " company_check_number, " +
+                                              " payment_method, " +
+                                              " issued_by, " +
+                                              " issued_date " +
+                                              " ) Values ( " +
+                                              " '" + msgetpayment_gid + "', " +
+                                              " '" + lssalary_gid + "', " +
+                                              " '" + lspaymentlimit_gid + "', " +
+                                              " '" + dt.employee_gid + "', " +
+                                              " '" + values.month + "', " +
+                                              " '" + values.year + "', " +
+                                              " '" + lsno_of_workeddays + "', " +
+                                              " '" + lsempbranch_gid + "', " +
+                                              " '" + lspayable_amount + "', " +
+                                              " '" + lsnet_salary + "', " +
+                                              "'" + DateTime.Now.ToString("yyyy-MM-dd") + "', " +
+                                              "'" +  values.payment_type + "', " +
+                                              " '" + values.cheque_bank + "', " +
+                                              " '" + values.bank_branch + "', " +
+                                              " '" + dt.paymentcount_gid + "', " +
+                                              " 'Y', " +
+                                              " '" + values.account_no + "', " +
+                                              " '" + values.bank_name + "', " +
+                                              " '" + values.cheque_number + "', " +
+                                              " '" + dt.company_check_number + "', " +
+                                              " 'Partial', " +
+                                               "'" + user_gid + "', " +
+                                       "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                
+                if( lsupdated_limitamount == 0.0)
+                {
+                    msSQL = " update pay_trn_tpayment set " +
+                                " payment_method='Full' " +
+                                " where payment_gid='" + msgetpayment_gid + "'  ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                    msSQL = " update pay_trn_tpaymentlimit set limit_flag='Y' " +
+                            " where  month='" + values.month + "' " +
+                            " and year='" + values.year + "' and employee_gid='" + dt.employee_gid + "'";
+                       mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                    msSQL = " update pay_trn_tsalary a " +
+                            " set a.limit_flag='Y'" +
+                            " where a.month='" + values.month + "' " +
+                            " and a.year='" + values.year + "' and a.employee_gid='" + dt.employee_gid + "'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+                      
+                    
+                    if (mnResult == 1)
+                {
+                    lscount = lscount + 1;
+                    msSQL = " update pay_trn_tsalary a " +
+                            " set a.payment_flag='Y'" +
+                            " where a.month='" + values.month + "' " +
+                            " and a.year='" + values.year + "' and a.employee_gid='" + dt.employee_gid + "'";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                    msSQL = " update pay_trn_tpaymentlimit set outstanding_amount='" + lsupdated_limitamount + "', " +
+                            " paid_amount='" + lspaidamount + "' " +
+                            " where  month='" + values.month + "' " +
+                            " and year='" + values.year + "' and employee_gid='" + dt.employee_gid + "'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+
+                }
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Payment Done Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Payment";
+                }
+            }
+        }
+        public void DagetDeletePayment(string payment_gid, MdlPayTrnSalaryPayment values)
+        {
+            msSQL = "  delete from pay_trn_tpayment where payment_gid='" + payment_gid + "'  ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Payment Deleted Successfully";
+            }
+            else
+            {
+                {
+                    values.status = false;
+                    values.message = "Error While Deleting Payment";
+                }
+            }
+        }
+
+    }
+
+ }
+
+
+
+
+
+  

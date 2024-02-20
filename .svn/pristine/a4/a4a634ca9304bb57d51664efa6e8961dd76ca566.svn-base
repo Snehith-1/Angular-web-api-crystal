@@ -1,0 +1,399 @@
+<div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white">
+            E-way Bill Entry Form
+        </h3>
+    </div>
+
+    <form [formGroup]="ewaybillform">
+        <div class="card m-3 border">
+            <div class="card-header bg-lightblue card-height55">
+                <div class="card-title m-0">
+                    <h4 class="fw-bolder text-blue">Transaction Details</h4>
+                </div>                
+            </div>            
+        </div>
+
+        <input type="text" formControlName="ewaybill_invoice_gid" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 border-secondary" hidden name="invoice_gid"/>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Supply Type</span>
+                    <ng-select class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2" formControlName="ewaybill_supply_type" [(ngModel)]="ewaysuptype" [class.is-invalid]="ewaybillform.get('ewaybill_supply_type')?.invalid && (ewaybillform.get('ewaybill_supply_type')?.dirty || ewaybillform.get('ewaybill_supply_type')?.touched)" [ngClass]="{'invalid-border': ewaybillform.get('ewaybill_supply_type')?.invalid && ewaybillform.get('ewaybill_supply_type')?.touched}" placeholder="Select an option">
+                        <ng-option value="Outward">Outward</ng-option>
+                        <ng-option value="Inward">Inward</ng-option>
+                    </ng-select>
+                    <div *ngIf="ewaybillform.get('ewaybill_supply_type')?.hasError('required') && ewaybillform.get('ewaybill_supply_type')?.touched || ewaybillform.get('ewaybill_supply_type')?.hasError('pattern')" class="text-red">Supply type is required.</div>
+                </div>
+                
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Sub Type</span>
+                    <ng-select class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2" formControlName="ewaybill_sub_type" [(ngModel)]="ewaysubtype" [class.is-invalid]="ewaybillform.get('ewaybill_sub_type')?.invalid && (ewaybillform.get('ewaybill_sub_type')?.dirty || ewaybillform.get('ewaybill_sub_type')?.touched)" [ngClass]="{'invalid-border': ewaybillform.get('ewaybill_sub_type')?.invalid && ewaybillform.get('ewaybill_sub_type')?.touched}" placeholder="Select an option">
+                        <ng-option value="Supply">Supply</ng-option>
+                        <ng-option value="Export">Export</ng-option>
+                        <ng-option value="Job_Work">Job Work</ng-option>
+                        <ng-option value="SKD/CKD/Lots">SKD/CKD/Lots</ng-option>
+                        <ng-option value="Recipient_Not_Known">Recipient Not Known</ng-option>
+                        <ng-option value="For_Own_Use">For Own Use</ng-option>
+                        <ng-option value="Exhibition_or_Fairs">Exhibition or Fairs</ng-option>
+                        <ng-option value="Line_Sales">Line Sales</ng-option>
+                        <ng-option value="Others">Others</ng-option>
+                    </ng-select>
+                    <div *ngIf="ewaybillform.get('ewaybill_sub_type')?.hasError('required') && ewaybillform.get('ewaybill_sub_type')?.touched || ewaybillform.get('ewaybill_sub_type')?.hasError('pattern')" class="text-red">Sub type is required.</div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Document Type</span>
+                    <ng-select class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2" formControlName="ewaybill_document_type" [(ngModel)]="ewaydoctype" [class.is-invalid]="ewaybillform.get('ewaybill_document_type')?.invalid && (ewaybillform.get('ewaybill_document_type')?.dirty || ewaybillform.get('ewaybill_document_type')?.touched)" [ngClass]="{'invalid-border': ewaybillform.get('ewaybill_document_type')?.invalid && ewaybillform.get('ewaybill_document_type')?.touched}" placeholder="Select an option">
+                        <ng-option value="Tax_Invoice">Tax Invoice</ng-option>
+                    </ng-select>
+                    <div *ngIf="ewaybillform.get('ewaybill_document_type')?.hasError('required') && ewaybillform.get('ewaybill_document_type')?.touched || ewaybillform.get('ewaybill_document_type')?.hasError('pattern')" class="text-red">Document type is required.</div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold required">Document Number</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input" formControlName="ewaybill_document_no" [ngStyle]="{'border-color': ewaybilldocumentnoControl.invalid && ewaybilldocumentnoControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+"/>
+                        <div *ngIf="ewaybilldocumentnoControl.invalid && ewaybilldocumentnoControl.touched">
+                            <div *ngIf="ewaybilldocumentnoControl.hasError('required')" class="text-red">Document number is required.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold required">Document Date</span>
+                    <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" class="form-control form-control-lg form-control-solid custom-input date-picker mb-3 mb-lg-0 bg-white custom-input" formControlName="ewaybill_document_date" [ngStyle]="{'border-color': ewaybilldocumentdateControl.invalid && ewaybilldocumentdateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" placeholder="DD-MM-YYYY"/>
+                        <div *ngIf="ewaybilldocumentdateControl.invalid && ewaybilldocumentdateControl.touched">
+                            <div *ngIf="ewaybilldocumentdateControl.hasError('required')" class="text-red">Document date is required.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold required">Transaction Type</span>
+                    <ng-select class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2" formControlName="ewaybill_transaction_type" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" [(ngModel)]="ewaytranstype" [class.is-invalid]="ewaybillform.get('ewaybill_transaction_type')?.invalid && (ewaybillform.get('ewaybill_transaction_type')?.dirty || ewaybillform.get('ewaybill_transaction_type')?.touched)" [ngClass]="{'invalid-border': ewaybillform.get('ewaybill_transaction_type')?.invalid && ewaybillform.get('ewaybill_transaction_type')?.touched}" placeholder="Select an option">
+                       <ng-option value="Tax_Invoice">Tax Invoice</ng-option>
+                    </ng-select>
+                    <div *ngIf="ewaybillform.get('ewaybill_transaction_type')?.hasError('required') && ewaybillform.get('ewaybill_transaction_type')?.touched || ewaybillform.get('ewaybill_transaction_type')?.hasError('pattern')" class="text-red">Transaction type is required.</div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="d-flex flex-row flex-wrap bg-lightblue card-height55">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <div class="card-header mt-4">
+                                        <div class="card-title m-0">
+                                            <h5 class="fw-bolder text-blue mb-3">Bill From</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-12 col-md-12 col-sm-12"><span class="font-bold">Name</span>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_bill_fromname" readonly/>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 mt-2"><span class="font-bold">GSTIN</span>
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_bill_fromgstin" readonly/>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 mt-2"><span class="font-bold">State</span>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_bill_fromstate" readonly/>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+    
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="d-flex flex-row flex-wrap bg-lightblue card-height55">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <div class="card-header mt-4">
+                                        <div class="card-title m-0">
+                                            <h5 class="fw-bolder text-blue mb-3">Dispatch From</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Place</span>
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_dispatch_fromplace" readonly/>
+                                </div>
+                            </div>
+    
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Pincode</span>
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_dispatch_frompincode" readonly/>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">State</span>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_dispatch_fromstate" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-12 col-md-12 col-sm-12 mt-2"><span class="font-bold">Address</span>
+                                <div class="mt-2">
+                                    <textarea type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary custom-input" formControlName="ewaybill_dispatch_fromaddress" class="form-control bg-secondary" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="d-flex flex-row flex-wrap bg-lightblue card-height55">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <div class="card-header mt-4">
+                                        <div class="card-title m-0">
+                                            <h5 class="fw-bolder text-blue mb-3">Bill To</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-12 col-md-12 col-sm-12"><span class="font-bold">Name</span>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_bill_toname" readonly/>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 mt-2"><span class="font-bold">GSTIN</span>
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_bill_togstin" readonly/>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12 mt-2"><span class="font-bold">State</span>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_bill_tostate" readonly/>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+    
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="d-flex flex-row flex-wrap bg-lightblue card-height55">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <div class="card-header mt-4">
+                                        <div class="card-title m-0">
+                                            <h5 class="fw-bolder text-blue mb-3">Ship To</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Place</span>
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_ship_toplace" readonly/>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">Pincode</span>
+                                <div class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_ship_topincode" readonly/>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold">State</span>
+                                <div class="mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_ship_tostate" readonly/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row flex-wrap mt-4">
+                            <div class="col-12 col-lg-12 col-md-12 col-sm-12 mt-2"><span class="font-bold">Address</span>
+                                <div class="mt-2">
+                                    <textarea type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary custom-input" formControlName="ewaybill_ship_toaddress" class="form-control bg-secondary" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Invoice Details</h4>
+                    </div>                
+                </div>            
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">IRN</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_irn" readonly/>
+                    </div>                    
+                </div>
+                
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="font-bold">Invoice Reference No</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_invoice_ref_no" readonly/>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12"><span class="font-bold">Invoice Amount</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="ewaybill_invoice_amount" readonly/>
+                    </div>
+                </div>                
+            </div>
+
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Items Details</h4>
+                    </div>                
+                </div>            
+            </div>
+
+            <div class="table-responsive">
+                <table id="product" class="table table-striped table-row-bordered border-bottom align-middle">
+                    <thead class="table_head">
+                        <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                            <th style="text-align: center;">S.No</th>
+                            <th>Product Name</th>
+                            <th>HSN Code / Description</th>
+                            <th>Unit</th>
+                            <th style="text-align: center;">Quantity</th>
+                            <th style="text-align: right;">Discount (%)</th>
+                            <th style="text-align: right; width: 120px;">Tax</th>
+                            <th style="text-align: right;">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of invoiceproductlist; let i=index;">
+                            <td style="text-align: center;">{{i+1}}</td>
+                            <td>{{data.product_name}}</td>
+                            <td>{{data.hsn}}</td>
+                            <td>{{data.uom_name}}</td>
+                            <td style="text-align: center;">{{data.qty_invoice}}</td>
+                            <td style="text-align: right;">{{data.discount}}</td>
+                            <td style="text-align: right;">{{data.tax}}</td>
+                            <td style="text-align: right; font-weight: bold;">{{data.product_total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Transportation Details</h4>
+                    </div>                
+                </div>            
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Transporter ID</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="ewaybill_transporter_id"/>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Transporter Name</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="ewaybill_transporter_name"/>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Approximate Distance (in KM)</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <div style="display: flex; flex-direction: column;">
+                            <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input" formControlName="ewaybill_approximate_distance" [ngStyle]="{'border-color': ewaybillapproximatedistanceControl.invalid && ewaybillapproximatedistanceControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" style="width:150px;"/>
+                            <span style="margin-left: 160px; margin-top: -26px; font-weight: bold;">Auto Calculated PIN to PIN (in KM)</span>
+                            <div *ngIf="ewaybillapproximatedistanceControl.invalid && ewaybillapproximatedistanceControl.touched">
+                                <div *ngIf="ewaybillapproximatedistanceControl.hasError('required')" class="text-red">Distance is required</div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="card m-3 border">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                        <h4 class="fw-bolder text-blue">Part B</h4>
+                    </div>                
+                </div>            
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Transport Mode</span>
+                    <ng-select class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2" formControlName="ewaybill_transport_mode" [(ngModel)]="ewaytransmode" placeholder="Select an option">
+                        <ng-option value="1">Road</ng-option>
+                        <ng-option value="2">Rail</ng-option>
+                        <ng-option value="3">Air</ng-option>
+                        <ng-option value="4">Ship or Ship Cum Road/Rail</ng-option>
+                    </ng-select>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Vehicle Type</span>
+                    <ng-select class="col-12 col-lg-11 col-md-11 col-sm-11 fv-row mt-2" formControlName="ewaybill_vehicle_type" [(ngModel)]="ewayvehicletype" placeholder="Select an option">
+                        <ng-option value="R">Regular</ng-option>
+                        <ng-option value="O">Over Dimensional Cargo</ng-option>
+                    </ng-select>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Vehicle Number</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="ewaybill_vehicle_no"/>
+                    </div>                    
+                </div>
+            </div>            
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Transporter Document Number</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="ewaybill_transporter_doc_no"/>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Transporter Date</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" class="form-control form-control-lg form-control-solid custom-input date-picker mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="ewaybill_transporter_date" placeholder="DD-MM-YYYY"/>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="text-center my-4">
+                <button type="submit" class="btn-success btn-sm text-white me-2" (click)="ewaybillSubmit()" [disabled]="ewaybillform.invalid" [ngClass]="{'primary-button': !ewaybillform.invalid,'secondary-button': ewaybillform.invalid}">
+                    <i class="bi bi-check-square fs-5"></i>
+                    <span class="ms-3">Submit</span>
+                </button>
+            
+                <button type="back" class="btn-primary btn-sm text-white me-4" (click)="back()">
+                    <i class="bi bi-arrow-left-square fs-5 me-1"></i>
+                    <span class="ms-3">Back</span>
+                </button>
+            </div>
+    </form>
+</div>

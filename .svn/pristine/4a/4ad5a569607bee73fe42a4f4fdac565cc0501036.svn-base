@@ -1,0 +1,288 @@
+<div class="card">
+  <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <h3 class="card-title">
+        Add Payment
+        <i class="bi bi-arrow-left-square-fill float-end fs-1 me-6"></i> <!-- (click)="back()" -->
+      </h3>
+    </div>
+  </div>
+
+  <div class="card m-3">
+    <form [formGroup]="reactiveForm" #form="ngForm">
+      <div *ngFor="let data of vendor_lists;">
+        <div class="d-flex flex-row flex-wrap mt-10 ms-3">
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Payment Date</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input type="date" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" formControlName="payment_date" placeholder="Enter Date" name="payment_date">
+            </div>
+          </div>
+  
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Vendor Name</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-4">
+              <p class="fs-5">{{data.vendor_companyname}}</p>
+            </div>
+          </div>
+  
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Vendor Contact Details</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-4">
+              <p class="fs-5">{{data.vendorcontactdetails}}</p>
+            </div>
+          </div>
+  
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Contact Number</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-4">
+              <p class="fs-5">{{data.contact_telephonenumber}}</p>
+            </div>
+          </div>
+  
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Email</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-4">
+              <p class="fs-5">{{data.email_id}}</p>
+            </div>
+          </div>
+  
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Vendor Address</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-4">
+              <p class="fs-5">{{data.vendoraddress}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+              <div class="d-flex flex-row m-0 flex-wrap">
+                <div class="col-lg-6 col-md-6 col-sm-6"><b>Currency</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row  mt-4">
+                    <p class="fs-5">{{data.currency_code}}</p>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6"><b>Exchange Rate</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row  mt-4">
+                    <p class="fs-5">{{data.exchange_rate}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Payment Remarks</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <textarea class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" id="payment_remarks" formControlName="payment_remarks" rows="1" placeholder="Enter Remarks"></textarea>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Payment Note</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <textarea class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" id="payment_note" formControlName="payment_note" rows="1" placeholder="Enter Note"></textarea>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Entered By</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-4">
+              <p class="fs-5">{{data.name}}</p>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Priority</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+              <input type="radio" class="form-control-input" formControlName="priority" value="N" (change)="showTextBox2($event)"><label class="fs-5 ms-3" for="Low">Low</label>
+              <input type="radio" class="form-control-input ms-6" formControlName="priority" value="Y" (change)="showTextBox2($event)"><label class="fs-5 ms-3" for="Low">High</label>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-2 col-md-2 col-sm-12" *ngIf="showInput1">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+              <textarea class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input" rows="1" formControlName="textbox" name="textbox" placeholder="Enter Text"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="table-responsive">
+        <div class="p-3 pt-0 p mt-12 bg-white rounded">
+          <table id="singlepayment_list" class="table table-striped table-row-bordered gy-5 gs-7">
+            <thead>
+              <tr class="fw-bolder fs-8 bg-lightblue text-blue align-bottom">
+                <th>
+                  <input type="checkbox" id="checkAll" class="mt-2" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </th>
+                <th>S.No</th>
+                <th style="width: 95px;">Invoice Date</th>
+                <th>Invoice Refno</th>
+                <th style="text-align: right; width: 70px;">Invoice Amount</th>
+                <th style="text-align: right; width: 70px;">Paid Amount</th>
+                <th style="text-align: right; width: 70px;">Outstanding Amount</th>
+                <th style="width: 95px;">Invoice Status</th>
+                <th style="text-align: right; width: 70px;">Advance</th>
+                <th style="text-align: right; width: 70px;">Payment Amount</th>
+                <th style="text-align: right; width: 70px;">Balance PO Advance</th>
+                <th style="text-align: right; width: 70px;">Total PO Advance</th>
+                <th style="text-align: right; width: 70px;">Grand Total</th>
+                <th style="text-align: right; width: 70px;">TDS Amount</th>
+                <th style="text-align: right; width: 70px;">Final Amount</th>
+                <th style="width: 100px;">Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of singlepayment_list; let i=index;" class="align-middle fs-8">
+                <td>
+                  <input type="checkbox" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(data) : null" [checked]="selection.isSelected(data)" />
+                </td>
+                <td>{{i+1}}</td>
+                <td>{{data.invoice_date}}</td>
+                <td>{{data.invoice_gid}}</td>
+                <td style="text-align: right; width: 45px;">{{data.invoice_amount}}</td>
+                <td style="text-align: right; width: 45px;">{{data.invoice_amount}}</td>
+                <td style="text-align: right; width: 45px;">{{data.outstanding}}</td>
+                <td style="width: 55px;">{{data.invoice_status}}</td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.advance" style="width:50px; text-align: right;" formControlName="advance_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.payment_amount" style="width:50px; text-align: right;" formControlName="payment_amount_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.balancepo_advance" style="width:50px; text-align: right;" formControlName="balancepo_advance_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.totalpo_advance" style="width:50px; text-align: right;" formControlName="totalpo_advance_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.grand_total" style="width:50px; text-align: right;" formControlName="grand_total_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.tds_amount" style="width:50px; text-align: right;" formControlName="tds_amount_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td style="text-align: right;">
+                  <input type="text" [(ngModel)]="data.final_amount" style="width:50px; text-align: right;" formControlName="payment_amount_{{i}}" (keypress)="onKeyPress($event)" />
+                </td>
+                <td>
+                  <textarea id="remark" formControlName="remark_{{i}}" rows="1"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row fv-row flex-wrap">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Payment Mode</b>
+            <select formControlName="payment_mode" class="form-select form-select-solid bg-white form-select-lg border-secondary custom-input select2 mt-3" (change)="showTextBox($event)">
+              <option value="">--Select an option--</option>
+              <option value="Cash">Cash</option>
+              <option value="Cheque">Cheque</option>
+              <option value="DD">DD</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="NEFT">NEFT</option>
+            </select>
+          </div>
+        </div>        
+      </div>
+
+      <div class="d-flex flex-row fv-row flex-wrap" *ngIf="showInput">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12 mt-5 ms-15 fv-row"><b>Bank Name</b>          
+            <ng-select formControlName="bank_name" [class.is-invalid]="bank_name.invalid && (bank_name.dirty || bank_name.touched)" [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}" [items]="bankdetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3" bindLabel="bank_name" bindValue="bank_name" placeholder="Select Bank Name"></ng-select>
+        </div>
+
+        <div class="col-12 col-lg-2 col-md-2 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Cheque No</b>
+            <input formControlName="cheque_no" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter Cheque No" name="cheque_no" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Branch Name</b>
+            <input formControlName="branch_name" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter Branch Name" name="branch_name" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Date</b>
+            <input formControlName="payment_date" type="date" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" name="payment_date" />
+          </div>
+        </div>
+      </div>     
+
+      <div class="d-flex flex-row fv-row flex-wrap" *ngIf="showInput2">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12 mt-5 ms-15 fv-row"><b>Bank Name</b>          
+          <ng-select formControlName="bank_name" [class.is-invalid]="bank_name.invalid && (bank_name.dirty || bank_name.touched)" [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}" [items]="bankdetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3" bindLabel="bank_name" bindValue="bank_name" placeholder="Select Bank Name"></ng-select>
+        </div>
+
+        <div class="col-12 col-lg-2 col-md-2 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>DD No.</b>
+            <input formControlName="dd_no" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter DD No." name="dd_no" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Branch Name</b>
+            <input formControlName="branch_name" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter Branch Name" name="branch_name" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Date</b>
+            <input formControlName="payment_date" type="date" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" name="payment_date" />
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row fv-row flex-wrap" *ngIf="showInput3">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Card Name</b>
+            <ng-select formControlName="card_name" [class.is-invalid]="card_name.invalid && (card_name.dirty || card_name.touched)" [ngClass]="{'invalid-border': card_name.invalid && card_name.touched}" [items]="carddetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3" bindLabel="bank_name" bindValue="bank_name" placeholder="Select Card Name"></ng-select>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Transaction No.</b>
+            <input formControlName="transaction_no" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter Transaction No." name="transaction_no" />
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-row fv-row flex-wrap" *ngIf="showInput4">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12 mt-5 ms-15 fv-row"><b>Bank Name</b>          
+          <ng-select formControlName="bank_name" [class.is-invalid]="bank_name.invalid && (bank_name.dirty || bank_name.touched)" [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}" [items]="bankdetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3" bindLabel="bank_name" bindValue="bank_name" placeholder="Select Bank Name"></ng-select>
+        </div>
+
+        <div class="col-12 col-lg-2 col-md-2 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Transaction Ref. No.</b>
+            <input formControlName="cheque_no" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter Cheque No" name="cheque_no" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Branch Name</b>
+            <input formControlName="branch_name" type="text" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" placeholder="Enter Branch Name" name="branch_name" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5"><b>Date</b>
+            <input formControlName="payment_date" type="date" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3" name="payment_date" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12" *ngIf="showInput5">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Date</b>
+          <input formControlName="payment_date1" type="date" class="form-control form-control-lg form-control-solid border-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"/>
+        </div>
+      </div>
+
+      <div class="text-center my-4 mt-10">
+        <button class="btn-success btn-sm text-white me-4" (click)="onsubmit()">
+          <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+        </button> &nbsp;&nbsp;
+        <button class="btn-danger btn-sm text-white me-4" (click)="onback()">
+          <i class="fa fa-arrow-left"></i>
+          <span class="ms-3">Back</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

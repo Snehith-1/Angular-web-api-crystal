@@ -1,0 +1,40 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CrmMstProductComponent } from './componet/crm-mst-product/crm-mst-product.component';
+import { CrmMstProductAddComponent } from './componet/crm-mst-product-add/crm-mst-product-add.component';
+import { CrmMstProductEditComponent } from './componet/crm-mst-product-edit/crm-mst-product-edit.component';
+import { DashboardComponent } from './componet/dashboard/dashboard.component';
+import { SidenavComponent } from './componet/sidenav/sidenav.component';
+import { CrmMstCustomerAddComponent } from './componet/crm-mst-customeradd/crm-mst-customeradd.component';
+import { CrmMstCustomerSummaryComponent } from './componet/crm-mst-customersummary/crm-mst-customersummary.component';
+import { RblTrnTinvoiceComponent } from './componet/rbl-trn-tinvoice/rbl-trn-tinvoice.component';
+import { RblTrninvoiceaddComponent } from './componet/rbl-trn-invoiceadd/rbl-trn-invoiceadd.component';
+import { CrmMstProductViewComponent } from './componet/crm-mst-product-view/crm-mst-product-view.component';
+import { CrmMstCustomereditComponent } from './componet/crm-mst-customeredit/crm-mst-customeredit.component';
+import { CrmMstCustomerviewComponent } from './componet/crm-mst-customerview/crm-mst-customerview.component';
+import { SysMstBranchComponent } from './componet/sys-mst-branch/sys-mst-branch.component';
+import { RblTrnEinvoiceComponent } from './componet/rbl-trn-einvoice/rbl-trn-einvoice.component';
+import { RblTrnInvoiceeditComponent } from './componet/rbl-trn-invoiceedit/rbl-trn-invoiceedit.component';
+
+const routes: Routes = [
+  { path: 'CrmMstProduct', component: CrmMstProductComponent},
+  { path: 'CrmMstProductAdd', component: CrmMstProductAddComponent},
+  { path: 'CrmMstCustomerAdd', component: CrmMstCustomerAddComponent},
+  { path: 'CrmMstCustomer', component: CrmMstCustomerSummaryComponent},
+  { path: 'Dashboard', component: DashboardComponent},
+  { path: 'Invoice', component: RblTrnTinvoiceComponent},
+  { path: 'AddInvoice', component: RblTrninvoiceaddComponent},
+  { path: 'CrmMstProductEdit/:product_gid', component: CrmMstProductEditComponent},
+  { path: 'EditInvoice/:invoice_gid', component: RblTrnInvoiceeditComponent},
+  { path: 'CrmMstProductView/:product_gid', component: CrmMstProductViewComponent},
+  { path: 'CrmMstCustomerEdit/:customer_gid', component: CrmMstCustomereditComponent},
+  { path: 'CrmMstCustomerview/:customer_gid', component: CrmMstCustomerviewComponent},
+  { path: 'SysMstBranch', component: SysMstBranchComponent},
+  { path: 'EInvoice/:invoice_gid', component: RblTrnEinvoiceComponent},
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class EmsEinvoiceRoutingModule { }

@@ -1,0 +1,59 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+@Component({
+  selector: 'app-crm-smm-emailmanagement',
+  templateUrl: './crm-smm-emailmanagement.component.html',
+  styleUrls: ['./crm-smm-emailmanagement.component.scss']
+})
+export class CrmSmmEmailmanagementComponent {
+  response_data: any;
+  mailmanagement: any[] = [];
+  reactiveForm!: FormGroup;
+  parameterValue1: any;
+  mailsummary_list: any;
+  mail: any;
+  from_mail: any;
+  to_mail: any;
+  subject: any;
+  body_content: any;
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService,) { }
+  ngOnInit(): void {
+    this.GetMailSummary();
+  }
+  GetMailSummary() {
+    
+    var api = 'MailCampaign/GetMailSummary';
+    this.service.get(api).subscribe((result: any) => {
+      $('#mail').DataTable().destroy();
+
+      this.response_data = result;
+      this.mailsummary_list = this.response_data.mailsummary_list;
+      setTimeout(() => {
+        $('#mail').DataTable();
+      }, 1);
+    });
+
+  }
+  
+  onadd() {
+    this.router.navigate(['/crm/CrmCampaignMailmanagement'])
+
+  } 
+  popmodal(parameter: string) {
+    this.parameterValue1 = parameter
+
+    this.to_mail = this.parameterValue1.to;
+
+    this.from_mail = this.parameterValue1.from;
+
+    this.subject = this.parameterValue1.sub;
+
+    this.body_content = this.parameterValue1.body;
+
+  }
+ 
+}

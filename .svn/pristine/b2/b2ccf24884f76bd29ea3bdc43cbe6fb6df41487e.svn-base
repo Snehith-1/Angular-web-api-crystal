@@ -1,0 +1,50 @@
+.primary-button {
+    background-color: #42ac72;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.secondary-button {
+    background-color: #50cd89;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.btn-danger {
+    
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.del_modal-dialog {
+    margin-top: 200px;
+    
+    .del_modal-content{
+        height: 200px;
+        width: 350px;
+
+        h2 {
+            margin-top: 20px;
+        }
+        
+        p {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+}

@@ -1,0 +1,63 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AES } from 'crypto-js';
+interface ICustomer {
+  customer_gid: string;
+  customer_id: string;
+  customer_name: string;
+  contact_details: string;
+  region_name: string;
+  PopupControlExtender_branch: string;
+  PopupControlExtender_person: string;
+}
+@Component({
+  selector: 'app-smr-trn-customer-summary',
+  templateUrl: './smr-trn-customer-summary.component.html',
+  styleUrls: ['./smr-trn-customer-summary.component.scss']
+})
+export class SmrTrnCustomerSummaryComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  parameter: any;
+  parameterValue: any;
+  parameterValue1: any;
+  smrcustomer_list: any[] = [];
+  customer!: ICustomer;
+  getData: any;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, private router: ActivatedRoute, private route: Router, public service: SocketService) {
+    this.customer = {} as ICustomer;
+    
+  }
+  ngOnInit(): void {
+    this.GetSmrTrnCustomerSummary();
+}
+//// Summary Grid//////
+GetSmrTrnCustomerSummary() {
+  var url = 'SmrTrnCustomerSummary/GetSmrTrnCustomerSummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#smrcustomer_list').DataTable().destroy();
+    this.responsedata = result;
+    this.smrcustomer_list = this.responsedata.smrcustomer_list;
+    setTimeout(() => {
+      $('#smrcustomer_list').DataTable();
+    }, 1);
+
+
+  })
+  
+  
+}
+
+onview(){}
+onedit(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.route.navigate(['/smr/SmrTrnCustomeredit',encryptedParam]) 
+}
+onaddinfo(){}
+openModaldelete(){}
+}

@@ -1,0 +1,456 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-skyblue" style="color: white;">
+        <h3 class="card-title">Message Template</h3>
+        <div style="margin: 13px">
+
+            <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign"
+                class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back</button>
+        </div>
+
+    </div>
+
+    <br>
+
+    <form [formGroup]="TemplateForm" #form="ngForm" (ngSubmit)="onprojectcreate()">
+        <div class="card m-3">
+            <!-- <div class="card-header bg-lightblue card-height55">
+                <div class="card-title m-0">
+                    <h4 class="fw-bolder text-blue"> Project Details</h4>
+                </div>
+            </div> -->
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Project Type<span class="ms-1 text-red">*</span></span>
+                    <ng-select style=" width: 330px;" formControlName="type" [class.is-invalid]="
+                    project_type.invalid && (project_type.dirty || project_type.touched)"
+                        [ngClass]="{'invalid-border': project_type.invalid && project_type.touched}"
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="">
+                        <ng-option value="channelTemplate" selected>ChannelTemplate</ng-option>
+
+                    </ng-select>
+                </div> -->
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Project Name <span class="ms-1 text-red">*</span></span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="name" class="
+                            form-control form-control-lg form-control-solid
+                            borderc-secondary
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " [ngStyle]="{
+                            'border-color':
+                            name.invalid && name.touched
+                                ? 'red'
+                                : 'rgb(209, 209, 209)'
+                          }" placeholder="" pattern="^(?!\s*$).+" name="project_name" />
+                    </div>
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                        <div *ngIf="name.errors?.['required'] || name.errors?.['whitespace']">
+                            <span style="color:red;">Project Name is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Project description <span class="ms-1 text-red">*</span></span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="description" class="
+                            form-control form-control-lg form-control-solid
+                            borderc-secondary
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " [ngStyle]="{
+                            'border-color':
+                            description.invalid && description.touched
+                                ? 'red'
+                                : 'rgb(209, 209, 209)'
+                          }" placeholder="" pattern="^(?!\s*$).+" name="project_description" />
+                    </div>
+                    <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                        <div *ngIf="description.errors?.['required'] || description.errors?.['whitespace']">
+                            <span style="color:red;">Project Description is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12" style="padding-top: 20px;padding-right: 30px;">
+
+                    <button title="Submit" class="btn btn-icon btn-sm me-2" type="submit"
+                        [disabled]="TemplateForm.invalid" [ngClass]="{
+                        'primary-button': !TemplateForm.invalid,
+                        'secondary-button': TemplateForm.invalid
+                      }" style="width: 110px;background-color: rgb(63, 149, 55);">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <br>
+</div>
+
+<div class="table-responsive">
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="template_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+            <thead>
+                <tr class=" text-white fw-bold fs-6 text-nowrap bg-skyblue">
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Type </th>
+                    <th>Status</th>
+                    <th>Last Edited</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of template_list; let i=index;">
+                    <td>{{i+1}}</td>
+                    <td>{{data.p_name}}</td>
+                    <td>{{data.p_type}}</td>
+                    <td> <span *ngIf="data.version === ''"><label class="ms-3" class="badge bg-warning text-white ">Inactive</label></span>
+                        <span *ngIf="data.version !== ''"><label class="ms-3"
+                                class="badge bg-success text-white ">Active</label></span>
+                    </td>
+                    <td>{{data.created_date}}</td>
+                    <td class="text-center text-nowrap">
+                        <button title="Create Template" type="button"
+                            class="btn btn-icon btn-sm bg-gradient-darkblues me-2" data-bs-toggle="modal"
+                            data-bs-target="#myModaladdtemplate"
+                            (click)="openModaledit(data.id,data.p_name,data.template_body)">
+                            <span class="fa-solid fa-plus text-white  fs-6"></span>
+                        </button>
+                        <button title="Publish" type="button" class="btn btn-icon btn-sm bg-gradient-darkgreens me-2"
+                            data-bs-toggle="modal" data-bs-target="#myModalpublish"
+                            (click)="openModalpublish(data.id, data.template_id, data.p_name, data.p_type)">
+                            <span class="fa-solid fa-check text-white fs-6"></span>
+                        </button>
+                        <button title="View" type="button" data-bs-toggle="modal" data-bs-target="#myModalview"
+                            class="btn btn-icon btn-sm bg-primary me-2" (click)="GetTemplateview(data.id)">
+                            <span class="fa-solid fa-eye text-white  fs-6"></span>
+                        </button>
+                        <!--   <button title="Edit" type="button" class="btn btn-icon btn-sm bg-edit me-2"
+                            data-bs-toggle="modal" data-bs-target="#myModaledit" (click)="openModaledit(data)">
+                            <span class="fa-solid fa-pencil text-white  fs-6"></span>
+                        </button> -->
+                        <button title="Delete" type="button" (click)="openModaldelete(data.id)" data-bs-toggle="modal"
+                            data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2">
+                            <span class="fa-solid fa-trash text-white  fs-6"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Message Template -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal modal-xl" id="myModaladdtemplate" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">
+                        &nbsp;<i class="fa-solid fa-film" style="font-size: 17px;"></i>&nbsp;&nbsp;Message Template</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <div class="row" style="padding-top: 20px;padding-bottom: 20px;"> -->
+                    <input formControlName="project_id" hidden placeholder="Address Line 1" type="text" class="
+                    form-control form-control-lg form-control-solid
+                    bg-white
+                    custom-input
+                    mb-3 mb-lg-0
+                    borderc-secondary
+                    " name="project_id" />
+                    <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Template Name</b><span class="ms-1 text-red">*</span></span>
+                        <br>
+                        <input formControlName="p_name" type="text" class="
+                        form-control form-control-lg form-control-solid
+                        custom-input
+                        mb-3 mb-lg-0
+                        bg-white
+                        custom-input
+                        borderc-secondary
+                        " placeholder="Text Here" readonly="" pattern="^(?!\s*$).+" name="footer" required />
+                    </div>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <span class="font-bold fs-6"><b>Header Image</b></span>
+                        <br>
+                        <input style="width: 109%;" (change)="onChange2($event)" (click)="setFileType('image')" accept="image/*" type="file" #fileInput
+                            class="
+                          form-control form-control-lg form-control-solid bg-white
+                          mb-3 mb-lg-0  borderc-secondary custom-input
+                        " name="fName" />
+
+                    </div>
+                    <!-- <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Body</b><span class="ms-1 text-red">*</span></span>
+                        <br>
+                        <textarea class="form-control" formControlName="body" placeholder="Text Here"
+                            style="resize: none;" pattern="^(?!\s*$).+" id="exampleFormControlTextarea1" rows="5"
+                            [ngStyle]="{
+                                'border-color':body.invalid && body.touched ? 'red': 'rgb(209, 209, 209)' }"
+                            placeholder="Enter Caption" pattern="^(?!\s*$).+" name="telegram_caption"
+                            required></textarea>
+
+                        <div *ngIf="body.invalid && (body.dirty || body.touched)">
+                            <div *ngIf="body.errors?.['required']  || body.errors?.['whitespace']">
+                                <span style="color:red;">Body is required.</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Body</b></span>
+                        <ckeditor  [config]="config" formControlName="body" debounce="500"></ckeditor>
+                                        </div>
+
+                    <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Footer</b></span>
+
+                        <input formControlName="footer" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                     borderc-secondary
+                   " placeholder="Text Here" pattern="^(?!\s*$).+" name="footer" required />
+                    </div>
+                  
+                    <!-- <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Media</b></span>
+
+                        <input style="width: 100%;" (change)="onChange1($event)" accept=".xlsx, .xls ,image/*"
+                            type="file" #fileInput class="
+                              form-control form-control-lg form-control-solid bg-white
+                              mb-3 mb-lg-0  borderc-secondary custom-input
+                            " name="fName" />
+                    </div> -->
+                    <!-- <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Category</b><span class="ms-1 text-red">*</span></span>
+                        <br>
+                        <ng-select style=" width: 460px;" formControlName="value1" [class.is-invalid]="
+                            value.invalid && (value.dirty || value.touched)"
+                            [ngClass]="{'invalid-border': value.invalid && value.touched}"
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="">
+                            <ng-option value="MARKETING" selected>Marketing</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-check form-switch" style="margin-top: 30px;">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                                formControlName="category_change">
+                            <label class="form-check-label fs-6" for="flexSwitchCheckDefault"
+                                style="color: black;">Allow
+                                Category Change</label>
+                        </div>
+                    </div> -->
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <!-- (click)="onsubmit()" -->
+                <button title="Submit" type="submit" (click)="onsubmit()" class="btn-success btn-sm text-white me-2">
+                <i class="fa fa-check fs-5"></i>&nbsp;Submit</button>
+                <button title="Close" class="btn-danger btn-sm text-white me-4" (click)="onclose()"
+                        data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+</form>
+<!--Publish Start-->
+<form [formGroup]="reactiveForm" #form="ngForm" (ngSubmit)="onpublish()">
+    <div class="modal" id="myModalpublish" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">
+                        &nbsp;&nbsp;Publish</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+
+                    <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Project Type</b></span>
+
+                        <input formControlName="p_type" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                     borderc-secondary
+                   " placeholder="Text Here" readonly="" pattern="^(?!\s*$).+" name="footer" required />
+                    </div>
+                    <div class="mb-3" style="margin-top:10px ;">
+                        <span class="font-bold fs-6"><b>Project Name</b></span>
+
+                        <input formControlName="p_name" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                     borderc-secondary
+                   " placeholder="Text Here" readonly="" pattern="^(?!\s*$).+" name="footer" required />
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <!-- (click)="onsubmit()" -->
+                    <button title="Publish" type="submit"
+                     class="btn-success btn-sm text-white me-2">
+                        <i class="fa fa-check fs-5"></i>&nbsp;Publish</button>
+
+                    <button title="Close" class="btn-danger btn-sm text-white me-4" (click)="onclose()"
+                        data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+</form>
+<!--Publish End-->
+<!---Template Edit start-->
+<!-- <form> -->
+<!-- <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-pencil fw-bolder fs-3"></i> &nbsp;&nbsp;Edit Message Template</h2>
+                </div> -->
+<!-- Modal body -->
+<!-- <div class="modal-body">
+                    <div class="row" style="padding-top: 20px;padding-bottom: 20px;"> -->
+<!-- <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                            <input style="width: 110%;" (change)="onChange1($event)" accept=".xlsx, .xls ,image/*"
+                                type="file" #fileInput class="
+              form-control form-control-lg form-control-solid bg-white
+              mb-3 mb-lg-0  borderc-secondary custom-input
+            " name="fName" />
+                        </div> -->
+<!-- <div class="mb-3" style="margin-top:10px ;">
+                            <textarea class="form-control" formControlName="project_editdescription" placeholder=""
+                                style="resize: none;" pattern="^(?![\s\n]*$)[\s\S]+$" id="exampleFormControlTextarea1"
+                                rows="5" name="project_editdescription"></textarea>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="footer" type="text" class="
+     form-control form-control-lg form-control-solid
+     custom-input
+     mb-3 mb-lg-0
+     bg-white
+     custom-input
+     borderc-secondary
+   " placeholder="Reply STOP to Unsubscribe" pattern="^(?!\s*$).+" name="footer" required />
+                        </div>
+
+
+                    </div> -->
+
+<!-- Modal footer -->
+<!-- <div class="text-center my-4"> -->
+<!-- (click)="onsubmit()" -->
+<!-- <button [disabled]="reactiveForm.invalid" [ngClass]="{
+'primary-button': !reactiveForm.invalid,
+'secondary-button': reactiveForm.invalid
+}" data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;submit
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form> -->
+<!---Template Edit end-->
+
+<!---Template View start-->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <br>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button>
+
+                    <!--   -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<form>
+    <div class="modal" id="myModalview" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">
+                        &nbsp; <i class="fa-solid fa-film" style="font-size: 17px;"></i>&nbsp;&nbsp;Template View</h2>
+                </div>
+
+                <BR>
+                <div class="card shadow-sm p-4 m-4" style="height: 300px" *ngFor="let d of templateview_list">
+                    <h2 style="color: rgb(26, 111, 145);">{{ d.p_name}}</h2>
+                    <div style="height: 280px;overflow-y: scroll;" id="scroll-bar-table">
+                        <img *ngIf="d.media_url" src={{d.media_url}} alt="" style="width:100%;height:100%;"><span
+                            *ngIf="!d.media_url"></span>
+                        <br><br>
+                        <p>{{ d.template_body}}</p>
+                        <a style="color: dodgerblue;" [href]="test" target="_blank">{{d.footer}}</a>
+                    </div>  
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-2"  data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+</form>
+<!---Template View end-->

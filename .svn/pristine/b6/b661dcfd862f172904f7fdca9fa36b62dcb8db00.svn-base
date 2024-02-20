@@ -1,0 +1,188 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Vendor Summary</h3>
+        </div>
+
+        <div class="col ">
+            <div class="float-end">
+                <button title="Export Excel" type="button" class="btn btn-icon btn-sm bg-export me-2 float-end"
+                    (click)="vrndorexportExcel()"><i class="bi bi-file-earmark-arrow-down"></i></button>
+                <button title="Add Vendor" class="btn-primary btn-sm text-white me-4 "
+                    routerLink="/pmr/PmrTrnVendorregisterAdd">
+                    <i class="fas fa-plus"></i>&nbsp;Add Vendor</button>
+                <button title="Import Excel" class="btn btn-icon btn-sm bg-success "
+                    routerLink="/pmr/PmrMstVendorRegisterImportExcel"><span
+                        class="fas fa-file-excel text-white  fs-2"></span>
+                </button> &nbsp;
+            </div>
+
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="employee_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Vendor Code</th>
+                        <th>Vendor Company</th>
+                        <th>Contact Person</th>
+                        <th>Contact Number</th>
+                        <th>Vendor Status</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of employee_list; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.vendor_code}}</td>
+                        <td>{{data.vendor_companyname}}</td>
+                        <td>{{data.contactperson_name}}</td>
+                        <td>{{data.contact_telephonenumber}}</td>
+                        <td>{{data.vendor_status}}</td>
+                        <td>{{data.active_flag}}</td>
+
+                        <td class="text-center text-nowrap">
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                                (click)="onview(data.vendorregister_gid)"><span
+                                    class="fa-solid fa-eye text-white  fs-6"></span></button>
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm  me-2" style="background-color:#009688;"
+                                (click)="onedit(data.vendorregister_gid)"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                            <button title="Additional Information" type="button"
+                                class="btn btn-icon btn-sm bg-warning me-2"
+                                (click)="onaddinfo(data.vendorregister_gid)" ><span
+                                    class="fa-solid fa-book text-white  fs-6"></span></button>
+                            <!-- <button title="Update User Code" type="button"       data-bs-toggle="modal" data-bs-target="#myModalUpdateusercode" class="btn btn-icon btn-sm bg-info me-2"><span class="fa-solid bi bi-arrow-clockwise  fs-6"></span></button>   -->
+                            <button title="Attachment" type="button" (click)="onattach(data.vendorregister_gid)" style="background-color:#3e5dfa;" 
+                                class="btn btn-icon btn-sm me-2"><span
+                                    class="fa-solid fa-link text-white  fs-6"></span></button>
+                            <!-- <button title="Attachment" type="button" (click)="activestatus(data)" class="btn btn-icon btn-sm bg-warning me-2" ><span class="bi bi-person-fill-slash fs-2"></span></button>    -->
+                            <button title="Active/Inactive" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                                (click)="activestatus(data)" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                                    class="bi bi-person-fill-slash fs-2"></span></button>
+                            <button title="Delete" type="button" (click)="openModaldelete(data.vendorregister_gid)" 
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- The Modal Reset-->
+<form>
+    <div class="modal" id="myModalRest" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-lock fw-bolder fs-3"></i> &nbsp;&nbsp;Reset Password</h2>
+
+                </div>
+
+                <!-- Modal body -->
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Delete vendor -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="reactiveFormstatus" #form="ngForm">
+    <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="card-header pb-3 pt-6 rounded-top bg-primary">
+                    <div>
+                        <h2 class="text-white">
+                            &nbsp;&nbsp;Vendor Status</h2>
+                    </div>
+
+                </div>
+                <!-- <div class="d-flex flex-row m-6 flex-wrap"> -->
+                <div class="m-3">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Vendor Access<span style="color:red"> *</span></b></span>
+                        <div class="d-flex justify-content-start mt-4 ms-2">
+                            <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                                <input class="form-check-input" type="radio" name="active_flag"
+                                    formControlName="active_flag" value="Y" />
+                                <label class="form-check-label text-gray-700 text-nowrap"
+                                    for="empAccessYes">Active</label>
+                            </div>
+                            <div
+                                class="form-check form-check-custom form-check-primary form-check-solid form-check-sm ms-10">
+                                <input class="form-check-input" type="radio" name="active_flag"
+                                    formControlName="active_flag" value="N" />
+                                <label class="form-check-label text-gray-700 text-nowrap"
+                                    for="empAccessNo">InActive</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                        <div>
+                            <!-- <b>Vendor Remarks</b>  -->
+                            <span class="font-bold"><b>Vendor Remarks<span style="color:red"> *</span></b></span>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea type="text" class="
+                            form-control form-control-lg form-control-solid
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                                  " placeholder="Vendor Remarks" formControlName="product_desc" rows="1"
+                                    maxlength="300" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center my-4">
+                    <!-- <button class="btn-sm text-white me-2" (click)="validate()">
+                    <i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+                  </button> -->
+                    <button (click)="validate()" [disabled]="reactiveFormstatus.invalid" [ngClass]="{
+                    'primary-button': !reactiveFormstatus.invalid,
+                    'secondary-button': reactiveFormstatus.invalid
+                  }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onclose()">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

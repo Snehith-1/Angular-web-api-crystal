@@ -1,0 +1,292 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+interface IBranch {
+  branch_gid: string;
+  branch_gid1: string;
+  branch_code: string;
+  branch_name: string;
+  branch_prefix: string;
+  branchmanager_gid: string;
+
+  branch_code_edit: string;
+  branch_name_edit: string;
+  branch_prefix_edit: string;
+
+  branch_code_add: string;
+  Branch_address_add: string;
+  City: string;
+  State: string;
+  Postal_code: any;
+  Phone_no_add: any;
+  Email_address_add: any;
+  GST_no_add: any;
+}
+
+@Component({
+  selector: 'app-sys-mst-branch',
+  templateUrl: './sys-mst-branch.component.html',
+  styleUrls: ['./sys-mst-branch.component.scss']
+})
+
+export class SysMstBranchComponent {
+  reactiveForm!: FormGroup;
+  reactiveFormEdit!: FormGroup;
+  reactiveFormadd!: FormGroup;
+  responsedata: any;
+  parameterValue: any;
+  parameterValue1: any;
+  branch_list: any[] = []
+  branch!: IBranch;
+  route: any;
+  file: any;
+  parameterValue2: any;
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+    this.branch = {} as IBranch;
+  }
+
+  ngOnInit(): void {
+    this.BranchSummary();
+
+    // Form values for Add popup //
+    this.reactiveForm = new FormGroup({
+      branch_code: new FormControl(this.branch.branch_code, [Validators.required,]),
+      branch_name: new FormControl(this.branch.branch_name, [Validators.required,]),
+      branch_prefix: new FormControl(this.branch.branch_prefix, [Validators.required,])
+    });
+
+    this.reactiveFormadd = new FormGroup({
+      branch_code_add: new FormControl(''),
+      Branch_address_add: new FormControl('', [Validators.required]),
+      City: new FormControl(''),
+      State: new FormControl(''),
+      Postal_code: new FormControl('', [Validators.pattern('[0-9]{6}$'), Validators.maxLength(6)]),
+      branch_gid: new FormControl(''),
+      Phone_no_add: new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}$'), Validators.maxLength(10)]),
+      Email_address_add: new FormControl('', [Validators.required, Validators.pattern('^([a-z0-9]+(?:[-.][a-z0-9]+)*)@([a-z0-9]+\\.[a-z]{2,20}(\\.[a-z]{2})?|\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\]|localhost)$')]),     
+       GST_no_add: new FormControl('', [Validators.required, Validators.pattern(/[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[0-9A-Z]{1}$/)])
+    });
+
+    // Form values for Edit popup //
+    this.reactiveFormEdit = new FormGroup({
+      branch_code_edit: new FormControl(this.branch.branch_code_edit, [Validators.required,]),
+      branch_name_edit: new FormControl(this.branch.branch_name_edit, [Validators.required,]),
+      branch_prefix_edit: new FormControl(this.branch.branch_prefix_edit, [Validators.required,]),
+      branch_gid: new FormControl(''),
+    });
+  }
+
+  BranchSummary() {
+    var url = 'SysMstBranch/BranchSummary'
+    this.service.get(url).subscribe((result: any) => {
+      this.responsedata = result;
+      this.branch_list = this.responsedata.branch_list1;
+
+      setTimeout(() => {
+        $('#branch_list').DataTable();
+      }, 1);
+    });
+  }
+
+  onChange(event: any) {
+    this.file = event.target.files[0];
+  }
+
+  // Add validtion //
+  get branch_code() {
+    return this.reactiveForm.get('branch_code')!;
+  }
+  get branch_name() {
+    return this.reactiveForm.get('branch_name')!;
+  }
+  get branch_prefix() {
+    return this.reactiveForm.get('branch_prefix')!;
+  }
+
+  // Add popup validtion //
+  get branch_code_add() {
+    return this.reactiveFormadd.get('branch_code_add')!;
+  }
+  get Branch_address_add() {
+    return this.reactiveFormadd.get('Branch_address_add')!;
+  }
+  get Phone_no_add() {
+    return this.reactiveFormadd.get('Phone_no_add')!;
+  }
+  get Email_address_add() {
+    return this.reactiveFormadd.get('Email_address_add')!;
+  }
+  get Postal_code_add() {
+    return this.reactiveFormadd.get('Postal_code')!;
+  }
+  get GST_no_add() {
+    return this.reactiveFormadd.get('GST_no_add')!;
+  }
+
+  // Edit popup validtion //
+  get branch_code_edit() {
+    return this.reactiveFormEdit.get('branch_code_edit')!;
+  }
+  get branch_name_edit() {
+    return this.reactiveFormEdit.get('branch_name_edit')!;
+  }
+  get branch_prefix_edit() {
+    return this.reactiveFormEdit.get('branch_prefix_edit')!;
+  }
+
+  // Add popup API //
+  public onsubmit(): void {
+    if (this.reactiveForm.value.branch_code != null && this.reactiveForm.value.branch_code != '')
+      if (this.reactiveForm.value.branch_name != null && this.reactiveForm.value.branch_name != '')
+        if (this.reactiveForm.value.branch_prefix != null && this.reactiveForm.value.branch_prefix != '') {
+          for (const control of Object.keys(this.reactiveForm.controls)) {
+            this.reactiveForm.controls[control].markAsTouched();
+          }
+          this.reactiveForm.value;
+          var url1 = 'SysMstBranch/PostBranch'
+
+          this.service.postparams(url1, this.reactiveForm.value).subscribe((result: any) => {
+            if (result.status == false) {
+              this.ToastrService.warning(result.message)
+              this.BranchSummary();
+            }
+            else {
+              this.reactiveForm.get("branch_code")?.setValue(null);
+              this.reactiveForm.get("branch_name")?.setValue(null);
+              this.reactiveForm.get("branch_prefix")?.setValue(null);
+              this.ToastrService.success(result.message)
+              this.BranchSummary();
+            }       
+          });
+        }
+        else {
+          this.ToastrService.warning('Kindly Fill All Mandatory Fields !!')
+        }
+  }
+
+  // Edit popup API //
+  openModaledit(parameter: string) {
+    this.parameterValue1 = parameter
+    this.reactiveFormEdit.get("branch_code_edit")?.setValue(this.parameterValue1.branch_code);
+    this.reactiveFormEdit.get("branch_name_edit")?.setValue(this.parameterValue1.branch_name);
+    this.reactiveFormEdit.get("branch_prefix_edit")?.setValue(this.parameterValue1.branch_prefix);
+    this.reactiveFormEdit.get("branch_gid")?.setValue(this.parameterValue1.branch_gid);
+  }
+
+  public onupdate(): void {
+    if (this.reactiveFormEdit.value.branch_name_edit != null && this.reactiveFormEdit.value.branch_name_edit != '') {
+      for (const control of Object.keys(this.reactiveFormEdit.controls)) {
+        this.reactiveFormEdit.controls[control].markAsTouched();
+      }
+      this.reactiveFormEdit.value;      
+      var url = 'SysMstBranch/getUpdatedBranch'
+      this.service.postparams(url, this.reactiveFormEdit.value).pipe().subscribe((result: any) => {
+        // this.ToastrService.success(result.message)
+        // this.BranchSummary();
+        if (result.status == false) {
+          this.ToastrService.warning(result.message)
+          this.BranchSummary();
+        }
+        else {
+          this.ToastrService.success(result.message)
+          this.BranchSummary();
+        }
+     
+      });
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+
+  myModaladddetails(parameter: string) {
+    this.parameterValue2 = parameter
+    this.reactiveFormadd.get("branch_code_add")?.setValue(this.parameterValue2.branch_code);
+    this.reactiveFormadd.get("branch_gid")?.setValue(this.parameterValue2.branch_gid);
+  }
+
+  public validate(): void {
+    console.log(this.reactiveFormadd.value)
+    this.branch = this.reactiveFormadd.value;
+
+    if (this.branch.branch_code_add != null && this.branch.Branch_address_add != null && this.branch.City != null && this.branch.State != null && this.branch.Postal_code != null && this.branch.Email_address_add != null && this.branch.Phone_no_add != null && this.branch.GST_no_add != null) {
+      let formData = new FormData();
+
+
+      if (this.file != null && this.file != undefined) {
+        formData.append("file", this.file, this.file.name);
+        formData.append("branch_gid", this.branch.branch_gid);
+        formData.append("branch_code", this.branch.branch_code_add);
+        formData.append("Branch_address", this.branch.Branch_address_add);
+        formData.append("City", this.branch.City);
+        formData.append("State", this.branch.State);
+        formData.append("Postal_code", this.branch.Postal_code);
+        formData.append("Email_address", this.branch.Email_address_add);
+        formData.append("Phone_no", this.branch.Phone_no_add);
+        formData.append("GST_no", this.branch.GST_no_add);
+
+        var api = 'SysMstBranch/Updatedbranchlogo'
+        this.service.postfile(api, formData,).subscribe((result: any) => {
+
+          if (result.status == true) {
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            this.ToastrService.success("Branch Updated Successfully")
+            this.BranchSummary();
+
+          }
+          this.responsedata = result;
+          window.location.reload();
+        });
+        
+      }
+      else {
+        var api = 'SysMstBranch/BranchSummarydetail'
+        debugger;
+        this.service.post(api, this.branch).subscribe((result: any) => {
+
+
+          if (result.status == true) {
+            this.ToastrService.success(result.message)
+          }
+          else {
+            this.ToastrService.success(result.message)
+            this.BranchSummary();
+
+          }
+          this.responsedata = result;
+          window.location.reload();
+        });
+      }
+    }
+    return;
+  }
+  openModaldelete(parameter: string) {
+    this.parameterValue = parameter
+  }
+
+  ondelete() {
+    console.log(this.parameterValue);
+    var url3 = 'SysMstBranch/DeleteBranch'
+    this.service.getid(url3, this.parameterValue).subscribe((result: any) => {
+      if (result.status == false) {
+        this.ToastrService.warning(result.message)
+        this.BranchSummary();
+
+      }
+      else {
+        this.ToastrService.success(result.message)
+        this.BranchSummary();
+      }
+
+    });
+  }
+
+  onclose() {
+    this.reactiveForm.reset();
+  };
+}

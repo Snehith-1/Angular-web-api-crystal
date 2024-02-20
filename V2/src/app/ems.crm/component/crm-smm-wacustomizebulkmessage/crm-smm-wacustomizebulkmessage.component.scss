@@ -1,0 +1,109 @@
+.card-body12 {
+    // width: 160px;
+    height: 36px;  
+  }
+  .bg-mail
+  {
+    background-color: #008ECC;
+  }
+  .cardHead {
+ 
+    position: relative;
+ 
+    display: flex;
+ 
+    flex-direction: column;
+ 
+    min-width: 0;
+ 
+    word-wrap: break-word;
+ 
+    padding: 18px;
+ 
+    background-clip: border-box;
+ 
+    border: 0px solid rgba(0, 0, 0, 0);
+ 
+    border-radius: .25rem;
+ 
+    margin-bottom: 1.0rem;
+ 
+    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+ 
+    transition: all .3s ease-in-out;
+ 
+    background-color: white;
+ 
+  }
+ 
+   
+ 
+  .cardHead:hover{
+ 
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+ 
+    transform: translate3d(0px, -2px, 0px);
+ 
+    cursor:pointer;
+ 
+    pointer-events: auto;
+ 
+  }
+  .outer-container {
+    padding: 25px;
+  }
+ 
+  .inner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+    margin-top: 5px;
+ 
+  }
+ 
+  ////////////////////////////////
+ 
+  // .p-datatable .p-sortable-column .p-sortable-column-icon {
+//   color: #ffffff;
+//   margin-left: 0.5rem;
+// }
+// .p-datatable .p-datatable-header {
+//   background: #ffffff;
+//   color: #374151;
+//   border: 1px solid#ffffff;
+//   border-width: 1px 0 1px 0;
+//   padding: 1rem 1rem;
+//   font-weight: 700;
+// }
+.bg-skyblue {
+  background-color: #075e54;
+}
+.p-datatable .p-datatable-header {
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid#ffffff;
+  border-width: 1px 0 1px 0;
+  padding: 1rem 1rem;
+  font-weight: 700;
+}
+.bg-whatsapp
+{
+    background-color: #075e54;
+}
+ 
+th{
+  background: #075e54  !important;
+    color: white;  
+}
+.p-sortable-column .p-sortable-column-icon {
+    color: #ffffff;
+    margin-left: 0.5rem;
+  }
+  :host ::ng-deep {
+    .p-paginator {
+        .p-paginator-current {
+            margin-left: auto;
+        }
+    }
+  }

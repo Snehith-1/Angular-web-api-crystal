@@ -1,0 +1,32 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Branch Summary</h3> 
+    </div>
+    <br>
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white table-responsive rounded">
+           <table id="BranchSummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Branch Code</th>
+                        <th>Branch Name</th>
+                        <th>Branch Prefix</th>
+                        <th>Branch Manager</th>
+                        <th>Branch Location</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of branch_data; let i=index;"> 
+                        <td >{{i+1}}</td>
+                        <td>{{data.branch_code}}</td>
+                        <td>{{data.branch_name}}</td>
+                        <td>{{data.branch_prefix}}</td>
+                        <td>{{data.branchmanager_gid}}</td>
+                        <td>{{data.branch_location}}</td>
+                    </tr>
+                </tbody> 
+            </table>
+    </div> 
+</div>
+
+

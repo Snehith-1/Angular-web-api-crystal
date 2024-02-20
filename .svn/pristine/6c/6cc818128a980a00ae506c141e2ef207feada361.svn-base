@@ -1,0 +1,56 @@
+ 
+  <div class="card shadow-sm">
+  
+    <div class="card-header">
+        <h3 class="card-title">Employee Onboard</h3> 
+    </div>
+    
+    <br>
+    <div>  &nbsp;  &nbsp; 
+        <!-- ADD Function -->
+        <button title="Add Employee" class="btn-primary btn-sm text-white me-4 mb-2 mt-2" routerLink="/hrm/HrmtrnEmployeeonboardadd">
+            <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;
+            Add Employee</button>  
+    </div> 
+
+   
+        <div class="card card-body m-3 shadow-lg p-3 p-md-3 mb-5 bg-white table-responsive rounded">
+           <table id="employeePendingtable" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Entity</th>
+                        <th>Employee Code</th>
+                        <th>Employee Name</th>
+                        <th>Base Location</th>
+                        <th>Department/Function</th>
+                        <th>Reporting To</th>
+                        <th>Created Date</th>
+                        <th>Created By</th>
+                        <!-- <th>Status</th> -->
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of employeePendingList; let i=index;"> 
+                        <td >{{i+1}}</td>
+                        <td>{{data.entity_name}}</td>
+                        <td>{{data.user_code}}</td>
+                        <td>{{data.employee_name}}</td>
+                        <td>{{data.baselocation_name}}</td>
+                        <td>{{data.department_name}}</td>
+                        <td>{{data.employeereporting_to}}</td>
+                        <td>{{data.created_date}}</td>
+                        <td>{{data.created_by}}</td>
+                        <!-- <td>{{data.employee_status}}</td> -->
+                        <td class="text-center text-nowrap">
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="employee_view(data.employee_gid)"><span class="fa-solid fa-eye text-white fs-6"></span></button>
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="employee_edit(data.employee_gid)"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                        </td>
+                    </tr>
+                </tbody> 
+            </table>  
+         </div> 
+</div>
+
+

@@ -1,0 +1,63 @@
+﻿using ems.pmr.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+
+namespace ems.pmr.DataAccess
+{
+    public class DaPmrTrnGrn
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, maGetGID, lsvendor_code, msUserGid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        public void DaGrninwardSummary(MdlPmrTrnGrn values)
+        {
+            msSQL = "SELECT a.purchaseorder_gid, a.vendor_gid, a.created_by, a.purchaseorder_status, e.vendor_companyname, j.costcenter_name, a.purchaseorder_date, y.branch_name, c.department_name, d.user_firstname " +
+            "FROM pmr_trn_tpurchaseorder a " +
+            "LEFT JOIN hrm_mst_temployee b ON a.created_by = b.user_gid " +
+            "LEFT JOIN hrm_mst_tdepartment c ON b.department_gid = c.department_gid " +
+            "LEFT JOIN adm_mst_tuser d ON d.user_gid = a.created_by " +
+            "LEFT JOIN acp_mst_tvendor e ON e.vendor_gid = a.vendor_gid " +
+            "LEFT JOIN pmr_mst_tcostcenter j ON j.costcenter_gid = a.costcenter_gid " +
+            "LEFT JOIN pmr_Trn_tpurchaserequisition f ON a.purchaserequisition_gid = f.purchaserequisition_gid " +
+            "LEFT JOIN hrm_mst_tbranch y ON a.branch_gid = y.branch_gid " +
+            "WHERE (a.purchaseorder_flag = 'PO Approved' AND a.grn_flag = 'GRN Pending') OR " +
+            "(a.grn_flag = 'Goods Received Partial' AND (a.invoice_flag = 'IV Pending' OR a.invoice_flag = 'Invoice Raised Partial')) " +
+            "GROUP BY a.purchaseorder_gid " +
+            "ORDER BY DATE(a.purchaseorder_date) DESC, a.purchaseorder_date ASC, a.purchaseorder_gid DESC";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getgrn_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getgrn_lists
+                    {
+
+                        purchaseorder_date = dt["purchaseorder_date"].ToString(),
+                        purchaseorder_gid = dt["purchaseorder_gid"].ToString(),
+                        purchaseorder_status = dt["purchaseorder_status"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        costcenter_name = dt["costcenter_name"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                    });
+                    values.Getgrn_lists = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    }
+    }

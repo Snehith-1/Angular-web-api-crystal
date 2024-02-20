@@ -1,0 +1,833 @@
+<div>
+    <div>
+        <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+            <h3 class="fw-bolder text-white"><i class="bi bi-shop fw-bolder fs-1"></i> &nbsp;&nbsp;Shopify Store</h3>
+        </div>
+
+        <div>
+            <div style="background-color: white;">
+                <div class="row">
+                    &nbsp;
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-8 fs-6">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_5"
+                                    style="color: #009EF7">&nbsp;&nbsp; Shopify Product</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_4"
+                                    style="color: #009EF7">Shopify Customer </a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6"
+                                    style="color: #009EF7">Shopify Order</a>
+                            </li>
+
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_10"
+                                    style="color: #009EF7">Shopify Payment</a>
+                            </li>
+                        </ul>
+
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active ms-5" id="kt_tab_pane_5" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <div class="modal-body">
+                                            <div class="card ">
+                                                <!-- <div class="card-header">
+                                                  <h3 class="card-title">Product Summary</h3>
+                                                  <div class="card-toolbar">
+                                                  </div>
+                                              </div>
+                                          
+                                              <br>
+                                              <div> &nbsp; &nbsp;
+                                          
+                                                  <button class="btn-primary btn-sm text-white me-4 mb-2 mt-2"  (click)="onadd()">
+                                          
+                                                      <i class="fas fa-plus"></i> &nbsp;  Add Product </button>
+                                                      <button title="Import Excel" type="button" class="btn btn-icon btn-sm bg-excel me-2" style="width: 5%;"   data-bs-toggle="modal" data-bs-target="#myModalexcelimport" ><i  class="bi bi-file-earmark-arrow-down"></i></button>
+                                                      <button title="Export Excel" type="button" class="btn btn-icon btn-sm bg-export me-2" style="width: 5%;"   (click)="exportExcel()" ><i class="bi bi-file-earmark-arrow-up"></i></button>
+                                          
+                                              </div> -->
+                                                <div class="row ms-3 mt-3 d-flex align-items-center">
+                                                    <div class="col">
+                                                        <h3 class="card-title"><b>Product Summary</b></h3>
+                                                    </div>
+                                                    <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                    style="border-left: 10px solid  #4604fc!important; background: white;border-radius:35px;width: 170px;
+                                        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                                    <span class="d-flex justify-content-center text-nowrap"
+                                                        style="font-size:12px ;margin-top:-30px;"><b
+                                                            style="color:#4604fc;">Product Count</b> </span>
+                                                    <div>
+                                                        <h1 class="justify-content-center"
+                                                            style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -60px;">
+                                                            <br>
+                                                            <b>{{product_count}}</b>
+                                                        </h1>
+
+                                                    </div>
+                                                   
+                                                </div>&nbsp; &nbsp;
+                                                
+                                                    <div class="col me-5">
+                                                        <!-- <button type="button" class="primary-button btn-sm text-white me-4 float-end" (click)="onsubmitproduct()">
+                                                        <i class="fas fa-check text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Move To Product
+                                                    </button>&nbsp;&nbsp; -->
+                                                        <button type="button"
+                                                            class="btn-primary btn-sm text-white me-4 float-end"
+                                                            data-bs-toggle="modal" data-bs-target="#myModaladd"
+                                                            (click)="onadd()">
+                                                            <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp; Add Product
+                                                        </button>
+                                                    </div>
+                                                    
+                                                </div>
+<br>
+                                                <div class="table-responsive">
+                                                    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+                                                        <table id="products"
+                                                            class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+                                                            <thead>
+                                                                <tr
+                                                                    class=" fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                                                                    <!-- <th>
+                                                                    <input type="checkbox" id="checkAll" (change)="$event ? masterToggle1() : null"
+                                                                        [checked]="selection1.hasValue() && isAllSelected1()"
+                                                                        [indeterminate]="selection1.hasValue() && !isAllSelected1()" />
+                                                                    All
+                                                                </th> -->
+                                                                    <!-- <th style="width:2%">S.No</th> -->
+                                                                    <th>Product Type </th>
+                                                                    <!-- <th>Product Code</th>
+                                                                  <th>Product Type </th>
+                                                                  <th>Product Group</th> -->
+                                                                    <th>Product</th>
+                                                                    <!-- <th>Unit</th> -->
+                                                                    <th>Product Image</th>
+                                                                    <th>Product Status</th>
+                                                                    <th>Vendor</th>
+                                                                    <th>Moved Status</th>
+                                                                    <!-- <th>Created Date</th>
+                                                                  <th>Created By</th> -->
+                                                                    <th class="text-center">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let data of products; let i=index;">
+                                                                    <!-- <td> <input *ngIf="data.status_flag  === 'Assigned'"  disabled type="checkbox" (click)="$event.stopPropagation()"
+                                                                    (change)="$event ? selection1.toggle(data) : null"
+                                                                    [checked]="selection1.isSelected(data)" />
+                                                                    <input *ngIf="data.status_flag  != 'Assigned'" type="checkbox"  (click)="$event.stopPropagation()"
+                                                                    (change)="$event ? selection1.toggle(data) : null"
+                                                                    [checked]="selection1.isSelected(data)" /></td> -->
+
+                                                                    <!-- <td >{{i+1}}</td> -->
+                                                                    <td>{{data.product_type}}</td>
+                                                                    <!-- <td>{{data.product_code}}</td>
+                                                                  <td>{{data.producttype_name}}</td>
+                                                                  <td>{{data.productgroup_name}}</td> -->
+                                                                    <td>{{data.product_name}}</td>
+                                                                    <!-- <td><span *ngIf="data.productuom_name === data.productuomclass_name" >{{data.productuom_name}}</span><span *ngIf="data.productuom_name != data.productuomclass_name" >{{data.productuom_name}} {{data.productuomclass_name}}</span></td> -->
+                                                                    <td><span
+                                                                            *ngIf="data.product_image === 'no'"></span>
+                                                                        <img *ngIf="data.product_image !='no'"
+                                                                            src={{data.product_image}} alt=""
+                                                                            style="width:69%;height:55px;"><span
+                                                                            *ngIf="!data.product_image"></span></td>
+                                                                    <td style="font-weight: bolder;"><span
+                                                                            *ngIf="data.Status  === 'archived'"
+                                                                            style="color: rgb(150, 40, 194);font-weight:bolder;">&nbsp;&nbsp;
+                                                                            Archived &nbsp;&nbsp;&nbsp;</span><span
+                                                                            *ngIf="data.Status  === 'draft'"
+                                                                            style="color: orange;font-weight:bolder;">&nbsp;&nbsp;
+                                                                            Draft &nbsp;&nbsp;&nbsp;</span><span
+                                                                            *ngIf="data.Status  === 'active'"
+                                                                            style="color: rgb(13, 224, 83);font-weight:bolder;">&nbsp;&nbsp;
+                                                                            Active &nbsp;&nbsp; </span><span
+                                                                            *ngIf="data.Status  === 'inactive'"
+                                                                            style="color: red;font-weight:bolder;">&nbsp;&nbsp;
+                                                                            Inactive &nbsp;&nbsp; </span></td>
+
+                                                                    <!-- <td>{{data.Status}}</td> -->
+                                                                    <td>{{data.vendor_name}}</td>
+                                                                    <td style="font-weight: bolder;"><span
+                                                                            *ngIf="data.status_flag  === 'Not Assign'"
+                                                                            style="color: orange;font-weight:bolder;">&nbsp;&nbsp;
+                                                                            Not Assign &nbsp;&nbsp;&nbsp;</span><span
+                                                                            *ngIf="data.status_flag  === 'Assigned'"
+                                                                            style="color: rgb(13, 224, 83);font-weight:bolder;">&nbsp;&nbsp;
+                                                                            Assigned &nbsp;&nbsp; </span></td>
+
+                                                                    <!-- <td>{{data.created_date}}</td>
+                                                                  <td>{{data.created_by}}</td> -->
+                                                                    <td class="text-center text-nowrap">
+                                                                        <!-- <button title="View" type="button" class="btn btn-icon btn-sm bg-view me-2" (click)="onview(data.product_gid)" ><span class="fa-solid fa-eye text-white  fs-6"></span></button> -->
+                                                                        <button title="Edit" type="button"
+                                                                            class="btn btn-icon btn-sm bg-edit me-2"
+                                                                            (click)="onedit(data.shopify_productid)"><span
+                                                                                class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                                                                        <!-- <button title="Delete" type="button" (click)="openModaldelete(data.product_gid)"   data-bs-toggle="modal" data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span class="fa-solid fa-trash text-white  fs-6"></span></button>    -->
+                                                                        <!-- <button title="Upload image" type="button" (click)="myModaladddetails(data)"   data-bs-toggle="modal" data-bs-target="#myModalUpdateimage" class="btn btn-icon btn-sm bg-warning me-2"><span class="fa-solid fa-camera text-white  fs-6"></span></button>   -->
+                                                                        <button title="Download image" type="button"
+                                                                            (click)="downloadImage(data)"
+                                                                            class="btn btn-icon btn-sm bg-info me-2"><span
+                                                                                class="fa-solid fa-download text-white  fs-6"></span></button>
+                                                                        <!-- <button title="Download image" type="button" class="btn btn-icon btn-sm bg-info me-2"><i *ngIf="data.Status  === 'Active'" class="bi bi-hand-thumbs-up-fill"></i><i *ngIf="data.Status  === 'Inactive'" class="bi bi-hand-thumbs-down-fill"></i></button>  -->
+
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <form [formGroup]="reactiveForm" #form="ngForm">
+                                                <div class="modal" id="myModalexcelimport" data-bs-backdrop="static"
+                                                    data-bs-keyboard="false">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+
+                                                            <div
+                                                                class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                                                                <h2
+                                                                    style="margin-top:10px;color:white;font-weight: bold;">
+                                                                    &nbsp;&nbsp;<i
+                                                                        class="fas fa-file fw-bolder fs-3"></i>
+                                                                    &nbsp;&nbsp;Import Excel</h2>
+
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+
+                                                                <button type="submit" style="margin-left: 290px;"
+                                                                    class="btn-danger btn-sm text-white me-2"
+                                                                    (click)="downloadfileformat()">
+                                                                    <i
+                                                                        class="bi bi-cloud-download fs-5"></i>&nbsp;&nbsp;Download</button>
+                                                                <br>
+                                                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                                                    <span class="font-bold"><b>Select an Excel File to
+                                                                            Import</b><span
+                                                                            class="ms-1 text-red">*</span></span>
+                                                                    <div
+                                                                        class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                                        <!-- <input (change)="onChange2($event)" accept="image/*" type="file" #fileInput class="
+                                                                    form-control form-control-lg form-control-solid
+                                                                    custom-input
+                                                                    mb-3 mb-lg-0
+                                                                    bg-white
+                                                                    custom-input
+                                                                  "  name="file" /> -->
+                                                                        <input style="width: 300%;"
+                                                                            (change)="onChange1($event)"
+                                                                            accept=".xlsx, .xls" type="file" #fileInput
+                                                                            class="
+                                                                    form-control form-control-lg form-control-solid bg-white
+                                                                    mb-3 mb-lg-0  borderc-secondary custom-input
+                                                                  " name="fName" />
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <!-- Modal footer -->
+                                                                <div class="text-center my-4">
+                                                                    <button type="submit"
+                                                                        class="btn-success btn-sm text-white me-2"
+                                                                        (click)="importexcel()">
+                                                                        <i
+                                                                            class="bi bi-check-square fs-5"></i>&nbsp;Upload</button>
+
+                                                                    <button class="btn-primary btn-sm text-white me-2"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="fas fa-arrow-left"></i> &nbsp;Back
+                                                                    </button>&nbsp;
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <form [formGroup]="reactiveForm" #form="ngForm">
+                                                <div class="modal" id="myModalUpdateimage" data-bs-backdrop="static"
+                                                    data-bs-keyboard="false">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+
+                                                            <!-- Modal Header -->
+
+                                                            <div
+                                                                class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                                                                <h2
+                                                                    style="margin-top:10px;color:white;font-weight: bold;">
+                                                                    &nbsp;&nbsp;<i
+                                                                        class="fas fa-lock fw-bolder fs-3"></i>
+                                                                    &nbsp;&nbsp;Upload Image</h2>
+
+                                                            </div>
+
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                                                    <span class="font-bold"><b>Upload Photo</b><span
+                                                                            class="ms-1 text-red">*</span></span>
+                                                                    <div
+                                                                        class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                                        <!-- <input (change)="onChange2($event)" accept="image/*" type="file" #fileInput class="
+                                                                    form-control form-control-lg form-control-solid
+                                                                    custom-input
+                                                                    mb-3 mb-lg-0
+                                                                    bg-white
+                                                                    custom-input
+                                                                  "  name="file" /> -->
+                                                                        <input style="width: 300%;"
+                                                                            (change)="onChange2($event)"
+                                                                            accept="image/*" type="file" #fileInput
+                                                                            class="
+                                                                    form-control form-control-lg form-control-solid bg-white
+                                                                    mb-3 mb-lg-0  borderc-secondary custom-input
+                                                                  " name="fName" />
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <!-- Modal footer -->
+                                                                <div class="text-center my-4">
+                                                                    <button type="submit"
+                                                                        class="btn-success btn-sm text-white me-2"
+                                                                        data-bs-dismiss="modal" (click)="onsubmit()">
+                                                                        <i
+                                                                            class="bi bi-check-square fs-5 "></i>&nbsp;Submit</button>
+
+                                                                    <button class="btn-primary btn-sm text-white me-2"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="fas fa-arrow-left"></i> &nbsp;Back
+                                                                    </button>&nbsp;
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            <div class="modal" id="myModaldelete" data-bs-backdrop="static"
+                                                data-bs-keyboard="false">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="text-center my-4">
+                                                            <h2><b>Are you sure?</b></h2>
+                                                            <br>
+                                                            <p style="display: block;">Do You Want To Delete the Record
+                                                                ?</p>
+                                                            <div class="text-center my-4">
+                                                                <button class="btn-primary btn-sm text-white me-2"
+                                                                    data-bs-dismiss="modal">
+                                                                    <i class="fas fa-close text-white"></i> &nbsp;Close
+                                                                </button>&nbsp;
+                                                                <button class="btn-danger btn-sm text-white me-4"
+                                                                    (click)="ondelete()" data-bs-dismiss="modal">
+                                                                    <i class="fas fa-trash text-white fs-5 "></i>
+                                                                    &nbsp;Delete
+                                                                </button>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row tab-pane fade ms-5" id="kt_tab_pane_4" role="tabpanel">
+                                <div style="margin-left: -10px;margin-top:-17px;" class="card shadow-sm">
+                                    <div class="row ms-3 mt-3 d-flex align-items-center">
+                                        <div class="col">
+                                            <br><br>
+                                            <h3 class="card-title"><b>Customer Summary</b></h3> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                                        </div>
+                                    </div>
+                                    <!-- &nbsp;&nbsp;&nbsp;<input type="file"  (change)="changeListener($event)"> -->
+                                    <div class="row d-flex flex-wrap m-4 justify-content-center">
+                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                            style="width:200px;margin-top: -62px;border-left: 10px solid  #4604fc!important; background: white;border-radius:35px;
+                                       box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                            <span class="d-flex justify-content-center text-nowrap"
+                                                style="font-size:12px ;margin-top:-30px;"><b
+                                                    style="color:#4604fc;">Total Customer Count</b> </span>
+                                            <div>
+                                                <h1 class="justify-content-center"
+                                                    style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -80px;">
+                                                    <br>
+                                                    <b>{{customer_count}}</b>
+                                                </h1>
+
+
+                                            </div>
+
+                                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                            style="width:200px;margin-top: -62px;border-left: 10px solid  orange!important; background: white;border-radius:15px;
+                                       box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+                                       " routerLink="/crm/CrmSmmShopifycustomerunassigned">
+                                            <span class="d-flex justify-content-center text-nowrap"
+                                                style="font-size:12px ;margin-top:-30px;"><b
+                                                    style="color:orange;">Unmoved To Lead Count</b> </span>
+                                            <div>
+                                                <h1 class="text-center"
+                                                    style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -150px;">
+                                                    <br>
+                                                    <b>{{unassign_count}}</b>
+                                                </h1>
+
+
+                                            </div>
+
+                                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                            style="width:200px;margin-top: -62px;border-left: 10px solid  #29af17!important; background: white;border-radius:15px;
+                                       box-shadow: rgba(158, 92, 92, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+                                       " routerLink="/crm/CrmSmmShopifycustomerassigned">
+                                            <span class="d-flex justify-content-center text-nowrap"
+                                                style="font-size:12px ;margin-top:-30px;"><b
+                                                    style="color:#29af17;">Moved To Lead Count</b> </span>
+                                            <div>
+                                                <h1 class="justify-content-center"
+                                                    style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -80px;">
+                                                    <br>
+                                                    <b>{{customer_assigncount}}</b>
+                                                </h1>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <form [formGroup]="reactiveFormSubmit" #form="ngForm">
+                                        <div class="d-flex flex-row m-6 flex-wrap">
+
+                                            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                                <span class="font-bold">Source<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                    <input type="text" formControlName="source_name" readonly
+                                                        class="form-control form-control-lg" placeholder="Source Name"
+                                                        pattern="^(?!\s*$).+" name="source_name"
+                                                        pattern="^(?!\s*$).+" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                                                Customer Type<span class="ms-1 text-red">*</span>
+                                                <ng-select formControlName="customer_type"
+                                                    [class.is-invalid]="
+                                                  customer_type.invalid && (customer_type.dirty || customer_type.touched)"
+                                                    [ngClass]="{'invalid-border': customer_type.invalid && customer_type.touched}"
+                                                    required
+                                                    class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                                    placeholder="-- Select Customer Type --">
+                                                    <ng-option value="Distributor">Distributor</ng-option>
+                                                    <ng-option value="Corporate">Corporate</ng-option>
+                                                    <ng-option value="Retailer">Retailer</ng-option>
+                                                </ng-select>
+
+                                                <div *ngIf="
+                                              customer_type.invalid && (customer_type.dirty || customer_type.touched)
+                                                " class="invalid-feedback">
+                                                    <div *ngIf="customer_type.errors?.['required']">
+                                                        Customer Type is required.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="button" [disabled]="reactiveFormSubmit.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormSubmit.invalid,
+                                            'secondary-button': reactiveFormSubmit.invalid
+                                          }" style="height:40px;margin-top:20px;" (click)="OnSubmit()">
+                                                <i class="fas fa-check text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Move To
+                                                Lead
+                                            </button>
+                                        </div>
+
+
+
+
+                                    </form>
+                                    <div class="table-responsive">
+
+
+                                        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+                                            <table id="shopify_customerlist"
+                                                class="table table-striped table-row-bordered gy-5 gs-7">
+                                                <thead>
+                                                    <tr
+                                                        class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                                                        <th>
+                                                            <input type="checkbox" id="checkAll"
+                                                                (change)="$event ? masterToggle() : null"
+                                                                [checked]="selection.hasValue() && isAllSelected()"
+                                                                [indeterminate]="selection.hasValue() && !isAllSelected()" />
+                                                            All
+                                                        </th>
+                                                        <th>Customer ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone</th>
+                                                        <th>Address</th>
+                                                        <th>Email subscription</th>
+                                                        <th>Orders</th>
+
+                                                        <th>Amount Spent</th>
+                                                        <th>Lead Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let data of shopify_customerlist; let i=index;">
+                                                        <td> <input *ngIf="data.status_flag  === 'Assigned'" disabled
+                                                                type="checkbox" (click)="$event.stopPropagation()"
+                                                                (change)="$event ? selection.toggle(data) : null"
+                                                                [checked]="selection.isSelected(data)" />
+                                                            <input *ngIf="data.status_flag  != 'Assigned'"
+                                                                type="checkbox" (click)="$event.stopPropagation()"
+                                                                (change)="$event ? selection.toggle(data) : null"
+                                                                [checked]="selection.isSelected(data)" />
+                                                        </td>
+                                                        <td>{{data.shopify_id}}</td>
+                                                        <td><span>{{data.first_name}} {{data.last_name}}<span
+                                                                    *ngIf="!data.first_name">{{data.email}}</span></span>
+                                                        </td>
+                                                        <!-- <td ><span [hidden]="data.email_marketing_consent.state != 'not_subscribed'">&nbsp;&nbsp;&nbsp;Not Subscribed &nbsp;&nbsp;&nbsp;<span [hidden]="data.email_marketing_consent.state != 'subscribed'" >&nbsp;&nbsp; Subscribed &nbsp;&nbsp;</span></span></td> -->
+                                                        <td><span>{{data.email}}</span></td>
+                                                        <td><span class="text-nowrap">{{data.default_phone}}</span></td>
+                                                        <td><span *ngIf="!data.default_city"></span><span
+                                                                *ngIf="data.default_city">{{data.default_address1}},{{data.default_address2}},{{data.default_city}},{{data.default_country}}</span>
+                                                        </td>
+                                                        <td><span *ngIf="data.email_state  === 'not_subscribed'"
+                                                                style="color: rgb(120, 124, 121);font-weight:bolder;">&nbsp;&nbsp;
+                                                                Not Subscribed &nbsp;&nbsp;&nbsp;</span><span
+                                                                *ngIf="data.email_state  === 'unsubscribed'"
+                                                                style="color: orange;font-weight:bolder;">&nbsp;&nbsp;
+                                                                Unsubscribed &nbsp;&nbsp;&nbsp;</span><span
+                                                                *ngIf="data.email_state  === 'subscribed'"
+                                                                style="color: rgb(13, 224, 83);font-weight:bolder;">&nbsp;&nbsp;
+                                                                Subscribed &nbsp;&nbsp; </span></td>
+
+                                                        <td>{{data.orders_count}}</td>
+                                                        <td>£{{data.total_spent}}</td>
+                                                        <td><span *ngIf="data.status_flag  === 'Assigned'"
+                                                                style="color: rgb(25, 219, 74);font-weight:bolder;"><b>{{data.status_flag}}</b></span><span
+                                                                *ngIf="data.status_flag  === 'Not Assign'"
+                                                                style="color: orange;font-weight:bolder;"><b>{{data.status_flag}}</b></span>
+                                                        </td>
+
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row tab-pane fade ms-5" id="kt_tab_pane_6" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <div >
+                                            <div >
+                                                <div>
+                                                    <br> <br>
+                                                    <h3   style="margin-left: -5px;">Order Summary </h3>
+                                                    <div class="row d-flex flex-wrap m-4 justify-content-center">
+                                                      &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                        style="margin-top: -52px;border-left: 10px solid  #4604fc!important; background: white;border-radius:100px;width: 170px;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                                        <span class="d-flex justify-content-center text-nowrap"
+                                                            style="font-size:12px ;margin-top:-30px;color:#4604fc;"><b
+                                                              >Order Count</b> </span>
+                                                        <div>
+                                                            <h1 class="justify-content-center"
+                                                                style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -60px;">
+                                                                <br>
+                                                                <b>{{total_order}}</b>
+                                                            </h1>
+
+                                                        </div>
+                                                    </div>&nbsp; &nbsp;
+                                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                            style="margin-top: -52px;border-left: 10px solid  rgb(25, 219, 74)!important; background: white;border-radius:35px;width: 170px;
+                                                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                                            <span class="d-flex justify-content-center text-nowrap"
+                                                                style="font-size:12px ;margin-top:-30px;"><b
+                                                                    style="color:rgb(25, 219, 74);">Paid Count</b> </span>
+                                                            <div>
+                                                                <h1 class="justify-content-center"
+                                                                    style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -60px;">
+                                                                    <br>
+                                                                    <b>{{order_paidcount}}</b>
+                                                                </h1>
+
+                                                            </div>
+                                                        </div> &nbsp; &nbsp;
+                                                    <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                    style="margin-top: -52px;border-left: 10px solid  orange!important; background: white;border-radius:35px;width: 170px;
+                                        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                                    <span class="d-flex justify-content-center text-nowrap"
+                                                        style="font-size:12px ;margin-top:-30px;"><b
+                                                            style="color:orange;">Pending Count</b> </span>
+                                                    <div>
+                                                        <h1 class="justify-content-center"
+                                                            style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -60px;">
+                                                            <br>
+                                                            <b>{{order_penidngcount}}</b>
+                                                        </h1>
+
+                                                    </div>
+                                                </div>&nbsp; &nbsp;
+                                                <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                style="margin-top: -52px;border-left: 10px solid  rgb(226, 77, 201)!important; background: white;border-radius:35px;width: 170px;
+                                    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                                <span class="d-flex justify-content-center text-nowrap"
+                                                    style="font-size:12px ;margin-top:-30px;"><b
+                                                        style="color:rgb(226, 77, 201);">Refunded Count</b> </span>
+                                                <div>
+                                                    <h1 class="justify-content-center"
+                                                        style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -60px;">
+                                                        <br>
+                                                        <b>{{order_refundedcount}}</b>
+                                                    </h1>
+
+                                                </div>
+                                            </div>&nbsp; &nbsp;
+                                            <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                            style="margin-top: -52px;border-left: 10px solid  rgb(223, 53, 124)!important; background: white;border-radius:35px;width: 170px;
+                                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                            <span class="d-flex justify-content-center text-nowrap"
+                                                style="font-size:12px ;margin-top:-30px;"><b
+                                                    style="color:rgb(223, 53, 124);">Partially Refunded Count</b> </span>
+                                            <div>
+                                                <h1 class="justify-content-center"
+                                                    style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -80px;">
+                                                    <br>
+                                                    <b>{{order_partiallycount}}</b>
+                                                </h1>
+
+                                            </div>
+                                            
+                                        </div>
+                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                            style="margin-top: -52px;width: 170px;">
+                                            
+                                            <div>
+                                                <button type="button" class="primary-button">
+                                                    <i class="fas fa-check text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Send Order
+                                                </button>&nbsp;&nbsp;
+
+                                            </div>
+                                            
+                                        </div>
+                                      
+                                                    </div>
+                                                   
+                                                   
+                                                </div>
+
+
+
+
+                                                <div class="table-responsive">
+                                                    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+                                                        <table id="shopifyordersummarylist"
+                                                            class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+                                                            <thead>
+                                                                <tr
+                                                                    class=" fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                                                                    <!-- <th>
+                                                              <input type="checkbox" id="checkAll" (change)="$event ? masterToggle1() : null"
+                                                                  [checked]="selection1.hasValue() && isAllSelected1()"
+                                                                  [indeterminate]="selection1.hasValue() && !isAllSelected1()" />
+                                                              All
+                                                          </th> -->
+                                                                    <th>Order</th>
+                                                                    <th>Created Date</th>
+                                                                    <th>Customer</th>
+                                                                    <th>Address</th>
+                                                                    <th>Total</th>
+                                                                    <th>Payment Status</th>
+                                                                    <th>Items</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr
+                                                                    *ngFor="let data of shopifyordersummarylist; let i=index;">
+                                                                    <!-- <td> <input *ngIf="data.status_flag  === 'Assigned'"  disabled type="checkbox" (click)="$event.stopPropagation()"
+                                                              (change)="$event ? selection1.toggle(data) : null"
+                                                              [checked]="selection1.isSelected(data)" />
+                                                              <input *ngIf="data.status_flag  != 'Assigned'" type="checkbox"  (click)="$event.stopPropagation()"
+                                                              (change)="$event ? selection1.toggle(data) : null"
+                                                              [checked]="selection1.isSelected(data)" /></td> -->
+
+                                                                    <td>{{data.shopifyorder_number}}</td>
+                                                                    <td>{{data.salesorder_date}}</td>
+                                                                    <td><span> {{data.customer_contact_person}}</span>
+                                                                    </td>
+                                                                    <td>{{data.customer_address}}</td>
+                                                                    <!-- <td ><span [hidden]="data.email_marketing_consent.state != 'not_subscribed'">&nbsp;&nbsp;&nbsp;Not Subscribed &nbsp;&nbsp;&nbsp;<span [hidden]="data.email_marketing_consent.state != 'subscribed'" >&nbsp;&nbsp; Subscribed &nbsp;&nbsp;</span></span></td> -->
+                                                                    <td><span>£ {{data.Grandtotal}}</span></td>
+                                                                    <td><span *ngIf="data.salesorder_status  === 'paid'"
+                                                                            style="color: rgb(25, 219, 74);font-weight:bolder;"><b>Paid</b></span><span
+                                                                            *ngIf="data.salesorder_status  === 'pending'"
+                                                                            style="color: orange;font-weight:bolder;"><b>Pending</b></span><span
+                                                                            *ngIf="data.salesorder_status  === 'refunded'"
+                                                                            style="color: rgb(226, 77, 201);font-weight:bolder;"><b>Refunded</b></span>
+                                                                            <span
+                                                                            *ngIf="data.salesorder_status  === 'partially_refunded'"
+                                                                            style="color: rgb(223, 53, 124);font-weight:bolder;"><b>Partially Refunded</b></span>
+
+                                                                            
+                                                                    </td>
+                                                                    <td><span> {{data.item_count}}</span>
+                                                                    </td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row tab-pane fade ms-5" id="kt_tab_pane_10" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-12 ">
+                                        <div >
+                                            <div >
+                                                <div >
+                                                  
+                                                    <div class="row d-flex flex-wrap m-4 justify-content-center">
+                                                        <h3 class="card-title"><b>Payment Summary</b></h3>
+                                                        <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                            style="margin-top: -32px;border-left: 10px solid  rgb(25, 219, 74)!important; background: white;border-radius:95px;width: 170px;
+                                                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
+                                                            <span class="d-flex justify-content-center text-nowrap"
+                                                                style="font-size:12px ;margin-top:-30px;"><b
+                                                                    style="color:rgb(25, 219, 74);">Total Paid Count</b> </span>
+                                                            <div>
+                                                                <h1 class="justify-content-center"
+                                                                    style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -70px;">
+                                                                    <br>
+                                                                    <b>{{order_paidcount}}</b>
+                                                                </h1>
+
+                                                            </div>
+                                                        </div>
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <div class=" col-3 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "
+                                                        style="margin-top: -30px;width: 170px;">
+                                                        
+                                                        <div>
+                                                            <button type="button" class="primary-button">
+                                                                <i class="fas fa-check text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Payment Approve
+                                                            </button>&nbsp;&nbsp;
+            
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    </div>
+                                                  
+                                                </div>
+
+
+
+
+                                                <div class="table-responsive">
+                                                    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+                                                        <table id="shopifypaymentsummarylist"
+                                                            class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+                                                            <thead>
+                                                                <tr
+                                                                    class=" fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                                                                    <!-- <th>
+                                                              <input type="checkbox" id="checkAll" (change)="$event ? masterToggle1() : null"
+                                                                  [checked]="selection1.hasValue() && isAllSelected1()"
+                                                                  [indeterminate]="selection1.hasValue() && !isAllSelected1()" />
+                                                              All
+                                                          </th> -->
+                                                                    <th>Order</th>
+                                                                    <th>Created Date</th>
+                                                                    <th>Customer</th>
+                                                                    <th>Address</th>
+                                                                    <th>Total</th>
+                                                                    <th>Payment Status</th>
+                                                                    <th>Items</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr
+                                                                    *ngFor="let data of shopifypaymentsummarylist; let i=index;">
+                                                                    <!-- <td> <input *ngIf="data.status_flag  === 'Assigned'"  disabled type="checkbox" (click)="$event.stopPropagation()"
+                                                              (change)="$event ? selection1.toggle(data) : null"
+                                                              [checked]="selection1.isSelected(data)" />
+                                                              <input *ngIf="data.status_flag  != 'Assigned'" type="checkbox"  (click)="$event.stopPropagation()"
+                                                              (change)="$event ? selection1.toggle(data) : null"
+                                                              [checked]="selection1.isSelected(data)" /></td> -->
+
+                                                                    <td>{{data.shopifyorder_number}}</td>
+                                                                    <td>{{data.salesorder_date}}</td>
+                                                                    <td><span> {{data.customer_contact_person}}</span>
+                                                                    </td>
+                                                                    <td>{{data.customer_address}}</td>
+                                                                    <!-- <td ><span [hidden]="data.email_marketing_consent.state != 'not_subscribed'">&nbsp;&nbsp;&nbsp;Not Subscribed &nbsp;&nbsp;&nbsp;<span [hidden]="data.email_marketing_consent.state != 'subscribed'" >&nbsp;&nbsp; Subscribed &nbsp;&nbsp;</span></span></td> -->
+                                                                    <td><span>£ {{data.Grandtotal}}</span></td>
+                                                                    <td><span *ngIf="data.salesorder_status  === 'paid'"
+                                                                            style="color: rgb(25, 219, 74);font-weight:bolder;"><b>Paid</b></span><span
+                                                                            *ngIf="data.salesorder_status  === 'pending'"
+                                                                            style="color: orange;font-weight:bolder;"><b>Pending</b></span><span
+                                                                            *ngIf="data.salesorder_status  === 'refunded'"
+                                                                            style="color: rgb(226, 77, 201);font-weight:bolder;"><b>Refunded</b></span>
+                                                                    </td>
+                                                                    <td><span> {{data.item_count}}</span>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>

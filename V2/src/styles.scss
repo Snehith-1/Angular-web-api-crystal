@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./assets/sass/style.scss";
+// Replace above style with this css file to enable RTL styles
+// @import "./assets/css/style.rtl";
+@import './assets/sass/plugins.scss';
+// @import "./assets/css/style.rtl.css";
+@import "./assets/sass/style.angular.scss";
+
+// Keenicons - High quality and pixel perfect font icons available in 3 styles, duotone, outline and solid for Metronic elements
+@import "./assets/plugins/keenicons/duotone/style.css";
+@import "./assets/plugins/keenicons/outline/style.css";
+
+@import "./assets/plugins/keenicons/solid/style.css";
+// @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+//Custom CSS
+@import "./assets/custom-css/custom-style.scss";
+@import "./assets/custom-css/select2-customstyle.scss";
+@import "~flatpickr/dist/flatpickr.css";
+//bundle CSS
+@import "./assets/custom-css/style.bundle.css";
+
+//ng-select for dropdown select
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+// @import url('https://fonts.googleapis.com/css?family=Nominee+Condensed');
+
+.primary-button {
+    background-color: #42ac72;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+.secondary-button {
+    background-color: #50cd89;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px !important;
+    border-radius: 3px;
+    border: 0;
+}
+
+// .nominee-condensed {
+
+//     font-family: 'Nominee Condensed', sans-serif;
+
+// }

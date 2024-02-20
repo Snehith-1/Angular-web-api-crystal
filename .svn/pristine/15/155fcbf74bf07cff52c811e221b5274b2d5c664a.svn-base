@@ -1,0 +1,151 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+
+@Component({
+  selector: 'app-hrm-member-myleave',
+  templateUrl: './hrm-member-myleave.component.html',
+  styleUrls: ['./hrm-member-myleave.component.scss']
+})
+export class HrmMemberMyleaveComponent {
+
+  radioSelected: any;
+  leaveperiod: any;  
+  responsedata: any;
+  leave_details: any;
+  leavetypecount_list:any;
+  reactiveFormadd:FormGroup;
+  leavetaken: any;
+  available: any;
+  parameterValue:any;
+  leavesummary:any;
+  NgxSpinnerService: any;
+  leave: any;
+  file: any;
+
+  constructor ( private fb: FormBuilder, private route: ActivatedRoute,private router: Router, private service: SocketService, private ToastrService: ToastrService ) {
+    this.reactiveFormadd = new FormGroup ({
+      leave_dateto : new FormControl(''),
+      leave_datefrom : new FormControl(''),
+      leave_days : new FormControl(''),
+      leave_type : new FormControl(''),
+      leave_reason : new FormControl(''),
+      file_uploadleave : new FormControl(''),
+    })
+  }
+  
+  ngOnInit(): void {
+
+
+    var api = 'applyLeave/leavesummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata = result;
+      this.leave_details = this.responsedata.leave_list;
+      setTimeout(()=>{  
+        $('#leave_details').DataTable();
+      }, 1);
+    });
+
+    var url = 'applyLeave/leavetype'
+    this.service.get(url).subscribe((result: any) => {
+  
+      this.responsedata = result;
+      this.leavetypecount_list = this.responsedata.leavetype_list;
+      this.leavetaken = this.leavetypecount_list[0].count_leavetaken;
+      this.available = this.leavetypecount_list[0].count_leaveavailable;
+    
+    });    
+  }
+  
+
+  public validate(): void {
+    console.log(this.reactiveFormadd.value)
+    
+       this.leave = this.reactiveFormadd.value;
+      // this.service.Profileupload(this.reactiveForm.value).subscribe(result => {  
+      //   this.responsedata=result;
+      // });   
+     
+        let formData = new FormData();
+        if (this.file != null && this.file != undefined) {      
+        formData.append("file", this.file,this.file.name);
+        formData.append("leave_datefrom", this.leave.branch_gid);
+        formData.append("leave_dateto", this.leave.branch_code);
+        formData.append("leave_days", this.leave.Branch_address);
+        formData.append("leave_type", this.leave.City);
+        formData.append("leave_reason", this.leave.State);
+        formData.append("file_uploadleave", this.leave.Postal_code);
+          
+       
+        var api='applyLeave/DaPostUploadDocument'
+        //console.log(this.file)
+          this.service.postfile(api,formData,).subscribe((result:any) => {
+  
+            if(result.status ==true){
+              this.ToastrService.warning(result.message)
+            }
+            else{
+              this.router.navigate(['/einvoice/Dashboard']);
+              this.ToastrService.success(result.message)
+            }
+            this.responsedata=result;        
+          });
+      
+      }
+      else{
+        var url = 'hrmTrnDashboard/applyCompoffReq';
+    this.service.post(url,this.reactiveFormadd.value).subscribe((result: any) => {
+      if (result.status == true) {
+        this.ToastrService.success(result.message)
+        this.NgxSpinnerService.hide();
+      }
+      else {
+        this.ToastrService.warning(result.message)
+        this.NgxSpinnerService.hide();
+      }
+    });
+      }
+      
+        // this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+  
+      // console.info('Name:', this.employee);
+      return; 
+  }  
+
+  delete(leave_gid: any) {
+    this.parameterValue = leave_gid
+  }
+
+
+  ondelete() {
+    this.NgxSpinnerService.show();
+    var params = {
+      leave_gid: this.parameterValue
+    }
+    console.log(this.parameterValue);
+    var url3 = 'applyLeave/leavePendingDelete'
+    this.service.getid(url3, this.parameterValue).subscribe((result: any) => {
+      if (result.status == false) {
+         this.ToastrService.warning(result.message)
+      }
+      else {
+         this.ToastrService.success("Delete successfully")
+      }
+      this.leavesummary();
+      window.location.reload();
+
+
+    });
+  }
+
+  leavePeriod() {
+    this.leaveperiod = this.radioSelected;
+  }
+
+  back() {
+    this.router.navigate(['/hrm/HrmMemberDashboard'])
+  }
+
+}

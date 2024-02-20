@@ -1,0 +1,94 @@
+<div class="card">
+    <!-- <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Edit Terms and Conditions</h3>
+        </div>
+    </div> -->
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white"><i class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Edit Terms and Conditions
+        </h3>
+    </div>
+
+    
+        <form [formGroup]="templateformedit">
+            
+
+            <input formControlName="termsconditions_gid" hidden type="text" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary" name="template_name" />
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required" >Template Name</span>
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                         <input formControlName="template_name" type="text" class="
+                         form-control
+                         mb-3 mb-lg-0 col-12
+                         bg-white
+                       "  placeholder="Template Name"   name="template_name" style="width:340px; height: 40px;" 
+                       [ngClass]="{'invalid-border': template_name.invalid && template_name.touched}" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" required  />
+                    </div>
+                    <div *ngIf="template_name.invalid && (template_name.dirty || template_name.touched)">
+                      <div *ngIf="template_name.errors?.['required']">
+                                  <span style="color:red;">Template Name Required </span>
+                      </div>
+                    </div> 
+                </div>
+              
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Template Type</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select" formControlName="template_type"
+                        placeholder="Template Type"  pattern="^(?!\s*$).+"  name="payment_terms" required>
+                          <option value="General">General</option>
+                          <option value="Payment Terms">Payment Terms</option>
+                          <option value="Delivery Details">Delivery Details</option>
+                        </select>
+                        
+                    </div>
+                </div> -->
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required" >Template Type</span>
+                    <div class="col-12 col-lg-4 col-md-3 col-sm-12">
+                      <ng-select formControlName="payment_terms"
+                         
+                              bindLabel="template_type"  placeholder="Select an option" style="width: 340px; height: 40px;" 
+                              [ngClass]="{'invalid-border': template_type.invalid && template_type.touched}">
+                              <ng-option value="General">General</ng-option>
+                              <ng-option value="Payment Terms">Payment Terms</ng-option>
+                              <ng-option value="Delivery Details">Delivery Details</ng-option>
+                              </ng-select>       
+                  </div>
+                  <div *ngIf="template_type.invalid && (template_type.dirty || template_type.touched)">
+                    <div *ngIf="template_type.errors?.['required']">
+                                <span style="color:red;">Template Type Required </span>
+                    </div>
+                    </div>
+                  </div>  
+            </div>
+<br><br>
+        
+            <div class="card-header bg-lightblue card-height35 table-responsive">
+                <div class="card-title m-0">
+                  <h5 class="fw-bolder text-blue">Template Content</h5>
+                </div>
+              </div>
+              <div class="d-flex flex-row flex-wrap mt-6 ms-3 table-responsive">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <angular-editor [config]="config" formControlName="template_content">
+                  </angular-editor>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-6">
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4" (click)="templateupdate()">   
+                        <i class="bi bi-check-square fs-7 me-1"></i>
+                        Update
+                    </button>
+        
+                    <button class="btn-primary btn-sm text-white me-4" routerLink="/pmr/PmrMstTermsconditionssummary">
+                        <i class="bi bi-arrow-left-square fs-7 me-1"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>        
+    </div>

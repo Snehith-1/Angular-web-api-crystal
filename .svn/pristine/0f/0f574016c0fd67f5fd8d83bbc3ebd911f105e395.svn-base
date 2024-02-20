@@ -1,0 +1,212 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+interface ILeadBank{
+  //sourceedit_name: any;
+
+  created_date: string;
+  company_name: string;
+  leadbank_name:string;
+  leadbankcontact_name: string;
+  contact_details: string;
+  region_name: string;
+  source_name:string;
+  created_by: string;
+  lead_status: string;
+  assign_to: string;
+  leadbank_gid: string;
+  companyedit_name:string;
+
+  
+
+}
+@Component({
+  selector: 'app-crm-trn-leadbanksummary',
+  templateUrl: './crm-trn-leadbanksummary.component.html',
+  styleUrls: ['./crm-trn-leadbanksummary.component.scss']
+})
+export class CrmTrnLeadbanksummaryComponent {
+  file!: File;
+  reactiveForm!: FormGroup;
+  reactiveFormEdit!: FormGroup;
+  responsedata: any;
+  parameterValue: any;
+
+  parameterValue1: any;
+  leadbank_list: any[] = [];
+  leadbank!: ILeadBank;
+  constructor(private formBuilder: FormBuilder, private route:Router,private router: Router,private ToastrService: ToastrService, public service: SocketService) {
+    this.leadbank = {} as ILeadBank;
+  }
+
+
+  ngOnInit(): void {
+    this.GetLeadbankSummary();
+     // Form values for Add popup/////
+     this.reactiveForm = new FormGroup({
+ 
+      company_name: new FormControl(this.leadbank.company_name, [
+         Validators.required,
+ 
+       ]),
+       leadbankcontact_name: new FormControl(this.leadbank.leadbankcontact_name, [
+        Validators.required,
+
+      ]),
+     });
+       // Form values for Edit popup/////
+     this.reactiveFormEdit = new FormGroup({
+ 
+      companyedit_name: new FormControl(this.leadbank.companyedit_name, [
+         Validators.required,
+       ]),
+      
+       leadbank_gid: new FormControl(''),
+ 
+ 
+     });
+   }
+  
+   //// Summary Grid//////
+   GetLeadbankSummary(){
+    var url='Leadbank/GetLeadbankSummary'
+   this.service.get(url).subscribe((result: any) => {
+ 
+     this.responsedata = result;
+     this.leadbank_list = this.responsedata.leadbank_list;
+     //console.log(this.source_list)
+     setTimeout(() => {
+       $('#leadbank_list').DataTable();
+     }, 1);
+ 
+ 
+   });
+ }
+ onview(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  //console.log(param);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  console.log(encryptedParam);
+  this.route.navigate(['/crm/CrmTrnLeadbankview',encryptedParam]) 
+}
+onbranch(params: any) {
+
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  //console.log(param);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  console.log(encryptedParam);
+  this.route.navigate(['/crm/CrmTrnLeadBankbranch',encryptedParam]) 
+ 
+}
+
+onedit(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  //console.log(param);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  console.log(encryptedParam);
+  this.route.navigate(['/crm/CrmTrnLeadbankedit',encryptedParam]) 
+  
+}
+ ////////////Delete ////////
+
+ openModaldelete(parameter: string) {
+  this.parameterValue = parameter
+}
+ondelete() {
+  console.log(this.parameterValue);
+  var url = 'Leadbank/deleteLeadbankSummary'
+  let param = {
+    leadbank_gid: this.parameterValue
+  }
+  this.service.getparams(url, param).subscribe((result: any) => {
+    if (result.status == false) {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning(result.message)
+    }
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+ this.ToastrService.success(result.message)
+    }
+    this.GetLeadbankSummary();
+  });
+}
+onChange1(event: any) {
+  this.file = event.target.files[0];
+  // var api='Employeelist/EmployeeProfileUpload'
+  // //console.log(this.file)
+  //   this.service.EmployeeProfileUpload(api,this.file).subscribe((result:any) => {
+  //     this.responsedata=result;
+  //   });
+}
+importexcel(){
+  let formData = new FormData();
+  if(this.file !=null &&  this.file != undefined){
+    window.scrollTo({
+      top: 0, // Code is used for scroll top after event done
+    });
+  
+  formData.append("file", this.file,this.file.name);
+
+  var api='Leadbank/LeadReportImport'
+
+    this.service.postfile(api,formData).subscribe((result:any) => {
+      this.responsedata = result;
+       
+      // this.router.navigate(['/crm/CrmMstProductsummary']);
+      window.location.reload();
+      this.ToastrService.success("Excel Uploaded Successfully")
+    
+  });
+
+}
+}
+exportExcel() {
+  var api7='Leadbank/GetLeadReportExport'
+  //console.log(this.file)
+    this.service.generateexcel(api7).subscribe((result:any) => {
+  this.responsedata=result;
+   var phyPath = this.responsedata.productexport_list[0].lspath1;
+   var relPath = phyPath.split("src");
+    var hosts = window.location.host;
+   var prefix = location.protocol + "//";
+    var str = prefix.concat(hosts,relPath[1]);
+   var link = document.createElement("a");
+   var name = this.responsedata.productexport_list[0].lsname.split('.');
+   link.download = name[0];
+   link.href = str;
+   link.click();
+   this.ToastrService.success("Lead Bank Excel Exported Successfully")
+ });
+ 
+}
+oncontact(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  //console.log(param);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  console.log(encryptedParam);
+  this.route.navigate(['/crm/CrmTrnLeadbankcontact',encryptedParam]) 
+}
+downloadfileformat(){
+  let link = document.createElement("a");
+  link.download = "Lead Report";
+  link.href = "assets/media/leadbank/export/VCIDEX/Export/2023/9/Lead_Report.xlsx";
+  link.click();
+}
+
+onclose() {
+  this.reactiveForm.reset();
+
+}
+}

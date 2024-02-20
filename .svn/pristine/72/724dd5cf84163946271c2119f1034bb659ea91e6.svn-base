@@ -1,0 +1,59 @@
+
+<div class="card shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">Quotation Summary</h3>
+    </div>
+    <br>
+    <div> &nbsp; &nbsp;
+  
+      <button title="Add Vendor" class="btn-primary btn-sm text-white me-4" routerLink="/smr/SmrTrnQuotationadd">
+        Raise Quotation</button> 
+    </div>
+    <div class="table-responsive">
+      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <table id="quotation_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.NO </th>
+              <th>Quotation  <br>Date</th>
+              <th>Quotation  <br>Ref. No</th>
+              <th>Enquiry  <br>Ref .No</th>
+              <th>Customer Enquiry <br>Ref .No</th>
+              <th>Customer </th>
+              <th>Customer  <br>Details</th>
+              <th>Quotation  <br>Type</th>
+              <th>Created By</th>
+              <th>Quotation  <br>Amount </th>
+              <th>Quotation  <br>Status</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of quotation_list; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.salesorder_date}}</td>
+              <td>{{data.so_referenceno1}}</td>
+              <td>{{data.customer_name}}</td> 
+              <td>{{data.branch_name}}</td>
+              <td>{{data.so_type}}</td>
+              <td>{{data.Grandtotal}}</td>
+              <td>{{data.user_firstname}}</td>
+              <td>{{data.salesorder_status}}</td>
+              <td class="text-center text-nowrap">
+  
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                (click)="openModaledit()" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                  class="fa-solid fa-pencil text-white  fs-6"></span></button>
+
+              <button title="Delete" type="button" (click)="openModaldelete()" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-trash text-white  fs-6"></span></button>
+  
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

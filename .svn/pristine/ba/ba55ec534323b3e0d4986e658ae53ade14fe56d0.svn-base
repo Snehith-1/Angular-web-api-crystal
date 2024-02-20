@@ -1,0 +1,362 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.inventory.Models;
+using OfficeOpenXml.FormulaParsing.Excel.Operators;
+
+namespace ems.inventory.DataAccess
+{
+
+    public class DaImsTrnDeliveryordersummary
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+
+        public void DaGetImsTrnDeliveryorderSummary(MdlImsTrnDeliveryordersummary values)
+        {
+            msSQL = " select distinct a.directorder_gid,s.branch_name,cast(concat(c.so_referenceno1," +
+                " if(c.so_referencenumber<>'',concat(' | ',c.so_referencenumber),'') ) as char)as so_referenceno1," +
+                " directorder_refno, directorder_date, n.user_firstname, a.dc_no,a.salesorder_gid, " +
+                " a.customer_name, customer_branchname, customer_contactperson, directorder_status,delivery_status, " +
+                " concat(CAST(date_format(delivered_date,'%d-%m-%Y') as CHAR),'/',delivered_to) as delivery_details, " +
+                " case when a.customer_contactnumber is null then concat(e.customercontact_name,'/',e.mobile,'/',e.email) " +
+                " when a.customer_contactnumber is not null then concat(a.customer_contactperson,' / ',a.customer_contactnumber,' / ',a.customer_emailid) end as contact" +
+                " from smr_trn_tdeliveryorder a " +
+                " inner join crm_mst_tcustomercontact e on e.customer_gid = a.customer_gid " +
+                " inner join hrm_mst_temployee m on m.employee_gid=a.created_name " +
+                " left join hrm_mst_tbranch s on s.branch_gid=a.customerbranch_gid " +
+                " inner join adm_mst_tuser n on n.user_gid= m.user_gid " +
+                " left join smr_trn_tdeliveryorderdtl b on a.directorder_gid =b.directorder_gid " +
+                " left join smr_trn_tsalesorder c on a.salesorder_gid=c.salesorder_gid " +
+                " where dc_type<>'Direct DC' " +
+                " order by a.directorder_date DESC,directorder_gid desc ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<deliveryorder_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new deliveryorder_list
+                    {
+
+                        directorder_date = dt["directorder_date"].ToString(),
+                        directorder_refno = dt["directorder_refno"].ToString(),
+                        so_referenceno1 = dt["so_referenceno1"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        contact = dt["contact"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        //salesorder_status = dt["salesorder_status"].ToString(),
+
+                    });
+                    values.deliveryorder_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetImsTrnAddDeliveryorderSummary(MdlImsTrnDeliveryordersummary values)
+        {
+            msSQL = " select distinct a.salesorder_gid,y.branch_name, cast(concat(a.so_referenceno1," +
+               " if(a.so_referencenumber<>'',concat(' | ',a.so_referencenumber),'') ) as char)as so_referenceno1, date_format(a.salesorder_date,'%d-%m-%Y') as salesorder_date, " +
+                " sum(b.qty_quoted) as qty_quoted,sum(b.product_delivered) as product_delivered," +
+                " a.customer_name,  a.customer_contact_person, a.salesorder_status,c.mobile, " +
+                " a.despatch_status, " +
+                " case when a.customer_email is null then concat(c.customercontact_name,'/',c.mobile,'/',c.email) " +
+                " when a.customer_email is not null then concat(a.customer_contact_person,' / ',a.customer_mobile,' / ',a.customer_email) end as contact " +
+                " from smr_trn_tsalesorder a " +
+                " left join smr_trn_tsalesorderdtl b on b.salesorder_gid = a.salesorder_gid " +
+                " left join crm_mst_tcustomercontact c on c.customer_gid=a.customer_gid " +
+                " left join hrm_mst_tbranch y on y.branch_gid=a.branch_gid" +
+                 " group by salesorder_gid " +
+                 " having(qty_quoted <> product_delivered)  order by a.salesorder_date desc, a.customer_name desc ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<adddeliveryorder_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new adddeliveryorder_list
+                    {
+                        salesorder_date = dt["salesorder_date"].ToString(),
+                        salesorder_gid = dt["salesorder_gid"].ToString(),
+                        so_referenceno1 = dt["so_referenceno1"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        contact = dt["contact"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        salesorder_status = dt["salesorder_status"].ToString(),
+
+                    });
+                    values.adddeliveryorder_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetRaiseDeliveryorderSummary ( string salesorder_gid ,MdlImsTrnDeliveryordersummary values)
+        {
+            msSQL = " select a.salesorder_gid,concat(a.so_referenceno1,case when so_referencenumber='' then '' else concat(' ','-',' ',so_referencenumber) end )as so_reference," +
+                    " a.salesorder_date,a.termsandconditions,b.customer_gid,b.customer_code,format(a.grandtotal,2) as grandtotal, a.customer_name, c.customerbranch_name ," +
+                    " concat(b.customer_address,b.customer_address2,b.customer_city,b.customer_state,b.customer_pin) as customer_address," +
+                    " c.designation,c.customercontact_name,c.email,c.mobile,a.currency_code,a.shipping_to, " +
+                    "  a.customer_mobile,a.customer_email,a.customer_address as customer_address_so, " +
+                    " a.customer_contact_person,a.shipping_to from smr_trn_tsalesorder a" +
+                    " left join crm_mst_tcustomer b on b.customer_gid=a.customer_gid " +
+                    " left join crm_mst_tcustomercontact c on c.customer_gid=a.customer_gid " +
+                    " where a.salesorder_gid='" + salesorder_gid + "' ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<raisedelivery_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new raisedelivery_list
+                    {
+                        
+                        salesorder_gid = dt["salesorder_gid"].ToString(),
+                        salesorder_date = dt["salesorder_date"].ToString(),
+                        customer_mobile = dt["customer_mobile"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        customer_branch = dt["customerbranch_name"].ToString(),
+                        customercontact_names = dt["customercontact_name"].ToString(),
+                        customer_email = dt["customer_email"].ToString(),
+                        customer_address_so = dt["customer_address_so"].ToString(),
+                        customer_address = dt["customer_address_so"].ToString(),
+                        so_referencenumber = dt["so_reference"].ToString(),
+
+
+                    });
+                    values.raisedelivery_list = getModuleList;
+                }
+            }
+            
+            dt_datatable.Dispose();
+        }
+        public void DaGetProductdelivery (string salesorder_gid, MdlImsTrnDeliveryordersummary values)
+        {
+           msSQL = "select distinct y.branch_name from smr_trn_tsalesorder a "+
+                 "left join crm_mst_tcustomercontact c on c.customer_gid = a.customer_gid "+
+                 "left join hrm_mst_tbranch y on y.branch_gid = a.branch_gid "+
+                   " where salesorder_gid = '" + salesorder_gid +  "' ";
+            string branch_name = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = "select branch_gid from hrm_mst_tbranch where branch_name = '" + branch_name + "' ";
+            string branch_gid = objdbconn.GetExecuteScalar(msSQL);
+
+
+            msSQL = " select a.salesorderdtl_gid,c.design_no,c.color_name,a.salesorder_gid,a.product_gid,date_format(a.product_requireddate, '%d-%m-%Y') as product_requireddate,a.productgroup_gid,a.productgroup_name,a.product_name,a.uom_gid,a.uom_name,a.qty_quoted," +
+                    " a.display_field,a.product_delivered,format(a.product_price,2) as product_price, a.discount_percentage,format(a.discount_amount,2) as discount_amount," +
+                    " format(a.tax_amount,2) as tax_amount,format(a.tax_amount2,2) as tax_amount2,format(a.tax_amount3,2) as tax_amount3, " +
+                    " a.tax_name,a.tax_name2,a.tax_name3,format(a.price,2) as price,b.stockable,a.customerproduct_code, " +
+                    " (select ifnull(sum(m.stock_qty)+sum(m.amend_qty)-sum(m.damaged_qty)-sum(m.issued_qty)-sum(m.transfer_qty),0) as available_quantity from " +
+                    "  ims_trn_tstock m where m.stock_flag='Y' and m.product_gid=a.product_gid and m.branch_gid='"+ branch_gid + " ' and " + 
+                    "  m.uom_gid=a.uom_gid) as available_quantity,b.serial_flag,b.producttype_gid, " +
+                    " a.tax1_gid,a.tax2_gid,a.tax3_gid,b.product_code " +
+                    " from smr_trn_tsalesorderdtl a " +
+                    " left join pmr_mst_tproduct b on a.product_gid=b.product_gid " +
+                    " left join acp_trn_torderdtl c on c.salesorderdtl_gid=a.salesorderdtl_gid " +
+                    " where a.salesorder_gid = '" + salesorder_gid + "'"+
+                    " group by a.salesorderdtl_gid order by a.salesorderdtl_gid asc  ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<raisedelivery_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new raisedelivery_list
+                    {
+
+                        salesorder_gid = dt["salesorder_gid"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        customerproduct_code = dt["customerproduct_code"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        display_field = dt["display_field"].ToString(),
+                        uom_name = dt["uom_name"].ToString(),
+                        available_quantity = dt["available_quantity"].ToString(),
+                        qty_quoted = dt["qty_quoted"].ToString(),
+                        product_delivered = dt["product_delivered"].ToString(),
+                        product_requireddate = dt["product_requireddate"].ToString(),
+
+
+                    });
+                    values.raisedelivery_list = getModuleList;
+                }
+            }
+
+            dt_datatable.Dispose();
+        }
+        public void DaGetOutstandingQty(string salesorderdtl_gid, MdlImsTrnDeliveryordersummary values)
+        {
+            
+            msSQL = "select (a.qty_quoted-a.product_delivered) as outstanding_qty,a.product_gid,a.uom_gid," +
+                " a.display_field,b.product_name,c.productuom_name from smr_trn_tsalesorderdtl a" +
+                " left join pmr_mst_tproduct b on a.product_gid=b.product_gid" +
+                " left join pmr_mst_tproductuom c on a.uom_gid=c.productuom_gid" +
+                " where  a.salesorderdtl_gid = '" + salesorderdtl_gid + "' group by a.salesorderdtl_gid ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<OutstandingQty_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new OutstandingQty_list
+                    {
+
+                        outstanding_qty = dt["outstanding_qty"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        display_field = dt["display_field"].ToString(),                      
+
+
+                    });
+                    values.OutstandingQty_list = getModuleList;
+                }
+            }
+
+            dt_datatable.Dispose();
+        }
+        public void DaIssueFromStock(string salesorderdtl_gid, MdlImsTrnDeliveryordersummary values)
+        {
+            
+            msSQL = " select a.created_date,a.stock_gid,a.product_gid,a.display_field,a.uom_gid,a.reference_gid," +
+                      " sum(a.stock_qty+amend_qty-a.issued_qty-damaged_qty-transfer_qty)as stock_qty,b.product_name,c.productuom_name" +
+                      " from ims_trn_tstock a" +
+                      " left join pmr_mst_tproduct b on a.product_gid=b.product_gid" +
+                      " left join pmr_mst_tproductuom c on a.uom_gid=c.productuom_gid" +
+                      " where a.product_gid='" + values.product_gid + "'" +
+                      " and a.uom_gid='" + values.uom_gid + "' and a.stock_flag='Y'" +
+                      " and a.branch_gid='" + values.branch_gid + "' " +
+                      " group by stock_gid having stock_qty >'0.00' order by date(a.created_date) asc,a.created_date desc ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<OutstandingQty_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new OutstandingQty_list
+                    {
+
+                        created_date = dt["created_date"].ToString(),
+                        stock_gid = dt["stock_gid"].ToString(),
+                        product_gid = dt["product_gid"].ToString(),
+                        display_field = dt["display_field"].ToString(),
+                        uom_gid = dt["uom_gid"].ToString(),
+                        reference_gid = dt["reference_gid"].ToString(),
+                        stock_qty = dt["stock_qty"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),                      
+
+
+                    });
+                    values.OutstandingQty_list = getModuleList;
+                }
+            }
+
+            dt_datatable.Dispose();
+        } 
+         public void DaPostSelectIssueQtySubmit(string employee_gid, string salesorder_gid, IssuedQty_list values)
+        {
+            msSQL = " select display_field from smr_trn_tsalesorderdtl where salesorder_gid='" + salesorder_gid + "' and product_gid='" + values.product_gid + "'";
+
+            {
+                if (Convert.ToDouble(values.txtstocktotal) <= Convert.ToDouble(values.lbloutstanding_qty))
+                {
+                    msSQL = " select tmp table ";
+
+                    dt_datatable = objdbconn.GetDataTable(msSQL);
+                    var getModuleList = new List<OutstandingQty_list>();
+                    if (dt_datatable.Rows.Count != 0)
+                    {
+                        foreach (DataRow dt in dt_datatable.Rows)
+                        {
+                            getModuleList.Add(new OutstandingQty_list
+                            {
+
+                                created_date = dt["created_date"].ToString(),
+                                stock_gid = dt["stock_gid"].ToString(),
+                                product_gid = dt["product_gid"].ToString(),
+                                display_field = dt["display_field"].ToString(),
+                                uom_gid = dt["uom_gid"].ToString(),
+                                reference_gid = dt["reference_gid"].ToString(),
+                                stock_qty = dt["stock_qty"].ToString(),
+                                product_name = dt["product_name"].ToString(),
+                                productuom_name = dt["productuom_name"].ToString(),
+
+
+                            });
+                            values.OutstandingQty_list = getModuleList;
+
+
+                        }
+                       
+                        if (values.txtissuedqty <= values.lblstock_qty)
+                        {
+                            objdbconn.OpenConn();
+                           
+                            msSQL = " insert into ims_tmp_tstock(" +
+                                " stock_gid," + " salesorderdtl_gid, " +
+                                " product_gid," + " stock_quantity," +
+                                " created_by," + " created_date," +
+                                " branch_gid," + " productuom_gid," +
+                                " mrdtl_gid," + " display_field" + ") values (" +
+                                "'" + values.stock_gid + "'," +
+                                 "'" + values.salesorderdtl_gid + "'," +
+                                "'" + values.product_gid + "'," +
+                                "'" + values.txtissuedqty + "'," +
+                                "'" + employee_gid + "'," +
+                                "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                                "'" + values.branch_gid + "'," + "'" + values.uom_gid + "'," +
+                                "'" + values.mrdtl_gid + "'," + "'" + values.display_field + "')";
+
+
+
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        }
+                   
+                       
+                        else
+                        {
+                            values.message = "Issue Quantity must be Less than or equal to Actual Quantity";
+
+                            values.txtstocktotal = "0.00";
+
+                            return;
+                        }
+                    }
+
+                    dt_datatable.Dispose();
+                   
+                }
+                else
+                {
+                    values.message = "Issue Quantity must be Less than or equal to Outstanding Quantity";
+                   
+                }
+               
+                values.txtstocktotal = "0.00";
+            }
+
+        }
+
+
+    }
+}

@@ -1,0 +1,115 @@
+﻿using ems.pmr.DataAccess;
+using ems.pmr.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web;
+using StoryboardAPI.Models;
+
+namespace ems.pmr.Controllers
+{
+    [RoutePrefix("api/PblTrnPaymentRpt")]
+    [Authorize]
+    public class PblTrnPaymentRptController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaPblTrnPaymentRpt objDaPurchase = new DaPblTrnPaymentRpt();
+        
+        [ActionName("GetPaymentRptSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetPaymentRptSummary()
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetPaymentRptSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+        [ActionName("GetPaymentAddproceed")]
+        [HttpGet]
+        public HttpResponseMessage GetPaymentAddproceed(string vendorname)
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetPaymentAddproceed(values, vendorname);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMakepaymentExpand")]
+        [HttpGet]
+        public HttpResponseMessage GetMakepaymentExpand(string vendor_gid)
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetMakepaymentExpand(vendor_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("Productdetails")]
+        [HttpGet]
+        public HttpResponseMessage Productdetails(string invoice_gid)
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaProductdetails(invoice_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetSinglePaymentSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetSinglePaymentSummary(string vendor_gid)
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetSinglePaymentSummary(vendor_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetBankDetail")]
+        [HttpGet]
+        public HttpResponseMessage GetBankDetail()
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetBankDetail(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetCardDetail")]
+        [HttpGet]
+        public HttpResponseMessage GetCardDetail()
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetCardDetail(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getmultipleinvoice2employeedtl")]
+        [HttpGet]
+        public HttpResponseMessage Getmultipleinvoice2employeedtl(string vendor_gid)
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaPurchase.DaGetmultipleinvoice2employeedtl(getsessionvalues.user_gid,vendor_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetpaymentInvoiceSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetpaymentInvoiceSummary(string vendor_gid)
+        {
+            MdlPblTrnPaymentRpt values = new MdlPblTrnPaymentRpt();
+            objDaPurchase.DaGetpaymentInvoiceSummary(vendor_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("Postmultipleinvoice2singlepayment")]
+        [HttpPost]
+        public HttpResponseMessage Postmultipleinvoice2singlepayment(multipleinvoice2singlepayment values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaPurchase.DaPostmultipleinvoice2singlepayment(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+    }
+}

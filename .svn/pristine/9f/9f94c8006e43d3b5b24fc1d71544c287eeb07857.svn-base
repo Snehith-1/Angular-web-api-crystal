@@ -1,0 +1,79 @@
+import { style } from '@angular/animations';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SharedService } from '../../services/shared.service';
+
+
+
+@Component({
+  selector: 'layout-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
+})
+export class HeaderComponent implements OnInit{
+
+  @Input() collapsed = false;
+  @Input() screenWidth = 0;
+  menu : any[] | undefined;
+  sidemenu : any[] | string[] | undefined;
+  menu_name: any;
+  firstMenu: any;
+  selectedIndex: number=0;
+
+  constructor(
+    public socketservice:SocketService, 
+    public router:Router,
+    public sharedservice:SharedService,
+    private NgxSpinnerService: NgxSpinnerService
+  ){
+    if(localStorage.getItem('token') != null && localStorage.getItem('token') != ''){
+      this.getmenu()
+    }
+  }
+
+  getHeaderClass(): string{
+    let styleClass = '';
+    if(this.collapsed && this.screenWidth > 768){
+      styleClass = 'head-trimmed';
+    }else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
+      styleClass = 'head-md-screen';
+    }
+    return styleClass;
+  }
+
+  getmenu(){
+    this.NgxSpinnerService.show();
+    let  user_gid = localStorage.getItem('user_gid');
+    let param = {
+      user_gid : user_gid 
+    }
+    var url = 'User/topmenu';
+    this.socketservice.getparams(url,param).subscribe((result: any) => {
+      this.menu = result.menu_list;
+      this.firstMenu = result.menu_list[0];
+      this.sharedservice.setData(this.firstMenu);
+    });
+    this.NgxSpinnerService.hide();
+  }
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['auth/login']);
+  }
+  getsidemenu(data:any){
+    this.menu_name = data.text;
+    // this.ongetsidemenu.emit({name: data.text});
+    this.sharedservice.setData(data);
+    this.sharedservice.functionToCall();
+    this.sharedservice.function1ToCall();
+  }
+
+  ngOnInit(): void {
+    
+  }
+  selectHead(_index: number){
+    this.selectedIndex = _index;
+  }
+}

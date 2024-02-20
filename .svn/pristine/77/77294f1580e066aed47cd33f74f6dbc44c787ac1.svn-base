@@ -1,0 +1,314 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Product Unit</h3>
+    </div>
+    <br>
+    <div> &nbsp; &nbsp;
+        <!-- ADD Function -->
+        <button type="button" class="btn-primary btn-sm text-white me-4" data-bs-toggle="modal"
+            data-bs-target="#myModaladd">
+            &nbsp;&nbsp;&nbsp; Add Product Unit
+        </button>
+    </div>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="productunit_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th></th>
+                        <th>S.no </th>
+                        <th>Unit Class Code </th>
+                        <th>Unit Class Name</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of productunit_list; let i=index;">
+                        <td (click)="ondetail(data.productuomclass_gid)" (click)="data.isExpand = !data.isExpand">
+                            <i *ngIf="!data.isExpand" class="bi-chevron-right"></i>
+                            <i *ngIf="data.isExpand" class="bi-chevron-up"></i>
+                        </td>
+                        <td>{{i+1}}</td>
+                        <td>{{data.productuomclass_code}}</td>
+                        <td>{{data.productuomclass_name}}</td>
+                        <td class="text-center text-nowrap">
+                            <button title="Add" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                                data-bs-toggle="modal" data-bs-target="#myModaladdproduct"><span
+                                    class="fa-solid fa-plus text-white  fs-6"></span></button>
+
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                                (click)="openModaledit(data)" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+
+                            <button title="Delete" type="button" (click)="openModaldelete(data.productuomclass_gid)"
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+
+                        </td>
+                        <br>
+                        <td *ngIf="data.isExpand">
+                            <br> <br> <br>
+                            <div class="table-responsive" style="margin-left:-1480px;">
+                                <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                                    <table id="productunit_list1" 
+                                        class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                        <thead>
+                                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                <th>S.No</th>
+                                                <th>Unit Code</th>
+                                                <th>Unit Name</th>
+                                                <th>Sequence Level</th>
+                                                <th>Conversion Rate</th>
+                                                <th>Base Flag</th>
+                                                <th>Product Count</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data1 of productunitgrid_list; let i=index;">
+                                                <td>{{i+1}}</td>
+                                                <td>{{data1.productuom_code}}</td>
+                                                <td>{{data1.productuom_name}}</td>
+                                                <td>{{data1.sequence_level}}</td>
+                                                <td>{{data1.convertion_rate}}</td>
+                                                <td>{{data1.baseuom_flag}}</td>
+                                                <td>{{data1.total_count}}</td>                                                
+                                                <td class="text-center text-nowrap"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- The Modal ADD UNIT CLASS DETAILS-->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;Add Product Unit</h2>
+
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+
+
+                    <div class="row"><span class="font-bold"><b>Unit Class Code</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                 -->
+                            <input formControlName="productuomclass_code" type="text" class="
+                 form-control form-control-lg form-control-solid
+                 custom-input
+                 mb-3 mb-lg-0
+                 bg-white
+                 custom-input
+               " [ngStyle]="{
+                 'border-color':
+                 productuomclass_code.invalid && productuomclass_code.touched
+                     ? 'red'
+                     : 'rgb(209, 209, 209)'
+               }" placeholder="Enter Unit Class Code" pattern="^(?!\s*$).+"  pattern="^(PUC)[0-9]{4}$"name="productuomclass_code" required maxlength="7"/>
+                        </div>
+
+                    </div>
+                    <div
+                        *ngIf="productuomclass_code.invalid && (productuomclass_code.dirty || productuomclass_code.touched)">
+                        <div *ngIf="productuomclass_code.errors?.['required']">
+                            <span style="color:red;">Unit Class Code is required.</span>
+                        </div>
+                        <div *ngIf="productuomclass_code.errors?.['pattern']">
+                            <span style="color:red;">Unit Class Code Like "PUC0000".</span>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div class="row"><span class="font-bold"><b>Unit Class Name</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                         -->
+                            <input formControlName="productuomclass_name" type="text" class="
+                         form-control form-control-lg form-control-solid
+                         custom-input
+                         mb-3 mb-lg-0
+                         bg-white
+                         custom-input
+                       " [ngStyle]="{
+                         'border-color':
+                         productuomclass_name.invalid && productuomclass_name.touched
+                             ? 'red'
+                             : 'rgb(209, 209, 209)'
+                       }" placeholder="Enter Unit Class Name" pattern="^(?!\s*$).+" name="productuomclass_name"
+                                required maxlength="7"/>
+                        </div>
+
+                    </div>
+                    <div
+                        *ngIf="productuomclass_name.invalid && (productuomclass_name.dirty || productuomclass_name.touched)">
+                        <div *ngIf="productuomclass_name.errors?.['required']">
+                            <span style="color:red;">Unit Class Name is required.</span>
+                        </div>
+                        <div *ngIf="productuomclass_name.errors?.['pattern']">
+                            <span style="color:red;">Unit Class Name is required.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                        'primary-button': !reactiveForm.invalid,
+                        'secondary-button': reactiveForm.invalid
+                      }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onclose()">
+                        <i class="fas fa-close text-white" ></i> &nbsp;Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal EDIT UNIT CLASS DETAILS-->
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+    <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;Edit Product Unit</h2>
+
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control form-control-lg" formControlName="productuomclass_gid" hidden
+                        pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity"
+                        aria-label=".form-control-lg example" autocomplete="off" required>
+
+
+
+                    <div class="row"><span class="font-bold"><b>Unit Class Code</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                 -->
+                            <input formControlName="productuomclassedit_code" type="text" class="
+                 form-control form-control-lg form-control-solid
+                 custom-input
+                 mb-3 mb-lg-0
+                 bg-white
+                 custom-input
+               " [ngStyle]="{
+                 'border-color':
+                 productuomclassedit_code.invalid && productuomclassedit_code.touched
+                     ? 'red'
+                     : 'rgb(209, 209, 209)'
+               }" placeholder="Enter Unit Class Code" pattern="^(?!\s*$).+" name="productuomclassedit_code" required />
+                        </div>
+
+                    </div>
+                    <div
+                        *ngIf="productuomclassedit_code.invalid && (productuomclassedit_code.dirty || productuomclassedit_code.touched)">
+                        <div *ngIf="productuomclassedit_code.errors?.['required']">
+                            <span style="color:red;">Unit Class Code is required.</span>
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div class="row"><span class="font-bold"><b>Unit Class Name</b><span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+                            <!-- <input class="form-control form-control-lg" formControlName="entity_name" pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required  [class.is-invalid]="entity_name.invalid && (entity_name.dirty || entity_name.touched)">
+                         -->
+                            <input formControlName="productuomclassedit_name" type="text" class="
+                         form-control form-control-lg form-control-solid
+                         custom-input
+                         mb-3 mb-lg-0
+                         bg-white
+                         custom-input
+                       " [ngStyle]="{
+                         'border-color':
+                         productuomclassedit_name.invalid && productuomclassedit_name.touched
+                             ? 'red'
+                             : 'rgb(209, 209, 209)'
+                       }" placeholder="Enter Unit Class Name" pattern="^(?!\s*$).+" name="productuomclassedit_name"
+                                required />
+                        </div>
+
+                    </div>
+                    <div
+                        *ngIf="productuomclassedit_name.invalid && (productuomclassedit_name.dirty || productuomclassedit_name.touched)">
+                        <div *ngIf="productuomclassedit_name.errors?.['required']">
+                            <span style="color:red;">Unit Class Name is required.</span>
+                        </div>
+                    </div>
+                    <br>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onupdate()" [disabled]="reactiveFormEdit.invalid" [ngClass]="{
+                        'primary-button': !reactiveFormEdit.invalid,
+                        'secondary-button': reactiveFormEdit.invalid
+                      }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

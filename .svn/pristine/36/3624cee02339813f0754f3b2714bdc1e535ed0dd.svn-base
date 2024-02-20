@@ -1,0 +1,97 @@
+<div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white">
+            <i class="bi bi-gear fw-bolder fs-3 me-4"></i>Purchase Configuration
+        </h3>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-3 fs-6 border-bottom">
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-flex btn-active-light-primary" data-bs-toggle="tab" href="#kt_tab_pane_1">
+                            <span class="bi bi-gear fw-bolder fs-3 me-4"></span>Optional
+                        </a>
+                    </li>
+                </ul>
+
+                <form [formGroup]="purchaseconfigform">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active ms-5" id="kt_tab_pane_1" role="tabpanel">
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Add On Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="addoncharges" (change)="addonchargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Additional Discount</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="additionaldiscount" (change)="additionaldiscounttoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Freight Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="freightcharges" (change)="freightchargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Packing / Forwarding Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="packing_forwardingcharges" (change)="packing_forwardingchargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Insurance Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="insurancecharges" (change)="insurancechargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

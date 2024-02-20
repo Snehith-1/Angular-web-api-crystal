@@ -1,0 +1,70 @@
+﻿using ems.sales.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+
+namespace ems.sales.DataAccess
+{
+    public class DaSmrTrnSalesorder
+    {
+            dbconn objdbconn = new dbconn();
+            cmnfunctions objcmnfunctions = new cmnfunctions();
+            string msSQL = string.Empty;
+            OdbcDataReader objODBCDatareader;
+            DataTable dt_datatable;
+            string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid;
+            int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+            public void DaGetSmrTrnSalesordersummary (MdlSmrTrnSalesorder values)
+            {
+            string currency = "INR";
+
+            msSQL = " select distinct a.salesorder_gid, cast(concat(a.so_referenceno1," +
+               " if(a.so_referencenumber<>'',concat(' | ',a.so_referencenumber),'') ) as char)as so_referenceno1," +
+               " a.salesorder_date,c.user_firstname,a.so_type,a.currency_code," +
+                " a.customer_contact_person, a.salesorder_status,a.currency_code,s.source_name,d.customer_code,i.branch_name, " +
+                " case when a.grandtotal_l ='0.00' then format(a.Grandtotal,2) else format(a.grandtotal_l,2) end as Grandtotal, " +
+                " case when a.currency_code = '" + currency + "' then a.customer_name " +
+                " when a.currency_code is null then a.customer_name " +
+                " when a.currency_code is not null and a.currency_code <> '" + currency + "' then concat(a.customer_name,' / ',h.country) end as customer_name, " +
+                " case when a.customer_email is null then concat(e.customercontact_name,'/',e.mobile,'/',e.email) " +
+                " when a.customer_email is not null then concat(a.customer_contact_person,' / ',a.customer_mobile,' / ',a.customer_email) end as contact,a.invoice_flag " +
+                " from smr_trn_tsalesorder a " +
+                " left join crm_mst_tcustomer d on a.customer_gid=d.customer_gid " +
+                " left join crm_mst_tcustomercontact e on d.customer_gid=e.customer_gid " +
+                " left join hrm_mst_temployee b on b.employee_gid=a.created_by " +
+                " left join crm_trn_tcurrencyexchange h on a.currency_code = h.currency_code " +
+                " left join adm_mst_tuser c on b.user_gid= c.user_gid" +
+                " left join hrm_mst_tbranch i on a.branch_gid= i.branch_gid" +
+                " left join crm_trn_tleadbank l on l.customer_gid=a.customer_gid" +
+                " left join crm_mst_tsource s on s.source_gid=l.source_gid" +
+                " where 1=1  ";
+
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getModuleList = new List<salesorder_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dt in dt_datatable.Rows)
+                    {
+                        getModuleList.Add(new salesorder_list
+                        {
+                            salesorder_gid = dt["salesorder_gid"].ToString(),
+                            salesorder_date = dt["salesorder_date"].ToString(),
+                            so_referenceno1 = dt["so_referenceno1"].ToString(),
+                            customer_name = dt["customer_name"].ToString(),
+                            branch_name = dt["branch_name"].ToString(),
+                            so_type = dt["so_type"].ToString(),
+                            Grandtotal = dt["Grandtotal"].ToString(),
+                            user_firstname = dt["user_firstname"].ToString(),
+                            salesorder_status = dt["salesorder_status"].ToString()
+                        });
+                        values.salesorder_list = getModuleList;
+                    }
+                }
+                dt_datatable.Dispose();
+            }
+        }
+}

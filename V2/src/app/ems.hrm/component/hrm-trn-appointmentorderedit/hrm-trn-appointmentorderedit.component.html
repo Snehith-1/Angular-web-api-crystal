@@ -1,0 +1,378 @@
+<div class="card rounded-top">
+
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white">
+            <i class="fa-solid fa-pen-to-square fs-2"></i> &nbsp;&nbsp; Edit Appointment Order
+        </h3>
+    </div>
+    <div class="card m-3 border">
+        <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0">
+                <h4 class="fw-bolder text-blue">Personal Details</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <form [formGroup]="appointmentorderform" #form="ngForm">
+        <input formControlName="appointmentorder_gid" hidden placeholder="Address Line 1" type="text" class="
+                form-control form-control-lg form-control-solid
+                bg-white
+                custom-input
+                mb-3 mb-lg-0
+                borderc-secondary
+              " name="appointmentorder_gid" />
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Branch</span>
+                <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" formControlName="branch_name"
+                    bindLabel="branch_name" bindValue="branch_name" [items]="branch_list"
+                    [class.is-invalid]="appointmentorderform.get('branch_name')?.invalid && (appointmentorderform.get('branch_name')?.dirty || appointmentorderform.get('branch_name')?.touched)"
+                    [ngClass]="{'invalid-border': appointmentorderform.get('branch_name')?.invalid && appointmentorderform.get('branch_name')?.touched}"
+                    placeholder="Select an option" required></ng-select>
+                <div *ngIf="appointmentorderform.get('branch_name')?.hasError('required') && appointmentorderform.get('branch_name')?.touched || appointmentorderform.get('branch_name')?.hasError('pattern')"
+                    class="text-red">Branch is required.</div>
+            </div>
+
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Appointment Ref No </span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" readonly class="
+                          form-control form-control-lg form-control-solid
+                          mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                        " placeholder="Appointment Ref No" formControlName="appointmentorder_gid"
+                        class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Appointment Date</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="appointment_date" type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                        [ngStyle]="{'border-color': appointment_date.invalid && appointment_date.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                        placeholder="" pattern="^(?!\s*$).+" name="appointment_date" />
+                    <div *ngIf="appointmentorderform.get('appointment_date')?.hasError('required') && appointmentorderform.get('appointment_date')?.touched || appointmentorderform.get('appointment_date')?.hasError('pattern')"
+                        class="text-red">Date of Joining is required.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">First Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="first_name" type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                        [ngStyle]="{'border-color': first_name.invalid && first_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                        placeholder="Enter First Name" pattern="^(?!\s*$).+" name="first_name" required />
+                    <div *ngIf="appointmentorderform.get('first_name')?.hasError('required') && appointmentorderform.get('first_name')?.touched || appointmentorderform.get('first_name')?.hasError('pattern')"
+                        class="text-red">First name is required.</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Last Name </span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                          form-control form-control-lg form-control-solid
+                          mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                        " placeholder="Last name" formControlName="last_name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Gender</span>
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <!--begin::Check-->
+                    <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                            ">
+                        <input class="form-check-input" type="radio" name="gender" checked="checked"
+                            formControlName="gender" value="male" />
+                        <!--begin::Label-->
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Male</label>
+                        <!--end::Label-->
+                    </div>
+                    <!--end::Check-->
+                    <!--begin::Check-->
+                    <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                              ms-10
+                            ">
+                        <input class="form-check-input" type="radio" name="gender" formControlName="gender"
+                            value="female" />
+                        <!--begin::Label-->
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_page-title">Female</label>
+                        <!--end::Label-->
+                    </div>
+                    <!--end::Check-->
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Experience</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Experience" formControlName="experience_detail" class="form-control" />
+                </div>
+
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Date Of Birth</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input" placeholder=""
+                        formControlName="dob" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Mobile</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Mobile Number" formControlName="mobile_number" class="form-control" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">E-mail</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input [(ngModel)]="email_address" type="text" formControlName="email_address"
+                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Personal Email Address" name="email_address" />
+                </div>
+
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Date Of Joining</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input" placeholder=""
+                        formControlName="joiningdate" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Qualification</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Qualification" formControlName="qualification" class="form-control" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Department</span>
+                <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                    formControlName="department_name" bindLabel="department_name" bindValue="department_name"
+                    [items]="department_list"
+                    [class.is-invalid]="appointmentorderform.get('department_name')?.invalid && (appointmentorderform.get('department_name')?.dirty || appointmentorderform.get('department_name')?.touched)"
+                    [ngClass]="{'invalid-border': appointmentorderform.get('department_name')?.invalid && appointmentorderform.get('department_name')?.touched}"
+                    placeholder="Select an option" required></ng-select>
+                <div *ngIf="appointmentorderform.get('department_name')?.hasError('required') && appointmentorderform.get('department_name')?.touched || appointmentorderform.get('department_name')?.hasError('pattern')"
+                    class="text-red">Deparment is required.</div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Designation</span>
+                <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                    formControlName="designation_name" bindLabel="designation_name" bindValue="designation_name"
+                    [items]="department_list"
+                    [class.is-invalid]="appointmentorderform.get('designation_name')?.invalid && (appointmentorderform.get('designation_name')?.dirty || appointmentorderform.get('designation_name')?.touched)"
+                    [ngClass]="{'invalid-border': appointmentorderform.get('designation_name')?.invalid && appointmentorderform.get('designation_name')?.touched}"
+                    placeholder="Select an option" required></ng-select>
+                <div *ngIf="appointmentorderform.get('designation_name')?.hasError('required') && appointmentorderform.get('designation_name')?.touched || appointmentorderform.get('designation_name')?.hasError('pattern')"
+                    class="text-red">Designation is required.</div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Salary</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                              form-control form-control-lg form-control-solid
+                              mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                            " placeholder="Salary" formControlName="employee_salary" class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="card m-3 border">
+            <div class="card-header bg-lightblue card-height55">
+                <div class="card-title m-0">
+                    <h4 class="fw-bolder text-blue">Address Details</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-3 mt-5 flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <div class="card m-3 border">
+                    <div class="card-header bg-lightblue card-height55">
+                        <div class="card-title m-0">
+                            <h4 class="fw-bolder text-blue">Permanent Address</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 1</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="perm_address1"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 2</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="perm_address2"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">City</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="perm_city"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="City" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Postal Code</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="perm_pincode"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="Postal Code" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">State</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="perm_state"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="State" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Country</span>
+                        <ng-select class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            formControlName="perm_country" [(ngModel)]="selectedcountry" bindLabel="country"
+                            bindValue="country_gids" [items]="country_list" placeholder="Select an option"></ng-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                <div class="card m-3 border">
+                    <div class="card-header bg-lightblue card-height55">
+                        <div class="card-title m-0">
+                            <h4 class="fw-bolder text-blue">Temporary Address</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 1</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="temp_address1"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Address Line 2</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text" pattern="^(?!\s*$).+" formControlName="temp_address2"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white border-secondary custom-input mt-2"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">City</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="temp_city"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="City" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Postal Code</span>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="temp_pincode"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="Postal Code" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">State</span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" formControlName="temp_state"
+                                class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary"
+                                placeholder="State" />
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><span class="font-bold">Country</span>
+                        <ng-select class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            formControlName="temp_country" [(ngModel)]="selectedcountry" bindLabel="country"
+                            bindValue="country_gids" [items]="country_list" placeholder="Select an option"></ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-header bg-lightblue card-height55" style="border-radius: 0px;">
+            <div class="card-title m-0">
+                <h5 class="fw-bolder text-blue">Terms and Conditions</h5>
+            </div>
+        </div>
+        <ng-select [items]="terms_list" class="custom col-lg-5 m-12 col-12 fv-row mt-2" bindLabel="template_name"
+            [(ngModel)]="mdlTerms" formControlName="template_name" bindValue="template_gid"
+            placeholder="Select an option" (change)="GetOnChangeTerms()"></ng-select>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <angular-editor [config]="config" formControlName="appointmentordertemplate_content"></angular-editor>
+            </div>
+        </div>
+
+        <div class="text-center my-4">
+            <button class="btn-success btn-sm text-white me-2" (click)="updated()"
+                [disabled]="appointmentorderform.invalid">
+                <i class="fas fa-check text-white fs-5 me-3"></i>&nbsp;Update
+            </button>
+
+            <button class="btn-primary btn-sm text-white me-4" routerLink="/hrm/HrmTrnAppointmentorder">
+                <i class="fas fa-arrow-left me-3"></i>Back
+            </button>
+        </div>
+    </form>
+
+</div>

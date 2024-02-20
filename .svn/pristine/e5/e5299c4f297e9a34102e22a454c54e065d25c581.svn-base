@@ -1,0 +1,31 @@
+﻿using StoryboardAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ems.pmr.Models
+{
+    public class MdlPmrMstTermsConditions : result
+    {
+        public List<Gettemplate_list> Gettemplate_list { get; set; }
+        public List<template_list> template_list { get; set; }
+    }
+
+    public class Gettemplate_list : result
+    {
+        public string template_name { get; set; }
+        public string payment_terms { get; set; }
+        public string user_firstname { get; set; }
+        public string user_gid { get; set; }
+
+    }
+    public class template_list : result
+    { 
+        public string template_name { get; set; }
+        public string template_content { get; set; }
+        public string payment_terms { get; set; }
+    }
+}

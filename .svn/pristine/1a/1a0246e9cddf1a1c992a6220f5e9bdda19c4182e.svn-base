@@ -1,0 +1,117 @@
+<main>
+   
+
+    <div class="head-content-right">
+      
+    </div>
+    <header>
+      <div class="tb">
+        <div class="td" id="logo">
+          <!-- <a><i class="bi bi-instagram"></i></a> -->
+        </div>
+        <section class="top-bar" style="margin-left:-10px;">
+     
+            
+          </section>
+       
+        <div class="td" id="i-links">
+          <div class="tb">
+    <div class="row" style="margin-left:-270px;">
+       
+          </div>
+          <span class="bi bi-telegram" style="font-size: 40px;color:#229ED9;"></span> &nbsp;
+          <span class="td" id="f-name-l" style="color:black;margin-top:-35px;">Telegram Channel</span>
+        </div>
+        </div>
+      </div>
+    </header>
+    <div id="profile-upper">
+      
+    <br><br><br><br><br><br><br><br><br>
+      <div id="profile-d">
+        <div id="profile-pic" style="background-color:white ;">
+          <!-- <img style="height:100%;" src="./assets/media/images/insta_icon.png"> -->
+          <span class="bi bi-telegram img" style="font-size: 110px;color:#229ED9;margin-left: 37px;"></span>
+           
+        </div>
+        <div id="u-name">{{bot_name}} 
+          <button class="btn btn-sm text-white me-4" style="width:250px;font-size:50px;" routerLink="/crm/CrmSmmTelegramaccount"  style="margin-left:100px;background-color:#229ED9;">
+            &nbsp;&nbsp; Post &nbsp;&nbsp;  </button>
+            
+
+             </div>
+ 
+       
+      </div>
+      <div id="black-grd"></div>
+    
+</div>
+   <br> <br>
+    <tabset style="align-items:center;">
+
+      
+        <tab heading="Post Image" style="background-color:white;"> 
+            
+            <br> 
+            <div class="image-gallery">
+
+                &nbsp;&nbsp; <div class="image" *ngFor="let imageurl of image_list">
+            
+                  <img [src]="imageurl.upload_path" (click)="modalimage(imageurl.upload_path)"   data-bs-toggle="modal" data-bs-target="#myModalimage"  alt="Image">
+                
+                  </div>
+                 
+            </div>
+            <br>
+          </tab>
+        <tab heading="Post Video" style="background-color:white;">
+          
+            <div class="video-gallery">
+
+               <div class="video-item" *ngFor="let videourl of video_list">
+              
+                  <video controls>
+              
+                    <source [src]="videourl.upload_path" type="video/mp4">
+              
+              
+                  </video>
+             
+              
+                </div>
+              
+              </div>
+          </tab>
+      </tabset>
+
+    
+  
+  </main>
+  <div class="modal" id="myModalimage"  data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+            <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="bi bi-images" style="font-size:25px;"></i> &nbsp;&nbsp;Posted Image
+                <button type="button" class="close" style="font-size:35px;color:white;margin-left: 268px; " data-bs-dismiss="modal"  aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </h2>
+  
+       
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          
+            <img src={{parameterValue}} alt="Image">
+
+         
+        </div>
+  
+       
+
+        </div>
+    </div>
+</div>

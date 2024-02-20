@@ -1,0 +1,112 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
+
+interface IUpcoming{
+  leadbank_name: string;
+  remarks: string;
+
+}
+@Component({
+  selector: 'app-crm-trn-upcomingmarketing',
+  templateUrl: './crm-trn-upcomingmarketing.component.html',
+  styleUrls: ['./crm-trn-upcomingmarketing.component.scss']
+})
+export class CrmTrnUpcomingmarketingComponent {
+  upcoming:any;
+  responsedata: any;
+  leadbank_list: any;
+  reactiveFormTransfer: any;
+  reactiveFormSchedule: any;
+  selection: any;
+  remarks: string | undefined;
+  leadbank_name: string | undefined;
+ 
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService,private route:Router) {
+    
+  }
+  ngOnInit(): void {
+    this.GetUpcomingManagerSummary();
+  }
+//// Summary Grid//////
+GetUpcomingManagerSummary() {
+  var url = 'Marketingmanager/GetUpcomingManagerSummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#upcoming').DataTable().destroy();
+    this.responsedata = result;
+    this.upcoming = this.responsedata.upcoming;
+    //console.log(this.source_list)
+    setTimeout(() => {
+      $('#upcoming').DataTable();
+    }, 1);
+  });
+}
+onclosetransfer() {
+  this.reactiveFormTransfer.reset();
+   }
+   oncloseschedule(){
+     this.reactiveFormSchedule.reset();
+   }
+  //  OnBin() {
+
+  //   this.selection.selected.forEach(s => s.campaign_gid);
+
+
+  //   this.pick = this.selection.selected
+  //   let list = this.pick
+  //   this.CurObj.assign_user = this.assign_user
+  //   this.CurObj.campaign_list = list
+
+  //   if (this.CurObj.campaign_list.length != 0) {
+  //     var url1 = 'MarketingManager/GetCampaignMoveToBin'
+  //     this.service.post(url1, this.CurObj).pipe().subscribe((result: any) => {
+
+  //       if (result.status == false) {
+
+
+  //         this.ToastrService.warning('Error While Lead Moved to MyBin')
+  //       }
+  //       else {
+  //         this.ToastrService.success('Lead Moved to MyBin Successfully')
+  //         window.location.reload();
+
+  //       }
+
+  //     });
+
+  //   }
+  //   else {
+  //     this.ToastrService.warning("Kindly Check Atleast One Record ! ")
+  //   }
+
+
+  // }
+
+
+  popmodal(parameter: string, parameter1: string) {
+
+    this.remarks = parameter;
+    this.leadbank_name = parameter1;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

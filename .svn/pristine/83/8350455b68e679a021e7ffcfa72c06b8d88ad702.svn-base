@@ -1,0 +1,158 @@
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Options } from 'flatpickr/dist/types/options';
+import flatpickr from 'flatpickr';
+import { SelectionModel } from '@angular/cdk/collections';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+export class IEmployee {
+  employeeattendace_list: string[] = [];
+  employee_gid:any;
+  
+}
+
+@Component({
+  selector: 'app-hrm-trn-attendancenonrollformanufacturing',
+  templateUrl: './hrm-trn-attendancenonrollformanufacturing.component.html',
+  styleUrls: ['./hrm-trn-attendancenonrollformanufacturing.component.scss']
+})
+export class HrmTrnAttendancenonrollformanufacturingComponent  {
+  constructor(private renderer: Renderer2, private el: ElementRef, public service: SocketService,
+     private ToastrService: ToastrService, private route: Router, private formBuilder: FormBuilder,
+     public NgxSpinnerService:NgxSpinnerService,) { 
+  }
+ 
+  reactiveForm!: FormGroup;
+  selection = new SelectionModel<IEmployee>(true, []);
+  department_list: any[] = [];
+  designation_list: any[] = [];
+  country_list: any[] = [];
+  country_list2: any[] = [];
+  AttentypeList:any[]=[];
+  entity_list:any[]=[];
+  branchList:any[]=[];
+  departmentList:any[]=[];
+  employeeattendace_list:any[]=[];
+  shiftList:any[]=[];
+  login_time :any;
+  Attentype:any;
+  branch_name:any;
+  department_name:any;
+  shift_name:any;
+  ngOnInit(): void {
+    const options: Options = {
+      dateFormat: 'd-m-Y',    
+    };
+    
+    flatpickr('.date-picker', options);
+    this.reactiveForm = new FormGroup({
+      date: new FormControl(''),
+      branch_name: new FormControl(''),
+      department_name: new FormControl(''),
+      Attentype: new FormControl(''),
+      employeeattendace_list:  this.formBuilder.array([]),
+
+      
+    });
+    var url = 'HrmTrnAttendanceroll/GetBranch';
+    this.service.get(url).subscribe((result: any) => {
+    this.branchList = result.GetBranch1;     
+    this.branchList = [{ branch_name: 'All', branch_gid: 'all' }, ...this.branchList];
+    
+   
+        });
+        this.AttentypeList = [
+          { Attentype_name: 'All', Attentype_gid: 'all' },
+          { Attentype_name: 'Present', Attentype_gid: 'present' },
+          { Attentype_name: 'Absent', Attentype_gid: 'absent' }
+        ];
+        
+  }
+  onBranchChange(branch_gid: any) {
+    debugger;
+    const branchValue = this.reactiveForm.get('branch_name')!.value;
+  
+    if (branchValue === 'all') {
+      this.departmentList = [{ department_name: 'All', department_gid: 'all' }];
+    } else {
+      var url1 = 'HrmTrnAttendanceroll/GetDepartment';
+    let param: { branch_gid: any } = {
+      branch_gid: branch_gid
+  };
+    this.service.getparams(url1, param).subscribe((result: any) => {
+      debugger;
+      this.departmentList = [{ department_name: 'All', department_gid: 'all' }];
+      this.departmentList.push(...result.GetDepartment1); // Add the data to the existing array 
+    });
+    var url2 = 'HrmTrnAttendanceroll/GetShift';
+    this.service.getparams(url2, param).subscribe((result: any) => {
+      debugger;
+      this.shiftList = [{ shift_name: 'All', shift_gid: 'all' }];
+      this.shiftList.push(...result.shiftList); // Add the data to the existing array 
+    });
+    
+    }
+ 
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.employeeattendace_list.length;
+    return numSelected === numRows;
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.employeeattendace_list.forEach((row: IEmployee) => this.selection.select(row));
+  }
+  search(){
+    var url = 'HrmTrnAttendanceroll/GetEmployeedtlSummary';
+    let param = {
+      date:this.reactiveForm.value.date,
+    };
+    this.NgxSpinnerService.show();
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.employeeattendace_list = result.employeeattendace_list1;
+      this.NgxSpinnerService.hide;
+
+      this.NgxSpinnerService.show();
+      for (let i = 0; i < this.employeeattendace_list.length; i++) {
+        const apiDate = new Date(this.employeeattendace_list[i].login_time);
+        const hours = apiDate.getHours().toString().padStart(2, '0');
+        const minutes = apiDate.getMinutes().toString().padStart(2, '0');
+        const formattedTime = `${hours}:${minutes}`;
+        this.reactiveForm.addControl(`login_time_${i}`, new FormControl(formattedTime));
+
+        const apiDate1 = new Date(this.employeeattendace_list[i].lunch_in);
+        const hours1 = apiDate1.getHours().toString().padStart(2, '0');
+        const minutes1 = apiDate1.getMinutes().toString().padStart(2, '0');
+        const formattedTime1 = `${hours1}:${minutes1}`;
+        
+        this.reactiveForm.addControl(`lunch_in_${i}`, new FormControl(formattedTime1));
+
+
+        const apiDate2= new Date(this.employeeattendace_list[i].logout_time);
+        const hours2= apiDate2.getHours().toString().padStart(2, '0');
+        const minutes2 = apiDate2.getMinutes().toString().padStart(2, '0');
+        const formattedTime2 = `${hours2}:${minutes2}`;
+        
+        this.reactiveForm.addControl(`logout_time_${i}`, new FormControl(formattedTime2));
+      }
+      this.NgxSpinnerService.hide(); 
+  
+    });
+    console.log(this.reactiveForm.value)
+    
+  }
+  clearAction(data :any){
+
+  }
+  updateAction(data :any){
+
+  }
+ 
+
+}

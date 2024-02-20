@@ -1,0 +1,189 @@
+.icon-container {
+    display: inline-block; /* Makes the container inline with the content */
+    margin-right: 10px; /* Adjust the margin to control spacing */
+    width: 16px; /* Set the width of the container */
+    height: 16px; /* Set the height of the container */
+}
+.card-body12 {
+    // width: 160px;
+    height: 32px;  
+  }
+  .cardHead {
+  
+    position: relative;
+  
+    display: flex;
+  
+    flex-direction: column;
+  
+    min-width: 0;
+  
+    word-wrap: break-word;
+  
+    padding: 18px;
+  
+    background-clip: border-box;
+  
+    border: 0px solid rgba(0, 0, 0, 0);
+  
+    border-radius: .25rem;
+  
+    margin-bottom: 1.0rem;
+  
+    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+  
+    transition: all .3s ease-in-out;
+  
+    background-color: white;
+  
+  }
+  .widgets-icons-2 {
+  
+    width: 38px;
+  
+    height: 38px;
+  
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    background-color: #ededed;
+  
+    font-size: 27px;
+  
+    border-radius: 10px;
+  
+  }
+  
+  .rounded-circle {
+  
+    border-radius: 50%!important;
+  
+  }
+  
+  .ms-auto {
+  
+    margin-left: 0px;
+  
+  }
+  
+   
+  
+  .border-brown {
+  
+    border-left: 5px solid  #ef3939 !important;
+  
+  }
+  .border-pinkish {
+  
+    border-left: 5px solid  #048904 !important;
+  
+  }
+  .radius-10 {
+    border-radius: 10px !important;
+  }
+  .card-body12 {
+    // width: 160px;
+    height: 36px;  
+  }
+
+  .cardHead:hover{
+  
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
+  
+    transform: translate3d(0px, -2px, 0px);
+  
+    cursor:pointer;
+  
+    pointer-events: auto;
+  
+  }
+  
+   
+  
+  .widgets-icons-2 {
+  
+    width: 38px;
+  
+    height: 38px;
+  
+    display: flex;
+  
+    align-items: center;
+  
+    justify-content: center;
+  
+    background-color: #ededed;
+  
+    font-size: 27px;
+  
+    border-radius: 10px;
+  
+  }
+  
+  .rounded-circle {
+  
+    border-radius: 50%!important;
+  
+  }
+  
+  .ms-auto {
+  
+    margin-left: 0px;
+  
+  }
+
+
+  .bg-gradient-darkgreens {
+  
+    background: #3F7B33;
+  
+    background: -webkit-linear-gradient(45deg, #47ac6d, #3F7B33)!important;
+  
+    background: linear-gradient(45deg, #c9fc9b, #3F7B33)!important;
+  
+  }
+  
+  .border-brown {
+  
+    border-left: 5px solid  #0592ab !important;
+  }
+
+  // Employee count tiles //
+.cardHeadLeads {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  padding: 18px;
+  background-clip: border-box;
+  border: 0px solid rgba(0, 0, 0, 0);
+  border-radius: .25rem;
+  margin-bottom: 1.0rem;
+  box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+  transition: all .3s ease-in-out;
+  background-color: white;
+}
+
+
+@keyframes blinkAnimation {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+.bg-gradient-CancelOrder {
+
+  background: #0691a6;
+
+  background: -webkit-linear-gradient(45deg, rgb(168, 231, 242), #037791)!important;
+
+  background: linear-gradient(45deg, #bcf1f7, #038793)!important;
+
+}
+

@@ -1,0 +1,197 @@
+<div class="card shadow-sm">
+  <div class="card-header">
+    <h3 class="card-title">Search Custodian</h3>
+  </div>
+  <br>
+  <form [formGroup]="reactiveFormSubmit" #form="ngForm">
+    <div class="row">
+        <div class="col-12 col-lg-5" style="margin-left: 20px; margin-bottom: 10px;">
+            <span class="font-bold"><b>Branch</b></span>
+            <select style="width: 200px;"
+                    class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                    formControlName="branch_name" (change)="onBranchChange($event)">
+                <option value="" disabled selected>Select branch</option>
+                <option *ngFor="let branch of branch_list" [value]="branch.branch_gid">
+                    {{branch.branch_name}}
+                </option>
+            </select>
+        </div>
+
+        <div class="col-12 col-lg-5" style="margin-left: -200px; margin-bottom: 10px;" >
+            <span class="font-bold" ><b>Department</b></span>
+            <select style="width: 200px;"
+                    class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                    formControlName="department_name">
+                <option value="" disabled selected>Select department</option>
+                <option *ngFor="let department of department_list" [value]="department.department_gid">
+                    {{department.department_name}}
+                </option>
+            </select>
+        </div>
+
+        <div class="col-12 col-lg-2 mt-3 d-flex align-items-center" style="margin-left: -200px;">
+            <button type="button" class="btn-primary btn-sm text-white w-100" (click)="GetCustodianSummary()">
+                <i class="fas fa-check text-white fs-5"></i> Search
+            </button>
+
+            
+        </div>
+        <button style="margin-top: 20px; margin-left: 150px;" title="Export Excel" type="button"
+        class="btn btn-icon btn-sm bg-success me-2 ms-2">
+    <i class="fa-solid fa-file-import fa-2xs"></i>
+</button>
+
+<button style="margin-top: 20px; margin-left: 0px;" title="Export Pdf" type="button"
+        class="btn btn-icon btn-sm custom-light-red me-2">
+    <i class="fa-solid fa-file-import fa-2xs"></i>
+</button>
+
+    </div>
+</form>
+
+  
+</div>
+
+
+<br><br>
+
+<div class="card shadow-sm">
+  <div class="card-header">
+      <h3 class="card-title">Asset Custodian</h3>
+  </div>
+  <br>
+ 
+  <div class="table-responsive">
+      <div class="card card-body m-1 shadow-lg p-3 mb-5 bg-white rounded">
+          <table id="custodian_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+              <thead>
+                  <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                      <th></th>
+                      <th>S.no </th>
+                      <th>Branch</th>
+                      <th>Department</th>
+                      <th>Designation</th>
+                      <th>Employee Code</th>
+                      <th>Employee Name</th>
+                      <th>Gender</th>
+                      <th>Department</th>
+                      <th>Joining Date</th>
+                      <th class="text-center">Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let data of custodian_list; let i=index;">
+                      <td (click)="ondetail(data.employee_gid)" (click)="data.isExpand = !data.isExpand">
+                          <i *ngIf="!data.isExpand" class="bi-chevron-right"></i>
+                          <i *ngIf="data.isExpand" class="bi-chevron-up"></i>
+                      </td>
+                      <td>{{i+1}}</td>
+                      <td>{{data.branch_name}}</td>
+                      <td>{{data.department_name}}</td>
+                      <td>{{data.designation_name}}</td>
+                      <td>{{data.user_code}}</td>
+                      <td>{{data.user_name}}</td>
+                      <td>{{data.employee_gender}}</td>
+                       <td>{{data.department_name}}</td>
+                      <td>{{data.employee_joiningdate}}</td>
+                      <td class="text-center text-nowrap">
+                        <button title="Addcustodian" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="addcustodian(data.employee_gid)">
+                          <i class="fa-solid fa-school-circle-exclamation"></i>
+                        </button>
+                           
+                          
+
+                      </td>
+                      <br>
+                      <td *ngIf="data.isExpand" >
+                          <br> <br> <br>
+                          <div class="table-responsive" style="margin-left:-1000px;">
+                              <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                                  <table id="custodianadd_list" 
+                                      class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                      <thead>
+                                          <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                              <th>S.No</th>
+                                              <th>Asset Ref No</th>
+                                              <th>Asset Name</th>
+                                              <th>Asset ID</th>
+                                              <th>Custodian Start Date</th>
+                                              <th>Custodian End Date</th>
+                                              <th>Remarks</th>
+                                              <th class="text-center">Action</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let data1 of custodianadd_list; let i=index;">
+                                              <td>{{i+1}}</td>
+                                              <td>{{data1.assetref_no}}</td>
+                                              <td>{{data1.asset_name}}</td>
+                                              <td>{{data1.asset_id}}</td>
+                                              <td>{{data1.custodian_date}}</td>
+                                              <td>{{data1.custodian_enddate}}</td>
+                                              <td>{{data1.remarks}}</td>                                                
+                                              <td class="text-center text-nowrap">
+                                                <button title="Download Document" type="button" 
+                                                class="btn btn-icon btn-sm bg-primary me-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#myModaladd" (click)="openModaldtl(data,data1)">
+                                                
+                     
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                                 </button>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+<form [formGroup]="reactiveFormSubmit" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+           <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+            <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class></i> Upload Documant
+              Details</h2>
+              </div>
+              
+  
+          <table style="margin-left: 80px;">
+            <tbody>
+            <tr *ngFor="let data of Document_list; let i=index;" >
+              <td>{{i+1}}</td>
+              <td style="color: red;"><b>{{data.document_path.split('/').pop()}}</b></td>
+              <td class="text-center text-nowrap">
+                <button title="download Document" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                (click)="downloadDocument(data.document_gid)">
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tbody>
+  
+          </table>
+          <div class="text-center my-4">
+           
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+              <i class="fas fa-close text-white"></i> &nbsp;Close
+            </button>
+          </div> 
+         
+        </div>
+        
+      </div>
+      
+    </div>
+   
+  </form>

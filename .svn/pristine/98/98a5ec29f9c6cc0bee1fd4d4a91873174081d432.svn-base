@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-smr-rpt-salesorder-report',
+  templateUrl: './smr-rpt-salesorder-report.component.html',
+  styleUrls: ['./smr-rpt-salesorder-report.component.scss']
+})
+export class SmrRptSalesorderReportComponent {
+
+}

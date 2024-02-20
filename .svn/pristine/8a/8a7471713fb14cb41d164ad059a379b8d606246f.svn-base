@@ -1,0 +1,60 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-whatsapp" style="color: white;">
+        <h3 class="card-title"> <i class="bi bi-whatsapp"></i> &nbsp;
+            Bulk Message </h3>
+            <div style="margin: 13px">
+                <div class="col me-5">
+                  <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign" class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back</button>
+        </div>
+</div>
+</div>
+        <form [formGroup]="bulkMessageForm" novalidate="novalidate" (ngSubmit)="onsend()">
+
+        <div class="d-flex flex-row m-6 flex-wrap" >
+            <div class="row ms-3 mt-3 d-flex align-items-center" >
+        <span class="font-bold fs-6" style="margin-left: 200px;"><b>Select Template</b><span class="ms-1 text-red">*</span></span>
+        <ng-select formControlName="cboTemplate" style="margin-left: 200px;" [items]="templateList" [(ngModel)]="cboTemplate"
+            class="custom col-lg-8 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="p_name" bindValue="id"
+            placeholder="Select an option"></ng-select>
+    </div>
+    <button type="button" class="btn-success btn-sm text-white me-2" data-bs-toggle="modal" data-bs-target="#myModaladd"
+    style="width: 93px;text-align: center;height: 33px;margin-top:30px;margin-left: 20px;" (click)="onsend()">
+    <i class="bi bi-send text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Send
+</button>
+</div>
+
+</form>
+
+   
+
+<div class="table-responsive">
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="mailsummarylist" class="table table-striped table-row-bordered border-bottom gs-7">
+            <thead>
+                <tr class=" text-white fw-bold fs-6 text-nowrap bg-whatsapp">
+                    <th style="width:2px;   ">
+                        <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" />
+                    </th>
+                    <th>Name</th>
+                    <th>Contact</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of contacts_list; let i=index;" class="align-middle">
+                    <td> <input type="checkbox" (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(data) : null" [checked]="selection.isSelected(data)" />
+                    </td>
+                    <td style="white-space: nowrap;">{{data.displayName}}</td>
+                    <td style="white-space: nowrap;">{{data.value}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

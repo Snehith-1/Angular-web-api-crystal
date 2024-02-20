@@ -1,0 +1,289 @@
+<div class="card">
+    <div class="card md-3 mt-lg-1 mt1-md-1 mt-5 me-0 border">
+        <div class="card-header mt-0    card-height55 d-flex justify-content-center" style="background-color:rgb(25, 167, 206)">
+            <div class="card-title m-0">
+
+                <h4 class="fw-bolder text-white text-center">Today Sales Report</h4>
+            </div>
+
+        </div>
+     
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <div class="card card-body m-3 p-3 mb-0 rounded bg-white rounded table-responsive">
+                <table id="GetMonthwiseOrderReport_List" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                    <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-black align-middle">
+                            <th></th>
+                            <th>Sales Order</th>
+                            <th>Despatch Order</th>
+                            <th>Invoice</th>
+                            <th>Payment</th>
+                            <th>Invoice Amount</th>
+                            <th>Paid Amount</th>
+                            <th>Outstanding Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Today </b></h6>
+                            </td>
+                            <td id="today_total_so">{{today_total_so}}</td>
+                            <td id="today_total_do">{{today_total_do}}</td>
+                            <td id="today_total_invoice">{{today_total_invoice}}</td>
+                            <td id="today_total_payment">{{today_total_payment}}</td>
+                            <td id="today_invoice_amount">{{today_invoice_amount}}</td>
+                            <td id="today_payment_amount">{{today_payment_amount}}</td>
+                            <td id="today_outstanding_amount">{{today_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Yesterday </b></h6>
+                            </td>
+                            <td id="yest_total_so">{{yest_total_so}}</td>
+                            <td id="yest_total_do">{{yest_total_do}}</td>
+                            <td id="yest_total_invoice">{{yest_total_invoice}}</td>
+                            <td id="yest_total_payment">{{yest_total_payment}}</td>
+                            <td id="yest_invoice_amount">{{yest_invoice_amount}}</td>
+                            <td id="yest_payment_amount">{{yest_payment_amount}}</td>
+                            <td id="yest_outstanding_amount">{{yest_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Current Week</b></h6>
+                            </td>
+                            <td id="cw_total_so">{{cw_total_so}}</td>
+                            <td id="cw_total_do">{{cw_total_do}}</td>
+                            <td id="cw_total_invoice">{{cw_total_invoice}}</td>
+                            <td id="cw_total_payment">{{cw_total_payment}}</td>
+                            <td id="cw_invoice_amount">{{cw_invoice_amount}}</td>
+                            <td id="cw_payment_amount">{{cw_payment_amount}}</td>
+                            <td id="cw_outstanding_amount">{{cw_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Last Week</b></h6>
+                            </td>
+                            <td id="lw_total_so">{{lw_total_so}}</td>
+                            <td id="lw_total_do">{{lw_total_do}}</td>
+                            <td id="lw_total_invoice">{{lw_total_invoice}}</td>
+                            <td id="lw_total_payment">{{lw_total_payment}}</td>
+                            <td id="lw_invoice_amount">{{lw_invoice_amount}}</td>
+                            <td id="lw_payment_amount">{{lw_payment_amount}}</td>
+                            <td id="lw_outstanding_amount">{{lw_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Current Month</b></h6>
+                            </td>
+                            <td id="cm_total_so">{{cm_total_so}}</td>
+                            <td id="cm_total_do">{{cm_total_do}}</td>
+                            <td id="cm_total_invoice">{{cm_total_invoice}}</td>
+                            <td id="cm_total_payment">{{cm_total_payment}}</td>
+                            <td id="cm_invoice_amount">{{cm_invoice_amount}}</td>
+                            <td id="cm_payment_amount">{{cm_payment_amount}}</td>
+                            <td id="cm_outstanding_amount">{{cm_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Previous Month</b></h6>
+                            </td>
+                            <td id="lm_total_so">{{lm_total_so}}</td>
+                            <td id="lm_total_do">{{lm_total_do}}</td>
+                            <td id="lm_total_invoice">{{lm_total_invoice}}</td>
+                            <td id="lm_total_payment">{{lm_total_payment}}</td>
+                            <td id="lm_invoice_amount">{{lm_invoice_amount}}</td>
+                            <td id="lm_payment_amount">{{lm_payment_amount}}</td>
+                            <td id="lm_outstanding_amount">{{lm_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Current Year</b></h6>
+                            </td>
+                            <td id="cy_total_so">{{cy_total_so}}</td>
+                            <td id="cy_total_do">{{cy_total_do}}</td>
+                            <td id="cy_total_invoice">{{cy_total_invoice}}</td>
+                            <td id="cy_total_payment">{{cy_total_payment}}</td>
+                            <td id="cy_invoice_amount">{{cy_invoice_amount}}</td>
+                            <td id="cy_payment_amount">{{cy_payment_amount}}</td>
+                            <td id="cy_outstanding_amount">{{cy_outstanding_amount}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="card-title"><b>Previous Year</b></h6>
+                            </td>
+                            <td id="ly_total_so">{{ly_total_so}}</td>
+                            <td id="ly_total_do">{{ly_total_do}}</td>
+                            <td id="ly_total_invoice">{{ly_total_invoice}}</td>
+                            <td id="ly_total_payment">{{ly_total_payment}}</td>
+                            <td id="ly_invoice_amount">{{ly_invoice_amount}}</td>
+                            <td id="ly_payment_amount">{{ly_payment_amount}}</td>
+                            <td id="ly_outstanding_amount">{{ly_outstanding_amount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row m-3 mt-5 flex-wrap ">
+        <div class="col-12 ms-0 card  bg-white rounded">
+            <div class="card-header justify-content-center" style="background-color:rgb(25, 167, 206)">
+                <h3 class="card-title text-white"><b> Today Delivery Report </b></h3>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrRptTodaySalesreport">
+                    <div class="cardHead radius-10 border-start border-0 border-3 border-red" >
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Sales Order </h5>
+                                    <div>
+                                        <h4 class="my-1 text-info">{{this.today_total_so}}</h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+                                        class="bi bi-calendar3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrRptTodayDeliveryreport">
+                    <div class="cardHead radius-10 border-start border-0 border-3 border-darkblue" style="background-color: #d3fafc;">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Delivery Order</h5>
+                                    <div>
+                                        <h4 class="my-1 text-info">{{this.today_total_do}}</h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i
+                                        class="fa-solid fa-truck-fast"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrRptTodayInvoicereport">
+                    <div class="cardHead radius-10 border-start border-0 border-3 border-darkorange">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Invoice</h5>
+                                    <div>
+                                        <h4 class="my-1 text-info">{{this.today_total_invoice}}</h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-purple text-white ms-auto"><i
+                                        class="fa-solid fa-file-invoice"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrRptTodayPaymentreport">
+                    <div class="cardHead radius-10 border-start border-0 border-3 border-orange">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Payment</h5>
+                                    <div>
+                                        <h4 class="my-1 text-info">{{this.today_total_payment}}</h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i
+                                        class="fa-solid fa-money-check-dollar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <div class="card card-body m-3 p-3 mb-5 bg-white rounded table-responsive">
+                        <table id="GetTodayDeliveryOrderReport_List" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                            <thead>
+                                <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                                    <th>S.No</th>
+                                    <th>DO Date</th>
+                                    <th>DO Reference No</th>
+                                    <th>Branch Name</th>
+                                    <th>Customer</th>
+                                    <th>Contact Details</th>
+                                    <th> Status</th>
+                                    <th> Ovreall Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of GetTodayDeliveryOrderReport_List; let i=index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.directorder_date}}</td>
+                                    <td>{{data.directorder_refno}}</td>
+                                    <td>{{data.customer_branchname}}</td>
+                                    <td>{{data.customer_name}}</td>
+                                    <td>{{data.contact}}</td>
+                                    <td>{{data.directorder_status}}</td>
+                                    <td>{{data.delivery_status}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="card">
+                <div class="row">
+                    <div class="table-responsive">
+                        <div class="card card-body m-3 p-3 mb-5 bg-white rounded table-responsive">
+    
+                            <table id="salesorder_list" class="table table-striped table-row-bordered gy-5 gs-7">
+                                <thead>
+                                    <tr class="fw-bold fs-5 text-nowrap bg-pink text-black">
+                                        <th>S.No</th>
+                                        <th>Product Group</th>
+                                        <th>Product</th>
+                                        <th>Unit</th>
+                                        <th>Order Qty</th>
+                                        <th>Unit Price</th>
+                                        <th>Discount</th>
+                                        <th>Tax Details</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of salesorder_list;let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td>{{data.product_code }}</td>
+                                        <td>{{data.product_name }}</td>
+                                        <td>{{data.productuom_name }}</td>
+                                        <td>{{data.qty_invoice }}</td>
+                                        <td>{{data.product_price }}</td>
+                                        <td>{{data.product_totalprice }}</td>
+                                        <td>{{data.discount_percentage }}
+                                            <br>{{data.discount_amount }}
+                                        </td>
+                                        <td>{{data.tax_name1}}&nbsp;&nbsp;: {{data.tax_amount1}}
+                                            <br>{{data.tax_name2}}&nbsp;&nbsp;: {{data.tax_amount2}}
+                                            <br>{{data.tax_name3}}&nbsp;&nbsp;: {{data.tax_amount3}}
+                                        </td>
+                                        <td>{{data.product_totalprice}}</td>
+                                        <td>{{data.product_remarks }}</td>
+                                    </tr>
+    
+                                </tbody>
+    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+
+
+            </div> -->
+        </div>
+
+        <div>

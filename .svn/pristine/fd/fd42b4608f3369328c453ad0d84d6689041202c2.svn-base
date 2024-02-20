@@ -1,0 +1,191 @@
+<div class="m-5">
+    <div class="card card-body">
+        <div class="card card-title bg-primary">
+            <h3 class="m-4 text-white">Edit Enquiry</h3>
+        </div>
+        <form [formGroup]="cuseditform" #form="ngForm">
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Enquiry Ref. No</b> 
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="enquiry_gid" class="form-control" readonly />
+                    </div>                    
+                </div>
+         
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Enquiry Date</b> <span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                        " placeholder="Product Code" formControlName="enquiry_date" class="form-control" />
+                    </div>                    
+                </div>
+           
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Branch</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="branch_name" class="form-control" readonly />
+                    </div>                    
+                </div></div>
+
+                <div class="d-flex flex-row m-6 flex-wrap">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Customer Enquiry Ref. No</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                            form-control form-control-lg form-control-solid custom-input
+                            mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                            formControlName="enquiry_referencenumber" class="form-control"/>
+                        </div>                    
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Customer </b>
+                        <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <ng-select formControlName="customer_name"    [items]="customer_list" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                              bindLabel="customer_name" bindValue="customer_name" placeholder="Select an option"></ng-select>
+                        </div>                    
+                    </div>
+
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Contact Number</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="
+                            form-control form-control-lg form-control-solid custom-input
+                            mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                            formControlName="contact_number" class="form-control"/>
+                        </div>                    
+                    </div>
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Contact Person</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="contact_person" class="form-control"/>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Enquiry Assigned To</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="assign_to" class="form-control"/>
+                    </div>                    
+                </div>
+
+                
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Email ID</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="contact_email" class="form-control"/>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Enquiry Remarks</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="enquiry_remarks" class="form-control"></textarea>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Address</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="contact_address" class="form-control"></textarea>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Customer Requirment</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="customer_requirement" class="form-control"></textarea>
+                    </div>                    
+                </div>
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Landmark</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="landmark" class="form-control"></textarea>
+                    </div>                    
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Expected Closure Date</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                        form-control form-control-lg form-control-solid custom-input
+                        mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="closure_date" class="form-control" />
+                    </div>                    
+                </div>
+            </div>
+
+ <!--product summary-->
+ 
+ <div class="table-responsive">
+    <div class="card card-body table-responsive m-3 shadow-lg p-3 mb-5 bg-white rounded">
+      <table id="products_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+        <thead>
+          <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+            <th>Product Group</th>
+            <th>Customer<br>Product<br>Code</th>
+            <th>Product Code</th>
+            <th>Product</th>
+            <th>Unit</th>
+            <th>Qty Requested</th>
+            <th>Potential value</th>
+            <th>Need By Date</th>
+           
+           
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of products_list;">
+            <td>{{data.enquiry_date}}</td>
+            <td>{{data.enquiry_refno}}</td>
+            <td>{{data.branch_name}}</td>
+            <td>{{data.customer_name}}</td>
+            <td>{{data.enquiry_referencenumber}}</td>
+            <td>{{data.contact_details}}</td>
+            <td></td>
+            <td>{{data.campaign}}</td>
+            <td>{{data.potorder_value}}</td>
+            <td>{{data.lead_status}}</td>
+            <td>{{data.enquiry_status}}</td>
+            <td>{{data.customer_rating}}</td> 
+            <td>{{data.user_firstname}}</td> 
+            <td class="text-center text-nowrap">
+
+              
+                <button title="Add" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                (click)="onadd()"><span class="fa-solid fa-plus text-white  fs-6"></span></button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+        </form>
+
+        </div>
+    </div>

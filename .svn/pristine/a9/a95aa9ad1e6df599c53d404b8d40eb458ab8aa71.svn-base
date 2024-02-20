@@ -1,0 +1,17 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ImsTrnOpeningstockSummaryComponent } from './Component/ims-trn-openingstock-summary/ims-trn-openingstock-summary.component';
+import { ImsTrnIssuematerialSummaryComponent } from './Component/ims-trn-issuematerial-summary/ims-trn-issuematerial-summary.component';
+import { ImsTrnStockadjustmentSummaryComponent } from './Component/ims-trn-stockadjustment-summary/ims-trn-stockadjustment-summary.component';
+
+const routes: Routes = [
+  {path:'ImsTrnOpeningstockSummary', component: ImsTrnOpeningstockSummaryComponent},
+  {path:'ImsTrnIssuematerialSummary', component: ImsTrnIssuematerialSummaryComponent},
+  {path:'ImsTrnStockadjustmentSummary', component: ImsTrnStockadjustmentSummaryComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class EmsInventoryRoutingModule { }

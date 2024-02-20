@@ -1,0 +1,345 @@
+import { Component, } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import * as ApexCharts from 'apexcharts';
+import { ApexOptions } from 'apexcharts';
+import {
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+  ApexChart,
+  ChartComponent 
+} from "ng-apexcharts";
+import flatpickr from 'flatpickr';
+import { Options } from 'flatpickr/dist/types/options';
+
+
+@Component({
+  selector: 'app-smr-rpt-quotationreport',
+  templateUrl: './smr-rpt-quotationreport.component.html',
+  styleUrls: ['./smr-rpt-quotationreport.component.scss']
+})
+export class SmrRptQuotationreportComponent {
+  chartOptions: any = {};
+  Date: string;
+  GetQuotationForLastSixMonths_List :any;
+  GetQuotationFromDate_List:any;
+  chart: ApexCharts | null = null;
+  GetOrderDetailSummary :any;
+  GetQuotationSummary : any;
+  GetOrderForLastSixMonths_List :any;
+  responsedata: any;
+  getData: any;
+  data: any;  
+  quotation_gid: any;
+  parameterValue1: any;
+  parameterValue: any;
+  month:any;
+  categories:any;
+  from_date!:string;
+  to_date!:string;
+
+ 
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService, private NgxSpinnerService: NgxSpinnerService) {
+    this.Date = new Date().toString();
+    
+    
+    
+
+  }
+  
+
+  ngOnInit(): void {
+    
+    this.GetQuotationReportForLastSixMonths();
+    const options: Options = {
+      dateFormat: 'd-m-Y',    
+    };
+    flatpickr('.date-picker', options);
+  }
+  private initializeChart(categories: any, data: any): void {
+    this.chartOptions = {
+      chart: {
+        type: 'bar',
+        height: 400,
+        width: 570,
+        background: 'White',
+        foreColor: '#0F0F0F',
+        fontFamily: 'inherit',
+        toolbar: {
+          show: false,
+        },
+      },
+      colors: ['#7FC7D9', '#FFD54F', '#66BB6A', '#EF5350'],
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '25%',
+          borderRadius: 3,
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent'],
+      },
+      xaxis: {
+        categories:categories,
+        labels: {
+          style: {
+            fontWeight: 'bold',
+            fontSize: '14px',
+          },
+        },
+      },
+      yaxis: {
+        title: {
+          style: {
+            fontWeight: 'bold',
+            fontSize: '14px',
+            color: '#7FC7D9',
+          },
+        },
+      },
+      series: [
+        {
+          name: 'Quotation Amount',
+          color:'#87CEEB',
+          data:data,
+        },
+      ],
+    };
+
+    this.renderChart();
+  }
+
+  private renderChart(): void {
+    if (this.chart) {
+      this.chart.updateOptions(this.chartOptions); // Update existing chart with new options
+    } else {
+      this.chart = new ApexCharts(document.getElementById('chart'), this.chartOptions);
+      this.chart.render();
+    }
+
+  }
+
+  
+  GetQuotationReportForLastSixMonths( )
+  {
+    debugger
+    this.NgxSpinnerService.show();
+    var url = 'SmrRptQuotationReport/GetQuotationReportForLastSixMonths'
+    this.service.get(url).subscribe((result: any) => {
+      $('#GetQuotationForLastSixMonths_List').DataTable().destroy();
+      this.responsedata = result;
+      this.GetQuotationForLastSixMonths_List = this.responsedata.GetQuotationForLastSixMonths_List;
+    //   const chardata={
+    //    categories: this.GetQuotationForLastSixMonths_List.map((entry: { quotation_date: any; }) => entry.quotation_date),
+    //    data : this.GetQuotationForLastSixMonths_List.map((entry: { amount: any; }) => entry.amount),
+    // }
+    this.initializeChart(
+      this.GetQuotationForLastSixMonths_List.map((entry: { quotation_date: any }) => entry.quotation_date),
+      this.GetQuotationForLastSixMonths_List.map((entry: { amount: any }) => entry.amount)
+    );
+      // this.chartOptions = {
+   
+      //   chart: {
+      //     type: 'bar',
+      //     height: 400, // Adjust the height of the chart as needed
+      //     width:600,
+      //     background: 'White',
+      //     foreColor: '#0F0F0F',
+      //     fontFamily: 'inherit',
+      //     toolbar: {
+      //       show: false, // Set to false to hide the toolbar/menu icon
+      //     },
+      //   },
+      //   colors: ['#7FC7D9', '#FFD54F', '#66BB6A', '#EF5350'], // Use a set of colors for better combinations
+      //   plotOptions: {
+      //     bar: {
+      //       horizontal: false,
+      //       columnWidth: '20%', // Adjust the width of the bars
+      //       borderRadius: 0, // Add some border radius for a more modern look
+      //     },
+      //   },
+      //   dataLabels: {
+      //     enabled: false, // Disable data labels for a cleaner look
+      //   },
+        
+      //   stroke: {
+      //     show: true,
+      //     width: 2,
+      //     colors: ['transparent'],
+      //   },
+      //   xaxis: {
+      //     categories:chardata.categories,
+      //     labels: {
+      //       style: {
+      //         fontWeight: 'bold',
+      //         fontSize: '14px',
+      //         //colors: ['#FF5733', '#33FF57', '#5733FF', '#FFFF33'], // Set different colors for each label
+      //       },
+      //     },
+      //   },
+        
+      //   yaxis: {
+      //     title: {
+
+      //       style: {
+      //         fontWeight: 'bold',
+      //         fontSize: '14px',
+      //         color: '#0F0F0F', // Set a different color for the y-axis title
+      //       },
+      //     },
+      //   },
+        
+      //   series: [
+      //     {
+      //       name: 'Quotation Amount',
+      //       data:chardata.data,
+            
+      //       // data1: data.map((value: any, index: number) => ({
+      //       //   y: value,
+      //       //   color: ['#64B5F6', '#FFD54F', '#66BB6A', '#EF5350'][index % 4], // Use the colors you want
+      //       // })),
+      //     },
+      //   ],
+      // };
+      this.NgxSpinnerService.hide();
+
+      // var chart = new ApexCharts(document.getElementById('chart'), this.chartOptions);
+      // chart.render();
+
+    });  
+    
+  }
+  onSearchClick() {
+    debugger
+    this.NgxSpinnerService.show();
+    var url= 'SmrRptQuotationReport/GetQuotationReportForLastSixMonthsSearch';
+    let params ={
+      from_date:this.from_date,
+      to_date:this.to_date
+    }
+    
+    this.service.getparams(url,params).subscribe((result: any) => {
+      $('#GetQuotationForLastSixMonths_List').DataTable().destroy();
+      this.responsedata = result;
+      this.GetQuotationForLastSixMonths_List = this.responsedata.GetQuotationForLastSixMonths_List;
+      // const chartdata1={
+      // categories : this.GetQuotationForLastSixMonths_List.map((entry: { quotation_date: any; }) => entry.quotation_date),
+      //  data : this.GetQuotationForLastSixMonths_List.map((entry: { amount: any; }) => entry.amount),
+      // }
+      // this.chartOptions.xaxis.categories = chartdata1.categories;
+      //   this.chartOptions.series[0].data = chartdata1.data;
+
+        this.chartOptions.xaxis.categories = this.GetQuotationForLastSixMonths_List.map((entry: { quotation_date: any }) => entry.quotation_date);
+    this.chartOptions.series[0].data = this.GetQuotationForLastSixMonths_List.map((entry: { amount: any }) => entry.amount);
+      
+      // this.chartOptions = {
+      //   chart: {
+      //   type: 'bar',
+      //    height: 400, // Adjust the height of the chart as needed
+      //    width:600,
+      //     background: 'White',
+      //     foreColor: '#0F0F0F',
+      //     fontFamily: 'inherit',
+      //     toolbar: {
+      //       show: false, // Set to false to hide the toolbar/menu icon
+      //     },
+      //   },
+      //   colors: ['#7FC7D9', '#FFD54F', '#66BB6A', '#EF5350'], // Use a set of colors for better combinations
+      //   plotOptions: {
+      //     bar: {
+      //       horizontal: false,
+      //       columnWidth: '30%', // Adjust the width of the bars
+      //       borderRadius: 0, // Add some border radius for a more modern look
+      //     },
+      //   },
+      //   dataLabels: {
+      //     enabled: false, // Disable data labels for a cleaner look
+      //   },
+      //   stroke: {
+      //     show: true,
+      //     width: 2,
+      //     colors: ['transparent'],
+      //   },
+      //   xaxis: {
+      //     categories:chartdata1.categories1,
+      //     labels: {
+      //       style: {
+      //         fontWeight: 'bold',
+      //         fontSize: '14px',
+      //         //colors: ['#FF5733', '#33FF57', '#5733FF', '#FFFF33'], // Set different colors for each label
+      //       },
+      //     },
+      //   },
+      //   yaxis: {
+      //     title: {
+
+      //       style: {
+      //         fontWeight: 'bold',
+      //         fontSize: '14px',
+      //         color: '#7FC7D9', // Set a different color for the y-axis title
+      //       },
+      //     },
+      //   },
+        
+      //   series: [
+      //     {
+      //       name: 'Quotation Amount',
+      //       data:chartdata1.data,
+      //       // data: data.map((value: any, index: number) => ({
+      //       //   y: value,
+            
+      //       // })),
+      //     },
+      //   ],
+      // };
+      this.renderChart();
+      this.NgxSpinnerService.hide();
+
+    });
+  }
+  onrefreshclick(){
+    this.from_date = null!;
+    this.to_date = null!;
+    this.GetQuotationReportForLastSixMonths()
+    window.location.reload();
+  }
+  ondetail(month: any,year:any ,parameter: string,quotation_gid: string) {
+
+    debugger
+    this.parameterValue1 = parameter;
+    this.quotation_gid = parameter;
+    this.month = this.GetQuotationForLastSixMonths_List[0].month;
+    var url = 'SmrRptQuotationReport/GetQuotationDetailSummary'
+    let param = {
+      quotation_gid : quotation_gid ,
+      month: month, year: year
+
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.responsedata = result;
+      this.GetQuotationSummary = result.GetQuotationSummary;
+      console.log(this.GetQuotationSummary)
+      setTimeout(() => {
+        $('#GetQuotationSummary');
+      }, 1);
+  
+    });
+  }
+
+
+
+
+}
+
+
+
+

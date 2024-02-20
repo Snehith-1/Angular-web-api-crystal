@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+          <h3 class="card-title">CUSTOMER</h3>
+      </div>
+
+      <div class="col me-5">
+        <div class="float-end">
+        <button title="Add Vendor" class="btn-primary btn-sm text-white me-4" routerLink="/smr/SmrTrnCustomeradd">
+
+      <div class="col me-5">
+        <button title="Add Vendor" class="btn-primary btn-sm text-white me-4" routerLink="/smr/SmrTrnCustomeradd">
+
+      <div class="col me-3 ">
+        <button title="Import Excel" class="btn btn-icon btn-sm bg-success me-2 float-end "  routerLink="/pmr/PmrMstVendorRegisterImportExcel"><span class="fas fa-file-excel text-white  fs-2"></span>  
+        </button>
+        <button title="Add Vendor" class="btn-primary btn-sm text-white me-2 float-end" routerLink="/smr/SmrTrnCustomeradd">
+
+          Add Customer</button>  
+      </div>
+    
+  
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+        <table id="smrcustomer_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+              <th>S.NO </th>
+              <th>Customer Code</th>
+              <th>Customer </th>
+              <th>Contact Details</th>
+              <!-- <th>Branch Details </th>
+              <th>Contact Person</th> -->
+              <th>Region</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of smrcustomer_list; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.customer_id}}</td>
+              <td>{{data.customer_name}}</td>
+              <td>{{data.contact_details}}</td>
+              <!-- <td>{{data.created_by}}</td>
+              <td>{{data.created_date}}</td> -->
+              <td>{{data.region_name}}</td>
+              <td class="text-center text-nowrap"> 
+  
+                 <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview()" ><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                 <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.customer_gid)"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                 <button title="Delete" type="button" (click)="openModaldelete()" data-bs-toggle="modal"data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span class="fa-solid fa-trash text-white  fs-6"></span></button>
+                 <button title="Additional Information" type="button" class="btn btn-icon btn-sm bg-warning me-2" (click)="onaddinfo()" ><span class="fa-solid fa-book text-white  fs-6"></span></button>   
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  

@@ -1,0 +1,116 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-whatsapp" style="color: white;">
+        <h3 class="card-title"> <i class="bi bi-send-fill fs-1"></i> &nbsp;&nbsp;
+            Bulk Message </h3>
+        <div style="margin: 13px">
+            <div class="col me-5">
+                <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign"
+                    class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                    </i>&nbsp;Back</button>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="bulkMessageForm" novalidate="novalidate" (ngSubmit)="onsend()">
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-5 col-md-6 col-sm-12" style="margin-top: 20px;">
+                <span class="font-bold fs-6" style="margin-left: 250px;"><b>Select Template</b><span
+                        class="ms-1 text-red">*</span></span>
+                <ng-select formControlName="cboTemplate" style="margin-left: 250px;" [items]="templateList" (change)="marketingteam()"
+                    [(ngModel)]="cboTemplate" class="custom col-lg-8 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                    bindLabel="p_name" bindValue="id" placeholder="Select an option"></ng-select>
+
+            </div>
+            <!-- <div class="col-lg-3 col-md-6 col-sm-8" style="margin-left: 80px;">
+                <div class="cardHead radius-10 border-start border-0 border-3 ">
+                    <div class="card-body12">
+                        <div class="d-flex align-items-center">
+                          <h3 style="margin-top: -60px;margin-left: 30px;">Template Preview</h3>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    <div class=row>
+    <div class=col-9>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded" style=" max-height: 290px; overflow-y: auto;">
+            <table id="whatsnamelist" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class=" text-white fw-bold fs-6 text-nowrap bg-whatsapp">
+                        <th style="width:2px;   ">
+                            <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()" />
+                        </th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Source</th>
+                        <th>Customer Type</th>
+                        <th>Lead Status</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of contacts_list; let i=index;" class="align-middle">
+                        <td> <input type="checkbox" (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(data) : null"
+                                [checked]="selection.isSelected(data)" />
+                        </td>
+                        <td style="white-space: nowrap;">{{data.displayName}}</td>
+                        <td style="white-space: nowrap;">{{data.value}}</td>
+                        <td style="white-space: nowrap;">{{data.source_name}}</td>
+                        <td style="white-space: nowrap;">{{data.customer_type}}</td>
+                        <td>
+                            <span *ngIf="data.lead_status === 'Assigned' "><label class="ms-3" class="badge bg-success text-white ">Assigned</label></span>
+                            
+                            <span *ngIf="data.lead_status === 'Not Assigned'" ><label class="ms-3" class="badge bg-primary text-white ">Not Assigned</label></span>
+                            
+                          </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class=col-3 style="margin-top: -60px;">
+    <h2>&nbsp;&nbsp;&nbsp;Template Preview :</h2>
+    <div class="card shadow-sm p-4 m-4" style="height: 300px;">
+        <div class="m-12 " *ngFor="let d of templateview_list">
+
+        <h3>{{ d.p_name}}</h3><br>
+        <p>{{ d.template_body}}</p>
+        </div>
+        <!-- <div
+        class="cardHead radius-10 border-start border-0 border-3 ">
+        <div class="card-body12">
+            <div class="">
+                
+                        <span class="bg-light-danger text-danger fs-6 fw-bolder" >
+                             'Body nizar4rrfrfgtggrtgtgtr
+                             Your
+                            message!' </span>
+                       
+                 
+
+            </div>
+        </div>
+    </div> -->
+    </div>
+</div>
+</div>
+    <div style="margin-left: 400px;">
+        <button title="Send" type="button" class="btn btn-icon btn-sm me-2"  data-bs-toggle="modal"
+        data-bs-target="#myModaladd"
+        style="width: 93px;text-align: center;height: 33px;background-color: rgb(63, 149, 55);" (click)="onsend()">
+        <i class="bi bi-send text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Send
+    </button>
+       
+    </div>
+    <br>
+</form>

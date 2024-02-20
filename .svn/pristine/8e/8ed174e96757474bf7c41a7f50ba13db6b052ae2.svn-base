@@ -1,0 +1,42 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">SELECT PURCHASE ORDER</h3> 
+    </div>
+    <br>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="grn_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>PO Date</th>
+                        <th>PO Ref. No.</th>
+                        <th>Po Status</th>
+                        <th>Vendor</th>
+                        <th>Cost Center</th>
+                        <th>Department</th>
+                        <th>Created By</th>
+                        <th>Branch</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of grn_list; let i=index;"> 
+                        <td >{{i+1}}</td>
+                        <td>{{data.purchaseorder_date}}</td>
+                        <td>{{data.purchaseorder_gid}}</td>
+                        <td>{{data.purchaseorder_status}}</td>
+                        <td>{{data.vendor_companyname}}</td>
+                        <td>{{data.costcenter_name}}</td>
+                        <td>{{data.department_name}}</td> 
+                        <td>{{data.created_by}}</td> 
+                        <td>{{data.branch_name}}</td>         
+                        <td class="text-center text-nowrap">
+                            <a title="Select" href="#" class="btn-text-link me-2" routerLink="/pmr/PmrTrnGrninwardsubmit">SELECT </a>
+                        </td>                        
+                    </tr>
+                </tbody> 
+            </table>
+        </div> 
+    </div> 
+</div>

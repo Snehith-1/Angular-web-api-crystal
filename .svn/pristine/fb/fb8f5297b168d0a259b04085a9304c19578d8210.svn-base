@@ -1,0 +1,126 @@
+<div class="card card-bordered">
+    <div class="card-header  d-flex justify-content-center " style="background-color:#faf8f8">
+        <h1 class="card-title fw-bold fs-3">RSK - Risk Management System</h1>
+    </div>
+
+    <div class="d-flex flex-row flex-wrap" >
+        
+        <div  class="col-12 col-lg-6 card ms-lg-3 m-3  bg-white rounded" >
+      
+        <div class="row d-flex m-4 ms-2 " >
+          <div class="col-2 h-100px w-150px d-flex justify-content-center rounded align-items-center hover-elevate-up ms-8 mt-1 mb-7" style="background-color: rgb(218, 217, 247); " >
+               
+            <p class="text-black mt-3 fw-bold fs-6 text-center" > <em style="color:rgb(55, 53, 182);" class="fa fa-file fa-2x "></em> <br> Sanction Management </p>
+          </div>
+        
+          <div class=" col-2 h-100px w-150px d-flex justify-content-center align-items-center rounded hover-elevate-up ms-5 mt-1" style="background-color: rgb(215, 239, 247);">    
+            <p class="text-black mt-2  fw-bold fs-6 text-center"><em style="color:rgb(5, 125, 129);"class="bi bi-people fa-2x"></em> <br> Customer Management</p>         
+          </div>      
+          <div class="col-2 h-100px w-150px d-flex justify-content-center align-items-center rounded hover-elevate-up ms-5 mt-1 " style="background-color: rgb(247, 231, 221);">      
+            <p class="text-black  fw-bold fs-6 text-center"> <em style="color:rgb(206, 119, 20);"class="bi bi-people fa-2x"></em> <br> My Zonal Customer </p>      
+          </div>
+        
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-8 mt-1"  style="background-color: rgb(240, 228, 228);">   
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(119, 91, 91);" class="bi bi-journal-text fa-2x"></em><br> Case Allocation </p>
+            
+          </div>
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-5 mb-7 "  style="background-color: rgb(247, 242, 225);">
+            <p class="text-black  fw-bold fs-6 text-center"><em class="bi bi-journal-text fa-2x" style="color:#7c680d;"></em><br> ZRM Dashboard </p>
+          
+          </div>
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-5 mb-7"  style="background-color: rgb(241, 228, 245);">
+            <p class="text-black mt-2 fw-bold fs-6 text-center"><em style="color:rgb(139, 15, 123);" class="fa fa-exchange fa-2x"></em><br> Allocation Transfer </p>
+          
+          </div>
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-8 mb-7"  style="background-color: rgb(208, 247, 220);">
+            <p class="text-black mt-2 fw-bold fs-6 text-center"><em style="color:rgb(64, 112, 68);" class="fa fa-thumbs-up fa-2x"></em><br> Transfer Approval </p>
+        
+          </div>
+        
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-5 mb-7"  style="background-color: rgb(247, 225, 228);">
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(224, 11, 11);" class="bi bi-file-earmark-pdf fa-2x"></em><br> RM Dashboard</p>
+         
+          </div>
+        
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-5 mb-7"  style="background-color: rgb(243, 223, 205);">
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(179, 100, 27);" class="fa fa-check-square fa-2x"></em><br> ATR Approval</p>
+        
+          </div>
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-8 mb-7 "  style="background-color: rgb(205, 240, 200);">
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(35, 141, 9);" class="fa fa-check-square fa-2x"></em><br> Tier 2 Approval</p>
+        
+          </div>
+
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-5 mb-7"  style="background-color: rgb(202, 235, 248);">
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(24, 143, 151);" class="fa fa-check-square fa-2x"></em><br> Tier 3 Preparation</p>
+        
+          </div>
+          
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-5 mb-7"  style="background-color: rgb(247, 231, 209);">
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(150, 116, 6);" class="fa fa-star fa-2x"></em><br> Tier Report</p>
+        
+          </div>
+
+          <div class="col-2 h-100px d-flex w-150px justify-content-center align-items-center rounded hover-elevate-up ms-8 mb-7"  style="background-color: rgb(226, 213, 241);">
+            <p class="text-black  fw-bold fs-6 text-center"><em style="color:rgb(163, 24, 156);" class="bi bi-file-earmark-text fa-2x"></em><br> Allocation Report</p>
+        
+          </div>
+        </div>
+        </div>
+        
+        <div class=" col-lg-5 card h-500px  ms-0 ms-lg-12 shadow-lg p-3  mt-7 bg-white rounded" style="background-image:url('../../../../assets/media/icons/duotune/abstract/abs004.svg'); background-repeat:no-repeat; background-position: right top "> 
+ 
+            <div class="ms-2">
+                <span class="fw-bolder text-gray-800 d-block fs-4 p-3">Month Wise Allocation</span>
+                <span class="text-gray-400 fw-bold p-3">Feb - Sep 2023</span>
+    
+                <div class="align-items-center position-relative">
+               
+                    <div class="d-flex flex-center me-5 pt-2">
+                      <div id="kt_card_widget_17_chart">  </div>
+                    </div>
+                                
+                    <div class="d-flex flex-wrap ms-5 ">
+                   
+                      <div class="d-flex fw-semibold align-items-center">
+                   
+                        <div class=" w-10px h-10px p-1 me-3"  style="background-color: #098be2"></div>
+                      
+                        <div class="text-gray-500 flex-grow-1 me-4">Allocated</div>
+                        
+                      </div>
+                                    
+                      <div class="d-flex fw-semibold align-items-center my-3">
+                    
+                        <div class=" w-10px h-10px p-1 me-3"  style="background-color: #a0a3a7" ></div>
+                        <div class="text-gray-500 flex-grow-1 me-4">Visit Completed</div>                  
+                      </div>
+               
+                    </div>
+                  </div>
+                </div>
+                <div #chartRef id="kt_charts_widget_1_chart" >
+    
+                    <apx-chart
+                
+                      [series]="rskHIchartOptions.series"
+                      [chart]="rskHIchartOptions.chart"
+                      [xaxis]="rskHIchartOptions.xaxis"
+                      [yaxis]="rskHIchartOptions.yaxis"
+                      [dataLabels]="rskHIchartOptions.dataLabels"
+                      [stroke]="rskHIchartOptions.stroke"
+                      [legend]="rskHIchartOptions.legend"
+                      [fill]="rskHIchartOptions.fill"
+                      [states]="rskHIchartOptions.states"
+                      [tooltip]="rskHIchartOptions.tooltip"
+                      [colors]="rskHIchartOptions.colors"
+                      [markers]="rskHIchartOptions.markers"
+                      [plotOptions]="rskHIchartOptions.plotOptions"
+                    ></apx-chart>
+                
+                  </div>
+        </div>
+    </div>
+    
+</div>
+

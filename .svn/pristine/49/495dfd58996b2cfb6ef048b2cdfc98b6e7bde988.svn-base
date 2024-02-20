@@ -1,0 +1,168 @@
+﻿using ems.system.Models;
+using ems.utilities.Functions;
+using Microsoft.SqlServer.Server;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Odbc;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Web;
+using static OfficeOpenXml.ExcelErrorValue;
+using static System.Collections.Specialized.BitVector32;
+
+namespace ems.system.DataAccess
+{
+    public class DaEntity
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objodbcDataReader;
+        DataTable dt_datatable;
+        int mnResult;
+        string msGetGid, msGetGid1,lsentity_name;
+
+        // Module Master Summary
+        public void DaGetEntitySummary(MdlEntity values)
+        {
+            msSQL = " select  entity_gid,entity_code, entity_name, entity_description, CONCAT(b.user_firstname,' ',b.user_lastname) as created_by, a.created_date " +
+                    " from adm_mst_tentity a " +
+                    " left join adm_mst_tuser b on b.user_gid=a.created_by order by entity_gid desc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<entity_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new entity_lists
+                    {
+                        entity_gid = dt["entity_gid"].ToString(),
+                        entity_code = dt["entity_code"].ToString(),
+                        entity_name = dt["entity_name"].ToString(),
+                        entity_description = dt["entity_description"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                    });
+                    values.entity_lists = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaPostEntity(string user_gid, entity_lists values)
+        {
+            msSQL = " select entity_name from adm_mst_tentity where entity_name = '" + values.entity_name + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                lsentity_name = objodbcDataReader["entity_name"].ToString();
+            }
+            if (lsentity_name != values.entity_name)
+            {
+                msGetGid = objcmnfunctions.GetMasterGID("CENT");
+                msSQL = " Select sequence_curval from adm_mst_tsequence where sequence_code ='CENT' order by finyear desc limit 0,1 ";
+                string lsCode = objdbconn.GetExecuteScalar(msSQL);
+
+                string lsentity_code = "ENT" + "000" + lsCode;
+
+                msSQL = " insert into adm_mst_tentity(" +
+                        " entity_gid," +
+                        " entity_code," +
+                        " entity_name," +
+                        " entity_description," +
+                        " created_by, " +
+                        " created_date)" +
+                        " values(" +
+                        " '" + msGetGid + "'," +
+                        " '" + lsentity_code + "'," +
+                        "'" + values.entity_name + "',";
+                if (values.entity_description == null || values.entity_description == "")
+                {
+                    msSQL += "'',";
+                }
+                else
+                {
+                    msSQL += "'" + values.entity_description.Replace("'", "") + "',";
+                }
+                msSQL += "'" + user_gid + "'," +
+                         "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Entity Added Successfully !!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Entity !!";
+                }
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Same Entity Already Exist !!";
+            }
+        }
+
+        public void DaGetupdateentitydetails(string user_gid, entity_lists values)
+        {
+            msSQL = " select entity_name from adm_mst_tentity where entity_name = '" + values.entityedit_name + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+               lsentity_name = objodbcDataReader["entity_name"].ToString();
+            }
+            if ( lsentity_name != values.entityedit_name)
+            {
+                msSQL = " update  adm_mst_tentity set " +
+                 " entity_name = '" + values.entityedit_name + "'," +
+                 " entity_description = '" + values.entityedit_description + "'," +
+                 " updated_by = '" + user_gid + "'," +
+                 " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where entity_gid='" + values.entity_gid + "'  ";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    values.status = true;
+                    values.message = "Entity Updated Successfully !!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Updating Entity !!";
+                }
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Same Entity Already Exist !!";
+            }
+
+        }
+        public void DaGetdeleteentitydetails(string entity_gid, entity_lists values)
+        {
+            msSQL = "  delete from adm_mst_tentity where entity_gid='" + entity_gid + "'  ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Entity Deleted Successfully !!";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Adding Entity Added Successfully !!";
+            }
+
+        }
+    }
+}

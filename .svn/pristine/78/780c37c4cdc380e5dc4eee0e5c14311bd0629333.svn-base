@@ -1,0 +1,332 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-lightblue">
+      <h3 class="card-title"><b>Create Loan</b></h3>
+    </div>
+
+    <div class="mt-6">
+        <!-- ADD Function -->
+        
+        <form [formGroup]="reactiveForm" #form="ngForm">
+        <div class="modal-body">
+        <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Loan Ref. No</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="loan_refno" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 placeholder="Enter Loan Ref. No"  name="loan_refno" required/>
+              </div>
+              </div>
+
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Employee</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select formControlName="employee" [class.is-invalid]="
+                    employee.invalid &&
+                    (employee.dirty || employee.touched)
+                  "  [ngClass]="{'invalid-border': employee.invalid && employee.touched}" [items]="employeelist" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                  bindLabel="employee_name" bindValue="employee_gid" placeholder="Select an option" style="width:400%;"></ng-select>
+                  </div>
+                  <div *ngIf="employee.invalid && (employee.dirty || employee.touched)">
+                    <div *ngIf="employee.errors?.['required']">
+                      <span style="color:red; font-size: 11px;">* Employee is required.</span>
+                    </div>
+                  </div>
+                </div>
+    
+                
+              </div>
+    
+        
+        
+        
+        </div>
+<br>
+        <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Type</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <label for="html" style="margin-left:1px;"><b>Loan</b>
+                  <input type="radio" formControlName="type" value="loan" style="margin-left:10px;"
+                    value="LOAN">
+                  <label for="html" style="margin-left:25px;"><b>Advance</b>
+                    <input type="radio" formControlName="type" value="advance" style="margin-left:10px;"
+                      value="ADVANCE"></label>
+                </label>
+              </div>
+              
+            </div>
+           
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Loan Name</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="loan_name" type="text" style="width:190%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': loan_name.invalid && loan_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Loan Name" pattern="^(?!\s*$).+" name="loan_name" required/>
+                  </div>
+                  <div *ngIf="loan_name.invalid && (loan_name.dirty || loan_name.touched)">
+                    <div *ngIf="loan_name.errors?.['required']">
+                      <span style="color:red; font-size: 11px;">* Loan Name is required.</span>
+                    </div>
+                  </div>
+                </div>
+    
+                
+              </div>
+            
+          </div>
+<br>
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Loan Amount</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="loan_amount" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 [ngStyle]="{'border-color': loan_amount.invalid && loan_amount.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                 placeholder="Enter Loan Amount" pattern="^(?!\s*$).+" name="loan_amount" required/>
+              </div>
+              <div *ngIf="loan_amount.invalid && (loan_amount.dirty || loan_amount.touched)">
+                <div *ngIf="loan_amount.errors?.['required']">
+                  <span style="color:red; font-size: 11px;">* Loan Amount is required.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Repayment Amount</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="repay_amt" type="text" style="width:190%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                    placeholder="Enter Repayment Amount"  name="repay_amt" required/>
+                  </div>
+                 </div>
+                </div>
+              </div>
+<br>
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Paid Amount</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="paid_amt" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                 placeholder="Enter Paid Amount"  name="paid_amt" required/>
+              </div>
+             
+            </div>
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Pending Amount</b>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="pend_amt" type="text" style="width:190%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                    placeholder="Enter Pending Amount"  name="pend_amt" required/>
+                  </div>
+                  
+                </div>
+    
+                
+              </div>
+            
+          </div>
+<br>
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Remarks</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <textarea id="remarks" formControlName="remarks" rows="4" cols="40" style="resize: none;" placeholder="Enter Remarks"></textarea>
+              </div>
+              
+            </div>
+          
+            <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:45px;"><b>Loan/Advance</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select formControlName="loan_advance" style="margin-left:px; width:228%;" class="
+                    form-control form-control-lg form-control-solid borderc-secondary
+                    custom-input
+                    mb-3 mb-lg-1
+                    bg-white
+                    custom-input" placeholder="Enter Loan/Advance" (change)="showTextBox($event)">
+                     <option>--Select an option--</option>
+                     <option value="Cash">Cash</option>
+                     <option value="Cheque">Cheque</option>
+                     <option value="DD">DD</option>
+                     <option value="NEFT">NEFT</option>
+                    
+                   </select>
+                  </div>
+                  <div *ngIf="loan_advance.invalid && (loan_advance.dirty || loan_advance.touched)">
+                    <div *ngIf="loan_advance.errors?.['required']">
+                      <span style="color:red; font-size: 11px;">* Loan/Advance is required.</span>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <br>
+            <div *ngIf="showInput">
+             
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Cheque No</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="cheque_no" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': cheque_no.invalid && cheque_no.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Cheque No" pattern="^(?!\s*$).+" name="cheque_no" required/>
+                  </div>
+                 
+                </div>
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Bank Name</b><span style="color:red"> *</span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input formControlName="bank_name" type="text" style="width:190%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                         [ngStyle]="{'border-color': bank_name.invalid && bank_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                         placeholder="Enter Bank Name" pattern="^(?!\s*$).+" name="bank_name" required/>
+                      </div>
+                      
+                    </div>
+        
+                    
+                  </div>
+                
+              </div>
+          <br>
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Branch Name</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="branch_name" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': branch_name.invalid && branch_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Branch Name" pattern="^(?!\s*$).+" name="branch_name" required/>
+                  </div>
+                 
+                </div>
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Deposit Bank</b><span style="color:red"> *</span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select formControlName="bank" [class.is-invalid]="
+                        bank.invalid &&
+                        (bank.dirty || bank.touched)
+                      "  [ngClass]="{'invalid-border': bank.invalid && bank.touched}" [items]="bankdetailslist" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                      bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:390%;"></ng-select>
+                      </div>
+                      
+                    </div>
+        
+                    
+                  </div>
+                
+              </div>
+ 
+            
+            
+            </div>
+            <div *ngIf="showInput2">
+              
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Cheque No</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="cheque_no" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': cheque_no.invalid && cheque_no.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Cheque No" pattern="^(?!\s*$).+" name="cheque_no" required/>
+                  </div>
+                 
+                </div>
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Bank Name</b><span style="color:red"> *</span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input formControlName="bank_name" type="text" style="width:190%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                         [ngStyle]="{'border-color': bank_name.invalid && bank_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                         placeholder="Enter Bank Name" pattern="^(?!\s*$).+" name="bank_name" required/>
+                      </div>
+                      
+                    </div>
+        
+                    
+                  </div>
+                
+              </div>
+          <br>
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Branch Name</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="branch_name" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': branch_name.invalid && branch_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Branch Name" pattern="^(?!\s*$).+" name="branch_name" required/>
+                  </div>
+                 
+                </div>
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Deposit Bank</b><span style="color:red"> *</span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select formControlName="bank" [class.is-invalid]="
+                        bank.invalid &&
+                        (bank.dirty || bank.touched)
+                      "  [ngClass]="{'invalid-border': bank.invalid && bank.touched}" [items]="bankdetailslist" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                      bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:390%;"></ng-select>
+                      </div>
+                      
+                    </div>
+        
+                    
+                  </div>
+                
+              </div>
+ 
+
+
+            </div>
+            <div *ngIf="showInput3">
+             
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Transaction Ref. No.</b><span style="color:red"> *</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="transaction_refno" type="text" style="width:55%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': transaction_refno.invalid && transaction_refno.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Enter Transaction" pattern="^(?!\s*$).+" name="transaction_refno" required/>
+                  </div>
+                 
+                </div>
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Deposit Bank</b><span style="color:red"> *</span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select formControlName="bank" [class.is-invalid]="
+                        bank.invalid &&
+                        (bank.dirty || bank.touched)
+                      "  [ngClass]="{'invalid-border': bank.invalid && bank.touched}" [items]="bankdetailslist" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                      bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:400%;"></ng-select>
+                      </div>
+                      
+                    </div>
+        
+                    
+                  </div>
+                
+              </div>
+ 
+             </div>
+<br>
+              <div class="d-flex flex-row flex-wrap">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="margin-left:40px;"><b>Date</b><span style="color:red">*</span>
+                  <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input formControlName="date" type="date" style="width:35%;" class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                     [ngStyle]="{'border-color': date.invalid && date.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                     placeholder="Select Date" pattern="^(?!\s*$).+" name="date" required/>
+                  </div>
+                  <div *ngIf="date.invalid && (date.dirty || date.touched)">
+                    <div *ngIf="date.errors?.['required']">
+                      <span style="color:red; font-size: 11px;">* Date is required.</span>
+                    </div>
+                  </div>
+                  </div>
+             </div>
+           
+
+           <!-- Modal footer -->
+           <div class="text-center my-4">
+            <button (click)="onconfirm()" class="btn-success btn-sm text-white me-4">
+              <i class="bi bi-check-square fs-5"></i>
+                  <span class="ms-3">Confirm</span>
+            </button>
+            <button class="btn-danger btn-sm text-white me-4" (click)="oncancel()">
+              <i class="fa fa-times"></i>
+              <span class="ms-3">Cancel</span>
+            </button>
+          </div>
+
+         
+
+
+
+
+      </div>
+      </form>
+      </div>

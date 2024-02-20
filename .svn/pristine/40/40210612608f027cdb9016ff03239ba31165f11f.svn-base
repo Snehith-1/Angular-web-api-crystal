@@ -1,0 +1,132 @@
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-smr-trn-raisesalesorder',
+  templateUrl: './smr-trn-raisesalesorder.component.html',
+  styleUrls: ['./smr-trn-raisesalesorder.component.scss']
+})
+export class SmrTrnRaisesalesorderComponent {
+
+  RaiseForm: FormGroup | any;
+  productform: FormGroup | any;
+  customer_list: any [] = [];
+  branch_list: any [] = [];
+  contact_list: any [] = [];
+  currency_list: any [] = [];
+  user_list:any [] = [];
+  productdetails_list: any [] = [];
+  tax_list: any [] = [];
+  POproductlist: any [] = [];
+  mdlBranchName:any;
+  mdlCustomerName:any;
+  mdlUserName:any;
+  mdlProductName:any;
+  mdlTaxName3:any;
+  mdlTaxName2:any;
+  mdlTaxName1:any;
+  mdlContactName:any;
+  unitprice:any;
+  quantity:any;
+  discountpercentage:any;
+  insurancecharges:any;
+  forwardingCharges:any;
+  frieghtcharges:any;
+  addoncharges:any;
+  selectedCurrencyCode:any;
+  producttotalamount:any;
+  roundoff:any;
+  grandtotal:any;
+  insurance_charges:any;
+  buybackorscrap:any;
+  freightcharges:any;
+  additional_discount:any;
+  addoncharge:any;
+  totalamount:any;
+  price:any;
+  discountamount:any;
+  tax_amount:any;
+  tax_amount2:any;
+  tax_amount3:any;
+
+
+
+  get branch_name() {
+    return this.RaiseForm.get('branch_name')!;
+  }
+  get customer_name() {
+    return this.RaiseForm.get('customer_name')!;
+  }
+  get customercontact_names() {
+    return this.RaiseForm.get('customercontact_names')!;
+  }
+  get user_name() {
+    return this.RaiseForm.get('user_name')!;
+  }
+  get product_name() {
+    return this.RaiseForm.get('product_name')!;
+  }
+  get tax_name(){
+    return this.productform.get('tax_name')!;
+  }
+  get tax_name2(){
+    return this.productform.get('tax_name2')!;
+  }
+  get tax_name3(){
+    return this.productform.get('tax_name3')!;
+  }
+
+
+
+  OnChangeCustomer(){
+
+  }
+  OnChangeCurrency(event: Event){
+
+  }
+
+  onCurrencyCodeChange(event: Event){
+
+  }
+
+  GetOnChangeProductName(){
+
+  }
+  productSubmit(){
+
+  }
+
+  OnChangeTaxAmount1(){
+
+  }
+
+  OnChangeTaxAmount2(){
+
+  }
+
+  OnChangeTaxAmount3(){
+
+  }
+
+  prodtotalcal(){
+
+  }
+
+  redirecttolist(){
+
+  }
+  OnTax(){
+
+  }
+  finaltotal(){}
+
+  onSubmit(){
+
+  }
+  ondelete(product_gid : string){
+    let param = {
+      product_gid: product_gid
+    }
+  }
+
+}

@@ -1,0 +1,84 @@
+import { Component, ElementRef } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { AES, enc } from 'crypto-js';
+
+interface  ICustomer
+
+{
+
+}
+@Component({
+  selector: 'app-smr-trn-customer-product-price',
+  templateUrl: './smr-trn-customer-product-price.component.html',
+  styleUrls: ['./smr-trn-customer-product-price.component.scss']
+})
+export class SmrTrnCustomerProductPriceComponent {
+
+  salesproduct_list: any[] = [];
+  cusprodForm!: FormGroup;
+  customer!: ICustomer;
+  productasgn: any;
+  responsedata: any;
+
+  constructor( private el: ElementRef, public service: SocketService, private ToastrService: ToastrService, private route: Router, private router: ActivatedRoute) {
+    this.customer = {} as ICustomer;
+  }
+  ngOnInit(): void {
+
+    this.cusprodForm = new FormGroup ({
+      amount : new FormControl (''),
+    });
+
+    this.productasgn = this.router.snapshot.paramMap.get('customer_gid');
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.productasgn, secretKey).toString(enc.Utf8);
+    this.GetSmrMstProductAssignSummary(deencryptedParam);
+   console.log(deencryptedParam);
+  }
+
+  GetSmrMstProductAssignSummary(customer_gid: any) {       
+  
+    let param = {
+      customer_gid: customer_gid,
+
+    }
+    var url = 'SmrTrnCustomerSummary/GetProductAssignSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#salesproduct_list').DataTable().destroy();
+     this.responsedata=result;
+     this.salesproduct_list = result.product_list
+     setTimeout(() => {
+      $('#salesproduct_list').DataTable();
+    }, 1);
+
+    });
+  }
+  get amount() {
+    return this.cusprodForm.get('amount')!;
+  }
+  openModaledit(data: any){
+    this.salesproduct_list.forEach(element => {
+    element.isEdit = false;
+    data.originalProductPrice = data.cost_price;
+ 
+   });
+   data.isEdit = true;    
+  }
+
+  onclose(data: any){  
+    if (data.isEdit) {
+      data.isEdit = false;
+}
+  }
+
+  edupdate()
+  {
+
+  }
+
+  }
+

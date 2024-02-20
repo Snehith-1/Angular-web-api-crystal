@@ -1,0 +1,178 @@
+<div class="card card-bordered">
+  <div class="d-flex flex-row" style="background-color: #ffffff; height: 500px;">
+    <!-- begin::Left side section -->
+    <div class="col-9 card m-0 ms-0 shadow-lg p-4 mb-20 rounded" style="height: 500px;">
+      <!-- begin::Chart heading -->
+      <div class="me-2">
+        <span class="fw-bolder text-gray-800 d-block fs-4 p-3" style="border-bottom: 2px solid #cce7f7; background-color: #009ef7;">
+          <span style="color: #ffffff;">Total Sales</span>
+          <br>
+          <span style="font-size: 12px; color: #ffffff;">Jan - Dec 2022</span>
+        </span>
+      </div>
+      <!-- end::Chart heading -->
+
+      <!-- begin::Chart -->
+      <div #chartRef class="d-flex flex-column mixed-widget-2-chart card-rounded-bottom">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+          [yaxis]="chartOptions.yaxis" [dataLabels]="chartOptions.dataLabels" [stroke]="chartOptions.stroke"
+          [legend]="chartOptions.legend" [fill]="chartOptions.fill" [states]="chartOptions.states"
+          [tooltip]="chartOptions.tooltip" [colors]="chartOptions.colors" [markers]="chartOptions.markers"
+          [plotOptions]="chartOptions.plotOptions">
+        </apx-chart>
+      </div>
+      <!-- end::Chart -->
+    </div>
+    <!-- end::Left side section -->
+
+    <!-- begin::Right side section -->
+    <div class="col-3 card m-0 ms-2 shadow-lg p-4 mb-20 rounded" style="height: 500px;">
+      <div class="d-flex flex-row mb-5">
+        <!-- begin::Master section -->
+        <div class="me-2" style="width: 500px;">
+          <!-- begin::Master heading -->
+          <span class="fw-bolder text-gray-800 d-block fs-6 p-2 mt-0" style="background-color: #009ef7; height: 35px; text-align: center;">
+            <span style="color: #ffffff;">Masters</span>
+          </span>
+          <!-- end::Master heading -->
+          <div class="d-flex flex-row">
+            <!-- begin::Master list -->
+            <div class="d-flex flex-column" style="width:100%; margin: 5px 5px 0px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #EFB693; width: 100%; margin-top: 5px; padding: 15px; text-align: center;" (click)="branch()">
+                <span>
+                  <i class="bi-geo-fill" style="font-size: 15px; margin-left: -9px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7" style="margin: 4px;">
+                  Branch
+                </a>
+              </div>
+            </div>
+
+            <div class="d-flex flex-column" style="width:100%; margin: 5px 5px 0px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #ADD1E1; width: 100%; margin-top: 5px; padding: 15px; text-align: center;" (click)="employee()">
+                <span>
+                  <i class="bi-person-circle" style="font-size: 15px; margin-left: -9px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7">
+                  Employee
+                </a>
+              </div>
+            </div>            
+            <!-- end::Master list -->
+          </div>          
+
+          <div class="d-flex flex-row">
+            <!-- begin::Master list -->
+            <div class="d-flex flex-column" style="width:100%; margin: 0px 5px 0px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #D2C2E4; width: 100%; margin-top: 5px; padding: 15px; text-align: center;" (click)="department()">
+                <span>
+                  <i class="bi bi-diagram-3-fill" style="font-size: 14px; margin-left: -8px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7" style="margin: 0px;">
+                  Department
+                </a>
+              </div>
+            </div>
+            <div class="d-flex flex-column" style="width:100%; margin: 0px 5px 0px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #D3EBBA; width: 100%; margin-top: 5px; padding: 15px; text-align: center;" (click)="product()">
+                <span>
+                  <i class="bi bi-box-fill" style="font-size: 15px; margin-left: -9px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7" style="margin: 4px;">
+                  Product
+                </a>
+              </div>
+            </div>
+            <!-- end::Master list -->
+          </div>
+
+          <div class="d-flex flex-row">
+            <div class="d-flex flex-column" style="width:100%; margin: 0px 5px 0px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #D1DADD; width: 100%; margin-top: 5px; padding: 15px; text-align: center;" (click)="customer()">
+                <span>
+                  <i class="bi-people-fill" style="font-size: 15px; margin-left: -9px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7">
+                  Customer
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end::Master section -->
+      </div>
+
+      <div class="d-flex flex-row">
+        <!-- begin::Invoice section -->
+        <div class="me-2" style="width: 500px;">
+          <!-- begin::Invoice heading -->
+          <span class="fw-bolder text-gray-800 d-block fs-6 p-2 mt-0" style="background-color: #009ef7; height: 35px; text-align: center;">
+            <span style="color: #ffffff;">Invoice Details</span>
+          </span>
+          <!-- end::Invoice heading -->
+          <div class="d-flex flex-row mb-3">
+            <!-- begin::Invoice list -->
+            <div class="d-flex flex-column" style="width:100%; margin:5px 5px 5px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #D6DECA; width: 100%; margin-top: 5px; padding: 15px; text-align: center;">
+                <span>
+                  <i class="bi bi-building-fill-add" style="font-size: 15px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7" style="margin: 4px;">
+                  New
+                </a>
+              </div>
+            </div>
+            <div class="d-flex flex-column" style="width:100%; margin:5px 5px 5px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #fbd8e1; width: 100%; margin-top: 5px; padding: 15px; text-align: center;">
+                <span>
+                  <i class="bi bi-trash-fill" style="font-size: 15px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7">
+                  Deleted
+                </a>
+              </div>
+            </div>
+            <!-- end::Invoice list -->
+          </div>
+        </div>
+        <!-- end::Invoice section -->
+      </div>
+      <div class="d-flex flex-row">
+        <!-- begin::IRN section -->
+        <div class="me-2" style="width: 500px;">
+          <!-- begin::IRN heading -->
+          <span class="fw-bolder text-gray-800 d-block fs-6 p-2 mt-0" style="background-color: #009ef7; height: 35px; text-align: center;">
+            <span style="color: #ffffff;">IRN Details</span>
+          </span>
+          <!-- end::IRN heading -->
+          <div class="d-flex flex-row">
+            <!-- begin::IRN list -->
+            <div class="d-flex flex-column" style="width:100%; margin:5px 5px 5px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: #EDD9BF; width: 100%; margin-top: 5px; padding: 15px; text-align: center;">
+                <span>
+                  <i class="bi bi-file-plus-fill" style="font-size: 15px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7" style="margin: 4px;">
+                  New
+                </a>
+              </div>
+            </div>
+            <div class="d-flex flex-column" style="width:100%; margin:5px 5px 5px 5px; text-align: center;">
+              <div class="col-3 h-50px justify-content-center align-items-center hover-elevate-up ms-0 mb-3" style="background-color: rgb(154, 218, 196); width: 100%; margin-top: 5px; padding: 15px; text-align: center;">
+                <span>
+                  <i class="bi bi-hourglass-split" style="font-size: 15px;"></i>
+                </span>
+                <a class="text-warning fw-bold fs-7">
+                  Pending
+                </a>
+              </div>
+            </div>
+            <!-- end::IRN list -->
+          </div>
+        </div>
+        <!-- end::IRN section -->
+      </div>
+    </div>
+    <!-- end::Right side section -->
+  </div>
+</div>

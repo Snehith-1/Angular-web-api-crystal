@@ -1,0 +1,109 @@
+﻿using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+using ems.hrm.DataAccess;
+using ems.hrm.Models;
+
+namespace ems.hrm.Controllers
+{
+    [RoutePrefix("api/hrmTrnDashboard")]
+    [Authorize]
+    public class HrmTrnDashboardController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaHrmTrnDashboard objDaHrmDashboard = new DaHrmTrnDashboard();
+
+        [ActionName("GetCompanyPolicies")]
+        [HttpGet]
+        public HttpResponseMessage GetCompanyPolicies()
+        {
+            mdlcompanypolicies values = new mdlcompanypolicies();
+            objDaHrmDashboard.DaGetCompanyPolicies(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("punchIn")]
+        [HttpPost]
+        public HttpResponseMessage PostIAttendanceLogin(mdliAttendance values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaHrmDashboard.DaPostIAttendanceLogin(getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("monthlyAttendence")]
+        [HttpGet]
+        public HttpResponseMessage GetMonthlyAttendence()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            monthlyAttendence objmonthlyAttendence = new monthlyAttendence();
+            objDaHrmDashboard.DaGetMonthlyAttendence(objmonthlyAttendence, getsessionvalues.employee_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, objmonthlyAttendence);
+        }
+
+        [ActionName("loginSummary")]
+        [HttpGet]
+        public HttpResponseMessage loginSummary()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            mdlloginsummary objloginsummary = new mdlloginsummary();
+            objDaHrmDashboard.DaGetLoginSummary(getsessionvalues.employee_gid, objloginsummary);
+            return Request.CreateResponse(HttpStatusCode.OK, objloginsummary);
+        }
+
+        [ActionName("logoutSummary")]
+        [HttpGet]
+        public HttpResponseMessage LogoutSummary()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            mdllogoutsummary objlogoutsummary = new mdllogoutsummary();
+            objDaHrmDashboard.DaGetLogoutSummary(getsessionvalues.employee_gid, objlogoutsummary);
+            return Request.CreateResponse(HttpStatusCode.OK, objlogoutsummary);
+        }
+
+        [ActionName("ondutySummary")]
+        [HttpGet]
+        public HttpResponseMessage GetOnDutySummary()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            onduty_detail_list objonduty_details = new onduty_detail_list();
+            objDaHrmDashboard.DaGetOnDutySummary(getsessionvalues.employee_gid, objonduty_details);
+            return Request.CreateResponse(HttpStatusCode.OK, objonduty_details);
+        }
+
+        [ActionName("compOffSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetCompOffSummary()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            compoff_list objcompoff_details = new compoff_list();
+            objDaHrmDashboard.DaGetCompOffSummary(getsessionvalues.employee_gid, objcompoff_details);
+            return Request.CreateResponse(HttpStatusCode.OK, objcompoff_details);
+        }
+
+        [ActionName("permissionSummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetPermissionSummary()
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            permission_details_list objpermission_details = new permission_details_list();
+            objDaHrmDashboard.DaGetPermissionSummary(getsessionvalues.employee_gid, objpermission_details);
+            return Request.CreateResponse(HttpStatusCode.OK, objpermission_details);
+        }
+    }
+}

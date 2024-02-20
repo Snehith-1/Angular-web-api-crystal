@@ -1,0 +1,242 @@
+<div class="card m-3">
+    <!-- begin::Heading -->
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0">
+            <h5 class="fw-bolder text-blue">ADD BANK BOOK</h5>
+        </div>
+    </div>
+    <!-- end::Heading -->
+
+    <!-- begin:: Bank Book Entry Form-->
+    <!--begin:: form -->
+    <form [formGroup]="addbankentryform" (ngSubmit)="onSubmit()">
+        
+        <div class="d-flex flex-row m-6 flex-wrap">
+            
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Account Reference No<span
+                        class="ms-1 text-red">*</span></b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text"
+                        class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter Reference No"  formControlName="journal_refno" class="form-control" />
+            </div></div>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Transaction Date<span
+                class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="date"
+                class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                placeholder="DD-MM-YYYY"  formControlName="transaction_date" class="form-control" />
+    </div></div>
+
+    <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Bank Name</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+        <input type="text"
+        class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+        placeholder="Auto Populate" readonly formControlName="bank_name" class="form-control" />
+</div></div>
+
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Account No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                placeholder="Auto Populate" readonly formControlName="account_no" class="form-control" />
+        </div></div>
+
+        <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Account Type</b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input type="text"
+            class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+            placeholder="Auto Populate" readonly formControlName="account_type" class="form-control" />
+    </div></div>
+
+    <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>IFSC Code</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+        <input type="text"
+        class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+        placeholder="Auto Populate" readonly formControlName="ifsc_code" class="form-control" />
+</div></div>
+</div>
+
+<div class="d-flex flex-row m-6 flex-wrap">
+
+    <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>NEFT Code</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+        <input type="text"
+        class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+        placeholder="Auto Populate" readonly formControlName="neft_code" class="form-control" />
+</div></div>
+
+<div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>SWIFT Code</b>
+    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+    <input type="text"
+    class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+    placeholder="Auto Populate" readonly formControlName="swift_code" class="form-control" />
+</div></div>
+
+<div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>GL Code</b>
+    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+    <input type="text"
+    class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+    placeholder="Auto Populate" readonly formControlName="gl_code" class="form-control" />
+</div></div>
+</div>
+
+<div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Remarks</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+        <textarea type="text"
+        class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+        placeholder="Your Remarks"  formControlName="remarks" class="form-control"></textarea>
+    </div></div>
+
+</div>
+<!--end:: form-->
+
+<!--bein:: Table summary-->
+<div class="table-responsive">
+    <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <table  class="table table-striped table-row-bordered gy-5 gs-7 ">
+            
+            <thead>
+                <tr *ngFor="let data of accountfetch_list;" class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                   <th>Account Group</th>
+                    <th>Account Name</th>
+                    <th>Transaction Type</th>
+                    <th>Transaction Amount</th>
+                    <th>Remarks</th>
+                    <th class="text-center">Action</th>
+                  
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr> 
+                    <td > <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select
+                            class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                             [ngStyle]="{
+                                'border-color':
+                                accountgroupcontrol_name.invalid && accountgroupcontrol_name.touched
+                                    ? 'red'
+                                    : 'rgb(209, 209, 209)'
+                              }"
+                            formControlName="accountgroup_name"[items]="accountgroup_list" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                            bindLabel="accountgroup_name" bindValue="accountgroup_name" placeholder="Select Acc Group" [(ngModel)]="mdlAccGrp"></ng-select>
+                        
+                    
+                    <div *ngIf="accountgroupcontrol_name.invalid && (accountgroupcontrol_name.dirty || accountgroupcontrol_name.touched)">
+                        <div *ngIf="accountgroupcontrol_name.errors?.['required']">
+                                    <span style="color:red;">Select Account Group!!</span>
+                        </div></div></div></td>
+                    <td>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <ng-select
+                                class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                                [ngStyle]="{
+                                    'border-color':
+                                    accountcontrol_name.invalid && accountcontrol_name.touched
+                                        ? 'red'
+                                        : 'rgb(209, 209, 209)'
+                                  }"
+                                formControlName="account_name"[items]="accountname_list" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                bindLabel="account_name" bindValue="account_name" placeholder="Select Acc Name"  [(ngModel)]="mdlAccname"></ng-select>
+                                <div *ngIf="accountcontrol_name.invalid && (accountcontrol_name.dirty || accountcontrol_name.touched)">
+                                    <div *ngIf="accountcontrol_name.errors?.['required']">
+                                                <span style="color:red;">Select Account Name!!</span>
+                                    </div></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <ng-select
+                                class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                                [ngStyle]="{
+                                    'border-color':
+                                    transtypecontrol_name.invalid && transtypecontrol_name.touched
+                                        ? 'red'
+                                        : 'rgb(209, 209, 209)'
+                                  }"
+                                formControlName="dr_cr" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                 placeholder="Select Transaction Type" [(ngModel)]="mdlAcctrn">
+                                <ng-option>Deposit</ng-option>
+                                <ng-option>Withdraw</ng-option>
+                        </ng-select>
+                        <div *ngIf="transtypecontrol_name.invalid && (transtypecontrol_name.dirty || transtypecontrol_name.touched)">
+                            <div *ngIf="transtypecontrol_name.errors?.['required']">
+                                        <span style="color:red;">Select Transaction Type!!</span>
+                            </div></div>
+                        </div>
+                    </td>
+                    <td>
+                        
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="numeric"
+                            class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                            [ngStyle]="{
+                                'border-color':
+                                transamtcontrol_name.invalid && transamtcontrol_name.touched
+                                    ? 'red'
+                                    : 'rgb(209, 209, 209)'
+                              }"
+                            placeholder="0.00"  formControlName="transaction_amount" class="form-control"/>
+                            <div *ngIf="transamtcontrol_name.invalid && (transamtcontrol_name.dirty || transamtcontrol_name.touched)">
+                                <div *ngIf="transamtcontrol_name.errors?.['required']">
+                                            <span style="color:red;">Enter Transaction Amount!!</span>
+                                </div></div>
+                        </div>
+                    </td>
+                    <td>
+                      
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <textarea type="text"
+                            class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                            placeholder="Your Remarks"  formControlName="journal_desc" class="form-control"></textarea>
+                        </div>
+                    </td>
+                    <td class="text-center text-nowrap">
+
+                        <button title="Add" type="submit" class="btn btn-icon btn-sm bg-success me-2" (click)="AddSummary()"><span class="fa-solid fa-plus text-white  fs-6"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+            <thead>
+                
+                <tr  class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                   <th>Account Group</th>
+                    <th>Account Name</th>
+                    <th>Transaction Type</th>
+                    <th>Transaction Amount</th>
+                    <th>Remarks</th>
+                    <th class="text-center">Action</th>
+                  
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of accountfetch_list;">
+                    <td>{{data.accountgroup_name}}</td>
+                    <td>{{data.account_name}}</td>
+                    <td>{{data.dr_cr}}</td>
+                    <td>{{data.transaction_amount}}</td>
+                    <td>{{data.journal_desc}}</td>
+                    <td class="text-center text-nowrap">
+
+                        <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2"><span class="fa-solid fa-trash text-white  fs-6"></span></button>
+                    </td>
+                </tr>
+            </tbody>
+
+         
+
+               
+    
+           
+<!--end:: Table summary-->
+        </table>
+    </div></div>
+</form>
+</div>

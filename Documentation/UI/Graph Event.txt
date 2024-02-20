@@ -1,0 +1,2 @@
+System dashboard- ApexChart
+  'npm install ng-apexcharts apexcharts' or 'npm install ng-apexcharts apexcharts --force'

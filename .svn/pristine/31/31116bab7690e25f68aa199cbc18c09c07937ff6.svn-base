@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-crm-trn-lapsedleadmarketing',
+  templateUrl: './crm-trn-lapsedleadmarketing.component.html',
+  styleUrls: ['./crm-trn-lapsedleadmarketing.component.scss']
+})
+export class CrmTrnLapsedleadmarketingComponent {
+
+}

@@ -1,0 +1,53 @@
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+interface IVendor {
+  vendor_companyname: string;
+ 
+}
+
+
+@Component({
+  selector: 'app-pmr-trn-grninwardadd',
+  templateUrl: './pmr-trn-grninwardadd.component.html',
+  styleUrls: ['./pmr-trn-grninwardadd.component.scss']
+})
+export class PmrTrnGrninwardaddComponent {
+
+  selectForm: FormGroup | any;
+  userlist: any[] = [];
+  branch_list: any[] = [];
+  vendor!: IVendor;
+  productgroup_list: any[] = [];
+  reactiveForm!: FormGroup;
+  invoiceform!: FormGroup; 
+  productform!: FormGroup; 
+  
+
+
+  constructor(private renderer: Renderer2, private el: ElementRef,public service :SocketService,private route:Router ) {
+    this.vendor = {} as IVendor;
+  }
+
+
+  ngOnInit(): void {
+    this.reactiveForm = new FormGroup({     
+    product_group: new FormControl(''),
+    product_name: new FormControl(''),
+    unit_name: new FormControl('')});
+  
+   }
+
+   onadd(){}
+   onSubmit(){}
+   onclose(){}
+
+   public validate(): void {
+    console.log(this.reactiveForm.value)
+    this.vendor = this.reactiveForm.value;
+    let formData = new FormData();
+
+   }
+}

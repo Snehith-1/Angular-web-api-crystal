@@ -1,0 +1,300 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Add GRN</h5>
+        </div>
+    </div>
+
+
+
+    <form [formGroup]="addgrnform">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Ref No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="GRN Ref No"
+                        formControlName="grn_gid" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><b>Branch Name</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        style="color: balck;" placeholder="Auto Populate" readonly formControlName="branch_name"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Name</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="vendor_companyname" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Contact Number</b>
+                <div class="col-lg-11 col-12 col-md-11 mt-4 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Vendor Contact Number"
+                        formControlName="contact_telephonenumber" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Contact Address</b>
+                <div class="col-lg-11 col-12 col-md-11 mt-4  col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="address"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>PO Ref No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="purchaseorder_gid" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Raised By</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="user_firstname" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <!-- <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12 "><b>Check By User<span
+                        class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select
+                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="checkby_user">
+                        <option value="user_firstname1" disabled selected>Select User</option>
+                        <option *ngFor="let checkuser of grn_lists" [value]="checkuser.user_gid">
+                            {{checkuser.user_firstname1}}</option>
+                    </select>
+                </div>
+            </div>
+            <br> -->
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Delivery Order No<span
+                        class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="dc_no" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="DO Number"
+                        class="form-control" />
+                </div>
+            </div>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Invoice Ref No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" formControlName="invoiceref_no" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Invoice Ref No"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Priority</b>
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                        <input class="form-check-input" type="radio" name="priority" formControlName ="priority_flag" id="N" value="N">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Low</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="priority" formControlName ="priority_flag" id="Y" value="Y">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_page-title">High</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" formControlName="grn_date" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="GRN Date"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Contact Person</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="type" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="contactperson_name" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Email Address</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="type" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="email_id"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+
+            <!-- <div class="col-12 col-lg-3 col-md-6 mt-4 col-sm-12"><b>GRN QC Required</b>
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                        <input class="form-check-input" type="radio" name="required" id="Y" value="Y">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Low</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="required" id="N" value="N">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_page-title">High</label>
+                    </div>
+                </div>
+            </div>
+            <br> -->
+
+
+
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Remarks</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="grn_remarks" placeholder="GRN Ref"
+                        class="form-control"></textarea>
+                </div>
+            </div>
+            <br>
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>DC Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" formControlName="dc_date" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="DC Date"
+                        class="form-control" />
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Invoice Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" formControlName="invoice_date" class="form-control form-control-lg form-control-solid 
+                    custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Product Code"
+                        class="form-control" />
+                </div>
+            </div>
+
+        </div>
+        <div class="table-responsive">
+
+            <table  class="table table-striped table-row-bordered gy-5 gs-7 ">
+
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>
+                            <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()" />
+                            Check All
+                        </th>
+                        
+                        <th>Product Group</th>
+                        <th>Product</th>
+                        <th>Units</th>
+                        <th>Qty Ordered</th>
+                        <th>Qty Received</th>
+                        <th>Qty Received As Per Invoice</th>
+                        <th>Qty Adjusted</th>
+                        <th>Qty Delivered</th>
+                        <th>Qty Adjustable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of addgrn_lists; let i=index;">
+                        <td> <input type="checkbox"  (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(data) : null"
+                                [checked]="selection.isSelected(data)" /></td>
+                       
+                        <td>{{data.productgroup_name}}</td>
+                        <td>{{data.product_name}}</td>
+                        <td>{{data.productuom_name}}</td>
+                        <td>{{data.qty_ordered}}</td>
+                        <td>{{data.qty_received}}</td>
+                        <td>
+                            <input type="text" formControlName="qtyreceivedas_{{i}}" [(ngModel)]="data.qtyreceivedas" 
+                            (ngModelChange)="event(data,i)"/>
+                            
+                       </td>
+                          <td>
+                            <!-- <input type="text" formControlName="qty_free_{{i}}" placeholder="0.00" [(ngModel)]="data.qty_free" /> -->
+                            {{data.qty_free}}</td>
+                        <td>
+                            <input type="text" formControlName="qty_delivered_{{i}}" placeholder="0.00" [(ngModel)]="data.qty_delivered " />
+                          </td>
+                        <td>
+                            <input type="text"  [(ngModel)]="data.qty_grnadjusted"  formControlName="qty_grnadjusted_{{i}}"  />
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="text-center my-4">
+            <button class="btn-sm text-white me-2" [ngClass]="{
+                'primary-button': !addgrnform.invalid,
+                'secondary-button': addgrnform.invalid
+              }" (click)="onsubmit()">
+                <i class="fas fa-check text-white fs-5"></i> &nbsp; Submit
+            </button> &nbsp;&nbsp;
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" routerLink="/pmr/PmrTrnGrninwardadd"
+                data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Back
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,461 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription, Observable, timer } from 'rxjs';
+import { map, share } from "rxjs/operators";
+import { DatePipe } from '@angular/common';
+import {
+  ApexNonAxisChartSeries,
+  ApexResponsive,
+  ApexChart
+} from "ng-apexcharts";
+
+import * as ApexCharts from 'apexcharts';
+
+export class IAnalytics {
+  analytics_listuser: any[] = [];
+  analytics_listpage: any[] = [];
+  analytics_list: any[] = [];
+}
+
+@Component({
+  selector: 'app-crm-smm-website',
+  templateUrl: './crm-smm-website.component.html',
+  styleUrls: ['./crm-smm-website.component.scss']
+})
+
+
+export class CrmSmmWebsiteComponent {
+  width: any;
+  width1: any;
+  analytics_list: any[] = [];
+  CurObj: IAnalytics = new IAnalytics();
+  responseData: any;
+  responsedata: any;
+  analytics_summarylist: any[] = [];
+  eventCount: any;
+  direct: any;
+  total_user: any;
+  referral: any;
+  city: any;
+  total_users: any;
+  analytics_summarylist1: any[] = [];
+  google_list: any;
+  time = new Date();
+  rxTime = new Date();
+  currentDayName: any;
+  toDate: any;
+  intervalId: any;
+  subscription!: Subscription;
+  analytics_summarylist2: any[] = [];
+  organic: any;
+  newUsers: any;
+  /////graph////
+  weekchart: any = {};
+  monthchart: any = {};
+  yearchart: any = {};
+  emptyFlag: boolean = false;
+  emptyFlag1: boolean = false;
+  year: any;
+  analytics_report: any[] = [];
+  noleadstatus: any;
+  response_data: any;
+  show = true;
+  week_date: any;
+  week_users: any;
+
+
+
+
+  constructor(private formBuilder: FormBuilder, private NgxSpinnerService: NgxSpinnerService, private route: Router, private router: Router, private ToastrService: ToastrService, public service: SocketService, private datePipe: DatePipe) {
+    const today = new Date();
+    this.currentDayName = today.toLocaleDateString('en-US', { weekday: 'long' });
+  }
+  ngOnInit(): void {
+
+    this.toDate = this.datePipe.transform(new Date(), 'dd-MM-yyyy');
+    this.intervalId = setInterval(() => {
+      this.time = new Date();
+    }, 1000);
+
+    // Using RxJS Timer
+    this.subscription = timer(0, 1000)
+      .pipe(
+        map(() => new Date()),
+        share()
+      )
+      .subscribe(time => {
+        let hour = this.rxTime.getHours();
+        let minuts = this.rxTime.getMinutes();
+        let seconds = this.rxTime.getSeconds();
+        //let a = time.toLocaleString('en-US', { hour: 'numeric', hour12: true });
+        let NewTime = hour + ":" + minuts + ":" + seconds
+        // console.log(NewTime);
+        this.rxTime = time;
+      });
+
+    async function getSheetDataUser() {
+      const scriptUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=eOokofEmKvwGvIagPnvFjLHzLpeGOtalaLCPK_qmqa6T-2yKK5lC8F5zcmfKLNt8-Mls7CtCdBgnNg5jdFC5UrLRQEYRwg48m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnH4U26xiJK7IfcE1o37pZqODruSBhDkbEwvJCaexnzbCp_GYxNII2pIKNH5uaseHKR2g3iiK_GHOyYURLueDIHfmANJ9v4LF-g&lib=MxWUZCLwy7Stxby_nh_fQ-cMngc_g7vfE'; // Replace with your Apps Script URL
+
+      try {
+        const response = await fetch(scriptUrl);
+
+        if (response.ok) {
+          const responseData = await response.json();
+          return responseData
+          // Handle your data here
+        } else {
+          console.error(`Failed to fetch data from the script. Status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    getSheetDataUser()
+      .then((data) => {
+        this.CurObj.analytics_list = data;
+        console.log('googleuser', this.CurObj.analytics_list);
+
+        // let newUsers = this.CurObj.analytics_list.reduce((acc, item) => acc + item.newUsers, 0);
+        // console.log(newUsers);
+        // let total_user = this.CurObj.analytics_list.reduce((acc, item) => acc + item.activeUsers, 0);
+        // console.log(total_user);
+
+
+        // const chunkSize = 10; // Change this to the desired chunk size
+        // const chunkedArrays: any[][] = [];
+        // for (let i = 0; i < this.CurObj.analytics_list.length; i += chunkSize) {
+        //   const chunk = this.CurObj.analytics_list.slice(i, i + chunkSize);
+        //   chunkedArrays.push(chunk);
+        // }
+
+
+
+        console.log();
+        var url = "WebsiteAnalytics/PostWebsiteAnalyticsUser"
+        this.service.post(url, this.CurObj).pipe().subscribe((result: any) => {
+        });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+    async function getSheetDataPage() {
+      const scriptUrl = 'https://script.googleusercontent.com/macros/echo?user_content_key=1G9muUgpqgmL5ITVd7bbSpz4TXFJk8mce2b7yP80LMYM6LsjJm9ybgS7IXn214ehaVIlxllUob8sH9apaYR0WETSIW65EFArm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnCzMj6nI1KmsUiggaRsImO8Lm0JFS-kKG_zz910-3g6lsXs02JwwpxqVLz8m3ZYlS9NlRQ71EpRBYHvkY4NnJS4zpm50RqvrZA&lib=M9rwg_5DYq1gF41jxqDcDLSqe_s_7gO_Q'; // Replace with your Apps Script URL
+
+      try {
+        const response = await fetch(scriptUrl);
+
+        if (response.ok) {
+          const responseData = await response.json();
+          return responseData
+          // Handle your data here
+        } else {
+          console.error(`Failed to fetch data from the script. Status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    getSheetDataPage()
+      .then((data) => {
+        this.CurObj.analytics_list = data;
+        console.log('googlepage', this.CurObj.analytics_list);
+        var url = "WebsiteAnalytics/PostWebsiteAnalyticsPage"
+        this.service.post(url, this.CurObj).pipe().subscribe((result: any) => {
+        });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+
+    this.GetWebsite();
+    this.GetWebsiteUser();
+    this.GetWebsiteSummary();
+    this.Getweekchart();
+    this.Getmonthchart();
+    this.Getyearchart();
+
+
+  }
+
+  Getweekchart() {
+
+    var url = 'WebsiteAnalytics/Getweekwisechart'
+    this.service.get(url).subscribe((result: any) => {
+
+      this.response_data = result;
+
+      this.analytics_report = this.response_data.analytics_report;
+      // this.monthlySalesData = result || [];
+
+      // Transform data for chart
+      const categories = this.analytics_report.map((entry: { week_date: any; }) => entry.week_date);
+      const data = this.analytics_report.map((entry: { week_users: any; }) => entry.week_users);
+      console.log(categories)
+      console.log(data)
+      // Initialize chart options
+      this.weekchart = {
+        chart: {
+          type: 'bar',
+          height: 400, // Adjust the height of the chart as needed
+          //  width: 600,
+          background: 'White',
+          foreColor: '#0F0F0F',
+          toolbar: {
+            show: false, // Set to false to hide the toolbar/menu icon
+          },
+        },
+        colors: ['#8062D6', '#FFD54F', '#66BB6A', '#EF5350'], // Use a set of colors for better combinations
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '10%', // Adjust the width of the bars
+            borderRadius: 0, // Add some border radius for a more modern look
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels for a cleaner look
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: categories,
+          labels: {
+            style: {
+              fontWeight: 'bold',
+              fontSize: '14px',
+              //colors: ['#FF5733', '#33FF57', '#5733FF', '#FFFF33'], // Set different colors for each label
+            },
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Weeks',
+            style: {
+              fontWeight: 'bold',
+              fontSize: '14px',
+              color: '#0F0F0F', // Set a different color for the y-axis title
+            },
+          },
+        },
+        series: [
+          {
+            name: 'Users',
+            data: data,
+          },
+        ],
+      };
+    })
+  }
+  Getmonthchart() {
+
+    var url = 'WebsiteAnalytics/Getmonthwisechart'
+    this.service.get(url).subscribe((result: any) => {
+
+      this.response_data = result;
+
+      this.analytics_report = this.response_data.analytics_report;
+      // this.monthlySalesData = result || [];
+
+      // Transform data for chart
+      const categories = this.analytics_report.map((entry: { month_date: any; }) => entry.month_date);
+      const data = this.analytics_report.map((entry: { month_users: any; }) => entry.month_users);
+      console.log(categories)
+      console.log(data)
+      // Initialize chart options
+      this.monthchart = {
+        chart: {
+          type: 'bar',
+          height: 400, // Adjust the height of the chart as needed
+          // width: 600,
+          background: 'White',
+          foreColor: '#0F0F0F',
+          toolbar: {
+            show: false, // Set to false to hide the toolbar/menu icon
+          },
+        },
+        colors: ['#8062D6', '#FFD54F', '#66BB6A', '#EF5350'], // Use a set of colors for better combinations
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '10%', // Adjust the width of the bars
+            borderRadius: 0, // Add some border radius for a more modern look
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels for a cleaner look
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: categories,
+          labels: {
+            style: {
+              fontWeight: 'bold',
+              fontSize: '14px',
+              //colors: ['#FF5733', '#33FF57', '#5733FF', '#FFFF33'], // Set different colors for each label
+            },
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Weeks',
+            style: {
+              fontWeight: 'bold',
+              fontSize: '14px',
+              color: '#0F0F0F', // Set a different color for the y-axis title
+            },
+          },
+        },
+        series: [
+          {
+            name: 'Users',
+            data: data,
+          },
+        ],
+      };
+
+    })
+  }
+
+  Getyearchart() {
+    var url = 'WebsiteAnalytics/Getyearwisechart'
+    this.service.get(url).subscribe((result: any) => {
+
+      this.response_data = result;
+
+      this.analytics_report = this.response_data.analytics_report;
+      // this.monthlySalesData = result || [];
+
+      // Transform data for chart
+      const categories = this.analytics_report.map((entry: { years: any; }) => entry.years);
+      const data = this.analytics_report.map((entry: { year_users: any; }) => entry.year_users);
+      console.log(categories)
+      console.log(data)
+      // Initialize chart options
+      this.yearchart = {
+        chart: {
+          type: 'bar',
+          height: 400, // Adjust the height of the chart as needed
+          // width: 1100,
+          background: 'White',
+          foreColor: '#0F0F0F',
+          toolbar: {
+            show: false, // Set to false to hide the toolbar/menu icon
+          },
+        },
+        colors: ['#8062D6', '#FFD54F', '#66BB6A', '#EF5350'], // Use a set of colors for better combinations
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '10%', // Adjust the width of the bars
+            borderRadius: 0, // Add some border radius for a more modern look
+          },
+        },
+        dataLabels: {
+          enabled: false, // Disable data labels for a cleaner look
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent'],
+        },
+        xaxis: {
+          categories: categories,
+          labels: {
+            style: {
+              fontWeight: 'bold',
+              fontSize: '14px',
+              //colors: ['#FF5733', '#33FF57', '#5733FF', '#FFFF33'], // Set different colors for each label
+            },
+          },
+        },
+        yaxis: {
+          title: {
+            text: 'Weeks',
+            style: {
+              fontWeight: 'bold',
+              fontSize: '14px',
+              color: '#0F0F0F', // Set a different color for the y-axis title
+            },
+          },
+        },
+        series: [
+          {
+            name: 'Users',
+            data: data,
+          },
+        ],
+      };
+
+    })
+  }
+  GetWebsite() {
+    this.NgxSpinnerService.show();
+    var url = 'WebsiteAnalytics/GetWebsiteAnalytics'
+    this.service.get(url).subscribe((result: any) => {
+      $('#analytics_summarylist').DataTable().destroy();
+      this.responsedata = result;
+      this.analytics_summarylist = this.responsedata.analytics_summarylist;
+      this.newUsers = this.analytics_summarylist[0].newUsers;
+      this.direct = this.analytics_summarylist[0].direct;
+      this.total_user = this.analytics_summarylist[0].total_user;
+      this.referral = this.analytics_summarylist[0].referral;
+      this.organic = this.analytics_summarylist[0].organic;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#analytics_summarylist').DataTable();
+      }, 1);
+    });
+    this.NgxSpinnerService.hide();
+  }
+
+  GetWebsiteUser() {
+    this.NgxSpinnerService.show();
+    var url = 'WebsiteAnalytics/GetWebsiteAnalyticsUser'
+    this.service.get(url).subscribe((result: any) => {
+      $('#analytics_summarylist').DataTable().destroy();
+      this.responsedata = result;
+      this.analytics_summarylist2 = this.responsedata.analytics_summarylist2;
+      this.total_users = this.analytics_summarylist[0].total_users;
+      //console.log(this.entity_list)
+
+      setTimeout(() => {
+        $('#analytics_summarylist').DataTable();
+      }, 1);
+    });
+    this.NgxSpinnerService.hide();
+  }
+
+  GetWebsiteSummary() {
+    this.NgxSpinnerService.show();
+    var url = 'WebsiteAnalytics/GetWebsiteAnalyticsSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#analytics_summarylist1').DataTable().destroy();
+      this.responsedata = result;
+      this.analytics_summarylist1 = this.responsedata.analytics_summarylist1;
+
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#analytics_summarylist1').DataTable();
+      }, 1);
+    });
+    this.NgxSpinnerService.hide();
+  }
+
+
+
+
+}
+

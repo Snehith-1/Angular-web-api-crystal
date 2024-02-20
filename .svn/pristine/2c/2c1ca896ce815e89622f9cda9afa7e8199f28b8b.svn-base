@@ -1,0 +1,413 @@
+<div>
+    <div class="card shadow-lg rounded-top" style="height: 490px;">
+        <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+            <h3 class="fw-bolder text-white"><i class="bi bi-gear fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp; Campaign
+                Settings</h3>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-8 fs-6">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_5"
+                                    style="color: #009EF7">Shopify Campaign</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_4"
+                                    style="color: #009EF7">WhatsApp Campaign </a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6"
+                                    style="color: #009EF7">Email Campaign</a>
+                            </li>
+                            <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_7"
+                                    style="color: #009EF7">Facebook Campaign</a>
+                            </li>
+                            <!-- <li class="nav-item ms-9">
+                                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8"
+                                    style="color: #009EF7">SMS Campaign</a>
+                            </li> -->
+
+                        </ul>
+
+                        <form [formGroup]="reactiveFormShopify" #form="ngForm">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active ms-5" id="kt_tab_pane_5" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-12 ">
+                                            <div  class="modal-body">
+                                                <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                                    <h2 class="text-center" style="margin-top:-35px;"><i class="bi bi-shop"
+                                                        style="font-size:20px;font-weight: bolder;background-color: #065e43;color:white;"></i> &nbsp; Shopify API Credentials</h2>
+                                                    <input formControlName="shopify_id" type="text" hidden
+                                                                class="
+                                                                    form-control form-control-lg form-control-solid
+                                                                    bg-white
+                                                                    custom-input
+                                                                    mb-3 mb-lg-0
+                                                                    borderc-secondary"  name="shopify_id" />
+                                                    <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                            <span class="font-bold">Shopify Store Name<span
+                                                                    class="ms-1 text-red">*</span></span>
+                                                            <input formControlName="shopify_store_name" type="text"
+                                                                class="
+                                                                    form-control form-control-lg form-control-solid
+                                                                    bg-white
+                                                                    custom-input
+                                                                    mb-3 mb-lg-0
+                                                                    borderc-secondary " [ngStyle]="{
+                                                                        'border-color':
+                                                                        shopify_store_name.invalid && shopify_store_name.touched
+                                                                            ? 'red'
+                                                                            : 'rgb(209, 209, 209)'
+                                                                      }" name="shopify_store_name" />
+                                                        </div>
+                                                        <div
+                                                            *ngIf="shopify_store_name.invalid && (shopify_store_name.dirty || shopify_store_name.touched)">
+                                                            <div *ngIf="shopify_store_name.errors?.['required']">
+                                                                <span style="color:red;">Store Name is required.</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                            <span class="font-bold">Store Month and Year<span
+                                                                    class="ms-1 text-red">*</span></span>
+
+                                                            <input formControlName="store_month_year" type="text" class="
+                                                                      form-control form-control-lg form-control-solid
+                                                                      bg-white
+                                                                      custom-input
+                                                                      mb-3 mb-lg-0
+                                                                      borderc-secondary " [ngStyle]="{
+                                                                          'border-color':
+                                                                          store_month_year.invalid && store_month_year.touched
+                                                                              ? 'red'
+                                                                              : 'rgb(209, 209, 209)'
+                                                                        }" name="store_month_year" />
+
+                                                        </div>
+                                                        <div
+                                                            *ngIf="store_month_year.invalid && (store_month_year.dirty || store_month_year.touched)">
+                                                            <div *ngIf="store_month_year.errors?.['required']">
+                                                                <span style="color:red;">Store Month and year is
+                                                                    required.</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                            <span class="font-bold">Access Token<span
+                                                                    class="ms-1 text-red">*</span></span>
+                                                            <input formControlName="shopify_accesstoken" type="text"
+                                                                class="
+                                                                form-control form-control-lg form-control-solid
+                                                                bg-white
+                                                                custom-input
+                                                                mb-3 mb-lg-0
+                                                                borderc-secondary " [ngStyle]="{
+                                                                    'border-color':
+                                                                    shopify_accesstoken.invalid && shopify_accesstoken.touched
+                                                                        ? 'red'
+                                                                        : 'rgb(209, 209, 209)'
+                                                                  }" name="shopify_accesstoken" />
+
+                                                        </div>
+                                                        <div
+                                                            *ngIf="shopify_accesstoken.invalid && (shopify_accesstoken.dirty || shopify_accesstoken.touched)">
+                                                            <div *ngIf="shopify_accesstoken.errors?.['required']">
+                                                                <span style="color:red;">Access Token is
+                                                                    required.</span>
+                                                            </div>
+                                                        </div>
+                                                    </div><br>
+                                                    <div class="text-center my-4">
+
+                                                        <button (click)="onshopifyupdate()"
+                                                            [disabled]="reactiveFormShopify.invalid" [ngClass]="{
+                                                        'primary-button': !reactiveFormShopify.invalid,
+                                                        'secondary-button': reactiveFormShopify.invalid
+                                                         }">
+                                                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                        </button>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                               
+                                <div  class="row tab-pane fade ms-5"
+                                    id="kt_tab_pane_4" role="tabpanel">
+
+                                    <form [formGroup]="reactiveFormWhatsapp" #form="ngForm">
+                                    <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                        <h2 class="text-center" style="margin-top:-35px;"><i class="bi bi-whatsapp"
+                                            style="font-size:20px;font-weight: bolder;color:white;background-color: #57e234;"></i> &nbsp;
+                              Whatsapp API Credentials</h2>
+                                        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                            <input formControlName="whatsapp_id" type="text" hidden
+                                            class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary"  name="whatsapp_id" />
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <span class="font-bold">Base URL<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <input formControlName="base_url" type="text"
+                                                    class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            base_url.invalid && base_url.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="base_url" />
+                                            </div>
+                                            <div
+                                                *ngIf="base_url.invalid && (base_url.dirty || base_url.touched)">
+                                                <div *ngIf="base_url.errors?.['required']">
+                                                    <span style="color:red;">Base URL is required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <span class="font-bold">WorkSpace ID<span
+                                                        class="ms-1 text-red">*</span></span>
+
+                                                <input formControlName="workspace_id" type="text" class="
+                                                          form-control form-control-lg form-control-solid
+                                                          bg-white
+                                                          custom-input
+                                                          mb-3 mb-lg-0
+                                                          borderc-secondary " [ngStyle]="{
+                                                              'border-color':
+                                                              workspace_id.invalid && workspace_id.touched
+                                                                  ? 'red'
+                                                                  : 'rgb(209, 209, 209)'
+                                                            }" name="workspace_id" />
+
+                                            </div>
+                                            <div
+                                                *ngIf="workspace_id.invalid && (workspace_id.dirty || workspace_id.touched)">
+                                                <div *ngIf="workspace_id.errors?.['required']">
+                                                    <span style="color:red;">WorkSpace Id and year is
+                                                        required.</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <span class="font-bold">Access Token<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <input formControlName="whatsapp_accesstoken" type="text"
+                                                    class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        whatsapp_accesstoken.invalid && whatsapp_accesstoken.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="whatsapp_accesstoken" />
+
+                                            </div>
+                                            <div
+                                                *ngIf="whatsapp_accesstoken.invalid && (whatsapp_accesstoken.dirty || whatsapp_accesstoken.touched)">
+                                                <div *ngIf="whatsapp_accesstoken.errors?.['required']">
+                                                    <span style="color:red;">Access Token is
+                                                        required.</span>
+                                                </div>
+                                            </div>
+                                        </div><br>
+                                        <div class="text-center my-4">
+
+                                            <button (click)="onwhatsappupdate()"
+                                                [disabled]="reactiveFormWhatsapp.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormWhatsapp.invalid,
+                                            'secondary-button': reactiveFormWhatsapp.invalid
+                                             }">
+                                                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                </div>
+                           
+                            
+                                <div  class="row tab-pane fade ms-5"
+                                    id="kt_tab_pane_6" role="tabpanel">
+                                    <h2>Email API Credentials</h2> 
+                                   
+                                </div>
+                                <div  class="row tab-pane fade ms-5"
+                                id="kt_tab_pane_7" role="tabpanel">
+                                <h2>Faceboook API Credentials</h2>
+                                <!-- <form [formGroup]="reactiveFormEmail" #form="ngForm">
+                                    <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                        <h2 class="text-center" style="margin-top:-35px;"><i class="bi bi-envelope"
+                                            style="font-size:20px;font-weight: bolder;background-color:rgb(211, 72, 72);color:white;"></i> &nbsp;Email API Credentials</h2>
+                                        <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+                                            
+                                            <input formControlName="email_id" type="text" hidden
+                                            class="
+                                                form-control form-control-lg form-control-solid
+                                                bg-white
+                                                custom-input
+                                                mb-3 mb-lg-0
+                                                borderc-secondary"  name="email_id" />
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"  >
+                                                <span class="font-bold">Base URL<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <input formControlName="mail_base_url" type="text"
+                                                    class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            mail_base_url.invalid && mail_base_url.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="mail_base_url" />
+                                            </div>
+                                            <div
+                                                *ngIf="mail_base_url.invalid && (mail_base_url.dirty || mail_base_url.touched)">
+                                                <div *ngIf="mail_base_url.errors?.['required']">
+                                                    <span style="color:red;">Base URL is required.</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <span class="font-bold">Access Token<span
+                                                        class="ms-1 text-red">*</span></span>
+                                                <input formControlName="mail_access_token" type="text"
+                                                    class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary " [ngStyle]="{
+                                                        'border-color':
+                                                        mail_access_token.invalid && mail_access_token.touched
+                                                            ? 'red'
+                                                            : 'rgb(209, 209, 209)'
+                                                      }" name="mail_access_token" />
+
+                                            </div>
+                                            <div
+                                                *ngIf="mail_access_token.invalid && (mail_access_token.dirty || mail_access_token.touched)">
+                                                <div *ngIf="mail_access_token.errors?.['required']">
+                                                    <span style="color:red;">Access Token is
+                                                        required.</span>
+                                                </div>
+                                            </div>
+                                        </div><br>
+                                        <div class="text-center my-4">
+
+                                            <button (click)="onemailupdate()"
+                                                [disabled]="reactiveFormEmail.invalid" [ngClass]="{
+                                            'primary-button': !reactiveFormEmail.invalid,
+                                            'secondary-button': reactiveFormEmail.invalid
+                                             }">
+                                                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                            </button>
+                                        </div>
+                                    </div>
+                            </form>  -->
+                            </div>
+                            <div  class="row tab-pane fade ms-5"
+                                    id="kt_tab_pane_8" role="tabpanel">
+                                    <h3>sms</h3>
+                                    <!-- <form [formGroup]="reactiveFormEmail" #form="ngForm">
+                                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                                            <h2 class="text-center" style="margin-top:-35px;"><i class="bi bi-envelope"
+                                                style="font-size:20px;font-weight: bolder;background-color:rgb(211, 72, 72);color:white;"></i> &nbsp;Email API Credentials</h2>
+                                            <div class="d-flex flex-row m-6 mt-0 flex-wrap" style="margin-top:-450px;">
+                                                
+                                                <input formControlName="email_id" type="text" hidden
+                                                class="
+                                                    form-control form-control-lg form-control-solid
+                                                    bg-white
+                                                    custom-input
+                                                    mb-3 mb-lg-0
+                                                    borderc-secondary"  name="email_id" />
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"  >
+                                                    <span class="font-bold">Base URL<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="mail_base_url" type="text"
+                                                        class="
+                                                            form-control form-control-lg form-control-solid
+                                                            bg-white
+                                                            custom-input
+                                                            mb-3 mb-lg-0
+                                                            borderc-secondary " [ngStyle]="{
+                                                                'border-color':
+                                                                mail_base_url.invalid && mail_base_url.touched
+                                                                    ? 'red'
+                                                                    : 'rgb(209, 209, 209)'
+                                                              }" name="mail_base_url" />
+                                                </div>
+                                                <div
+                                                    *ngIf="mail_base_url.invalid && (mail_base_url.dirty || mail_base_url.touched)">
+                                                    <div *ngIf="mail_base_url.errors?.['required']">
+                                                        <span style="color:red;">Base URL is required.</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                    <span class="font-bold">Access Token<span
+                                                            class="ms-1 text-red">*</span></span>
+                                                    <input formControlName="mail_access_token" type="text"
+                                                        class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " [ngStyle]="{
+                                                            'border-color':
+                                                            mail_access_token.invalid && mail_access_token.touched
+                                                                ? 'red'
+                                                                : 'rgb(209, 209, 209)'
+                                                          }" name="mail_access_token" />
+    
+                                                </div>
+                                                <div
+                                                    *ngIf="mail_access_token.invalid && (mail_access_token.dirty || mail_access_token.touched)">
+                                                    <div *ngIf="mail_access_token.errors?.['required']">
+                                                        <span style="color:red;">Access Token is
+                                                            required.</span>
+                                                    </div>
+                                                </div>
+                                            </div><br>
+                                            <div class="text-center my-4">
+    
+                                                <button (click)="onemailupdate()"
+                                                    [disabled]="reactiveFormEmail.invalid" [ngClass]="{
+                                                'primary-button': !reactiveFormEmail.invalid,
+                                                'secondary-button': reactiveFormEmail.invalid
+                                                 }">
+                                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                </form>  -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+       

@@ -1,0 +1,64 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+import { environment } from 'src/environments/environment';
+import { AES } from 'crypto-js';
+
+@Component({
+  selector: 'app-rbl-trn-tinvoice',
+  templateUrl: './rbl-trn-tinvoice.component.html',
+  styleUrls: ['./rbl-trn-tinvoice.component.scss']
+})
+
+export class RblTrnTinvoiceComponent {
+  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+
+  invoicesummarylist: any[] = [];
+  response_data :any;
+  company_code:any;
+
+  constructor (private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService) { } 
+
+  ngOnInit(): void {
+    var api = 'Einvoice/einvoiceSummary';
+    this.service.get(api).subscribe((result:any) => {
+
+      this.response_data = result;
+
+      this.invoicesummarylist = this.response_data.invoicesummary_list;
+      setTimeout(()=>{  
+        $('#invoice').DataTable();
+      }, 1);
+    });
+  }
+
+  onadd()
+  {
+    this.router.navigate(['/einvoice/AddInvoice'])
+  }
+
+  PrintPDF(invoice_gid:string)
+  {
+    this.company_code = localStorage.getItem('c_code')
+    window.location.href ="http://" + environment.host +"/Print/EMS_print/rbl_trn_salesinvoice.aspx?invoicegid=" + invoice_gid + "&companycode=" + this.company_code
+  }
+
+  editinvoice(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.router.navigate(['/einvoice/EditInvoice',encryptedParam])
+  }
+  einvoice(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.router.navigate(['/einvoice/EInvoice',encryptedParam])
+  }
+
+  ondelete() {
+    
+  }
+}

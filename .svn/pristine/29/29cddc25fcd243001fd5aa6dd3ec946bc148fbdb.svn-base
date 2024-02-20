@@ -1,0 +1,105 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/MarketingManager")]
+    public class MarketingmanagerController : ApiController
+    {
+        session_values objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaMarketingmanager objdaMarkeingManager = new DaMarketingmanager();
+
+        [ActionName("GetMarketingManagerSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetMarketingManagerSummary()
+        {
+            MdlMarketingmanager values = new MdlMarketingmanager();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdaMarkeingManager.DaGetMarketingManagerSummary(getsessionvalues.user_gid,values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetManagerSummaryDetailTable")]
+        [HttpGet]
+        public HttpResponseMessage GetManagerSummaryDetailTable(string campaign_gid)
+        {
+            MdlMarketingmanager objresult = new MdlMarketingmanager();
+            objdaMarkeingManager.DaGetManagerSummaryDetailTable(campaign_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+        [ActionName("GetCampaignmanagerSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetCampaignmanagerSummary(string campaign_gid,string assign_to,string stages)
+        {
+            MdlMarketingmanager objresult = new MdlMarketingmanager();
+            objdaMarkeingManager.DaGetCampaignmanagerSummary(campaign_gid, assign_to,stages,objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+        [ActionName("GetCampaignmanagerTeam")]
+        [HttpGet]
+        public HttpResponseMessage GetCampaignmanagerTeam(string campaign_gid, string assign_to)
+        {
+            MdlMarketingmanager objresult = new MdlMarketingmanager();
+            objdaMarkeingManager.DaGetCampaignmanagerTeam(campaign_gid, assign_to, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+        [ActionName("GetCampaignMoveToBin")]
+        [HttpPost]
+        public HttpResponseMessage GetCampaignMoveToBin(campaignbin_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdaMarkeingManager.DaGetCampaignMoveToBin(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+        }
+        [ActionName("GetCampaignMoveToTransfer")]
+        [HttpPost]
+        public HttpResponseMessage GetCampaignMoveToTransfer(campaigntransfer_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdaMarkeingManager.DaGetCampaignMoveToTransfer(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+        }
+        [ActionName("GetCampaignSchedule")]
+        [HttpPost]
+        public HttpResponseMessage GetCampaignSchedule(campaignschedule_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdaMarkeingManager.DaGetCampaignSchedule(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+        }
+        [ActionName("GetTeamNamedropdown")]
+        [HttpGet]
+        public HttpResponseMessage GetTeamNamedropdown()
+        {
+            MdlMarketingmanager values = new MdlMarketingmanager();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdaMarkeingManager.DaGetTeamNamedropdown(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetTeamEmployeedropdown")]
+        [HttpGet]
+        public HttpResponseMessage GetTeamEmployeedropdown(string team_gid)
+        {
+            MdlMarketingmanager objresult = new MdlMarketingmanager();
+            objdaMarkeingManager.DaGetTeamEmployeedropdown(team_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+    }
+}

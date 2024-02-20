@@ -1,0 +1,73 @@
+ 
+<div class="card shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title"> <b>Delivery Order Summary</b></h3>
+    </div>
+    <br>
+    <div> &nbsp; &nbsp;
+  
+      <button title="" class="btn-primary btn-sm text-white me-4" routerLink="/smr/SmrTrnAdddeliveryorder">
+        Raise Delivery Oreder </button> 
+    </div>
+    <div class="table-responsive">
+      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded table-responsive">
+        <table id="deliveryorder_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.NO </th>
+              <th>DO Date</th>
+              <th>DO Reference .No</th>
+              <th>DO No</th>
+              <th>SO Ref No</th>
+              <th>Customer  </th>
+              <th>Branch </th>
+              <th>Contact Details</th>
+              <th>Created By</th>
+              <th>Status</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of deliveryorder_list; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.directorder_date}}</td>
+              <td>{{data.directorder_refno}}</td>
+              <td>{{data.so_referenceno1}}</td> 
+              <td>{{data.customer_name}}</td> 
+              <td>{{data.branch_name}}</td>         
+              <td>{{data.contact}}</td>
+              <td>{{data.user_firstname}}</td>
+              <td>{{data.salesorder_status}}</td>
+  >
+              <td class="text-center text-nowrap">
+
+                <button title="View" type="button" (click)="openModaldelete()" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-primary me-2"><span
+                  class="fa-solid fa-eye text-white  fs-6"></span></button>
+  
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                (click)="openModaledit()" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                  class="fa-solid fa-pencil text-white  fs-6"></span></button>
+
+              <button title="Amend" type="button" (click)="openModalamend()" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-xmark text-white  fs-6"></span></button>
+
+                  <button title="Additional Information" type="button" 
+                  class="btn btn-icon btn-sm bg-warning me-2" (click)="onaddinfo()" >
+                  <span class="fa-solid fa-book text-white  fs-6"></span></button> 
+
+           
+                  
+                  
+
+              </td>
+  
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+          <h3 class="card-title">Vendor Ledger Report</h3>
+      </div>
+
+      <br>
+      <div class="col me-5 ">
+        <button title="Export Excel" type="button" class="btn btn-icon btn-sm bg-export me-2 float-end"
+                (click)="vendorexportExcel()"><i class="bi bi-file-earmark-arrow-down"></i></button> 
+      </div>
+    </div>
+  <div class="table-responsive">
+    <div class="card card-body m-3  bg-white rounded">
+      <table id="vendorledger_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+        <thead>
+          <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+            <th>Vendor Ref.No</th>
+            <th>Vendor</th>
+            <th>Vendor Code</th>
+            <th>Vendor Address</th>
+            <th>Contact Details</th>
+            <th>Products</th>
+            <th class="text-end">Order Value (INR)</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>   
+            
+          <tr *ngFor="let data of vendorledger_list;">
+            <td>{{data.vendor_refno}}</td>
+            <td>{{data.vendor}}</td>
+            <td>{{data.vendor_code}}</td>
+             <td>{{data.vendor_address}}</td>
+            <td>{{data.contact_details}}</td>
+            <td>{{data.products}}</td>
+            <td class="text-end">{{data.order_value}}</td>
+            <td class="text-center text-nowrap">
+                <label title=" Details" data-bs-toggle="modal" data-bs-target="#myModalUpdateimage9"
+                    (click)="ondetail()">
+                    <i class="fas fa-question-circle fa-5x text-primary fs-2 text-center"></i>
+                </label>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

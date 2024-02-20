@@ -1,0 +1,1 @@
+:host ::ng-deep .custom-width {   width: 300px;height:40px; /* Adjust the width to your preference */}

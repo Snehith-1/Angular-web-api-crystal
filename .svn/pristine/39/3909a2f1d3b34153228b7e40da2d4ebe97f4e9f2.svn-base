@@ -1,0 +1,66 @@
+﻿using ems.sales.DataAccess;
+using ems.sales.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.sales.Controllers
+
+{
+
+    [Authorize]
+    [RoutePrefix("api/SmrMstSalesteamSummary")]
+    public class SmrMstSalesteamSummaryController: ApiController
+    {
+         session_values objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaSmrMstSalesteamSummary objsales = new DaSmrMstSalesteamSummary();
+        // Module Summary
+
+        [ActionName("GetSmrMstSalesteamSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetSmrMstSalesteamSummary()
+        {
+            MdlSmrMstSalesteamSummary values = new MdlSmrMstSalesteamSummary();
+            objsales.DaGetSmrMstSalesteamSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetSmrMstSalesteamgrid")]
+        [HttpGet]
+        public HttpResponseMessage GetSmrMstSalesteamgrid (string campaign_gid)
+        {
+            MdlSmrMstSalesteamSummary values = new MdlSmrMstSalesteamSummary();
+            objsales.DaGetSmrMstSalesteamgrid(campaign_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("Getemployee")]
+        [HttpGet]
+        public HttpResponseMessage Getemployee()
+        {
+            MdlSmrMstSalesteamSummary values = new MdlSmrMstSalesteamSummary();
+            objsales.DaGetemployee(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        [ActionName("PostSalesTeam")]
+        [HttpPost]
+        public HttpResponseMessage Postmarketingteam(salesteamgrid_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objsales.PostSalesTeam(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+    }
+}

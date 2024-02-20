@@ -1,0 +1,6 @@
+
+Issue 1 :
+
+     * no directive found with exportas 'ngform'.ngtsc(-998003) 
+
+     * Solution: Go to Extenstion => Uninstall Angular selection language service

@@ -1,0 +1,63 @@
+.primary-button {
+    background-color: #42ac72;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px  !important;
+    border-radius: 3px ;
+    border: 0;
+    }
+    
+    .secondary-button {
+    background-color: #50cd89;
+    color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+    }
+    .invalid-border {
+
+        border: 1px solid rgb(255, 63, 63);
+        border-radius: 10px;
+    
+      }
+      .error-text {
+
+        color: red;
+    
+      }
+      @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap');
+      body {
+        height: 100%; margin: 0
+      }
+      
+      a {
+          color: #007bff;
+          text-decoration: none;
+      }
+      button:focus,
+      input:focus{
+        outline: none;
+        box-shadow: none;
+      }
+      a,
+      a:hover{
+        text-decoration: none;
+      }
+      
+      body{
+        font-family: 'Roboto', sans-serif;
+         background-color: #e0e3e8;
+        
+      }
+      
+      
+    
+       //Flag Mobile Input box width 
+       :host ::ng-deep .custom-width { 
+        width: 353px;
+      /* Adjust the width to your preference */
+      }
+    

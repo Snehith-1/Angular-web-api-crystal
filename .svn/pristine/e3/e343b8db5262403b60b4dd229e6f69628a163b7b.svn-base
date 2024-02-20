@@ -1,0 +1,197 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+interface Isalesteam {
+  mail_id: string;
+  team_name: any;
+  branch_name: string;
+  branch_gid: string;
+  employee_name: string;
+  employee_gid: string;
+  description : string;
+
+  
+}
+
+@Component({
+  selector: 'app-smr-mst-salesteam-summary',
+  templateUrl: './smr-mst-salesteam-summary.component.html',
+  styleUrls: ['./smr-mst-salesteam-summary.component.scss']
+})
+export class SmrMstSalesteamSummaryComponent {
+  reactiveForm: FormGroup | any;
+  responsedata: any;
+  salesteam_list : any;
+  salesteamgrid_list :any;
+  getData: any;
+  salesteam!: Isalesteam;
+  campaign_gid : any;
+  branch_list : any [] = [];
+  Getemployee : any [] = [];
+  data: any;  
+  parameterValue: any;
+
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService) {
+    this.salesteam = {} as Isalesteam;
+
+    this.reactiveForm = new FormGroup ({
+      branch_name: new FormControl(''),
+      branch_gid: new FormControl(''),
+      employee_name: new FormControl(''),
+      employee_gid: new FormControl(''),
+      description : new FormControl('')
+    })
+    
+    
+
+  }
+  
+
+  ngOnInit(): void {  
+
+    
+    
+    
+    this.reactiveForm = new FormGroup({
+      mail_id: new FormControl(this.salesteam.mail_id, [
+        Validators.required,
+      ]),
+      team_name: new FormControl(this.salesteam.team_name, [
+        Validators.required,
+      ]),
+      employee_name: new FormControl(this.salesteam.employee_name, [
+        Validators.required,
+      ]),
+      branch_name: new FormControl(this.salesteam.branch_name, [
+        Validators.required,
+      ]),
+      description : new FormControl(''),
+      
+    });
+    
+    var url = 'SmrTrnSalesorder/GetBranchDtl'
+this.service.get(url).subscribe((result:any)=>{
+  this.branch_list = result.GetBranchDtl;
+ });
+
+ var url = 'SmrMstSalesteamSummary/Getemployee'
+ this.service.get(url).subscribe((result:any)=>{
+   this.Getemployee = result.Getemployee;
+  });
+   
+    
+  
+    
+}
+
+//// Summary //////
+GetSmrMstSalesteamSummary()
+
+ {
+  debugger
+  var url = 'SmrMstSalesteamSummary/GetSmrMstSalesteamSummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#salesteam_list').DataTable().destroy();
+    this.responsedata = result;
+    this.salesteam_list = this.responsedata.salesteam_list;
+    setTimeout(() => {
+      $('#salesteam_list').DataTable();
+    }, 1);
+
+
+  })
+
+  
+  
+}
+
+
+
+
+/////////For Add PopUp/////////
+get mail_id() {
+  return this.reactiveForm.get('mail_id')!;
+}
+get team_name() {
+  return this.reactiveForm.get('team_name')!;
+}
+get branch_name() {
+  return this.reactiveForm.get('branch_name')!;
+}
+get employee_name() {
+  return this.reactiveForm.get('employee_name')!;
+}
+
+
+public onsubmit(): void {
+  debugger
+  if (this.reactiveForm.value.team_name != null && this.reactiveForm.value.mail_id != null) {
+
+    for (const control of Object.keys(this.reactiveForm.controls)) {
+      this.reactiveForm.controls[control].markAsTouched();
+    }
+    this.reactiveForm.value;
+    var url='SmrMstSalesteamSummary/PostSalesteam'
+          this.service.post(url,this.reactiveForm.value).subscribe((result:any) => {
+
+            if(result.status ==false){
+              this.ToastrService.warning(result.message)
+              this.GetSmrMstSalesteamSummary();
+            }
+            else{
+              this.reactiveForm.get("team_name")?.setValue(null);
+              this.reactiveForm.get("mail_id")?.setValue(null);
+              this.reactiveForm.get("branch_name")?.setValue(null);
+              this.reactiveForm.get("employee_name")?.setValue(null);
+              this.reactiveForm.get("description")?.setValue(null);
+              this.ToastrService.success(result.message) 
+              this.reactiveForm.reset();
+              this.GetSmrMstSalesteamSummary();
+             
+            }
+            
+          });
+          
+  }
+  else {
+    this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+  }
+  
+}
+redirecttolist(){
+  this.router.navigate(['/smr/SmrMstSalesteamSummary']);
+
+}
+
+  ////Expandable Grid////
+  ondetail(campaign_gid: any) {
+    var url = 'SmrMstSalesteamSummary/GetSmrMstSalesteamgrid'
+    let param = {
+      campaign_gid: campaign_gid
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.responsedata = result;
+      this.salesteamgrid_list = result.salesteamgrid_list;
+      console.log(this.salesteamgrid_list)
+      setTimeout(() => {
+        $('#salesteamgrid_list').DataTable();
+      }, 1);
+
+    });
+  }
+  
+
+
+
+
+  onclose(){
+    this.reactiveForm.reset();
+  }
+  openModaledit() {}
+  openModalemployeeassign(){}
+  openModalmanagerassign(){}
+  openModaldelete(){}
+}

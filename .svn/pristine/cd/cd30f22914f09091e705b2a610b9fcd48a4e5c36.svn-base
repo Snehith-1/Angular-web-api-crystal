@@ -1,0 +1,15 @@
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Employee Summary</h3> 
+    </div>
+    <br>
+    <div>  &nbsp;  &nbsp; 
+        <!-- ADD Function -->
+        <button title="Add Employee" class="btn-primary btn-sm text-white me-4" routerLink="/crm/CrmTrnSalesOrderAdd">
+            <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;
+            Add Sales Order</button>  
+    </div> 
+    <br>
+    <br>
+</div> 

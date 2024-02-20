@@ -1,0 +1,70 @@
+.custom-button {
+    background-color: grey;
+    color: white; /* Icon color */
+}
+
+.bg-grey
+{
+    background-color: rgb(175, 185, 185);
+}
+
+
+
+#kt_chat_contacts_body {
+    max-height: 290px;
+    overflow-y: auto;
+}
+
+#kt_chat_contacts_body::-webkit-scrollbar {
+    width: 8px; /* You can adjust the width to your preference */
+}
+
+#kt_chat_contacts_body::-webkit-scrollbar-thumb {
+    background: #888;  /* You can set the color of the scrollbar thumb */
+    border-radius: 10px; /* You can adjust the border radius to your preference */
+    height: 5px;
+}
+
+#kt_chat_messenger_body {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#kt_chat_messenger_body::-webkit-scrollbar {
+    width: 8px; /* You can adjust the width to your preference */
+}
+
+#kt_chat_messenger_body::-webkit-scrollbar-thumb {
+    background: #888; /* You can set the color of the scrollbar thumb */
+    border-radius: 10px; /* You can adjust the border radius to your preference */
+}
+
+#kt_chat_messenger_body::-webkit-scrollbar-track {
+    background: #f1f1f1; /* You can set the background color of the scrollbar track */
+}
+
+.bg-skyblue
+{
+    background-color: #075e54;
+}
+.btn-send
+{
+    background-color: #075e54;
+}
+.btn-sends
+{
+    background-color: #075e54;
+}
+
+.bg-pink
+{
+    background-color: rgb(224, 179, 233);
+}
+
+.bg-message
+{
+    background-color: #ECE5DD;
+}
+
+
+

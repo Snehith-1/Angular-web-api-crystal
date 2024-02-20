@@ -1,0 +1,238 @@
+<div class="card m-3">
+  <div class="card-header bg-lightblue card-height55">
+      <div class="card-title m-0 ">
+          <h5 class="fw-bolder text-blue">Edit Product</h5>
+      </div>
+  </div>
+
+  <form [formGroup]="productform" #form="ngForm">
+    <input formControlName="product_gid" hidden
+    placeholder="Address Line 1"  type="text" class="
+        form-control form-control-lg form-control-solid
+        bg-white
+        custom-input
+        mb-3 mb-lg-0
+        borderc-secondary
+      " name="product_gid" />
+    
+    <div class="d-flex flex-row m-6 flex-wrap">
+         
+        
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Type</b> <span class="ms-1 text-red">*</span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                <select
+                    class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                    formControlName="producttype_name" [(ngModel)]="selectedProducttype">
+                    <option value="">Select Product Units</option>
+                    <option *ngFor="let productunit of producttype_list" [value]="productunit.producttype_gid">
+                        {{productunit.producttype_name}}</option>
+                </select>
+                <div *ngIf="producttypename.invalid && producttypename.touched">
+                  <div *ngIf="producttypename.hasError('required')"style="color:red;">Product Type is required.
+                  </div>
+              </div>
+            </div>
+            </div>
+
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Group</b> <span class="ms-1 text-red">*</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                  <select
+                      class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                      formControlName="productgroup_name" [(ngModel)]="selectedProductgroup">
+                      <option value="">Select Product Group</option>
+
+                      <option *ngFor="let productgroup of productgroup_list" [value]="productgroup.productgroup_gid">
+                          {{productgroup.productgroup_name}}</option>
+
+                  </select>
+                  <div *ngIf="productgroupname.invalid && productgroupname.touched">
+                    <div *ngIf="productgroupname.hasError('required')"style="color:red;">Product grouo is required
+                    </div>
+                </div>
+              </div>
+          </div>
+         
+          <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                <div class="d-flex flex-row">
+                    <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>Product Unit Class *</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <select
+                                class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                                formControlName="productuomclass_name">
+
+                                <option value="">Select </option>
+                                <option *ngFor="let productunitclass of productunitclass_list"
+                                    [value]="productunitclass.productuomclass_gid">
+                                    {{productunitclass.productuomclass_name}}</option>
+
+                            </select>
+
+                            <div *ngIf="productunitclasscontrol.invalid && productunitclasscontrol.touched">
+                                <div *ngIf="productunitclasscontrol.hasError('required')" style="color:red;">Product
+                                    unit class
+                                    is required
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>Product Units *</b>
+
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                            <select
+                                class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                                formControlName="productuom_name">
+
+                                <option value="">Select </option>
+                                <option *ngFor="let productunit of productunit_list"
+                                    [value]="productunit.productuom_gid">
+                                    {{productunit.productuom_name}}</option>
+
+                            </select>
+
+                            <div *ngIf="productunitscontrol.invalid && productunitscontrol.touched">
+                                <div *ngIf="productunitscontrol.hasError('required')" style="color:red;">Product
+                                    units is
+                                    required
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Code *</b>
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input type="text" class="
+                      form-control form-control-lg form-control-solid custom-input
+                      mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                    " placeholder="Product Code" formControlName="product_code" class="form-control"
+                  pattern="[A-Za-z0-9]+" />
+          </div>
+          <div *ngIf="productcodecontrol.invalid && productcodecontrol.touched">
+              <div *ngIf="productcodecontrol.hasError('required')" style="color:red;">Product code is required
+              </div>
+          </div>
+      </div>
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Name *</b>
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input type="text" class="
+                      form-control form-control-lg form-control-solid
+                      mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                    " placeholder="Product Name" formControlName="product_name" class="form-control" />
+          </div>
+          <div *ngIf="productnamecontrol.invalid && productnamecontrol.touched">
+              <div *ngIf="productnamecontrol.hasError('required')" style="color:red;">Product name is required
+              </div>
+          </div>
+
+      </div>
+
+
+      <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row ">
+              <div class="d-flex flex-row">
+                  <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>MRP *</b>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                          <input type="tel"
+                              class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input "
+                              style="text-align: right;" placeholder="MRP" formControlName="mrp"
+                              class="form-control" />
+
+                          <div *ngIf="mrpControl.invalid && mrpControl.touched">
+                              <div *ngIf="mrpControl.hasError('required')" style="color:red;">Enter only digits
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>Cost Price *</b>
+
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                          <input type="text" class="
+                              form-control form-control-lg form-control-solid custom-input
+                              mb-3 mb-lg-0  borderc-secondary bg-white custom-input" style="text-align: right;"
+                              placeholder="Cost Price" formControlName="cost_price" class="form-control" />
+                      </div>
+                      <div *ngIf="costpricecontrol.invalid && costpricecontrol.touched">
+                          <div *ngIf="costpricecontrol.hasError('required')" style="color:red;">Cost price is
+                              required
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+          </div>
+      </div>
+  </div>
+
+  <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Description</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <textarea type="text"  rows="1" class="
+            form-control form-control-lg form-control-solid custom-input
+            mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+          " placeholder="Product Description" formControlName="product_desc" maxlength="200"
+                class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>HSN Code *</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input type="tel" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                " placeholder="HSN Code" formControlName="hsn_code" class="form-control" />
+
+            <div *ngIf="hsncodeControl.invalid && hsncodeControl.touched">
+                <div *ngIf="hsncodeControl.hasError('required')" style="color:red;"> HSN code is required
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>HSN Description</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <textarea type="text" rows="1" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " placeholder="HSN Description" formControlName="hsn_desc" maxlength="200"
+                class="form-control"></textarea>
+        </div>
+    </div>
+</div>
+</form>
+
+       
+<div class="text-center my-4">
+<button class="btn-sm text-white me-2"  [ngClass]="{
+  'primary-button': !productform.invalid,
+  'secondary-button': productform.invalid
+}" (click)="validate()">
+<i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+</button>
+
+
+ 
+  <button class="btn-primary btn-sm text-white me-4" routerLink="/einvoice/CrmMstProduct">
+    <i class="fas fa-arrow-left"></i> &nbsp; Back
+  </button>
+      </div>
+   
+
+</div>
+
+
+  

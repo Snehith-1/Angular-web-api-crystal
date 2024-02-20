@@ -1,0 +1,68 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
+
+@Component({
+  selector: 'app-crm-trn-marketingmanagersummary',
+  templateUrl: './crm-trn-marketingmanagersummary.component.html',
+  styleUrls: ['./crm-trn-marketingmanagersummary.component.scss']
+})
+export class CrmTrnMarketingmanagersummaryComponent {
+  marketingmanager_list:any;
+  managerdetail_list:any;
+  isCollapsed = false;
+  public isOpen = true;
+
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService,private route:Router) {
+    
+  }
+  ngOnInit(): void {
+    this.GetMarketingManagerSummary();
+  }
+  
+  //// Summary Grid//////
+  GetMarketingManagerSummary(){
+    var url = 'MarketingManager/GetMarketingManagerSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#marketingmanager_list').DataTable().destroy();
+      // this.responsedata = result;
+      this.marketingmanager_list = result.marketingmanager_lists;
+      //console.log(this.marketingmanager_list)
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#marketingmanager_list').DataTable();
+      }, 1);
+  
+  
+    });
+  }
+  ondetail(campaign_gid: any) {
+    var url = 'MarketingManager/GetManagerSummaryDetailTable'
+    let param = {
+      campaign_gid : campaign_gid 
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      $('#managerdetail_list').DataTable().destroy();
+      // this.responsedata=result;
+      this.managerdetail_list = result.managerDetailTable_lists;
+      console.log('details',this.managerdetail_list)
+      setTimeout(() => {
+        $('#managerdetail_list').DataTable();
+      }, 1);
+  
+    });
+  }
+  onedit(params:any){
+    const secretKey = 'storyboarderp';
+    // const param = (params);
+    const campaign_gid = AES.encrypt(params.campaign_gid,secretKey).toString();
+    const assign_to = AES.encrypt(params.assign_to,secretKey).toString();
+    const stage1="Total";
+    const stage = AES.encrypt(stage1,secretKey).toString();
+    this.route.navigate(['/crm/CrmTrnCampaignmanager',campaign_gid,assign_to,stage]) 
+  }
+}

@@ -1,0 +1,333 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-lightblue">
+    <h3 class="card-title"><b>Branch Summary</b></h3>
+  </div>
+
+  <div class="mt-6">
+    <!-- ADD Function -->
+    <button type="button" class="btn-primary btn-sm text-white ms-5 me-4" data-bs-toggle="modal"
+      data-bs-target="#myModaladd">
+      Add Branch
+    </button>
+  </div>
+  <div class="table-responsive">
+    <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+      <table id="branch_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+        <thead>
+          <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+            <th>S.No</th>
+            <th>Branch Code </th>
+            <th>Branch Prefix</th>
+            <th>Branch Name</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of branch_list; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{data.branch_code}}</td>
+            <td>{{data.branch_prefix}}</td>
+            <td>{{data.branch_name}}</td>
+            <td class="text-center text-nowrap">
+              <button title="Add" type="button" class="btn btn-icon btn-sm bg-primary me-2" data-bs-toggle="modal"
+                (click)="myModaladddetails(data)" data-bs-target="#myModaladddetails" style="color: #ffffff;">
+                <span class="fa-solid fa-add text-white fs-6"></span></button>
+              <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                (click)="openModaledit(data)" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                  class="fa-solid fa-pencil text-white fs-6" style="color: #ffffff;"></span></button>
+              <button title="Delete" type="button" (click)="openModaldelete(data.branch_gid)" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="bi bi-trash-fill fs-6" style="color: #ffffff;"></span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal ADD -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal mt-20" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+          <div>
+            <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Add Branch</h2>
+          </div>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Branch Code</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="branch_code" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Branch Code" pattern="^(?!\s*$).+" name="branch_code" required />
+              </div>
+              <div *ngIf="branch_code.invalid && (branch_code.dirty || branch_code.touched)">
+                <div *ngIf="branch_code.errors?.['required']">
+                  <span style="color:red;">Branch Code is required.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Branch Prefix</b><span class="ms-1 text-red">*</span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                <input formControlName="branch_prefix" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_prefix.invalid && branch_prefix.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Branch  Prefix" pattern="^(?!\s*$).+" name="branch_prefix" required />
+              </div>
+              <div *ngIf="branch_prefix.invalid && (branch_prefix.dirty || branch_prefix.touched)">
+                <div *ngIf="branch_prefix.errors?.['required']">
+                  <span style="color:red;">Branch Prefix is required.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <span class="font-bold"><b>Branch Name</b>
+              <span style="color:red"> *</span>
+            </span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+              <input formControlName="branch_name" type="text"
+                class=" form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                [ngStyle]="{'border-color': branch_name.invalid && branch_name.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                placeholder="Enter Branch Name" pattern="^(?!\s*$).+" name="branch_name" required />
+            </div>
+            <div *ngIf="branch_name.invalid && (branch_name.dirty || branch_name.touched)">
+              <div *ngIf="branch_name.errors?.['required']">
+                <span style="color:red;">Branch Name is required.</span>
+              </div>
+            </div>
+          </div>
+          <!-- Modal footer -->          
+          <div class="text-center my-4">
+            <button class="me-4" (click)="onsubmit()" [disabled]="reactiveForm.invalid"
+              [ngClass]="{'primary-button': !reactiveForm.invalid, 'secondary-button': reactiveForm.invalid}" data-bs-dismiss="modal">
+              <i class="bi bi-check-square fs-5"></i>
+                  <span class="ms-3">Submit</span>
+            </button>
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+              <i class="fas fa-close text-white fs-5"></i>
+              <span class="ms-3">Close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form [formGroup]="reactiveFormadd" #form="ngForm">
+  <div class="modal" id="myModaladddetails" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="card-header p-2 pb-3 pt-2 rounded-top bg-primary">
+          <div>
+            <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Add Branch Details</h2>
+          </div>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Branch Code<span style="color:red">*</span></b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="branch_code" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Branch Code" name="branch_code" readonly style="background-color: #e9e7e7;" />
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Branch Address<span style="color:red">*</span></b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <textarea formControlName="Branch_address" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Address" rows="1"></textarea>
+                  
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row mt-4 flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>City</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="City" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter City" name="City" required />
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>State</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="State" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter State" />
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mt-4 flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Authorized Mobile<span style="color:red">*</span></b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="Phone_no" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Phone No" />
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Postal Code</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="Postal_code" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Postal Code" />
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mt-4 flex-wrap">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Authorized Email</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="Email_address" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Email Address " />
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>GST No<span style="color:red">*</span></b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="GST_no" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter GST No" />
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-row mt-4 flex-wrap">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>Branch Logo</b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input (change)="onChange($event)" accept="image/*" type="file" #fileInput class="form-control form-control-lg form-control-solid bg-white mb-3 mb-lg-0 borderc-secondary custom-input" name="fName"/>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-7 my-4">
+            <button class="me-4" (click)="validate()" [disabled]="reactiveFormadd.invalid"
+              [ngClass]="{'primary-button': !reactiveFormadd.invalid, 'secondary-button': reactiveFormadd.invalid}" data-bs-dismiss="modal">
+              <i class="bi bi-check-square fs-5"></i>
+                  <span class="ms-3">Submit</span>
+            </button>
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+              <i class="fas fa-close text-white fs-5"></i>
+              <span class="ms-3">Close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- modal edit -->
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+  <div class="modal mt-20" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+          <div>
+            <h2 class="fw-bolder ms-5 mt-4" style="color: #ffffff;">Edit Branch Details</h2>
+          </div>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Branch Code</b><span style="color:red"> *</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input formControlName="branch_code_edit" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_code_edit.invalid && branch_code.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Branch Code"  name="branch_code_edit" required />
+              </div>
+              <div *ngIf="branch_code_edit.invalid && (branch_code_edit.dirty || branch_code_edit.touched)">
+                <div *ngIf="branch_code_edit.errors?.['required']">
+                  <span style="color:red;">branch_code_edit is required.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Branch Prefix</b><span class="ms-1 text-red">*</span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                <input formControlName="branch_prefix_edit" type="text"
+                  class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': branch_prefix_edit.invalid && branch_prefix_edit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Branch  Prefix" pattern="^(?!\s*$).+" name="branch_prefix_edit" required />
+              </div>
+              <div *ngIf="branch_prefix_edit.invalid && (branch_prefix_edit.dirty || branch_prefix_edit.touched)">
+                <div *ngIf="branch_prefix_edit.errors?.['required']">
+                  <span style="color:red;">Branch Prefix is required.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <span class="font-bold"><b>Branch Name</b>
+              <span style="color:red"> *</span>
+            </span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+              <input formControlName="branch_name_edit" type="text"
+                class=" form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input"
+                [ngStyle]="{'border-color': branch_name_edit.invalid && branch_name_edit.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                placeholder="Enter Branch Name" pattern="^(?!\s*$).+" name="branch_name_edit" required />
+            </div>
+            <div *ngIf="branch_name_edit.invalid && (branch_name_edit.dirty || branch_name_edit.touched)">
+              <div *ngIf="branch_name_edit.errors?.['required']">
+                <span style="color:red;">Branch Name is required.</span>
+              </div>
+            </div>
+          </div>
+          <!-- Modal footer -->          
+          <div class="text-center my-4">
+            <button class="me-4" (click)="onupdate()" [disabled]="reactiveFormEdit.invalid"
+              [ngClass]="{'primary-button': !reactiveFormEdit.invalid, 'secondary-button': reactiveFormEdit.invalid}" data-bs-dismiss="modal">
+              <i class="bi bi-check-square fs-5"></i>
+                  <span class="ms-3">Update</span>
+            </button>
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+              <i class="fas fa-close text-white fs-5"></i>
+              <span class="ms-3">Close</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog del_modal-dialog">
+    <div class="modal-content del_modal-content">
+      <div class="text-center my-4">
+        <h2><b>Are you sure?</b></h2>
+        <p style="display: block;">Do You Want To Delete the Record ?</p>
+        <div class="text-center my-4">
+          <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()">
+            <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+          </button>
+          <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white me-2"></i>Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

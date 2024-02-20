@@ -1,0 +1,198 @@
+<div class="card m-3">
+  <div class="card-header bg-lightblue card-height55">
+    <div class="card-title m-0">
+      <h5 class="fw-bolder text-blue"> Opening Invoice</h5>
+    </div>
+  </div>
+  <!--------SUBMIT--------------->
+  <form [formGroup]="vendorform" (ngSubmit)="onSubmit()">
+    <div class="d-flex flex-row m-6 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-4 col-sm-12"><b>Branch<span class="ms-1 text-red">*</span></b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3">
+
+          <ng-select formControlName="branch_name" [items]="branch_list" class="
+          custom
+          col-lg-12 col-14 
+          fv-row
+          mt-2
+        " bindLabel="branch_name" [(ngModel)]="mdlBranchName" bindValue="branch_gid" placeholder="Select branch"
+            style="border: 1px solid grey;border-radius: 10px;"></ng-select>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-4 col-sm-12"><b>Invoice Ref No</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" class="
+      form-control form-control-lg form-control-solid
+      custom-input
+      mb-3 mb-lg-0
+      bg-white
+      custom-input
+    " placeholder="Invoice Ref No" formControlName="invoice_refno" class="form-control" />
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Invoice Date</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="date" class="
+      form-control form-control-lg form-control-solid
+      custom-input
+      mb-3 mb-lg-0
+      bg-white
+      custom-input
+    " placeholder="Invoice Date" formControlName="invoice_date" class="form-control" />
+        </div>
+      </div>
+
+    </div>
+    <div class="d-flex flex-row m-6 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-4 col-sm-12"><b>Vendor Name<span class="ms-1 text-red">*</span></b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3">
+
+          <ng-select formControlName="vendor_companyname" [items]="vendor_list" class="
+          custom
+          col-lg-12 col-14 
+          fv-row
+          mt-2
+        " bindLabel="vendor_companyname" [(ngModel)]="mdlBranchName" bindValue="vendor_gid" (change)="OnChangevonder()" placeholder="Select vendor"
+            style="border: 1px solid grey;border-radius: 10px;"></ng-select>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Vendor Contact Person</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3">
+          <input type="text" rows="1" class="
+       form-control form-control-lg form-control-solid
+       custom-input
+       mb-3 mb-lg-0
+       bg-white
+       custom-input
+     " placeholder="Vendor Contact Person" formControlName="Vendor_Contact_Person" class="form-control">
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Vendor Phone No</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" rows="1" class="
+     form-control form-control-lg form-control-solid
+     custom-input
+     mb-3 mb-lg-0
+     bg-white
+     custom-input
+   " placeholder="Vendor Phone No" formControlName="Vendor_Phone_No" class="form-control">
+        </div>
+      </div>
+
+    </div>
+    <div class="d-flex flex-row m-6 flex-wrap  ">
+
+
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Fax</b>
+        <div class="col-lg-11 col-12 col-md-12 col-sm-11 fv-row mt-2 ">
+          <input type="text" class="
+        form-control form-control-lg form-control-solid
+        custom-input
+        mb-3 mb-lg-0
+        bg-white
+        custom-input
+      " placeholder="Fax" formControlName="fax" class="form-control" />
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Vendor Address</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" rows="1" class="
+       form-control form-control-lg form-control-solid
+       custom-input
+       mb-3 mb-lg-0
+       bg-white
+       custom-input
+     " placeholder="Vendor Address" formControlName="address" class="form-control">
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Remarks</b>
+        <div class="col-lg-11 col-12 col-md-12 col-sm-11 fv-row mt-2 ">
+
+          <textarea type="text" rows="1" class="
+            form-control form-control-lg form-control-solid
+            custom-input
+            mb-3 mb-lg-0
+            bg-white
+            custom-input
+          " placeholder="Remarks" formControlName="invoice_remarks" class="form-control"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-row m-6 flex-wrap">
+      <div class="col-12 col-lg-4 col-md-4 col-sm-12"><b>Currency<span class="ms-1 text-red">*</span></b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3">
+
+          <ng-select formControlName="currency_code" [items]="currency_list" class="
+        custom
+        col-lg-12 col-14 
+        fv-row
+        mt-2
+      " bindLabel="currency_code" [(ngModel)]="mdlBranchName" bindValue="currencyexchange_gid" (change)="OnChangeCurrency()"
+            placeholder="Select Currency" style="border: 1px solid grey;border-radius: 10px;"></ng-select>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4 col-md-4  col-sm-12"><b>Exchange Rate</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" rows="1" class="
+     form-control form-control-lg form-control-solid
+     custom-input
+     mb-3 mb-lg-0
+     bg-white
+     custom-input
+   " placeholder="Exchange Rate" readonly formControlName="exchange_rate" class="form-control">
+        </div>
+      </div>
+    </div>
+
+    <div class="card m-3">
+        <div class="d-flex justify-content-end mt-4">
+          <div class="col-md-0">
+            <label class="tbl_lab">Order Total:</label>
+            <input type="text" formControlName="Order_Total" class="tbl_in" placeholder="0.00">
+            <span class="tbl_spn"></span>
+          </div>
+          <div class="col-md-0">INR</div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <div class="col-md-0">
+            <label class="tbl_lab">Received Amount:</label>
+            <input type="text" class="tbl_in" placeholder="0.00" formControlName="received_amount">
+            <span class="tbl_spn"></span>
+          </div>
+          <div class="col-md-0">INR</div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <div class="col-md-0">
+            <label class="tbl_lab">Received Year:</label>
+            <input type="text" class="tbl_in" placeholder="yyyy" formControlName="received_year" type="number" [(ngModel)]="currentYear">
+            <span class="tbl_spn"></span>
+          </div>
+          <div class="col-md-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+          <div class="col-md-0">
+            <label class="tbl_lab">Total Amount:</label>
+            <input type="text" class="tbl_in" placeholder="0.00">
+            <span class="tbl_spn"></span>
+          </div>
+          <div class="col-md-0">INR</div>
+        </div>
+      
+    </div>
+    <div class="text-center my-4">
+      <button class="btn-success btn-sm text-white me-4" data-bs-dismiss="modal">
+        <i class="fas fa-check  text-white fs-5 "></i> &nbsp; Submit
+      </button> &nbsp;&nbsp;
+      <button class="btn-danger btn-sm text-white me-4" routerLink="/payable/PmrTrnOpeninginvoiceSummary"
+        data-bs-dismiss="modal">
+        <i class="fas fa-arrow-left text-white"></i> &nbsp; Back
+      </button>
+    </div>
+
+  </form>
+
+</div>

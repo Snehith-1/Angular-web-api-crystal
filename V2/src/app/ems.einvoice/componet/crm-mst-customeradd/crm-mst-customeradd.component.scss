@@ -1,0 +1,30 @@
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.submit-button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #555;
+  box-shadow: none;
+  
+}
+
+.submit-button:not([disabled]) {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}
+.submit-button:not([disabled]):hover {
+  background-color: #004ea1;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}

@@ -1,0 +1,188 @@
+<div class="card shadow-sm">
+    <div class="card-header justify-content-center  text-black head">
+        <h2 class="card-title fs-3"><b>Payable Dashboard</b></h2>
+    </div>
+    <br>
+    <div class="card card-bordered rounded">
+        <div class="d-flex flex-wrap flex-row col-12 ">
+            <div class="col-12 col-lg-4 ">
+                <div class=" header1 cardHead radius-10 border-start border-0 border-3 border-orde m-8 card mb-8 shadow-lg p-3 rounded border-order">
+                    <div class=" height col-lg-6 col-md-4 col-sm-4 card-header justify-content-center bg-gradient-Torder  ">
+
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h5 class="mb-0 text-secondary">Vendor</h5>
+                               
+                                    <h4 class="my-1 text-info">{{this.vendor_count}}</h4>
+                               
+                            </div>
+                            
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            
+            <!-- <div class=" height cardHead m-8 card mb-8 shadow-lg p-3  rounded">
+            <div class="  card-body12 card-header justify-content-center cardHead-100  bg-gradient-Torder ">
+                <h4 class=" rounded card-title fluid-width-100 
+                fs-3 fw-bold text-black" >Vendor </h4>
+                <div class="card-toolbar"></div>
+            </div>
+        </div> -->
+
+
+            <div class="col-12 col-lg-4 ">
+                <div
+                    class=" header1 cardHead radius-10 border-start border-0 border-3 border-orde m-8 card mb-8 shadow-lg p-3 rounded">
+                    <div
+                        class=" height col-lg-6 col-md-4 col-sm-4 card-header justify-content-center bg-gradient-Torder ">
+
+
+                        <div>
+                            <h4 class=" card-body12  card-title  fw-bold text-black">Product</h4>
+                            <div>
+                                <h6 class="my-1 text-info text-center fs-30">{{this.count_product}}</h6>
+                            </div>
+                        </div>
+                        <div class="card-toolbar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 ">
+                <div
+                    class=" header1 cardHead radius-10 border-start border-0 border-3 border-orde m-8 card mb-8 shadow-lg p-3 rounded">
+                    <div
+                        class=" height col-lg-6 col-md-4 col-sm-4 card-header justify-content-center bg-gradient-Torder ">
+
+
+
+                        <div>
+                            <h4 class=" card-body12  card-title fw-bold text-black">Total Invoice Count</h4>
+                            <div>
+                                <h6 class="my-1 text-info text-center fs-30">{{this.count_total}}</h6>
+                            </div>
+                        </div>
+                        <div class="card-toolbar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap flex-row col-12">
+            <div class="col-12 col-lg-4 ">
+                <div
+                    class=" header1 cardHead radius-10 border-start border-0 border-3 border-orde m-8 card mb-8 shadow-lg p-3 rounded">
+                    <div
+                        class=" height col-lg-6 col-md-4 col-sm-4 card-header justify-content-center bg-gradient-Torder ">
+
+
+
+                        <div>
+                            <h4 class="card-title card-body12  fw-bold text-black">Paid Invoice</h4>
+                            <div>
+                                <h6 class="my-1 text-info text-center fs-30">{{this.cancel_invoice}}</h6>
+                            </div>
+                        </div>
+                        <div class="card-toolbar"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 ">
+                <div
+                    class="header1 cardHead radius-10 border-start border-0 border-3 border-orde m-8 card mb-8 shadow-lg p-3 rounded">
+                    <div
+                        class=" height col-lg-6 col-md-4 col-sm-4 card-header justify-content-center bg-gradient-Torder ">
+
+
+
+                        <div>
+                            <h4 class="card-title card-body12  fw-bold text-black">Pending Invoice</h4>
+                            <div>
+                                <h6 class="my-1 text-info text-center fs-30">{{this.pending_count}}</h6>
+                            </div>
+                        </div>
+                        <div class="card-toolbar"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 ">
+                <div
+                    class="header1 cardHead radius-10 border-start border-0 border-3 border-orde m-8 card mb-8 shadow-lg p-3 rounded">
+                    <div
+                        class=" height col-lg-6 col-md-4 col-sm-4 card-header justify-content-center bg-gradient-Torder ">
+
+
+                        <div>
+                            <h4 class="card-title card-body12  fw-bold text-black">Payment Count</h4>
+                            <div>
+                                <h6 class="my-1 text-info text-center fs-30">{{this.count_total}}</h6>
+                            </div>
+                        </div>
+
+                        <div class="card-toolbar "></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="d-flex flex-row" style="background-color: #ffffff;">
+
+            <div class="col-12 card  shadow-lg p-3 mb-9 rounded">
+                <div class="me-2">
+
+                    <div class="card-header justify-content-center bg-gradient-Torder head">
+                        <h4 class="card-title fs-3 fw-bold text-black">Payabel Report</h4>
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <div class="card card-body m-3 p-3 mb-5">
+
+                            <table id="GetMonthwiseOrderReport_List"
+                                class="table table-striped table-row-bordered gy-5 gs-7 ">
+
+                                <thead>
+
+                                    <tr
+                                        class="fw-bold fs-5 text-nowrap bg-lightblue text-black align-middle  text-center">
+
+                                        <th>S.No</th>
+                                        <th>Invoice Ref No</th>
+                                        <th>Vendor Ref No.</th>
+                                        <th>Invoice Amount</th>
+                                        <th>Status</th>
+                                        <th>Invoice Date</th>
+                                        <th>Overall Status</th>
+                                        <th>Due Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let data of payablesummary_list; let i=index;" class="align-middle">
+                                        <td style="text-align: center;">{{i+1}}</td>
+                                        <td style="text-align: center;">{{data.invoice_refno}}</td>
+                                        <td style="text-align: center;">{{data.invoice_refno}}</td>
+                                        <td style="text-align: center;">{{data.invoice_amount}}</td>
+                                        <td style="text-align: center;">{{data.invoice_status }}</td>                                        
+                                        <td style="text-align: center;">{{data.invoice_date | date: 'dd-MM-yyyy'}}</td>
+                                        <td style="text-align: center;">{{data.overall_status}}</td>
+                                        <td style="text-align: center;">{{data.payment_date | date: 'dd-MM-yyyy'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>

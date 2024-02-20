@@ -1,0 +1,55 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators,  ValidationErrors,
+  AbstractControl,
+  ValidatorFn } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+@Component({
+  selector: 'app-crm-smm-instagram',
+  templateUrl: './crm-smm-instagram.component.html',
+  styleUrls: ['./crm-smm-instagram.component.scss']
+})
+export class CrmSmmInstagramComponent {
+
+  responsedata: any;
+  instagram_list: any;
+  id: any;
+  username: any;
+  image_list: any;
+  video_list: any;
+  media_url: any;
+  profile_photo: any;
+  parameterValue: any;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService) {
+   
+  }
+//   ngOnInit(): void {
+  
+//     var url = 'Instagram/GetInstagram'
+//     this.service.get(url).subscribe((result) => {
+//       console.log(result)
+//       this.responsedata = result;
+//       this.instagram_list = this.responsedata.data;
+//       this.username = this.responsedata.data[0].username;
+//       this.id = this.responsedata.data[0].id;
+
+
+
+//       console.log(this.responsedata)
+//     });
+//     var url1 = 'Instagram/GetInstagramProfile'
+//     this.service.get(url1).subscribe((result,) => {
+//       this.responsedata = result;
+//       this.image_list = this.responsedata.data;
+//       this.video_list = this.responsedata.videoData;
+
+
+//     });
+
+// }
+// modalimage(parameter: string) {
+//   this.parameterValue = parameter
+// console.log(this.parameterValue)
+// }
+}

@@ -1,0 +1,15 @@
+.left_label {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 10px 0px 0px 0px;
+    width: 160px;
+}
+
+.left_input {
+    font-size: 12px;
+    margin: 0px 0px 0px 25px;
+    height: 25px;
+    width: 180px;
+    border-radius: 0px;
+    border: 1px solid rgb(209, 209, 209);
+}

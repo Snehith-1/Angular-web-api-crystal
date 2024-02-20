@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System.IO;
+
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/ShopifyCustomer")]
+    public class ShopifyCustomerController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaShopifyCustomer objDaleadbank = new DaShopifyCustomer();
+        // code By snehith
+        [ActionName("GetShopifyCustomer")]
+        [HttpGet]
+        public HttpResponseMessage GetShopifyCustomer()
+        {
+            shopifycustomerlist values = new shopifycustomerlist();
+            values = objDaleadbank.DaGetShopifyCustomer();
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetShopifyCustomersList")]
+        [HttpGet]
+        public HttpResponseMessage GetShopifyCustomersList()
+        {
+            MdlShopifyCustomer values = new MdlShopifyCustomer();
+            objDaleadbank.DaGetShopifyCustomersList(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetLeadmoved")]
+        [HttpPost]
+        public HttpResponseMessage GetLeadmoved(shopifycustomermovingtolead values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaleadbank.DaGetLeadmoved(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+        }
+    }
+}

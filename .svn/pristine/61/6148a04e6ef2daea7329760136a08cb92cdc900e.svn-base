@@ -1,0 +1,126 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AES } from 'crypto-js';
+interface ICustomer {
+  customer_gid: string;
+  customer_id: string;
+  customer_name: string;
+  contact_details: string;
+  region_name: string;
+  PopupControlExtender_branch: string;
+  PopupControlExtender_person: string;
+  customer_type: string;
+}
+@Component({
+  selector: 'app-smr-trn-customer-summary',
+  templateUrl: './smr-trn-customer-summary.component.html',
+  styleUrls: ['./smr-trn-customer-summary.component.scss']
+})
+export class SmrTrnCustomerSummaryComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  customercount_list :any
+  parameter: any;
+  parameterValue: any;
+  parameterValue1: any;
+  smrcustomer_list: any[] = [];
+  customer!: ICustomer;
+  getData: any;
+  NgxSpinnerService: any;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, private router: ActivatedRoute, private route: Router, public service: SocketService) {
+    this.customer = {} as ICustomer;
+    
+  }
+  ngOnInit(): void {
+    this.GetSmrTrnCustomerSummary();
+    // this.GetSmrTrnDistributorSummary();
+}
+//// Summary Grid//////
+GetSmrTrnCustomerSummary() {
+  var url = 'SmrTrnCustomerSummary/GetSmrTrnCustomerSummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#smrcustomer_list').DataTable().destroy();
+     this.responsedata = result;
+     this.smrcustomer_list = this.responsedata.smrcustomer_list;
+     //console.log(this.entity_list)
+     setTimeout(() => {
+       $('#smrcustomer_list').DataTable()
+     }, 1);
+
+
+  });
+  
+  
+
+// GetSmrTrnDistributorSummary() {
+//   debugger
+//   var url = 'SmrTrnCustomerSummary/GetSmrTrnCustomerCount'
+//   this.service.get(url).subscribe((result: any) => {
+//     $('#smrcustomer_list').DataTable().destroy();
+//     this.responsedata = result;
+//     this.smrcustomer_list = this.responsedata.smrcustomer_list;
+//     setTimeout(() => {
+//       $('#smrcustomer_list').DataTable();
+//     }, 1);
+
+
+//   })
+  
+  
+
+var url  = 'SmrTrnCustomerSummary/GetSmrTrnCustomerCount';
+    this.service.get(url).subscribe((result:any) => {
+    this.responsedata = result;
+    this.customercount_list = this.responsedata.customercount_list; 
+    console.log(this.customercount_list);
+    });
+
+  }
+
+
+onview(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.route.navigate(['/smr/SrmTrnCustomerview',encryptedParam]) 
+}
+onedit(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.route.navigate(['/smr/SmrTrnCustomeredit',encryptedParam]) 
+}
+onaddinfo(){}
+openModaldelete(parameter: string){
+  this.parameterValue = parameter
+}
+ondelete(){
+  console.log(this.parameterValue);
+  var url = 'SmrTrnCustomerSummary/GetDeleteCustomerdetails'
+  let param = {
+    customer_gid : this.parameterValue 
+  }
+  this.service.getparams(url,param).subscribe((result: any) => {
+    if(result.status ==false){
+      this.ToastrService.warning(result.message)
+    }
+    else{
+         
+      this.ToastrService.success(result.message)
+      this.NgxSpinnerService.hide();
+      this.GetSmrTrnCustomerSummary();
+    
+  }
+  });
+}
+onprod(params: any)
+{
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.route.navigate(['/smr/SmrTrnCustomerPriceSegment',encryptedParam]) 
+}
+}

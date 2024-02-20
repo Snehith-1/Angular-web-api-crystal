@@ -1,0 +1,116 @@
+<main>
+   
+
+    <div class="head-content-right">
+      
+    </div>
+    <header>
+      <div class="tb">
+        <div class="td" id="logo">
+          <!-- <a><i class="bi bi-instagram"></i></a> -->
+        </div>
+        <section class="top-bar" style="margin-left:-10px;">
+
+            <div class="top-bar__title">        
+              <h1 class="top-bar__title__text">instagram</h1>
+              <img class='top-bar__title__verified-icon' src="./assets/media/images/insta_tick.jpg" alt="verified-icon"></div>
+              
+          </section>
+       
+        <div class="td" id="i-links">
+          <div class="tb">
+    <div class="row" style="margin-left:-50px;">
+            <span> <img id="p-link" src="./assets/media/images/insta.png"></span>
+          </div>
+          <span class="td" id="f-name-l" style="color:black;">{{username}}</span>
+        </div>
+        </div>
+      </div>
+    </header>
+    <div id="profile-upper">
+      
+    <br><br><br><br><br><br><br><br><br>
+      <div id="profile-d">
+        <div id="profile-pic">
+          <img style="height:100%;" src="./assets/media/images/insta_icon.png">
+           
+        </div>
+        <div id="u-name">{{username}} 
+            
+
+             </div>
+ 
+       
+      </div>
+      <div id="black-grd"></div>
+    
+</div>
+   <br> <br>
+    <tabset style="align-items:center;">
+
+      
+        <tab heading="Post Image" style="background-color:white;"> 
+            
+            <br> 
+            <div class="image-gallery">
+
+                &nbsp;&nbsp; <div class="image" *ngFor="let imageurl of image_list">
+            
+                  <img [src]="imageurl.media_url" (click)="modalimage(imageurl.media_url)"   data-bs-toggle="modal" data-bs-target="#myModalimage"  alt="Image">
+                
+                  </div>
+                 
+            </div>
+            <br>
+          </tab>
+        <tab heading="Post Video" style="background-color:white;">
+          
+            <div class="video-gallery">
+
+               <div class="video-item" *ngFor="let videourl of video_list">
+              
+                  <video controls>
+              
+                    <source [src]="videourl.media_url" type="video/mp4">
+              
+              
+                  </video>
+             
+              
+                </div>
+              
+              </div>
+          </tab>
+      </tabset>
+
+    
+  
+  </main>
+  <div class="modal" id="myModalimage"  data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+            <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="bi bi-images" style="font-size:25px;"></i> &nbsp;&nbsp;Posted Image
+                <button type="button" class="close" style="font-size:35px;color:white;margin-left: 268px; " data-bs-dismiss="modal"  aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </h2>
+  
+       
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          
+            <img src={{parameterValue}} alt="Image">
+
+         
+        </div>
+  
+       
+
+        </div>
+    </div>
+</div>

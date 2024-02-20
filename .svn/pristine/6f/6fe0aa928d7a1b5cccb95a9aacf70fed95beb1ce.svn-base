@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-pay-trn-editsalarygrade-template',
+  templateUrl: './pay-trn-editsalarygrade-template.component.html',
+  styleUrls: ['./pay-trn-editsalarygrade-template.component.scss']
+})
+export class PayTrnEditsalarygradeTemplateComponent {
+
+}

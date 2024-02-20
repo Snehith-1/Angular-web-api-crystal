@@ -1,0 +1,150 @@
+<div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white">
+            Make Receipt
+        </h3>
+    </div>
+
+    <form [formGroup]="makereceiptform">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Receipt Date</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 bg-white custom-input" formControlName="receipt_paymentdate" [ngStyle]="{'border-color': receiptdateControl.invalid && receiptdateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" placeholder="DD-MM-YYYY">
+                    <div *ngIf="receiptdateControl.invalid && receiptdateControl.touched">
+                        <div *ngIf="receiptdateControl.hasError('required')" class="text-red">Receipt date is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Invoice No</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_invoice_id" readonly>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Currency / Exchange Rate</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="currency_code" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Invoice Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_invoice_amount">
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Advance Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input"formControlName="advance_amount" >
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Outstanding Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="os_amount" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Received Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="received_amount" [(ngModel)] = "received_amount" (input)="receivedamount()">
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">TDS Receivable</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="tds_receivable">
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Adjust Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="adjust_amount">
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Payment Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_payment_amount">
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Total Amount</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_total_amount">
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Branch Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_branch_name" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold required">Customer Name</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_customer_name">
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Mobile No</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_mobile_no" readonly>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Email</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input" formControlName="receipt_email_id" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Customer Address</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" rows="3" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-secondary border-secondary bg-white custom-input" formControlName="receipt_customer_address" class="form-control bg-secondary" maxlength="200"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold">Receipt Towards</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" rows="3" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  border-secondary bg-white custom-input" placeholder="" formControlName="receipt_towards" maxlength="200" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12 mt-2"><span class="font-bold required">Receipt Mode</span>
+                <!-- <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="payment_type" [ngStyle]="{'border-color': receiptmodecontrol.invalid && receiptmodecontrol.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+">
+                        <option value="">Select</option>
+                        <option *ngFor="let receiptmode of modeofpayment_list" [value]="receiptmode.modeofpayment_gid">{{receiptmode.payment_type}}</option>
+                    </select>
+                    <div *ngIf="receiptmodecontrol.invalid && receiptmodecontrol.touched">
+                        <div *ngIf="receiptmodecontrol.hasError('required')" class="text-red">Receipt mode is required</div>
+                    </div>
+                </div> -->
+                <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" formControlName="payment_type" bindLabel="payment_type" bindValue="modeofpayment_gid" [items]="modeofpayment_list" [class.is-invalid]="makereceiptform.get('modeofpayment_gid')?.invalid && (makereceiptform.get('modeofpayment_gid')?.dirty || makereceiptform.get('modeofpayment_gid')?.touched)" [ngClass]="{'invalid-border': makereceiptform.get('modeofpayment_gid')?.invalid && makereceiptform.get('modeofpayment_gid')?.touched}" placeholder="Select an option" [(ngModel)]="mdlReceiptmode"></ng-select>
+                <div *ngIf="makereceiptform.get('modeofpayment_gid')?.hasError('required') && makereceiptform.get('modeofpayment_gid')?.touched || makereceiptform.get('modeofpayment_gid')?.hasError('pattern')" class="text-red">Receipt mode is required.</div>
+            </div>
+        </div>
+
+        <div class="text-center my-4">
+            <button class="btn-success btn-sm text-white me-2" [disabled]="makereceiptform.invalid" (click)="updated()">
+                <i class="bi bi-check-square fs-5 ms-3 me-2"></i>Update
+            </button>
+
+            <button type="back" class="btn-primary btn-sm text-white me-4" (click)="redirecttolist()">
+                <i class="bi bi-arrow-left-square fs-5 ms-3 me-2"></i>Back
+            </button>
+        </div>
+    </form>
+</div>

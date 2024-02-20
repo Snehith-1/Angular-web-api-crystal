@@ -1,0 +1,357 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+          <h3 class="card-title">Currency Summary</h3>
+        </div>
+    
+        <div class="col me-5">
+          <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal" 
+            data-bs-target="#myModaladd" > 
+            
+            <i class="fas fa-plus"></i>&nbsp; Add Currency
+          </button>
+        </div>
+      </div>
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+            <table id="salescurrency_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Currency Code </th>
+                        <th>Exchange Rate</th>
+                        <th>Country</th>
+                        <th>Created By</th>
+                        <th>Created Date</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of salescurrency_list; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.currency_code}}</td>
+                        <td>{{data.exchange_rate}}</td>
+                        <td>{{data.country_name}}</td>
+                        <td>{{data.created_by}}</td>
+                        <td>{{data.created_date}}</td>
+                        <td class="text-center text-nowrap">
+
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-etdark me-2"
+                                (click)="openModaledit(data)" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                            <button title="Delete" type="button" (click)="openModaldelete(data.currencyexchange_gid)"
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                                class="btn btn-icon btn-sm bg-danger me-2"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal ADD -->
+<!-- Add Event -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog p-10">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="card-header pb-3 pt-6 rounded-top bg-primary">
+                    <div>
+                        <h3 class="fw-bolder text-white">
+                            &nbsp;&nbsp;<i class="fas fa-plus fs-5"></i>&nbsp;&nbsp;&nbsp;Add Currency </h3>
+                    </div>
+
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row"><span class="fw-bold">Country<span
+                        class="ms-1 text-red">*</span></span>
+                <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                    <ng-select formControlName="country_name" [class.is-invalid]="
+                    country_name.invalid && (country_name.dirty || country_name.touched)
+          "  [ngClass]="{'invalid-border': country_name.invalid && country_name.touched}" 
+          [items]="salescountry_list"  class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+          bindLabel="country_name" bindValue="country_gid" placeholder="Select an Country">
+        
+        </ng-select>
+                </div>
+                <div *ngIf="country_name.invalid && (country_name.dirty || country_name.touched)">
+                    <div *ngIf="country_name.errors?.['required']">
+                        <span style="color:red;">Country is required.
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="country_name.invalid && (country_name.dirty || country_name.touched)">
+                    <div *ngIf="country_name.errors?.['pattern']">
+                        <span style="color:red;">Country is required .</span>
+                    </div>
+                </div>
+            </div>
+            <br>
+                    <div class="row"><span class="fw-bold">Currency Code<span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input formControlName="currency_code" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0 
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                    'border-color':
+                    currency_code.invalid && currency_code.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                  }" style="width: 420px;border: 0px solid grey;" placeholder="Enter Currency Code"
+                                pattern="^(?!\s*$)[A-Za-z0-9]+$" name="currency_code" required  style="height:40px;"/>
+                        </div>
+                        <div *ngIf="currency_code.invalid && (currency_code.dirty || currency_code.touched)">
+                            <div *ngIf="currency_code.errors?.['required']">
+                                <span style="color:red;">Currency Code is required.</span>
+                            </div>
+                        </div>
+                        <div *ngIf="currency_code.invalid && (currency_code.dirty || currency_code.touched)">
+                            <div *ngIf="currency_code.errors?.['pattern']">
+                                <span style="color:red;">Invalid Currency Code  .</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row"><span class="fw-bold">Exchange Rate<span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input formControlName="exchange_rate" type="numeric" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                    'border-color':
+                    exchange_rate.invalid && exchange_rate.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                  }" style="width: 420px;border: 1px solid grey;" placeholder="Enter Exchange Rate"
+                  pattern="^(?!\s*$)\d+(\.\d+)?$"  pattern1="[0-9]*" name="exchange_rate" required style="height:40px;"/>
+                        </div>
+                        <div *ngIf="exchange_rate.invalid && (exchange_rate.dirty || exchange_rate.touched)">
+                            <div *ngIf="exchange_rate.errors?.['required']">
+                                <span style="color:red;">Exchange Rate is required.</span>
+                            </div>
+                        </div>
+                        <div *ngIf="exchange_rate.invalid && (exchange_rate.dirty || exchange_rate.touched)">
+                            <div *ngIf="exchange_rate.errors?.['pattern1']">
+                                <span style="color:red;">Special Characters Not Allowed.</span>
+                            </div>
+                        </div>
+                        <div *ngIf="exchange_rate.invalid && (exchange_rate.dirty || exchange_rate.touched)">
+                            <div *ngIf="exchange_rate.errors?.['pattern']">
+                                <span style="color:red;">Invalid Exchange Rate.</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                    'primary-button': !reactiveForm.invalid,
+                    'secondary-button': reactiveForm.invalid
+                  }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onclose()">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<form [formGroup]="reactiveFormEdit" #form="ngForm">
+    <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog p-10">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="card-header pb-3 pt-6 rounded-top bg-primary">
+                    <div>
+                        <h2 class="fw-bolder text-white">
+                            &nbsp;&nbsp;<i class="fa-solid fa-pen-to-square fs-2"></i>&nbsp;&nbsp;&nbsp;Edit Currency Details</h2>
+                    </div>
+
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control form-control-lg" formControlName="country_nameedit" hidden
+                        pattern="^(?!\s*$).+" type="text" placeholder="Enter Currency"
+                        aria-label=".form-control-lg example" autocomplete="off" required>
+
+                    <div class="row">
+                        <span class="fw-bold">Country<span class="ms-1 text-red">*</span></span>
+                           <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                    <ng-select formControlName="country_nameedit" [class.is-invalid]="
+                    country_nameedit.invalid && (country_nameedit.dirty || country_nameedit.touched)
+          "  [ngClass]="{'invalid-border': country_nameedit.invalid && country_nameedit.touched}" 
+          [items]="salescountry_list"  class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+          bindLabel="country_name" bindValue="country_name" placeholder="Select an Country">
+        
+        </ng-select>
+                </div>
+                <div *ngIf="country_nameedit.invalid && (country_nameedit.dirty || country_nameedit.touched)">
+                    <div *ngIf="country_nameedit.errors?.['required']">
+                        <span style="color:red;">Country is required.
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="country_nameedit.invalid && (country_nameedit.dirty || country_nameedit.touched)">
+                    <div *ngIf="country_nameedit.errors?.['pattern']">
+                        <span style="color:red;">Country is required .</span>
+                    </div>
+                </div>
+                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <ng-select formControlName="country_nameedit" [class.is-invalid]="
+                            country_nameedit.invalid && (country_nameedit.dirty || country_nameedit.touched)
+                  "  [ngClass]="{'invalid-border': country_nameedit.invalid && country_nameedit.touched}" 
+                  [items]="salescountry_list"  class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                  bindLabel="country_name" bindValue="country_name" placeholder="Select an Country">
+                
+                </ng-select>
+                <div *ngIf="
+                country_nameedit.invalid && (country_nameedit.dirty || country_nameedit.touched)
+                  " class="invalid-feedback">
+                  <div *ngIf="country_nameedit.errors?.['required']">
+                    country is required.
+                  </div>
+                </div>
+                        </div> -->
+
+                    </div>
+
+                    <br>
+                    <div class="row"><span class="fw-bold">Currency Code<span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12    col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input formControlName="currency_codeedit" type="text" class="
+                         form-control form-control-lg form-control-solid
+                         custom-input
+                         mb-3 mb-lg-0
+                         bg-white
+                         custom-input
+                       " [ngStyle]="{
+                        'border-color':
+                        currency_codeedit.invalid && currency_codeedit.touched
+                            ? 'red'
+                            : 'rgb(209, 209, 209)'
+                      }"style="width: 420px;border: 0px solid grey; " placeholder="Enter Currency Code" pattern="^(?!\s*$)[A-Za-z0-9]+$"
+                      pattern="^(?!\s*$)[A-Za-z0-9]+$" name="currency_codeedit" required  style="height:40px;"/>
+                        </div>
+
+                    </div>
+                    <div *ngIf="currency_codeedit.invalid && (currency_codeedit.dirty || currency_codeedit.touched)">
+                        <div *ngIf="currency_codeedit.errors?.['required']">
+                          <span style="color:red;">Currency Code is required.</span>
+                        </div>
+                      </div>
+                    <div *ngIf="currency_codeedit.invalid && (currency_codeedit.dirty || currency_codeedit.touched)">
+                        <div *ngIf="currency_codeedit.errors?.['pattern']">
+                          <span style="color:red;">Invalid Currency Code </span>
+                        </div>
+                      </div>
+                      
+                    <br>
+                    <div class="row"><span class="fw-bold">Exchange Rate<span
+                                class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input formControlName="exchange_rateedit" type="text" class="
+                         form-control form-control-lg form-control-solid
+                         custom-input
+                         mb-3 mb-lg-0
+                         bg-white
+                         custom-input
+                       " [ngStyle]="{
+                        'border-color':
+                        exchange_rateedit.invalid && exchange_rateedit.touched
+                            ? 'red'
+                            : 'rgb(209, 209, 209)'
+                        }"style="width: 420px;border: 0px solid grey;" placeholder="Enter Exchange Rate"
+                        pattern="^(?!\s*$)\d+(\.\d+)?$" name="exchange_rateedit" required  style="height:40px;"/>
+                        </div>
+
+                    </div>
+                    <div *ngIf="exchange_rateedit.invalid && (exchange_rateedit.dirty || exchange_rateedit.touched)">
+                        <div *ngIf="exchange_rateedit.errors?.['required']">
+                          <span style="color:red;">Exchange Rate is required.</span>
+                        </div>
+                    </div>
+                    <div *ngIf="exchange_rateedit.invalid && (exchange_rateedit.dirty || exchange_rateedit.touched)">
+                        <div *ngIf="exchange_rateedit.errors?.['pattern']">
+                          <span style="color:red;">Invalid Exchange Rate </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button (click)="onupdate()" [disabled]="reactiveFormEdit.invalid" [ngClass]="{
+                        'primary-button': !reactiveFormEdit.invalid,
+                        'secondary-button': reactiveFormEdit.invalid
+                      }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>

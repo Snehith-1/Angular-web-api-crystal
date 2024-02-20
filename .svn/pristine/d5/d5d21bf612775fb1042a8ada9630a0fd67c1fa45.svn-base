@@ -1,0 +1,211 @@
+<main>
+  <div *ngFor="let d of facebookuser_list; let i=index;">
+
+    <header>
+      <div class="tb">
+        <div class="td" id="logo">
+          <a><i class="fab fa-facebook-square"></i>
+          </a>
+
+        </div>
+
+
+        <div class="td" id="i-links">
+          <div class="tb">
+            <div class="row">
+
+              <span> <img id="p-link" src={{d.profile_picture}}></span>
+            </div>
+
+            <span class="td" style=" font-size: 14px;" id="f-name-l">{{d.user_name}}</span>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </header>
+
+
+
+
+    <div id="details">
+      <br><br>
+      <div style="margin-left: 500px;" class="cnt-label">
+        <span><b style="font-size:18px;margin-left: -243px;color:black;font-size:bolder;">Page Id :</b><span
+            style="font-size:16px;">&nbsp;{{d.id}}</span></span>
+        <br>
+        <span><b style="font-size:18px;margin-left: -243px;color:black;font-size:bolder;">Name :</b><span
+            style="font-size:16px;">&nbsp; {{d.user_name}}</span></span>
+        <br>
+        <span><b style="font-size:18px;margin-left: -243px;color:black;font-size:bolder;">Page Category :</b><span
+            style="font-size:16px;">&nbsp;{{d.page_category}}</span></span>
+        <br>
+
+        <span><b style="font-size:18px;margin-left: -243px;"></b> <a href={{d.page_link}}
+            style="color:black;font-size:bolder;"><b>Invite Link:</b>&nbsp;&nbsp;{{d.page_link}}</a><br></span><BR>
+        <button class="btn btn-sm me-4"
+          style="margin-left: -245px; background-color: whitesmoke; color: black; font-size: 14px;">
+          <span class="fa-solid fa-user-group fs-6"></span>&nbsp;&nbsp;
+          {{d.friends_count}}<B>&nbsp;&nbsp;Followers</B>
+        </button>
+
+        <button class="btn btn-sm text-white me-4" data-bs-toggle="modal" data-bs-target="#myModalfacebookpost"
+          style="margin-left:18px;background-color:#0093f7;font-size: 12px;">
+          <b>Post</b> </button>
+
+      </div>
+    </div>
+
+
+  </div>
+  <br>
+  <div class="table-responsive">
+
+    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+      <table id="product" class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+        <thead>
+          <tr class=" text-white fw-bold fs-6 text-nowrap bg-gradient-darkgreens">
+            <th style="width:2%">S.No</th>
+            <th>Post</th>
+            <th>Date Published</th>
+            <th>Posted Type</th>
+            <th>Caption</th>
+            <th>Views</th>
+            <th>Comments</th>
+            <th>Action</th>
+
+          </tr>
+        </thead>
+        <tbody id="Inbox" #Inbox>
+          <br>
+          <tr
+            *ngFor="let data of facebookpage_list | paginate: { itemsPerPage: pageSize, currentPage: currentPage };let i=index;">
+            <td>{{i+1}}</td>
+
+            <td>
+              <ng-container *ngIf="data.post_type === 'Picture' ">
+                <img src="{{ data.post_url }}" alt="" style="width:69%;height:55px;">
+              </ng-container>
+              <ng-container *ngIf="data.post_type === 'Videos'">
+                <video controls style="width:69%;height:55px;">
+                  <source [src]="data.post_url" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </ng-container>
+              <span *ngIf="!data.post_url"></span>
+            </td>
+
+
+
+            <td style="white-space: nowrap;">{{data.postcreated_time}}</td>
+            <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;{{data.post_type}}</td>
+            <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;{{data.caption}}</td>
+            <td style="white-space: nowrap;">{{data.views_count}}</td>
+            <td style="white-space: nowrap;">{{data.comment_message}}</td>
+            <td> <button title="View" type="button" data-bs-toggle="modal" class="btn eye-button"
+                (click)="onview(data.facebookmain_gid)"><span class="fa-solid fa-eye text-white fs-6"></span></button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <div>Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ (currentPage * pageSize) < facebookpage_list.length ?
+          (currentPage * pageSize) : facebookpage_list.length }} of {{ facebookpage_list.length }} entries </div>
+
+      </div>
+
+      <div class="col me-5">
+        <div class="float-end">
+
+          <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Previous" nextLabel="Next">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+
+</main>
+<!-- The Modal ADD -->
+<form [formGroup]="FacebookImageForm" #form="ngForm">
+  <div class="modal" id="myModalfacebookpost" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+          <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+              class="fas fa-upload fw-bolder fs-3"></i> &nbsp;&nbsp;Facebook Post</h2>
+
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="row"><span class="font-bold"><b>Caption</b><span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+              <input formControlName="image_caption" type="text" pattern="^(?!\s*$).+" class="
+                                 form-control form-control-lg form-control-solid
+                                 custom-input
+                                 mb-3 mb-lg-0
+                                 bg-white
+                                 custom-input
+                               " [ngStyle]="{
+                                 'border-color':
+                                 image_caption.invalid && image_caption.touched
+                                     ? 'red'
+                                     : 'rgb(209, 209, 209)'
+                               }" placeholder="Enter Caption" pattern="^(?!\s*$).+" name="image_caption" required />
+
+            </div>
+            <div *ngIf="image_caption.invalid && (image_caption.dirty || image_caption.touched)">
+              <div *ngIf="image_caption.errors?.['required']  || image_caption.errors?.['whitespace']">
+                <span style="color:red;">Caption is required.</span>
+              </div>
+            </div>
+
+          </div>
+          <br>
+          <span class="font-bold"><b>Image/video Only</b></span>
+          <br>
+          <div class="input-group mb-4" style="margin-left: 12px;width:97%;">
+
+
+
+            <input class="form-control" accept="image/*, video/*" (change)="onChange2($event)"
+              style="margin-left:-8px;width:30%;" type="file" #fileInput />
+
+
+
+
+
+          </div>
+
+
+
+
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="text-center my-4">
+          <button (click)="onsubmit()" type="submit" class="btn-success btn-sm text-white me-2">
+            <i class="bi bi-check-square fs-5"></i>&nbsp;Submit</button>
+
+          <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white"></i> &nbsp;Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,112 @@
+<div class="card shadow-sm">
+
+  <div class="card-header bg-whatsapp" style="color: white;">
+
+    <h3 class="card-title"><i class="bi bi-linkedin" style="font-size: 20px;"></i>&nbsp;&nbsp;Linkedin </h3>
+    <div style="margin: 13px;">
+
+
+      <button title="Create Post" data-bs-toggle="modal" data-bs-target="#myModallinkedinpost"
+        class="btn-secondary btn-sm text-black me-4 "> <i class="bi bi-send"></i>&nbsp;
+        Post</button>
+      <span>
+        <img id="p-link" src="{{profile_photo}}" style="border-radius: 50%; width: 49px; height: 49px;">
+        &nbsp; <span style=" font-size: 14px;">{{user_name}}</span> </span>
+    </div>
+
+
+  </div>
+
+
+
+<div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+  <table id="linkedin_summary" class="table table-striped table-row-bordered border-bottom gs-7">
+    <thead>
+      <tr class="fw-bolder fs-5 text-nowrap bg-mail text-white align-middle">
+
+        <th>S.No</th>
+        <th>Caption</th>
+
+        <th>Posted Type</th>
+        <th>Date Published</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of linkedin_summary; let i=index;">
+        <td>{{i+1}}</td>
+        <td style="white-space: nowrap;">{{data.message_content}}</td>
+
+
+        <td style="white-space: nowrap;">&nbsp;&nbsp;&nbsp;{{data.upload_type}}</td>
+
+        <td style="white-space: nowrap;">{{data.created_date}}</td>
+
+
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+<form [formGroup]="LinkedinForm" #form="ngForm">
+  <div class="modal" id="myModallinkedinpost" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+          <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+              class="fas fa-upload fw-bolder fs-3"></i> &nbsp;&nbsp;Linkedin Post</h2>
+
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="row"><span class="font-bold"><b>Post Content</b><span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+
+              <textarea formControlName="body_content" type="text" pattern="^(?!\s*$).+" class="
+              form-control form-control-lg form-control-solid
+              custom-input
+              mb-3 mb-lg-0
+              bg-white
+              custom-input
+            " [ngStyle]="{
+              'border-color':
+              body_content.invalid && body_content.touched
+                  ? 'red'
+                  : 'rgb(209, 209, 209)'
+            }" placeholder="Enter Entity Name" pattern="^(?!\s*$).+" name="body_content" required rows="3"></textarea>
+
+            </div>
+            <div *ngIf="body_content.invalid && (body_content.dirty || body_content.touched)">
+              <div *ngIf="body_content.errors?.['required'] || body_content.errors?.['whitespace']">
+                <span style="color:red;">Caption is required.</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="text-center my-4">
+          <button (click)="onsubmit()" [disabled]="LinkedinForm.invalid" [ngClass]="{
+            'primary-button': !LinkedinForm.invalid,
+            'secondary-button': LinkedinForm.invalid
+          }" data-bs-dismiss="modal">
+            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Post
+          </button>&nbsp;
+
+          <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onclose()">
+            <i class="fas fa-close text-white"></i>&nbsp; Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>

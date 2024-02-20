@@ -1,0 +1,486 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Data;
+using ems.hrm.Models;
+using System.Data.Odbc;
+using ems.utilities.Functions;
+using System.Web.Script.Serialization;
+using System.Text;
+
+namespace ems.hrm.DataAccess
+{
+    public class DaHrmTrnDashboard
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        OdbcConnection objODBCconnection;
+        OdbcDataReader objODBCDatareader, objODBCDatareader1, objODBCDatareader2;
+        DataTable dt_datatable;
+        string msSQL;
+        string msGetGID, lsdate, msGetdtlGID, gid;
+        int mnResult;
+        string strClientIP;
+        TimeSpan time1 = new TimeSpan();
+        TimeSpan time2 = new TimeSpan();
+        TimeSpan lslunch = new TimeSpan();
+        TimeSpan lstotal = new TimeSpan();
+        string lstime;
+        string lsholiday, lsemployee, hierary_level;
+        DataSet ds_tPR = new DataSet();
+        string lsgid = "";
+        int i = 1, MailFlag;
+        string lsEmployee_Gid_list;
+        Double lscount;
+        DataTable objTblRQ;
+        DataTable table;
+        string employee;
+        string attendancelogintmp_gid, attendancelogouttmp_gid;
+        DataTable objTblemployee;
+        string lsshift_gid;
+        string lsflag;
+        DateTime lsfromtime, lstotime;
+        TimeSpan lstotaltime;
+        string lblEmployeeGID_whatsapp, lsmobile_no, lsmessage, lsapproved_by;
+        string lsname, lsupdate_flag;
+        string lswhatsappflag, lsemployeeGID, supportmail, emailpassword;
+        string employee_mailid, employeename, fromhours, attendance_date;
+        string message, lsapprovedby, applied_by;
+        TimeSpan lstotalpermissiontime;
+        TimeSpan lspermissiontime;
+        String totalhr, totalmin, msGetGIDpermission;
+
+        public void DaGetCompanyPolicies(mdlcompanypolicies values)
+        {
+            msSQL = " select policy_name,policy_desc from hrm_trn_tcompanypolicy; ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<CompanyPolicies>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new CompanyPolicies
+                    {
+                        policy_name = dt["policy_name"].ToString(),
+                        policy_desc = dt["policy_desc"].ToString(),
+                    });
+                    values.CompanyPolicies = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public bool DaPostIAttendanceLogin(string employee_gid, mdliAttendance values)
+        {
+            try
+            {
+                strClientIP = "";
+
+
+                msSQL = " select a.* " +
+                        " from hrm_trn_tattendance a left join hrm_mst_temployee b on a.employee_gid = b.employee_gid  " +
+                        "  where b.employee_gid ='" + employee_gid + "' and" +
+                        " a.attendance_date ='" + DateTime.Now.ToString("yyyy-MM-dd") + "%'  and b.attendance_flag='Y'";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow objtblrow in dt_datatable.Rows)
+                    {
+                        msSQL = " update hrm_trn_tattendance set " +
+                                " login_time='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                                " login_time_audit='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                                " employee_attendance='Present'," +
+                                " attendance_source='Manual'," +
+                                " login_ip='" + strClientIP + "'," +
+                                " attendance_type='P'," +
+                                " update_flag='N'," +
+                                " updated_date='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' " +
+                                " where employee_gid='" + employee_gid + "' and attendance_date='" + DateTime.Now.ToString("yyyy-MM-dd") + "' ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    }
+                }
+                else
+                {
+                    msGetGID = objcmnfunctions.GetMasterGID("HATP");
+                    msSQL = "Insert Into hrm_trn_tattendance" +
+                        "(attendance_gid," +
+                        " employee_gid," +
+                        " attendance_date," +
+                        " attendance_source," +
+                        " login_time," +
+                        " login_time_audit," +
+                        " employee_attendance," +
+                        " login_ip, " +
+                        " location," +
+                        " created_date," +
+                        " attendance_type)" +
+                        " VALUES ( " +
+                        "'" + msGetGID + "', " +
+                        "'" + employee_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                        "'Manual'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                        "'Present'," +
+                        "'" + strClientIP + "'," +
+                        "'" + values.location + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                        "'P')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    return true;
+                }
+                else
+                {
+                    values.status = false;
+                    return false;
+                }
+            }
+            catch
+            {
+                values.status = false;
+                return false;
+            }
+        }
+
+        public bool DaGetMonthlyAttendence(monthlyAttendence values, string employee_gid)
+        {
+            try
+            {
+
+                values.monthyear = DateTime.Now.ToString("MMMM yyyy");
+                lsdate = DateTime.Now.ToString("MM");
+
+                msSQL = " select concat(c.user_code,'<br>',c.user_firstname,' ' ,c.user_lastname) as 'Employee'  , " +
+                       " cast((select count(attendance_gid) from hrm_trn_tattendance x  where (x.employee_gid = '" + employee_gid + "') " +
+                       " and MONTH(x.attendance_date) = '" + lsdate + "' and year(x.attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' group by a.employee_gid) as char) as 'totaldays', " +
+                       " cast((select count(attendance_type) from hrm_trn_tattendance x  where (x.employee_gid = '" + employee_gid + "') " +
+                       " and attendance_type = 'P' and MONTH(x.attendance_date) = '" + lsdate + "'  and year(x.attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' group by a.employee_gid) as char) as Present, " +
+                       " cast((select count(attendance_type) from hrm_trn_tattendance x " +
+                       " where (x.employee_gid = '" + employee_gid + "') and attendance_type = 'A' and MONTH(x.attendance_date) = '" + lsdate + "'  and year(x.attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' " +
+                       " group by a.employee_gid) as char) as 'Absent', " +
+                       " cast((select ifnull(SUM(if (x.day_session = 'NA','1','0.5')),0) as count from hrm_trn_tattendance x " +
+                       " where (x.employee_gid = '" + employee_gid + "') and employee_attendance = 'Leave' and MONTH(x.attendance_date) = '" + lsdate + "' " +
+                       "  and year(x.attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' group by a.employee_gid ) as char) as 'Leave', " +
+                       " cast((select count(attendance_type) from hrm_trn_tattendance x " +
+                       "  where (x.employee_gid = '" + employee_gid + "') and employee_attendance = 'Holiday' and  MONTH(x.attendance_date) = '" + lsdate + "'" +
+                       "  and year(x.attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' group by a.employee_gid) as char) as 'Holiday', " +
+                       " cast((select count(attendance_type) from hrm_trn_tattendance x " +
+                       " where(a.employee_gid = x.employee_gid) and attendance_type = 'WH' and MONTH(x.attendance_date) = '" + lsdate + "'" +
+                       "  and year(x.attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' group by a.employee_gid ) as char) as 'Weekoff' " +
+                       " from hrm_mst_temployee a " +
+                       " inner join adm_mst_tuser c on a.user_gid = c.user_gid " +
+                       " left join hrm_trn_temployeetypedtl h on a.employee_gid = h.employee_gid " +
+                       " where a.attendance_flag = 'Y' and a.employee_gid = '" + employee_gid + "'";
+                objODBCDatareader = objdbconn.GetDataReader(msSQL);
+                if (objODBCDatareader.HasRows == true)
+                {
+                    if (objODBCDatareader["totaldays"].ToString() == "")
+                    {
+                        values.totalDays = "0";
+                    }
+                    else
+                    {
+                        values.totalDays = objODBCDatareader["totaldays"].ToString();
+                    }
+
+                    if (objODBCDatareader["Present"].ToString() == "")
+                    {
+                        values.countPresent = "0";
+                    }
+                    else
+                    {
+                        values.countPresent = objODBCDatareader["Present"].ToString();
+                    }
+                    if (objODBCDatareader["Absent"].ToString() == "")
+                    {
+                        values.countAbsent = "0";
+                    }
+                    else
+                    {
+                        values.countAbsent = objODBCDatareader["Absent"].ToString();
+                    }
+                    if (objODBCDatareader["Leave"].ToString() == "")
+                    {
+                        values.countLeave = "0";
+                    }
+                    else
+                    {
+                        values.countLeave = objODBCDatareader["Leave"].ToString();
+                    }
+                    if (objODBCDatareader["Holiday"].ToString() == "")
+                    {
+                        values.countholiday = "0";
+                    }
+                    else
+                    {
+                        values.countholiday = objODBCDatareader["Holiday"].ToString();
+                    }
+                    if (objODBCDatareader["Weekoff"].ToString() == "")
+                    {
+                        values.countWeekOff = "0";
+                    }
+                    else
+                    {
+                        values.countWeekOff = objODBCDatareader["Weekoff"].ToString();
+                    }
+
+                }
+                objODBCDatareader.Close();
+
+                var getdata = new List<last6MonthAttendence_list>();
+                msSQL = " select concat(CAST(monthname(attendance_date) AS char),' ',year(attendance_date)) as monthname,count(attendance_gid) as total, " +
+                       " (select count(attendance_gid) from hrm_trn_tattendance b where monthname(a.attendance_date) = monthname(b.attendance_date) " +
+                       " and year(a.attendance_date) = year(b.attendance_date) and  b.employee_gid = '" + employee_gid + "' and attendance_type = 'P' group by monthname(attendance_date)) AS present, " +
+                       " (select count(attendance_gid) from hrm_trn_tattendance b where monthname(a.attendance_date) = monthname(b.attendance_date) " +
+                       " and year(a.attendance_date) = year(b.attendance_date) and  b.employee_gid = '" + employee_gid + "' and attendance_type = 'A'  group by monthname(attendance_date)) AS absent " +
+                       " from hrm_trn_tattendance a where employee_gid = '" + employee_gid + "' " +
+                       " and  year(attendance_date) = '" + DateTime.Now.ToString("yyyy") + "' " +
+                       " group by monthname(attendance_date) ORDER BY MONTH(attendance_date) desc";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    if (dt_datatable.Rows.Count < 5)
+                    {
+                        int count = 5 - dt_datatable.Rows.Count;
+                        for (int i = 0; i < count; i++)
+                        {
+                            getdata.Add(new last6MonthAttendence_list
+                            {
+                                monthname = "",
+                                countPresent = "",
+                                countAbsent = ""
+                            });
+                        }
+                    }
+                    foreach (DataRow dr_datarow in dt_datatable.Rows)
+                    {
+                        getdata.Add(new last6MonthAttendence_list
+                        {
+                            monthname = dr_datarow["monthname"].ToString(),
+                            countPresent = dr_datarow["present"].ToString(),
+                            countAbsent = dr_datarow["absent"].ToString()
+                        });
+                    }
+
+
+                    values.last6MonthAttendence_list = getdata;
+                }
+                dt_datatable.Dispose();
+                values.status = true;
+                return true;
+            }
+            catch
+            {
+                values.status = false;
+                return false;
+            }
+        }
+
+        public bool DaGetLoginSummary(string employee_gid, mdlloginsummary objloginsummary)
+        {
+            try
+            {
+                msSQL = " SELECT attendancelogintmp_gid,date_format(created_date,'%d-%m-%Y') as applydate, date_format(attendance_date,'%d-%m-%Y') as attendancedate," +
+                   " time_format(login_time, '%H:%i %p') as login,status,remarks from hrm_tmp_tattendancelogin " +
+                   " where employee_gid = '" + employee_gid + "' order by attendancelogintmp_gid desc";
+
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getloginsummary = new List<loginsummary_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dr_datarow in dt_datatable.Rows)
+                    {
+                        getloginsummary.Add(new loginsummary_list
+                        {
+                            attendancelogintmp_gid = (dr_datarow["attendancelogintmp_gid"].ToString()),
+                            applyDate = (dr_datarow["applydate"].ToString()),
+                            attendanceDate = (dr_datarow["attendancedate"].ToString()),
+                            login_Time = (dr_datarow["login"].ToString()),
+                            login_status = (dr_datarow["status"].ToString()),
+                            remarks = (dr_datarow["remarks"].ToString())
+                        });
+                    }
+                    objloginsummary.loginsummary_list = getloginsummary;
+                }
+                dt_datatable.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DaGetLogoutSummary(string employee_gid, mdllogoutsummary objlogoutsummary)
+        {
+            try
+            {
+                msSQL = " SELECT attendancetmp_gid,date_format(created_date,'%d-%m-%Y') as applydate, date_format(attendance_date,'%d-%m-%Y') as attendancedate," +
+                  " time_format(logout_time, '%H:%i %p') as logout,status,remarks from hrm_tmp_tattendance " +
+                  " where employee_gid = '" + employee_gid + "' order by attendancetmp_gid desc";
+
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var getloginsummary = new List<logoutsummary_list>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dr_datarow in dt_datatable.Rows)
+                    {
+                        getloginsummary.Add(new logoutsummary_list
+                        {
+                            attendancetmp_gid = (dr_datarow["attendancetmp_gid"].ToString()),
+                            applyDate = (dr_datarow["applydate"].ToString()),
+                            attendanceDate = (dr_datarow["attendancedate"].ToString()),
+                            logout_Time = (dr_datarow["logout"].ToString()),
+                            logout_status = dr_datarow["status"].ToString(),
+                            remarks = dr_datarow["remarks"].ToString()
+
+                        });
+                    }
+                    objlogoutsummary.logoutsummary_list = getloginsummary;
+                }
+                dt_datatable.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DaGetOnDutySummary(string employee_gid, onduty_detail_list objonduty_details)
+        {
+            try
+            {
+
+                msSQL = " select a.ondutytracker_gid,a.employee_gid,concat(onduty_fromtime, ':', from_minutes) as onduty_from,onduty_reason," +
+                        " concat(onduty_totime, ':', to_minutes) as onduty_to," +
+                        " date_format(ondutytracker_date,'%d-%m-%Y') as ondutytracker_date,onduty_duration,ondutytracker_status," +
+                        " concat(c.user_firstname, ' ', c.user_lastname) as onduty_approveby,onduty_approvedate" +
+                        " from hrm_trn_tondutytracker a" +
+                        " left join hrm_mst_temployee b on b.employee_gid = a.onduty_approveby" +
+                        " left join adm_mst_tuser c on c.user_gid = b.user_gid" +
+                        " where a.employee_gid = '" + employee_gid + "' order by ondutytracker_gid desc ";
+
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var onduty_details = new List<onduty_details>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dr_datarow in dt_datatable.Rows)
+                    {
+                        onduty_details.Add(new onduty_details
+                        {
+                            ondutytracker_gid = (dr_datarow["ondutytracker_gid"].ToString()),
+                            onduty_from = dr_datarow["onduty_from"].ToString(),
+                            onduty_to = dr_datarow["onduty_to"].ToString(),
+                            onduty_date = (dr_datarow["ondutytracker_date"].ToString()),
+                            onduty_duration = dr_datarow["onduty_duration"].ToString(),
+                            ondutytracker_status = dr_datarow["ondutytracker_status"].ToString(),
+                            approved_by = dr_datarow["onduty_approveby"].ToString(),
+                            approved_date = dr_datarow["onduty_approvedate"].ToString(),
+                            onduty_reason = dr_datarow["onduty_reason"].ToString()
+
+                        });
+                    }
+                    objonduty_details.onduty_details = onduty_details;
+                }
+                dt_datatable.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DaGetCompOffSummary(string employee_gid, compoff_list objcompoff_details)
+        {
+            try
+            {
+
+                msSQL = " select a.compensatoryoff_gid,date_format(a.actualworking_fromdate,'%d-%m-%Y') as actualworking_fromdate, " +
+                        " date_format(a.actualworking_fromdate,'%d-%m-%Y') as actualworking_fromdate, " +
+                        " date_format(a.compensatoryoff_applydate,'%d-%m-%Y') as compensatoryoff_applydate, " +
+                        " a.compoff_noofdays, " +
+                        " a.compensatoryoff_reason,a.compensatoryoff_status from hrm_trn_tcompensatoryoff a " +
+                      " where a.employee_gid ='" + employee_gid + "' order by created_date desc ";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var compoff_details = new List<compoffSummary_details>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dr_datarow in dt_datatable.Rows)
+                    {
+                        compoff_details.Add(new compoffSummary_details
+                        {
+                            compensatoryoff_gid = (dr_datarow["compensatoryoff_gid"].ToString()),
+                            compoff_date = (dr_datarow["compensatoryoff_applydate"].ToString()),
+                            atual_working = (dr_datarow["actualworking_fromdate"].ToString()),
+
+                            compoff_reason = dr_datarow["compensatoryoff_reason"].ToString(),
+                            compoff_status = dr_datarow["compensatoryoff_status"].ToString()
+
+                        });
+                    }
+                    objcompoff_details.compoffSummary_details = compoff_details;
+                }
+                dt_datatable.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool DaGetPermissionSummary(string employee_gid, permission_details_list objpermission_details)
+        {
+            try
+            {
+
+                msSQL = " select a.permissiondtl_gid,a.permission_gid,date_format(a.permission_date,'%d-%m-%Y') as applydate,a.permission_applydate, " +
+                        " concat(a.permission_fromhours,':',a.permission_frommins) as permission_fromhours , " +
+                        " concat(a.permission_tohours,':',a.permission_tomins) as permission_tohours, " +
+                        " concat(a.permission_totalhours,':',a.total_mins) as permission_totalhours, " +
+                     " a.permission_reason,a.permission_status,concat(c.user_firstname,' ',c.user_lastname) as approvedby,a.permission_approveddate from hrm_trn_tpermissiondtl a " +
+                    " left join hrm_mst_temployee b on b.employee_gid =a.permission_approvedby " +
+                    "left join adm_mst_tuser c on c.user_gid= b.user_gid where a.employee_gid ='" + employee_gid + "' order by a.permissiondtl_gid desc";
+                dt_datatable = objdbconn.GetDataTable(msSQL);
+                var permission_details = new List<permissionSummary_details>();
+                if (dt_datatable.Rows.Count != 0)
+                {
+                    foreach (DataRow dr_datarow in dt_datatable.Rows)
+                    {
+                        permission_details.Add(new permissionSummary_details
+                        {
+                            permission_gid = (dr_datarow["permission_gid"].ToString()),
+                            permissiondtl_gid = (dr_datarow["permissiondtl_gid"].ToString()),
+                            permission_date = (dr_datarow["applydate"].ToString()),
+                            permission_applydate = (dr_datarow["permission_applydate"].ToString()),
+                            permission_from = (dr_datarow["permission_fromhours"].ToString()),
+                            permission_to = dr_datarow["permission_tohours"].ToString(),
+                            permission_total = dr_datarow["permission_totalhours"].ToString(),
+                            permission_reason = dr_datarow["permission_reason"].ToString(),
+                            permission_status = dr_datarow["permission_status"].ToString(),
+                            approved_by = dr_datarow["approvedby"].ToString(),
+                            approved_date = dr_datarow["permission_approveddate"].ToString()
+
+                        });
+                    }
+                    objpermission_details.permissionSummary_details = permission_details;
+                }
+                dt_datatable.Dispose();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
+}

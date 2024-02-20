@@ -1,0 +1,83 @@
+<div class="card shadow-lg rounded-top">
+  <form [formGroup]="roleform">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary" >
+      <h3 class="fw-bolder text-white"><i class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Edit Role</h3>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap">
+      <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Role Code</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" readonly class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary" placeholder="Role Code" formControlName="Role_Code" [(ngModel)]="txtrolecode"/> 
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Role Title<span class="ms-1 text-red"> *</span></b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" [ngStyle]="{ 'border-color': RoleTitle.invalid && RoleTitle.touched ? 'red' : 'rgb(209, 209, 209)' }" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input" [(ngModel)]="txtroletitle" placeholder="Role Title" required formControlName="Role_Title" pattern="^(?!\s*$).+" [class.is-invalid]="RoleTitle.invalid && (RoleTitle.dirty || RoleTitle.touched)"/>
+          <div *ngIf="RoleTitle.invalid && (RoleTitle.dirty || RoleTitle.touched)" class="invalid-feedback">
+            <div *ngIf="RoleTitle.errors?.['required']">
+              <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Role title is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap">
+      <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Reporting To Role</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <ng-select [items]="reportingtoList"  class="custom col-lg-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="role_name" bindValue="role_gid" placeholder="Select an option" formControlName="Reporting_to"[(ngModel)]="txtreportingto"></ng-select>
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Probation Period<span class="ms-1 text-red"> *</span></b>
+        <div class="d-flex flex-row   flex-wrap">
+          <div class="col-12 col-lg-9 col-md-9 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input type="number" [ngStyle]="{ 'border-color': ProbationPeriod.invalid && ProbationPeriod.touched ? 'red' : 'rgb(209, 209, 209)' }" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input" [(ngModel)]="txtprobationperiod" placeholder="Probation Period" required formControlName="Probation_Period" pattern="^(?!\s*$).+" [class.is-invalid]="ProbationPeriod.invalid && (ProbationPeriod.dirty || ProbationPeriod.touched)"/>
+              <div *ngIf="ProbationPeriod.invalid && (ProbationPeriod.dirty || ProbationPeriod.touched)" class="invalid-feedback">
+                <div *ngIf="ProbationPeriod.errors?.['required']">
+                  <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Probation period is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-6">
+              <span><b>Month(s)</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap">
+      <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Job Description<span class="ms-1 text-red"> *</span></b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <textarea [ngStyle]="{ 'border-color': JobDescription.invalid && JobDescription.touched ? 'red' : 'rgb(209, 209, 209)' }" class="form-control rounded" formControlName="Job_Description" pattern="^(?!\s*$).+" [(ngModel)]="txtjobdescription" rows="3" [class.is-invalid]="JobDescription.invalid && (JobDescription.dirty || JobDescription.touched)"></textarea>
+          <div *ngIf="JobDescription.invalid && (JobDescription.dirty || JobDescription.touched)" class="invalid-feedback">
+            <div *ngIf="JobDescription.errors?.['required']">
+              <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Job description is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Role Responsible</b>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <textarea class="form-control rounded" rows="3" formControlName="Role_Responsible" [(ngModel)]="txtroleresponsible"></textarea>
+        </div>
+      </div>
+    </div>      
+      
+    <div class="text-center my-4 mt-10 mb-10">
+      <button class="btn-success btn-sm text-white me-2"(click)="role_update()"[disabled]="roleform.invalid">     
+        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+      </button>
+      <button class="btn-primary btn-sm text-white me-4" (click)="backbutton()">
+        <i class="fas fa-arrow-left"></i> &nbsp;Back
+      </button>
+    </div>
+  </form>
+</div>
+    

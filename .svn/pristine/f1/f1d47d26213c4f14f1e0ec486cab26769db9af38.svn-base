@@ -1,0 +1,177 @@
+<div class="card">
+    <div class="card-header bg-mail" style="color: white;">
+        <h3 class="card-title"><i class="fa-regular fa-envelope"
+                style="font-size: 20px;"></i>&nbsp;&nbsp;{{template_name}}</h3>
+        <div style="margin: 13px">
+            <button title="Back" class="btn-secondary btn-sm text-black me-4 " data-bs-toggle="modal"
+                data-bs-target="#popup"> <i class="fa-solid fa-eye "></i>
+                Preview</button>
+
+            <button title="Back" class="btn-secondary btn-sm text-black me-4 " (click)="onback()"> <i
+                    class="fas fa-arrow-left"></i>
+                Back</button>
+        </div>
+    </div>
+
+    <!-- mail split screen starts -->
+    <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-3 fs-6 border-bottom text-center mt-2" id="myTab"
+        role="tablist">
+        <li class="active justify-content-center col nav-link sample border rounded-0 p-4 count" data-bs-toggle="tab"
+            href="#kt_tab_pane_1">
+            <b>Unsent Contacts</b>
+        </li>
+        <li class="justify-content-center col nav-link sample border rounded-0 p-4 count" data-bs-toggle="tab"
+            href="#kt_tab_pane_2">
+            <b>Sent Contacts</b>
+        </li>
+    </ul>
+
+    <!-- mail split screen ends-->
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+            <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded tab-content table-responsive"
+                id="myTabContent">
+                <table id="mailtemplatesendsummary_list"
+                    class="table table-striped table-row-bordered border-bottom gs-7 ">
+                    <thead>
+                        <tr class="fw-bolder fs-5 text-nowrap bg-mail text-white Align-middle">
+                            <th style="width:2px;">
+                                <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()" /> 
+                            </th>
+                            <th>Contact Person</th>
+                            <th>Email Address</th>
+                            <th>Source</th>
+                            <th>Customer Type</th>
+                            <th>Customer Address</th>
+                            <th>Contact </th>
+                            <th>Lead Assigned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of mailtemplatesendsummary_list; let i=index;" class="align-middle">
+                            <td> <input type="checkbox" (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(data) : null"
+                                    [checked]="selection.isSelected(data)" />
+                            </td>
+                            <td><span>{{data.names}}<span *ngIf="data.names  === ''"> - </span></span></td>
+                            <td><span>{{data.email}}<span *ngIf="data.email  === ''"> - </span></span></td>
+                            <td><span>{{data.source_name}}<span *ngIf="data.source_name  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                            <td><span>{{data.customer_type}}<span *ngIf="data.default_company  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                            <td><span>{{data.address1}} {{data.address2}} {{data.city}} {{data.state}}<span
+                                        *ngIf="data.address1  === '' && data.address2  === '' && data.city  === ''&& data.state  === ''">
+                                        - </span></span></td>
+                            <td><span>{{data.default_phone}}<span *ngIf="data.default_phone  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                            <td><span>{{data.lead_status}}<span *ngIf="data.lead_status  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center my-4">
+                    <button type="button" class="btn-success btn-sm text-white me-2" data-bs-toggle="modal"
+                        data-bs-target="#myModaladd" style="width: 93px;text-align: center;height: 33px;"
+                        (click)="onsend()">
+                        <i class="fa-solid fa-paper-plane text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="kt_tab_pane_2" role="tabpanel">
+            <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded tab-content table-responsive"
+                id="myTabContent">
+                <table id="mailtemplatesendsummary_list" class="table table-striped table-row-bordered border-bottom gs-7 ">
+                    <thead>
+                        <tr class="fw-bolder fs-5 text-nowrap bg-mail text-white Align-middle">
+                            <th style="width:2px;">
+                                <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()" /> All
+                            </th>
+                            <th>Contact Person</th>
+                            <th>Email Address</th>
+                            <th>Source</th>
+                            <th>Customer Type</th>
+                            <th>Customer Address</th>
+                            <th>Contact </th>
+                            <th>Lead Assigned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of mailtemplatesendsummary_list; let i=index;" class="align-middle">
+                            <td> <input type="checkbox" (click)="$event.stopPropagation()"
+                                    (change)="$event ? selection.toggle(data) : null"
+                                    [checked]="selection.isSelected(data)" />
+                            </td>
+                            <td><span>{{data.names}}<span *ngIf="data.names  === ''"> - </span></span></td>
+                            <td><span>{{data.email}}<span *ngIf="data.email  === ''"> - </span></span></td>
+                            <td><span>{{data.source_name}}<span *ngIf="data.source_name  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                            <td><span>{{data.customer_type}}<span *ngIf="data.default_company  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                            <td><span>{{data.address1}} {{data.address2}} {{data.city}} {{data.state}}<span
+                                        *ngIf="data.address1  === '' && data.address2  === '' && data.city  === ''&& data.state  === ''">
+                                        - </span></span></td>
+                            <td><span>{{data.default_phone}}<span *ngIf="data.default_phone  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                            <td><span>{{data.lead_status}}<span *ngIf="data.lead_status  === ''"
+                                        style="  color: black;font-weight:bolder;"> - </span></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center my-4">
+                    <button type="button" class="btn-success btn-sm text-white me-2" data-bs-toggle="modal"
+                        data-bs-target="#myModaladd" style="width: 93px;text-align: center;height: 33px;"
+                        (click)="onsend()">
+                        <i class="fa-solid fa-paper-plane text-white fs-5"></i> &nbsp;&nbsp;&nbsp; Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- mail template popup starts-->
+<div class="modal modal-xl" id="popup" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+
+                <div style="margin-top:10px;color:white;font-weight: bold;font-size: 15px;">&nbsp;&nbsp;<i
+                        class="fa-solid fa-eye fw-bolder fs-3"></i> &nbsp;&nbsp;{{template_name}}
+
+                    <button title="Close" class=" btn-sm text-black me-4 float-end"
+                        style="font-size: 15px;border-radius: 5px;" data-bs-dismiss="modal"> <i
+                            class="fas fa-solid fa-x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="overflow-y: auto; max-height: 550px;">
+                <div class="row">
+                    <div class="col">
+                        <span
+                            class="fw-bold text-gray-900 text-hover-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject:
+                        </span>
+                        <a href="#" class=" text-gray-900 text-hover-primary"> {{sub}}</a>
+                    </div>
+                    <div class="col text-end">
+                        <span class="fw-bold text-gray-900 text-hover-primary text-end me-3 mt-1">Created
+                            Date:</span>
+                        <a href="#" class=" text-gray-900 text-hover-primary me-3">{{created_date}}</a>
+                    </div>
+                </div>
+                <div class="outer-container">
+                    <div class="inner-container" [innerHTML]="body">
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- mail template popup ends -->

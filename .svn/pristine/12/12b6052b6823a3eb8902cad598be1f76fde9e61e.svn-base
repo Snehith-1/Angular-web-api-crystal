@@ -1,0 +1,23 @@
+.background-color{
+    background: rgb(203, 2, 19);
+    background: radial-gradient(circle, rgb(249, 14, 65) 0%, rgb(177, 73, 78) 100%); 
+}
+.background-color1{
+    background: rgb(2, 159, 203);
+    background: radial-gradient(circle, rgb(105, 214, 253) 0%, rgb(86, 183, 218) 100%); 
+}
+.background-color2{
+    background: rgb(2, 203, 15);
+    background: radial-gradient(circle, rgb(69, 219, 0) 0%, rgb(73, 177, 78) 100%); 
+}
+.background-color3{
+    background: rgb(156, 2, 203);
+    background: radial-gradient(circle, rgb(185, 39, 198) 0%, rgb(156, 51, 185) 100%); 
+}
+.background-color4{
+    background: rgb(5, 5, 166);
+    background: radial-gradient(circle, rgb(92, 89, 255) 0%, rgb(77, 88, 246) 100%); 
+}
+.bg-raise{
+    background-color: #cd0e70 !important;
+  }

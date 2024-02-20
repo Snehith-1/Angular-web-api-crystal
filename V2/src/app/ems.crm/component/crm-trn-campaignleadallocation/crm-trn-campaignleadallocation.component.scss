@@ -1,0 +1,23 @@
+.card-title1 {
+    display: inline-block; /* or use 'inline' for full inline display */
+    margin-right: 50px; /* Add some margin to separate the elements */
+}
+
+#user
+{
+    color: rgba(15, 88, 246, 0.968);
+    font-weight: 300;
+}
+#assign
+{
+    margin-left: 100px;
+}
+.card-title1#assign {
+    margin-right: 10px; /* Adjust the value to control spacing */
+  }
+  .card-title1#team {
+    margin-right: 10px; /* Adjust the value to control spacing */
+  }
+  .card-title1#records {
+    margin-right: 10px; /* Adjust the value to control spacing */
+  }

@@ -1,0 +1,264 @@
+<div class="m-12">
+    <form [formGroup]="reactiveForm" #form="ngForm">
+      <div class="card shadow-lg rounded-top" style="top:-15px;">
+        <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+          <h3 class="fw-bolder text-white">
+            <i class="fas fa-pencil fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Edit
+            Lead Details
+          </h3>
+        </div>
+        <div class="m-3 mt-5 border card">
+          <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0">
+              <h5 class="fw-bolder text-blue">Industry</h5>
+            </div>
+          </div>
+
+        <input formControlName="leadbank_gid" hidden>
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">Region</span>
+            <ng-select formControlName="region_name"  [(ngModel)]="selectedregion_name" [class.is-invalid]="
+            region_name.invalid && (region_name.dirty || region_name.touched) " [items]="regionnamelist"
+              class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="region_name"
+              bindValue="region_gid"placeholder="--Select Region--"></ng-select>
+          </div>
+
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">Source</span>
+            <ng-select formControlName="source_name" [(ngModel)]="selectedsource_name" [class.is-invalid]="
+            source_name.invalid && (source_name.dirty || source_name.touched)" [items]="source_list"
+              class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="source_name"
+              bindValue="source_gid"placeholder="--Select Source--"></ng-select>
+
+          </div>
+
+        </div>
+        </div>
+         
+          <div class="m-3 mt-5 border card">
+            <div class="card-header bg-lightblue card-height55">
+              <div class="card-title m-0">
+                <h5 class="fw-bolder text-blue">Contact Person </h5>
+              </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Contact Person Name<span class="ms-1 text-red">*</span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text" formControlName="leadbankcontact_name" class="
+                          f form-control form-control-lg form-control-solid
+                          custom-input
+                          mb-3 mb-lg-0
+                          bg-white
+                          custom-input
+                        " [ngStyle]="{
+                          'border-color':
+                          leadbankcontact_name.invalid && leadbankcontact_name.touched
+                              ? 'red'
+                              : 'rgb(209, 209, 209)'
+                        }" pattern="^(?!\s*$).+" name="leadbankcontact_name" />
+                  <div *ngIf="leadbankcontact_name.invalid && (leadbankcontact_name.dirty || leadbankcontact_name.touched)"
+                    class="text-red">
+                    <div *ngIf="leadbankcontact_name.errors?.['required']">
+                      Contact person name is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Designation</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+  
+                  <input formControlName="designation" type="text" class="
+                                        form-control form-control-lg form-control-solid
+                                        borderc-secondary
+                                        bg-white
+                                        custom-input
+                                        mb-3 mb-lg-0
+                                    " name="designation" />
+                </div>
+              </div>
+  
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Mobile Number</span>
+                <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                  <ngx-intl-tel-input [cssClass]="'form-control custom-width'"
+                      [preferredCountries]="[CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="true"
+                      [enablePlaceholder]="true" [searchCountryFlag]="true"
+                      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                      [selectedCountryISO]="CountryISO.UnitedKingdom" [phoneValidation]="true"
+                      name="phone" [maxLength]="15" formControlName="phone">
+                  </ngx-intl-tel-input>
+              </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold"> Email Address</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input type="text" formControlName="email" class="
+                        form-control form-control-lg form-control-solid
+                        custom-input
+                        mb-3 mb-lg-0
+                        bg-white
+                        custom-input
+                      " [ngStyle]="{
+                        'border-color':
+                          email.invalid && email.touched
+                            ? 'red'
+                            : 'rgb(209, 209, 209)'
+                      }"
+                      maxlength="320"
+                    name="email" />
+                  <div *ngIf="
+                      email.invalid &&
+                          (email.dirty || email.touched)
+                        " class="text-red">
+                    <div *ngIf="email.errors?.['pattern']" class="error-text">
+                      Enter Valid email.   
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Customer Type</span><span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <ng-select formControlName="customer_type"  [(ngModel)]="selectedCustomerType" [class.is-invalid]="
+                  customer_type.invalid && (customer_type.dirty || customer_type.touched)" [items]="customertype_list"
+                    class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="customer_type1"
+                    bindValue="customertype_gid1" placeholder="--Select Customer Type--"></ng-select>
+              
+                  <div *ngIf="customer_type.invalid && (customer_type.dirty || customer_type.touched)" class="text-red">
+                    <div *ngIf="customer_type.errors?.['required']">
+                      Customer Type is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+            </div>
+             </div>
+          <div class="m-3 mt-5 border card">
+            <div class="card-header bg-lightblue card-height55">
+              <div class="card-title m-0">
+                <h5 class="fw-bolder text-blue">Address</h5>
+              </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Address Line 1</span>
+                <div class="col-lg-11 fv-row mt-2">
+                  <input formControlName="leadbank_address1" type="text" class="
+                      form-control form-control-lg form-control-solid
+                      bg-white
+                      custom-input
+                      mb-3 mb-lg-0
+                      borderc-secondary
+                    " name="leadbank_address1" />
+                </div>
+              </div>
+    
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Address Line 2</span>
+                <div class="col-lg-11 fv-row mt-2">
+                  <input formControlName="leadbank_address2" type="text" class="
+                      form-control form-control-lg form-control-solid
+                      bg-white
+                      custom-input
+                      mb-3 mb-lg-0
+                      borderc-secondary
+                    " name="leadbank_address2" />
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Country</span>
+                <ng-select formControlName="country_name" [(ngModel)]="selectedcountry_name" [items]="country_list" class="
+              custom
+              col-lg-11 col-12 col-md-11 col-sm-11
+              fv-row
+              mt-2
+            " bindLabel="country_name" bindValue="country_gid"placeholder="--Select Country--">
+                </ng-select>
+              </div>
+            </div>
+            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">State</span>
+                <div class="col-lg-11 fv-row mt-2">
+                  <input formControlName="leadbank_state" type="text" class="
+                      form-control form-control-lg form-control-solid
+                      borderc-secondary
+                      bg-white
+                      custom-input
+                      mb-3 mb-lg-0
+                    " name="leadbank_state" />
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">City</span>
+                <div class="col-lg-11 fv-row mt-2">
+                  <input formControlName="leadbank_city" type="text" class="
+                      form-control form-control-lg form-control-solid
+                      borderc-secondary
+                      bg-white
+                      custom-input
+                      mb-3 mb-lg-0
+                    " name="leadbank_city" />
+                </div>
+              </div>
+    
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Postal Code</span>
+                <div class="col-lg-11 fv-row  mt-2">
+                  <input type="text" id="leadbank_pin" name="leadbank_pin" formControlName="leadbank_pin" class="
+                          form-control form-control-lg form-control-solid
+                          custom-input
+                          mb-3 mb-lg-0
+                          bg-white
+                          custom-input
+                        " [ngStyle]="{
+                          'border-color':
+                          leadbank_pin.invalid && leadbank_pin.touched
+                              ? 'red'
+                              : 'rgb(209, 209, 209)'
+                        }"  pattern="^[A-Za-z0-9_-]+$"  minlength="5"maxlength="12">
+                  <div *ngIf="
+                        leadbank_pin.invalid &&
+                            (mobile.dirty || leadbank_pin.touched)
+                          " class="text-red">
+                    <div *ngIf="leadbank_pin.errors?.['pattern']" class="error-text">
+                      Enter Valid Postal Code.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">Remarks</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <textarea class="form-control" formControlName="remarks" pattern="^(?!\s*$).+"
+                    id="exampleFormControlTextarea1" rows="1" style="overflow-y: scroll;"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="text-center my-4">
+            <button class="btn-sm text-white me-2" [disabled]="isSubmitting" [ngClass]="{
+                    'primary-button': !reactiveForm.invalid,
+                    'secondary-button': reactiveForm.invalid
+                  }" (click)="validate()">
+              <i class="fas fa-check text-white fs-5"></i> &nbsp; Update
+            </button>
+            <button class="btn-primary btn-sm text-white me-4" (click)="back()">
+              <i class="fas fa-arrow-left"></i> &nbsp; Back
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>

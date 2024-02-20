@@ -1,0 +1,65 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Holiday Grade Summary</h3>
+        </div>
+
+        <div class="col me-5">          
+                <button title="Add Holiday Grade" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end"
+                data-bs-toggle="modal" data-bs-target="#myModaladd"  routerLink="/hrm/HrmTrnAddHolidayAssign">
+                <i class="fas fa-plus"></i> &nbsp;&nbsp;
+                Add Holiday Grade</button>
+                <button title="Add Holiday" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end"
+                data-bs-toggle="modal" data-bs-target="#myModaladd"(click)="HolidayGrade()" > 
+                <i class="fas fa-plus"></i> &nbsp;&nbsp;
+                Add Holiday</button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+            <table id="Holidaygrade_list" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No</th>
+                        <th>Holiday Grade</th> 
+                        <th>Holiday Grade Name</th>                       
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of Holidaygrade_list; let i=index;" class="align-middle">
+                        <td>{{i+1}}</td>
+                        <td>{{data.holidaygrade_code}}</td>
+                        <td>{{data.holidaygrade_name}}</td>                       
+                        <td class="text-center text-nowrap">
+                            <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2"
+                                data-bs-toggle="modal" data-bs-target="#myModaldelete" (click)="openModaldelete(data.holiday_gid)">
+                                <span class="fa-solid fa-trash fs-6" style="color: #ffffff;"></span>
+                            </button>                            
+                        </td>
+                    </tr> 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog del_modal-dialog">
+      <div class="modal-content del_modal-content">
+        <div class="text-center my-4">
+          <h2><b>Are you sure?</b></h2>
+          <p style="display: block;">Do You Want To Delete the Record ?</p>
+          <div class="text-center my-4">
+            <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()"  data-bs-dismiss="modal">
+              <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+            </button>
+            <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+              <i class="fas fa-close text-white me-2"></i>Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,50 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Issue Material Summary</h3> 
+    </div>
+    <br>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="entity_list" class="table table-striped table-row-bordered gy-5 gs-7">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>Issued Date</th>
+                        <th>Issued Ref.No</th>
+                        <th>Cost Center</th>
+                        <th>Branch/Department</th>
+                        <th>Details</th>
+                        <th>MR No</th>
+                        <th>MR Reference</th>
+                        <th>Issued By</th>
+                        <th>Issued To</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of issuematerial_list;">
+                        <td>{{ data.materialissued_date }}</td>
+                        <td>{{ data.materialissued_gid }}</td>
+                        <td>{{ data.costcenter_name }}</td>
+                        <td>{{ data.department_name }}</td>
+                        <td></td>
+                        <td>{{ data.materialrequisition_gid }}</td>
+                        <td>{{ data.materialrequisition_reference }}</td>
+                        <td>{{ data.user_firstname }}</td>
+                        <td>{{ data.issued_to }}</td>
+                        <td class="text-center text-nowrap">
+
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2"
+                                data-bs-toggle="modal" data-bs-target="#myModaladdproduct"><span
+                                    class="fa-solid fa-eye text-white  fs-6"></span></button>
+                            <button title="Pdf" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                                 data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                                    class="fa-solid fa-file text-white  fs-6"></span></button>
+                            
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div> 

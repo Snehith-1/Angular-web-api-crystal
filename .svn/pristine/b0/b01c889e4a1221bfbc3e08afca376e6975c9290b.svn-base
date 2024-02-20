@@ -1,0 +1,148 @@
+﻿using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Results;
+
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/MyLead")]
+    public class MyLeadController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaMyLead objDaMyleads = new DaMyLead();
+
+        [ActionName("GetMyleadsSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetMyleadsSummary()
+        {
+            MdlMyLead values = new MdlMyLead();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaGetMyleadsSummary(values, getsessionvalues.employee_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetInprogressSummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetInprogressSummary()
+        {
+            MdlMyLead values = new MdlMyLead();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaGetInprogressSummary(values, getsessionvalues.employee_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetCustomerSummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetCustomerSummary()
+        {
+            MdlMyLead values = new MdlMyLead();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaGetCustomerSummary(values, getsessionvalues.employee_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetDropSummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetDropSummary()
+        {
+            MdlMyLead values = new MdlMyLead();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaGetDropSummary(values, getsessionvalues.employee_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetAllSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetAllSummary()
+        {
+            MdlMyLead values = new MdlMyLead();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaGetAllSummary(values, getsessionvalues.employee_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetleadbankeditSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetleadbankeditSummary(string leadbank_gid)
+        {
+            MdlMyLead objresult = new MdlMyLead();
+            objDaMyleads.DaGetleadbankeditSummary(leadbank_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+
+        [ActionName("Getregiondropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getregiondropdown()
+        {
+            MdlMyLead objresult = new MdlMyLead();
+            objDaMyleads.DaGetregiondropdown(objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+
+        [ActionName("Getcountrydropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getcountrydropdown()
+        {
+            MdlMyLead objresult = new MdlMyLead();
+            objDaMyleads.DaGetcountrydropdown(objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+        [ActionName("Getcurrencydropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getcurrencydropdown()
+        {
+            MdlMyLead objresult = new MdlMyLead();
+            objDaMyleads.DaGetcurrencydropdown( objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+        [ActionName("Postleadbank")]
+        [HttpPost]
+        public HttpResponseMessage Postleadbank(leadbank_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaPostleadbank(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("Movetodrop")]
+        [HttpPost]
+        public HttpResponseMessage Movetodrop(leadbank_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaMyleads.DaMovetodrop(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //[ActionName("Getbreadcrumb")]
+        //[HttpGet]
+        //public HttpResponseMessage Getbreadcrumb(string user_gid, string module_gid)
+        //{
+        //    MdlMyLead objresult = new MdlMyLead();
+        //    objDaMyleads.DaGetbreadcrumb(user_gid, module_gid, objresult);
+        //    return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        //}
+
+
+    }
+
+}

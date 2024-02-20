@@ -1,0 +1,103 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+        <h3 class="card-title">Purchase Requisition</h3>
+      </div>
+      <div class="col me-5">
+        <button type="button" class="btn-primary btn-sm text-white me-4 float-end" (click)="onadd()"> <i class="fas fa-plus"></i>  &nbsp;&nbsp;Raise PR
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+        <table id="purchaserequest_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue">
+              <th>PR Date</th>
+              <th>PR Ref. No</th>
+              <!-- <th>Cost Centre</th> -->
+              <th>Branch / Department</th>
+              <th>Details</th>
+              <th>PR Reference</th>
+              <th>Status</th>
+              <th>Created By</th>
+              <th>Remarks</th>              
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of purchaserequest_list;" class="align-items-center">
+              <td>{{data.purchaserequisition_date}}</td>
+              <td>{{data.purchaserequisition_gid}}</td>
+              <!-- <td>{{data.costcenter_name}}</td> -->
+              <td>{{data.branch_name}}</td>
+              <td class="text-center text-nowrap">
+                <label title="Product Details" data-bs-toggle="modal" data-bs-target="#myModalUpdateimage9"
+                    (click)="Details(data.parameter,data.purchaserequisition_gid)">
+                    <i class="fas fa-question-circle fa-5x text-primary fs-2"></i>
+                </label>
+            </td>
+              <td>{{data.purchaserequisition_referencenumber}}</td>
+              <td>{{data.overall_status}}</td>
+              <td>{{data.user_firstname}}</td>
+              <td>{{data.purchaserequisition_remarks}}</td>
+              <td class="text-center text-nowrap">
+                <!-- <button title="Edit" type="button" class="btn btn-icon btn-sm bg-warning me-2" (click)="openModaledit()">
+                  <span class="fa-solid fa-pencil text-white  fs-6"></span>
+                </button> -->
+                <button title="View" type="button" (click)="onview(data.purchaserequisition_gid)" class="btn btn-icon btn-sm bg-primary me-2" >
+                  <span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                <!-- <button title="Delete" type="button" (click)="openModaldelete()" data-bs-toggle="modal" data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-primary me-2">
+                  <span class="fa-solid fa-clone text-white  fs-6"></span>
+                </button> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- details popup -->
+  <div class="modal fade" id="myModalUpdateimage9" tabindex="-1" data-bs-backdrop='static'
+        aria-labelledby="editamlcategoryLabel" aria-hidden="true" data-bs-keyboard="false">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content  d-flex justify-content-center">
+                <div class="card-header p-1 pb-1 pt-1 rounded-top bg-primary"
+                    style="display: flex; align-items: center; height: 40px;">
+                </div>
+                <div class="modal-body">
+                  <div class="table-responsive">
+                    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+                      <table class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                          <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                            <th>S.No </th>
+                            <th>Product Code </th>
+                            <th>Product Name </th>
+                            <th>Qty Requested </th>
+                            <th>Qty Approved </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of productlistdetailspr; let i=index;" style="white-space: nowrap;">
+                            <td>{{i+1}}</td>
+                            <td>{{data.product_code}}</td>
+                            <td>{{data.product_name}}</td>
+                            <td>{{data.qty_requested}}</td>
+                            <td>{{data.pr_originalqty}}</td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                    <div class="text-center my-4">
+                        <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal"
+                            style="background-color: red;">
+                            <i class="fas fa-arrow-left text-white"></i> &nbsp;Back
+                        </button>&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

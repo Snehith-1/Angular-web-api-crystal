@@ -1,0 +1,262 @@
+﻿using ems.sales.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+
+namespace ems.sales.DataAccess
+{
+    public class DaSmrTrnCustomerSummary
+    {
+
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        public void DaGetSmrTrnCustomerSummary(MdlSmrTrnCustomerSummary values)
+        {
+            msSQL = " Select distinct UCASE(a.customer_id) as customer_id,a.*,c.*, concat(c.customercontact_name,' / ',c.mobile,' / ',c.email) as contact_details, " +
+                " case when d.region_name is null then concat(a.customer_city,' / ',a.customer_state)" +
+                " when d.region_name is not null " +
+                " then Concat(d.region_name,' / ',a.customer_city,' / ',a.customer_state) end as region_name " +
+                " from crm_mst_tcustomer a" +
+                " left join crm_mst_tregion d on a.customer_region =d.region_gid " +
+                " left join crm_mst_tcustomercontact c on a.customer_gid=c.customer_gid " +
+                " order by a.customer_id desc ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<smrcustomer_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new smrcustomer_list
+                    {
+                        customer_gid = dt["customer_gid"].ToString(),
+                        customer_id = dt["customer_id"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+                    });
+                    values.smrcustomer_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetcountry(MdlSmrTrnCustomerSummary values)
+        {
+            msSQL = " Select country_name,country_gid  " +
+                    " from adm_mst_tcountry ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getcountry>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getcountry
+                    {
+                        country_name = dt["country_name"].ToString(),
+                        country_gid = dt["country_gid"].ToString(),
+                    });
+                    values.Getcountry = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetcurrency(MdlSmrTrnCustomerSummary values)
+        {
+            msSQL = " Select currency_code ,currencyexchange_gid  " +
+                    " from crm_trn_tcurrencyexchange ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getcurency>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getcurency
+                    {
+                        currency_code = dt["currency_code"].ToString(),
+                        currencyexchange_gid = dt["currencyexchange_gid"].ToString(),
+                    });
+                    values.Getcurency = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGettax(MdlSmrTrnCustomerSummary values)
+        {
+            msSQL = " Select tax_gid ,tax_name " +
+                    " from acp_mst_ttax  ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Gettax>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Gettax
+                    {
+                        tax_name = dt["tax_name"].ToString(),
+                        tax_gid = dt["tax_gid"].ToString(),
+                    });
+                    values.Gettax = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetregion(MdlSmrTrnCustomerSummary values)
+        {
+            msSQL = " SELECT region_gid, region_code, region_name FROM crm_mst_tregion Order by region_name asc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getregion>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getregion
+                    {
+                        region_name = dt["region_name"].ToString(),
+                        region_gid = dt["region_gid"].ToString(),
+                    });
+                    values.Getregion = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetcustomercity(MdlSmrTrnCustomerSummary values)
+        {
+            msSQL = " SELECT  customer_gid, customer_code, customer_city FROM crm_mst_tcustomer ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getcustomercity>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getcustomercity
+                    {
+                        customer_gid = dt["customer_gid"].ToString(),
+                        customer_city = dt["customer_city"].ToString(),
+                    });
+                    values.Getcustomercity = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetCustomerCode(MdlSmrTrnCustomerSummary values)
+        {
+            msGetGid = objcmnfunctions.GetMasterGID("CO");
+         
+           values.customer_id = msGetGid;
+        }
+        public void DaPostCustomer(string user_gid, postcustomer_list values)
+
+        {
+            msGetGid = objcmnfunctions.GetMasterGID("CO");
+
+            values.customer_id = msGetGid;
+
+            msSQL = " SELECT customer_id " +
+                " from crm_mst_tcustomer " +
+                " where customer_id = '" + values.customer_id + "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            
+            {
+                msGetGid = objcmnfunctions.GetMasterGID("BCRM");
+                msGetGid1 = objcmnfunctions.GetMasterGID("BCCM");
+
+                msSQL = " insert into crm_mst_tcustomer (" +
+                   " customer_gid," +
+                   " customer_id, " +
+                   " customer_name, " +
+                   " company_website, " +
+                   " customer_address, " +
+                   " customer_address2," +
+                   " customer_city," +
+                   " customer_country," +
+                   " customer_region," +
+                   " customer_state," +
+                   " gst_number ," +
+                   " customer_pin ," +
+                  " created_by," +
+                   "created_date"+
+                    ") values (" +
+                   "'" + msGetGid + "', " +
+                   "'" + values.customer_id + "'," +
+                   "'" + values.customer_name + "'," +
+                   "'" + values.company_website + "'," +
+                   "'" + values.customer_address + "'," +
+                   "'" + values.customer_address2 + "'," +
+                   "'" + values.customer_city + "'," +
+                   "'" + values.customer_country + "'," +
+                   "'" + values.customer_region + "'," +
+                   "'" + values.customer_state + "'," +
+                   "'" + values.gst_number + "'," +
+                   "'" + values.postal_code + "'," +
+                    "'" + user_gid + "'," +
+                     "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult != 0)
+                {
+                    msSQL = " insert into crm_mst_tcustomercontact  (" +
+                    " customercontact_gid," +
+                    " customer_gid," +
+                    " customercontact_name, " +
+                    " email, " +
+                    " mobile, " +
+                    " designation," +
+                    " address1," +
+                    " address2," +
+                    " state," +
+                    " city," +
+                    " region," +
+                    " fax, " +
+                    " fax_area_code, " +
+                    " fax_country_code," +
+                    " gst_number " +
+
+                    ") values (" +
+                    "'" + msGetGid1 + "', " +
+                    "'" + msGetGid + "', " +
+                    "'" + values.customercontact_name + "'," +
+                    "'" + values.email + "'," +
+                    "'" + values.mobile + "'," +
+                    "'" + values.designation + "'," +
+                    "'" + values.address1 + "'," +
+                    "'" + values.address2 + "'," +
+                    "'" + values.state + "'," +
+                    "'" + values.city + "'," +
+                    "'" + values.region + "'," +
+                     "'" + values.fax + "'," +
+                     "'" + values.fax_area_code + "'," +
+                     "'" + values.fax_country_code + "'," +
+                   "'" + values.gst_number + "')";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Customer Added Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Customer";
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,1523 @@
+<div class="card card-bordered" style="background-color: white;">
+    <div class="card-header d-flex align-items-center"
+        style="background: rgb(81,183,204);
+        background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;height:60px;padding-top: 12px;padding-left: 8px;">
+        <div *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist">
+            <h1 class="card-title fw-bold fs-3"><b><i class="fa-solid fa-eye" style="font-size: 14px;"></i>&nbsp;
+                    {{leadbasicdetailslist1.leadbank_name}}</b></h1>
+        </div>
+        <div class="ms-auto">
+            <h5 style="color:#9e28db;">{{toDate}} &nbsp; {{currentDayName}}</h5>
+            <h1> {{ rxTime | date: 'hh:mm:ss a' }} </h1>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-violet ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Quotation Sent </h5>
+                                    <div *ngFor="let totalquotationcount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalquotationcount_list.totalquotation_count}} - £
+                                            {{totalquotationcount_list.totalquotation_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+                                        class="bi bi-calendar3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-brown ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary"> Order </h5>
+                                    <div *ngFor="let totalsalescount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalsalescount_list.totalorder_count}} - £
+                                            {{totalsalescount_list.totalorder_amount}} </h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto"><i
+                                        class="bi bi-arrow-down-left"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkbrown ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Invoice Sent</h5>
+                                    <div *ngFor="let totalsalescount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalsalescount_list.totalinvoice_count}} - £
+                                            {{totalsalescount_list.totalinvoice_amount}} </h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-darkbrown text-white ms-auto">
+                                    <i class="bi bi-arrow-up-right-circle"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEAD PROFILE-->
+
+
+            <!--  -->
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-orange ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Accepted </h5>
+                                    <div *ngFor="let totalinvoicependingcount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalinvoicependingcount_list.quotationaccepted_count}} - £
+                                            {{totalinvoicependingcount_list.quotationaccepted_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreen text-white ms-auto"><i
+                                        class="bi bi-browser-edge"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-blue ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary"> Delivery </h5>
+                                    <div *ngFor="let totalinvoicecompletedcount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalinvoicecompletedcount_list.delevery_count}} - £
+                                            {{totalinvoicecompletedcount_list.delevery_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-darkbluess text-white ms-auto"><i
+                                        class="bi bi-clipboard-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkorange ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary"> Payment Received </h5>
+                                    <div *ngFor="let totalinvoicecompletedcount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalinvoicecompletedcount_list.paymentreceived_count}} - £
+                                            {{totalinvoicecompletedcount_list.paymentreceived_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-purple text-white ms-auto"><i
+                                        class="bi bi-clipboard-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-redskyblue ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Dropped </h5>
+                                    <div *ngFor="let totalinvoicecompletedcount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalinvoicecompletedcount_list.quotationdropped_count}} - £
+                                            {{totalinvoicecompletedcount_list.quotationdropped_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div
+                                    class="widgets-icons-2 rounded-circle bg-gradient-reddarkbluess text-white ms-auto">
+                                    <i class="bi bi-hand-thumbs-down-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-lightgreenborder ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Order Pending </h5>
+                                    <div *ngFor="let totalquotationcount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalquotationcount_list.orderpending_count}} - £
+                                            {{totalquotationcount_list.orderpending_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div
+                                    class="widgets-icons-2 rounded-circle bg-gradient-greendarkbluess text-white ms-auto">
+                                    <i class="bi bi-calendar3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-skygreenborder ms-2">
+                        <div class="card-body12">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h5 class="mb-0 text-secondary">Invoice Pending </h5>
+                                    <div *ngFor="let totalsalescount_list of leadcountdetails_list">
+                                        <h4 class="my-1 text-info">
+                                            {{totalsalescount_list.paymentpending_count}} - £
+                                            {{totalsalescount_list.paymentpending_amount}}
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div
+                                    class="widgets-icons-2 rounded-circle bg-gradient-skydarkbluess text-white ms-auto">
+                                    <i class="bi bi-arrow-down-left"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                <div class="card shadow-sm p-3 user-profile-card radius-10  border-start border-0 border-3 border-blue1 me-3">
+                    <div class="col-lg-12 col-md-6 col-sm-12 text-center symbol symbol-60px symbol-circle">
+                        <img src="assets\media\patterns\user-image.jpg" width="100%" height="100%">
+                    </div>
+                    <div *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist">
+
+                        <p style="color: #009EF7;" class="d-flex align-items-center justify-content-center">
+                            <span class="font-bold ms-3" style="font-size: 14px; margin-top: 8px;">
+                                {{leadbasicdetailslist1.leadbankcontact_name}} </span>
+
+
+                        </p>
+                        <div class="text-black-600 ms-3 d-flex align-items-center justify-content-center"
+                            style="color: #009EF7;font-size: 12px;">
+                            {{leadbasicdetailslist1.email}}</div>
+                        <!-- ... Rest of the user profile content ... -->
+                        <br>
+                        <div class="text-black-600 ms-3 d-flex align-items-center justify-content-center"
+                            style="font-size:12px;">
+                            <b>{{leadbasicdetailslist1.customer_type}} </b>
+                        </div>
+
+                        <div class="text-black-600 ms-3 d-flex align-items-center justify-content-center"
+                            style="font-size:12px;"><b> Active Since</b> -
+                            <br> <b> {{leadbasicdetailslist1.created_date}}</b>
+                        </div>
+
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center"
+                        *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist">
+                        <button title="Edit" type="button"
+                            class="widgets-icons-2 rounded-circle bg-gradient-info1 text-white me-2"
+                            data-bs-toggle="modal" data-bs-target="#myModaleditcontact"
+                            (click)="openmodaleditcustomer(leadbasicdetailslist1.leadbank_gid)">
+                            <span class="fa-solid fa-pencil text-white fs-6"></span>
+                        </button>
+                        <ng-container *ngIf="leadbasicdetailslist1.customer_gid !== '' ">
+                            <button title="Add to customer" type="button"
+                                class="widgets-icons-2 rounded-circle bg-gradient-user text-white"
+                                data-bs-toggle="modal" data-bs-target="#myModalalreadycustomer">
+                                <span class="fa-solid fa-user-plus text-white fs-6"></span>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="leadbasicdetailslist1.customer_gid === '' ">
+
+                            <button title="Add to customer" type="button"
+                                class="widgets-icons-2 rounded-circle bg-gradient-user text-white"
+                                data-bs-toggle="modal" data-bs-target="#myModaladdtocustomer"
+                                (click)="openModaladdtocustomer()">
+                                <span class="fa-solid fa-user-plus text-white fs-6"></span>
+                            </button>
+                        </ng-container>&nbsp;&nbsp;
+                        <ng-container *ngIf="leadbasicdetailslist1.customer_gid === '' ">
+                            <button title="Price Segment" type="button"
+                                class="widgets-icons-2 rounded-circle bg-gradient-brown text-white"
+                                data-bs-toggle="modal" data-bs-target="#myModalpricesegmentmsg">
+                                <span class="fas fa-ticket text-white fs-3"></span>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="leadbasicdetailslist1.customer_gid !== '' ">
+
+                            <button title="Price Segment" type="button"
+                                class="widgets-icons-2 rounded-circle bg-gradient-brown text-white"
+                                data-bs-toggle="modal"
+                                (click)="openModalpricesegment(leadbasicdetailslist1.customer_gid)">
+                                <span class="fas fa-ticket text-white fs-3"></span>
+                            </button>
+                        </ng-container>&nbsp;&nbsp;
+                        <!-- <button title="Schedule Details" type="button"
+                    class="widgets-icons-2 rounded-circle bg-gradient-darkoranges text-white me-2"
+                    data-bs-toggle="modal" data-bs-target="#myscheduledetails">
+                    <span class="fa fa-clock text-white fs-6"></span>
+                </button> -->
+
+                    </div>
+
+                </div>
+
+</div>
+    </div>
+
+    
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card-header "
+                style="background: rgb(81,183,204);
+            background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+                <b>Enquiry</b>
+                <div *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist" class="d-flex ms-auto">
+                  
+                    <ng-container *ngIf="leadbasicdetailslist1.customer_gid === '' ">
+                       
+                            <button type="button" class="btn btn-sm text-white me-4"
+                            style="background-color: #097495;" data-bs-toggle="modal"
+                            data-bs-target="#myModalcustomermsg" title="Raise Enquiry">
+                            <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Enquiry</b></span>
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="leadbasicdetailslist1.customer_gid !== '' ">
+                        <button type="button" class="btn btn-sm text-white me-4"
+                            style="background-color: #097495;" (click)="raiseenquiry()"
+                            title="Raise Enquiry">
+                            <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Enquiry</b></span>
+                        </button>
+
+                    </ng-container>
+                   
+                </div>
+                <button class="btn dropdown-toggle fs-1" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTen" aria-expanded="true" aria-controls="collapseTen   "></button>
+     
+                   </div>
+            <div id="collapseTen" class="accordion-collapse collapse show" data-bs-parent="#accordionExample10">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <div class="card card-body m-3  p-3 mb-5 bg-white rounded " id="kt_chat_contacts_body"
+                                style=" max-height: 270px; overflow-y: auto;overflow-x: hidden;">
+                                <div class="me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                    data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                    data-kt-scroll-max-height="auto"
+                                    data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                    data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                    data-kt-scroll-offset="5px">
+                                    <div *ngFor="let data of Enquirylist;">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <label><b>Enquiry Date</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{data.enquiry_date}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <label><b>Enquiry Ref.No</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{data.enquiry_refno}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <label><b>Assigned To</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{data.user_firstname}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <label><b>Enquiry Status</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{data.enquiry_status}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <label><b>Contact Details</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{data.contact_details}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-5 col-md-3 col-sm-3">
+                                                </div>
+                                                <!-- <div class="col-lg-4 col-md-3 col-sm-3">
+                                                    <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                        (click)="raisequotations(data.enquiry_gid)"
+                                                        style="cursor: pointer;">
+                                                        Raise Quote
+                                                    </h6>
+                                                </div> -->
+                                            </div>
+
+                                        </div>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div>
+            </div> -->
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card-header "
+        style="background: rgb(81,183,204);
+    background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+        <b>Quotation</b>
+                            <div *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist" class="d-flex ms-auto">
+                                <ng-container *ngIf="leadbasicdetailslist1.customer_gid === '' ">
+                                    <button type="button" class="btn btn-sm text-white me-4"
+                                        style="background-color: #097495;" data-bs-toggle="modal"
+                                        data-bs-target="#myModalcustomerqotationmsg" title="Raise Quotation" routerlink="/smr/SmrTrnRaisequote">
+                                        <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Quotation</b></span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="leadbasicdetailslist1.customer_gid !== '' ">
+                                    <button type="button" class="btn btn-sm text-white me-4"
+                                        style="background-color: #097495;" (click)="raisequotation()"
+                                        title="Raise Quotation">
+                                        <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Quotation</b></span>
+                                    </button>
+                                </ng-container>
+                            </div>
+                            <button class="btn dropdown-toggle fs-1" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive"></button>
+                 </div>
+                    <div id="collapseFive" class="accordion-collapse collapse show" data-bs-parent="#accordionExample5">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <div class="card card-body m-3  p-3 mb-5 bg-white rounded "
+                                        id="kt_chat_contacts_body"
+                                        style=" max-height: 270px; overflow-y: auto;overflow-x: hidden;">
+                                        <div class="me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                            data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                            data-kt-scroll-max-height="auto"
+                                            data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                            data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                            data-kt-scroll-offset="5px">
+                                            <div *ngFor="let data of leadquotationdetails_list;">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Quotation Date</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.quotation_date}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Quotation Ref.No</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.quotation_referenceno1}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Contact Details</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.customer_contact_person}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Quotation Status</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.quotation_status}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Quotation Type</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.quotation_type}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <label><b>Amount</b></label>
+                                                            <br />
+                                                            <div style="white-space: nowrap;text-align: right;">
+                                                                <p>{{data.Grandtotal}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-md-3 col-sm-3">
+                                                        </div>
+                                                        <!-- <div class="col-lg-4 col-md-3 col-sm-3">
+                                                            <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                                (click)="raiseorders(data.quotation_gid)"
+                                                                style="cursor: pointer;">
+                                                                Raise Order
+                                                            </h6>
+                                                        </div> -->
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                                (click)="viewquotation(data.quotation_gid)"
+                                                                style="cursor: pointer;">
+                                                                &nbsp;&nbsp;&nbsp;View
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+        </div> 
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card-header "
+            style="background: rgb(81,183,204);
+        background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+            <b>Order</b>
+                            <div *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist" class="d-flex ms-auto">
+                                <ng-container *ngIf="leadbasicdetailslist1.customer_gid === '' ">
+                                    <button type="button" class="btn btn-sm text-white me-4"
+                                        style="background-color: #097495;" data-bs-toggle="modal"
+                                        data-bs-target="#myModalcustomerordermsg" title="Raise Order">
+                                        <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Order</b></span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="leadbasicdetailslist1.customer_gid !== '' ">
+                                    <button type="button" class="btn btn-sm text-white me-4"
+                                        style="background-color: #097495;" (click)="raiseorder()"
+                                        title="Raise Order">
+                                        <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Order</b></span>
+                                    </button>
+                                </ng-container>
+                            </div>
+                            <button class="btn dropdown-toggle fs-1" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne   "></button>
+                 
+                            </div>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                        
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <div class="card card-body m-3  p-3 mb-5 bg-white rounded "
+                                        id="kt_chat_contacts_body"
+                                        style=" max-height: 270px; overflow-y: auto;overflow-x: hidden;">
+                                        <div class="me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                            data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                            data-kt-scroll-max-height="auto"
+                                            data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                            data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                            data-kt-scroll-offset="5px">
+                                            <div *ngFor="let data of leadorderdetails_list;">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Raised On</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.salesorder_date}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Order Ref.No</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.so_referenceno1}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Contact Details</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.customer_contact_person}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Order Status</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.salesorder_status}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <label><b>Amount</b></label>
+                                                            <br />
+                                                            <div style="white-space: nowrap;text-align: right;">
+                                                                <p>{{data.Grandtotal}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-md-3 col-sm-3">
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-3 col-sm-3">
+                                                            <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                                (click)="raisesalesinvoice(data.salesorder_gid)"
+                                                                style="cursor: pointer;">
+                                                                Raise Invoice
+                                                            </h6>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                                (click)="vieworder(data.salesorder_gid)"
+                                                                style="cursor: pointer;">
+                                                                &nbsp;&nbsp;&nbsp;View
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+                                                <hr />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card-header "
+        style="background: rgb(81,183,204);
+    background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+        <b>Invoice</b>
+                            <div *ngFor="let leadbasicdetailslist1 of leadbasicdetailslist" class="d-flex ms-auto">
+                                <ng-container *ngIf="leadbasicdetailslist1.customer_gid === '' ">
+                                    <button type="button" class="btn btn-sm text-white me-4"
+                                        style="background-color: #097495;" data-bs-toggle="modal"
+                                        data-bs-target="#myModalcustomerinvoicemsg" title="Raise Invoice">
+                                        <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Invoice</b></span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="leadbasicdetailslist1.customer_gid !== '' ">
+
+                                    <button type="button" class="btn btn-sm text-white me-4" (click)="raiseinvoice()"
+                                        style="background-color: #097495;" title="Raise Invoice">
+                                        <span style="font-size: 11px;"><i class="fas fa-plus"></i> &nbsp;<b>Raise Invoice</b></span>
+                                    </button>
+                                </ng-container>
+                            </div>
+                            <button class="btn dropdown-toggle fs-1" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo   "></button>
+                 
+                       </div>
+                    <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample2">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <!-- <button type="button" class="btn-primary btn-sm text-white me-4"
+                                        title="Raise Order">
+                                    <i class="fas fa-plus"></i> &nbsp; Raise Invoice
+                                </button><br /> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <div class="card card-body m-3  p-3 mb-5 bg-white rounded "
+                                        id="kt_chat_contacts_body"
+                                        style=" max-height: 365px; overflow-y: auto;overflow-x: hidden;">
+                                        <div class="me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                            data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                            data-kt-scroll-max-height="auto"
+                                            data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                            data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                            data-kt-scroll-offset="5px">
+                                            <div *ngFor="let data of leadinvoicedetails_list;">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>SO Ref.No</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.so_referencenumber}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Invoice Date</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.invoice_date}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Invoice Ref.No</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.invoice_refno}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Invoice Status</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.invoice_status}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Invoice From</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.invoice_from}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label><b>Mail Status</b></label>
+                                                            <br />
+                                                            <div>
+                                                                <p>{{data.mail_status}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><b>Invoice Amount</b></label>
+                                                            <br />
+                                                            <div style="white-space: nowrap;text-align: right;">
+                                                                <p>{{data.invoice_amount}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-5 col-md-3 col-sm-3">
+                                                        </div>
+                                                        <!-- <div class="col-lg-4 col-md-3 col-sm-3">
+                                                            <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                                (click)="raisepayment(data.invoice_gid)"
+                                                                style="cursor: pointer;">
+                                                                Payment
+                                                            </h6>
+                                                        </div> -->
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <h6 type="text" class="bg-white text-blue me-4 float-end"
+                                                                (click)="viewinvoice(data.invoice_gid)"
+                                                                style="cursor: pointer;">
+                                                                View
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card-header  me-8"
+            style="background: rgb(81,183,204);
+        background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+            <b>Notes</b>
+            <button class="btn dropdown-toggle fs-1 ms-auto" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapsesix" aria-expanded="true" aria-controls="collapsesix"></button>
+            <div>
+                <i class="bi bi-arrow-right-square-fill  fs-1  text-black " title="Notes Update" (click)="Update()"></i>
+              </div>
+            </div>
+                    <div id="collapsesix" class="accordion-collapse collapse" data-bs-parent="#accordionExample6">
+                        <div class="accordion-body">
+                            <div class="row" style="margin-left: -30px;">
+                                <div id="kt_app_content" class="app-content flex-column-fluid"
+                                    style="max-height: 400px;">
+                                    <div id="kt_app_content_container" class="app-container container-xxl"
+                                        style="margin-top: -30px;">
+                                        <div class="d-flex flex-column flex-lg-row">
+                                            <div class="flex-lg-fill">
+                                            <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5">
+                                                <form [formGroup]="NotesreactiveForm" #form="ngForm">
+                                                    <div class="row">
+                                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                                                            <div>
+                                                                <textarea class="form-control" pattern="^(?!\s*$).+"
+                                                                    id="internalnotestextarea" rows="17"
+                                                                    style="overflow-y: scroll;"
+                                                                    formControlName="internalnotestext_area" class="
+                                                                        form-control form-control-lg form-control-solid
+                                                                        custom-input
+                                                                        mb-3 mb-lg-0
+                                                                        bg-white
+                                                                        custom-input" name="internalnotestext_area">
+                                                                        {{txtinternal_notes}}</textarea>
+                                                                <!-- <div class="text-center my-4"> -->
+                                                                    <!-- <br /> -->
+                                                                    <!-- <button class="btn-success btn-sm text-white me-4"
+                                                                        (click)="Update()">
+                                                                        <i class="fas fa-check text-white fs-5 "></i>
+                                                                        &nbsp;Update
+                                                                    </button> -->
+                                                                    <!-- <br />
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+        </div>
+         <!-- <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="card-header "
+        style="background: rgb(81,183,204);
+    background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;align-items: center;margin: 2px;">
+        <b>Documents</b>
+        <button class="btn dropdown-toggle fs-1" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapseseven" aria-expanded="true" aria-controls="collapseseven"></button>
+        </div>
+                    <div id="collapseseven" class="accordion-collapse collapse show"
+                        data-bs-parent="#accordionExample7">
+                        <div class="accordion-body">
+                            <button type="button" class="btn-success btn-sm text-white me-4 ms-3" data-bs-toggle="modal"
+                                data-bs-target="#myModalUpdateimage" title="Upload image">
+                                <i class="bi bi-cloud-upload"></i> &nbsp; Upload
+                            </button><br />
+                            <div class="card card-body m-3  p-3 mb-5 bg-white rounded " id="kt_chat_contacts_body"
+                                style=" max-height: 350px; overflow-y: auto;overflow-x: hidden;">
+                                <div class="me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                    data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                    data-kt-scroll-max-height="auto"
+                                    data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                    data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                    data-kt-scroll-offset="5px">
+                                    <div *ngFor="let doctitlelist of leaddocumentdetail_list;">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-8 col-sm-8">
+                                                    <label><b>Document Title</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{doctitlelist.document_title}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label><b>Uploaded Date</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{doctitlelist.created_date}}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                    <button title="Download" type="button"
+                                                        style="width: 10px; display: flex; justify-content: center; align-items: center;"
+                                                        (click)="downloadImage(doctitlelist)"
+                                                        class="btn download-button">
+                                                        <span class="fa-solid fa-download text-white fs-4"
+                                                            style="color: #097495;"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <label><b>Remarks</b></label>
+                                                    <br />
+                                                    <div>
+                                                        <p>{{doctitlelist.remarks}}</p>
+                                                    </div>
+                                                </div>
+                                            </div><br>
+
+                                        </div>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>               
+        </div> -->
+    </div>
+    <br />
+    <!-- schedule -->
+    
+    <br>
+    <!-- The Modal ADD -->
+</div>
+
+<!-- Filter dropdown -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="mydropdown" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width: 250px; max-height: 600px; margin-top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-white"
+                    style="border-bottom: 1px solid rgb(173, 173, 173);">
+                    <h2 style="margin-top:10px;color:rgb(3, 2, 2);font-weight: bold;">
+                        &nbsp;&nbsp;Filter Options
+                    </h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <span class="font-bold"><b>Status</b></span>
+                        <ng-select style="width: 100%;" formControlName="moving_stage"
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="Select option">
+                            <ng-option value="1">New</ng-option>
+                            <ng-option value="3">Prospect</ng-option>
+                            <ng-option value="4">Potential</ng-option>
+                            <ng-option value="5">Drop</ng-option>
+                            <ng-option value="6">Customer</ng-option>
+                        </ng-select>
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                        <div class="col-lg-6 col-md-6 col-sm-6 fv-row mt-2">
+                            <span class="font-bold"><b>View Type</b></span>
+                            <div class="d-flex justify-content-start mt-4 ms-2">
+                                <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                            ">
+                                    <input class="form-check-input" type="radio" name="contact" checked="checked"
+                                        formControlName="contact" value="all_contact" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="kt_builder_header_content_menu">All Contacts</label>
+                                </div>
+                                <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                              ms-10
+                            ">
+                                    <input class="form-check-input" type="radio" name="contact"
+                                        formControlName="contact" value="my_contact" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="kt_builder_header_content_page-title">My Contact</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br /><br />
+                    <div class="text-center my-4">
+                        <button [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Apply
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- <form [formGroup]="reactiveForm" #form="ngForm">
+
+    <div class="modal" id="myModalcreatecontact" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div *ngFor="let data of whatsapp_list; let i=index;">
+                    <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                        <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;Create new
+                            contact</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row"><span class="font-bold"><b>Display Name</b>
+                                <span class="ms-1 text-red">*</span></span>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                <input formControlName="displayName" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     displayName.invalid && displayName.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="displayName" required />
+                            </div>
+                        </div>
+                        <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                            <div *ngIf="displayName.errors?.['required']">
+                                <span style="color:red;">Document title is required.</span>
+                            </div>
+                        </div>
+
+                        <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                            <div *ngIf="displayName.errors?.['pattern']">
+                                <span style="color:red;">Invalid Format</span>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <div class="row"> <span class="font-bold"><b>Mobile Number</b>
+                                    <span class="ms-1 text-red">*</span></span>
+                                <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                    <ngx-intl-tel-input [cssClass]="'form-control'"
+                                        [preferredCountries]="[CountryISO.UnitedKingdom]"
+                                        [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                                        [searchCountryFlag]="true"
+                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                        [selectedCountryISO]="CountryISO.UnitedKingdom" [phoneValidation]="true"
+                                        name="phone" [maxLength]="15" formControlName="phone">
+                                    </ngx-intl-tel-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center my-4">
+                            <button (click)="onsubmit(data.leadbank_gid)" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                            </button> &nbsp;&nbsp;
+                            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()"
+                                data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form> -->
+
+<!-- <form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaldocument" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="bi bi-file-earmark-text fs-default-icon"></i> &nbsp;&nbsp;Upload Document</h2>
+                </div>
+
+                
+                <div class="modal-body">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Upload Document</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input style="width: 300%;" (change)="onChange1($event)" type="file" #fileInput class="
+                          form-control form-control-lg form-control-solid bg-white
+                          mb-3 mb-lg-0  borderc-secondary custom-input
+                        " name="fName" />
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="text-center my-4">
+                        <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                            <button type="submit" title="Send" class="btn-success btn-sm text-white me-2"
+                                data-bs-dismiss="modal" (click)="onupload(data.contact_id)" *ngIf="i === 0">
+                                <i class="fas fa-paper-plane fs-3"></i>&nbsp;&nbsp;Send</button>
+
+
+                            <button title="Back" class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal"
+                                *ngIf="i === 0">
+                                <i class="fas fa-arrow-left"></i> &nbsp;&nbsp;Back
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form> -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModalimage" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="bi bi-card-image fs-default-icon"></i> &nbsp;&nbsp;Upload Image</h2>
+
+                </div>
+
+            
+                <div class="modal-body">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Upload Image</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input style="width: 300%;" (change)="onChange4($event)" accept="image/*" type="file"
+                                #fileInput class="
+                              form-control form-control-lg form-control-solid bg-white
+                              mb-3 mb-lg-0  borderc-secondary custom-input
+                            " name="fName" />
+
+                        </div>
+                    </div>
+                    <br>
+                    
+                    <div class="text-center my-4">
+                        <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                            <button type="submit" title="Send" class="btn-success btn-sm text-white me-2"
+                                (click)="onupload(data.contact_id)" data-bs-dismiss="modal" *ngIf="i === 0">
+                                <i class="fas fa-paper-plane fs-3"></i>&nbsp;&nbsp;Send</button>
+                            <button title="Back" class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal"
+                                *ngIf="i === 0">
+                                <i class="fas fa-arrow-left"></i> &nbsp;&nbsp;Back
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!--Add to customer popup-->
+<div class="modal" id="myModaladdtocustomer" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <br>
+                <p style="display: block; font-size:small;">Check to make sure that you have filled out all the
+                    required
+                    fields
+                    correctly.</p><br>
+                <br>
+                <div class="text-center my-4">
+                    <button class="btn-success btn-sm text-white me-4" (click)="onaddtocustomer()"
+                        data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5"></i>&nbsp;Yes
+                    </button>
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModalalreadycustomer" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="text-center my-4">
+                <h2><b>Lead already added as Customer</b></h2>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---Price Segment Notification-->
+<div class="modal" id="myModalpricesegmentmsg" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="position: absolute; top: 5; right: 5px;"></button> -->
+                <div class="text-center my-4">
+                    <h4> Add to customer , to Raise Price Segment
+                    </h4>
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-5" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Enquiry notification-->
+<div class="modal" id="myModalcustomermsg" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="position: absolute; top: 5; right: 5px;"></button> -->
+                <div class="text-center my-4">
+                    <h4> Add to customer ,to Raise Enquiry.
+
+                    </h4>
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-5" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Quotation notification-->
+<div class="modal" id="myModalcustomerqotationmsg" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <div class="text-center my-4">
+                    <h4> Add to customer, to Raise Quotation.</h4>
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-5" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Order notification-->
+<div class="modal" id="myModalcustomerordermsg" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center my-4">
+
+                    <h4> Add To Customer, to Raise Order.</h4>
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Invoice notification-->
+<div class="modal" id="myModalcustomerinvoicemsg" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center my-4">
+
+                    <h4>Add to customer, to Raise Invoice.</h4>
+                </div>
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit contact -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+
+    <div class="modal" id="myModaleditcontact" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top"
+                    style="background: rgb(81,183,204);
+                background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;height:40px;padding-top: 12px;padding-left: 8px;">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">
+                        <i class="fas fa-pencil fw-bolder fs-3" style="margin-left: 10px;"></i>&nbsp;&nbsp;Edit
+                        Contact
+                    </h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <span class="font-bold"><b>Contact Person Name</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="displayName" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     displayName.invalid && displayName.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="displayName" required />
+                        </div>
+                    </div>
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['required']">
+                            <span style="color:red;">Contact person name is required.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row"> <span class="font-bold"><b>Mobile Number</b>
+                                <span class="ms-1 text-red">*</span></span>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                <ngx-intl-tel-input [cssClass]="'form-control'"
+                                    [preferredCountries]="[CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="true"
+                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                    [selectedCountryISO]="CountryISO.UnitedKingdom" [phoneValidation]="true"
+                                    name="phone" [maxLength]="15" formControlName="mobile">
+                                </ngx-intl-tel-input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span class="font-bold"><b>Email</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="email" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     email.invalid && email.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="email" required />
+                        </div>
+                    </div>
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors?.['required']">
+                            <span style="color:red;">email address is required.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <span class="font-bold"><b>Address </b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="address1" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     address1.invalid && address1.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="address1" required />
+                        </div>
+                    </div>
+                    <div *ngIf="address1.invalid && (address1.dirty || address1.touched)">
+                        <div *ngIf="address1.errors?.['required']">
+                            <span style="color:red;">Address is required.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="address1.invalid && (address1.dirty || address1.touched)">
+                        <div *ngIf="address1.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format</span>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button (click)="onsubmit()" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-success">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form [formGroup]="reactiveMessageForm" #form="ngForm">
+    <div class="modal" id="template" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width: 400px; max-height: 600px; margin-top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send"
+                    style="border-bottom: 1px solid rgb(173, 173, 173);">
+                    <h2 style="margin-top: 10px; color: white; font-weight: bold;">&nbsp;&nbsp;Templates</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="max-height: 250px; overflow-y: auto; ">
+                    <!-- contact card body -->
+                    <!-- <div *ngFor="let data of whatsappMessagetemplatelist; let i=index;"
+                        (click)="onTemplatesent(data.id,data.version)" data-bs-dismiss="modal">
+                        <div class="d-flex flex-stack py-4 nassar">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-5">
+                                    <div class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">
+                                        {{data.p_name
+                                        }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator separator-dashed d-none"></div>
+                    </div> -->
+                    <div class="text-center my-4">
+                        <button title="Back" class="btn-primary btn-sm text-white me-4" (click)="onclose()"
+                            data-bs-dismiss="modal">
+                            <i class="fas fa-arrow-left"></i> &nbsp;&nbsp;Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- ----------Schedule form ----------- -->
+<div class="modal" id="myscheduledetails" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="card-header p-1 pb-2 pt-1 rounded-top"
+                style="background: rgb(81,183,204);
+        background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;height:40px;padding-top: 12px;padding-left: 8px;">
+                <h2 style="margin-top:10px;color:white;font-weight: bold;">
+                    <i class="bi bi-calendar-event fw-bolder fs-3" style="margin-left: 10px;"></i>&nbsp;&nbsp;
+                    {{leadbank_name}}
+                </h2>
+            </div>
+
+            <div class="modal-body">
+                <div class="log-details-tab-content">
+                    <div class="col-12 col-lg-3 col-md-6 col-lg-12">
+                        <span class="fw-bold ms-2" style="font-size: small;"><b>Schedule Log Details
+                            </b></span><br /><br />
+
+                        <ng-container *ngFor="let schedule of schedulesummary_list; let i = index">
+                            <div style="margin-bottom: 5px; padding: 5px; overflow-y: auto; max-height: 300px;"
+                                class="panel bg-white">
+                                {{schedule.log_legend}}
+                                <div style="margin-bottom: 3px; margin-top: 2px;">
+                                    <div class="row">
+                                        <div class="panel-body" style="font-size: x-small;">{{ schedule.log_details
+                                            }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Add a horizontal line after each schedule log -->
+                                <hr style="margin-top: 5px; margin-bottom: 5px;">
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="text-center my-4">
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal"
+                        style="background-color: red;">
+                        <i class="fas fa-arrow-left text-white"></i> &nbsp;Back
+                    </button>&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ------------ -->

@@ -1,0 +1,103 @@
+<div class="card m-3">
+    <form [formGroup]="reactiveForm" #form="ngForm">
+        <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-1">
+                <h5 class="fw-bolder text-blue"> RAISE VENDOR DOCUMENT</h5>
+            </div>
+        </div>
+
+        <br>
+        <div *ngFor="let data of Vendorregister_list;">
+            <div class="d-flex flex-row m-3 mt-6 flex-wrap border-bottom">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 ms-5 p-5"><b>Vendor Code</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <p>{{data.vendor_code}}</p>
+                    </div>
+                </div>
+                <br>
+
+                <div class="col-12 col-lg-3 col-md-6 col-sm-12 ms-5 p-5"><b>Vendor Company Name</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <p>{{data.vendor_companyname}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-row m-3 mt-6 flex-wrap border-bottom">
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12 ms-5 p-5"><b>Document Type<span
+                        class="ms-1 text-red">*</span></b>
+                
+                <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-1">
+                    <ng-select
+                        class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="documenttype_name" [items]="DocumentVendorregister_list" required
+                        class="custom col-lg-10 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="documenttype_name"
+                        bindValue="documenttype_gid" placeholder="Select an option"></ng-select>
+                </div>
+            </div>
+            
+            
+
+
+            <div class="col-12 col-lg-7 col-md-6 col-sm-12 p-8"><b>Vendor Document</b>
+                <div class="col-lg-6 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="file"
+                        class="form-control form-control-lg form-control-solid custom-input mb-6 mb-lg-0 borderc-secondary bg-white custom-input"
+                        (change)="onChange2($event)" accept=".xlsx , .xls" #fileinput class="form-control" />
+                </div>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="text-center my-4">
+            <button class="btn-success btn-sm text-white me-4 mt-3-center" [disabled]="reactiveForm.invalid" [ngClass]="{
+            'primary-button': !reactiveForm.invalid,
+            'secondary-button': reactiveForm.invalid
+          }" data-bs-dismiss="modal"><i class="bi bi-check-square fs-5"></i>
+                &nbsp;Submit
+            </button>
+            <button class="btn-primary btn-sm text-white me-4 mt-3-center"  routerLink="/smr/SmrTrnRaiseproposal">
+                <i class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back
+            </button>
+        </div>
+        <br><br>
+
+        <!-- Table starts -->
+        <div class="table-responsive">
+            <div *ngFor="let data of Vendorregister_list;">
+                <table id="ViewVendorregister_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                    <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                            <th>Date</th>
+                            <th>Document Code</th>
+                            <th>Document Type</th>
+                            <th>Uploaded By</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <!-- <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                                    <i class="fas fa-download text-white fs-5 "></i>
+                                </button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+    <!-- Table ends -->

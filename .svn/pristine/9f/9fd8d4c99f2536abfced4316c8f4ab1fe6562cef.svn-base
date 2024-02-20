@@ -1,0 +1,191 @@
+<form [formGroup]="combinedFormData">
+    <div class="card rounded-top">
+        <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary" style="height:50px;">
+            <h3 class="fw-bolder text-white"><i class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Raise Open DC
+            </h3>
+        </div>
+        <div *ngFor="let data of opendcaddsel_list;">
+            <div class="d-flex flex-row m-3 mt-6 flex-wrap border-bottom">
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12 "><span class="fw-bold">DO Reference No</span>
+                    <p class="mt-3">{{data.directorder_refno}}</p>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12"><span class="fw-bold">DO Date </span>
+                    <p class="mt-3">{{data.directorder_date}}</p>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12"> <span class="fw-bold">Customer Name </span>
+                    <p class="mt-3">{{data.customercontact_name}}</p>
+                </div>
+
+            </div>
+
+            <div class="d-flex flex-row m-3 mt-6 flex-wrap border-bottom">
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12 "><span class="fw-bold">Customer Branch</span>
+                    <p class="mt-3">{{data.customer_code}}</p>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12"><span class="fw-bold">Contact Person </span>
+                    <p class="mt-3">{{data.customer_contact_person }}</p>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12"> <span class="fw-bold">Email Address </span>
+                    <p class="mt-3">{{data.customer_email}}</p>
+                </div>
+
+            </div>
+            <div class="d-flex flex-row m-3 mt-6 flex-wrap border-bottom">
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12 "><span class="fw-bold">Contact Number</span>
+                    <p class="mt-3">{{data.customer_mobile}}</p>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12"><span class="fw-bold">SO Reference No</span>
+                    <p class="mt-3">{{data.salesorder_gid }}</p>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6 col-sm-12"> <span class="fw-bold">Customer Address </span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                        <textarea type="text"
+                            [ngStyle]="{ 'border-color': combinedFormData.get('customer_address_so')?.hasError('required') && combinedFormData.get('customer_address_so')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                            pattern="^(?!\s*$).+" formControlName="customer_address_so"
+                            class="form-control form-control-lg form-control-solid  mb-3 mb-lg-0 bg-white  mt-2"
+                            rows="3"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="d-flex flex-row m-6  flex-wrap row">
+
+            <div class="col-lg-4 col-md-12 col-sm-12 ">
+                <span class="font-bold">Shipping To<span class="ms-1 text-red">*</span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                    <textarea type="text"
+                        [ngStyle]="{ 'border-color': combinedFormData.get('shipping_to')?.hasError('required') && combinedFormData.get('shipping_to')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                        pattern="^(?!\s*$).+" formControlName="shipping_to" placeholder="Enter Shpping Address"
+                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white  mt-2"
+                        rows="3"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 ">
+                <span class="font-bold">DC No</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" [ngStyle]="{ 'border-color': 'rgb(209, 209, 209)','height': '42px'}"
+                        formControlName="dc_no" placeholder="Enter DC Number"
+                        class="form-control form-control-lg form-control-solid inputfield custom-input mb-3 mb-lg-0 bg-white custom-input mt-2" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 ">
+                <span class="font-bold">Mode Of Despatch</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" [ngStyle]="{ 'border-color': 'rgb(209, 209, 209)','height': '42px'}"
+                        formControlName="despatch_mode" placeholder="Mode"
+                        class="form-control form-control-lg form-control-solid inputfield custom-input mb-3 mb-lg-0 bg-white custom-input mt-2" />
+                </div>
+            </div>
+
+        </div>
+        <div class="d-flex flex-row m-6  flex-wrap row">
+
+            <div class="col-lg-4 col-md-12 col-sm-12 ">
+                <span class="font-bold">Tracker ID<span class="ms-1 text-red">*</span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" [ngStyle]="{ 'border-color': 'rgb(209, 209, 209)','height': '42px'}"
+                        formControlName="dc_no" placeholder="Enter Tracker ID"
+                        class="form-control form-control-lg form-control-solid inputfield custom-input mb-3 mb-lg-0 bg-white custom-input mt-2" />
+                </div>
+            </div>
+
+            </div>
+
+
+            <div class="card-header bg-lightblue card-height55" style="border-radius: 0px;">
+                <div class="card-title m-0">
+                    <h5 class="fw-bolder text-blue">Product Summary</h5>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <div class="card card-body m-0 shadow-lg p-3 mb-5 bg-white rounded table-responsive">
+                    <table id="product" class="table table-striped table-row-bordered gy-4 gs-2">
+                        <thead class="table_head">
+                            <tr class="text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Product Group</th>
+                                <th>Product & Description</th>
+                                <th>Unit</th>
+                                <th>Quantity Ordered</th>
+                                <th>Quantity Delivered</th>
+                                <th>Despatch Quantity</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of opendcaddselprod_list; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.productgroup_name}}</td>
+                                <td>
+                                    <div class="container">
+                                        <div class="row">
+                                            {{data.product_name}}
+                                        </div>
+                                        <div class="row">
+                                            {{data.display_field}}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{data.uom_name}}</td>
+                                <td style="text-align:center;">{{data.qty_quoted}}</td>
+                                <td style="text-align: center;">{{data.product_delivered}}</td>
+                                <td>
+                                    <input type="text"
+                                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                        formControlName="despatch_quantity" class="form-control" />
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <div class="card-header bg-lightblue card-height55">
+                <div class="card-title m-0">
+                    <h5 class="fw-bolder text-blue">Terms and Conditions</h5>
+                </div>
+            </div>
+            <br>
+            <ng-select formControlName="template_name"
+               bindLabel="template_name"  placeholder="Select an option" style="width: 340px; height: 40px;" 
+               >
+               <ng-option value="General">General</ng-option>
+               <ng-option value="Payment Terms">Payment Terms</ng-option>
+               <ng-option value="Delivery Details">Delivery Details</ng-option>
+               </ng-select>  
+            <div class="d-flex flex-row m-12 flex-wrap table-responsive">
+                <div class="col-12 col-lg-12 col-md-10  col-sm-10 fv-row">
+                    <angular-editor [config]="config" formControlName="termsandconditions"></angular-editor>
+                </div>
+            </div>
+        </div>
+   
+
+        <div class="text-center my-4">
+            <button class="btn-sm text-white me-2"  [ngClass]="{
+              'primary-button': !combinedFormData.invalid,
+              'secondary-button': combinedFormData.invalid
+            }" (click)="OnDelDcSubmit()">
+            <i class="fas fa-check text-white fs-5"></i> &nbsp; Submit
+          </button>
+      
+      
+              <button class="btn-primary btn-sm text-white me-4"(click)="redirecttolist()">
+                  <i class="fa-solid fa-arrow-left text-white">
+                      <i class="path1"></i>
+                      <i class="path2"></i>
+                  </i>&nbsp;Back</button>
+                  
+          </div>
+        </form>
+   

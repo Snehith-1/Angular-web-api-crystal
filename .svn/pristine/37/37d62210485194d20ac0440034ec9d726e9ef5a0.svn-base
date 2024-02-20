@@ -1,0 +1,105 @@
+import { NgModule, importProvidersFrom } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SmrMstProductgroupComponent } from './Component/smr-mst-productgroup/smr-mst-productgroup.component';
+import { SmrMstTaxsummaryComponent } from './Component/smr-mst-taxsummary/smr-mst-taxsummary.component';
+import { SmrMstCurrencySummaryComponent } from './Component/smr-mst-currency-summary/smr-mst-currency-summary.component';
+import { SmrMstProductunitsSummaryComponent } from './Component/smr-mst-productunits-summary/smr-mst-productunits-summary.component';
+import { SmrMstProductSummaryComponent } from './Component/smr-mst-product-summary/smr-mst-product-summary.component';
+import { SmrTrnCustomerenquirySummaryComponent } from './Component/smr-trn-customerenquiry-summary/smr-trn-customerenquiry-summary.component';
+import { SmrTrnQuotationSummaryComponent } from './Component/smr-trn-quotation-summary/smr-trn-quotation-summary.component';
+import { SmrTrnSalesorderSummaryComponent } from './Component/smr-trn-salesorder-summary/smr-trn-salesorder-summary.component';
+import { SmrRptSalesorderReportComponent } from './Component/smr-rpt-salesorder-report/smr-rpt-salesorder-report.component';
+import { SmrMstProductaddComponent } from './Component/smr-mst-productadd/smr-mst-productadd.component';
+import { SmrMstProducteditComponent } from './Component/smr-mst-productedit/smr-mst-productedit.component';
+import { SmrMstProductviewComponent } from './Component/smr-mst-productview/smr-mst-productview.component';
+import { SmrTrnCustomerenquiryeditComponent } from './Component/smr-trn-customerenquiryedit/smr-trn-customerenquiryedit.component';
+import { SmrTrnCustomerSummaryComponent } from './Component/smr-trn-customer-summary/smr-trn-customer-summary.component';
+import { SmrTrnCustomeraddComponent } from './Component/smr-trn-customeradd/smr-trn-customeradd.component';
+import { SmrTrnRaiseproposalComponent } from './Component/smr-trn-raiseproposal/smr-trn-raiseproposal.component';
+import { SmrTrnCustomerraiseenquiryComponent } from './Component/smr-trn-customerraiseenquiry/smr-trn-customerraiseenquiry.component';
+import { SmrTrnQuotationaddComponent } from './Component/smr-trn-quotationadd/smr-trn-quotationadd.component';
+import { SmrMstPricesegmentComponent } from './Component/smr-mst-pricesegment/smr-mst-pricesegment.component';
+import { SmrMstProductAssignComponent } from './Component/smr-mst-product-assign/smr-mst-product-assign.component';
+import { SmrTrnRaisesalesorderComponent } from './Component/smr-trn-raisesalesorder/smr-trn-raisesalesorder.component';
+import { SmrTrnMyenquiryComponent } from './Component/smr-trn-myenquiry/smr-trn-myenquiry.component';
+import { SmrTrnAllComponent } from './Component/smr-trn-all/smr-trn-all.component';
+import { SmrTrnCompletedComponent } from './Component/smr-trn-completed/smr-trn-completed.component';
+import { SmrTrnDropComponent } from './Component/smr-trn-drop/smr-trn-drop.component';
+import { SmrTrnNewComponent } from './Component/smr-trn-new/smr-trn-new.component';
+import { SmrTrnPotentialComponent } from './Component/smr-trn-potential/smr-trn-potential.component';
+import { SmrTrnProspectComponent } from './Component/smr-trn-prospect/smr-trn-prospect.component';
+import { SmrTrnAdddeliveryorderComponent } from './Component/smr-trn-adddeliveryorder/smr-trn-adddeliveryorder.component';
+import { SmrTrnDeliveryorderSummaryComponent } from './Component/smr-trn-deliveryorder-summary/smr-trn-deliveryorder-summary.component';
+import { SmrTrnRaisedeliveryorderComponent } from './Component/smr-trn-raisedeliveryorder/smr-trn-raisedeliveryorder.component';
+import { SmrTrnRaisequoteComponent } from './Component/smr-trn-raisequote/smr-trn-raisequote.component';
+import { SmrtrnquotetoorderComponent } from './Component/smrtrnquotetoorder/smrtrnquotetoorder.component';
+import { SmrMstSalesteamSummaryComponent } from './Component/smr-mst-salesteam-summary/smr-mst-salesteam-summary.component';
+import { DualListComponent } from './Component/smr-mst-pricesegment/dual-list/dual-list.component'; 
+import { SmrRptTodaySalesreportComponent } from './Component/smr-rpt-today-salesreport/smr-rpt-today-salesreport.component';
+import { SmrRptTodayDeliveryreportComponent } from './Component/smr-rpt-today-deliveryreport/smr-rpt-today-deliveryreport.component';
+import { SmrRptTodayInvoicereportComponent } from './Component/smr-rpt-today-invoicereport/smr-rpt-today-invoicereport.component';
+import { SmrRptTodayPaymentreportComponent } from './Component/smr-rpt-today-paymentreport/smr-rpt-today-paymentreport.component';
+import { SmrRptOrderreportComponent } from './Component/smr-rpt-orderreport/smr-rpt-orderreport.component';
+import { SmrRptSalesreportComponent } from './Component/smr-rpt-salesreport/smr-rpt-salesreport.component';
+// import { SmrTrnCustomerDistributorComponent } from './Component/smr-trn-customer-distributor/smr-trn-customer-distributor.component';
+// import { SmrTrnCustomerCorporateComponent } from './Component/smr-trn-customer-corporate/smr-trn-customer-corporate.component';
+// import { SmrTrnCustomerRetailerComponent } from './Component/smr-trn-customer-retailer/smr-trn-customer-retailer.component';
+
+const routes: Routes = [
+  { path:'SmrMstProductGroup', component:SmrMstProductgroupComponent},
+  { path:'SmrMstTaxsummary', component:SmrMstTaxsummaryComponent},
+  { path:'SmrMstCurrencySummary', component:SmrMstCurrencySummaryComponent},
+  { path:'SmrMstProductunitsSummary', component:SmrMstProductunitsSummaryComponent},
+  { path:'SmrMstProductSummary', component:SmrMstProductSummaryComponent},
+  { path:'SmrTrnCustomerenquirySummary', component:SmrTrnCustomerenquirySummaryComponent},
+  { path:'SmrTrnSalesorderSummary', component:SmrTrnSalesorderSummaryComponent},
+  { path:'SmrRptSalesorderReport', component:SmrRptSalesorderReportComponent},
+  { path:'SmrMstProductAdd', component:SmrMstProductaddComponent},
+  { path:'SmrMstProductEdit/:product_gid', component:SmrMstProducteditComponent},
+  { path:'SmrMstProductView/:product_gid', component:SmrMstProductviewComponent},
+  { path:'SmrTrnEditCustomerEnquiry', component:SmrTrnCustomerenquiryeditComponent},
+  { path:'SmrTrnCustomerSummary', component:SmrTrnCustomerSummaryComponent},
+  { path:'SmrTrnCustomeradd', component:SmrTrnCustomeraddComponent},
+  { path:'SmrTrnRaiseproposal/:enquiry_gid', component:SmrTrnRaiseproposalComponent},
+  { path:'SmrTrnQuotationSummary', component:SmrTrnQuotationSummaryComponent},  
+  { path:'SmrTrnCustomerraiseenquiry', component:SmrTrnCustomerraiseenquiryComponent},
+  { path:'SmrTrnQuotationadd', component:SmrTrnQuotationaddComponent},
+  { path:'SmrMstPricesegmentSummary', component:SmrMstPricesegmentComponent},
+  { path:'SmrMstProductAssign/:pricesegment_gid', component:SmrMstProductAssignComponent},
+  { path:'SmrTrnRaiseSalesOrder', component:SmrTrnRaisesalesorderComponent},
+  { path:'SmrTrnMyenquiry', component:SmrTrnMyenquiryComponent},
+  { path:'SmrTrnAll', component:SmrTrnAllComponent},
+  { path:'SmrTrnCompleted', component:SmrTrnCompletedComponent},
+  { path:'SmrTrnDrop', component:SmrTrnDropComponent},
+  { path:'SmrTrnNew', component:SmrTrnNewComponent},
+  { path:'SmrTrnPotential', component:SmrTrnPotentialComponent},
+  { path:'SmrTrnProspect', component:SmrTrnProspectComponent},
+  { path:'SmrTrnAdddeliveryorder', component:SmrTrnAdddeliveryorderComponent},
+  { path:'SmrTrnDeliveryorderSummary', component:SmrTrnDeliveryorderSummaryComponent},
+  { path:'SmrTrnRaisedeliveryorder', component:SmrTrnRaisedeliveryorderComponent},
+  { path:'SmrTrnRaisequote/:enquiry_gid', component:SmrTrnRaisequoteComponent},
+  { path:'SmrTrnQuoteToOrder/:quotation_gid', component:SmrtrnquotetoorderComponent},
+  { path:'SmrMstSalesteamSummary', component:SmrMstSalesteamSummaryComponent},
+  { path:'DualList', component:DualListComponent},
+  { path:'SmrRptTodaySalesreport', component:SmrRptTodaySalesreportComponent},
+  { path:'SmrRptTodayDeliveryreport', component:SmrRptTodayDeliveryreportComponent},
+  { path:'SmrRptTodayInvoicereport', component:SmrRptTodayInvoicereportComponent},
+  { path:'SmrRptTodayPaymentreport', component:SmrRptTodayPaymentreportComponent},
+  { path:'SmrRptOrderreport', component:SmrRptOrderreportComponent},
+  // { path:'SmrTrnCustomerDistributor', component:SmrTrnCustomerDistributorComponent},
+  // { path:'SmrTrnCustomerCorporate', component:SmrTrnCustomerCorporateComponent},
+  // { path:'SmrTrnCustomerRetailer', component:SmrTrnCustomerRetailerComponent},
+  { path:'SmrRptSalesreport', component:SmrRptSalesreportComponent}
+  
+  
+  
+
+
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class EmsSalesRoutingModule { }

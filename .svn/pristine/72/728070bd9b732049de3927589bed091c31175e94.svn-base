@@ -1,0 +1,356 @@
+import { Component,OnInit,ElementRef,ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES } from 'crypto-js';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+interface IMailform {
+  leadbank_gid: string;
+  mail_from: string;
+  sub: string;
+  to: string;
+  body: string;
+  bcc: any;
+  cc: any;
+  reply_to: any;
+
+
+
+}
+@Component({
+  selector: 'app-crm-smm-emailmanagement',
+  templateUrl: './crm-smm-emailmanagement.component.html',
+  styleUrls: ['./crm-smm-emailmanagement.component.scss']
+})
+export class CrmSmmEmailmanagementComponent {
+  @ViewChild ('Inbox') tableRef!: ElementRef;
+
+  search: string = '';
+  response_data: any;
+  mailmanagement: any[] = [];
+  reactiveForm!: FormGroup;
+  parameterValue1: any;
+  mailsummary_list: any;
+  mail: any;
+  from_mail: any;
+  to_mail: any;
+  subject: any;
+  body_content: any;
+  mailcount_list: any[] = [];
+  responsedata: any;
+  filteredData: any;
+  clicktotal_count:any;
+  deliverytotal_count:any;
+  opentotal_count:any;
+  searchTerm: string = '';
+  searchResults: string[] = [];
+  searchText: any;
+  items = [];
+  currentPage: number = 1;
+  pageSize: number = 50;
+  mailevent_list: any;
+  file1!: FileList;
+  file: any;
+  AutoIDkey: any;
+  formDataObject: FormData = new FormData();
+  allattchement: any[] = [];
+  file_name: any;
+  mailform!: IMailform;
+  mailview_list: any;
+  mailopen: boolean = true;
+  mailreply: boolean = true;
+  attachment_type: any;body: any;
+  created_date: any;
+  created_time: any;
+  openDiv: boolean = false;
+  direction: any;
+  document_path: any;
+  to_address: any;
+  leadbank: any;
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService, private NgxSpinnerService: NgxSpinnerService ) { }
+  ngOnInit(): void {
+    this.GetMailSummary();
+    this.GetMailEventCount();
+    this.GetMailEventClick();
+    this.GetMailEventDelivery();
+    this.GetMailEventOpen();
+    this.reactiveForm = new FormGroup({
+ 
+      customer_name: new FormControl(this.leadbank.customer_name, [
+        Validators.required,
+      ]),
+      displayName: new FormControl(this.leadbank.displayName, [
+        Validators.required,
+      ]),
+      mobile: new FormControl(''),
+      value: new FormControl(this.leadbank.value, [
+        Validators.required,
+      ]),
+      gender: new FormControl(''),
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      sub: new FormControl( ''),
+  
+      file: new FormControl(''),
+      body: new FormControl(''),
+      bcc: new FormControl(''),
+      cc: new FormControl(''),
+      reply_to: new FormControl('company@receive.vcidex.com'),
+      to: new FormControl(''),
+      mail_from: new FormControl('company@reply.vcidex.com'),
+      leadbank_gid: new FormControl('')
+    });
+  }
+
+  
+ 
+  // GetMailSummary() {
+    
+  //   var api = 'MailCampaign/GetMailSummary';
+  //   this.service.get(api).subscribe((result: any) => {
+  //     $('#mailsummary_list').DataTable().destroy();
+
+  //     this.response_data = result;
+  //     this.mailsummary_list = this.response_data.mailsummary_list;
+  //     this.filteredData = this.mailsummary_list
+  //     setTimeout(() => {
+  //       $('#mailsummary_list').DataTable();
+  //     }, 1);
+  //   });
+    
+  // }
+  GetMailSummary() {
+    this.NgxSpinnerService.show();
+    var api = 'MailCampaign/GetMailSummary';
+    this.service.get(api).subscribe((result: any) => {
+      this.response_data = result;
+      this.mailsummary_list = this.response_data.mailsummary_list;
+      this.NgxSpinnerService.hide();
+      setTimeout(() => {
+        $('#mail').DataTable();
+      }, 1);
+    });
+ 
+  }
+
+
+  onbackmail() {
+    this.mailopen = true;
+ 
+  }
+  viewpage(mailmanagement_gid: any) {
+    this.mailopen = !this.mailopen;
+    var url = 'MailCampaign/GetMailView';
+    let param = {
+      mailmanagement_gid: mailmanagement_gid
+    }
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.mailview_list = result.mailsummary_list;
+      this.from_mail = this.mailview_list[0].mail_from;
+      this.to_mail = this.mailview_list[0].to;
+      this.subject = this.mailview_list[0].sub;
+      this.body = this.mailview_list[0].body;
+      this.created_date = this.mailview_list[0].created_date;
+      this.direction = this.mailview_list[0].direction;
+      this.document_path = this.mailview_list[0].document_path;
+      this.created_time = this.mailview_list[0].created_time;
+ 
+    });
+  }
+  onreply() {
+    this.mailreply = !this.mailreply;
+ 
+  }
+  onChange2($event: any): void {
+    this.file1 = $event.target.files;
+ 
+    if (this.file1 != null && this.file1.length !== 0) {
+      for (let i = 0; i < this.file1.length; i++) {
+        this.AutoIDkey = this.generateKey();
+        this.formDataObject.append(this.AutoIDkey, this.file1[i]);
+        this.file_name = this.file1[i].name;
+        this.allattchement.push({
+          AutoID_Key: this.AutoIDkey,
+          file_name: this.file1[i].name
+        });
+        console.log(this.file1[i]);
+      }
+    }
+ 
+    //console.log(this.files[i]);
+  }
+ 
+  generateKey(): string {
+ 
+    return `AutoIDKey${new Date().getTime()}`;
+  }
+ 
+ 
+ 
+ 
+  public onadd(): void {
+    console.log(this.reactiveForm.value)
+    this.mailform = this.reactiveForm.value;
+    if (this.mailform.mail_from != null && this.mailform.sub != null && this.mailform.to != null) {
+      const allattchement = "" + JSON.stringify(this.allattchement) + "";
+      if (this.file1 != null && this.file1 != undefined) {
+        this.formDataObject.append("filename", allattchement);
+        this.formDataObject.append("mail_from", this.mailform.mail_from);
+        this.formDataObject.append("sub", this.mailform.sub);
+        this.formDataObject.append("to", this.mailform.to);
+        this.formDataObject.append("body", this.mailform.body);
+        this.formDataObject.append("bcc", this.mailform.bcc);
+        this.formDataObject.append("cc", this.mailform.cc);
+        this.formDataObject.append("reply_to", this.mailform.reply_to);
+        this.formDataObject.append("leadbank_gid", this.mailform.leadbank_gid);
+ 
+        var api7 = 'MailCampaign/MailUpload'
+        this.service.post(api7, this.formDataObject).subscribe((result: any) => {
+          this.responsedata = result;
+          if (result.status == false) {
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            window.scrollTo({
+ 
+              top: 0, // Code is used for scroll top after event done
+ 
+            });
+            // this.router.navigate(['/crm/CrmSmmEmailmanagement']);
+            this.ToastrService.success(result.message)
+          }
+        });
+      }
+      else {
+        var api7 = 'MailCampaign/MailSend'
+        //console.log(this.file)
+        this.service.post(api7, this.mailform).subscribe((result: any) => {
+ 
+          if (result.status == false) {
+            window.scrollTo({
+ 
+              top: 0, // Code is used for scroll top after event done
+ 
+            });
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            window.scrollTo({
+ 
+              top: 0, // Code is used for scroll top after event done
+ 
+            });
+            // this.router.navigate(['/crm/CrmSmmEmailmanagement']);
+            this.ToastrService.success(result.message)
+          }
+          this.responsedata = result;
+        });
+      }
+    }
+ 
+    else {
+      window.scrollTo({
+ 
+        top: 0, // Code is used for scroll top after event done
+ 
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+    return;
+ 
+  }
+  get mail_from() {
+    return this.reactiveForm.get('mail_from')!;
+  }
+  get to() {
+    return this.reactiveForm.get('to')!;
+  }
+  // get sub() {
+  //   return this.reactiveForm.get('sub')!;
+  // }
+  get reply_to() {
+    return this.reactiveForm.get('reply_to')!;
+  }
+  get cc() {
+    return this.reactiveForm.get('cc')!;
+  }
+  get bcc() {
+    return this.reactiveForm.get('bcc')!;
+  }
+  get schedule_time() {
+    return this.reactiveForm.get('bcc')!;
+  }
+ 
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '120px',
+    minHeight: '0rem',
+    width: '630px',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+  };
+  config_compose_mail: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '120px',
+    minHeight: '0rem',
+    width: '1013px',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+ 
+  };
+
+  GetMailEventCount(){
+    var api2 = 'MailCampaign/GetMailEventCount'
+    this.service.get(api2).subscribe((result:any) => {
+    this.mailcount_list = result.mailcount_list; 
+    this.clicktotal_count=this.mailcount_list[0].clicktotal_count;
+    this.opentotal_count=this.mailcount_list[0].opentotal_count;
+    this.deliverytotal_count=this.mailcount_list[0].deliverytotal_count;
+    });}
+    GetMailEventOpen() {
+      var api = 'MailCampaign/GetMailEventOpen'
+      this.service.get(api).subscribe((result: any) => {
+        this.response_data = result;
+        this.mailevent_list = this.response_data.mailevent_list;
+      });
+    }
+    GetMailEventClick() {
+      var api = 'MailCampaign/GetMailEventClick'
+      this.service.get(api).subscribe((result: any) => {
+        this.response_data = result;
+        this.mailevent_list = this.response_data.mailevent_list;
+      });
+    }
+    GetMailEventDelivery() {
+      var api = 'MailCampaign/GetMailEventDelivery'
+      this.service.get(api).subscribe((result: any) => {
+        this.response_data = result;
+        this.mailevent_list = this.response_data.mailevent_list;
+      });
+    }
+
+    onback() {
+      this.router.navigate(['/crm/CrmSmmMailcampaignsummary']);
+  
+    }
+
+
+
+
+
+
+
+
+  
+  
+}

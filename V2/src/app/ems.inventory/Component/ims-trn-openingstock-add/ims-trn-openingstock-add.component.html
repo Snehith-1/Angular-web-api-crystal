@@ -1,0 +1,169 @@
+<div class="card shadow-lg rounded-top">
+  <form [formGroup]="productform">
+  <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary" style="height:50px;" >
+      <h3 class="fw-bolder text-white"><i class="fas fa-plus fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Add Opening Stock</h3>
+    </div>    
+    <div class="m-4 mt-4 card">     
+      <div class="d-flex flex-row m-6 flex-wrap ">
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+    <span class="font-bold">Branch<span class="ms-1 text-red" >*</span></span>
+     <ng-select [items]="branch_list"  class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+     [class.is-invalid]="
+     branch_name.invalid && (branch_name.dirty || branch_name.touched)"
+                  [ngClass]="{'invalid-border': branch_name.invalid && branch_name.touched}"
+     bindLabel="branch_name" 
+     [(ngModel)]="mdlBranchName"
+     formControlName="branch_name"
+     placeholder="Select an option"></ng-select>
+     <div *ngIf="branch_name.invalid && (branch_name.dirty || branch_name.touched)">
+      <div *ngIf="branch_name.errors?.['required']">
+                  <span style="color:red;"> Select Branch Name </span>
+      </div>
+    </div>
+    </div>
+
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Product<span class="ms-1 text-red" >*</span></span>
+       <ng-select [items]="product_list"  class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" 
+
+       bindLabel="product_name" (change)="GetOnChangeProductsName()" (clear)="onClearCustomer()"
+       [(ngModel)]="mdlProductName"
+       [class.is-invalid]="
+       product_name.invalid && (product_name.dirty || product_name.touched)"
+                    [ngClass]="{'invalid-border': product_name.invalid && product_name.touched}"
+       formControlName="product_name"
+       placeholder="Select an option"></ng-select>
+       <div *ngIf="product_name.invalid && (product_name.dirty || product_name.touched)">
+        <div *ngIf="product_name.errors?.['required']">
+                    <span style="color:red;"> Select Product </span>
+        </div>
+      </div>
+       </div> 
+  
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+    <span class="font-bold">Product Group</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input
+            type="text"
+            class="
+              form-control form-control-lg form-control-solid bg-white custom-input bg-secondary 
+              mb-3 mb-lg-0 borderc-secondary"               
+              placeholder="Product Group" [(ngModel)]="txtprodcutgroup"  
+              formControlName="productgroup_name" readonly
+              style="height:40px;"/>   
+          </div>
+        </div>
+
+        
+    
+    
+  </div>
+  <div class="d-flex flex-row m-6 flex-wrap ">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Product Code</span>
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input
+              type="text" 
+              class="
+                form-control form-control-lg form-control-solid bg-white custom-input
+                mb-3 mb-lg-0 bg-secondary borderc-secondary"                  
+                placeholder="Product Code" [(ngModel)]="txtproductcode"  
+                formControlName="product_code" readonly  style="height:40px;"
+                />   
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">Product Unit</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" >
+                  <input
+                  type="text"   
+                  class=" 
+                    form-control form-control-lg form-control-solid bg-white custom-input bg-secondary 
+                    mb-3 mb-lg-0 borderc-secondary"               
+                    placeholder="Product Unit"[(ngModel)]="txtproductunit" 
+                    formControlName="productuom_name" readonly  style="height:40px;"
+                />   
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Opening Stock <span class="ms-1 text-red">*</span></span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text" formControlName="stock_qty" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                   " [ngStyle]="{
+                   'border-color':
+                   stock_qty.invalid && stock_qty.touched
+               ? 'red'
+               : 'rgb(209, 209, 209)'
+               }" placeholder="Opening Stock " name="stock_qty" required style="height:40px;"/>
+          <div *ngIf=" stock_qty.invalid &&
+               (stock_qty.dirty || stock_qty.touched)
+        " class="text-red">
+           <div *ngIf="stock_qty.errors?.['required']">
+            Opening Stock is required.
+           </div>
+         </div>
+      </div>
+   </div>
+
+  </div>
+
+  <div class="d-flex flex-row m-6 flex-wrap ">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Unit Price <span class="ms-1 text-red">*</span></span>
+      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+        <input type="text" formControlName="cost_price" class="
+            form-control form-control-lg form-control-solid
+            custom-input
+            mb-3 mb-lg-0
+            bg-white
+            custom-input
+           " [ngStyle]="{
+           'border-color':
+           cost_price.invalid && cost_price.touched
+       ? 'red'
+       : 'rgb(209, 209, 209)'
+       }" placeholder="Unit Price " name="cost_price" required style="height:40px;"/>
+  <div *ngIf=" cost_price.invalid &&
+       (cost_price.dirty || cost_price.touched)
+" class="text-red">
+   <div *ngIf="cost_price.errors?.['required']">
+    Unit Price is required.
+   </div>
+ </div>
+</div>
+</div>
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                  <div class="col"><span class="font-bold">Product Description</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea 
+                        class="form-control rounded-0" formControlName="product_desc"placeholder="Enter Product Description" pattern="^(?!\s*$).+"  rows="3"></textarea>
+                      </div>
+                        </div></div>
+         </div> 
+
+    </div>
+    <div class="text-center my-4">
+      <button class="btn-sm text-white me-2"  [ngClass]="{
+        'primary-button': !productform.invalid,
+        'secondary-button': productform.invalid
+      }" (click)="validate()">
+      <i class="fas fa-check text-white fs-5"></i> &nbsp; Submit
+    </button>
+
+
+        <button class="btn-primary btn-sm text-white me-4"(click)="redirecttolist()">
+            <i class="fas fa-arrow-left fs-5">
+                <i class="path1"></i>
+                <i class="path2"></i>
+            </i>&nbsp;Back</button>
+    </div>
+  </form>
+ 
+
+  

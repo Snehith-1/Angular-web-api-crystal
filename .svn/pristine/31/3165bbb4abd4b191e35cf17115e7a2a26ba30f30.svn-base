@@ -1,0 +1,25 @@
+<div class="footer"  [ngClass]="getFooterClass()">
+    <div class="footer-content">
+        <div class="footer-content-left">
+            <!-- <div *ngFor=" let list of menu; let i = index;" style="padding-left: 6px;"> 
+                <button class="head-menu-item-name-btn"
+                  (click)="getsidemenu(list);selectHead(i)"
+                  [ngClass]="{'activeHeader': selectedIndex === i}"
+                >{{list.text}}</button>
+            </div> -->
+            <span>© 2023 - <a href="https://www.vcidex.com/StoryboardCRM.html" target="_blank"> StoryboardSystem </a> </span>
+        </div>
+        <div class="footer-content-right">
+            <button class="footer-menu-item-btn ">
+                <i class="fa-brands fa-facebook"></i>
+            </button>
+            <button class="footer-menu-item-btn ">
+                <i class="fa-brands fa-instagram"></i>
+            </button>
+            <button class="footer-menu-item-btn">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </button>
+
+        </div>
+    </div>
+</div>

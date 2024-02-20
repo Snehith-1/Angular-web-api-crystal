@@ -1,0 +1,91 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Renderer2, ElementRef } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+import { SelectionModel } from '@angular/cdk/collections';
+import flatpickr from 'flatpickr';
+import { Options } from 'flatpickr/dist/types/options';
+import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { NgbTimepickerModule, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { Router } from '@angular/router';
+interface IPayrunReport {
+  
+}
+
+@Component({
+  selector: 'app-pay-trn-payrunview',
+  templateUrl: './pay-trn-payrunview.component.html',
+  styleUrls: ['./pay-trn-payrunview.component.scss']
+})
+export class PayTrnPayrunviewComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  payrun_list: any[] = [];
+  PayrunReport!: IPayrunReport;
+  router: any;
+  monthyear: any;
+  month: any;
+  year: any;
+  LeaveGeneratingFor: any;
+  Getemployeeleave: any;
+  date: any;
+ 
+  constructor(    
+    private renderer: Renderer2,
+    private el: ElementRef,
+    public service: SocketService,
+    private ToastrService: ToastrService,
+    private route: Router,
+    private formBuilder: FormBuilder,
+    
+   )
+       {}
+
+  ngOnInit(): void {
+    debugger;
+    const monthyear = this.router.snapshot.paramMap.get('monthyear');
+    this.monthyear = monthyear;
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.monthyear, secretKey).toString(enc.Utf8);
+    console.log(deencryptedParam);
+    const [month, year] = deencryptedParam.split('+');
+    this.month = month;
+    this.year = year;
+    this.LeaveGeneratingFor=month+' '+year;
+  
+    this.Getpayrun(month, year);
+    this.reactiveForm = this.formBuilder.group({
+     
+    });
+
+       const currentDate = new Date();
+       this.date = currentDate.toDateString();                 
+
+  }
+    Getpayrun(month: any,year: any) {
+    var url = 'PayRptPayrunSummary/GetPayrunSummary'
+    let param = {
+    month: month,
+    year: year,
+  }; 
+  this.service.getparams(url, param).subscribe((result: any) => {
+   this.payrun_list = this.responsedata.payrunlist;
+  });
+}
+
+openModalpdf(){
+      
+}
+onback(){
+  this.router.navigate(['/payroll/PayTrnSalaryManagement']);
+
+}
+ 
+}
+   
+   
+
+
+

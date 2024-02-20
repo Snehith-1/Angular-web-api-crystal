@@ -1,0 +1,136 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Add Bank</h5>
+        </div>
+    </div>
+
+    <form [formGroup]="reactiveform" (ngSubmit)="onsubmit()">
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Bank Code</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter Bank Code" formControlName="bank_code" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Bank Name</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter Bank Name" formControlName="bank_name" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>A/C Type</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select
+                        class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="account_type"  required
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="account_type"
+                        bindValue="account_type" [items]="accounttype_list"
+                        placeholder="Select an option"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>A/C No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter A/C No" formControlName="account_no" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>IFSC Code</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter IFSC Code" formControlName="ifsc_code"  class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>NEFT Code</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter NEFT Code" formControlName="neft_code" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Swift Code</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter Swift Code" formControlName="swift_code" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Account Group</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select
+                        class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="accountgroup_name"  required
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="accountgroup_name"
+                        bindValue="accountgroup_gid" [items]="accountgroup_list" placeholder="Select an option"></ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Opening Balance</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="Enter Opening Balance" formControlName="openning_balance"  class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Branch Name</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select
+                        class="form-select form-control-lg bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="branch_name"  required
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="branch_name"
+                        bindValue="branch_gid" [items]="branchname_list" placeholder="Select an option"></ng-select>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date"
+                        class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                        placeholder="DD-MM-YYYY" formControlName="date" />
+                </div>
+                
+            </div>
+
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>Remarks</b>
+                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                       
+                        <textarea type="text"
+                            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                            placeholder="" formControlName="remarks" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center my-4">
+            <button type="submit" class="btn-success btn-sm text-white me-2" >
+                <i class="bi bi-check-square fs-5"></i>
+                <span class="ms-3">Submit</span> </button>
+                <button class="btn-primary btn-sm text-white me-4" (click)="redirecttolist()" >
+                    <i class="ki-duotone ki-entrance-right fs-5">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                    </i>&nbsp;Back</button>
+           
+        </div>
+     
+
+    </form>

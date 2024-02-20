@@ -1,0 +1,213 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">LEAD BANK CONTACT</h5>
+        </div>
+    </div>
+<br>
+    <form [formGroup]="contactform" (ngSubmit)="onadd()">
+
+        <input formControlName="leadbank_gid" hidden
+    placeholder="Address Line 1"  type="text" class="
+        form-control form-control-lg form-control-solid
+        bg-white
+        custom-input
+        mb-3 mb-lg-0
+        borderc-secondary
+      " name="leadbank_gid" />
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Branch Name</b> <span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                    <select
+                        class="form-select form-select-solid form-select-lg borderc-secondary bg-white custom-input select2"
+                        formControlName="leadbankbranch_name">
+                        <option value="">Select Branch Name</option>
+                        <option *ngFor="let productunit of branch_list" [value]="productunit.leadbank_gid">
+                            {{productunit.leadbankbranch_name}}</option>
+
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Contact Person Name</b> <span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"  class="
+                    form-control form-control-lg form-control-solid 
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                  " placeholder="Contact Person Name" formControlName="leadbankcontact_name" class="form-control" />
+                  </div>
+            
+            </div>
+            
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Mobile Number</b> <span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="number" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Mobile Number" formControlName="mobile" class="form-control" />
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Email Address</b> <span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Email Address" formControlName="email" class="form-control" />
+                </div>
+            </div>
+
+           
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Designation</b> <span class="ms-1 text-red">*</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Designation" formControlName="designation" class="form-control" />
+                </div>
+            </div>
+            <div class="row col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold"><b>Fax</b> <span class="ms-1 text-red">*</span></span>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Country" formControlName="fax_area_code" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Area Code" formControlName="fax_country_code" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="" formControlName="fax" class="form-control" />
+                  
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="row col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold"><b>Telephone No I</b> <span class="ms-1 text-red">*</span></span>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Country" formControlName="country_code1" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Area Code" formControlName="area_code1" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="" formControlName="phone1" class="form-control" />
+                  
+                </div>
+            </div>
+
+           
+            <div class="row col-14 col-lg-4 col-md-6 col-sm-12" style="margin-left: 10px;"> <span class="font-bold"><b>Telephone No II</b> <span class="ms-1 text-red">*</span></span>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Country" formControlName="country_code2" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="Area Code" formControlName="area_code2" class="form-control" />
+                  
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="
+                    form-control form-control-lg form-control-solid
+                    mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+                  " placeholder="" formControlName="phone2" class="form-control" />
+                  
+                </div>
+            </div>
+          
+            
+
+        </div>
+        
+        <div class="text-center my-4">
+            <button type="submit" class="btn-success btn-sm text-white me-2"(click)="onadd()">
+                <i class="bi bi-check-square fs-5"></i>&nbsp;Submit</button>
+
+                <button class="btn-primary btn-sm text-white me-4"(click)="redirecttolist()">
+                    <i class="ki-duotone ki-entrance-right fs-5">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                    </i>&nbsp;Back</button>
+        </div>
+    </form>
+</div>
+<br>
+<div class="card shadow-sm">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">LEAD BANK CONTACT</h5>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="product" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class=" text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.NO</th>
+                        <th>Branch Name</th>
+                        <th>Contact Person</th>
+                        <th>Mobile Number </th>
+                        <th>Email ID</th>
+                        <th>Designation</th>
+                       
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr *ngFor="let data of contactlist; let i=index;">
+                        <td >{{i+1}}</td>
+                        <td>{{data.leadbankbranch_name}}</td>
+                        <td>{{data.leadbankcontact_name}}</td>
+                        <td>{{data.mobile}}</td>
+                        <td>{{data.email}}</td>
+                        <td>{{data.designation}}</td>
+
+                        
+                        <td class="text-center text-nowrap">
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.leadbank_gid)"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>
+
+
+                        </td>
+                    </tr> 
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+
+</div>

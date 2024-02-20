@@ -1,0 +1,364 @@
+<div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+      <h3 class="fw-bolder text-white"><i class="fa-solid fa-arrow-up text-white  fs-6"></i> &nbsp;&nbsp;&nbsp; Raise Enquiry
+      </h3>
+    </div> 
+        <!-- <div>
+            <i class="bi bi-arrow-left-square-fill fs-1  text-black" (click)="onclose()"></i>
+        </div> -->
+        
+        <form [formGroup]="combinedFormData" (ngSubmit)="onSubmit()">
+            <div class="m-4 mt-4 border card">
+                <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold">Enquiry Ref. No</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="New Reference No"
+                            formControlName="enquiry_gid" class="form-control" readonly style="height:40px;" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Enquiry Date</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" class="date-picker
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input
+                " placeholder="DD-MM-YYYY" formControlName="enquiry_date" style="height:40px;"  
+                [ngStyle]="{
+                    'border-color':
+                    enquiry_date.invalid && enquiry_date.touched
+                ? 'red'
+                : 'rgb(209, 209, 209)'
+                }"/>
+                <div *ngIf=" enquiry_date.invalid &&
+                (enquiry_date.dirty || enquiry_date.touched)
+         " class="text-red">
+            <div *ngIf="enquiry_date.errors?.['required']">
+               Enquiry Date is required.
+            </div>
+          </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Branch</span>
+                    <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select formControlName="branch_name" [items]="branch_list" required
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="branch_name"
+                            bindValue="branch_gid" placeholder="Select an option" [(ngModel)]="mdlBranch"
+                            [ngStyle]="{
+                                'border-color':
+                                branch_name.invalid && branch_name.touched
+                            ? 'red'
+                            : 'rgb(209, 209, 209)'
+                            }"></ng-select>
+                            <div *ngIf=" branch_name.invalid &&
+                (branch_name.dirty || branch_name.touched)
+         " class="text-red">
+            <div *ngIf="branch_name.errors?.['required']">
+               Please Select Branch Name!
+            </div>
+          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Customer Enquiry Ref. No</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="enquiry_referencenumber" style="height:40px;"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold required"> Customer Name</span>
+                    <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <ng-select formControlName="customer_name" [items]="customer_list" required
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="customer_name"
+                            placeholder="Select an option" [(ngModel)]="mdlcus"
+                            (change)="GetOnChangeCustomerName()"
+                            [ngStyle]="{
+                                'border-color':
+                                customer_name.invalid && customer_name.touched
+                            ? 'red'
+                            : 'rgb(209, 209, 209)'
+                            }"></ng-select>
+                            <div *ngIf=" customer_name.invalid &&
+                (customer_name.dirty || customer_name.touched)
+         " class="text-red">
+            <div *ngIf="customer_name.errors?.['required']">
+               Please Select Cusotmer!.
+            </div>
+          </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 "><span class="font-bold">Customer Branch</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                        <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input 
+                    mb-3 mb-lg-0  borderc-secondary bg-secondary custom-input" readonly
+                            formControlName="customerbranch_name" 
+                            style="height:40px;" />
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12 font-bold">Contact Person
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control bg-secondary" formControlName="customercontact_name" readonly
+                    style="height:40px;">
+                </div>
+            </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Contact Number</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary custom-input  bg-secondary" formControlName="contact_number" readonly
+                    style="height:40px;" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Email ID</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control bg-secondary" formControlName="contact_email" readonly  
+                        style="height:40px;">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"> <span class="font-bold ">Address</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  borderc-secondary custom-input" formControlName="contact_address"
+                                class="form-control  bg-secondary "  rows="3" ></textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Customer Requirment</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="customer_requirement"
+                placeholder="Enter Customer Requirment" class="form-control"  rows="3" ></textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Landmark</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="landmark"
+                placeholder="Enter Customer Landmark"  class="form-control"  rows="3" ></textarea>
+                    </div>
+                </div>
+              
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Enquiry Assigned To </span>
+                <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select formControlName="user_firstname" [items]="assign_list" required
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" bindLabel="user_firstname"
+                        bindValue="employee_gid" placeholder="Select an option"
+                        [(ngModel)]="mdlEmployee"
+                        [ngStyle]="{
+                            'border-color':
+                            user_firstname.invalid && user_firstname.touched
+                        ? 'red'
+                        : 'rgb(209, 209, 209)'
+                        }"></ng-select>
+                        <div *ngIf=" user_firstname.invalid &&
+            (user_firstname.dirty || user_firstname.touched)
+     " class="text-red">
+        <div *ngIf="user_firstname.errors?.['required']">
+           Please Select Assign Person!.
+        </div>
+      </div>
+                </div>
+            </div>
+              
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Enquiry Rating</span>
+                <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <ng-select formControlName="customer_rating" required
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                        placeholder="Select an option" [(ngModel)]="mdlEnq">
+                        <ng-option value="Cold">Cold</ng-option>
+                        <ng-option value="Warm">Warm</ng-option>
+                        <ng-option value="Hot">Hot</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Expected Closure Date</span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date"   pattern="^(?!\s*$).+" [ngStyle]="{ 'border-color': combinedFormData.get('closure_date')?.hasError('required') && combinedFormData.get('closure_date')?.touched ? 'red' : 'rgb(209, 209, 209)' , 'height': '42px'}"
+                     formControlName="closure_date" 
+                class="form-control form-control-lg form-control-solid date-picker custom-input mb-3 mb-lg-0 bg-white custom-input date-picker mt-2" placeholder="DD-MM-YYYY"/>
+                </div>
+            </div>
+                
+               
+            </div>
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold ">Enquiry Remarks</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" class="
+                form-control form-control-lg form-control-solid custom-input
+                mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="enquiry_remarks"
+                placeholder="Enter Enquiry Remarks" class="form-control"  rows="3" ></textarea>
+                    </div>
+                </div>
+               
+            </div>
+
+            <!--product summary-->
+            <div class="card ">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0">
+                      <h4 class="fw-bolder text-blue"> <b>Product Summary</b></h4>
+                    </div>
+                  </div>
+                <form [formGroup]="productform" (ngSubmit)="productSubmit()">                 
+              <input type="hidden" formControlName="tmpsalesenquiry_gid">
+                                    <div class="d-flex flex-row flex-wrap mt-2">
+                                        <div class="col-12 col-lg-2 col-md-2 col-sm-12"><span class="font-bold required mt-2 m-2">Product</span>
+                                            <ng-select formControlName="product_name" [items]="products_list1"
+                                                required
+                                                class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 m-2"
+                                                bindLabel="product_name" placeholder="Select an option"
+                                                (change)="GetOnChangeProductsName()"
+                                                [(ngModel)]="mdlproduct" style="height:40px;"></ng-select>
+                                        </div>
+
+                                        <div class="col-12 col-lg-2 col-md-1 col-sm-12"><span class="font-bold mt-2 ">Product Group</span>
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                                                <input type="text" class="form-control bg-secondary" formControlName="productgroup_name"
+                                                    readonly  style="height:40px;">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-1 col-md-1 col-sm-12 "><span class="font-bold mt-2 ">Product Code</span>
+                                            <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                                                <input type="text" class="form-control bg-secondary" formControlName="product_code"
+                                                    readonly  style="height:40px;">
+                                            </div>
+                                        </div>
+                                    <div class="col-12 col-lg-1 col-md-1 col-sm-12 ms-3"><span class="font-bold mt-2 ">Unit</span>
+                                        <div class="col-lg-12 col-11 col-md-11 col-sm-11 fv-row mt-2 ">
+                                            <input type="text" class="form-control  bg-secondary" formControlName="productuom_name" 
+                                                readonly   style="height:40px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-lg-1 col-md-1 col-sm-12 ms-3"><span class="font-bold mt-2 required ">Quantity</span>
+                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                                            <input type="text" class="
+        form-control form-control-lg form-control-solid custom-input
+        mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="qty_requested" class="form-control" style="height:40px;"  />
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-12 col-lg-2 col-md-1 col-sm-12"><span class="font-bold mt-2 ">Amount</span>
+                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                                            <input type="text" class="
+        form-control form-control-lg form-control-solid custom-input
+        mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="potential_value"
+                                                class="form-control"  style="height:40px;"/>
+                                        </div>
+                                    </div>
+                                                <div class= "col-12 col-lg-1 col-md-2 col-sm-12 " ><span class="font-bold mt-2 ">Need by Date</span>
+                                                    <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-1 ">
+                                                        <input type="date"   pattern="^(?!\s*$).+" [ngStyle]="{ 'border-color': combinedFormData.get('product_requireddate')?.hasError('required')
+                                                         && combinedFormData.get('product_requireddate')?.touched ? 'red' : 'rgb(209, 209, 209)' , 'height': '42px' ,'width': '120px'}"
+                                                        formControlName="product_requireddate" 
+                                                   class="form-control form-control-lg form-control-solid date-picker custom-input mb-3 mb-lg-0 bg-white 
+                                                   custom-input date-picker " placeholder="DD-MM-YYYY"/>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-1 col-12 col-md-11 col-sm-12 fv-row mt-4 p-3 ms-12 "> 
+                                        <button title="Add" type="button" class="btn btn-icon btn-sm bg-success me-1"
+                                            (click)="productSubmit()">
+                                            <span Class="fa-solid fa-plus text-white  fs-6"></span></button>&nbsp;
+                                                <button title="Update" type="button" (click)="onupdate()"                                        
+                                                class="btn btn-icon btn-sm bg-primary me-1"><span
+                                                    class="fa-solid fa-arrow-up text-white  fs-6"></span></button>
+                                            </div> 
+
+                                        
+                                        </div>
+                          
+                    <div class="modal" id="myModaldeletes" data-bs-backdrop="static" data-bs-keyboard="false">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="text-center my-4">
+                                    <h2><b>Are you sure?</b></h2>
+                                    <br>
+                                    <p style="display: block;">Do You Want To Delete the Record ?</p>
+                                    <div class="text-center my-4">
+                                        <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                                        </button>&nbsp;
+                                        <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()"
+                                            data-bs-dismiss="modal">
+                                            <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                                                     
+                </form> 
+            </div>          
+
+               <div class=" table-responsive">
+                    <table id="POproductlist" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>Product Name</th>
+                                <!-- <th>Customer Product Code</th> -->
+                                <th>Product Group</th>
+                                <th>Product Code</th>
+                                <th>Unit</th>
+                                <th>Qty Requested</th>
+                                <th>Potential value</th>
+                                <th>Need By Date</th>
+                                <th class="align-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let data of POproductlist; ">
+                                <!--Product Group Dropdown-->
+                                <td>{{data.product_name}}</td>
+                                <!-- <td>{{data.customerproduct_code}}</td> -->
+                                <td>{{data.productgroup_name}}</td>
+                                <td>{{data.product_code}}</td>
+                                <td>{{data.productuom_name}}</td>
+                                <td>{{data.qty_requested}}</td>
+                                <td>{{data.potential_value}}</td>
+                                <td>{{data.product_requireddate}}</td>
+                                <td>
+                                    <button title="Delete" type="button"
+                                        (click)="openModaldelete(data.tmpsalesenquiry_gid)" data-bs-toggle="modal"
+                                        data-bs-target="#myModaldeletes"
+                                        class="btn btn-icon btn-sm bg-danger me-1"><span
+                                            class="fa-solid fa-trash text-white  fs-6"></span></button>&nbsp;
+                                    <button title="Edit" type="button" (click)="editprod(data.tmpsalesenquiry_gid)"                                        
+                                        class="btn btn-icon btn-sm bg-warning me-1"><span
+                                            class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>        
+
+            <div class="text-center my-4">
+                <button type="submit" class="btn-success btn-sm text-white me-4" data-bs-dismiss="modal">
+                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                  </button>
+                <button class="btn-primary btn-sm text-white me-4" (click)="onclose()">
+                    <i class="fas fa-arrow-left fs-5">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                    </i>&nbsp;Back</button>
+            </div>
+        
+        
+        </div>
+    </form>

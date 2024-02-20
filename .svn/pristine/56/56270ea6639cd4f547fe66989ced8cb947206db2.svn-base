@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-crm-smm-website',
+  templateUrl: './crm-smm-website.component.html',
+  styleUrls: ['./crm-smm-website.component.scss']
+})
+export class CrmSmmWebsiteComponent {
+
+}

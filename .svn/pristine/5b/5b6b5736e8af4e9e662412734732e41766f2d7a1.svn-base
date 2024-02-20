@@ -1,0 +1,57 @@
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+@Component({
+  selector: 'app-crm-smm-sendmail',
+  templateUrl: './crm-smm-sendmail.component.html',
+  styleUrls: ['./crm-smm-sendmail.component.scss']
+})
+export class CrmSmmSendmailComponent {
+  response_data: any;
+  mailview_list: any;
+  mail: any;
+  from_mail: any;
+  to_mail: any;
+  subject: any;
+  body_content: any;
+  mail_from: any;
+  sub: any;
+  body: any;
+  created_date: any;
+  to: any;
+  mailmanagement_gid: any;
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService,) { }
+  ngOnInit(): void {
+  
+    const mailmanagement_gid = this.route.snapshot.paramMap.get('mailmanagement_gid');
+    this.mailmanagement_gid = mailmanagement_gid;
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.mailmanagement_gid, secretKey).toString(enc.Utf8);
+    console.log(deencryptedParam)
+    this. GetMailView(deencryptedParam);  
+  }
+  GetMailView(mailmanagement_gid:any) {
+    
+    var url = 'MailCampaign/GetMailView';
+    let param = {
+      mailmanagement_gid : mailmanagement_gid 
+    }
+    this.service.getparams(url,param).subscribe((result: any) => {
+      this.mailview_list = result.mailsummary_list;
+      this.mail_from = this.mailview_list[0].mail_from;
+      this.to = this.mailview_list[0].to;
+      this.sub = this.mailview_list[0].sub;
+      this.body = this.mailview_list[0].body;
+      this.created_date = this.mailview_list[0].created_date;
+    });
+}
+onback()
+{
+  this.router.navigate(['/crm/CrmSmmEmailmanagement']);
+}
+
+
+}

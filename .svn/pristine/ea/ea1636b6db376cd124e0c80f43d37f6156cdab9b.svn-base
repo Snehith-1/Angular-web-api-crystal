@@ -1,0 +1,419 @@
+﻿using ems.pmr.Models;
+using ems.pmr.DataAccess;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Configuration;
+using System.IO;
+namespace ems.pmr.DataAccess
+{
+    public class DaPmrMstProduct
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        private OdbcDataReader objodbcDataReader;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+
+        string msEmployeeGID, lsemployee_gid, lsuser_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, status;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        public void DaGetProductSummary(MdlPmrMstProduct values)
+        {
+            msSQL = " SELECT d.producttype_name,b.productgroup_name,b.productgroup_code,a.product_gid, a.product_price, a.cost_price, a.product_code, CONCAT_WS('|',a.product_name,a.size, a.width, a.length) as product_name,  CONCAT(f.user_firstname,' ',f.user_lastname) as created_by,date_format(a.created_date,'%d-%m-%Y')  as created_date, " +
+                    " c.productuomclass_code,e.productuom_code,c.productuomclass_name,(case when a.stockable ='Y' then 'Yes' else 'No ' end) as stockable,e.productuom_name,d.producttype_name as product_type,(case when a.status ='1' then 'Active' else 'Inactive' end) as Status," +
+                    " (case when a.serial_flag ='Y' then 'Yes' else 'No' end)as serial_flag,(case when a.avg_lead_time is null then '0 days' else concat(a.avg_lead_time,'  ', 'days') end)as lead_time  from pmr_mst_tproduct a " +
+                    " left join pmr_mst_tproductgroup b on a.productgroup_gid = b.productgroup_gid " +
+                    " left join pmr_mst_tproductuomclass c on a.productuomclass_gid = c.productuomclass_gid " +
+                    " left join pmr_mst_tproducttype d on a.producttype_gid = d.producttype_gid " +
+                    " left join pmr_mst_tproductuom e on a.productuom_gid = e.productuom_gid " +
+                    " left join adm_mst_tuser f on f.user_gid=a.created_by order by a.created_date desc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<product_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new product_list
+                    {
+                        product_gid = dt["product_gid"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+
+                        producttype_name = dt["producttype_name"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        productgroup_code = dt["productgroup_code"].ToString(),
+                        product_price = dt["product_price"].ToString(),
+                        cost_price = dt["cost_price"].ToString(),
+                        productuomclass_code = dt["productuomclass_code"].ToString(),
+                        productuom_code = dt["productuom_code"].ToString(),
+                        productuomclass_name = dt["productuomclass_name"].ToString(),
+                        stockable = dt["stockable"].ToString(),
+
+                        productuom_name = dt["productuom_name"].ToString(),
+                        product_type = dt["product_type"].ToString(),
+                        Status = dt["Status"].ToString(),
+                        serial_flag = dt["serial_flag"].ToString(),
+                        lead_time = dt["lead_time"].ToString(),
+
+
+                    });
+                    values.product_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaPostProduct(string user_gid, product_list values)
+        {
+
+
+            msGetGid = objcmnfunctions.GetMasterGID("PPTM");
+            msSQL = " SELECT currency_code FROM crm_trn_tcurrencyexchange WHERE currencyexchange_gid='" + values.currency_code + "' ";
+            string lscurrency_code = objdbconn.GetExecuteScalar(msSQL);
+
+
+            msSQL = " insert into pmr_mst_tproduct (" +
+                    " product_gid," +
+                    " product_code," +
+                    " product_name," +
+                " product_desc, " +
+                " productgroup_gid, " +
+                " productuomclass_gid, " +
+                " productuom_gid, " +
+                " currency_code," +
+                " mrp_price, " +
+                " cost_price, " +
+                " avg_lead_time, " +
+                " stockable, " +
+                " status, " +
+                " producttype_gid, " +
+                " purchasewarrenty_flag, " +
+                " expirytracking_flag, " +
+                " batch_flag," +
+                " serial_flag," +
+                    " created_by, " +
+                    " created_date)" +
+                    " values(" +
+                    " '" + msGetGid + "'," +
+                    "'" + values.product_code + "',";
+            if (values.product_name == null || values.product_name == "")
+            {
+                msSQL += "'',";
+            }
+            else
+            {
+                msSQL += "'" + values.product_name.Replace("'", "\\'") + "',";
+            }
+            msSQL += "'" + values.product_desc + "'," +
+                     "'" + values.productgroup_name + "'," +
+                     "'" + values.productuomclass_name + "'," +
+                     "'" + values.productuom_name + "'," +
+                     "'" + lscurrency_code + "'," +
+                     "'" + values.mrp_price + "'," +
+                     "'" + values.cost_price + "'," +
+                     "'" + values.avg_lead_time + "'," +
+                     "'" + "Y" + "'," +
+                     "'" + "1" + "'," +
+                     "'" + values.producttype_name + "'," +
+                     "'" + values.purchasewarrenty_flag + "'," +
+                     "'" + values.expirytracking_flag + "'," +
+                     "'" + values.batch_flag + "'," +
+                     "'" + values.serial_flag + "'," +
+                     "'" + user_gid + "'," +
+                     "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Product Added Successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Please Enter All Mandatory Fields";
+            }
+
+        }
+        public void DaPmrMstProductUpdate(string user_gid, product_list values)
+        {
+            msSQL = " SELECT productgroup_gid FROM pmr_mst_tproductgroup WHERE productgroup_name='" + values.productgroupname + "' ";
+            string lsproductgroup_gid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " SELECT producttype_gid FROM pmr_mst_tproducttype WHERE producttype_name='" + values.producttypename + "' ";
+            string lsproducttype_gid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " SELECT productuomclass_gid FROM pmr_mst_tproductuomclass WHERE productuomclass_name='" + values.productuomclassname + "' ";
+            string lsproductuomclass_gid = objdbconn.GetExecuteScalar(msSQL);
+
+            msSQL = " SELECT productuom_gid FROM pmr_mst_tproductuom WHERE productuom_name='" + values.productuomname + "' ";
+            string lsproductuom_gid = objdbconn.GetExecuteScalar(msSQL);
+
+
+            msSQL = " update  pmr_mst_tproduct  set " +
+          " product_name = '" + values.product_name + "'," +
+          " product_code = '" + values.product_code + "'," +
+          " product_desc = '" + values.product_desc + "'," +
+          " currency_code = '" + values.currency_code + "'," +
+          " productgroup_gid = '" + lsproductgroup_gid + "'," +
+          " producttype_gid = '" + lsproducttype_gid + "'," +
+          " productuomclass_gid = '" + lsproductuomclass_gid + "'," + 
+          " productuom_gid = '" + lsproductuom_gid + "'," +
+          " mrp_price = '" + values.mrp_price + "'," +
+          " cost_price = '" + values.cost_price + "'," +
+          " avg_lead_time = '" + values.avg_lead_time + "'," +
+          " purchasewarrenty_flag = '" + values.purchasewarrenty_flag + "'," +
+          " expirytracking_flag = '" + values.expirytracking_flag + "'," +
+          " batch_flag = '" + values.batch_flag + "'," +
+          " serial_flag = '" + values.serial_flag + "'," +
+          " updated_by = '" + user_gid + "'," +
+          " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where product_gid='" + values.product_gid + "'  ";
+
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+
+                values.status = true;
+                values.message = "Product Updated Successfully";
+
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Updating Product";
+            }
+
+
+
+
+        }
+        public void DaGetProducttype(MdlPmrMstProduct values)
+        {
+            msSQL = " Select producttype_name,producttype_gid  " +
+                    " from pmr_mst_tproducttype where producttype_name like 'trad%' " +
+                    " or producttype_name like 'Service%' " +
+                   // " or producttype_name like 'sem%' " +
+                   " or producttype_name like 'fin%' " +
+                    " or producttype_name like 'consum%'  ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProducttype>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProducttype
+                    {
+                        producttype_name = dt["producttype_name"].ToString(),
+                        producttype_gid = dt["producttype_gid"].ToString(),
+                    });
+                    values.GetProducttype = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetProductGroup(MdlPmrMstProduct values)
+        {
+            msSQL = " Select productgroup_gid, productgroup_name from pmr_mst_tproductgroup  " +
+                    " order by productgroup_name asc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductGroup>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductGroup
+                    {
+                        productgroup_gid = dt["productgroup_gid"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                    });
+                    values.GetProductGroup = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetProductUnitclass(MdlPmrMstProduct values)
+        {
+            msSQL = " Select productuomclass_gid, productuomclass_code, productuomclass_name  " +
+                    " from pmr_mst_tproductuomclass order by productuomclass_name asc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductUnitclass>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductUnitclass
+                    {
+                        productuomclass_gid = dt["productuomclass_gid"].ToString(),
+                        productuomclass_code = dt["productuomclass_code"].ToString(),
+                        productuomclass_name = dt["productuomclass_name"].ToString(),
+                    });
+                    values.GetProductUnitclass = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetProductUnit(MdlPmrMstProduct values)
+        {
+            msSQL = " select productuom_name,productuom_gid from pmr_mst_tproductuom a left join pmr_mst_tproductuomclass b on b.productuomclass_gid= a.productuomclass_gid  " +
+                    " order by a.sequence_level ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductUnit>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductUnit
+                    {
+                        productuom_name = dt["productuom_name"].ToString(),
+                        productuom_gid = dt["productuom_gid"].ToString(),
+
+                    });
+                    values.GetProductUnit = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetOnChangeProductUnitClass( string productuomclass_gid, MdlPmrMstProduct values)
+        {
+            msSQL = " select productuom_name,productuom_gid from pmr_mst_tproductuom a left join pmr_mst_tproductuomclass b on b.productuomclass_gid= a.productuomclass_gid  " +
+                     " where b.productuomclass_gid ='" + productuomclass_gid + "' order by a.sequence_level  ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetProductUnit>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetProductUnit
+                    {
+                        productuom_name = dt["productuom_name"].ToString(),
+                        productuom_gid = dt["productuom_gid"].ToString(),
+
+                    });
+                    values.GetProductUnit = getModuleList;
+                }
+            }
+        }
+        public void DaGetDeleteProductdetails(string product_gid, product_list values)
+        {
+            msSQL = "  delete from pmr_mst_tproduct where product_gid='" + product_gid + "'  ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Product Deleted Successfully";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Deleting Product";
+            }
+        }
+
+        public void DaGetViewProductSummary(string product_gid, MdlPmrMstProduct values)
+        {
+           
+            msSQL = "  select CASE WHEN a.batch_flag = 'N' THEN 'NO' ELSE 'YES' END AS batch_flag,CASE WHEN a.serial_flag = 'N' THEN 'NO' ELSE 'YES' END AS serial_flag," +
+                    " CASE WHEN a.purchasewarrenty_flag = 'N' THEN 'NO' ELSE 'YES' END AS purchasewarrenty_flag,CASE WHEN a.expirytracking_flag = 'N' THEN 'NO' ELSE 'YES' END AS expirytracking_flag," +
+                    "  a.product_desc,a.avg_lead_time,a.mrp_price,e.producttype_name,a.cost_price,b.currency_code,a.product_gid,c.productgroup_name,a.product_name,f.productuomclass_name,a.product_code,d.productuom_name " +
+                    "  from pmr_mst_tproduct a " +
+                    "  left join crm_trn_tcurrencyexchange b on b.currency_code=a.currency_code" +
+                    "  left  join pmr_mst_tproductgroup c on a.productgroup_gid=c.productgroup_gid" +
+                    "  left join pmr_mst_tproductuom d on a.productuom_gid=d.productuom_gid" +
+                    "  left  join pmr_mst_tproducttype e on a.producttype_gid=e.producttype_gid" +
+                    "  left  join pmr_mst_tproductuomclass f on a.productuomclass_gid=f.productuomclass_gid" +
+                    "  where a.product_gid='" + product_gid + "' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetViewProductSummary>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetViewProductSummary
+                    {
+
+
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        productuomclass_name = dt["productuomclass_name"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        producttype_name = dt["producttype_name"].ToString(),
+                        batch_flag = dt["batch_flag"].ToString(),
+                        serial_flag = dt["serial_flag"].ToString(),
+                        expirytracking_flag = dt["expirytracking_flag"].ToString(),
+                        purchasewarrenty_flag = dt["purchasewarrenty_flag"].ToString(),
+                        cost_price = dt["cost_price"].ToString(),
+                        mrp_price = dt["mrp_price"].ToString(),
+                        product_desc = dt["product_desc"].ToString(),
+                        avg_lead_time = dt["avg_lead_time"].ToString(),
+                        product_gid = dt["product_gid"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+
+                    });
+                    values.GetViewProductSummary = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetEditProductSummary(string product_gid, MdlPmrMstProduct values)
+        {
+            msSQL = "  select  a.batch_flag,a.serial_flag, a.purchasewarrenty_flag,a.expirytracking_flag,a.product_desc,a.avg_lead_time," +
+              "  a.mrp_price,a.cost_price,a.product_gid,a.product_name,a.product_code,b.productgroup_gid,b.productgroup_name,c.productuomclass_gid,c.productuomclass_name," +
+              "  d.producttype_gid,d.producttype_name,e.productuom_gid,e.productuom_name from pmr_mst_tproduct a " +
+              " left join pmr_mst_tproductgroup b on a.productgroup_gid = b.productgroup_gid" +
+              " left join pmr_mst_tproductuomclass c on a.productuomclass_gid = c.productuomclass_gid" +
+              " left join pmr_mst_tproducttype d on a.producttype_gid = d.producttype_gid " +
+              " left join pmr_mst_tproductuom e on a.productuom_gid = e.productuom_gid" +
+              " where a.product_gid='" + product_gid + "' ";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetEditProductSummary>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetEditProductSummary
+                    {
+
+
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        productgroup_gid = dt["productgroup_gid"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        product_gid = dt["product_gid"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        productuomclass_name = dt["productuomclass_name"].ToString(),
+                        productuomclass_gid = dt["productuomclass_gid"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        productuom_gid = dt["productuom_gid"].ToString(),
+                        producttype_name = dt["producttype_name"].ToString(),
+                        producttype_gid = dt["producttype_gid"].ToString(),
+                        batch_flag = dt["batch_flag"].ToString(),
+                        serial_flag = dt["serial_flag"].ToString(),
+                        expirytracking_flag = dt["expirytracking_flag"].ToString(),
+                        purchasewarrenty_flag = dt["purchasewarrenty_flag"].ToString(),
+                        cost_price = dt["cost_price"].ToString(),
+                        mrp_price = dt["mrp_price"].ToString(),
+                        product_desc = dt["product_desc"].ToString(),
+                        avg_lead_time = dt["avg_lead_time"].ToString(),
+                        
+                        
+
+                    });
+                    values.GetEditProductSummary = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+       
+
+    }
+}

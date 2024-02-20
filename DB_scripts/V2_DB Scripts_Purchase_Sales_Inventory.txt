@@ -1,0 +1,203 @@
+Tmodule Scripts for Sales:
+update adm_mst_tmodule set lw_flag='N' where module_gid like 'SMR%';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrDashboard' where module_gid='SMR';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrTrnCustomerSummary' where module_gid='SMRCMTCUS';
+update adm_mst_tmodule set lw_flag='Y',sref='/einvoice/Invoice-Summary' where module_gid='SMRINMINV';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrMstCurrencySummary' where module_gid='SMRMSTCUR';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrMstTaxsummary' where module_gid='SMRMSTTAX';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrRptSalesorderReport' where module_gid='SMRORT';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrRptOrderreport' where module_gid='SMRORTORT';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrRptTodaySalesreport' where module_gid='SMRORTOVE';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrRptSalesreport' where module_gid='SMRORTSSR';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrMstProductGroup' where module_gid='SMRPDMPDG';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrMstProductSummary' where module_gid='SMRPDMPDT';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrMstProductunitsSummary' where module_gid='SMRPDMPOU';
+update adm_mst_tmodule set lw_flag='Y',sref='/einvoice/ProformaInvoice' where module_gid='SMRPROINV';
+update adm_mst_tmodule set lw_flag='Y',sref='/einvoice/ReceiptSummary' where module_gid='SMRRCP';
+update adm_mst_tmodule set lw_flag='Y',sref='/einvoice/ReceiptSummary' where module_gid='SMRRCT';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrTrnCustomerenquirySummary' where module_gid='SMRSMRENS';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrRptQuotationreport' where module_gid='SMRSMRQAP';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrTrnQuotationSummary' where module_gid='SMRSMRQUO';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrTrnSalesManagerSummary' where module_gid='SMRSMRSMM';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrMstSalesteamSummary' where module_gid='SMRSMRSTM';
+update adm_mst_tmodule set lw_flag='Y',sref='/smr/SmrTrnSalesorderSummary' where module_gid='SMRSROSRO';
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRMST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRINM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRCMT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRPDM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRSMR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRSMRMYE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRQAP');
+
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon) values
+('SMRCMM', 'SMR', 'SMRCMM', '1005', 'ems_crm/crm_transaction.aspx#', '2', NULL, 'Commission Management', '1', '../images/ICO_ADDPRODUC_RS.gif', '', '', 'Commission Management', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', NULL, NULL);
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon) values
+('SMRCMMCMS', 'SMRCMM', 'SMRCMMCMS', '1403', 'ems_crm/crm_trn_customersummary.aspx', '3', NULL, 'Commission Setting', '1', '', '', '', 'Commission Setting', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', '/smr/SmrTrnCommissionSetting', NULL);
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon) values
+('SMRCMMCMP', 'SMRCMM', 'SMRCMMCMP', '1403', 'ems_crm/crm_trn_customersummary.aspx', '3', NULL, 'Commission Payouts', '1', '', '', '', 'Commission Payouts', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', '/smr/SmrTrnCommissionPayouts', NULL);
+
+Tmodule Scripts for Purchase:
+update adm_mst_tmodule set lw_flag='N' where module_gid like 'PMR%';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrDashboard' where module_gid='PMR';
+update adm_mst_tmodule set lw_flag='Y',sref='/payable/PmrTrnInvoice' where module_gid='PMRINETRNIN';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstCurrencySummary' where module_gid='PMRMSTCUR';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstTaxSummary' where module_gid='PMRMSTTAX';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstTermsconditionssummary' where module_gid='PMRMSTTMC';
+update adm_mst_tmodule set lw_flag='Y',sref='/payable/PblTrnPaymentsummary' where module_gid='PMRPAYTRNPA';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstProductSummary' where module_gid='PMRPRMPDT';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstProductGroup' where module_gid='PMRPRMPTG';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstProductunit' where module_gid='PMRPRMUOM';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrTrnRaiseEnquiry' where module_gid='PMRPRVEQ';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrRptPurchaseorderdetailedreport' where module_gid='PMRRPTPOR';
+update adm_mst_tmodule set lw_flag='Y',sref='' where module_gid='PMRTRN';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrTrnPurchaseorderSummary' where module_gid='PMRTRNPRO';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrMstVendorregister' where module_gid='PMRVENRVD';
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRMST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRPAY');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRPRM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRPRO');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRRPT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRVEN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRINV');
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Invoice', `breadcrumb_name` = 'Invoice' WHERE (`module_gid` = 'PMRINV');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstVendorregister' WHERE (`module_gid` = 'PMRVEN');
+UPDATE `adm_mst_tmodule` SET `sref` = '' WHERE (`module_gid` = 'PMRVEN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRVEN');
+UPDATE `adm_mst_tmodule` SET `module_gid_parent` = 'PMRTRN' WHERE (`module_gid` = 'PMRPRVEQ');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRO');
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Purchase Enquiry' WHERE (`module_gid` = 'PMRPRVEQ');
+
+UPDATE `adm_mst_tmodule` SET `breadcrumb_name` = 'Purchase Enquiry' WHERE (`module_gid` = 'PMRPRVEQ');
+
+UPDATE `adm_mst_tmodule` SET `module_gid_parent` = 'PMRTRN', `display_order` = '1002' WHERE (`module_gid` = 'PMRPROPQN');
+
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Invoice', `breadcrumb_name` = 'Invoice' WHERE (`module_gid` = 'PMRINV');
+
+Tmodule Scripts for Inventory:
+update adm_mst_tmodule set lw_flag='N' where module_gid like 'IMS%';
+update adm_mst_tmodule set lw_flag='Y',sref='/ims/ImsTrnDeliveryorder' where module_gid='IMSDEL';
+update adm_mst_tmodule set lw_flag='Y',sref='ims/ImsTrnDeliveryOrderAcknowlegement' where module_gid='IMSDELACK';
+update adm_mst_tmodule set lw_flag='Y',sref='/ims/ImsTrnDeliveryorder' where module_gid='IMSDELDEL';
+update adm_mst_tmodule set lw_flag='Y',sref='/ims/ImsTrnOpendcsummary' where module_gid='IMSDELODC';
+update adm_mst_tmodule set lw_flag='Y',sref='/ims/ImsTrnOpeningstockSummary' where module_gid='IMSSTKOPS';
+update adm_mst_tmodule set lw_flag='Y',sref=' /pmr/PmrTrnGrncheckerSummary' where module_gid='IMSTRNGCK';
+update adm_mst_tmodule set lw_flag='Y',sref='/pmr/PmrTrnGrninward' where module_gid='IMSTRNGIW';
+update adm_mst_tmodule set lw_flag='Y',sref='/ims/ImsTrnIssuematerialSummary' where module_gid='IMSTRNISM';
+
+
+INSERT INTO `adm_mst_tmodule` (`module_gid`,`module_gid_parent`,`module_code`,`display_order`,`module_link`,`menu_level`,`max_menulevel`,`module_name`,`status`,`image_url`,`group_type`,`modulemanager_gid`,`breadcrumb_name`,`approval_flag`,`approval_tablename`,`approval_type`,`approval_limit`,`module_flag`,`created_by`,`created_date`,`updated_by`,`updated_date`,`lw_flag`,`sref`,`icon`)
+
+VALUES ('PMRPROPQN','PMRPRO','PMRPROPQN',1011,'ems_pmr/pmr_trn_purchasequotation.aspx',3,NULL,'Purchase Quotation','1','../images/ICO_RAISE_ENQ_RS.png','PURCHASE','','Purchase Quotation','Y','','','Y','N','',NULL,'',NULL,NULL,NULL,NULL);
+
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Open Delivery Challan' WHERE (`module_gid` = 'IMSDELODC');
+
+UPDATE `adm_mst_tmodule` SET `display_order` = '3011' WHERE (`module_gid` = 'SMRINMINV');
+UPDATE `adm_mst_tmodule` SET `display_order` = '3010' WHERE (`module_gid` = 'SMRPROINV');
+UPDATE `adm_mst_tmodule` SET `display_order` = '1011' WHERE (`module_gid` = 'PMRTRNPRO');
+UPDATE `adm_mst_tmodule` SET `display_order` = '1001' WHERE (`module_gid` = 'PMRPRVEQ');
+
+
+/*---------------------------------------------- (Poornima) 29-12-2023--------------------------------------------------------------------*/
+
+insert into adm_mst_tsequence (sequence_gid, sequence_code, sequence_name, sequence_format, sequence_curval, sequence_flag, branch_flag, department_flag, year_flag, month_flag, location_flag, company_code, delimeter, runningno_prefix, finyear, carry_forward, created_by, created_date, updated_by, updated_date) values
+('SSQM2312291101', 'BEAC', 'Email Attachments', '4', '7', 'N', 'N', 'N', 'N', '', 'N', '', '', '', '2023', 'N', NULL, NULL, NULL, NULL);
+insert into adm_mst_tsequence (sequence_gid, sequence_code, sequence_name, sequence_format, sequence_curval, sequence_flag, branch_flag, department_flag, year_flag, month_flag, location_flag, company_code, delimeter, runningno_prefix, finyear, carry_forward, created_by, created_date, updated_by, updated_date) values
+('SSQM2312291102', 'BELP', 'Emails', '4', '7', 'N', 'N', 'N', 'N', '', 'N', '', '', '', '2023', 'N', NULL, NULL, NULL, NULL); 
+
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrDashboard' WHERE (`module_gid` = 'PMR');
+/*--------------------------------------End:(Poornima) ------------------------------------------------------*/
+alter table crm_trn_tleadbank add column customer_type varchar(64) default null;
+
+/*---------------------------------------------- (Poornima) 19-01-2024--------------------------------------------------------------------*/
+
+CREATE TABLE `crm_smm_exchangerate_service` (
+  `s_no` int(11) NOT NULL AUTO_INCREMENT,
+  `api_url` varchar(1000) DEFAULT NULL,
+    `api_key` varchar(1000) DEFAULT NULL,
+      `api_host` varchar(1000) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `created_by` varchar(64) DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `crm_smm_exchangerate_service` (`s_no`, `api_url`, `api_key`, `api_host`) VALUES ('1', 'currency-exchange.p', '14da834b12msh710e57f3bd88c1fp19cc93jsnba653ed40922', 'currency-exchange.p.rapidapi.com');
+
+UPDATE `crm_smm_exchangerate_service` SET `api_url` = 'exchangerate-api.p.rapidapi.com/rapid/latest/', `api_host` = 'exchangerate-api.p.rapidapi.com' WHERE (`s_no` = '1');
+/*--------------------------------------End:(Poornima) ------------------------------------------------------*/
+
+/*---------------------------------------------- Add module (Vengatramanan S) Date 23-01-2024--------------------------------------------------------------------*/
+
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y', `sref` = 'pmr/PmrRptOverallreport' WHERE (`module_gid` = 'PMRRPTOAR');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET  `lw_flag` = 'Y', `sref` = '/pmr/PmrRptVendorLedgerreport' WHERE (`module_gid` = 'PMRRPTVLR');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172511');
+
+ 
+ 
+#PRIVILEGE SCRIPT
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172565');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172517');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172523');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172535');
+
+
+
+/*---------------------------------------------- End module (Vengatramanan S) Date 23-01-2024--------------------------------------------------------------------*/
+
+/*---------------------------------------------- Add module (Vengatramanan S) Date 26-01-2024--------------------------------------------------------------------*/
+
+
+CREATE TABLE `crm_mst_tsalestype` (
+  `salestype_gid` varchar(64) NOT NULL,
+  `sales_type` varchar(45) DEFAULT NULL,
+  `neworder_percentage` varchar(45) NOT NULL,
+  `repeatorder_percentage` varchar(45) DEFAULT NULL, 
+  `created_by` varchar(64) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` varchar(64) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`salestype_gid`) 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+ 
+INSERT INTO `crm_mst_tsalestype` (`salestype_gid`, `sales_type`, `neworder_percentage`, `repeatorder_percentage`) VALUES ('1', 'Distributor', '0', '0');
+INSERT INTO `crm_mst_tsalestype` (`salestype_gid`, `sales_type`, `neworder_percentage`, `repeatorder_percentage`) VALUES ('2', 'Dealer', '0', '0');
+INSERT INTO `crm_mst_tsalestype` (`salestype_gid`, `sales_type`, `neworder_percentage`, `repeatorder_percentage`) VALUES ('3', 'Sub Dealer', '0', '0');
+INSERT INTO `crm_mst_tsalestype` (`salestype_gid`, `sales_type`, `neworder_percentage`, `repeatorder_percentage`) VALUES ('4', 'Corporate', '0', '0');
+INSERT INTO `crm_mst_tsalestype` (`salestype_gid`, `sales_type`, `neworder_percentage`, `repeatorder_percentage`) VALUES ('5', 'Online Price', '0', '0');
+ 
+Alter table rbl_trn_tinvoice add payable_commission  float(13,2);
+ 
+CREATE TABLE `crm_trn_tcommissionpayout` (
+  `commissionpayout_gid` varchar(45) NOT NULL DEFAULT '', 
+  `invoice_gid` varchar(45) DEFAULT NULL,
+  `generation_date` date DEFAULT NULL,
+  `total_invoice` varchar(45) DEFAULT NULL,  
+  `invoice_amount` double DEFAULT NULL,
+  `payable_commission` double DEFAULT NULL,
+  `commission_amount` double DEFAULT NULL,
+  `payout_status` varchar(45) DEFAULT NULL, 
+  `created_by` varchar(45) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`commissionpayout_gid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ 
+insert into adm_mst_tsequence ( sequence_gid, sequence_code, sequence_name, sequence_format, sequence_curval, sequence_flag, branch_flag, department_flag, year_flag, month_flag, location_flag, company_code, delimeter, runningno_prefix, finyear, carry_forward, created_by, created_date, updated_by, updated_date) values
+('SSQM2301202401', 'SCMP', 'Commission Payout', '4', '0', 'N', 'N', 'N', 'N', 'N', 'N', '', '', '', '2023', 'N', NULL, NULL, NULL, NULL);
+
+ alter table pmr_tmp_tquotationdtl add column productrequireddate_remarks varchar(256);
+
+/*---------------------------------------------- End module (Vengatramanan S) Date 26-01-2024--------------------------------------------------------------------*/
+
+
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon) values
+('SMRCMMCMR', 'SMRCMM', 'SMRCMMCMR', '1405', 'ems_crm/crm_trn_customersummary.aspx', '3', NULL, 'Commission Report', '1', '', '', '', 'Commission Report', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', '/smr/SmrRptCommissionpayoutReport', NULL);
+
+
+update adm_mst_tmodule set display_order='1404' where module_gid='SMRCMMCMP';
+
+insert into adm_mst_tmodule (module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon)
+values('SMROPTQTR', 'SMRORT', 'SMROPTQTR', '1006', 'ems_pmr/pmr_rpt_quotationreport.aspx', '3', NULL, 'Quotation Report', '1', '../images/ico_report_quotation_RS.png', 'SALES', '', 'Quotation Report', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', '/smr/SmrRptQuotationreport', NULL);
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTQTR');

@@ -1,0 +1,393 @@
+<div class="card shadow-sm" >
+  <div class="card-header bg-lightblue">
+    <h3 class="card-title"><b>Payment Add</b></h3>
+  </div>
+
+  <form [formGroup]="reactiveForm" #form="ngForm">
+    <div *ngFor="let data of vendor_lists;">
+    <div class="d-flex flex-row fv-row flex-wrap">
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Payment Date</b>
+          <input formControlName="payment_date" type="date" style="width:70%;"
+            class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+            placeholder="Enter Date" name="payment_date" />
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-5"><b>Entered By</b>
+          <p>{{data.name}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12 mt-5 ms-5"><span class="ms-6"><b>Priority</b></span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ms-1">
+          <input type="radio" class="form-control-input ms-4 me-2" formControlName="priority" value="Low"
+            (change)="showTextBox2($event)">
+          <label><b>Low</b></label>
+          <input type="radio" class="form-control-input ms-4 me-2" formControlName="priority" value="High"
+            (change)="showTextBox2($event)">
+          <label><b>High</b></label>
+        </div>
+      </div>
+
+
+      <div *ngIf="showInput1" class="col-12 col-lg-2 col-md-2 col-sm-12 mt-6 ms-2">
+        <textarea
+          class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+          rows="1" formControlName="textbox" name="textbox" style="width:110%;"
+          placeholder="Enter Text"></textarea>
+      </div>
+
+    </div>
+
+
+    <div class="d-flex flex-row fv-row flex-wrap">
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Email</b>
+          <p>{{data.email_id}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-5"><b>Contact Number</b>
+          <p>{{data.contact_telephonenumber}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-11"><b>Vendor Name</b>
+          <p>{{data.vendor_companyname}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-8"><b>Vendor Contact Details</b>
+          <p>{{data.vendorcontactdetails}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row fv-row flex-wrap">
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Vendor Address</b>
+          <p>{{data.vendoraddress}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-5"><b>Fax</b>
+          <p>{{data.fax}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-11"><b>Currency</b>
+          <p>{{data.currency_code}}</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-8"><b>Exchange Rate</b>
+          <p>{{data.exchange_rate}}</p>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="d-flex flex-row fv-row flex-wrap">
+
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Payment Remarks</b>
+          <textarea
+            class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+            id="payment_remarks" formControlName="payment_remarks" rows="1" style="width:70%;"
+            placeholder="Enter Remarks"></textarea>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-5"><b>Payment Note</b>
+          <textarea
+            class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+            id="payment_note" formControlName="payment_note" rows="1" style="width:70%;"
+            placeholder="Enter Note"></textarea>
+        </div>
+      </div>
+
+
+
+    </div>
+ </div>
+
+
+
+
+    <br><br>
+
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 p mt-12 bg-white rounded">
+        <table id="singlepayment_list" class="table table-striped table-row-bordered gy-5 gs-7">
+          <thead>
+            <tr class="fw-bolder fs-8 text-nowrap bg-lightblue text-blue align-middle">
+              <th>
+                <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"/>
+                    <b style="font-size:9px;">Check All</b>
+            </th>
+              <th style="font-size:9px;">S.No</th>
+              <th style="font-size:9px;">Invoice Date</th>
+              <th style="font-size:9px;">Invoice Refno</th>
+              <th style="font-size:9px;">Invoice Amount</th>
+              <th style="font-size:9px;">Paid Amount</th>
+              <th style="font-size:9px;">Outstanding Amount</th>
+              <th style="font-size:9px;">Invoice Status</th>
+              <th style="font-size:9px;">Advance</th>
+              <th style="font-size:9px;">Payment Amount</th>
+              <th style="font-size:9px;">Balance PO Advance</th>
+              <th style="font-size:9px;">Total PO Advance</th>
+              <th style="font-size:9px;">Grand Total</th>
+              <th style="font-size:9px;">TDS Amount</th>
+              <th style="font-size:9px;">Final Amount</th>
+              <th style="font-size:9px;">Remarks</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of singlepayment_list; let i=index;" class="align-middle">
+              <td> <input type="checkbox" (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(data) : null"
+                [checked]="selection.isSelected(data)" /></td>
+              <td style="font-size:9px;">{{i+1}}</td>
+              <td style="font-size:9px;">{{data.invoice_date}}</td>
+              <td style="font-size:9px;">{{data.invoice_gid}}</td>
+              <td style="font-size:9px;">{{data.invoice_amount}}</td>
+              <td style="font-size:9px;">{{data.invoice_amount}}</td>
+              <td style="font-size:9px;">{{data.outstanding}}</td>
+              <td style="font-size:9px;">{{data.invoice_status}}</td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.advance"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"                 
+                formControlName="advance_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.payment_amount"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"
+                          formControlName="payment_amount_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.balancepo_advance"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"
+                formControlName="balancepo_advance_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.totalpo_advance"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"
+                formControlName="totalpo_advance_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.grand_total"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"
+                formControlName="grand_total_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.tds_amount"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"
+                formControlName="tds_amount_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <input type="text" [(ngModel)]="data.final_amount"  placeholder="0.0" style="width:55px;" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input borderc-secondary"
+                formControlName="payment_amount_{{i}}" (keypress)="onKeyPress($event)" /> 
+              </td>
+              <td style="font-size:9px;">
+                <textarea
+                  class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+                  id="remark" formControlName="remark_{{i}}" rows="1" style="width:70%;"
+                  placeholder="Enter Remarks"></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row fv-row flex-wrap">
+      <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Payment Mode</b>
+          <select formControlName="payment_mode" style="width:70%;"
+            class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2 mt-3"
+            placeholder="Enter Payment Mode" (change)="showTextBox($event)">
+            <option value="">--Select an option--</option>
+            <option value="Cash">Cash</option>
+            <option value="Cheque">Cheque</option>
+            <option value="DD">DD</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="NEFT">NEFT</option>
+
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="showInput5">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Date</b>
+            <input formControlName="payment_date1" type="date" style="width:400%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Date"  />
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="showInput">
+      <div class="d-flex flex-row fv-row flex-wrap">
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Bank Name</b>
+            <ng-select formControlName="bank_name" [class.is-invalid]="
+            bank_name.invalid &&
+            (bank_name.dirty || bank_name.touched)
+             "  [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}" [items]="bankdetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3"
+             bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:70%;"></ng-select>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Cheque No</b>
+            <input formControlName="cheque_no" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Cheque No" name="cheque_no" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Branch Name</b>
+            <input formControlName="branch_name" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Branch Name" name="branch_name" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Date</b>
+            <input formControlName="payment_date" type="date" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Date" name="payment_date" />
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <div *ngIf="showInput4">
+      <div class="d-flex flex-row fv-row flex-wrap">
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Bank Name</b>
+            <ng-select formControlName="bank_name" [class.is-invalid]="
+            bank_name.invalid &&
+            (bank_name.dirty || bank_name.touched)
+             "  [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}" [items]="bankdetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3"
+             bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:70%;"></ng-select>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Transaction Ref. No.</b>
+            <input formControlName="transaction_refno" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Transaction Ref. No." name="transaction_refno" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Branch Name</b>
+            <input formControlName="branch_name" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Branch Name" name="branch_name" />
+          </div>
+        </div>
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Date</b>
+            <input formControlName="payment_date" type="date" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Date" name="payment_date" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="showInput3">
+      <div class="d-flex flex-row fv-row flex-wrap">
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Card Name</b>
+            <ng-select formControlName="card_name" [class.is-invalid]="
+            card_name.invalid &&
+            (card_name.dirty || card_name.touched)
+             "  [ngClass]="{'invalid-border': card_name.invalid && card_name.touched}" [items]="carddetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3"
+             bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:70%;"></ng-select>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Transaction No.</b>
+            <input formControlName="transaction_no" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Transaction No." name="transaction_no" />
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div *ngIf="showInput2">
+      <div class="d-flex flex-row fv-row flex-wrap">
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Bank Name</b>
+            <ng-select formControlName="bank_name" [class.is-invalid]="
+            bank_name.invalid &&
+            (bank_name.dirty || bank_name.touched)
+             "  [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}" [items]="bankdetailslist" class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-3"
+             bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option" style="width:70%;"></ng-select>
+          </div>
+        </div>
+
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>DD No.</b>
+            <input formControlName="dd_no" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter DD No." name="dd_no" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Branch Name</b>
+            <input formControlName="branch_name" type="text" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Branch Name" name="branch_name" />
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+          <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-5 ms-15"><b>Date</b>
+            <input formControlName="payment_date" type="date" style="width:70%;"
+              class="form-control form-control-lg form-control-solid  borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input mt-3"
+              placeholder="Enter Date" name="payment_date" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="text-center my-4">
+      <button class="btn-success btn-sm text-white me-4" (click)="onsubmit()">
+        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+      </button> &nbsp;&nbsp;
+      <button class="btn-danger btn-sm text-white me-4" (click)="onback()">
+        <i class="fa fa-arrow-left"></i>
+        <span class="ms-3">Back</span>
+      </button>
+    </div>
+
+
+
+
+
+  </form>
+</div>

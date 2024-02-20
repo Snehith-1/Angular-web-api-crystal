@@ -1,0 +1,10 @@
+.primary-button {
+    background-color: #229ED9;
+    background: #229ED9;
+    
+    }
+    
+    .secondary-button {
+    background-color: #b0deec;
+    
+    }

@@ -1,0 +1,248 @@
+<div class="card shadow-sm">
+
+  <div class="card-header bg-whatsapp" style="color: white;">
+
+    <h3 class="card-title"><i class="bi bi-whatsapp" style="font-size: 20px;"></i>&nbsp;&nbsp;Whatsapp</h3>
+    <div style="margin: 13px;">
+      <button title="Send Bulk Messages" routerLink="/crm/CrmMstWabulkmessage"
+        class="btn-secondary btn-sm text-black me-4 "><span class="bi bi-send-fill">&nbsp;</span>
+        Bulk Message</button>
+    
+      <button title="Create Template" routerLink="/crm/CrmSmmWhatsappmessagetemplate"
+        class="btn-secondary btn-sm text-black me-4 "> <i class="bi bi-plus-circle-fill"></i>&nbsp;
+        Create Template</button>
+      <!-- <button title="Log"  routerLink="/crm/CrmSmmWhatsapplog" class="btn-secondary btn-sm text-black me-4 "><i class="fas fa-phone"></i>&nbsp;
+              Log</button> -->
+      <button title="View" type="button" data-bs-toggle="modal" data-bs-target="#myModalview2"
+        class="btn-secondary btn-sm text-black me-4 ">
+        <i class="fa fa-user"></i>&nbsp;
+        Account Details
+      </button>
+      <button title="Chats" routerLink="/crm/CrmSmmWatsapp" class="btn-secondary btn-sm text-black me-4 "><span
+        class="fas fa-comment"></span>&nbsp;
+      Chats</button>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+<br>
+<br>
+<div class="row">
+  <!-- ADD Function -->
+  <!-- <div class="col-lg-2 col-md-2 col-sm-2" style="width:170px;">
+      <br/>
+    <button title="Add Lead" class="btn-primary btn-sm text-white me-4" (click)="onadd()" >
+      <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp; Add Lead
+    </button>
+  </div> -->
+  <div class="col-lg-3 col-md-3 col-sm-3">
+    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkgreen">
+      <div class="card-body12">
+        <div class="d-flex align-items-center">
+
+          <div>
+            <h5 class="mb-0 text-secondary"> All Contacts </h5>
+            <div *ngFor="let data of contact_count1">
+              <h5 class="my-1 text-info">{{data.contact_count1}}</h5>
+            </div>
+
+          </div>
+          <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i
+              class="bi bi-person-lines-fill fs-3"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-lg-3 col-md-3 col-sm-3">
+    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkgreen">
+      <div class="card-body12">
+        <div class="d-flex align-items-center">
+
+          <div>
+            <h5 class="mb-0 text-secondary">Received Messages</h5>
+            <div *ngFor="let data of message_count">
+              <h5 class="my-1 text-info">{{data.Received_messages}}</h5>
+            </div>
+          </div>
+          <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i
+              class="fa-solid fa-message"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3">
+    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkgreen">
+      <div class="card-body12">
+        <div class="d-flex align-items-center">
+          <div *ngFor="let data of message_count">
+            <h5 class="mb-0 text-secondary">Delivered Messages</h5>
+            <h5 class="mb-0 text-secondary">{{data.Sent_messages}}</h5>
+
+          </div>
+          <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto"><i
+              class="fas fa-paper-plane fs-3"></i>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3">
+    <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-darkgreen">
+      <div class="card-body12">
+        <div class="d-flex align-items-center">
+          <div *ngFor="let data of message_count">
+            <h5 class="mb-0 text-secondary">Total Messages</h5>
+            <h5 class="mb-0 text-dark"> {{ data.Total_messages }}</h5>
+          </div>
+          <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i
+              class="bi bi-chat-dots-fill fs-3"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="table-responsive">
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+      <table id="whatsappCampaign" class="table table-striped table-row-bordered border-bottom gs-7">
+        <thead>
+          <tr class=" text-white fw-bold fs-6 text-nowrap bg-whatsapp">
+            <th style="width: 1px;">S.No</th>
+            <th>Created Date</th>
+            <th>Campaign</th>
+            <th>Status</th>
+            <th style="text-align: center;">Sent Count</th>
+            <th>Published Date</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of whatsappCampaign; let i=index;" class="align-middle">
+            <td>{{i+1}}</td>
+            <td style="white-space: nowrap;">{{data.created_date}}</td>
+            <td style="white-space: nowrap;">{{data.p_name}}</td>
+            <td> <span *ngIf="data.version === ''"><label class="ms-3" class="badge bg-warning text-white ">Inactive</label></span>
+              <span *ngIf="data.version !== ''" ><label class="ms-3" class="badge bg-success text-white ">Active</label></span></td>
+            <td style="text-align: center;"><label class="ms-3" class="badge badge-circle badge-primary"
+                style="color:white ;"><b>{{data.send_campaign}}</b></label></td>
+            <td style="white-space: nowrap;">{{data.created_date}}</td>
+            <td class="text-nowrap text-center">
+              <button title="View" type="button" data-bs-toggle="modal" data-bs-target="#myModalview1" (click)="openModalview(data.project_id)"
+                class="btn btn-icon btn-sm bg-view bg-primary me-2"><span
+                  class="fa-solid fa-eye text-white  fs-6"></span> </button>
+              <button title="Log" type="button"  (click)="whatsapplog(data)" data-bs-toggle="modal" class="btn btn-icon btn-sm bg-view me-2"><span
+                  class="fa-solid fa-calendar-check text-white fs-6"></span></button>
+              <button title="Delete" type="button" (click)="openModaldelete(data.project_id)" data-bs-toggle="modal"
+                data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-trash text-white  fs-6"></span></button>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" ><span class="fa-solid fa-eye text-white  fs-6"></span></button> -->
+
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="text-center my-4">
+        <h2><b>Are you sure?</b></h2>
+        <br>
+
+        <p style="display: block;">Do You Want To Delete the Record ?</p>
+        <br>
+        <div class="text-center my-4">
+          <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white"></i> &nbsp;Close
+          </button>&nbsp;
+          <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+            <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+          </button>
+
+          <!--   -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!---Template View start-->
+<div class="modal" id="myModalview1" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+        <h2 style="margin-top:10px;color:white;font-weight: bold;">
+            &nbsp; <i class="fa-solid fa-film" style="font-size: 17px;"></i>&nbsp;&nbsp;Template View</h2>
+    </div>
+
+      <BR>
+        <div class="card shadow-sm p-4 m-4" style="height: 300px" *ngFor="let d of templateview_list" >
+        <h2 style="color: rgb(26, 111, 145);">{{ d.p_name}}</h2>
+        <div style="height: 280px;overflow-y: scroll;" id="scroll-bar-table">
+        <p>{{ d.template_body}}</p>
+       </div>
+    </div>
+      <div class="text-center my-4">
+        <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+          <i class="ki-duotone ki-entrance-right fs-5">
+            <i class="path1"></i>
+            <i class="path2"></i>
+        </i>&nbsp;Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+</div>
+
+<!---Template View end-->
+<div class="modal" id="myModalview2" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+        <h2 style="margin-top:10px;color:white;font-weight: bold;">
+          &nbsp; <i class="fa fa-user" style="color: white; font-size: 20px;"></i>&nbsp;&nbsp;&nbsp;Account Details</h2>
+      </div>
+      <Br>
+      <div style="margin-left: 20px;">
+        <h2>Channel Name</h2>
+        <h4 style="margin-left: 10px;"> VCIDEX Solutions</h4>
+        <h2>Channel ID</h2>
+        <h4 style="margin-left: 10px;"> 165373139982603 </h4> 
+        <h2>Mobile Number</h2>
+        <h4 style="margin-left: 10px;">+919360389967 </h4>
+      </div>
+      <div class="text-center my-4">
+        <button class="btn-primary btn-sm text-black me-4 " data-bs-dismiss="modal"><i class="ki-duotone ki-entrance-right fs-5">
+          <i class="path1"></i>
+          <i class="path2"></i>
+      </i>
+          &nbsp;Back
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- </div> -->
+</div>

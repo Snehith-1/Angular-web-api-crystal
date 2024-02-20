@@ -1,0 +1,27 @@
+import { Injectable} from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class SharedService {
+    private dataSubject = new BehaviorSubject<any>(null);
+    functionToCall!: () => void | any;
+    function1ToCall!: () => void | any;
+
+    setData(data: any){
+        this.dataSubject.next(data);
+    }
+
+    getData(){
+        return this.dataSubject.asObservable();
+    }
+
+    setFunctionToCall(func: () => void){
+        this.functionToCall = func;
+    }
+
+    setFunction1ToCall(func: () => void){
+        this.function1ToCall = func;
+    }
+}

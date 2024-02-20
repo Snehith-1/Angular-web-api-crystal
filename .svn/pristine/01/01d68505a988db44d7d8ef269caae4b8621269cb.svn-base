@@ -1,0 +1,750 @@
+
+
+
+/*---------------------------------------------- ERP Lite Menus (Poornima) 12-09-2023--------------------------------------------------------------------*/
+
+update adm_mst_tmodule set lw_flag='Y' where module_link like '%ems_payroll%';
+update adm_mst_tmodule set lw_flag='Y' where module_link like '%ems_finance%';
+update adm_mst_tmodule set lw_flag='Y' where module_link like '%ems_inventory%';
+
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon)
+values('FMSINV', 'FMS', 'FMSINV', '1404', 'ems_finance/finance_transaction.aspx#', '2', NULL, 'Invoice', '1', '../images/Settings.gif', 'INVOICE', '', 'Invoice', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', NULL, NULL);
+
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon)
+values('FMSINVPBL', 'FMSINV', 'FMSINVPBL', '1404', 'ems_finance/acc_mst_bankmaster.aspx', '3', NULL, 'Payable Invoice', '1', '../images/ico_opening_stock_RS.png', 'Payable Invoice', '', 'Payable Invoice', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', NULL, NULL);
+
+
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon)
+values('FMSINVRBL', 'FMSINV', 'FMSINVRBL', '1404', 'ems_finance/acc_mst_bankmaster.aspx', '3', NULL, 'Receivable Invoice', '1', '../images/ico_opening_stock_RS.png', 'Receivable Invoice', '', 'Receivable Invoice', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', NULL, NULL);
+
+
+insert into adm_mst_tprivilege (privilege_gid, usergroup_gid, module_gid, isallow, user_gid, module_parent_gid, created_by, created_date, updated_by, updated_date) values('SPGM2309120213', NULL, 'FMSMST', NULL, 'U1', 'FMS', NULL, NULL, NULL, NULL);
+insert into adm_mst_tprivilege (privilege_gid, usergroup_gid, module_gid, isallow, user_gid, module_parent_gid, created_by, created_date, updated_by, updated_date) values('SPGM2309120214', NULL, 'FMSRPT', NULL, 'U1', 'FMS', NULL, NULL, NULL, NULL);
+insert into adm_mst_tprivilege (privilege_gid, usergroup_gid, module_gid, isallow, user_gid, module_parent_gid, created_by, created_date, updated_by, updated_date) values('SPGM2309120215', NULL, 'FMS', NULL, 'U1', 'FMS', NULL, NULL, NULL, NULL);
+
+
+/*--------------------------------------End:(Poornima) ------------------------------------------------------*/
+/*---------------------------------------------- Add Sref (Thirumurugan S) Date 12-09-2023--------------------------------------------------------------------*/
+
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstTermsconditionssummary' WHERE (`module_gid` = 'PMRMSTTMC');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnPurchaseorderSummary' WHERE (`module_gid` = 'PMRTRNPRO');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnGrninward' WHERE (`module_gid` = 'PMRSTKGRN');
+
+update adm_mst_tmodule set lw_flag='Y' where module_link like '%ems_inventory%';
+UPDATE `adm_mst_tmodule` SET `sref` = '/payable/PmrTrnInvoice' WHERE (`module_gid` = 'FMSINVPBL');
+UPDATE `adm_mst_tmodule` SET `sref` = '/ims/ImsTrnOpeningstockSummary' WHERE (`module_gid` = 'IMSSTKOPS');
+
+/*--------------------------------------End:(Thirumurugan S) ------------------------------------------------------*/
+/*---------------------------------------------- (purchase ,inventory, finance) Add Sref (Indiran R) Date 10-05-2023--------------------------------------------------------------------*/
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstCurrencySummary' WHERE (`module_gid` = 'PMRMSTCUR');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstTaxSummary' WHERE (`module_gid` = 'PMRMSTTAX');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstTermsconditionssummary' WHERE (`module_gid` = 'PMRMSTTMC');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstProductGroup' WHERE (`module_gid` = 'PMRPRMPTG');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstProductunit' WHERE (`module_gid` = 'PMRPRMUOM');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstProductSummary' WHERE (`module_gid` = 'PMRPRMPDT');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrMstVendorregister' WHERE (`module_gid` = 'PMRVENRVD');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnPurchaseorderSummary' WHERE (`module_gid` = 'PMRTRNPRO');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnGrninward' WHERE (`module_gid` = 'PMRSTKGRN');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrRptPurchaseorderdetailedreport' WHERE (`module_gid` = 'PMRRPTPOR');
+UPDATE `adm_mst_tmodule` SET `sref` = '/ims/ImsTrnOpeningstockSummary' WHERE (`module_gid` = 'IMSSTKOPS');
+UPDATE `adm_mst_tmodule` SET `sref` = '/ims/ImsTrnIssuematerialSummary' WHERE (`module_gid` = 'IMSTRNISM');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnCashbooksummary' WHERE (`module_gid` = 'FMSICECHB');
+UPDATE `adm_mst_tmodule` SET `sref` = '/payable/PmrTrnInvoice' WHERE (`module_gid` = 'FMSINVPBL');
+UPDATE adm_mst_tmodule SET sref = '/finance/AccTrnBankbooksummary' WHERE module_gid = 'FMSICEBNB';
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccMstBankMasterSummary' WHERE (`module_gid` = 'FMSMSTBAM');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrRptOutstandingamountreport' WHERE (`module_gid` = 'FMSRPTOMR');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccMstOpeningbalance' WHERE (`module_gid` = 'FMSMSTOBM');
+UPDATE `adm_mst_tmodule` SET `sref` = '/ims/ImsTrnStockadjustmentSummary' WHERE (`module_gid` = 'IMSSTKSTA');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccMstCreditcardmasterSummary' WHERE (`module_gid` = 'FMSMSTCAM');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccMstGlcodeSummary' WHERE (`module_gid` = 'FMSMSTGLC');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnCreditcardbookSummary' WHERE (`module_gid` = 'FMSICECCB');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnJournalentrySummary' WHERE (`module_gid` = 'FMSICEJNE');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnSundrysalesSummary' WHERE (`module_gid` = 'FMSICESDS');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnGstmanagementSummary' WHERE (`module_gid` = 'FMSGSTGST');
+
+
+
+
+
+/*---------------------------------------------- End Sref (Indiran R) Date 10-05-2023--------------------------------------------------------------------*/
+/*---------------------------------------------- Add Sequence (Indiran R) Date 10-05-2023--------------------------------------------------------------------*/
+UPDATE `adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2103310474');
+UPDATE `adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310114');
+UPDATE `adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310081');
+UPDATE `adm_mst_tsequence` SET `sequence_curval` = '0' WHERE (`sequence_gid` = 'SSQM2103311078');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSMSTOBM');
+
+/*---------------------------------------------- End sequence (Indiran R) Date 10-05-2023--------------------------------------------------------------------*/
+
+/*---------------------------------------------- (Sales) Add Sref (Indiran R) Date 10-05-2023--------------------------------------------------------------------*/
+
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstProductGroup' WHERE (`module_gid` = 'SMRPDMPDG');
+UPDATE `adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310422');
+
+insert into  adm_mst_tprivilege ( privilege_gid,module_gid,user_gid,module_parent_gid) values ('SPGM17092521189','FMSMSTOBM','SUSM1709250002','FMS');
+
+/*---------------------------------------------- End Sref (Indiran R) Date 10-05-2023--------------------------------------------------------------------*/
+
+/*---------------------------------------------- (Sales & finance ) Add Sref (Indiran R) Date 10-06-2023--------------------------------------------------------------------*/
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnGstmanagementSummary' WHERE (`module_gid` = 'FMSGSTGST');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstTaxsummary' WHERE (`module_gid` = 'SMRMSTTAX');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccRptIncomeandEpenditureReport' WHERE (`module_gid` = 'FMSRPTIAE');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccTrnReceivableinvoiceSummary' WHERE (`module_gid` = 'FMSINVRBL');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstCurrencySummary' WHERE (`module_gid` = 'SMRMSTCUR');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstProductunitsSummary' WHERE (`module_gid` = 'SMRPDMPOU');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstProductSummary' WHERE (`module_gid` = 'SMRPDMPDT');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnCustomerenquirySummary' WHERE (`module_gid` = 'SMRSMRENS');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnQuotationSummary' WHERE (`module_gid` = 'SMRSMRQUO');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnSalesorderSummary' WHERE (`module_gid` = 'SMRSROSRO');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrRptSalesorderReport' WHERE (`module_gid` = 'SMRORTSOR');
+
+insert into  adm_mst_tprivilege ( privilege_gid,module_gid,user_gid,module_parent_gid) values ('SPGM17092521189','FMSMSTOBM','SUSM1709250002','FMS');
+
+/*---------------------------------------------- End Sref (Indiran R) Date 10-06-2023--------------------------------------------------------------------*/
+
+UPDATE `adm_mst_tmodule` SET `module_gid_parent` = 'FMSMST' WHERE (`module_gid` = 'FMSMSTOBM');
+
+/*---------------------------------------------- (Sales & finance ) Add Sref (Indiran R) Date 11-06-2023--------------------------------------------------------------------*/
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstTaxsummary' WHERE (`module_gid` = 'SMRMSTTAX');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnCustomer' WHERE (`module_gid` = 'SMRCMTCUS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRCMTCUS');
+UPDATE `adm_mst_tsequence` SET `sequence_curval` = '0' WHERE (`sequence_gid` = 'SSQM2203310490');
+UPDATE `adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310368');
+
+/*---------------------------------------------- End Sref (Indiran R) Date 11-oct-2023--------------------------------------------------------------------*/
+/*---------------------------------------------- (pmr ) Add Sref (Indiran R) Date 12-06-2023--------------------------------------------------------------------*/
+UPDATE `adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1711053362');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnGrncheckerSummary' WHERE (`module_gid` = 'PMRSTKGQC');
+
+
+
+/*---------------------------------------------- End Sref (Indiran R) Date 11-oct-2023--------------------------------------------------------------------*/
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRAUT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRAUTHDE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRCPRCCC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRCPRCPA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRCPRFRA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRCPRMRA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMDPE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMDPG');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMNPP');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMPCG');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMPDD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRPRMPDT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMPHN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRMPPE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRO');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROAPR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROCCM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROCQA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROCTC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRODAQ');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRODFQ');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROMBD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROPRA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPROPRN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRPRORFQ');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTCCR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTCPI');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTEQR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTGND');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTGRN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTMWR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTOAR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPCR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPLR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPOA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPOD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPPC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPRJ');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPRR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTPTG');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTQTR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTSTR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTUPR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTVLR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRRPTVPL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSERSAA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSERSOA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSET');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSETCOF');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSETSQC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSETURL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKBAR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKBAP');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSETCON');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSETHCY');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKGQC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKGRA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRSTKGRN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKOGN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKOGQ');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKPRT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKWAR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTAM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTAMDAS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTRNPAA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTRNPAD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTRNPFA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTRNPOA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRTRNSOP');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRVENAVD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRVENGST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRVENMBX');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRVENPMP');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRVENVDR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PBLSERSOS');
+
+
+
+
+
+
+
+
+/*---------------------------------------------- Add Sref (Indiran R) Date 13-oct-2023--------------------------------------------------------------------*/
+
+
+
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSDEL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTK');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTKSTA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTKOPS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSTRNISM');
+
+
+
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRADL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRADLADH');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTCDD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTCSA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTGST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTMBX');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTRCS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCRT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCRTCLR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCRTCPL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCRTCPR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCRTMNC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTODR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTORT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTOVE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTSDR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTSSR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPDMNPA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPDMNPT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPDMPSM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSBIL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSDIE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSPRM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSSPM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSSRN');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSSRT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSSSS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOSTDM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRREW');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRREWRPT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRRWL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRRWLMYR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRRWLRLM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRRWLRMT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRRWLRTM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRCAS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRMYE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRPDS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRPSA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRPST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRQAP');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRSMM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRSTM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSROSAA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSROSAD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSROSOA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTG');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTGCNF');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTGCON');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTGHCY');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTGSQC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTGURL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRTAM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRTAMDAS');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrMstProductSummary' WHERE (`module_gid` = 'SMRPDMPDT');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnSalesorderSummary' WHERE (`module_gid` = 'SMRSROSRO');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrRptSalesorderReport' WHERE (`module_gid` = 'SMRORTSOR');
+
+
+
+/*---------------------------------------------- End module (Indiran R) Date 13-oct-2023--------------------------------------------------------------------*/
+
+
+
+
+/*---------------------------------------------- Add module (Indiran R) Date 14-oct-2023--------------------------------------------------------------------*/
+
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnCustomerSummary' WHERE (`module_gid` = 'SMRCMTCUS');
+UPDATE `adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1711053362');
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnGrncheckerSummary' WHERE (`module_gid` = 'PMRSTKGQC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRSTKGQC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMS');
+UPDATE `adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1709252206');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSMST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICESDS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSMSTBAM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSMSTCAM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSMSTGLC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSMSTOBM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICEBNB');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICECCB');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICECHB');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICEJNE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSICESDS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSGST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y', `sref` = '/finance/AccTrnGstmanagementSummary' WHERE (`module_gid` = 'FMSGSTGST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSRPT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'FMSRPTIAE');
+UPDATE `adm_mst_tmodule` SET `sref` = '/finance/AccRptIncomeandEpenditureReport' WHERE (`module_gid` = 'FMSRPTIAE');
+UPDATE `adm_mst_tprivilege` SET `module_gid` = 'FMSRPTOMR', `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809171849');
+
+insert into adm_mst_tmodule ( module_gid, module_gid_parent, module_code, display_order, module_link, menu_level, max_menulevel, module_name, status, image_url, group_type, modulemanager_gid, breadcrumb_name, approval_flag, approval_tablename, approval_type, approval_limit, module_flag, created_by, created_date, updated_by, updated_date, lw_flag, sref, icon
+) values ('FMSRPTOMR', 'FMSRPT', 'FMSRPTOMR', '1454', 'ems_finance/finance_transaction.aspx#', '3', NULL, 'Outstanding Amount Report', '1', '../images/Settings.gif', 'REPORT', '', 'Outstanding Amount Report', '', '', '', 'N', 'N', NULL, NULL, NULL, NULL, 'Y', '/pmr/PmrRptOutstandingamountreport', NULL
+);
+
+
+
+
+
+/*---------------------------------------------- End module (Indiran R) Date 14-oct-2023--------------------------------------------------------------------*/
+
+
+
+/*---------------------------------------------- EMS_Base Sales Module (boba_tea) Database (Pugazenthi M R) Date 04-11-2023--------------------------------------------------------------------*/
+
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSTG');
+UPDATE `adm_mst_tmodule` SET `group_type` = 'Product Master', `breadcrumb_name` = ' Price Segment' WHERE (`module_gid` = 'SMRPDMPSM');
+UPDATE `adm_mst_tmodule` SET `group_type` = 'Product Master' WHERE (`module_gid` = 'SMRPDMPDG');
+UPDATE `adm_mst_tmodule` SET `group_type` = 'Product Master' WHERE (`module_gid` = 'SMRPDMPDT');
+UPDATE `adm_mst_tmodule` SET `group_type` = 'Product Master' WHERE (`module_gid` = 'SMRPDMPOU');
+UPDATE `adm_mst_tmodule` SET `module_name` = ' Price Segment', `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRPDMPSM');
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Customer', `breadcrumb_name` = 'Customer', `sref` = '/smr/SmrTrnCustomerSummary' WHERE (`module_gid` = 'SMRCMTCUS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTCDD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTCSA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTGST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTRCS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRCMTMBX');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRPDS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRPSA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRPST');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRQAP');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRCAS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRSMRMYE');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnQuotationSummary' WHERE (`module_gid` = 'SMRSMRQUO');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSMRSMM');
+UPDATE `vcidex_angular`.`adm_mst_tmodule` SET `lw_flag` = 'Y', `sref` = '/smr/SmrMstSalesteamSummary' WHERE (`module_gid` = 'SMRSMRSTM');
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Order ', `breadcrumb_name` = 'Order', `sref` = '/smr/SmrTrnSalesorderSummary' WHERE (`module_gid` = 'SMRSRO');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRTAM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRRWL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRADL');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRPOS');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRREWRPT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRREW');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrRptSalesorderReport' WHERE (`module_gid` = 'SMRORT');
+UPDATE `adm_mst_tmodule` SET `module_name` = ' Report', `breadcrumb_name` = 'Report' WHERE (`module_gid` = 'SMRORT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSROSAD');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSROSOA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSROSAA');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTSOR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTODR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTSDR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTORT');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRORTOVE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'HRM');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PAY');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SDC');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMR');
+UPDATE `adm_mst_tmodule` SET `display_order` = '2' WHERE (`module_gid` = 'MKT');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrRptSalesorderReport' WHERE (`module_gid` = 'SMRORTSSR');
+UPDATE `adm_mst_tmodule` SET `sref` = '/smr/SmrTrnSalesorderSummary' WHERE (`module_gid` = 'SMRSROSRO');
+
+/*--------------------------------------End:(Pugazenthi M R) ------------------------------------------------------*/
+
+
+
+/*--------------------------------------(Siva G) ------------------------------------------------------*/
+
+
+UPDATE adm_mst_tmodule SET `group_type` = 'Delivery Order', `lw_flag` = 'Y', `sref` = '/ims/ImsTrnDeliveryorder' WHERE (`module_gid` = 'IMSDEL');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSSTR');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSDELODC');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSDELSAR');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSDELSRA');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSDELACK');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMS');
+
+UPDATE adm_mst_tmodule SET `sref` = '/ims/ImsTrnOpeningstockSummary' WHERE (`module_gid` = 'IMSSTKOPS');
+
+UPDATE adm_mst_tmodule SET `sref` = '/ims/ImsTrnIssuematerialSummary' WHERE (`module_gid` = 'IMSTRNISM');
+
+UPDATE adm_mst_tmodule SET `sref` = '/ims/ImsTrnStockadjustmentSummary' WHERE (`module_gid` = 'IMSSTKSTA');
+ 
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMS');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSDEL');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTK');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTKSTA');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTKOPS');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSSTR');
+
+UPDATE adm_mst_tmodule SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSTRNISM');
+
+----- Poornima - 24-11-2023----------------
+
+UPDATE `adm_mst_tmodule` SET `display_order` = '3' WHERE (`module_gid` = 'SMR');
+
+UPDATE `adm_mst_tmodule` SET `sref` = '' WHERE (`module_gid` = 'PMR');
+
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Vendor', `breadcrumb_name` = 'Vendor' WHERE (`module_gid` = 'PMRVENRVD');
+
+UPDATE `adm_mst_tmodule` SET `module_name` = 'Vendor Master', `breadcrumb_name` = 'Vendor Master' WHERE (`module_gid` = 'PMRVEN');
+
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRORTSOR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRORTOVE');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRORTSSR');
+UPDATE `adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRORTORT');
+
+UPDATE `adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnGrnchecker' WHERE (`module_gid` = 'IMSTRNGCK');
+UPDATE `adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1712013838');
+
+
+/*---------------------------------------------- EMS_Base Sales Module boba_tea (Pugazenthi M R) Date 27-11-2023--------------------------------------------------------------------*/
+
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203311263');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2004060228');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2004060497');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203311301');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310462');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310328');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310424');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310395');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310396');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310083');
+
+/*---------------------------------------------- End Scripts (Pugazenthi M R) Date 27-11-2023--------------------------------------------------------------------*/
+
+/*---------------------------------------------- Add module (Vengatramanan S) Date 20-nov-2023--------------------------------------------------------------------*/
+
+
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310395');
+
+INSERT INTO `adm_mst_tsequence` (`sequence_gid`,`sequence_code`,`sequence_name`,`sequence_format`,`sequence_curval`,`sequence_flag`,`branch_flag`,`department_flag`,`year_flag`,`month_flag`,`location_flag`,`company_code`,`delimeter`,`runningno_prefix`,`finyear`,`carry_forward`,`created_by`,`created_date`,`updated_by`,`updated_date`) VALUES ('SPRS1703310381','SPRS','Price Segment','4','4','N','N','N','N','','N','','','','2023','N',NULL,NULL,NULL,NULL);
+
+
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310396');
+
+/*---------------------------------------------- End module (Vengatramanan S) Date 20-nov-2023--------------------------------------------------------------------*/
+
+/*---------------------------------------------- EMS_Base Sales Module boba_tea (Pugazenthi M R) Date 02-12-2023--------------------------------------------------------------------*/
+
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310498');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `sref` = '/Ims/ImsTrnDeliveryAcknowledgement' WHERE (`module_gid` = 'IMSDELACK');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310499');
+
+/*---------------------------------------------- End Scripts (Pugazenthi M R) Date 02-12-2023--------------------------------------------------------------------*/
+
+
+/*---------------------------------------------- EMS_Base PDF Functions (Pugazenthi M R) Date 02-12-2023--------------------------------------------------------------------*/
+
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` FUNCTION `ConvertAmountinWords`(n INT) RETURNS varchar(100) CHARSET latin1
+BEGIN
+    -- This function returns the string representation of a number.
+    -- It's just an example... I'll restrict it to hundreds, but
+    -- it can be extended easily.
+    -- The idea is:
+    --      For each digit you need a position,
+    --      For each position, you assign a string
+    declare ans varchar(100);
+    declare dig1, dig2, dig3, dig4, dig5, dig6 int;
+ 
+set ans = '';
+ 
+set dig6 = CAST(RIGHT(CAST(floor(n / 100000) as CHAR(8)), 1) as SIGNED);
+set dig5 = CAST(RIGHT(CAST(floor(n / 10000) as CHAR(8)), 1) as SIGNED);
+set dig4 = CAST(RIGHT(CAST(floor(n / 1000) as CHAR(8)), 1) as SIGNED);
+set dig3 = CAST(RIGHT(CAST(floor(n / 100) as CHAR(8)), 1) as SIGNED);
+set dig2 = CAST(RIGHT(CAST(floor(n / 10) as CHAR(8)), 1) as SIGNED);
+set dig1 = CAST(RIGHT(floor(n), 1) as SIGNED);
+ 
+if dig6 > 0 then
+    case
+        when dig6=1 then set ans=concat(ans, 'one hundred');
+        when dig6=2 then set ans=concat(ans, 'two hundred');
+        when dig6=3 then set ans=concat(ans, 'three hundred');
+        when dig6=4 then set ans=concat(ans, 'four hundred');
+        when dig6=5 then set ans=concat(ans, 'five hundred');
+        when dig6=6 then set ans=concat(ans, 'six hundred');
+        when dig6=7 then set ans=concat(ans, 'seven hundred');
+        when dig6=8 then set ans=concat(ans, 'eight hundred');
+        when dig6=9 then set ans=concat(ans, 'nine hundred');
+        else set ans = ans;
+    end case;
+end if;
+ 
+if dig5 = 1 then
+    case
+        when (dig5*10 + dig4) = 10 then set ans=concat(ans, ' ten thousand ');
+        when (dig5*10 + dig4) = 11 then set ans=concat(ans, ' eleven thousand ');
+        when (dig5*10 + dig4) = 12 then set ans=concat(ans, ' twelve thousand ');
+        when (dig5*10 + dig4) = 13 then set ans=concat(ans, ' thirteen thousand ');
+        when (dig5*10 + dig4) = 14 then set ans=concat(ans, ' fourteen thousand ');
+        when (dig5*10 + dig4) = 15 then set ans=concat(ans, ' fifteen thousand ');
+        when (dig5*10 + dig4) = 16 then set ans=concat(ans, ' sixteen thousand ');
+        when (dig5*10 + dig4) = 17 then set ans=concat(ans, ' seventeen thousand ');
+        when (dig5*10 + dig4) = 18 then set ans=concat(ans, ' eighteen thousand ');
+        when (dig5*10 + dig4) = 19 then set ans=concat(ans, ' nineteen thousand ');
+        else set ans=ans;
+    end case;
+else
+    if dig5 > 0 then
+        case
+            when dig5=2 then set ans=concat(ans, ' twenty');
+            when dig5=3 then set ans=concat(ans, ' thirty');
+            when dig5=4 then set ans=concat(ans, ' fourty');
+            when dig5=5 then set ans=concat(ans, ' fifty');
+            when dig5=6 then set ans=concat(ans, ' sixty');
+            when dig5=7 then set ans=concat(ans, ' seventy');
+            when dig5=8 then set ans=concat(ans, ' eighty');
+            when dig5=9 then set ans=concat(ans, ' ninety');
+            else set ans=ans;
+        end case;
+    end if;
+    if dig4 > 0 then
+        case
+            when dig4=1 then set ans=concat(ans, ' one thousand ');
+            when dig4=2 then set ans=concat(ans, ' two thousand ');
+            when dig4=3 then set ans=concat(ans, ' three thousand ');
+            when dig4=4 then set ans=concat(ans, ' four thousand ');
+            when dig4=5 then set ans=concat(ans, ' five thousand ');
+            when dig4=6 then set ans=concat(ans, ' six thousand ');
+            when dig4=7 then set ans=concat(ans, ' seven thousand ');
+            when dig4=8 then set ans=concat(ans, ' eight thousand ');
+            when dig4=9 then set ans=concat(ans, ' nine thousand ');
+            else set ans=ans;
+        end case;
+    end if;
+    if dig4 = 0 AND (dig5 != 0 || dig6 != 0) then
+        set ans=concat(ans, ' thousand ');
+    end if;
+end if;
+ 
+if dig3 > 0 then
+    case
+        when dig3=1 then set ans=concat(ans, 'one hundred');
+        when dig3=2 then set ans=concat(ans, 'two hundred');
+        when dig3=3 then set ans=concat(ans, 'three hundred');
+        when dig3=4 then set ans=concat(ans, 'four hundred');
+        when dig3=5 then set ans=concat(ans, 'five hundred');
+        when dig3=6 then set ans=concat(ans, 'six hundred');
+        when dig3=7 then set ans=concat(ans, 'seven hundred');
+        when dig3=8 then set ans=concat(ans, 'eight hundred');
+        when dig3=9 then set ans=concat(ans, 'nine hundred');
+        else set ans = ans;
+    end case;
+end if;
+ 
+if dig2 = 1 then
+    case
+        when (dig2*10 + dig1) = 10 then set ans=concat(ans, ' ten');
+        when (dig2*10 + dig1) = 11 then set ans=concat(ans, ' eleven');
+        when (dig2*10 + dig1) = 12 then set ans=concat(ans, ' twelve');
+        when (dig2*10 + dig1) = 13 then set ans=concat(ans, ' thirteen');
+        when (dig2*10 + dig1) = 14 then set ans=concat(ans, ' fourteen');
+        when (dig2*10 + dig1) = 15 then set ans=concat(ans, ' fifteen');
+        when (dig2*10 + dig1) = 16 then set ans=concat(ans, ' sixteen');
+        when (dig2*10 + dig1) = 17 then set ans=concat(ans, ' seventeen');
+        when (dig2*10 + dig1) = 18 then set ans=concat(ans, ' eighteen');
+        when (dig2*10 + dig1) = 19 then set ans=concat(ans, ' nineteen');
+        else set ans=ans;
+    end case;
+else
+    if dig2 > 0 then
+        case
+            when dig2=2 then set ans=concat(ans, ' twenty');
+            when dig2=3 then set ans=concat(ans, ' thirty');
+            when dig2=4 then set ans=concat(ans, ' fourty');
+            when dig2=5 then set ans=concat(ans, ' fifty');
+            when dig2=6 then set ans=concat(ans, ' sixty');
+            when dig2=7 then set ans=concat(ans, ' seventy');
+            when dig2=8 then set ans=concat(ans, ' eighty');
+            when dig2=9 then set ans=concat(ans, ' ninety');
+            else set ans=ans;
+        end case;
+    end if;
+    if dig1 > 0 then
+        case
+            when dig1=1 then set ans=concat(ans, ' one');
+            when dig1=2 then set ans=concat(ans, ' two');
+            when dig1=3 then set ans=concat(ans, ' three');
+            when dig1=4 then set ans=concat(ans, ' four');
+            when dig1=5 then set ans=concat(ans, ' five');
+            when dig1=6 then set ans=concat(ans, ' six');
+            when dig1=7 then set ans=concat(ans, ' seven');
+            when dig1=8 then set ans=concat(ans, ' eight');
+            when dig1=9 then set ans=concat(ans, ' nine');
+            else set ans=ans;
+        end case;
+    end if;
+end if;
+ 
+return trim(ans);
+END$$
+DELIMITER ;
+/*---------------------------------------------- End Functions (Pugazenthi M R) Date 02-12-2023--------------------------------------------------------------------*/
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_gid_parent` = 'SMRSMR' WHERE (`module_gid` = 'SMRSROSRO');
+PDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'SMRSRO');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `sref` = '/pmr/PmrTrnGrninward' WHERE (`module_gid` = 'IMSTRNGIW');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKGRN');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'IMSGRN');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTK');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'PMRSTKGQC');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'N' WHERE (`module_gid` = 'IMSTRNGAP');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_name` = 'Stock' WHERE (`module_gid` = 'IMSSTK');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_name` = 'Stock Master', `breadcrumb_name` = 'Stock  Master' WHERE (`module_gid` = 'IMSSTK');
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `module_name` = 'Invoice', `breadcrumb_name` = 'Invoice' WHERE (`module_gid` = 'SMRINM');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `display_order` = '3014' WHERE (`module_gid` = 'SMRORT');
+
+/*---------------------------------------------- Start Functions (Pugazenthi M R) Date 16-12-2023--------------------------------------------------------------------*/
+
+ALTER TABLE smr_trn_treceivequotationdtl
+MODIFY COLUMN price  double(13,2) DEFAULT '0.00';
+ALTER TABLE smr_trn_treceivequotationdtl
+MODIFY COLUMN discount_amount  double(13,2) DEFAULT '0.00';
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310498');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310960');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310497');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `sequence_curval` = '0', `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310499');
+
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310501');
+
+ALTER TABLE smr_trn_tpricelistdtl
+ADD COLUMN customer_gid varchar(32) DEFAULT NULL;
+ALTER TABLE smr_trn_tpricelistdtl
+ADD COLUMN productgroup_gid varchar(32) NOT NULL;
+ALTER TABLE smr_trn_tpricelistdtl
+ADD COLUMN productgroup_name varchar(32) NOT NULL;
+ALTER TABLE smr_trn_tpricelistdtl
+ADD COLUMN product_code varchar(32) NOT NULL;
+
+ALTER TABLE smr_trn_tpricelistdtl 
+ADD COLUMN `product_price` decimal(13,2) DEFAULT '0.00';
+
+ALTER TABLE smr_trn_tpricelistdtl
+ADD COLUMN productuom_name varchar(32) NOT NULL;
+
+ALTER TABLE smr_trn_tpricelistdtl
+ADD COLUMN productuom_gid varchar(32) NOT NULL;
+
+/*---------------------------------------------- End Functions (Pugazenthi M R) Date 16-12-2023--------------------------------------------------------------------*/
+
+/*---------------------------------------------- Add module (Vengatramanan S) Date 09-10-2023--------------------------------------------------------------------*/
+
+
+INSERT INTO `adm_mst_tsequence` (`sequence_gid`,`sequence_code`,`sequence_name`,`sequence_format`,`sequence_curval`,`sequence_flag`,
+`branch_flag`,`department_flag`,`year_flag`,`month_flag`,`location_flag`,`company_code`,`delimeter`,`runningno_prefix`,`finyear`,`carry_forward`,
+`created_by`,`created_date`,`updated_by`,`updated_date`)
+ VALUES ('AADC20190621059','UPEE','Excel Error','0','0','N','N','N','N','','N','','','','2023','N',NULL,NULL,NULL,NULL);
+
+
+
+CREATE TABLE `smr_trn_tcustomeruploadexcellog` (
+  `uploadexcellog_gid` varchar(64) NOT NULL,
+  `uploaded_by` varchar(45) DEFAULT NULL,
+  `uploaded_date` datetime DEFAULT NULL,
+  `fileextenssion` varchar(45) DEFAULT NULL,
+  `importcount` int DEFAULT NULL,
+  PRIMARY KEY (`uploadexcellog_gid`)
+);
+
+CREATE TABLE `smr_trn_tcustomeruploadexcelerrorlog` (
+  `uploaderrorlog_gid` varchar(64) NOT NULL,
+  `uploadexcellog_gid` varchar(64) NOT NULL,
+  `remarks` varchar(245) DEFAULT NULL,
+  `customercode` varchar(64) NOT NULL,
+  `customername` varchar(64) NOT NULL,
+  PRIMARY KEY (`uploaderrorlog_gid`)
+);
+
+
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310425');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM1703310420');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'PMRPRMNPP');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y', `sref` = 'ims/ImsTrnDeliveryOrderAcknowlegement' WHERE (`module_gid` = 'IMSDELACK');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y', `sref` = '/ims/ImsTrnOpendcsummary' WHERE (`module_gid` = 'IMSDELODC');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310513');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310512');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y' WHERE (`module_gid` = 'SMRORTSDR');
+ UPDATE `boba_tea`.`adm_mst_tmodule` SET `sref` = '/smr/SmrRptSalesorderDetailedreport' WHERE (`module_gid` = 'SMRORTSDR');
+UPDATE `boba_tea`.`adm_mst_tsequence` SET `finyear` = '2023' WHERE (`sequence_gid` = 'SSQM2203310304');
+
+
+alter table crm_mst_tcustomer add column customercontact_name varchar(250);
+alter table crm_mst_tcustomer add column mobile varchar(250);
+alter table crm_mst_tcustomer add column city varchar(250);
+alter table crm_mst_tcustomer add column email varchar(250);
+alter table crm_mst_tcustomer add column region_name varchar(250);
+alter table crm_mst_tcustomer add column state varchar(250);
+alter table crm_mst_tcustomer add column country_name varchar(250);
+alter table crm_mst_tcustomer add column currency_code varchar(250);
+alter table crm_mst_tcustomer add column fax_country_code varchar(250);
+alter table crm_mst_tcustomer add column fax_area_code varchar(250);
+alter table crm_mst_tcustomer add column fax varchar(250);
+alter table crm_mst_tcustomer add column designation varchar(250);
+alter table crm_mst_tcustomer add column zip_code varchar(250);
+alter table crm_mst_tcustomercontact add column customer_address varchar(256);
+alter table crm_mst_tcustomercontact add column customer_address2 varchar(256);
+alter table crm_mst_tcustomercontact add column region_name varchar(256);
+
+
+
+/*---------------------------------------------- End module (Vengatramanan S) Date 09-10-2023--------------------------------------------------------------------*/
+
+
+/*---------------------------------------------- Add module (Vengatramanan S) Date 23-01-2024--------------------------------------------------------------------*/
+
+
+UPDATE `boba_tea`.`adm_mst_tmodule` SET `lw_flag` = 'Y', `sref` = 'pmr/PmrRptOverallreport' WHERE (`module_gid` = 'PMRRPTOAR');
+UPDATE `boba_tea`.`adm_mst_tmodule` SET  `lw_flag` = 'Y', `sref` = '/pmr/PmrRptVendorLedgerreport' WHERE (`module_gid` = 'PMRRPTVLR');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172511');
+
+ 
+ 
+#PRIVILEGE SCRIPT
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172565');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172517');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172523');
+UPDATE `boba_tea`.`adm_mst_tprivilege` SET `user_gid` = 'U1' WHERE (`privilege_gid` = 'SPGM1809172535');
+
+
+
+/*---------------------------------------------- End module (Vengatramanan S) Date 23-01-2024--------------------------------------------------------------------*/
+

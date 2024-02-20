@@ -1,0 +1,39 @@
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-center" style="background-image: linear-gradient(to right, #2429e0, #39ffff, #2429e0);
+    border-radius: 0px;">
+        <h3 class="card-title fw-bold fs-3"><b>Company Policies</b></h3>
+    </div>
+</div>
+<div class="back-icon">
+    <i class="bi bi-arrow-left-square-fill" (click)="back()"></i>
+</div>
+<br><br>
+<div class="table-responsive">
+    <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <table class="table table-striped table-row-bordered gy-5 gs-7">
+            <tbody>
+                <tr *ngFor="let policy of policies_list">
+                    <td>
+                        <div class="card shadow-sm" style="width: 200px; background-color: #2196f3;">
+                            <div class="card-header text-right text-center mt-03">
+                                <div class="text-lightblue fw-bold mt-7 mr-2 ml-10" style="color: #ffffff;">
+                                    {{ policy.policy_name }}
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card shadow-sm"
+                            style="width: 800px; background-color: #b5daf8; border: 1px solid #2196f3;">
+                            <div class="card-header">
+                                <div class="mt-4 mb-3" *ngFor="let point of policy.policy_desc.split('tab')">
+                                    {{ point }}<br>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

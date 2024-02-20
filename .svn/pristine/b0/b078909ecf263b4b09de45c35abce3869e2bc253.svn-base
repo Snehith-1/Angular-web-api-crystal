@@ -1,0 +1,72 @@
+<div class="m-12">
+    <form [formGroup]="reactiveForm" #form="ngForm">
+        <div class="card shadow-lg rounded-top" style="top:-27px;">
+            <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                <h3 class="fw-bolder text-white">
+                    <i class="fas fa-envelope fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp;Create New Campaign
+                </h3>
+            </div>
+            <div class="card m-3">
+                <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12 ps-0 pe-1">
+                        <span class="font-bold">Campaign<span class="ms-1 text-red">*</span></span>
+                        <input formControlName="template_name" type="text" class="
+                                        form-control form-control-lg form-control-solid
+                                        bg-white
+                                        custom-input
+                                        mb-3 mb-lg-0
+                                        borderc-secondary " pattern="^(?!\s*$).+" name="template_name" />
+                        <div *ngIf="template_name.invalid && (template_name.dirty || template_name.touched)">
+                            <div *ngIf="template_name.errors?.['required']">
+                                <span style="color:red;">&nbsp;Campaign Is required.</span>
+                            </div>
+                        </div>
+                        <div *ngIf="template_name.invalid && (template_name.dirty || template_name.touched)">
+                            <div *ngIf="template_name.errors?.['pattern']">
+                                <span style="color:red;">Invalid Format.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12 ps-0 pe-1">
+                        <span class="font-bold">Subject<span class="ms-1 text-red">*</span></span>
+                        <input formControlName="sub" type="text" class="
+                                        form-control form-control-lg form-control-solid
+                                        bg-white
+                                        custom-input
+                                        mb-3 mb-lg-0
+                                        borderc-secondary " pattern="^(?!\s*$).+" name="sub" />
+                        <div *ngIf="sub.invalid && (sub.dirty || sub.touched)">
+                            <div *ngIf="sub.errors?.['required']">
+                                <span style="color:red;">&nbsp;Subject Is required.</span>
+                            </div>
+                        </div>
+                        <div *ngIf="sub.invalid && (sub.dirty || sub.touched)">
+                            <div *ngIf="sub.errors?.['pattern']">
+                                <span style="color:red;">Invalid Format.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-12 col-md-6 col-sm-12 ps-5 pe-5">
+                    <span class="font-bold">Body</span>
+                    <angular-editor [config]="config" formControlName="body"></angular-editor>
+                </div>
+                <div class="text-center my-4">
+                    <button (click)="submit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                        'primary-button': !reactiveForm.invalid,
+                        'secondary-button': reactiveForm.invalid
+                      }" data-bs-dismiss="modal" class="btn-success btn-sm text-white me-2">
+                        <i class="bi bi-send"></i> &nbsp;Send
+                    </button>&nbsp;&nbsp;
+                    <button class="btn-primary btn-sm text-white me-4" (click)="onback()">
+                        <i class="ki-duotone ki-entrance-right fs-5">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>&nbsp;Back
+                      </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

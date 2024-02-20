@@ -1,0 +1,333 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Add GRN</h5>
+        </div>
+    </div>
+
+    <form [formGroup]="selectForm" (ngSubmit)="onadd()">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Ref No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Product Code"
+                        formControlName="    " class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Branch Name</b>
+                <div class="col-lg-11 col-12 col-md-11  col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="branch_gid"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Name</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="product_code"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Contact Number</b>
+                <div class="col-lg-11 col-12 col-md-11 mt-4 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                        formControlName="vendor_contact_person" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Contact Address</b>
+                <div class="col-lg-11 col-12 col-md-11 mt-4  col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="product_code"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>PO Ref No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="product_code"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Raised By</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="product_code"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Remarks</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Remarks"
+                        formControlName="product_code" class="form-control"></textarea>
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Delivery Order No<span
+                        class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="DO Number"
+                        formControlName="product_code" class="form-control" />
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Invoice Ref No</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Invoice Ref No"
+                        formControlName="product_code" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Priority</b>
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                        <input class="form-check-input" type="radio" name="priority"
+                            formControlName="expirytracking_flag" id="Y" value="Y">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Low</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="priority"
+                            formControlName="expirytracking_flag" id="N" value="N">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_page-title">High</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Product Code"
+                        formControlName="product_code" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Vendor Contact Person</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="type" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="product_code"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Email Address</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="type" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" formControlName="product_code"
+                        class="form-control" />
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-3 col-md-6 mt-4 col-sm-12"><b>GRN QC Required</b>
+                <div class="d-flex justify-content-start mt-4 ms-2">
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                        <input class="form-check-input" type="radio" name="required"
+                            formControlName="expirytracking_flag" id="Y" value="Y">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_menu">Low</label>
+                    </div>
+                    <div class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                        <input class="form-check-input" type="radio" name="required"
+                            formControlName="expirytracking_flag" id="N" value="N">
+                        <label class="form-check-label text-gray-700 text-nowrap"
+                            for="kt_builder_header_content_page-title">High</label>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12 "><b>Checked By User<span
+                        class="ms-1 text-red">*</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select
+                        class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                        formControlName="producttype_name">
+
+                        <option value="" disabled selected>Select User</option>
+                        <option *ngFor="let producttype of userlist" [value]="producttype.producttype_gid">
+                            {{producttype.producttype_name}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>GRN Ref</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="GRN Ref"
+                        formControlName="product_code" class="form-control"></textarea>
+                </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>DC Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Product Code"
+                        formControlName="product_code" class="form-control" />
+                </div>
+            </div>
+            <br>
+
+
+            <div class="col-12 col-lg-4 col-md-6 mt-4 col-sm-12"><b>Invoice Date</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="date" class="form-control form-control-lg form-control-solid 
+                custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="Product Code"
+                        formControlName="product_code" class="form-control" />
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="card m-3">
+                <div class="card-header bg-lightblue card-height55">
+                    <div class="card-title m-0 ">
+                        <h5 class="fw-bolder text-blue">PRODUCT DETAILS</h5>
+                    </div>
+                </div>
+
+
+                <div class="d-flex flex-row m-2 mt-3 flex-wrap" style="font-size: 12px;">
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 180px;margin-left: 40px;"><b>Product
+                            Group</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="" formControlName="product_group" placeholder="Enter Product Group"
+                                style="text-align: right;">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-15" style="width: 200px;margin-left: 33px;"><b>Product
+                            Name<span class="ms-1 text-red">*</span></b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="Enter Product Name" formControlName="product_name"
+                                style="text-align: right;">
+
+                        </div>
+
+
+                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2" style="width: 185px;">
+                            <textarea type="text"
+                                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input"
+                                placeholder="" formControlName="remarks" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="col-1 col-lg-1 col-md-1 col-sm-15" style="margin-left: 40px;"><b>Unit</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" formControlName="unit_name" placeholder="0.00"
+                                style="text-align: right;">
+
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-14" style="width: 80px; margin-left: 40px;"><b>Qty
+                            Ordered</b>
+                        <div class="col-lg-13 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" placeholder="0.00" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 80px;margin-left: 40px;"><b>Qty
+                            Recieved</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="0.00" style="text-align: right;">
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 80px;margin-left: 40px;"><b>Invoice
+                            Qty</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="0.00" style="text-align: right;">
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 80px;margin-left: 40px;"><b>Qty
+                            Adjusted</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="0.00" style="text-align: right;">
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 100px;margin-left: 40px;"><b>Qty
+                            Delivered</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input type="text" class="form-control" placeholder="0.00" style="text-align: right;">
+                        </div>
+                    </div>
+                    
+               <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 100px;margin-left: 40px;"><b>Qty
+                        Adjustable</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control" placeholder="0.00" style="text-align: right;">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-1 col-md-1 col-sm-12" style="width: 100px;margin-left: 40px;"><b>
+                    Location</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select
+                    class="form-select form-select-solid bg-white form-select-lg borderc-secondary custom-input select2"
+                    formControlName="product_group" style="width: 165px;">
+                    <option disabled selected>Location</option>
+                    <option *ngFor="let product_group of productgroup_list"
+                        [value]="product_group.productgroup_gid">{{product_group.productgroup_name}}
+                    </option>
+                </select>
+                </div>
+            </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="text-center my-4">
+            <button class="btn-success btn-sm text-white me-4" [disabled]="selectForm.invalid" [ngClass]="{
+        'primary-button': !selectForm.invalid,
+        'secondary-button': selectForm.invalid
+      }" data-bs-dismiss="modal">
+                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+            </button> &nbsp;&nbsp;
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Close
+            </button>
+        </div>
+    </form>
+</div>

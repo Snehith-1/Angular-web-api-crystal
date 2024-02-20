@@ -1,0 +1,92 @@
+﻿using ems.einvoice.DataAccess;
+using ems.einvoice.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.einvoice.Controllers
+{
+    [RoutePrefix("api/EinvoiceCustomer")]
+    [Authorize]
+    public class EinvoiceCustomerController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        Dacustomer objDaPurchase = new Dacustomer();
+        // Module Summary
+        [ActionName("GetCustomerSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetCustomerSummary()
+        
+        {
+            Mdlcustomer values = new Mdlcustomer();
+            objDaPurchase.DaCustomersummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Postcustomer")]
+        [HttpPost]
+        public HttpResponseMessage Postcustomer(Customer_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaPurchase.DaPostcustomer(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+        }
+        [ActionName("UpdatedCustomer")]
+        [HttpPost]
+        public HttpResponseMessage UpdatedCustomer(Customer_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaPurchase.DaUpdatedCustomer(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, true);
+        }
+        [ActionName("Getcurrencydropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getcurrencydropdown()
+        {
+            MdlProduct values = new MdlProduct();
+            objDaPurchase.DaGetcurrencydropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Getcountrydropdown")]
+        [HttpGet]
+        public HttpResponseMessage Getcountrydropdown()
+        {
+            MdlProduct values = new MdlProduct();
+            objDaPurchase.DaGetcountrydropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetRegiondropdown")]
+        [HttpGet]
+        public HttpResponseMessage GetRegiondropdown()
+        
+        {
+            MdlProduct values = new MdlProduct();
+            objDaPurchase.DaGetRegiondropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetEditcustomer")]
+        [HttpGet]
+        public HttpResponseMessage GetEditcustomer(string customer_gid)
+        {
+            Customer_list values = new Customer_list();
+            values = objDaPurchase.DaGetEditcustomer(customer_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("Deletecustomer")]
+        [HttpGet]
+        public HttpResponseMessage Deletecustomer(string params_gid)
+        {
+            Customer_list objresult = new Customer_list();
+            objDaPurchase.DaDeletecustomer(params_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+    }
+}

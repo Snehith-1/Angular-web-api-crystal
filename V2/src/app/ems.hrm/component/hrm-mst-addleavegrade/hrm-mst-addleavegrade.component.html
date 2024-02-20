@@ -1,0 +1,85 @@
+<form [formGroup]="reactiveFormadd" #form="ngForm">
+ <div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white"><i class="fas fa-plus fw-bolder fs-3 me-4"></i>Add Leave grade </h3>  
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap" style="width: 80%;">
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+            <b>Leave Grade Code<span style="color:red">*</span></b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                    class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 border-secondary bg-white custom-input"
+                    placeholder="Enter Leave Grade Code" formControlName="leavegrade_code"/>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12" style="margin-left: 50px;">
+            <b>Leave Grade Name<span style="color:red">*</span></b>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text"
+                    class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 border-secondary bg-white custom-input"
+                    placeholder="Enter Leave Grade Name" formControlName="leavegrade_name" />
+            </div>
+        </div>       
+    </div>
+</div>
+
+<div class="table-responsive">
+    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+        <table id="" class="table border-bottom gs-7">
+            <thead>
+                <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                    <th style="width: 2px;">
+                        <input type="checkbox" id="checkAll" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"/>
+                    </th>
+                    <th rowspan="2">Leavetype Code</th>
+                    <th rowspan="2">Leave Type</th>
+                    <th rowspan="2">Total</th>
+                    <th rowspan="2">Available</th>
+                    <th rowspan="2">Limit Per Month</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of leavegradecode_list; let i=index;" class="align-middle">
+                    <td> <input type="checkbox" 
+                        (change)="$event ? selection.toggle(data) : null"
+                        [checked]="selection.isSelected(data)" /></td>
+                    <td>{{data.leavetype_code}}</td>
+                    <td>{{data.leavetype_name}}</td>
+
+                    <td>
+                        <input type="text" [(ngModel)]="data.total_leavecount"
+                            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 border-secondary bg-white custom-input"
+                            formControlName="Total" placeholder="0.00" style="width: 100px;" />
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="data.available_leavecount" 
+                            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 border-secondary bg-white custom-input"
+                            formControlName="available" placeholder="0.00" style="width: 100px;" />
+                    </td>
+                    <td>
+                        <input type="text"  [(ngModel)]="data.leave_limit"
+                            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 border-secondary bg-white custom-input"
+                            formControlName="limitper_month" placeholder="0.00" style="width: 100px;" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="text-center mb-10">
+    <button type="submit" class="btn-success text-white" (click)="submit()" data-bs-dismiss="modal">
+        <i class="fas fa-check text-white fs-5"></i>
+        Submit
+    </button> &nbsp; &nbsp;
+    <button type="button" class="btn-danger text-white" data-bs-dismiss="modal" routerLink="/hrm/HrmMstLeaveGrade">
+        <i class="fa fa-close fs-5 text-center"></i>
+        Close
+    </button>
+</div>
+</form>

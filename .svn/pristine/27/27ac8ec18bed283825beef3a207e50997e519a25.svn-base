@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Edit Template</h3>
+        </div>
+    </div>
+
+    <div class="card m-3">
+        <form [formGroup]="templateformedit">
+
+            <input formControlName="template_gid_edit" hidden type="text" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary" name="template_gid_edit" />
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Template Name</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="template_name_edit" [ngStyle]="{'border-color': templatenameeditControl.invalid && templatenameeditControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="templatenameeditControl.invalid && (templatenameeditControl.dirty || templatenameeditControl.touched)">
+                        <div *ngIf="templatenameeditControl.invalid && templatenameeditControl.touched" class="invalid-feedback">
+                            <div *ngIf="templatenameeditControl.hasError('required')" class="text-red ms-3 fs-5">* Template name is required</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Template Type</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select form-select-solid bg-white form-select-lg custom-input select2" formControlName="templatetype_gid_edit" [ngStyle]="{'border-color': templatetypeeditControl.invalid && templatetypeeditControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="templatetypeeditControl.invalid && (templatetypeeditControl.dirty || templatetypeeditControl.touched)">
+                            <option value="" disabled selected>Select Template Type</option> 
+                            <option *ngFor="let templatetype of templatetype_list" [value]="templatetype.templatetype_gid">{{templatetype.templatetype_name}}</option>
+                        </select>
+                        <div *ngIf="templatetypeeditControl.invalid && templatetypeeditControl.touched" class="invalid-feedback">
+                            <div *ngIf="templatetypeeditControl.hasError('required')" class="text-red ms-3 fs-5">* Template type is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>Template Content</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <angular-editor [config]="config" formControlName="template_content_edit"></angular-editor>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-6">
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4" (click)="templateupdate()">   
+                        <i class="bi bi-check-square fs-7 me-1"></i>
+                        Update
+                    </button>
+        
+                    <button class="btn-primary btn-sm text-white me-4" (click)="back()">
+                        <i class="bi bi-arrow-left-square fs-7 me-1"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="row ms-3 mt-3 d-flex align-items-center">
+  <div class="col">
+      <h2 class="card-title">Customer Ledger Dashboard</h2>
+  </div>
+</div>
+<br>
+ <div class="row">         
+  <div class="col-lg-3 col-md-3 col-sm-3" [routerLink]="['/smr/SmrRptCustomerledgerdetail',customer_gid]">
+      <div class="cardHead radius-10 border-start border-0 border-3 border-violet">
+         <div class="card-body12">
+             <div class="d-flex align-items-center">
+                 <div>
+                  <h5 class="mb-0 text-secondary">Sales Order</h5>
+                  <div *ngFor="let salesorder_count of customerledgercount_list">
+                      
+                    <h4 class="my-1 text-info">{{salesorder_count.salesorder_count}}</h4>
+                    </div>
+                 </div>
+                 <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i class="fa-solid fa-street-view"></i>
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3" [routerLink]="['/smr/SmrRptCustomerledgerinvoice',customer_gid]">
+      <div class="cardHead radius-10 border-start border-0 border-3 border-darkblue"  >
+         <div class="card-body12">
+             <div class="d-flex align-items-center">
+                 <div>
+                  <h5 class="mb-0 text-secondary">Invoice</h5>
+                  <div *ngFor="let invoice_count of customerledgercount_list">
+                  
+                    <h4 class="my-1 text-info">{{invoice_count.invoice_count}}</h4>
+                    </div>
+                 </div>
+                 <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3" [routerLink]="['/smr/SmrRptCustomerledgerpayment',customer_gid]">
+      <div class="cardHead radius-10 border-start border-0 border-3 border-darkgreen">
+         <div class="card-body12">
+             <div class="d-flex align-items-center">
+                 <div>
+                  <h5 class="mb-0 text-secondary">Payment</h5>
+                  <div *ngFor="let payment_count of customerledgercount_list">
+                    
+                    <h4 class="my-1 text-info">{{payment_count.payment_count}}</h4>
+                </div>
+                 </div>
+                 <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i class="fa-solid fa-users-rectangle"></i>
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3" [routerLink]="['/smr/SmrRptCustomerledgeroutstandingreport',customer_gid]">
+      <div class="cardHead radius-10 border-start border-0 border-3 border-brown" style="background-color: #fcd3d3;" >
+         <div class="card-body12">
+             <div class="d-flex align-items-center">
+                 <div>
+                  <h5 class="mb-0 text-secondary">Outstanding Report</h5>
+                  <div *ngFor="let outstanding_count of customerledgercount_list">
+                      
+                    <h4 class="my-1 text-info">{{outstanding_count.outstanding_count}}</h4>
+                </div>
+                 </div>
+                 <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto"><i class="fa-solid fa-users"></i>
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+  
+<div class="table-responsive">
+<div class="card card-body m-3  bg-white rounded">
+  <table id="customerledgeroutstanding_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+    <thead>
+      <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+        <th>Invoice Date</th>
+        <th>Invoice Ref.No</th>
+        <th>Customer Details</th>
+        <th class="text-end">Invoice Amount(INR)</th>
+        <th class="text-end">Paid Amount(INR)</th>
+        <th class="text-end">Outstanding Amount(INR)</th>
+        <th>Due Date</th>
+        <th>Days Expired</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>   
+        
+      <tr *ngFor="let data of customerledgeroutstanding_list;">
+        <td>{{data.invoice_date | date: 'dd-MM-yyyy'}}</td>
+        <td>{{data.invoice_referenceno1}}</td>
+        <td>{{data.customer_details}}</td>
+        <td class="text-end">{{data.invoice_amount}}</td>
+        <td class="text-end">{{data.paid_amount}}</td>
+        <td  class="text-end">{{data.outstanding_amount}}</td>
+        <td>{{data.due_date}}</td>
+        <td>{{data.days_expired}}</td>
+        <td>{{data.outstanding_status}}</td>
+
+
+        
+        
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+</div> 
+
+
+
+

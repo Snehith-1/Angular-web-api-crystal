@@ -1,0 +1,120 @@
+.primary-button {
+    background-color: #42ac72;
+    color: #fff !important;
+    font-size: 1.1rem !important;
+    font-weight: 630 !important;
+    padding: 9px 16px 9px 13px  !important;
+    border-radius: 3px ;
+    border: 0;
+    }
+    
+    .secondary-button {
+    background-color: #50cd89;
+    color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+    }
+    .invalid-border {
+
+        border: 1px solid rgb(255, 63, 63);
+        border-radius: 10px;
+    
+      }
+
+      .table_head th{
+
+        font-size: 12px;
+      
+    }
+    .new_table {
+    
+        text-align: center;
+    
+    }
+    .lab {
+    
+        font-size: 12px;
+    
+        font-weight: bold;
+    }
+    
+    .in {
+    
+        margin-left: 13px;
+    
+        width: 100px;
+    
+    }
+    
+     
+    
+    .spn {
+    
+        margin-left: 5px;
+    
+        color: #3f51b5;
+    
+        font-weight: bold;
+    
+    }
+    
+     
+    
+     
+    
+    .tbl_lab {
+    
+        font-size: 11px;
+    
+        font-weight: bold;
+    
+        width: 170px;
+    
+    }
+    
+     
+    
+    .tbl_in {
+    
+        margin-left: 13px;
+    
+        width: 100px;
+    
+        text-align: right;
+    
+    }
+    
+     
+    
+    .tbl_spn {
+    
+        margin-left: 5px;
+    
+        color: #3f51b5;
+    
+        font-weight: bold;
+    
+    }
+    
+     
+    
+    .new_table1 {
+    
+        text-align: right;
+    
+    }
+    
+     
+    
+    .icon {
+    
+        background-color: #009ef7;
+    
+        color: white;
+    
+        font-weight: bold;
+    
+    }

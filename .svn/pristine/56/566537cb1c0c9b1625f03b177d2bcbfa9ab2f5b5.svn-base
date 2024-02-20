@@ -1,0 +1,50 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Invoice Add Select</h3> 
+    </div>
+    <br>
+    
+   
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white  rounded table-responsive">
+            <table id="invoice_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>PO <br>Date</th>
+                        <th>PO <br> Ref No</th>
+                        <th>Branch<br> Name</th>
+                        <th>Vendor<br> Name</th>
+                        <th>Vendor<br> Contact<br>Person</th>
+                        <th>Cost <br>Center</th>
+                        <th>Order<br> Amount</th>                        
+                        <th>Raised<br> Amount</th>
+                        <th>Outstanding <br>Amount</th>
+                        
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr *ngFor="let data of invoice; let i=index;"> 
+                        <td >{{i+1}}</td>
+                        <td>{{data.purchaseorder_date}}</td>
+                        <td>{{data.purchaseorder_gid}}</td>
+                        <td>{{data.branch_name}}</td>
+                        <td>{{data.vendor_companyname}}</td>
+                        <td>{{data.vendor_contact_person}}</td>
+                        <td>{{data.costcenter_name}}</td>
+                        <td>{{data.total_amount}}</td>
+                        <td>{{data.invoice_amount}}</td>                       
+                        <td>{{data.outstanding_amount}}</td>
+                        <td class="text-center text-nowrap">
+
+                            <button class="link-button" (click)="onview(data.vendor_gid)">
+                                <span></span>Select To Proceed
+                            </button>
+                         </td>
+                    </tr>
+                </tbody> 
+            </table>
+        </div> 
+    
+</div>
+

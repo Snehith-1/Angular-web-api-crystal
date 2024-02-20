@@ -1,0 +1,147 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ToastrService } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AES } from 'crypto-js';
+import { Router } from '@angular/router';
+
+interface IWhatsappcampaign {
+  created_date:string;
+  direction:string;
+  status:string;
+  identifiervalue:string;
+  displayName:string;
+  wvalue:string;
+  formatDate:string;
+  
+
+  
+  }
+@Component({
+  selector: 'app-crm-smm-whatsapplog',
+  templateUrl: './crm-smm-whatsapplog.component.html',
+  styleUrls: ['./crm-smm-whatsapplog.component.scss']
+})
+export class CrmSmmWhatsapplogComponent {
+  whatsappCampaign: any;
+  responsedata: any;
+  
+  contactcount_list:any;
+  file!: File;
+  image_path: any;
+  formatDate:any;
+  template_list: any[] = [];
+  reactiveForm!: FormGroup;
+  reactiveFormadd!: FormGroup;
+  reactiveMessageForm!:FormGroup;
+
+  Whatsappcampaign!: IWhatsappcampaign;
+  parameterValue1: any;
+  //reactiveFormEdit: any;
+  parameterValue: any;
+  count_list: any;
+  log: any;
+  
+ 
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService,
+    private route: Router, public service: SocketService) {
+    this.Whatsappcampaign = {} as IWhatsappcampaign;
+    
+    function formatDate(isoDate: string): string {
+      const options: Intl.DateTimeFormatOptions = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      };
+    
+      const date = new Date(isoDate);
+      return date.toLocaleString('en-US', options);
+    }
+    
+}
+ngOnInit(): void {
+
+  this.Getlog();
+
+  this.reactiveForm = new FormGroup({
+    created_date: new FormControl(this.Whatsappcampaign.created_date, [
+      Validators.required,
+    ]),
+    direction: new FormControl(this.Whatsappcampaign.direction, [
+    ]),
+    status: new FormControl(this.Whatsappcampaign.status, [
+    ]),
+    identifiervalue: new FormControl(this.Whatsappcampaign.identifiervalue, [
+    ]),
+    displayName: new FormControl(this.Whatsappcampaign.displayName, [
+    ]),
+    wvalue: new FormControl(this.Whatsappcampaign.wvalue, [
+    ]),
+    
+    
+  });
+
+}
+
+get created_date() {
+  return this.reactiveForm.get('created_date')!;
+}
+get wvalue() {
+  return this.reactiveForm.get('wvalue')!;
+}
+get displayName() {
+  return this.reactiveForm.get('displayName')!;
+}
+get identifiervalue() {
+  return this.reactiveForm.get('identifiervalue')!;
+}
+get status() {
+  return this.reactiveForm.get('status')!;
+}
+get direction() {
+  return this.reactiveForm.get('direction')!;
+}
+onChange1(event: any) {
+  this.file = event.target.files[0];
+}
+
+
+
+  
+  //// Summary Grid//////
+  Getlog(){
+  var url = 'Whatsapp/Getlog'
+  this.service.get(url).subscribe((result: any) => {
+    $('#log').DataTable().destroy();
+    this.responsedata = result;
+    this.log = this.responsedata.log;
+    //console.log(this.source_list)
+    setTimeout(() => {
+      $('#log').DataTable();
+    }, 1);
+
+
+  });
+}
+GetContactCount() {
+  var url = 'Whatsapp/GetContactCount'
+  this.service.get(url).subscribe((result: any) => {
+    $('#count_list').DataTable().destroy();
+    this.responsedata = result;
+    this.count_list = this.responsedata.contactcount_list;
+    //console.log(this.source_list)
+
+  });
+}
+redirecttolist(){
+  this.route.navigate(['/crm/CrmSmmWhatsappcampaign']);
+
+}
+
+}

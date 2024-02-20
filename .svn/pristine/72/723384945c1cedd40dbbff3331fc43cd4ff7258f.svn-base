@@ -1,0 +1,153 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ToastrService } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AES } from 'crypto-js';
+
+interface IWhatsappMessage {
+platform:string;
+localae:string;
+template_name:string;
+category:string;
+category_change:string;
+message_type:string;
+project_name:string;
+project_description:string;
+body:string;
+footer:string;
+}
+
+@Component({
+  selector: 'app-crm-smm-whatsappmessagetemplate',
+  templateUrl: './crm-smm-whatsappmessagetemplate.component.html',
+  styleUrls: ['./crm-smm-whatsappmessagetemplate.component.scss']
+})
+export class CrmSmmWhatsappmessagetemplateComponent {
+
+  file!: File;
+  image_path: any;
+  reactiveForm!: FormGroup;
+  reactiveMessageForm!:FormGroup;
+
+  whatsappmessage!: IWhatsappMessage;
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService,
+    private route: Router, public service: SocketService) {
+    this.whatsappmessage = {} as IWhatsappMessage;
+}
+
+ngOnInit(): void {
+
+  this.reactiveForm = new FormGroup({
+    platform: new FormControl(this.whatsappmessage.platform, [
+      Validators.required,
+    ]),
+    localae: new FormControl(this.whatsappmessage.localae, [
+    ]),
+    template_name: new FormControl(this.whatsappmessage.template_name, [
+    ]),
+    category: new FormControl(this.whatsappmessage.category, [
+    ]),
+    category_change: new FormControl(this.whatsappmessage.category_change, [
+    ]),
+    message_type: new FormControl(this.whatsappmessage.message_type, [
+    ]),
+    project_name: new FormControl(this.whatsappmessage.project_name, [
+    ]),
+    project_description: new FormControl(this.whatsappmessage.project_description, [
+    ]),
+    body: new FormControl(this.whatsappmessage.body, [
+      Validators.required,
+    ]),
+    footer: new FormControl(this.whatsappmessage.footer, [
+      Validators.required,
+    ]),  
+    file: new FormControl(''),
+      fileExtension: new FormControl(''),
+      fileName: new FormControl(''),
+      imagePath: new FormControl(''),
+  });
+
+}
+
+get platform() {
+  return this.reactiveForm.get('platform')!;
+}
+get localae() {
+  return this.reactiveForm.get('localae')!;
+}
+get template_name() {
+  return this.reactiveForm.get('template_name')!;
+}
+get category() {
+  return this.reactiveForm.get('category')!;
+}
+get category_change() {
+  return this.reactiveForm.get('category_change')!;
+}
+get message_type() {
+  return this.reactiveForm.get('message_type')!;
+}
+get project_name() {
+  return this.reactiveForm.get('project_name')!;
+}
+get project_description() {
+  return this.reactiveForm.get('project_description')!;
+}
+get body() {
+  return this.reactiveForm.get('body')!;
+}
+get footer() {
+  return this.reactiveForm.get('footer')!;
+}
+get image() {
+  return this.reactiveForm.get('image')!;
+}
+
+onChange1(event: any) {
+  this.file = event.target.files[0];
+}
+onclose() {
+  this.reactiveMessageForm.reset();
+}
+
+ //Create Project//
+//  public onprojectcreate(): void {
+//   if (this.reactiveForm.value.project_name != null && this.reactiveForm.value.template_name != null && 
+//     this.reactiveForm.value.category != null &&  this.reactiveForm.value.category_change != null
+//     && this.reactiveForm.value.project_description != null) {
+
+        
+        
+// }
+//  }
+
+ onprojectcreate(){
+  this.whatsappmessage = this.reactiveForm.value;
+  if (this.whatsappmessage.project_name != null && this.whatsappmessage.template_name != null
+     && this.whatsappmessage.category != null && this.whatsappmessage.category_change != null && 
+    this.whatsappmessage.project_description != null) {
+    console.log(this.reactiveForm.value)
+    //  this.leadbank.region_name != null,this.leadbank.country_name != null  &&
+    var api = 'Whatsapp/CreateProject';
+    this.service.post(api, this.reactiveForm.value).subscribe((result: any) => {
+      console.log(result);
+      if (result.status == false) {
+        window.location.reload()
+        this.ToastrService.warning(result.message)
+      }
+      else {
+        // this.GetleadbranchaddSummary(this.leadbank_gid);
+        // this.route.navigate(['/crm/CrmTrnLeadBankbranch',this.leadbank_gid]);
+        window.location.reload()
+        this.ToastrService.success(result.message)
+      }
+    });
+  }
+}
+
+}

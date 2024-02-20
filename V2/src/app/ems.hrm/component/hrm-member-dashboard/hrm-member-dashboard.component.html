@@ -1,0 +1,867 @@
+<div class="card card-bordered">
+    <div class="card-header d-flex justify-content-center">
+        <h1 class="card-title fw-bold fs-3">Member Dashboard</h1>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-9 col-md-9 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end sec_1">
+                            <div class="card-body">
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa fa-user mt-6"></i>
+                                </div>
+                                <div class="card-heading">
+                                    <h6 class="mt-6 mb-3 text-secondary" (click)="myprofile()">My Profile</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end sec_2">
+                            <div class="card-body">
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa fa-reply mt-6"></i>
+                                </div>
+                                <div class="card-heading">
+                                    <h6 class="mt-6 mb-3 text-secondary" (click)="myleave()">My Leave</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end sec_3">
+                            <div class="card-body">
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa fa-thumbs-up mt-6"></i>
+                                </div>
+                                <div class="card-heading">
+                                    <h6 class="mt-6 mb-3 text-secondary" (click)="approveleave()">Approve Leave</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap row mt-4">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end sec_4">
+                            <div class="card-body">
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa fa-building mt-6"></i>
+                                </div>
+                                <div class="card-heading">
+                                    <h6 class="mt-6 mb-3 text-secondary" (click)="companypolicies()">Company Policies
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"style="cursor: not-allowed;">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end sec_5">
+                            <div class="card-body">
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa-solid fa-calendar-days mt-6"></i>
+                                </div>
+                                <div class="card-heading">
+                                    <h6 class="mt-6 mb-3 text-secondary" (click)="officecalendar()">Office Calender</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"style="cursor: not-allowed;">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end sec_6">
+                            <div class="card-body">
+                                <div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto">
+                                    <i class="fa-solid fa-square-check mt-6"></i>
+                                </div>
+                                <div class="card-heading">
+                                    <h6 class="mt-6 mb-3 text-secondary" (click)="monthlyattendance()">Monthly
+                                        Attendance Report</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h4>What's Up!</h4>
+                    </div>
+                    <div class="panel-body" >
+                        <img src="./assets/media/images/image (2).png" class="h-83px w-150px" alt="Logo" >
+                        <marquee behavior="scroll" direction="left" vspace="20px">
+                        <p>Welcome to NOQU Tech Solutions Pvt Ltd !</p>
+                        </marquee>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card chart-card">
+                            <div class="chart-head">
+                                <p>Monthly Attendance</p>
+                            </div>
+
+                            <div class="chart-body">
+                                <div #chartRef id="kt_card_widget_17_chart" class="d-flex flex-center me-5 pt-2">
+                                    <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                                        [labels]="chartOptions1.labels"
+                                        [responsive]="chartOptions1.responsive"></apx-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card chart-card">
+                            <div class="chart-head">
+                                <p>Monthwise Attendance</p>
+                            </div>
+
+                            <div class="chart-body">
+                                <div #chartRef id="kt_charts_widget_1_chart"
+                                    class="d-flex flex-column mixed-widget-2-chart card-rounded-bottom">
+                                    <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart"
+                                        [xaxis]="chartOptions2.xaxis" [yaxis]="chartOptions2.yaxis"
+                                        [dataLabels]="chartOptions2.dataLabels" [legend]="chartOptions2.legend"
+                                        [fill]="chartOptions2.fill" [tooltip]="chartOptions2.tooltip"
+                                        [colors]="chartOptions2.colors" [plotOptions]="chartOptions2.plotOptions">
+                                    </apx-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card card1">
+                            <div class="card-head">
+                                <p class="main-head">I - Attendance</p>
+                                <p class="sub-head">Punch in</p>
+                                <p class="head-right">{{ Date | date: "hh:mm:ss "}}<span style="font-size: 12px;">{{
+                                        Date | date: "a"}}</span></p>
+                            </div>
+                            <div class="card-body" *ngIf="!buttonClicked">
+
+                                <p class="body-left">Punch In</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <i class="bi bi-alarm"></i>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary" (click)="punchin()">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3" *ngIf="!buttonClicked">Punch In</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body" *ngIf="buttonClicked">
+                                <p class="body-left">Punch Out</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <p class="text">Your attendance has been marked at :</p>
+                                    <p class="success">{{login_time_audit}}</p>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary btn-text" data-bs-toggle="modal"
+                                        data-bs-target="#iattendance">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3" *ngIf="buttonClicked">Punch Out</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="card-body" *ngIf="button1Clicked">
+                                <div class="text-center icon">
+                                    <p class="text" *ngIf="button1Clicked"> Your attendance has been marked for the day
+                                    </p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card card2">
+                            <div class="card-head">
+                                <p class="main-head">Apply Login Time</p>
+                                <p class="sub-head">Login Time Requisition</p>
+                                <div class="right-icon">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="body-left">Login</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <i class="bi bi-alarm"></i>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#applylogin">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply Login</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card card3">
+                            <div class="card-head">
+                                <p class="main-head">Apply Logout Time</p>
+                                <p class="sub-head">Logout Time Requisition</p>
+                                <div class="right-icon">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="body-left">Logout</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <i class="bi bi-alarm"></i>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#applylogout">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply Logout</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card card4">
+                            <div class="card-head">
+                                <p class="main-head">Apply OD</p>
+                                <p class="sub-head">OD</p>
+                                <div class="right-icon">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="body-left">OD</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <i class="bi bi-alarm"></i>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#applyod">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply OD</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card card5">
+                            <div class="card-head">
+                                <p class="main-head">Apply Compoff</p>
+                                <p class="sub-head">Compoff</p>
+                                <div class="right-icon">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="body-left">Compoff</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <i class="bi bi-alarm"></i>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#applycompoff">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply Compoff</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="card card6">
+                            <div class="card-head">
+                                <p class="main-head">Apply Permission</p>
+                                <p class="sub-head">Permission</p>
+                                <p class="head-right">{{ Date | date: "hh:mm "}}<span style="font-size: 12px;">{{ Date |
+                                        date: "a"}}</span></p>
+                            </div>
+                            <div class="card-body">
+                                <p class="body-left">Permission</p>
+                                <p class="body-right">{{ Date | date: 'dd-MM-yyyy'}}</p>
+
+                                <div class="text-center icon">
+                                    <i class="bi bi-alarm"></i>
+                                </div>
+
+                                <div class="submit-button">
+                                    <button type="button" class="btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#applypermission">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply Permission</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <tabset>
+        <tab heading="Login Time Requisition">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="login" class="table table-striped table-row-bordered gy-5 gs-7">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Apply Date</th>
+                                <th>Attendence Date</th>
+                                <th>Login Time</th>
+                                <th>Login Reason</th>
+                                <th>Approval Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of loginsummary_list; let i=index;">
+                                <td title="S.No">{{i+1}}</td>
+                                <td title="Apply Date">{{data.applyDate | date: 'dd-MM-yyyy'}}</td>
+                                <td title="Attendence Date">{{data.attendanceDate | date: 'dd-MM-yyyy'}}</td>
+                                <td title="Login Time">{{data.login_Time}}</td>
+                                <td title="Login Reason">{{data.remarks}}</td>
+                                <td title="Approval Status">{{data.login_status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+
+        <tab heading="Logout Time Requisition">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="logout" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Apply Date</th>
+                                <th>Attendence Date</th>
+                                <th>Logout Time</th>
+                                <th>Logout Reason</th>
+                                <th>Approval Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of logoutsummary_list; let i=index;">
+                                <td title="S.No">{{i+1}}</td>
+                                <td title="Apply Date">{{data.applyDate | date: 'dd-MM-yyyy'}}</td>
+                                <td title="Attendence Date">{{data.attendanceDate | date: 'dd-MM-yyyy'}}</td>
+                                <td title="Logout Time">{{data.logout_Time}}</td>
+                                <td title="Logout Reason">{{data.remarks}}</td>
+                                <td title="Approval Status">{{data.logout_status}}</td>
+                                <td title="Action"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+
+        <tab heading="OnDuty">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="onduty" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>OD Date</th>
+                                <th>OD From</th>
+                                <th>OD To </th>
+                                <th>OD Duration</th>
+                                <th>OD Reason</th>
+                                <th>OD Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of ondutysummary_list; let i=index;">
+                                <td title="S.No">{{i+1}}</td>
+                                <td title="OD Date">{{data.onduty_date | date: 'dd-MM-yyyy'}}</td>
+                                <td title="OD From">{{data.onduty_from}}</td>
+                                <td title="OD To">{{data.onduty_to}}</td>
+                                <td title="OD Duration">{{data.onduty_duration}}</td>
+                                <td title="OD Reason">{{data.onduty_reason}}</td>
+                                <td title="OD Status">{{data.ondutytracker_status}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+
+        <tab heading="Compoff">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="compoff" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th style="display:none;">ID</th>
+                                <th>Compoff Availed</th>
+                                <th>Actual Working</th>
+                                <th>Compoff Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of compoffsummary_list; let i = index;">
+                                <td title="S.No">{{i+1}}</td>
+                                <td title="ID" style="display:none;">{{data.compensatoryoff_gid}}</td>
+                                <td title="Compoff Availed">{{data.compoff_date | date: 'dd-MM-yyyy'}}</td>
+                                <td title="Actual Working">{{data.atual_working}}</td>
+                                <td title="Compoff Reason">{{data.compoff_reason}}</td>
+                                <td title="Status">{{data.compoff_status}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+
+        <tab heading="Permission">
+            <div class="table-responsive">
+                <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                    <table id="permission" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                        <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                <th>S.No</th>
+                                <th>Permission Date</th>
+                                <th>Permission From</th>
+                                <th>Permission To</th>
+                                <th>Duration</th>
+                                <th>Permission Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of permissionsummary_list; let i=index;">
+                                <td title="S.No">{{i+1}}</td>
+                                <td title="Permission Date">{{data.permission_date | date: 'dd-MM-yyyy'}}</td>
+                                <td title="Permission From">{{data.permission_from}}</td>
+                                <td title="Permission To">{{data.permission_to}}</td>
+                                <td title="Duration">{{data.permission_total}}</td>
+                                <td title="Permission Reason">{{data.permission_reason}}</td>
+                                <td title="Status">{{data.permission_status}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </tab>
+    </tabset>
+</div>
+
+
+<div class="modal fade" id="iattendance" tabindex="-1" *ngIf="!button1Clicked">
+    <div class="modal-dialog modal-dialog-centered iattendancepopup">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">I - Attendence - Punch Out</h4>
+            </div>
+            <div class="modal-body iattendancepopupbody">
+                <p class="para">{{ Date | date: "hh:mm:ss a"}}</p>
+            </div>
+
+            <div class="text-center contain">
+
+                <div class="submit-button">
+                    <button type="button" class="btn-primary" (click)="punchout()">
+                        <span class="btn-text ms-3" *ngIf="!button1Clicked">Punch Out</span>
+                    </button>
+
+                    <button type="button" class="btn-danger ms-5" data-bs-dismiss="modal"><i
+                            class="bi bi-x-square fs-8 me-2"></i>Cancel
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form [formGroup]="applyLoginReqForm" novalidate="novalidate" (ngSubmit)="onapplylogin()">
+    <div class="modal fade" id="applylogin" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered loginpopup">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Apply Login Time</h4>
+                </div>
+                <div class="modal-body loginpopupbody">
+                    <div class="d-flex flex-row flex-wrap">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Attendance Date</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="date" class="login-input form-control form-control-lg"
+                                    formControlName="loginreq_date" />
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Login Time</b>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                <input type="time" class="login-input form-control form-control-lg"
+                                    formControlName="logintime" />
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <!-- <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Login Date</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea name="" id="" rows="5" class="inputfield form-control form-control-lg"
+                                    formControlName="login_date"></textarea>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Reason</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea name="" id="" rows="5" class="inputfield form-control form-control-lg"
+                                    formControlName="loginreq_reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center contain">
+                    <button (click)="onapplylogin()" class="me-4" [disabled]="applyLoginReqForm.invalid"
+                        [ngClass]="{'primary-button': !applyLoginReqForm.invalid, 'secondary-button': applyLoginReqForm.invalid}"
+                        data-bs-dismiss="modal">
+                        <i class="bi bi-check-square fs-5"></i>
+                        <span class="ms-3">Submit</span>
+                    </button> &nbsp;
+                    <button type="button" class="btn-danger" data-bs-dismiss="modal"><i
+                            class="bi bi-x-square fs-8 me-2"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]="applyLogoutReqForm" novalidate="novalidate" (ngSubmit)="onapplylogout()">
+    <div class="modal fade" id="applylogout" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered logoutpopup">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Apply Logout Time</h4>
+                </div>
+                <div class="modal-body logoutpopupbody">
+                    <div class="d-flex flex-row flex-wrap">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Attendance Date</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="date" class="logout-input form-control form-control-lg"
+                                    formControlName="logoutattendence_date" />
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Logout Time</b>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                <input type="time" class="logout-input form-control form-control-lg"
+                                    formControlName="logouttime" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Reason</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea name="" id="" rows="5" class="inputfield form-control-lg"
+                                    formControlName="logouttime_reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center my-4">
+                    <button (click)="onapplylogout()" class="me-4" [disabled]="applyLogoutReqForm.invalid"
+                        [ngClass]="{'primary-button': !applyLogoutReqForm.invalid, 'secondary-button': applyLogoutReqForm.invalid}"
+                        data-bs-dismiss="modal">
+                        <i class="bi bi-check-square fs-5"></i>
+                        <span class="ms-3">Submit</span>
+                    </button> &nbsp;
+                    <button (click)="onclose()" class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]="applyODForm" novalidate="novalidate" (ngSubmit)="onapplyod()">
+    <div class="modal fade" id="applyod" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered odpopup">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Apply OD</h4>
+                </div>
+                <div class="modal-body odpopupbody">
+                    <div class="d-flex flex-row flex-wrap">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>OD Date</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="date" class="oddate-input form-control form-control-lg"
+                                    formControlName="od_date" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>From</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="time" class="od-input form-control form-control-lg"
+                                    formControlName="od_fromhr" />
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>To</b>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                <input type="time" class="od-input form-control form-control-lg"
+                                    formControlName="od_tohr" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Onduty Period</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <div
+                                    class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                                    <input class="form-check-input" type="radio" name="onduty_confirmed" value="Y" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="ondutyconfirmedFull">Full</label>
+
+                                    <input class="form-check-input ms-6" type="radio" name="onduty_confirmed"
+                                        value="N" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="ondutyconfirmedHalf">Half</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Session</b>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                <div
+                                    class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                                    <input class="form-check-input" type="radio" name="onduty_confirmed" value="Y" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="ondutyconfirmedFN">FN</label>
+
+                                    <input class="form-check-input ms-6" type="radio" name="onduty_confirmed"
+                                        value="N" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="ondutyconfirmedAN">AN</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Reason</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea name="" id="" rows="5" class="inputfield form-control form-control-lg"
+                                    formControlName="od_reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center contain">
+                    <button type="button" class="btn-success"><i class="bi bi-check-square fs-8 me-2"
+                            (click)="onapplyod()"></i>Submit</button> &nbsp;
+                    <button type="button" class="btn-danger" data-bs-dismiss="modal"><i
+                            class="bi bi-x-square fs-8 me-2"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]="applycompoffForm" novalidate="novalidate" (ngSubmit)="onapplycompoff()">
+    <div class="modal fade" id="applycompoff" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered applycompoffpopup">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Apply Compoff</h4>
+                </div>
+                <div class="modal-body applycompoffbody">
+                    <div class="d-flex flex-row flex-wrap">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Actual Working Date</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="date" class="compoff-input form-control form-control-lg"
+                                    formControlName="actualworking_date" />
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Compoff Availed</b>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                <input type="date" class="compoff-input form-control form-control-lg"
+                                    formControlName="compensatoryoff_applydate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Reason</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea name="" id="" rows="5" class="inputfield form-control form-control-lg"
+                                    formControlName="compoff_reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center contain">
+                    <button (click)="onapplycompoff()" class="me-4" [disabled]="applycompoffForm.invalid"
+                        [ngClass]="{'primary-button': !applycompoffForm.invalid, 'secondary-button': applycompoffForm.invalid}"
+                        data-bs-dismiss="modal">
+                        <i class="bi bi-check-square fs-5"></i>
+                        <span class="ms-3">Submit</span>
+                    </button> &nbsp;
+                    <button type="button" class="btn-danger" data-bs-dismiss="modal"><i
+                            class="bi bi-x-square fs-8 me-2"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form [formGroup]="applypermissionForm" novalidate="novalidate" (ngSubmit)="onapplypermission()">
+    <div class="modal fade" id="applypermission" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered permissionpopup">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Apply Permission</h4>
+                </div>
+                <div class="modal-body permissionpopupbody">
+                    <div class="d-flex flex-row flex-wrap">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Permission Date</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="date" class="permissiondate-input form-control form-control-lg"
+                                    formControlName="permission_date" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>From</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="time" class="permission-input form-control form-control-lg"
+                                    formControlName="permission_fromhr" />
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>To</b>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                <input type="time" class="permission-input form-control form-control-lg"
+                                    formControlName="permission_tohr" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row flex-wrap mt-4">
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Permission Reason</b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <textarea name="" id="" rows="5" class="inputfield form-control form-control-lg"
+                                    formControlName="permission_reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center contain">
+                    <button (click)="onapplypermission()" class="me-4" [disabled]="applypermissionForm.invalid"
+                        [ngClass]="{'primary-button': !applypermissionForm.invalid, 'secondary-button': applypermissionForm.invalid}"
+                        data-bs-dismiss="modal">
+                        <i class="bi bi-check-square fs-5"></i>
+                        <span class="ms-3">Submit</span>
+                    </button> &nbsp;
+                    <button type="button" class="btn-danger" data-bs-dismiss="modal"><i
+                            class="bi bi-x-square fs-8 me-2"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

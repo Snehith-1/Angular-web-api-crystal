@@ -1,0 +1,23 @@
+.separator.separator-content::before, .separator.separator-content::after {
+    content: " ";
+    width: 50%;
+    border-bottom: 1px solid rgb(219, 208, 208);
+}
+
+.button{
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: #256fde;
+    color: white; 
+    height: 40px;
+    cursor: pointer;
+    text-align: center;
+     border-radius: 12px;
+     float: left;
+     padding-right: 25px;
+    
+}
+.button:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }

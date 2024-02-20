@@ -1,0 +1,117 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+interface IPayrunReport {
+  branch_name: string;
+  department_name: string;
+  month: string;
+  year: string;
+  branch_gid: string;
+  department_gid: string;
+}
+@Component({
+  selector: 'app-pay-rpt-employeesalaryreport',
+  templateUrl: './pay-rpt-employeesalaryreport.component.html',
+  styleUrls: ['./pay-rpt-employeesalaryreport.component.scss']
+})
+export class PayRptEmployeesalaryreportComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  dept_name: any;
+  departmentlist: any[] = [];
+  branch_name: any;
+  branchlist: any[] = [];
+  payrun_list: any[] = [];
+  PayrunReport!: IPayrunReport;
+  branch_gid: any;
+  department_gid: any;
+  month: any; 
+  year: any;
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private ToastrService: ToastrService, public service: SocketService) {
+  this.PayrunReport = {} as IPayrunReport;
+  }
+
+  ngOnInit(): void {
+    
+    this.reactiveForm = new FormGroup({
+
+    branch_name : new FormControl(this.PayrunReport.branch_name, [
+      Validators.required,
+      Validators.minLength(1),
+      ]),
+
+      department_name : new FormControl(this.PayrunReport.department_name, [
+        Validators.required,
+        Validators.minLength(1),
+        ]),
+       
+        month : new FormControl(this.PayrunReport.month, [
+          Validators.required,
+          Validators.minLength(1),
+          ]),
+          year: new FormControl(''),
+          branch_gid: new FormControl(''),
+          department_gid: new FormControl(''),
+      });
+
+    var api='PayRptPayrunSummary/GetBranchDtl'
+    this.service.get(api).subscribe((result:any)=>{
+    this.branchlist = result.GetBranchDtl;
+    //console.log(this.branchlist)
+   });
+
+   var api='PayRptPayrunSummary/GetDepartmentDtl'
+   debugger;
+   this.service.get(api).subscribe((result:any)=>{
+   this.departmentlist = result.GetDepartmentDtl;
+   //console.log(this.branchlist)
+  });
+
+   //// Summary Grid//////
+   var url = 'PayRptPayrunSummary/GetPayrunSummary'
+      
+   this.service.get(url).subscribe((result: any) => {
+   this.responsedata = result;
+   this.payrun_list = this.responsedata.payrunlist;
+     setTimeout(() => {
+       $('#payrun_list').DataTable();
+       }, );
+
+
+ });
+
+       
+    }
+    searchloan(){
+
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      
+      const formData = {
+      branch_gid: this.branch_gid,
+      department_gid: this.department_gid,
+      month: this.month,
+      year: this.year,
+      }
+
+
+    }
+
+    openModalpdf(){
+      
+    }
+
+  }
+
+
+  
+
+
+    
+    
+
+
+

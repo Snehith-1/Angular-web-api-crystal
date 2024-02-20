@@ -1,0 +1,10 @@
+.background-color1{
+    background: rgb(56, 243, 131) 100%;
+    background: radial-gradient(circle, rgb(56, 243, 131) 100%); 
+}
+.background-color2{
+    background: rgb(156, 2, 203) 100%;
+    background: radial-gradient(circle, rgb(56, 243, 131) 100%); 
+}
+  
+  

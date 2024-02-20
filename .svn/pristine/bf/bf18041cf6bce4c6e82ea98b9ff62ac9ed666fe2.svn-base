@@ -1,0 +1,1235 @@
+﻿using ems.system.Models;
+using ems.utilities.Functions;
+using Microsoft.SqlServer.Server;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Odbc;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Web;
+using static OfficeOpenXml.ExcelErrorValue;
+using static System.Collections.Specialized.BitVector32;
+
+namespace ems.system.DataAccess
+{
+    public class DaEmployeelist
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objodbcDataReader;
+        DataTable dt_datatable;
+        int mnResult;
+        string msUserGid, msEmployeeGID, msBiometricGID, msGetemployeetype, msTemporaryAddressGetGID, msPermanentAddressGetGID, usercode, lsuser_gid, lsemployee_gid, lsuser_code, lscountry_gid2, lscountry_gid;
+      
+        public void DaPostEmployeedetails(employee_lists values,string user_gid)
+        {
+            msSQL = " SELECT user_code FROM adm_mst_tuser where user_code = '" + values.user_code + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                lsuser_code = objodbcDataReader["user_code"].ToString();
+            }
+            if (lsuser_code != null &&  lsuser_code !="")
+            {
+                lsuser_code = lsuser_code.ToUpper();
+            }
+            else
+            {
+                lsuser_code = null;
+
+            }
+
+           
+            string uppercaseString = values.user_code.ToUpper();
+            if (uppercaseString != lsuser_code) {
+                msUserGid = objcmnfunctions.GetMasterGID("SUSM");
+
+                msSQL = " insert into adm_mst_tuser(" +
+                " user_gid," +
+                " user_code," +
+                " user_firstname," +
+                " user_lastname, " +
+                " user_password, " +
+                " user_status, " +
+                " created_by, " +
+                " created_date)" +
+                " values(" +
+                " '" + msUserGid + "'," +
+                " '" + values.user_code + "'," +
+                " '" + values.first_name + "'," +
+                " '" + values.last_name + "'," +
+                " '" + objcmnfunctions.ConvertToAscii(values.password) + "'," +
+                "'" + values.active_flag + "',";
+                msSQL += "'" + user_gid + "'," +
+                         "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    msEmployeeGID = objcmnfunctions.GetMasterGID("SERM");
+                    //msSQL1 = " SELECT entity_gid FROM adm_mst_tentity where entity_name='" + values.entityname + "' ";
+                    //string lsentity_gid = objdbconn.GetExecuteScalar(msSQL1);
+                    //msSQL1 = " SELECT branch_gid FROM hrm_mst_tbranch where branch_name='" + values.branchname + "' ";
+                    //string lsbranch_gid = objdbconn.GetExecuteScalar(msSQL1);
+                    //msSQL1 = " SELECT department_gid FROM hrm_mst_tdepartment where department_name='" + values.departmentname + "' ";
+                    //string lsdepartment_gid = objdbconn.GetExecuteScalar(msSQL1);
+                    //msSQL1 = " SELECT designation_gid FROM adm_mst_tdesignation where designation_name='" + values.designationname + "' ";
+                    //string lsdesignation_gid = objdbconn.GetExecuteScalar(msSQL1);
+                    msBiometricGID = objcmnfunctions.GetBiometricGID();
+                    msSQL1 = " Insert into hrm_mst_temployee " +
+                        " (employee_gid , " +
+                        " user_gid," +
+                        " designation_gid," +
+                        " employee_mobileno , " +
+                        " employee_emailid , " +
+                        " employee_gender , " +
+                        " department_gid," +
+                        " entity_gid," +
+                        " employee_photo," +
+                        " useraccess," +
+                        " engagement_type," +
+                        " attendance_flag, " +
+                        " branch_gid, " +
+                        " biometric_id, " +
+                        " created_by, " +
+                        " created_date " +
+                        " )values( " +
+                        "'" + msEmployeeGID + "', " +
+                        "'" + msUserGid + "', " +
+                        "'" + values.designationname + "'," +
+                        "'" + values.mobile + "'," +
+                        "'" + values.email + "'," +
+                        "'" + values.gender + "'," +
+                        "'" + values.departmentname + "'," +
+                        "'" + values.entityname + "'," +
+                        "'" + null + "'," +
+                        "'" + values.active_flag + "'," +
+                        "'Direct'," +
+                        "'Y'," +
+                        " '" + values.branchname + "'," +
+                        "'" + msBiometricGID + "'," +
+                        "'" + user_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL1);
+                    if (mnResult == 1) {
+                        msSQL = " update  hrm_mst_temployee set " +
+                 " employee_photo = '/assets/media/images/Employee_defaultimage.png'" +
+                 "  where employee_gid='" + msEmployeeGID + "' ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        msGetemployeetype = objcmnfunctions.GetMasterGID("SETD");
+                        msSQL = " insert into hrm_trn_temployeetypedtl(" +
+                      " employeetypedtl_gid," +
+                      " employee_gid," +
+                      " workertype_gid," +
+                      " systemtype_gid, " +
+                      " branch_gid, " +
+                      " wagestype_gid, " +
+                      " department_gid, " +
+                      " employeetype_name, " +
+                      " designation_gid, " +
+                      " created_by, " +
+                      " created_date)" +
+                      " values(" +
+                      " '" + msGetemployeetype + "'," +
+                      " '" + msEmployeeGID + "'," +
+                      " 'null'," +
+                      " 'Audit'," +
+                      " '" + values.branchname + "'," +
+                      " 'wg001'," +
+                      " '" + values.departmentname + "'," +
+                      "'Roll'," +
+                      " '" + values.designationname + "'," +
+                       "'" + user_gid + "'," +
+                       "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult == 1)
+                        {
+                            //msSQL = "  SELECT country_gid FROM adm_mst_tcountry where country_name='" + values.country + "' ";
+                            //objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                            //if (objodbcDataReader.HasRows)
+                            //{
+                            //    lscountry_gid = objodbcDataReader["country_gid"].ToString();
+                            //}
+
+                            msPermanentAddressGetGID = objcmnfunctions.GetMasterGID("SADM");
+                            msTemporaryAddressGetGID = objcmnfunctions.GetMasterGID("SADM");
+                            msSQL = " insert into adm_mst_taddress(" +
+                        " address_gid," +
+                        " parent_gid," +
+                        " country_gid," +
+                        " address1, " +
+                        " address2, " +
+                        " city, " +
+                        " state, " +
+                        " address_type, " +
+                        " postal_code, " +
+                        " created_by, " +
+                        " created_date)" +
+                        " values(" +
+                        " '" + msPermanentAddressGetGID + "'," +
+                        " '" + msEmployeeGID + "'," +
+                        " '" + values.country + "'," +
+                        " '" + values.permanent_address1 + "'," +
+                        " '" + values.permanent_address2 + "'," +
+                        " '" + values.permanent_city + "'," +
+                        " '" + values.permanent_state + "'," +
+                        " 'Permanent'," +
+                        "'" + values.permanent_postal + "',";
+                            msSQL += "'" + user_gid + "'," +
+                                     "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+                                //msSQL = "  SELECT country_gid FROM adm_mst_tcountry where country_name='" + values.countryname + "' ";
+                                //objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                                //if (objodbcDataReader.HasRows)
+                                //{
+                                //    lscountry_gid2 = objodbcDataReader["country_gid"].ToString();
+                                //}
+
+                                msSQL = " insert into adm_mst_taddress(" +
+                        " address_gid," +
+                        " parent_gid," +
+                        " country_gid," +
+                        " address1, " +
+                        " address2, " +
+                        " city, " +
+                        " state, " +
+                        " address_type, " +
+                        " postal_code, " +
+                        " created_by, " +
+                        " created_date)" +
+                        " values(" +
+                        " '" + msTemporaryAddressGetGID + "'," +
+                        " '" + msEmployeeGID + "'," +
+                        " '" + values.countryname + "'," +
+                        " '" + values.temporary_address1 + "'," +
+                        " '" + values.temporary_address2 + "'," +
+                        " '" + values.temporary_city + "'," +
+                        " '" + values.temporary_state + "'," +
+                        " 'Temporary'," +
+                        "'" + values.temporary_postal + "',";
+                                msSQL += "'" + user_gid + "'," +
+                                         "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            }
+
+                        }
+
+
+                    }
+                }
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Employee Added Successfully !!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Employee !!";
+                }
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Employee User Code Already Exist";
+                
+
+
+                //return values.message = "Employee User Code Already Exist";
+
+            }
+        }
+        public void DaGetentitydropdown(MdlEmployeelist values)
+        {
+            msSQL = " select  entity_gid, entity_name " +
+                    " from adm_mst_tentity a " +
+                    " left join adm_mst_tuser b on b.user_gid=a.created_by order by entity_gid desc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getentitydropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getentitydropdown
+                    {
+                        entity_gid = dt["entity_gid"].ToString(),
+                        entity_name = dt["entity_name"].ToString(),
+
+                    });
+                    values.Getentitydropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetdesignationdropdown(MdlEmployeelist values)
+        {
+            msSQL = " Select designation_name,designation_gid  " +
+                    " from adm_mst_tdesignation ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getdesignationdropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getdesignationdropdown
+                    {
+                        designation_name = dt["designation_name"].ToString(),
+                        designation_gid = dt["designation_gid"].ToString(),
+                    });
+                    values.Getdesignationdropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetcountrydropdown(MdlEmployeelist values)
+        {
+            msSQL = " Select country_name,country_gid  " +
+                    " from adm_mst_tcountry ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getcountrydropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getcountrydropdown
+                    {
+                        country_name = dt["country_name"].ToString(),
+                        country_gid = dt["country_gid"].ToString(),
+                    });
+                    values.Getcountrydropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetcountry2dropdown(MdlEmployeelist values)
+        {
+            msSQL = " Select country_name as country_names,country_gid as country_gids  " +
+                    " from adm_mst_tcountry ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getcountry2dropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getcountry2dropdown
+                    {
+                        country_names = dt["country_names"].ToString(),
+                        country_gids = dt["country_gids"].ToString(),
+                    });
+                    values.Getcountry2dropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetbranchdropdown(MdlEmployeelist values)
+        {
+            msSQL = " Select branch_name,branch_gid  " +
+                    " from hrm_mst_tbranch ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getbranchdropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getbranchdropdown
+                    {
+                        branch_name = dt["branch_name"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+                    });
+                    values.Getbranchdropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetdepartmentdropdown(MdlEmployeelist values)
+        {
+            msSQL = " Select department_name,department_gid  " +
+                    " from hrm_mst_tdepartment ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getdepartmentdropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getdepartmentdropdown
+                    {
+                        department_name = dt["department_name"].ToString(),
+                        department_gid = dt["department_gid"].ToString(),
+                    });
+                    values.Getdepartmentdropdown = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetEmployeeSummary(MdlEmployeelist values)
+        {
+            msSQL = " Select distinct a.user_gid,c.useraccess,case when c.entity_gid is null then c.entity_name else z.entity_name end as entity_name , " +
+                   " a.user_code,concat(a.user_firstname,' ',a.user_lastname) as user_name ,c.employee_joiningdate," +
+                   " c.employee_gender,  " +
+                   " concat(j.address1,' ',j.address2,'/', j.city,'/', j.state,'/',k.country_name,'/', j.postal_code) as emp_address, " +
+                   " d.designation_name,c.designation_gid,c.employee_gid,e.branch_name, " +
+                   " CASE " +
+                   " WHEN a.user_status = 'Y' THEN 'Active'  " +
+                   " WHEN a.user_status = 'N' THEN 'Inactive' " +
+                   " END as user_status,c.department_gid,c.branch_gid, e.branch_name, g.department_name " +
+                   " FROM adm_mst_tuser a " +
+                   " left join hrm_mst_temployee c on a.user_gid = c.user_gid " +
+                   " left join adm_mst_tdesignation d on c.designation_gid = d.designation_gid " +
+                   " left join hrm_mst_tbranch e on c.branch_gid = e.branch_gid " +
+                   " left join hrm_mst_tdepartment g on g.department_gid = c.department_gid " +
+                   " left join adm_mst_taddress j on c.employee_gid=j.parent_gid " +
+                   " left join adm_mst_tcountry k on j.country_gid=k.country_gid " +
+                   " left join adm_mst_tentity z on z.entity_gid=c.entity_gid" +
+                   " left join hrm_trn_temployeedtl m on m.permanentaddress_gid=j.address_gid " +
+                   " group by c.employee_gid " +
+                   " order by c.employee_gid desc  ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getemployee_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getemployee_lists
+                    {
+
+                        user_gid = dt["user_gid"].ToString(),
+                        useraccess = dt["useraccess"].ToString(),
+                        entity_name = dt["entity_name"].ToString(),
+                        user_code = dt["user_code"].ToString(),
+                        user_name = dt["user_name"].ToString(),
+                        employee_joiningdate = dt["employee_joiningdate"].ToString(),
+                        employee_gender = dt["employee_gender"].ToString(),
+                        emp_address = dt["emp_address"].ToString(),
+                        designation_name = dt["designation_name"].ToString(),
+                        designation_gid = dt["designation_gid"].ToString(),
+                        employee_gid = dt["employee_gid"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        user_status = dt["user_status"].ToString(),
+                        department_gid = dt["department_gid"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+
+                    });
+                    values.Getemployee_lists = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaEmployeeProfileUpload(HttpRequest httpRequest, result objResult, string user_gid)
+        {
+
+            HttpFileCollection httpFileCollection;
+            string lsfilepath = string.Empty;
+            string lsdocument_gid = string.Empty;
+            MemoryStream ms_stream = new MemoryStream();
+            string document_gid = string.Empty;
+            string lscompany_code = string.Empty;
+            HttpPostedFile httpPostedFile;
+
+            string lspath;
+            string msGetGid;
+
+            msSQL = " SELECT a.company_code FROM adm_mst_tcompany a ";
+            lscompany_code = objdbconn.GetExecuteScalar(msSQL);
+            string entity = httpRequest.Form[0];
+            string branch = httpRequest.Form[1];
+            string department = httpRequest.Form[2];
+            string designation = httpRequest.Form[3];
+            string active_flag = httpRequest.Form[4];
+            string user_code = httpRequest.Form[5];
+            string password = httpRequest.Form[6];
+            string first_name = httpRequest.Form[8];
+            string last_name = httpRequest.Form[9];
+            string gender = httpRequest.Form[10];
+            string email = httpRequest.Form[11];
+            string mobile = httpRequest.Form[12];
+            string permanent_address1 = httpRequest.Form[14];
+            string permanent_address2 = httpRequest.Form[14];
+            string country = httpRequest.Form[15];
+            string permanent_city = httpRequest.Form[16];
+            string permanent_state = httpRequest.Form[17];
+            string permanent_postal = httpRequest.Form[18];
+            string temporary_address1 = httpRequest.Form[19];
+            string temporary_address2 = httpRequest.Form[20];
+            string countryname = httpRequest.Form[21];
+            string temporary_city = httpRequest.Form[22];
+            string temporary_state = httpRequest.Form[23];
+            string temporary_postal = httpRequest.Form[24];
+
+            MemoryStream ms = new MemoryStream();
+            lspath = ConfigurationManager.AppSettings["imgfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "Employee/Profile/" + DateTime.Now.Year + "/" + DateTime.Now.Month;
+
+            {
+                if ((!System.IO.Directory.Exists(lspath)))
+                    System.IO.Directory.CreateDirectory(lspath);
+            }
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    string lsfirstdocument_filepath = string.Empty;
+                    httpFileCollection = httpRequest.Files;
+                    for (int i = 0; i < httpFileCollection.Count; i++)
+                    {
+                        string msdocument_gid = objcmnfunctions.GetMasterGID("UPLF");
+                        httpPostedFile = httpFileCollection[i];
+                        string FileExtension = httpPostedFile.FileName;
+                        //string lsfile_gid = msdocument_gid + FileExtension;
+                        string lsfile_gid = msdocument_gid;
+                        string lscompany_document_flag = string.Empty;
+                        FileExtension = Path.GetExtension(FileExtension).ToLower();
+                        lsfile_gid = lsfile_gid + FileExtension;
+                        Stream ls_readStream;
+                        ls_readStream = httpPostedFile.InputStream;
+                        ls_readStream.CopyTo(ms);
+
+                        lspath = ConfigurationManager.AppSettings["imgfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "Employee/Profile/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                        string status;
+                        status = objcmnfunctions.uploadFile(lspath + msdocument_gid, FileExtension);
+                        //string local_path = "E:/Angular15/AngularUI/src";
+                        ms.Close();
+                        lspath = "/assets/media/images/erpdocument" + "/" + lscompany_code + "/" + "Employee/Profile/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+
+                        string final_path = lspath + msdocument_gid + FileExtension;
+                        msSQL = " SELECT user_code FROM adm_mst_tuser where user_code = '" + user_code + "' ";
+                        objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                        if (objodbcDataReader.HasRows)
+                        {
+                             lsuser_code = objodbcDataReader["user_code"].ToString();
+                        }
+                        if (lsuser_code != null && lsuser_code != "")
+                        {
+                            lsuser_code = lsuser_code.ToUpper();
+                        }
+                        else
+                        {
+                            lsuser_code = null;
+
+                        }
+                        //string usercode =lsuser_code.ToUpper();
+                        string uppercaseString = user_code.ToUpper();
+                        if (uppercaseString != lsuser_code)
+                        {
+                            msUserGid = objcmnfunctions.GetMasterGID("SUSM");
+
+                            msSQL = " insert into adm_mst_tuser(" +
+                            " user_gid," +
+                            " user_code," +
+                            " user_firstname," +
+                            " user_lastname, " +
+                            " user_password, " +
+                            " user_status, " +
+                            " created_by, " +
+                            " created_date)" +
+                            " values(" +
+                            " '" + msUserGid + "'," +
+                            " '" + user_code + "'," +
+                            " '" + first_name + "'," +
+                            " '" + last_name + "'," +
+                            " '" + objcmnfunctions.ConvertToAscii(password) + "'," +
+                            "'" + active_flag + "',";
+                            msSQL += "'" + user_gid + "'," +
+                                     "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+                                msEmployeeGID = objcmnfunctions.GetMasterGID("SERM");
+                                //msSQL1 = " SELECT entity_gid FROM adm_mst_tentity where entity_name='" + entity + "' ";
+                                //string lsentity_gid = objdbconn.GetExecuteScalar(msSQL1);
+                                //msSQL1 = " SELECT branch_gid FROM hrm_mst_tbranch where branch_name='" + branch + "' ";
+                                //string lsbranch_gid = objdbconn.GetExecuteScalar(msSQL1);
+                                //msSQL1 = " SELECT department_gid FROM hrm_mst_tdepartment where department_name='" + department + "' ";
+                                //string lsdepartment_gid = objdbconn.GetExecuteScalar(msSQL1);
+                                //msSQL1 = " SELECT designation_gid FROM adm_mst_tdesignation where designation_name='" + designation + "' ";
+                                //string lsdesignation_gid = objdbconn.GetExecuteScalar(msSQL1);
+                                msBiometricGID = objcmnfunctions.GetBiometricGID();
+                                msSQL1 = " Insert into hrm_mst_temployee " +
+                                    " (employee_gid , " +
+                                    " user_gid," +
+                                    " designation_gid," +
+                                    " employee_mobileno , " +
+                                    " employee_emailid , " +
+                                    " employee_gender , " +
+                                    " department_gid," +
+                                    " entity_gid," +
+                                    " employee_photo," +
+                                    " useraccess," +
+                                    " engagement_type," +
+                                    " attendance_flag, " +
+                                    " branch_gid, " +
+                                    " biometric_id, " +
+                                    " created_by, " +
+                                    " created_date " +
+                                    " )values( " +
+                                    "'" + msEmployeeGID + "', " +
+                                    "'" + msUserGid + "', " +
+                                    "'" + designation + "'," +
+                                    "'" + mobile + "'," +
+                                    "'" + email + "'," +
+                                    "'" + gender + "'," +
+                                    "'" + department + "'," +
+                                    "'" + entity + "'," +
+                                    "'" + final_path + "'," +
+                                    "'" + active_flag + "'," +
+                                    "'Direct'," +
+                                    "'Y'," +
+                                    " '" + branch + "'," +
+                                    "'" + msBiometricGID + "'," +
+                                    "'" + user_gid + "'," +
+                                    "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL1);
+                                if (mnResult == 1)
+                                {
+
+                                    msGetemployeetype = objcmnfunctions.GetMasterGID("SETD");
+                                    msSQL = " insert into hrm_trn_temployeetypedtl(" +
+                                  " employeetypedtl_gid," +
+                                  " employee_gid," +
+                                  " workertype_gid," +
+                                  " systemtype_gid, " +
+                                  " branch_gid, " +
+                                  " wagestype_gid, " +
+                                  " department_gid, " +
+                                  " employeetype_name, " +
+                                  " designation_gid, " +
+                                  " created_by, " +
+                                  " created_date)" +
+                                  " values(" +
+                                  " '" + msGetemployeetype + "'," +
+                                  " '" + msEmployeeGID + "'," +
+                                  " 'null'," +
+                                  " 'Audit'," +
+                                  " '" + branch + "'," +
+                                  " 'wg001'," +
+                                  " '" + department + "'," +
+                                    "'Roll'," +
+                                  " '" + designation + "'," +
+                                   "'" + user_gid + "'," +
+                                   "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    if (mnResult == 1)
+                                    {
+                                        //msSQL = "  SELECT country_gid FROM adm_mst_tcountry where country_name='" + country + "' ";
+                                        //objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                                        //if (objodbcDataReader.HasRows)
+                                        //{
+                                        //    lscountry_gid = objodbcDataReader["country_gid"].ToString();
+                                        //}
+                                      
+                                        msPermanentAddressGetGID = objcmnfunctions.GetMasterGID("SADM");
+                                        msTemporaryAddressGetGID = objcmnfunctions.GetMasterGID("SADM");
+                                        msSQL = " insert into adm_mst_taddress(" +
+                                    " address_gid," +
+                                    " parent_gid," +
+                                    " country_gid," +
+                                    " address1, " +
+                                    " address2, " +
+                                    " city, " +
+                                    " state, " +
+                                    " address_type, " +
+                                    " postal_code, " +
+                                    " created_by, " +
+                                    " created_date)" +
+                                    " values(" +
+                                    " '" + msPermanentAddressGetGID + "'," +
+                                    " '" + msEmployeeGID + "'," +
+                                    " '" + country + "'," +
+                                    " '" + permanent_address1 + "'," +
+                                    " '" + permanent_address2 + "'," +
+                                    " '" + permanent_city + "'," +
+                                    " '" + permanent_state + "'," +
+                                    "'Permanent'," +
+                                    "'" + permanent_postal + "',";
+                                        msSQL += "'" + user_gid + "'," +
+                                                 "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                        if (mnResult == 1)
+                                        {
+                                            //msSQL = "  SELECT country_gid FROM adm_mst_tcountry where country_name='" + countryname + "' ";
+                                            //objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                                            //if (objodbcDataReader.HasRows)
+                                            //{
+                                            //    lscountry_gid2 = objodbcDataReader["country_gid"].ToString();
+                                            //}
+                                            msSQL = " insert into adm_mst_taddress(" +
+                                    " address_gid," +
+                                    " parent_gid," +
+                                    " country_gid," +
+                                    " address1, " +
+                                    " address2, " +
+                                    " city, " +
+                                    " state, " +
+                                    " address_type, " +
+                                    " postal_code, " +
+                                    " created_by, " +
+                                    " created_date)" +
+                                    " values(" +
+                                    " '" + msTemporaryAddressGetGID + "'," +
+                                    " '" + msEmployeeGID + "'," +
+                                    " '" + countryname + "'," +
+                                    " '" + temporary_address1 + "'," +
+                                    " '" + temporary_address2 + "'," +
+                                    " '" + temporary_city + "'," +
+                                    " '" + temporary_state + "'," +
+                                    "'Temporary'," +
+                                    "'" + temporary_postal + "',";
+                                            msSQL += "'" + user_gid + "'," +
+                                                     "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                        }
+
+                                    }
+
+
+                                }
+                            }
+
+                            if (mnResult != 0)
+                            {
+                                objResult.status = true;
+                                objResult.message = "Employee Added Successfully !!";
+                            }
+                            else
+                            {
+                                objResult.status = false;
+                                objResult.message = "Error While Adding Employee !!";
+                            }
+                        }
+                        else
+                        {
+                            objResult.status = false;
+                            objResult.message = "Employee User Code Already Exist !!";
+
+
+
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.message = ex.ToString();
+            }
+            //return true;
+
+        }
+        public void DaGetEditEmployeeSummary(string employee_gid, MdlEmployeelist values)
+        {
+            msSQL = " select a.employee_gid,a.employee_gender,z.entity_name,a.identity_no,date_format(a.employee_dob,'%d-%m-%Y') as employee_dob,a.employee_sign,a.bloodgroup, " +
+               " a.employee_image,a.employee_photo, " +
+               " a.employee_emailid,a.employee_mobileno,a.employee_qualification,a.employee_documents, " +
+               " (select address1 from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_address1, " +
+               " (select address2 from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_address2, " +
+               " (select city from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_city, " +
+               " (select state from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_state, " +
+               " (select postal_code from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_postalcode, " +
+               " (select address_gid from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_addressgid, " +
+               " (select n.country_name from adm_mst_taddress m LEFT JOIN adm_mst_tcountry n ON m.country_gid = n.country_gid   where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_country, " +
+               " (select r.country_gid from adm_mst_taddress q LEFT JOIN adm_mst_tcountry r ON q.country_gid = r.country_gid   where parent_gid = '" + employee_gid + "' and address_type = 'Permanent') as permanent_countrygid, " +
+               " (select address1 from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_address1, " +
+               " (select address2 from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_address2, " +
+               " (select city from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_city, " +
+               " (select state from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_state, " +
+               " (select postal_code from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_postalcode, " +
+               " (select address_gid from adm_mst_taddress where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_addressgid, " +
+               " (select p.country_name from adm_mst_taddress o LEFT JOIN adm_mst_tcountry p ON o.country_gid = p.country_gid   where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_country, " +
+               " (select t.country_gid from adm_mst_taddress s LEFT JOIN adm_mst_tcountry t ON s.country_gid = t.country_gid   where parent_gid = '" + employee_gid + "' and address_type = 'Temporary') as temporary_countrygid, " +
+               " a.employee_experience,a.employee_experiencedtl, a.employeereporting_to , a.employment_type , " +
+               " b.user_code,b.user_firstname,b.user_lastname, b.user_status,b.usergroup_gid,c.usergroup_code,a.entity_gid,a.designation_gid,a.department_gid, " +
+               " a.branch_gid,d.branch_name,  e.department_name,f.designation_name,  " +
+               " (select i.user_firstname from adm_mst_tuser i ,  hrm_mst_temployee j where i.user_gid = j.user_gid " +
+               " and a.employeereporting_to = j.employee_gid)  as approveby_name,(date_format(a.employee_joiningdate,'%d/%m/%Y')) as employee_joiningdate, " +
+              " ( Select k.user_firstname from adm_mst_tuser k ,hrm_mst_temployee l " +
+              "  where k.user_gid = l.user_gid and l.employee_gid = '" + employee_gid + "')  as approver_name,a.nationality,a.nric_no " +
+               " FROM hrm_mst_temployee a  LEFT JOIN adm_mst_tuser b ON a.user_gid = b.user_gid " +
+               " LEFT JOIN adm_mst_tusergroup c ON b.usergroup_gid = c.usergroup_gid " +
+               " LEFT JOIN hrm_mst_tbranch d ON a.branch_gid = d.branch_gid " +
+               " LEFT JOIN hrm_mst_tdepartment e ON a.department_gid = e.department_gid  " +
+               " LEFT JOIN adm_mst_tdesignation f ON a.designation_gid = f.designation_gid " +
+               " LEFT JOIN hrm_mst_tjobtype g ON a.jobtype_gid = g.jobtype_gid " +
+               " left join adm_mst_tentity z on z.entity_gid=a.entity_gid " +
+               " WHERE a.employee_gid = '" + employee_gid + "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetEditEmployeeSummary>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetEditEmployeeSummary
+                    {
+                       
+
+                        employee_gid = dt["employee_gid"].ToString(),
+                        employee_gender = dt["employee_gender"].ToString(),
+                        entity_name = dt["entity_name"].ToString(),
+                        identity_no = dt["identity_no"].ToString(),
+                        employee_dob = dt["employee_dob"].ToString(),
+                        employee_sign = dt["employee_sign"].ToString(),
+                        bloodgroup = dt["bloodgroup"].ToString(),
+                        entity_gid = dt["entity_gid"].ToString(),
+                        branch_gid = dt["branch_gid"].ToString(),
+                        department_gid = dt["department_gid"].ToString(),
+                        designation_gid = dt["designation_gid"].ToString(),
+                        employee_photo = dt["employee_photo"].ToString(),
+                        employee_image = dt["employee_image"].ToString(),
+                        employee_emailid = dt["employee_emailid"].ToString(),
+                        employee_mobileno = dt["employee_mobileno"].ToString(),
+                        employee_documents = dt["employee_documents"].ToString(),
+                        employee_experience = dt["employee_experience"].ToString(),
+                        employee_experiencedtl = dt["employee_experiencedtl"].ToString(),
+                        employeereporting_to = dt["employeereporting_to"].ToString(),
+                        employment_type = dt["employment_type"].ToString(),
+                        user_code = dt["user_code"].ToString(),
+                        user_firstname = dt["user_firstname"].ToString(),
+                        user_lastname = dt["user_lastname"].ToString(),
+                        user_status = dt["user_status"].ToString(),
+                        usergroup_gid = dt["usergroup_gid"].ToString(),
+                        usergroup_code = dt["usergroup_code"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        approveby_name = dt["approveby_name"].ToString(),
+                        employee_joiningdate = dt["employee_joiningdate"].ToString(),
+                        approver_name = dt["approver_name"].ToString(),
+                        nationality = dt["nationality"].ToString(),
+                        permanent_countrygid = dt["permanent_countrygid"].ToString(),
+                        temporary_countrygid = dt["temporary_countrygid"].ToString(),
+                        nric_no = dt["nric_no"].ToString(),
+                        permanent_address1 = dt["permanent_address1"].ToString(),
+                        permanent_address2 = dt["permanent_address2"].ToString(),
+                        permanent_city = dt["permanent_city"].ToString(),
+                        permanent_state = dt["permanent_state"].ToString(),
+                        permanent_postalcode = dt["permanent_postalcode"].ToString(),
+                        permanent_country = dt["permanent_country"].ToString(),
+                        permanent_addressgid = dt["permanent_addressgid"].ToString(),
+                        temporary_address1 = dt["temporary_address1"].ToString(),
+                        temporary_address2 = dt["temporary_address2"].ToString(),
+                        temporary_city = dt["temporary_city"].ToString(),
+                        temporary_postalcode = dt["temporary_postalcode"].ToString(),
+                        temporary_country = dt["temporary_country"].ToString(),
+                        temporary_state = dt["temporary_state"].ToString(),
+                        temporary_addressgid = dt["temporary_addressgid"].ToString(),                      
+                        designation_name = dt["designation_name"].ToString(),
+
+
+                    });
+                    values.GetEditEmployeeSummary = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaUpdateEmployeeProfileUpload(HttpRequest httpRequest, result objResult, string user_gid)
+        {
+
+            HttpFileCollection httpFileCollection;
+            string lsfilepath = string.Empty;
+            string lsdocument_gid = string.Empty;
+            MemoryStream ms_stream = new MemoryStream();
+            string document_gid = string.Empty;
+            string lscompany_code = string.Empty;
+            HttpPostedFile httpPostedFile;
+
+            string lspath;
+            string msGetGid;
+
+            msSQL = " SELECT a.company_code FROM adm_mst_tcompany a ";
+            lscompany_code = objdbconn.GetExecuteScalar(msSQL);
+            string entity = httpRequest.Form[0];
+            string branch = httpRequest.Form[1];
+            string department = httpRequest.Form[2];
+            string designation = httpRequest.Form[3];
+            string active_flag = httpRequest.Form[4];
+            string user_code = httpRequest.Form[5];
+            string first_name = httpRequest.Form[6];
+            string last_name = httpRequest.Form[7];
+            string gender = httpRequest.Form[8];
+            string email = httpRequest.Form[9];
+            string mobile = httpRequest.Form[10];
+            string permanent_address1 = httpRequest.Form[11];
+            string permanent_address2 = httpRequest.Form[12];
+            string country = httpRequest.Form[13];
+            string permanent_city = httpRequest.Form[14];
+            string permanent_state = httpRequest.Form[15];
+            string permanent_postal = httpRequest.Form[16];
+            string temporary_address1 = httpRequest.Form[17];
+            string temporary_address2 = httpRequest.Form[18];
+            string countryname = httpRequest.Form[19];
+            string temporary_city = httpRequest.Form[20];
+            string temporary_state = httpRequest.Form[21];
+            string temporary_postal = httpRequest.Form[22];
+            string permanent_addressgid = httpRequest.Form[23];
+            string temporary_addressgid = httpRequest.Form[24];
+            string employee_gid = httpRequest.Form[25];
+            MemoryStream ms = new MemoryStream();
+            lspath = ConfigurationManager.AppSettings["imgfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "Employee/Profile/" + DateTime.Now.Year + "/" + DateTime.Now.Month;
+
+            {
+                if ((!System.IO.Directory.Exists(lspath)))
+                    System.IO.Directory.CreateDirectory(lspath);
+            }
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    string lsfirstdocument_filepath = string.Empty;
+                    httpFileCollection = httpRequest.Files;
+                    for (int i = 0; i < httpFileCollection.Count; i++)
+                    {
+                        string msdocument_gid = objcmnfunctions.GetMasterGID("UPLF");
+                        httpPostedFile = httpFileCollection[i];
+                        string FileExtension = httpPostedFile.FileName;
+                        //string lsfile_gid = msdocument_gid + FileExtension;
+                        string lsfile_gid = msdocument_gid;
+                        string lscompany_document_flag = string.Empty;
+                        FileExtension = Path.GetExtension(FileExtension).ToLower();
+                        lsfile_gid = lsfile_gid + FileExtension;
+                        Stream ls_readStream;
+                        ls_readStream = httpPostedFile.InputStream;
+                        ls_readStream.CopyTo(ms);
+
+                        lspath = ConfigurationManager.AppSettings["imgfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "Employee/Profile/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                        string status;
+                        status = objcmnfunctions.uploadFile(lspath + msdocument_gid, FileExtension);
+                        //string local_path = "E:/Angular15/AngularUI/src";
+                        ms.Close();
+                        lspath = "assets/media/images/erpdocument" + "/" + lscompany_code + "/" + "Employee/Profile/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+
+                        string final_path = lspath + msdocument_gid + FileExtension;
+
+                        msSQL = " SELECT user_gid FROM hrm_mst_temployee where employee_gid = '" + employee_gid + "' ";
+                        objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                        if (objodbcDataReader.HasRows)
+                        {
+                            lsuser_gid = objodbcDataReader["user_gid"].ToString();
+                        }
+                        msSQL = " update  adm_mst_tuser set " +
+           " user_firstname = '" + first_name + "'," +
+           "user_lastname = '" + last_name + "'," +
+           "user_status = '" + active_flag + "'," +
+           " updated_by = '" + user_gid + "'," +
+           " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where user_gid='" + lsuser_gid + "'  ";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        if (mnResult == 1)
+                        {
+
+                            msSQL = " update  hrm_mst_temployee set " +
+                            " designation_gid = '" + designation + "'," +
+                            " employee_mobileno = '" + mobile + "'," +
+                            "employee_emailid = '" + email + "'," +
+                            "employee_gender = '" + gender + "'," +
+                            "department_gid = '" + department + "'," +
+                             "employee_photo = '" + final_path + "'," +
+                            "entity_gid = '" + entity + "'," +
+                            "useraccess = '" + active_flag + "'," +
+                            "branch_gid = '" + branch + "'," +
+                            " updated_by = '" + user_gid + "'," +
+                            " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where employee_gid='" + employee_gid + "'  ";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+
+                                msSQL = " update hrm_trn_temployeetypedtl set " +
+                                " wagestype_gid='wg001', " +
+                                " systemtype_gid='Audit', " +
+                                " branch_gid='" + branch + "', " +
+                                " employeetype_name='Roll', " +
+                              " department_gid='" + department + "', " +
+                              " designation_gid='" + designation + "', " +
+                              " updated_date='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                              " updated_by='" + user_gid + "'" +
+                              " where employee_gid = '" + employee_gid + "' ";
+
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                if (mnResult == 1)
+                                {
+                                    //msSQL = "  SELECT country_gid FROM adm_mst_tcountry where country_name='" + country + "' ";
+                                    //objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                                    //if (objodbcDataReader.HasRows)
+                                    //{
+                                    //    lscountry_gid = objodbcDataReader["country_gid"].ToString();
+                                    //}
+                                    msSQL = " update adm_mst_taddress SET " +
+                                    " country_gid = '" + country + "', " +
+                                    " address1 =  '" + permanent_address1 + "', " +
+                                    " address2 = '" + permanent_address2 + "'," +
+                                    " city = '" + permanent_city + "', " +
+                                    " state = '" + permanent_state + "', " +
+                                    " postal_code = '" + permanent_postal + "'" +
+                                    " where address_gid = '" + permanent_addressgid + "' and " +
+                                    " parent_gid = '" + employee_gid + "'";
+                                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    if (mnResult == 1)
+                                    {
+
+                                        msSQL = " update adm_mst_taddress SET " +
+                                        " country_gid = '" + countryname + "', " +
+                                        " address1 =  '" + temporary_address1 + "', " +
+                                        " address2 = '" + temporary_address2 + "'," +
+                                        " city = '" + temporary_city + "', " +
+                                        " state = '" + temporary_state + "', " +
+                                        " postal_code = '" + temporary_postal + "'" +
+                                        " where address_gid = '" + temporary_addressgid + "' and " +
+                                        " parent_gid = '" + employee_gid + "'";
+
+
+                                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    }
+
+                                }
+
+
+                            }
+                        }
+
+                        if (mnResult != 0)
+                        {
+                            objResult.status = true;
+                            objResult.message = "Employee Added Successfully !!";
+                        }
+                        else
+                        {
+                            objResult.status = false;
+                            objResult.message = "Error While Adding Employee !!";
+                        }
+                    }
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                objResult.message = ex.ToString();
+            }
+            //return true;
+
+        }
+        public void DaUpdateEmployeedetails(employee_lists values, string user_gid)
+        {
+
+            msSQL = " SELECT user_gid FROM hrm_mst_temployee where employee_gid = '" + values.employee_gid + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                lsuser_gid = objodbcDataReader["user_gid"].ToString();
+            }
+
+            msSQL = " update  adm_mst_tuser set " +
+                               " user_firstname = '" + values.first_name + "'," +
+                               "user_lastname = '" + values.last_name + "'," +
+                               "user_status = '" + values.active_flag + "'," +
+                               " updated_by = '" + user_gid + "'," +
+                               " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where user_gid='" + lsuser_gid + "'  ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult == 1)
+            {
+                msSQL = " update  hrm_mst_temployee set " +
+                                " designation_gid = '" + values.designationname + "'," +
+                                " employee_mobileno = '" + values.mobile + "'," +
+                                "employee_emailid = '" + values.email + "'," +
+                                "employee_gender = '" + values.gender + "'," +
+                                "department_gid = '" + values.departmentname + "'," +
+                                "entity_gid = '" + values.entityname + "'," +
+                                "useraccess = '" + values.active_flag + "'," +
+                                "branch_gid = '" + values.branchname + "'," +
+                                " updated_by = '" + user_gid + "'," +
+                                " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where employee_gid='" + values.employee_gid + "'  ";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult == 1)
+                {
+                    msSQL = " update hrm_trn_temployeetypedtl set " +
+                                                           " wagestype_gid='wg001', " +
+                                                           " systemtype_gid='Audit', " +
+                                                           " branch_gid='" + values.branchname + "', " +
+                                                           " employeetype_name='Roll', " +
+                                                         " department_gid='" + values.departmentname + "', " +
+                                                         " designation_gid='" + values.designationname + "', " +
+                                                         " updated_date='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+                                                         " updated_by='" + user_gid + "'" +
+                                                         " where employee_gid = '" + values.employee_gid + "' ";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                    if (mnResult == 1)
+                    {
+
+                        msSQL = " update adm_mst_taddress SET " +
+                                           " country_gid = '" + values.country + "', " +
+                                           " address1 =  '" + values.permanent_address1 + "', " +
+                                           " address2 = '" + values.permanent_address2 + "'," +
+                                           " city = '" + values.permanent_city + "', " +
+                                           " state = '" + values.permanent_state + "', " +
+                                           " postal_code = '" + values.permanent_postal + "'" +
+                                           " where address_gid = '" + values.permanent_addressgid + "' and " +
+                                           " parent_gid = '" + values.employee_gid + "'";
+                        mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                        if (mnResult == 1)
+                        {
+                            //msSQL = "  SELECT country_gid FROM adm_mst_tcountry where country_name='" + values.countryname + "' ";
+                            msSQL = " update adm_mst_taddress SET " +
+                                            " country_gid = '" + values.countryname + "', " +
+                                            " address1 =  '" + values.temporary_address1 + "', " +
+                                            " address2 = '" + values.temporary_address2 + "'," +
+                                            " city = '" + values.temporary_city + "', " +
+                                            " state = '" + values.temporary_state + "', " +
+                                            " postal_code = '" + values.temporary_postal + "'" +
+                                            " where address_gid = '" + values.temporary_addressgid + "' and " +
+                                            " parent_gid = '" + values.employee_gid + "'";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                        }
+
+                    }
+
+
+                }
+            }
+
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = "Employee Added Successfully !!";
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Error While Adding Employee !!";
+            }
+        }
+        public void DaGetresetpassword(string user_gid, employee_lists values)
+        {
+            msSQL = " select user_gid from hrm_mst_temployee where employee_gid = '" + values.employee_gid + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                lsuser_gid = objodbcDataReader["user_gid"].ToString();
+            }
+            
+                msSQL = " update  adm_mst_tuser set " +
+                 " user_password = '" + objcmnfunctions.ConvertToAscii(values.password)+ "'," +
+                 " updated_by = '" + user_gid + "'," +
+                 " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where user_gid='" + lsuser_gid + "'  ";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    values.status = true;
+                    values.message = "Password Reset Successfully !!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Reset Password !!";
+                }
+          
+
+        }
+        public void DaGetupdateusercode(string user_gid, employee_lists values)
+        {
+            msSQL = " select user_gid from hrm_mst_temployee where employee_gid = '" + values.employee_gid + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                lsuser_gid = objodbcDataReader["user_gid"].ToString();
+            }
+            msSQL = " SELECT user_code FROM adm_mst_tuser where user_code = '" + values.user_code + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                
+                
+                    lsuser_code = objodbcDataReader["user_code"].ToString();
+                if (lsuser_code != null && lsuser_code != "")
+                {
+                    usercode = lsuser_code.ToUpper();
+                }
+                else
+                {
+                    usercode = null;
+                   
+
+                }
+            }
+            string uppercaseString = values.user_code.ToUpper();
+            
+            if (uppercaseString != usercode)
+            {
+                msSQL = " update  adm_mst_tuser set " +
+             " user_code = '" + values.user_code + "'," +
+             " updated_by = '" + user_gid + "'," +
+             " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where user_gid='" + lsuser_gid + "'  ";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    values.status = true;
+                    values.message = "User Code Updated Successfully !!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While User Code Updated !!";
+                }
+            }
+            else
+            {
+                values.status = false;
+                values.message = "User Code Already Exist !!";
+            }
+
+
+        }
+        //public void DaGetEditEmployeeSummary(string employee_gid, MdlEmployeelist values)
+        //{
+
+
+        //    msSQL = " Select a.address1,a.address2,a.city, " +
+        //        " a.postal_code,a.state,b.country_name" +
+        //        " from adm_mst_taddress a,adm_mst_tcountry b " +
+        //        " where  address_gid = '" & lspermanentaddressGID & "' and " +
+        //        " a.country_gid = b.country_gid and " +
+        //       " WHERE a.parent_gid = '" + employee_gid + "'";
+        //    dt_datatable = objdbconn.GetDataTable(msSQL);
+        //    var getModuleList = new List<GetEditEmployeeSummary>();
+        //    if (dt_datatable.Rows.Count != 0)
+        //    {
+        //        foreach (DataRow dt in dt_datatable.Rows)
+        //        {
+        //            getModuleList.Add(new GetEditEmployeeSummary
+        //            {
+
+
+        //                employee_gid = dt["employee_gid"].ToString(),
+        //                employee_gender = dt["employee_gender"].ToString(),
+        //                entity_name = dt["entity_name"].ToString(),
+        //                identity_no = dt["identity_no"].ToString(),
+        //                employee_dob = dt["employee_dob"].ToString(),
+        //                employee_sign = dt["employee_sign"].ToString(),
+        //                bloodgroup = dt["bloodgroup"].ToString(),
+
+
+        //            });
+        //            values.GetEditEmployeeSummary = getModuleList;
+        //        }
+        //    }
+        //    dt_datatable.Dispose();
+        //}
+    }
+}

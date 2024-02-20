@@ -1,0 +1,71 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/Telegram")]
+    public class TelegramController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaTelegram objDaTelegram = new DaTelegram();
+        [ActionName("GetTelegram")]
+        [HttpGet]
+        public HttpResponseMessage GetTelegram()
+        {
+            telegramlist values = new telegramlist();
+            values = objDaTelegram.DaGetTelegram();
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("TelegramUpload")]
+        [HttpPost]
+        public HttpResponseMessage TelegramUpload()
+        {
+            HttpRequest httpRequest;
+            //Postassetlocationcreation values = new Postassetlocationcreation();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            httpRequest = HttpContext.Current.Request;
+            result objResult = new result();
+            objDaTelegram.DaTelegramUpload(httpRequest, getsessionvalues.user_gid, objResult);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+        [ActionName("Telegrammessage")]
+        [HttpPost]
+        public HttpResponseMessage Telegrammessage(message_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            result objResult = new result();
+            objDaTelegram.DaTelegrammessage(getsessionvalues.user_gid, values, objResult);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+        [ActionName("GetTelegramImage")]
+        [HttpGet]
+        public HttpResponseMessage GetTelegramImage()
+        {
+            MdlTelegram values = new MdlTelegram();
+            objDaTelegram.DaGetTelegramImage(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetTelegramVideo")]
+        [HttpGet]
+        public HttpResponseMessage GetTelegramVideo()
+        {
+            MdlTelegram values = new MdlTelegram();
+            objDaTelegram.DaGetTelegramVideo(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+    }
+}

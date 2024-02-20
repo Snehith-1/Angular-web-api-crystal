@@ -1,0 +1,25 @@
+
+<div class="flex-container card">
+  <div class="flex-container1">
+    <img src="assets/media/patterns/500.svg " height="300px" width="500px">
+  </div><br>
+  <div class="flex-container2" style="text-align:center">
+    
+      <h1 >Internal Server Error</h1><br>
+      <h3>Oops ! Somenthing went wrong</h3>
+      <br>
+      <a routerLink="/system/SystemDashboard">
+        <button class="btn-primary btn-sm text-white me-2" >         
+          Back To Dashboard</button></a>&nbsp;
+
+
+               <a routerLink="/auth/login">
+            <button class="btn-primary btn-sm text-white me-2" >          
+              Back To Login</button></a>
+  </div>
+ 
+</div>
+<div class="lefttop">    
+</div>
+<div class="rightbottom">
+</div>

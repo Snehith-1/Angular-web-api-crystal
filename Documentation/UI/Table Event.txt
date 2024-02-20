@@ -1,0 +1,10 @@
+Datatables 
+
+Install DataTables and Bootstrap:
+
+Step 1
+Install DataTables and Bootstrap
+npm install datatables.net-bs5 bootstrap or npm install datatables.net-bs5 bootstrap --force
+Step 2 
+Install jQuery and Popper.js:
+npm install jquery popper.js or npm install jquery popper.js --force

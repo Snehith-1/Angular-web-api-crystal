@@ -1,0 +1,21 @@
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-pmr-mst-vendorregisterimportexcel',
+  templateUrl: './pmr-mst-vendorregisterimportexcel.component.html',
+  styleUrls: ['./pmr-mst-vendorregisterimportexcel.component.scss']
+})
+export class PmrMstVendorregisterimportexcelComponent {
+
+  reactiveForm!: FormGroup;
+  constructor(public service: SocketService, private ToastrService: ToastrService, private router: Router) {  }
+
+  onback(){
+    this.router.navigate(['/pmr/PmrMstVendorregister']);
+  }
+
+}

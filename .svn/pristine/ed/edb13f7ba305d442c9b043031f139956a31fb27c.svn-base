@@ -1,0 +1,237 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+
+import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+interface Ileadbank {
+  leadbank_gid:string;
+}
+@Component({
+  selector: 'app-crm-trn-leadbankcontact',
+  templateUrl: './crm-trn-leadbankcontact.component.html',
+  styleUrls: ['./crm-trn-leadbankcontact.component.scss']
+})
+export class CrmTrnLeadbankcontactComponent {
+  leadbank!: Ileadbank;
+  leadbank_gid:any;
+  lsleadbank_gid:any;
+
+  contactlist: any[] = [];
+  response_data :any;
+  branch_list: any;
+  contactform: FormGroup<{}> | any;
+
+
+  constructor(private fb: FormBuilder,private route: ActivatedRoute,private router: Router,private service: SocketService,private ToastrService: ToastrService,) {this.leadbank = {} as Ileadbank;
+  this.contactform = new FormGroup({
+    leadbankbranch_name: new FormControl('', Validators.required),
+    leadbankcontact_name: new FormControl('', Validators.required),
+    mobile:new FormControl('', Validators.required),
+    email:new FormControl('', Validators.required),
+    designation:new FormControl('',Validators.required),
+    fax_area_code:new FormControl('',Validators.required),
+    fax_country_code:new FormControl('', Validators.required),
+    fax:new FormControl('', Validators.required),
+    country_code1:new FormControl('',Validators.required),
+    area_code1:new FormControl('', Validators.required),
+    phone1:new FormControl('', Validators.required),
+    country_code2:new FormControl('',Validators.required),
+    area_code2:new FormControl('', Validators.required),
+    phone2:new FormControl('', Validators.required),
+    leadbank_gid:new FormControl(''),
+
+  });
+}
+  ngOnInit(): void {
+    const leadbank_gid = this.route.snapshot.paramMap.get('leadbank_gid');
+    // console.log(termsconditions_gid)
+    this.lsleadbank_gid = leadbank_gid;
+
+    const secretKey = 'storyboarderp';
+  
+    const deencryptedParam = AES.decrypt(this.lsleadbank_gid, secretKey).toString(enc.Utf8);
+
+    console.log(deencryptedParam)
+    if (deencryptedParam != null) {
+      this.leadbank_gid=(deencryptedParam);
+
+
+    }
+    this.Getbranchdropdown(this.leadbank_gid);
+
+   
+
+    this.GetleadbankcontactaddSummary(this.leadbank_gid);
+
+}
+GetleadbankcontactaddSummary(leadbank_gid:any){
+
+  var api = 'Leadbank/GetleadbankcontactaddSummary';
+  let param = {
+    leadbank_gid : leadbank_gid 
+  }
+  this.service.getparams(api, param).subscribe((result: any) => {
+    this.response_data = result;
+    this.contactlist = this.response_data.leadbank_list;
+    setTimeout(()=>{  
+      $('#product').DataTable();
+    }, 1);
+  });
+
+}
+Getbranchdropdown(leadbank_gid:any){
+
+var api = 'Leadbank/Getbranchdropdown';
+let param = {
+  leadbank_gid : leadbank_gid 
+}
+this.service.getparams(api, param).subscribe((result: any) => {
+  this.response_data = result;
+  this.branch_list = this.response_data.leadbankcontact_list;
+
+});
+}
+initForm() {
+  this.contactform = this.fb.group({
+    leadbankbranch_name: [
+      this.contactform.leadbankbranch_name,
+      Validators.compose([
+
+        Validators.required,
+        ]),
+    ],
+    leadbankcontact_name: [
+      this.contactform.leadbankcontact_name,
+      Validators.compose([
+        Validators.required,
+
+      ]),
+    ],
+   
+    mobile: [
+      this.contactform.mobile,
+      Validators.compose([
+        Validators.required
+
+      ]),
+    ],
+    designation: [
+      this.contactform.designation,
+      Validators.compose([
+      Validators.required,
+
+      ]),
+    ],
+    country_code2: [
+      this.contactform.country_code2,
+      Validators.compose([
+      Validators.required,
+
+      ]),
+    ],
+      area_code2: [
+        this.contactform.area_code2,
+        Validators.compose([
+        Validators.required,
+  
+        ]),
+      ],
+        phone2: [
+          this.contactform.phone2,
+          Validators.compose([
+          Validators.required,
+    
+          ]),
+    ],
+    country_code1: [
+      this.contactform.country_code1,
+      Validators.compose([
+      Validators.required,
+
+      ]),
+    ],
+      area_code1: [
+        this.contactform.area_code1,
+        Validators.compose([
+        Validators.required,
+  
+        ]),
+      ],
+        phone1: [
+          this.contactform.phone1,
+          Validators.compose([
+          Validators.required,
+    
+          ]),
+    ],
+    fax_area_code: [
+      this.contactform.fax_area_code,
+      Validators.compose([
+      Validators.required,
+
+      ]),
+    ],
+      fax_country_code: [
+        this.contactform.fax_country_code,
+        Validators.compose([
+        Validators.required,
+  
+        ]),
+      ],
+        fax: [
+          this.contactform.fax,
+          Validators.compose([
+          Validators.required,
+    
+          ]),
+        ],
+        leadbank_gid: [
+          this.contactform.leadbank_gid],
+
+           
+    
+
+
+    
+  });
+
+}
+
+onedit(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.router.navigate(['/crm/CrmTrnLeadbankcontactEdit',encryptedParam]) 
+}
+
+onadd() {
+  // debugger
+
+  console.log(this.contactform)
+
+  var api = 'Leadbank/Postleadbankcontactadd';
+  this.service.post(api, this.contactform.value).subscribe(
+    (result: any) => {
+      this.ToastrService.success(result.message)
+
+        this.router.navigate(['crm/CrmTrnLeadbankcontact']);
+
+      }
+    ,(error: any) => {
+      if (error.status === 401)
+        this.router.navigate(['pages/401'])
+      else if (error.status === 404)
+        this.router.navigate(['pages/404'])
+    });
+  
+}
+
+redirecttolist(){
+  this.router.navigate(['/crm/CrmTrnLeadbanksummary']);
+
+}
+}

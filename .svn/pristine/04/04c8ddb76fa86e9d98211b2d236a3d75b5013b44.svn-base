@@ -1,0 +1,235 @@
+<div class="m-5">
+  <form  [formGroup]="EditForm" #form="ngForm">
+    <div class="card shadow-lg rounded-top"   style="top:-50px;">
+      <div class="card m-7">
+        <div class="m-5 mt-5 border card">
+          <div class="card-header bg-lightblue card-height55">
+            <div class="card-title m-0">
+              <h5 class="fw-bolder text-blue">EDIT CUSTOMER</h5>
+            </div>
+          </div>
+
+<div class="d-flex flex-row m-6 flex-wrap">
+  <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+    <span class="font-bold">Customer Code</span>
+  <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+    <input formControlName="customer_id" readonly
+    required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <span class="font-bold">Customer Name<span class="ms-1 text-red">*</span></span>
+      <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+        <input formControlName="customer_name" 
+        required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+    
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">Contact Person<span class="ms-1 text-red">*</span></span>
+          <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+            <input formControlName="customercontact_name" 
+            required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+        
+                </div>
+              </div>
+  
+  </div>
+  <div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Customer Type<span class="ms-1 text-red">*</span></span>
+     <div class="col-12 col-lg-12 col-md-6 col-sm-12">
+       <ng-select formControlName="customer_type"   
+       required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+       placeholder="Select Customer Type">
+       <ng-option value="Distributor">Distributor</ng-option>
+       <ng-option value="Corporate">Corporate</ng-option>
+       <ng-option value="Retailer">Retailer</ng-option>
+             </ng-select>
+           </div>
+         </div>
+
+         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">Mobile Number<span class="ms-1 text-red">*</span></span>
+        <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+          <input formControlName="customer_mobile"  minlength="0" maxlength="10" pattern="^[0-9]{10}$"
+          required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+      
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Address - I<span class="ms-1 text-red">*</span></span>
+            <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+              <textarea formControlName="address1" rows="1"
+              required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary"></textarea>
+          
+                  </div>
+                </div>
+
+  </div>
+  <div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Address - II</span>
+    <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+      <textarea formControlName="address2" rows="1"
+      required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary"></textarea>
+  
+          </div>
+        </div>
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">City</span>
+        <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+          <input formControlName="city" 
+          required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+      
+              </div>
+            </div>
+
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">Postal Code</span>
+        <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+          <input formControlName="postal_code" rows="1" pattern="[0-9]*" minlength="0" maxlength="6"
+          required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+      
+              </div>
+            </div>
+            
+  </div>
+  <div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Country<span class="ms-1 text-red">*</span></span>
+     <div class="col-12 col-lg-12 col-md-6 col-sm-12">
+       <ng-select formControlName="countryname"   [items]="country_list"      bindLabel="country_name" bindValue="country_gid"
+       required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" 
+       placeholder="Select Country">
+      
+             </ng-select>
+           </div>
+         </div>
+
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Currency<span class="ms-1 text-red">*</span></span>
+     <div class="col-12 col-lg-12 col-md-6 col-sm-12">
+       <ng-select formControlName="currencyname"   [items]="currency_list"  bindLabel="currency_code" bindValue="currencyexchange_gid"
+       required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+       placeholder="Select Currency">
+      
+             </ng-select>
+           </div>
+         </div>
+         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">Email ID<span class="ms-1 text-red">*</span></span>
+        <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+          <input formControlName="email" 
+          required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+      
+              </div>
+            </div>
+  </div>
+
+  <div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">State</span>
+    <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+      <input formControlName="customer_state"
+      required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+  
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">GST Number</span>
+        <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+          <input formControlName="gst_number"
+          required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+      
+              </div>
+            </div>
+
+            <div class="row col-12 col-lg-4 col-md-6 col-sm-12">
+              <span class="font-bold">Fax No</span>
+              <div class="col-lg-3">
+                <input type="text" formControlName="country_code" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input borderc-secondary
+                  "  placeholder="Country Code"  required />
+               
+              </div>
+              <div class="col-lg-3">
+                <input type="text" formControlName="area_code" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input borderc-secondary
+                  "  placeholder="Area Code" required />
+               
+              </div>
+              <div class="col-lg-5">
+                <input type="text" formControlName="fax_number" class="
+                    form-control form-control-lg form-control-solid
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input borderc-secondary
+                  "  placeholder="Fax No"  required />
+               
+              </div>
+            </div>
+  </div>
+
+  <div class="d-flex flex-row m-6 flex-wrap">
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Designation</span>
+    <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+      <input formControlName="designation"
+      required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+  
+          </div>
+        </div>
+
+
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Company Website</span>
+    <div class="col-12 col-lg-11 col-md-6 col-sm-12">
+      <input formControlName="company_website"
+      required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 form-control custom-input borderc-secondary">
+  
+          </div>
+        </div>
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+          <span class="font-bold">Region<span class="ms-1 text-red">*</span></span>
+         <div class="col-12 col-lg-12 col-md-6 col-sm-12">
+           <ng-select formControlName="region_name"   [items]="region_list" bindLabel="region_name" bindValue="region_gid"
+           required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+           placeholder="Select Region">
+          
+                 </ng-select>
+               </div>
+             </div>
+
+  </div>
+
+  
+  </div>
+
+  <div class="text-center my-4">
+    <button class="btn-success btn-sm text-white me-4"  
+     (click)="validate()">
+      <i class="fas fa-check text-white fs-5"></i> &nbsp; Submit
+    </button>
+
+    <button class="btn-primary btn-sm text-white me-4" (click)="onclose()">
+      <i class="fas fa-arrow-left"></i> &nbsp; Back
+    </button>
+  </div>
+</div>
+</div>
+</form>
+</div>

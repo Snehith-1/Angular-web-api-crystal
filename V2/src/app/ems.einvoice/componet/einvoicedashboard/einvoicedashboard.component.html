@@ -1,0 +1,217 @@
+<div class="card card-bordered">
+    <div class="card-header d-flex justify-content-center">
+        <h1 class="card-title fw-bold fs-3 text-white ">Invoice Dashboard</h1>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_1">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex" (click)="customer()">
+                                <div class="panel-body">
+                                    <p class="count">{{count_customer}}</p>
+                                    <p class="content">Customer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_2">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-box"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex" (click)="product()">
+                                <div class="panel-body">
+                                    <p class="count">{{count_product}}</p>
+                                    <p class="content">Product</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_3">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-file-contract"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex" (click)="raiseinvoice()">
+                                <div class="panel-body">
+                                    <p class="count">{{count_raisedinvoice}}</p>
+                                    <p class="content">Raise Invoice</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_4">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-rectangle-xmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body">
+                                    <p class="count">{{count_cancelledinvoice}}</p>
+                                    <p class="content">Cancelled Invoice</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_5">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-regular fa-file-lines"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body">
+                                    <p class="count">{{count_irngeneration}}</p>
+                                    <p class="content">IRN</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_6">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-file-circle-question"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body">
+                                    <p class="count">{{count_pendingirn}}</p>
+                                    <p class="content">Pending IRN</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_7">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body">
+                                    <p class="count">{{count_cancelledirn}}</p>
+                                    <p class="content">IRN Cancelled</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12 tab_8">
+                    <div class="d-flex flex-row flex-wrap row">
+                        <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="body-left text-center">
+                                    <i class="fa-solid fa-receipt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 col-md-8 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                                <div class="panel-body">
+                                    <p class="count">{{count_creditnote}}</p>
+                                    <p class="content">Credit Note</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mt-20">
+        <div class="card">
+            <div class="row ms-3 mt-3 d-flex align-items-center">
+                <div class="col">
+                    <h3 class="card-title">Invoice Summary</h3>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+                    <table id="invoice" class="table table-striped table-row-bordered border-bottom gs-7">
+                        <thead>
+                            <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                                <th>S.No</th>
+                                <th>Invoice Ref. No </th>
+                                <th>Invoice Date</th>
+                                <th>Customer Name</th>
+                                <th>Contact Details</th>
+                                <th style="text-align: right;">Invoice Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of einvoicesummarylist; let i=index;" class="align-middle">
+                                <td>{{i+1}}</td>
+                                <td>{{data.invoice_refno}}</td>
+                                <td>{{data.invoice_date | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{data.customer_name }}</td>
+                                <td>{{data.customer_contactperson}}</td>
+                                <td style="text-align: right;">{{data.invoice_amount}}</td>
+                                <td>{{data.invoice_status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

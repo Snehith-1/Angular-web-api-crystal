@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>E:\Publish\2022-11-16(1)\print</_PublishTargetUrl>
+    <History>True|2022-11-15T04:48:23.7037277Z;True|2022-11-15T04:31:14.1600511+00:00;True|2022-11-14T13:33:42.5257925+00:00;True|2022-11-14T13:21:33.7537537+00:00;True|2022-11-14T04:32:36.1936779+00:00;True|2022-11-11T13:16:25.3912471+00:00;True|2022-11-11T12:58:02.6679842+00:00;True|2022-11-10T14:00:39.1502914+00:00;True|2022-11-10T06:12:43.8188807+00:00;True|2022-11-09T05:29:11.2680760+00:00;True|2022-11-09T05:22:10.3415216+00:00;True|2022-11-08T13:02:24.8121824+00:00;True|2022-11-03T12:58:23.2520865+00:00;True|2022-10-31T12:32:18.1120497+00:00;True|2022-10-27T12:38:10.1760132+00:00;True|2022-10-27T11:19:10.4815767+00:00;True|2022-10-18T13:38:56.7233128+00:00;True|2022-10-18T12:35:14.1237150+00:00;True|2022-10-18T06:22:22.9821325+00:00;True|2022-10-18T06:15:00.6655465+00:00;True|2022-10-18T06:01:30.8632108+00:00;True|2022-10-11T03:15:45.9558508+00:00;True|2022-10-10T18:07:17.3071919+00:00;True|2022-10-10T17:29:20.6722170+00:00;True|2022-10-10T17:19:24.3521289+00:00;True|2022-09-01T07:19:42.4750128+00:00;True|2022-08-30T11:35:05.0431190+00:00;True|2022-08-30T09:45:01.0680944+00:00;True|2022-08-30T08:48:19.1572289+00:00;True|2022-08-26T13:25:04.6776782+00:00;True|2022-08-26T13:06:24.0135132+00:00;True|2022-08-26T13:02:59.7611736+00:00;True|2022-08-22T10:39:29.6071105+00:00;True|2022-08-20T07:17:00.2492888+00:00;True|2022-08-18T14:31:32.8348600+00:00;True|2022-08-18T12:28:47.0838303+00:00;True|2022-08-17T20:34:07.5710269+00:00;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/CrystalDecisions.CrystalReports.Engine.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.ClientDoc.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.CommLayer.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.CommonControls.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.CommonObjectModel.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.Controllers.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.CubeDefModel.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.DataDefModel.dll">
+      <publishTime>11/21/2019 13:18:00</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.DataSetConversion.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.ObjectFactory.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.Prompting.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.ReportDefModel.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportAppServer.XmlSerialize.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.ReportSource.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.Shared.dll">
+      <publishTime>11/21/2019 13:18:02</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
+      <publishTime>09/05/2018 21:40:50</publishTime>
+    </File>
+    <File Include="bin/print.dll">
+      <publishTime>11/15/2022 04:48:22</publishTime>
+    </File>
+    <File Include="bin/print.pdb">
+      <publishTime>11/15/2022 04:48:22</publishTime>
+    </File>
+    <File Include="bin/print.xml">
+      <publishTime>11/15/2022 04:48:22</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe.config">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.rsp">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.exe">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/csi.rsp">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.Scripting.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.Scripting.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.amd64.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.DiaSymReader.Native.x86.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.AppContext.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Diagnostics.StackTrace.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.IO.FileSystem.Primitives.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe.config">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.rsp">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>06/28/2016 03:20:24</publishTime>
+    </File>
+    <File Include="bin/stdole.dll">
+      <publishTime>05/09/2022 10:39:41</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_balancesheetdataset.Designer.cs">
+      <publishTime>08/11/2022 11:00:48</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_balancesheetdataset.xsc">
+      <publishTime>08/11/2022 11:00:48</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_balancesheetdataset.xss">
+      <publishTime>08/11/2022 11:00:48</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_customerinvoice.aspx">
+      <publishTime>10/18/2022 15:23:51</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_inconeexpanseds.Designer.cs">
+      <publishTime>08/11/2022 11:00:48</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_inconeexpanseds.xsc">
+      <publishTime>11/14/2022 11:24:35</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_inconeexpanseds.xss">
+      <publishTime>11/14/2022 11:24:35</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_invoice.xsc">
+      <publishTime>11/14/2022 06:43:13</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_invoice.xss">
+      <publishTime>11/14/2022 06:43:13</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_voucher.xsc">
+      <publishTime>08/26/2022 10:44:07</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_voucher.xss">
+      <publishTime>08/26/2022 10:44:07</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_crp_voucherprint.aspx">
+      <publishTime>11/10/2022 13:47:39</publishTime>
+    </File>
+    <File Include="travelapp_print/trv_trn_incomeandexpance.aspx">
+      <publishTime>11/10/2022 13:43:42</publishTime>
+    </File>
+    <File Include="travelapp_print/tvr_crp_balancesheet.aspx">
+      <publishTime>11/15/2022 04:25:42</publishTime>
+    </File>
+    <File Include="trv_crp_balancesheet.aspx">
+      <publishTime>11/15/2022 04:46:37</publishTime>
+    </File>
+    <File Include="trv_crp_profitloss.aspx">
+      <publishTime>11/14/2022 13:32:21</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>11/15/2022 04:48:23</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

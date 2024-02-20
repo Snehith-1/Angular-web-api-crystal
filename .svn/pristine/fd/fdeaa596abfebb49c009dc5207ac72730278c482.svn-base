@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-crm-trn-longestleadmarketing',
+  templateUrl: './crm-trn-longestleadmarketing.component.html',
+  styleUrls: ['./crm-trn-longestleadmarketing.component.scss']
+})
+export class CrmTrnLongestleadmarketingComponent {
+
+}

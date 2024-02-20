@@ -1,0 +1,138 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.system.DataAccess;
+using ems.system.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+
+
+namespace ems.crm.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/Mycalls")]
+    public class MyCallsController : ApiController
+    {
+        session_values objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaMyCalls objdamycalls = new DaMyCalls();
+
+
+        [ActionName("GetNewSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetNewSummary()
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetNewSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetPendingSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetPendingSummary()
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetPendingSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetFollowupSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetFollowupSummary()
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetFollowupSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetClosedSummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetClosedSummary()
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetClosedSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetDropSummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetDropSummary()
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetDropSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+      
+
+        [ActionName("GetProductdropdown")]
+        [HttpGet]
+
+        public HttpResponseMessage GetProductdropdown()
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetProductdropdown(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetProductGroupdropdown")]
+        [HttpGet]
+        public HttpResponseMessage GetProductGroupdropdown(string product_gid)
+        {
+            MdlMyCalls values = new MdlMyCalls();
+            objdamycalls.DaGetProductGroupdropdown(product_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("PostFollowschedulelog")]
+        [HttpPost]
+        public HttpResponseMessage PostFollowschedulelog(followup_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdamycalls.DaPostFollowschedulelog(values, getsessionvalues.user_gid);
+            //return Request.CreateResponse(HttpStatusCode.OK, true);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+
+        }
+        [ActionName("PostNewlog")]
+        [HttpPost]
+        public HttpResponseMessage PostNewlog(new_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdamycalls.DaPostNewlog( getsessionvalues.user_gid,values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+        [ActionName("PostPendinglog")]
+        [HttpPost]
+        public HttpResponseMessage PostPendinglog(new_pending_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdamycalls.DaPostPendinglog(values,getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+        [ActionName("PostFollowuplog")]
+        [HttpPost]
+        public HttpResponseMessage PostFollowuplog(followup_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdamycalls.DaPostFollowuplog(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+
+
+
+
+    }
+}

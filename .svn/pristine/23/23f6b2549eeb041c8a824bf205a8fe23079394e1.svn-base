@@ -1,0 +1,95 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { AES, enc } from 'crypto-js';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+interface Ipurchaseview {
+  purchaseorder_gid: string;
+  manualporef_no: string;
+  purchaseorder_date: string;
+  branch_name: string;
+  vendor_companyname: string;
+  deliverytobranch: string;
+  vendor_contactnumber: string;
+  vendor_contact_person: string;
+  vendor_faxnumber: string;
+  vendor_emailid: string;
+  vendor_address: string;
+  exchange_rate: string;
+  ship_via: string;
+  payment_terms: string;
+  freight_terms: string;
+  delivery_location: string;
+  currency_code: string;
+  shipping_address: string;
+  purchaseorder_reference: string;
+  purchaseorder_remarks: string;
+  productgroup_name: string;
+  product_code: string;
+  product_name: string;
+  productuom_name: string;
+  qty_ordered: string;
+  product_price: string;
+  discount_percentage: string;
+  tax_gid: string;
+  packing_charges: string;
+  insurance_charges: string;
+  payment_days: string;
+  termsandconditions: string;
+  priority:string;
+
+}
+@Component({
+  selector: 'app-pmr-trn-purchaseorder-view',
+  templateUrl: './pmr-trn-purchaseorder-view.component.html',
+  styleUrls: ['./pmr-trn-purchaseorder-view.component.scss']
+})
+export class PmrTrnPurchaseorderViewComponent {
+  
+  config: AngularEditorConfig = {
+    editable: false,
+    spellcheck: false,
+    height: '25rem',
+    minHeight: '5rem',
+    width: '1230px',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+  };
+  purchaseorder_gid: any;
+  purchaseorder_list: any;
+  params:any;
+  purchaseview!: Ipurchaseview;
+  parameterValue1: any;
+  purchaseorder:any;
+
+  constructor(private formBuilder: FormBuilder,private route:Router,private router:ActivatedRoute,public service :SocketService) {
+    this.purchaseview = {} as Ipurchaseview;
+  }
+
+
+  ngOnInit(): void {
+    debugger
+    this.purchaseorder= this.router.snapshot.paramMap.get('purchaseorder_gid');
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.purchaseorder,secretKey).toString(enc.Utf8);
+    console.log(deencryptedParam)
+    this.GetViewPurchaseOrderSummary(deencryptedParam);    
+  }
+  GetViewPurchaseOrderSummary(purchaseorder_gid: any) {
+    var url='PmrTrnPurchaseOrder/GetViewPurchaseOrderSummary'
+    let param = {
+      purchaseorder_gid : purchaseorder_gid 
+    }
+    this.service.getparams(url,param).subscribe((result:any)=>{
+    this.purchaseorder_list = result.GetViewPurchaseOrder;
+    //console.log(this.employeeedit_list)
+  });
+  }
+  
+
+
+}

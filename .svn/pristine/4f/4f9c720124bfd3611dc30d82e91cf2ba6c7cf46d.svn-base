@@ -1,0 +1,218 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ToastrService } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AES } from 'crypto-js';
+interface IMyleads {
+  campaign_title: string;
+  leadbank_name: string;
+  contact_details: string;
+  region_name: string;
+  leadstage_name: string;
+  remarks: string;
+  lead_notes: string;
+  details: string;
+  leadbank_gid: string;
+  lead2campaign_gid: string;
+
+
+}
+@Component({
+  selector: 'app-crm-trn-mycampaign',
+  templateUrl: './crm-trn-mycampaign.component.html',
+  styleUrls: ['./crm-trn-mycampaign.component.scss']
+})
+export class CrmTrnMycampaignComponent {
+  parameterValue: any;
+  responsedata: any;
+  parameterValue1: any;
+  myleadslist: any[] = [];
+  inprogresslist: any[] = [];
+  customerlist: any[] = [];
+  alllist: any[] = [];
+  droplist: any[] = [];
+  myleads!: IMyleads;
+  reactiveForm!: FormGroup;
+  reactiveFormInprogress!: FormGroup;
+  reactiveFormCustomer!: FormGroup;
+  movetodrop: any;
+
+  leadbank_gid: any;
+  lead2campaign_gid: any;
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, private route: Router, public service: SocketService) {
+    this.myleads = {} as IMyleads;
+  }
+  ngOnInit(): void {
+    this.GetMyleadsSummary();
+
+    this.GetInprogressSummary();
+    this.GetCustomerSummary();
+    this.GetDropSummary();
+    this.GetAllSummary();
+
+    this.reactiveForm = new FormGroup({
+      leadbank_gid: new FormControl(''),
+      lead2campaign_gid: new FormControl(''),
+    });
+
+    this.reactiveFormInprogress = new FormGroup({
+
+      leadbank_name: new FormControl(this.myleads.leadbank_name, [
+        Validators.required,
+      ]),
+      leadbank_gid: new FormControl(''),
+      contact_details: new FormGroup(''),
+      region_name: new FormGroup(''),
+
+    });
+  }
+
+  public onsubmit(): void {
+
+  }
+
+  public onsubmit2(): void {
+
+  }
+  public onsubmit3(): void {
+
+  }
+
+  onedit(params: any) {
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    console.log(param);
+    const encryptedParam = AES.encrypt(param, secretKey).toString();
+    console.log(encryptedParam);
+    this.route.navigate(['/crm/CrmTrnAddtocustomer', encryptedParam])
+
+  }
+
+  // ondelete(parameter: string) {
+  //   this.parameterValue = parameter;
+  //   console.log(this.parameterValue);
+  //   var url = 'MyLead/Movetodrop'
+  //   let param = {
+  //     leadbank_gid : this.parameterValue 
+  //   }
+  //   this.service.post(url,param).subscribe((result: any) => {
+  //     if(result.status ==false){
+  //       this.ToastrService.warning(result.message)
+  //     }
+  //     else{
+  //       this.ToastrService.success(result.message)
+  //       this.GetMyleadsSummary();
+  //     }
+  //     this.GetMyleadsSummary();
+  //   });
+  // }
+
+
+  ondelete(parameter: string) {
+    this.parameterValue = parameter
+    var api7 = 'MyLead/Movetodrop'
+    let param = {
+      leadbank_gid: this.parameterValue
+    }
+    this.service.post(api7, param).subscribe((result: any) => {
+      if (result.status == false) {
+        this.ToastrService.warning(result.message)
+        this.GetInprogressSummary();
+
+      }
+      else {
+        this.route.navigate(['/crm/CrmTrnMycampaign']);
+        this.ToastrService.success(result.message)
+        this.GetInprogressSummary();
+
+      }
+      this.responsedata = result;
+    });
+    this.GetInprogressSummary();
+    location.reload();
+
+  }
+
+  onadd() {
+    const secretKey = 'storyboarderp'
+    const lspage1 = 'MyLead';
+    const lspage = AES.encrypt(lspage1, secretKey).toString();
+    this.route.navigate(['/crm/CrmTrnLeadmasteradd', lspage]);
+
+  }
+
+  GetMyleadsSummary() {
+    var url = 'MyLead/GetMyleadsSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#myleadslist').DataTable().destroy();
+      this.responsedata = result;
+      this.myleadslist = this.responsedata.myleadslist;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#myleadslist').DataTable();
+      }, 1);
+    });
+  }
+
+
+  GetInprogressSummary() {
+    var url = 'MyLead/GetInprogressSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#inprogresslist').DataTable().destroy();
+      this.responsedata = result;
+      this.inprogresslist = this.responsedata.inprogresslist;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#inprogresslist').DataTable();
+      }, 1);
+    });
+  }
+
+
+  GetCustomerSummary() {
+    var url = 'MyLead/GetCustomerSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#customerlist').DataTable().destroy();
+      this.responsedata = result;
+      this.customerlist = this.responsedata.customerlist;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#customerlist').DataTable();
+      }, 1);
+    });
+  }
+
+  GetDropSummary() {
+    
+    var url = 'MyLead/GetDropSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#droplist').DataTable().destroy();
+      this.responsedata = result;
+      this.droplist = this.responsedata.droplist;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#droplist').DataTable();
+      }, 1);
+    });
+   
+  }
+
+  GetAllSummary() {
+    var url = 'MyLead/GetAllSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#alllist').DataTable().destroy();
+      this.responsedata = result;
+      this.alllist = this.responsedata.alllist;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#alllist').DataTable();
+      }, 1);
+    });
+  }
+}
+
+

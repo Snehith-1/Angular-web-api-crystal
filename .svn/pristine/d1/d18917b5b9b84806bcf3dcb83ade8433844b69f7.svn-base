@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+        <h4 class="card-title">Sales Report (Month Wise)</h4>
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+        <table id="GetMonthwiseOrderReport_List" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+              <th>S.NO </th>
+              <th>Month</th>
+              <th>Total SO </th>
+              <th>Total Order Value(INR)</th>
+              <th>Total Invoice Value(INR)</th>
+              <th>Total Payment Value(INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of GetMonthwiseOrderReport_List; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{data.month_wise}}</td>
+                <td>{{data.so_total}}</td>
+                <td>{{data.total}}</td>
+                <td>{{data.total_invoice}}</td>
+                <td>{{data.total_payment}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+        <h4 class="card-title">Sales Report (Order Wise)</h4>
+      </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+        <table id="GetOrderwiseOrderReport_List" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+              <th>S.NO </th>
+              <th>Month</th>
+              <th>Total SO </th>
+              <th>Total Order Value(INR)</th>
+              <th>Total Invoice Value(INR)</th>
+              <th>Total Payment Value(INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of GetOrderwiseOrderReport_List; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.month_wise}}</td>
+              <td>{{data.so_total}}</td>
+              <td>{{data.total}}</td>
+              <td>{{data.total_invoice}}</td>
+              <td>{{data.total_payment}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

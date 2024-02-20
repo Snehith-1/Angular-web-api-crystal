@@ -1,0 +1,25 @@
+﻿using ems.system.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.crm.Models
+{
+    public class MdlMailmanagement : result
+    {
+        public List<from_list> from_list { get; set; }
+
+    }
+    public class from_list
+    {
+        public string mail { get; set; }
+        public string company_gid { get; set; }
+
+        public string sub { get; set; }
+        public string to { get; set; }
+        public string body { get; set; }
+    }
+
+  
+}

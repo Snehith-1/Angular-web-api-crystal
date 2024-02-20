@@ -1,0 +1,65 @@
+﻿using StoryboardAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.sales.Models
+{
+    public class MdlSmrTrnCustomerEnquiry : result
+    {
+        public List<GetCusEnquiry> cusenquiry_list { get; set; }
+        public List<GetLeadDropdown> GetLeadDtl { get; set; }
+        public List<GetTeamDropdown> GetTeamDtl { get; set; }
+        public List<GetEmployeeDropdown> GetEmployeeDtl { get; set; }
+    }
+
+    public class GetCusEnquiry : result
+    {
+        public string enquiry_gid { get; set; }
+        public string enquiry_date { get; set; }
+        public string enquiry_refno { get; set; }
+        public string branch_name { get; set; }
+        public string customer_name { get; set; }
+        public string enquiry_referencenumber { get; set; }
+        public string contact_details { get; set; }
+        public string campaign { get; set; }
+        public string potorder_value { get; set; }
+        public string lead_status { get; set; }
+        public string enquiry_status { get; set; }
+        public string customer_rating { get; set; }
+        public string user_firstname { get; set; }
+        public string leadstage_gid { get; set; }
+        public string internal_notes { get; set; }
+        public string leadstage_name { get; set; }
+        public string campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+        public string employee_gid { get; set; }
+        public string employee_name { get; set; }
+
+
+    }
+
+    public class GetLeadDropdown : result
+    {
+        public string leadstage_gid { get; set; }
+        public string leadstage_name { get; set; }
+
+
+    }
+
+    public class GetTeamDropdown : result
+    {
+        public string campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+
+
+    }
+
+    public class GetEmployeeDropdown : result
+    {
+        public string employee_gid { get; set; }
+        public string employee_name { get; set; }
+
+    }
+}

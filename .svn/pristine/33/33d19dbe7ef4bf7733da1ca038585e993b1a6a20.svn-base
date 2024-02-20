@@ -1,0 +1,346 @@
+﻿using ems.pmr.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using static System.Net.Mime.MediaTypeNames;
+using System.Web.Http.Results;
+using static ems.pmr.Models.addgrn_lists;
+using System.Web.UI.WebControls;
+using System.Diagnostics.Eventing.Reader;
+
+namespace ems.pmr.DataAccess
+{
+    public class DaPmrTrnGrn
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, txtGRNRefNo, lblpurchasebranch_gid, lsemployee_gid, lblBranch_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msStockGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, maGetGID, lsvendor_code, msUserGid;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+        private string grn_gid;
+
+        public void DaGrninwardSummary(MdlPmrTrnGrn values)
+        {
+            msSQL = "SELECT a.purchaseorder_gid, a.vendor_gid, a.created_by, a.purchaseorder_status, e.vendor_companyname, j.costcenter_name, a.purchaseorder_date, y.branch_name, c.department_name, d.user_firstname " +
+            "FROM pmr_trn_tpurchaseorder a " +
+            "LEFT JOIN hrm_mst_temployee b ON a.created_by = b.user_gid " +
+            "LEFT JOIN hrm_mst_tdepartment c ON b.department_gid = c.department_gid " +
+            "LEFT JOIN adm_mst_tuser d ON d.user_gid = a.created_by " +
+            "LEFT JOIN acp_mst_tvendor e ON e.vendor_gid = a.vendor_gid " +
+            "LEFT JOIN pmr_mst_tcostcenter j ON j.costcenter_gid = a.costcenter_gid " +
+            "LEFT JOIN pmr_Trn_tpurchaserequisition f ON a.purchaserequisition_gid = f.purchaserequisition_gid " +
+            "LEFT JOIN hrm_mst_tbranch y ON a.branch_gid = y.branch_gid " +
+            "WHERE (a.purchaseorder_flag = 'PO Approved' AND a.grn_flag = 'GRN Pending') OR " +
+            "(a.grn_flag = 'Goods Received Partial' AND (a.invoice_flag = 'IV Pending' OR a.invoice_flag = 'Invoice Raised Partial')) " +
+            "GROUP BY a.purchaseorder_gid " +
+            "ORDER BY DATE(a.purchaseorder_date) DESC, a.purchaseorder_date ASC, a.purchaseorder_gid DESC";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<Getgrn_lists>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new Getgrn_lists
+                    {
+
+                        purchaseorder_date = dt["purchaseorder_date"].ToString(),
+                        purchaseorder_gid = dt["purchaseorder_gid"].ToString(),
+                        purchaseorder_status = dt["purchaseorder_status"].ToString(),
+                        vendor_companyname = dt["vendor_companyname"].ToString(),
+                        costcenter_name = dt["costcenter_name"].ToString(),
+                        department_name = dt["department_name"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                    });
+                    values.Getgrn_lists = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetaddgrnsummary(string user_gid, string purchaseorder_gid, MdlPmrTrnGrn values)
+        {
+            grn_gid = objcmnfunctions.GetMasterGID("SUSM");
+
+            if (grn_gid == "E")
+            {
+                values.message = "Create Sequence Code PGNP for GRN Table";
+            }
+
+            //Raised By Binding Event
+            string userFirstNameSQL = " select a.user_gid, concat(a.user_firstname,' - ',c.department_name) as user_firstname " +
+                                      " from adm_mst_tuser a " +
+                                      " left join hrm_mst_temployee b on a.user_gid = b.user_gid " +
+                                      " left join hrm_mst_tdepartment c on b.department_gid = c.department_gid " +
+                                      " where a.user_gid = '" + user_gid + "' ";
+            DataTable userFirstNameDataTable = objdbconn.GetDataTable(userFirstNameSQL);
+
+            string userFirstName = string.Empty;
+
+            if (userFirstNameDataTable.Rows.Count > 0)
+            {
+                userFirstName = userFirstNameDataTable.Rows[0]["user_firstname"].ToString();
+            }
+            //--END--//
+
+
+            //Check by user drop down event
+            msSQL = " select branch_gid from pmr_trn_tpurchaseorder where purchaseorder_gid = '" + purchaseorder_gid + "'";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows)
+            {
+                lblpurchasebranch_gid = objODBCDatareader["branch_gid"].ToString();
+            }
+            msSQL = " select b.branch_gid, d.mainbranch_flag " +
+                 " from adm_mst_tuser a " +
+                 " left join hrm_mst_temployee b on a.user_gid = b.user_gid " +
+                 " left join hrm_mst_tbranch d on b.branch_gid = d.branch_gid " +
+                 " where a.user_gid = '" + user_gid + "' ";
+            objODBCDatareader = objdbconn.GetDataReader(msSQL);
+            if (objODBCDatareader.HasRows)
+            {
+                lblBranch_gid = objODBCDatareader["branch_gid"].ToString();
+            }
+
+            string userFirstName1SQL = "SELECT CONCAT(a.user_firstname, ' ', a.user_lastname) AS user_firstname1, a.user_gid, a.user_code " +
+                    "FROM adm_mst_tuser a " +
+                    "LEFT JOIN hrm_mst_temployee b ON a.user_gid = b.user_gid " +
+                    "WHERE b.branch_gid = '" + lblpurchasebranch_gid + "' OR b.branch_gid = '" + lblBranch_gid + "'";
+
+            DataTable userFirstName1DataTable = objdbconn.GetDataTable(userFirstName1SQL);
+
+            List<string> user_firstname1List = new List<string>();
+
+            foreach (DataRow row in userFirstName1DataTable.Rows)
+            {
+                string user_firstname1 = row["user_firstname1"].ToString();
+                user_firstname1List.Add(user_firstname1);
+            }
+
+            //--END--//
+
+            //Other fieds biding event query
+            msSQL = "SELECT a.purchaseorder_gid, a.branch_gid, b.branch_name, c.vendor_companyname, c.contactperson_name, c.contact_telephonenumber, c.email_id, concat(d.address1, ' ', d.address2) as address " +
+                    "FROM pmr_trn_tpurchaseorder a " +
+                    "LEFT JOIN hrm_mst_tbranch b ON a.branch_gid = b.branch_gid " +
+                    "LEFT JOIN acp_mst_tvendor c ON a.vendor_gid = c.vendor_gid " +
+                    "LEFT JOIN adm_mst_taddress d ON c.address_gid = d.address_gid " +
+                    "WHERE a.purchaseorder_gid = '" + purchaseorder_gid + "'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+
+            var getModuleList = new List<grn_lists>();
+
+            if (dt_datatable.Rows.Count != 0)
+            {
+                int user_firstname1Index = 0;
+
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    if (user_firstname1Index < user_firstname1List.Count)
+                    {
+                        // Get the user_firstname1 value from the list using the counter
+                        string user_firstname1 = user_firstname1List[user_firstname1Index];
+
+                        getModuleList.Add(new grn_lists
+                        {
+                            branch_name = dt["branch_name"].ToString(),
+                            vendor_companyname = dt["vendor_companyname"].ToString(),
+                            contactperson_name = dt["contactperson_name"].ToString(),
+                            contact_telephonenumber = dt["contact_telephonenumber"].ToString(),
+                            email_id = dt["email_id"].ToString(),
+                            address = dt["address"].ToString(),
+                            purchaseorder_gid = dt["purchaseorder_gid"].ToString(),
+                            grn_gid = grn_gid,
+                            user_firstname = userFirstName,
+                            user_firstname1 = user_firstname1,
+                        });
+
+                        // Increment the counter for the next iteration
+                        user_firstname1Index++;
+                    }
+                }
+
+                values.grn_lists = getModuleList;
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetsummaryaddgrnsummary(string user_gid, MdlPmrTrnGrn values)
+        {
+            msSQL = " Select a.tmpgrn_gid, a.purchaseorder_gid, a.purchaseorderdtl_gid, a.product_gid,a.producttype_gid, e.purchaserequisition_gid,  format(a.qty_delivered,2) as qty_delivered, format(a.qty_ordered,2)  " +
+                    " as qty_ordered,a.qty_free,  format(a.qty_received,2) as qty_received, format(a.qty_grnadjusted,2) as qty_grnadjusted,  a.qty_excess, a.remarks, a.product_price, a.display_field,  g.product_code,  " +
+                    " concat(g.product_name) as product, c.productgroup_gid, c.productgroup_name,  d.productuom_gid, g.productuom_name,f.producttype_name,a.user_gid,e.vendor_gid  " +
+                    "FROM pmr_tmp_tgrn a " +
+                    "left join pmr_trn_tpurchaseorderdtl g on a.purchaseorderdtl_gid = g.purchaseorderdtl_gid " +
+                    "left join pmr_mst_tproduct b on a.product_gid = b.product_gid " +
+                    "left join pmr_mst_tproductgroup c on c.productgroup_gid = b.productgroup_gid " +
+                    "left join pmr_mst_tproductuom d on d.productuom_gid = a.uom_gid " +
+                    "left join pmr_mst_tproducttype f on f.producttype_gid = b.producttype_gid " +
+                    "left join pmr_trn_tpurchaseorder e on a.purchaseorder_gid = e.purchaseorder_gid " +
+                    "WHERE user_gid = '" + user_gid + "'";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<addgrn_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new addgrn_list
+                    {
+
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        product_name = dt["product"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        qty_ordered = dt["qty_ordered"].ToString(),
+                        qty_received = dt["qty_received"].ToString(),
+                        qty_free = dt["qty_free"].ToString(),
+                        qty_grnadjusted = dt["qty_grnadjusted"].ToString(),
+                        qty_delivered = dt["qty_delivered"].ToString(),
+                    });
+                    values.addgrn_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaPostGrnSubmit(string user_gid, addgrn_lists values)
+        {
+            foreach (var data in values.summary_list)
+            {
+            
+                msSQL = "select purchaseorderdtl_gid from pmr_trn_tpurchaseorderdtl where purchaseorder_gid='" + values.purchaseorder_gid + "' ";
+                string lspurchaseorderdtlgid = objdbconn.GetExecuteScalar(msSQL);
+
+                msSQL = "select product_gid from pmr_mst_tproduct where product_name='" + data.product_name + "' ";
+                string lsproductgid = objdbconn.GetExecuteScalar(msSQL);
+
+                msSQL = "select product_code from pmr_mst_tproduct where product_name='" + data.product_name + "' ";
+                string lsproductcode = objdbconn.GetExecuteScalar(msSQL);
+
+                msSQL = "select producttype_gid from pmr_mst_tproduct where product_name='" + data.product_name + "' ";
+                string lsproducttypegid = objdbconn.GetExecuteScalar(msSQL);
+
+                msSQL = "select productuom_gid from pmr_mst_tproductuom where productuom_name='" + data.productuom_name + "' ";
+                string lsporductuomgid = objdbconn.GetExecuteScalar(msSQL);
+
+                msGetGid1 = objcmnfunctions.GetMasterGID("PGDC");
+                msSQL = " insert into pmr_trn_tgrndtl (" +
+                 " grndtl_gid, " +
+                 " grn_gid, " +
+                 " purchaseorderdtl_gid, " +
+                 " product_gid," +
+                 " product_code," +
+                 " product_name," +
+                 " productuom_name," +
+                 " qty_delivered," +
+                 " qtyreceivedas," +
+                 " producttype_gid, " +
+                 " qty_grnadjusted) " +
+                 " values (" +
+                 "'" + msGetGid1 + "', " +
+                "'" + values.grn_gid + "', " +
+                "'" + lspurchaseorderdtlgid + "', " +
+                 "'" + lsproductgid + "'," +
+                 "'" + lsproductcode + "'," +
+                "'" + data.product_name + "', " +
+                "'" + data.productuom_name + "', " +
+                 "'" + data.qty_delivered + "'," +
+                 "'" + data.qtyreceivedas + "'," +
+                 "'" + lsproducttypegid + "'," +
+                   "'0')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+                msSQL = "select branch_gid from hrm_mst_tbranch where branch_name='" + values.branch_name + "' ";
+                string lsbranchgid = objdbconn.GetExecuteScalar(msSQL);
+                msSQL = "select vendor_gid from acp_mst_tvendor where vendor_companyname='" + values.vendor_companyname + "' ";
+                string lsvendorgid = objdbconn.GetExecuteScalar(msSQL);
+
+                msSQL = "INSERT INTO pmr_trn_tgrn (" +
+                                       "grn_gid, " +
+                                       "branch_gid, " +
+                                       "purchaseorder_gid, " +
+                                       "grn_date, " +
+                                       "vendor_gid, " +
+                                       "vendor_contact_person, " +
+                                       "dc_no, " +
+                                       "grn_status, " +
+                                       "grn_flag, " +
+                                       "checkeruser_gid, " +
+                                       "user_gid, " +
+                                       "created_date, " +
+                                       "currency_code, " +
+                                       "dc_date) " +
+                                       "VALUES (" +
+                                       "'" + values.grn_gid + "', " +
+                                       "'" + lsbranchgid + "', " +
+                                       "'" + values.purchaseorder_gid + "', " +
+                                       "'" + DateTime.Now.ToString("yyyy-MM-dd") + "', " +
+                                       "'" + lsvendorgid + "', " +
+                                       "'" + values.contactperson_name + "', " +
+                                       "'" + values.dc_no + "', " +
+                                       "'GRN Pending', " +
+                                       "'GRN QC Completed', " +
+                                       "'" + values.user_firstname1 + "', " +
+                                       "'" + user_gid + "', " +
+                                       "'" + DateTime.Now.ToString("yyyy-MM-dd") + "', " +
+                                       "'INR', " +
+                                       "'" + values.dc_date + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+
+                msStockGid = objcmnfunctions.GetMasterGID("PGDC");
+                msSQL = "INSERT INTO ims_trn_tstock (" +
+                                      "stock_gid, " +
+                                      "branch_gid, " +
+                                      "product_gid, " +
+                                      "uom_gid, " +
+                                      "stock_qty, " +
+                                      "grn_qty, " +
+                                      "rejected_qty, " +
+                                      "stocktype_gid, " +
+                                      "reference_gid, " +
+                                      "stock_flag, " +
+                                      "adjusted_qty) " +
+                                      "VALUES (" +
+                                      "'" + msStockGid + "', " +
+                                      "'" + lsbranchgid + "', " +
+                                      "'" + lsproductgid + "', " +
+                                      "'" + lsporductuomgid + "', " +
+                                      "'0', " +
+                                      "'0', " +
+                                      "'0', " +
+                                      "'SY0905270002', " +
+                                      "'" + values.grn_gid + "', " +
+                                      "'Y', " +
+                                      "'0')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "GRN Inward Added Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error Occured Adding GRN Inward";
+                }
+
+            }
+        }
+    }
+}

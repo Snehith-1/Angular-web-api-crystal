@@ -1,0 +1,105 @@
+<div class="card card-bordered">
+    <div class="card-shadow-sm i-card">
+        <form [formGroup]="attendanceform" (ngSubmit)="signin()" (ngSubmit)="punchin()">
+            <div class="card1">
+                <label for="">Location </label>
+                <input type="text" id="" name="" formControlName="location">
+            </div>
+
+            <div class="date_time">
+                <p>{{ Time | date: " hh:mm:ss a"}}</p>
+            </div>
+
+            <div class="card-body" *ngIf="!buttonClicked">
+                <div class="submit-button">
+                    <div class="text-center icon">
+                        <p class="text"><b>Please click punch in to mark your attendance !</b></p>
+                    </div>
+                    <button type="button" class="btn-primary me-4" (click)="punchin()"> <!-- (click)="signin()"  -->
+                        <i class="fa fa-hand-point-right"></i>
+                        <span class="btn-text ms-3">Punch In</span>
+                    </button>
+                   
+                </div>
+            </div>
+
+            <div class="card-body" *ngIf="buttonClicked && !button1Clicked">
+                <div class="submit-button">
+                    <div class="text-center icon">
+                        <p class="text"><b>Successfully Punched In</b></p>
+                    </div>
+                    <button type="button" class="btn-success me-4">
+                        <i class="fa fa-hand-point-right"></i>
+                        <span class="btn-text ms-3" (click)="punchout()">Punch Out</span> <!-- (click)="signout()"  -->
+                    </button>
+                   
+                </div>
+            </div>
+
+            <div class="card-body" *ngIf="button1Clicked">
+                <div class="submit-button">
+                    <div class="text-center icon">
+                        <p class="text"><b>Your attendance has been marked for the day!!</b></p>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- <div class="submit-button">
+                    <button type="button" class="btn-primary btn-text" data-bs-toggle="modal"
+                        data-bs-target="#iattendance">
+                        <i class="fa fa-hand-point-right"></i>
+                        <span class="btn-text ms-3" *ngIf="buttonClicked">Punch Out</span></button>
+                    <button type="button" class="btn-danger" (click)="redirecttolist()">Back </button>
+                </div> -->
+
+
+
+
+
+
+            <!-- <div>
+                <p class="para"><b>Please click Punch In to mark your attendance ! </b></p>
+            </div>
+
+            <div class="text-center submit-button">
+                <button type="button" class="btn-success text-white me-2" (click)="signin()" (click)="punchin()">
+                    <i class="bi bi-check-square fs-5"></i>&nbsp; {{bname}} </button>&nbsp;
+
+                    <button type="button" class="btn-success text-white me-2" (click)="signout()" (click)="punchout()">
+                        <i class="bi bi-check-square fs-5"></i>&nbsp; {{b1name}} </button>&nbsp;
+    
+                <button type="button" class="btn-danger" (click)="redirecttolist()">Back </button>
+            </div> -->
+
+       

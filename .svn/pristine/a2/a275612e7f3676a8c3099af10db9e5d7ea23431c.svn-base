@@ -1,0 +1,111 @@
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+interface IProposal {
+  quotation_gid :string;
+  proposal_name: string;
+  document_list : string ;
+  raiseproposal_list : string;
+}
+
+@Component({
+  selector: 'app-smr-trn-raiseproposal',
+  templateUrl: './smr-trn-raiseproposal.component.html',
+  styleUrls: ['./smr-trn-raiseproposal.component.scss']
+})
+export class SmrTrnRaiseproposalComponent {
+  file!: File;
+  proposal!: IProposal;
+  reactiveForm!: FormGroup;
+  document_list : any;
+  responsedata : any;
+  raiseproposal_list : any;
+
+
+  constructor(private renderer: Renderer2, private el: ElementRef, public service: SocketService, private ToastrService: ToastrService, private route: Router) {
+    this.proposal ={} as IProposal ;
+  }
+  ngOnInit(): void {
+
+    this.reactiveForm = new FormGroup({
+      proposal_name: new FormControl(this.proposal.proposal_name, [
+        Validators.required,
+
+      ]),
+   }
+
+    );
+      //country drop down//
+      var url = 'SmrTrnCustomerSummary/Getcountry'
+      this.service.get(url).subscribe((result: any) => {
+        this.document_list = result.Getcountry;
+      });
+    }
+    onChange2(event: any) {
+      this.file = event.target.files[0];
+    
+    }
+    
+    get proposal_name() {
+      return this.reactiveForm.get('proposal_name')!;
+    }
+    get document_type() {
+      return this.reactiveForm.get('proposal_name')!;
+    }
+    public validate(): void {
+      debugger
+    
+      this.proposal = this.reactiveForm.value;
+    
+      if (this.proposal.proposal_name != null ) {
+        let formData = new FormData();
+        if (this.file != null && this.file != undefined) {
+          debugger
+          formData.append("proposal_name", this.proposal.proposal_name);
+
+
+          
+          var api = 'SmrTrnCustomerSummary/Postcustomer'
+
+          this.service.postfile(api, formData).subscribe((result: any) => {
+            debugger
+            this.responsedata = result;
+            if (result.status == false) {
+              this.ToastrService.warning(result.message)
+            }
+            else {
+              this.route.navigate(['/smr/SmrTrnCustomer']);
+              this.ToastrService.success(result.message)
+            }
+          });
+  
+        }
+        else {
+          var api7 = 'SmrTrnCustomerSummary/Postcustomer'
+  
+          this.service.post(api7, this.proposal).subscribe((result: any) => {
+  
+            if (result.status == false) {
+              this.ToastrService.warning(result.message)
+            }
+            else {
+              this.route.navigate(['/smr/SmrTrnCustomer']);
+              this.ToastrService.success(result.message)
+            }
+            this.responsedata = result;
+          });
+        }
+      }
+      else {
+        this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+      }
+      return;
+  
+  
+    }
+
+}

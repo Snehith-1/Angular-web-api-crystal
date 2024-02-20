@@ -1,0 +1,385 @@
+﻿using ems.sales.DataAccess;
+using ems.sales.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.sales.Controllers
+{
+    [RoutePrefix("api/SmrTrnQuotation")]
+    [Authorize]
+    public class SmrTrnQuotationController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaSmrTrnQuotation objDaSales = new DaSmrTrnQuotation();
+        // Module Summary
+        [ActionName("GetSmrTrnQuotation")]
+        [HttpGet]
+        public HttpResponseMessage GetSmrTrnQuotation()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetSmrTrnQuotation(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //  sales person dropdown
+
+        [ActionName("GetSalesDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetSalesDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetSalesDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Currency dropdown
+
+        [ActionName("GetCurrencyCodeDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetCurrencyCodeDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetCurrencyCodeDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 1 dropdown
+
+        [ActionName("GetTaxOnceDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTaxOnceDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTaxOnceDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 2 dropdown
+
+        [ActionName("GetTaxTwiceDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTaxTwiceDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTaxTwiceDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 3 dropdown
+
+        [ActionName("GetTaxThriceDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTaxThriceDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTaxThriceDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Product dropdown
+
+        [ActionName("GetProductNamesDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetProductNamesDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetProductNamesDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 4 dropdown
+
+        [ActionName("GetTaxFourSDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTaxFourSDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTaxFourSDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // On change
+        [ActionName("GetOnChangeProductsName")]
+        [HttpGet]
+
+        public HttpResponseMessage GetOnChangeProductsName(string product_gid)
+
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetOnChangeProductsName(product_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        // Summary bind
+
+        [ActionName("GetRaiseSOSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetRaiseSOSummary(string quotation_gid)
+        {
+            MdlSmrTrnQuotation objresult = new MdlSmrTrnQuotation();
+            objDaSales.DaGetRaiseSOSummary(quotation_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+
+
+        //Raise Quoatation
+
+        // Branch dropdown
+
+        [ActionName("GetBranchDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetBranchDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetBranchDt(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //customer
+
+        [ActionName("GetCustomerDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetCustomerDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetCustomerDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Person dropdown
+
+        [ActionName("GetPersonDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetPersonDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetPersonDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Currency dropdown
+
+        [ActionName("GetCurrencyDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetCurrencyDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetCurrencyDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Product dropdown
+        
+
+        [ActionName("GetProductDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetProductDtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetProductDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 1 dropdown
+
+        [ActionName("GetTax1Dtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTax1Dtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTax1Dtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 2 dropdown
+
+        [ActionName("GetTax2Dtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTax2Dtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTax2Dtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 3 dropdown
+
+        [ActionName("GetTax3Dtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTax3Dtl()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTax3Dtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // OnChange based on Customer
+
+        [ActionName("GetOnChangeCustomeName")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeCustomeName(string customer_gid)
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetOnChangeCustomeName(customer_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Temp Summary
+        [ActionName("GetTemporarySummary")]
+        [HttpGet]
+
+        public HttpResponseMessage GetTemporarySummary()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaSales.DaGetTemporarySummary(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+
+        // Product Add 
+        [ActionName("GetProductAdd")]
+        [HttpPost]
+        public HttpResponseMessage GetProductAdd(summarys_lists values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaSales.DaGetProductAdd(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // On change customer
+        [ActionName("GetOnChangeCustomerDtls")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeCustomerDtls(string customercontact_gid)
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetOnChangeCustomerDtls(customercontact_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Terms And Condition dropdown
+
+        [ActionName("GetTermsandConditions")]
+        [HttpGet]
+        public HttpResponseMessage GetTermsandConditions()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetTermsandConditions(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // On change t and c
+        [ActionName("GetOnChangeTerms")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeTerms(string template_gid)
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetOnChangeTerms(template_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        // temp product summary by pugaz 
+
+        [ActionName("GetTempProductsSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetTempProductsSummary()
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaSales.DaGetTempProductsSummary(getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // product submit for Add quotation by pugaz
+        [ActionName("PostAddProduct")]
+        [HttpPost]
+        public HttpResponseMessage PostAddProduct(summaryprod_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaSales.DaPostAddProduct(getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // delete for enq to quote event
+
+        [ActionName("GetDeleteQuotationProductSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetDeleteQuotationProductSummary(string tmpquotationdtl_gid)
+        {
+            summaryprod_list objresult = new summaryprod_list();
+            objDaSales.DaGetDeleteQuotationProductSummary(tmpquotationdtl_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // Overall submit for QuotationToOrder
+
+        [ActionName("PostQuotationToOrder")]
+        [HttpPost]
+        public HttpResponseMessage PostQuotationToOrder(MdlSmrTrnQuotation values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaSales.DaPostQuotationToOrder(getsessionvalues.employee_gid, getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Overall submit For Direct Quotation
+
+        [ActionName("PostDirectQuotation")]
+        [HttpPost]
+        public HttpResponseMessage PostDirectQuotation(Post_List values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objDaSales.DaPostDirectQuotation(getsessionvalues.employee_gid,  values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetViewQuotationSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetViewQuotationSummary(string quotation_gid)
+        {
+            MdlSmrTrnQuotation objresult = new MdlSmrTrnQuotation();
+            objDaSales.DaGetViewQuotationSummary(quotation_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        [ActionName("GetOnChangeCurrency")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeCurrency(string currencyexchange_gid)
+        {
+            MdlSmrTrnQuotation values = new MdlSmrTrnQuotation();
+            objDaSales.DaGetOnchangeCurrency(currencyexchange_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        [ActionName("GetProductdetails")]
+        [HttpGet]
+        public HttpResponseMessage GetProductdetails(string quotation_gid)
+        {
+            MdlSmrTrnQuotation objresult = new MdlSmrTrnQuotation();
+            objDaSales.DaGetProductdetails(quotation_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+    }
+
+ 
+
+   
+
+}
+

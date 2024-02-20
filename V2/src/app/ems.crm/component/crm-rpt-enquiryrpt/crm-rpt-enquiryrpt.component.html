@@ -1,0 +1,203 @@
+<div class="card card-bordered" style="background-color: white;" >
+<div class=" col-12 mb-7 shadow-lg p-3 rounded card">
+  <div class="col">
+    <h3 class="card-title">Marketing Enquiry Report</h3>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-md-2 mt-3 row">
+      <label for="FromDate"><b>From Date:</b></label>
+      <input type="date" [(ngModel)]="from_date" class="form-control form-control-lg form-control-solid custom-input
+          mb-1 mb-lg-0  borderc-secondary bg-white custom-input" />
+    </div>
+    <div class="col-md-2 mt-3">
+      <label for="ToDate"><b>To Date:</b></label>
+      <input type="date" [(ngModel)]="to_date" class="form-control form-control-lg form-control-solid custom-input
+        mb-1 mb-lg-0  borderc-secondary bg-white custom-input" />
+    </div>
+    <div class="col-md-1 mt-9 row">
+      <button class="btn-primary btn-sm text-black me-1" (click)="onSearchClick()"
+        style="background-color: blue #1146f5 !important;">Search</button>
+    </div>
+    <div class="col-md-1 mt-9 row">
+      <button class="btn-primary btn-sm text-black ms-1" (click)="onrefreshclick()"
+        style="background-color: blue #1146f5 !important;">Refresh</button>
+    </div>
+  </div>
+<!-- </div>
+  
+    <div class="m-5 me-1 d-flex flex-wrap mb-0 mt-0 "> -->
+  <div class="col-12 col-lg-12 row">
+    <div class="col-12 col-lg-6 pe-0">
+  
+      <div class="m-3 me-0 card shadow-lg p-3 rounded" style="height:470px;">
+      <div class="card-header"
+        style="background: rgb(81,183,204);
+     background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+        <b style="padding-top: 12px;">Monthly Enquiry Details - {{year}} </b>
+      </div>
+      <!-- <ng-container *ngIf="emptyFlag1">
+        <p style ="margin-top:-26px;font-size: 12px;text-align: center;color: rgb(17, 16, 16);">No Records are Found...</p>
+      </ng-container> -->
+      <div class="card-body align-items-center position-relative ">
+        <div class="d-flex flex-center me-5 pt-2">
+          <div id="kt_card_widget_17_chart"> </div>
+        </div>
+      </div>
+      <ng-container *ngIf="emptyFlag1">
+        <p style ="margin-top:-26px;font-size: 12px;text-align: center;color: rgb(17, 16, 16);">No Records are Found...</p>
+      </ng-container>
+      <ng-container>
+
+        <div #chartRef class="d-flex flex-column mixed-widget-2-chart card-rounded-bottom">
+          <apx-chart [series]="chartOptions2.series" [chart]="chartOptions2.chart" [xaxis]="chartOptions2.xaxis"
+            [yaxis]="chartOptions2.yaxis" [dataLabels]="chartOptions2.dataLabels" [stroke]="chartOptions2.stroke"
+            [legend]="chartOptions2.legend" [fill]="chartOptions2.fill" [states]="chartOptions2.states"
+            [tooltip]="chartOptions2.tooltip" [colors]="chartOptions2.colors" [markers]="chartOptions2.markers"
+            [plotOptions]="chartOptions2.plotOptions">
+          </apx-chart>
+        </div>
+      </ng-container>
+
+
+      </div>
+    </div>
+  
+    <div class="col-12 col-lg-6 pe-0">
+      <div class="m-3 me-0 card shadow-lg p-3 rounded"  style="height:470px;">
+      <div class="card-header"
+        style="background: rgb(81,183,204);
+    background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+        <b style="padding-top: 12px;"> Monthly Lead Details - {{year}} </b>
+      </div>
+      <div class="card-body align-items-center position-relative ">
+        <div class="d-flex flex-center me-5 pt-2">
+          <div id="kt_card_widget_17_chart"> </div>
+        </div>
+      </div>
+      <ng-container *ngIf="emptyFlag">
+        <p style ="margin-top:-26px;font-size: 12px;text-align: center;color: rgb(17, 16, 16);">No Records are Found...</p>
+      </ng-container>
+
+      
+        <ng-container>
+          <div id="chart">
+            <div #chartRef class="d-flex flex-column mixed-widget-2-chart card-rounded-bottom">
+
+              <!-- <ng-container *ngIf="emptyFlag">
+        <p style ="margin-top:-26px;font-size: 12px;text-align: center;color: rgb(0, 0, 0);">No Records are Found...</p>
+      </ng-container> -->
+
+              <div #chartRef class="d-flex flex-column mixed-widget-2-chart card-rounded-bottom">
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [xaxis]="chartOptions.xaxis"
+                  [stroke]="chartOptions.stroke" [tooltip]="chartOptions.tooltip" [dataLabels]="chartOptions.dataLabels"
+                  [legend]="chartOptions.legend">
+                </apx-chart>
+              </div>
+              
+            </div>
+          </div>
+        </ng-container>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- </div>
+  <div class="col-lg-12 col-md-12 col-sm-12 bg-white rounded"> -->
+    <!-- <div class="col-11 card m-3 ms-5 shadow-lg p-3 mb-5 bg-white rounded"> -->
+  <div class="d-flex flex-row  m-3" style="background-color: white;"> 
+    <div class=" col-12 mb-7 shadow-lg p-3 rounded">
+      <div class="card-header"style="background: rgb(81,183,204);
+     background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+        <b style="padding-top: 12px;"> Enquiry Details - {{year}} </b>
+      </div>
+      <br>
+      <div class="table-responsive">
+        
+        <table id="activitylog_list" class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+              <th class="text-center">Month</th>
+              <th class="text-center">Customer Detail</th>
+              <th class="text-center">Enquiry Count</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of EnquiryReportMainSummary_list; let i=index;" class="align-middle">
+              <td class="text-center">{{data.Month}}</td>
+              <td class="text-center text-nowrap">
+                <label title="Remarks" data-bs-toggle="modal" data-bs-target="#myModalUpdateimage9"
+                  (click)="popmodal(data.Month,data.Year)">
+                  <i class="fas fa-question-circle fa-5x text-primary fs-2"></i>
+                </label>
+              </td>
+              <td class="text-center">{{data.Enquirycount}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--Popup-->
+<div class="modal fade" id="myModalUpdateimage9" tabindex="-1" data-bs-backdrop='static'
+  aria-labelledby="editamlcategoryLabel" aria-hidden="true" data-bs-keyboard="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content  d-flex justify-content-center  width: 100%;">
+      <div class="card-header p-1 pb-1 pt-1 rounded-top bg-primary"
+        style="display: flex; align-items: center; height: 40px;">
+
+        <h3 Style="color: white; font-weight: bold; text-align: left; width: 100%;margin-left: 10px;">
+Customer Detail
+        </h3>
+      </div>
+      <div class="modal-body">
+
+        <div class="d-flex flex-wrap flex-row col-12 ">
+          <div class=" col-12 mb-7 p-3 rounded">
+            <div class="table-responsive">
+              <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+                <table id="EnquirysubReportSummary_list"
+                  class="table table-striped table-row-bordered border-bottom gs-7 align-middle ">
+                  <thead>
+                    <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+                      <th>Enquiry Date</th>
+                      <th>Enquiry Ref.No/Type</th>
+                      <th>Customer Name</th>
+                      <th>Contact Details</th>
+                      <th>Source </th>
+                      <th>Potential Order Value</th>
+                      <th>Enquiry Status</th>
+                      <!-- <th>Created By</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of EnquirysubReportSummary_list; let i=index;" class="align-middle">
+                      <td style="white-space: nowrap;">{{data.enquiry_date}}</td>
+                      <td>{{data.enquiry_refno}}</td>
+                      <td>{{data.customer_name}}</td>
+                      <td>{{data.contact_details}}</td>
+                      <td>{{data.source_name}}</td>
+                      <td>{{data.potorder_value}}</td>
+                      <td>{{data.enquiry_status}}</td>
+                      <!-- <td>{{data.user_firstname}}</td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="text-center my-4">
+              <button class="btn-danger btn-sm text-white me-4" style="color:red;" data-bs-dismiss="modal">
+                <i class="fas fa-close text-white" ></i> &nbsp;Close
+                </button>&nbsp;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

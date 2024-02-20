@@ -1,0 +1,438 @@
+<div class="card">
+ <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <h3 class="card-title">Employee Bank Details Summary</h3>
+    </div>
+ 
+  <div class="col me-5">
+  <button title="Import Excel" class="btn btn-icon btn-sm bg-success me-2 float-end "  
+  data-bs-toggle="modal" data-bs-target="#myModalexcelimport"><span class="fas fa-file-excel text-white 
+   fs-2"></span>  
+  </button>
+  <button title="View Imported Excel" (click)="getdocumentlist()" class="btn btn-icon btn-sm bg-success me-2 float-end "  
+        data-bs-toggle="modal" data-bs-target="#myModalviewexcelimport"><span class="fas fa-eye text-white 
+         fs-2" ></span>  
+        </button>
+  </div>
+ </div>
+
+  <div class="table-responsive">
+    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+      <table id="employeebankdetailslist" class="table table-striped table-row-bordered border-bottom gs-7">
+        <thead>
+          <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle">
+            <th>S.No</th>
+            <th>Branch</th>
+            <th>Department</th>
+            <th>Employee Code</th>
+            <th>Employee Name</th>
+            <th>Designation </th>
+            <th>Bank Details</th>
+            <th>Action</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of employeebankdetailslist; let i=index;" class="align-middle">
+            <td>{{i+1}}</td>
+            <td>{{data.branch_name}}</td>
+            <td>{{data.department_name}}</td>
+            <td>{{data.user_code}}</td>
+            <td>{{data.empname}}</td>
+            <td>{{data.designation_name}}</td>
+            <td class="text-center text-nowrap">
+
+              <button title="Bank Details" type="button" (click)="openBankDetails(data)" data-bs-toggle="modal"
+                data-bs-target="#mymodelBank" class="btn btn-icon btn-sm bg-primary me-2"><span
+                  class="fa fa-question-circle fs-6"></span></button>
+
+            </td>
+            <td class="text-center text-nowrap">
+
+              <button title="Bank" type="button" (click)="openBank(data)" data-bs-toggle="modal"
+                data-bs-target="#mymodelAddBank" class="btn btn-icon btn-sm bg-success me-2"><span
+                  class="fa fa-university fs-6"></span></button>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- The Modal Add -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="mymodelAddBank" style="margin-top: 90px;" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" style="width:45%;">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+          <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="fa fa-university fs-6"></i>
+            &nbsp;&nbsp;Bank Details</h2>
+
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- <input class="form-control form-control-lg" formControlName="entity_gid" hidden pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required > -->
+
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Bank Name<span style="color:red"> *</span></b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                <ng-select formControlName="bank_name" [class.is-invalid]="
+                        bank_name.invalid &&
+                        (bank_name.dirty || bank_name.touched)
+                      " [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}"
+                  [items]="bankdetailslist" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                  bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option"
+                  style="width:100%;"></ng-select>
+                <div *ngIf="bank_name.invalid && (bank_name.dirty || bank_name.touched)" 
+                class="invalid-feedback">
+                  <div *ngIf="bank_name.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; 
+                    margin-left: 8px; font-size: 11px;">* Bank
+                      Name is required</span>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <span class="font-bold"><b>Bank Code</b><span style="color:red"> *</span></span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input type="text" formControlName="bankcode_no" [ngStyle]=
+                "{ 'border-color': reactiveForm.get('bankcode_no')?.hasError('required')
+                 && reactiveForm.get('bankcode_no')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                 class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 
+            bg-white custom-input  mb-3 mb-lg-0" placeholder="Enter Bank Code No" required pattern="^[A-Z]{4}[0-9]{7}$" />
+                <div *ngIf="reactiveForm.get('bankcode_no')?.hasError('required') &&
+                 reactiveForm.get('bankcode_no')?.touched " 
+                 class="text-red">Bank Code is required.</div>
+                 <div *ngIf=" reactiveForm.get('bankcode_no')?.
+                 hasError('pattern')" class="text-red">
+                 It should be a 4 capital alphabet and 7 numbers.</div>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="d-flex flex-row flex-wrap">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <b>Bank Account Number<span style="color:red"> *</span></b>
+              <div class="col-lg-11 col-md-12 col-sm-12 fv-row mt-2">
+                <input type="text" formControlName="bankacc_no"  [ngStyle]=
+                "{ 'border-color': reactiveForm.get('bankacc_no')?.hasError('required')
+                 && reactiveForm.get('bankacc_no')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                 class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 
+            bg-white custom-input  mb-3 mb-lg-0" placeholder="Enter Bank Account Number" required maxlength="18" pattern="[0-9]*" />
+                <div *ngIf="reactiveForm.get('bankacc_no')?.hasError('required') &&
+                 reactiveForm.get('bankacc_no')?.touched " 
+                 class="text-red">Account number is required</div>
+                 <div *ngIf=" reactiveForm.get('bankacc_no')?.
+                 hasError('pattern')" class="text-red">
+                 numeric characters allowed</div>
+                 <div *ngIf=" reactiveForm.get('bankacc_no')?.
+                 hasError('maxlength')" class="text-red">
+                 It Maximum length 18 </div>
+              </div>
+            </div>
+
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <b>PF Account Number<span style="color:red"> *</span></b>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input type="text" formControlName="pf_no" style="width:93%;" [ngStyle]=
+                "{ 'border-color': reactiveForm.get('pf_no')?.hasError('required')
+                 && reactiveForm.get('pf_no')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                 class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 
+            bg-white custom-input  mb-3 mb-lg-0" placeholder="Enter PF Number" required pattern="^[A-Z]{5}[0-9]{14,17}$" />
+                <div *ngIf="reactiveForm.get('pf_no')?.hasError('required') &&
+                 reactiveForm.get('pf_no')?.touched " 
+                 class="text-red">PF number is required</div>
+                 <div *ngIf=" reactiveForm.get('pf_no')?.
+                 hasError('pattern')" class="text-red">
+                 Number format 5 capital alphabet and 14-17 numbers</div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+
+          <div class="d-flex flex-row flex-wrap">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <span class="font-bold"><b>ESI Account Number</b><span style="color:red"> *</span></span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input type="text" formControlName="esi_no" style="width:93%;" [ngStyle]=
+                "{ 'border-color': reactiveForm.get('esi_no')?.hasError('required')
+                 && reactiveForm.get('esi_no')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                 class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 
+            bg-white custom-input  mb-3 mb-lg-0" placeholder="Enter ESI Number" required pattern="[0-9]{17}" maxlength="17" />
+                <div *ngIf="reactiveForm.get('esi_no')?.hasError('required') &&
+                 reactiveForm.get('esi_no')?.touched " 
+                 class="text-red">ESI number is required</div>
+                 <div *ngIf=" reactiveForm.get('esi_no')?.
+                 hasError('pattern')" class="text-red">
+                 ESI format. It should be a 17-digit number.</div>
+                 <div *ngIf=" reactiveForm.get('maxlength')?.
+                 hasError('pattern')" class="text-red">
+                 Maximum length is 17 characters.</div>
+ 
+              </div>
+            </div>
+            <br>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <span class="font-bold"><b>PAN Number</b><span style="color:red"> *</span></span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input type="text" formControlName="pan_no" style="width:93%;" [ngStyle]=
+                "{ 'border-color': reactiveForm.get('pan_no')?.hasError('required')
+                 && reactiveForm.get('pan_no')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                 class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 
+            bg-white custom-input  mb-3 mb-lg-0" placeholder="Enter PAN Number" name="pan_no" required pattern="^[A-Z]{5}\d{4}[A-Z]{1}$" />
+                <div *ngIf="reactiveForm.get('pan_no')?.hasError('required') &&
+                 reactiveForm.get('pan_no')?.touched " 
+                 class="text-red">PAN number is required</div>
+                 <div *ngIf=" reactiveForm.get('pan_no')?.
+                 hasError('pattern')" class="text-red">
+                 format. It should be a 5 capital alphabet and 4 numbers and 1 capital alphabet</div>  
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+          <div class="row">
+            <span class="font-bold"><b>UAN Number</b><span style="color:red"> *</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+
+              <input type="text" formControlName="uan_no" style="width:47%;" [ngStyle]=
+                "{ 'border-color': reactiveForm.get('uan_no')?.hasError('required')
+                 && reactiveForm.get('uan_no')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                 class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 
+            bg-white custom-input  mb-3 mb-lg-0" name="uan_no" placeholder="Enter UAN number" required pattern="[0-9]{12}" />
+                <div *ngIf="reactiveForm.get('uan_no')?.hasError('required') &&
+                 reactiveForm.get('uan_no')?.touched " 
+                 class="text-red">UAN number is required</div>
+                 <div *ngIf=" reactiveForm.get('uan_no')?.
+                 hasError('pattern')" class="text-red">
+                 format. It should be a 5 capital alphabet and 4 numbers and 1 capital alphabet</div>  
+     
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="text-center my-4">
+          <button class="me-4 btn-success" id="mymodelAddBank" (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                    'primary-button': !reactiveForm.invalid,
+                    'secondary-button': reactiveForm.invalid 
+                  }" data-bs-dismiss="modal">
+            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+          </button>&nbsp;&nbsp;
+          <button class="btn-danger btn-sm text-white me-4" id="mymodelAddBank" (click)="onback()"
+            data-bs-dismiss="modal">
+            <i class="fas fa-close text-white me-2"></i>&nbsp;Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!-- The Modal View -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="mymodelBank" style="margin-top: 215px;" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="table-responsive">
+          <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded d-flex">
+            <table id="bankdetails" class="table table-striped table-row-bordered gy-5 gs-7">
+              <thead>
+                <tr class="fw-bold fs-5 bg-lightblue text-blue">
+                  <th>S.No</th>
+                  <th>Bank Name</th>
+                  <th>Bank Code No</th>
+                  <th>Account No</th>
+                  <th>PF No</th>
+                  <th>ESIC No</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of bankdetails; let i=index;">
+
+                  <td>{{i+1}}</td>
+                  <td>{{data.bank}}</td>
+                  <td>{{data.bank_code}}</td>
+                  <td>{{data.ac_no}}</td>
+                  <td>{{data.pf_no}}</td>
+                  <td>{{data.esi_no}}</td>
+
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center my-4">
+              <button class="btn-danger btn-sm text-white me-4" id="mymodelAddBank" (click)="onback()"
+                data-bs-dismiss="modal">
+                <i class="fa fa-arrow-left"></i> &nbsp;Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="myModalexcelimport" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+
+              <!-- Modal Header -->
+
+              <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                  <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                          class="fas fa-lock fw-bolder fs-3"></i> &nbsp;&nbsp;BANK EXCEL FILE IMPORT</h2>
+
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+
+                  <button type="submit" style="margin-left: 290px;" class="btn-danger btn-sm text-white me-2"
+                  (click)="downloadfileformat()" >
+                      <i class="fa fa-download fs-5 me-2"></i>&nbsp;&nbsp;Download</button>
+                  <br>
+                  <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                      <span class="font-bold"><b>Select an Excel File to Import</b><span
+                              class="ms-1 text-red">*</span></span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                         
+                          <input style="width: 300%;" (change)="onChange1($event)" accept=".xlsx, .xls"
+                              type="file" #fileInput class="
+                        form-control form-control-lg form-control-solid bg-white
+                        mb-3 mb-lg-0  borderc-secondary custom-input
+                      " name="fName" />
+
+
+                      </div>
+                  </div>
+                  <br>
+                  <!-- Modal footer -->
+                  <div class="text-center my-4">
+                      <button type="submit" class="btn-success btn-sm text-white me-2" 
+                      (click)="importexcel()">
+                          <i class="fa fa-upload fs-5 me-2"></i>&nbsp;Upload</button>
+
+                      <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                          <i class="fas fa-arrow-left fs-5 me-2"></i> &nbsp;Back
+                      </button>&nbsp;
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</form>
+
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="myModalviewexcelimport" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered" style="width: 90%; max-width: 900px; height: 100%; max-height: 0vh;"  >
+          <div class="modal-content">
+
+              <!-- Modal Header -->
+
+              <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                  <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                          class="fas fw-bolder fs-3"></i> EMPLOYEE EXCEL FILE IMPORTED DETAILS AND ERROR LOG</h2>
+
+              </div>
+
+              <!-- Modal body -->
+              <div class="table-responsive">
+                <div class="card card-body m-1 shadow-lg p-3 mb-5 bg-white rounded">
+                  <table id="" class="table table-striped table-row-bordered gy-5 gs-7">
+                    <thead>
+                      <tr class="fw-bolder fs-5 text-nowrap bg-lightblue text-blue align-middle"> 
+                        <th></th>             
+                        <th style="font-size:11px;">S.No</th>
+                        <th style="font-size:11px;">Document name</th>
+                        <th style="font-size:11px;">Updated by</th>            
+                        <th style="font-size:11px;">Updated Time</th>
+                        <th style="font-size:11px;">Import Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of Document_list; let i=index;">
+                        <td (click)="ondetail(data.document_name)" (click)="data.isExpand = !data.isExpand">
+                            <i *ngIf="!data.isExpand" class="bi-chevron-right"></i>
+                            <i *ngIf="data.isExpand" class="bi-chevron-up"></i>
+                        </td>
+                      <td style="font-size:11px;">{{i+1}}</td>
+                      <td style="font-size:11px;">{{data.document_name}}</td>
+                      <td style="font-size:11px;">{{data.updated_by}}</td>            
+                      <td style="font-size:11px;">{{data.uploaded_date}}</td>
+                      <td style="font-size:11px;">{{data.importcount}}</td>
+                      <td *ngIf="data.isExpand" >
+                        <br> <br> <br>
+                        <div class="table-responsive" style="margin-left:-850px;">
+                            <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                                <table id="" 
+                                    class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                    <thead>
+                                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                            <th>User Code</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Remark</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr  *ngFor="let data1 of Documentdtl_list; let i=index;">
+                                            <td>{{data1.user_code}}</td>
+                                            <td>{{data1.first_name}}</td>
+                                            <td>{{data1.last_name}}</td>                                           
+                                            <td>{{data1.remarks}}</td>
+                                        </tr> 
+                                 </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>     
+                    </tr>
+                     </tbody>
+                     </table>
+                     <div class="text-center my-4">
+                      <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal" (click)="onclose()">
+                        <i class="fas fa-close text-white"></i> &nbsp;Close
+                    </button>
+                   </div>
+                     </div>
+
+                    
+                     </div>
+                    
+          </div>
+      </div>
+
+  </div>
+</form>

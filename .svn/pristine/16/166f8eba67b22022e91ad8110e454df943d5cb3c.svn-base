@@ -1,0 +1,210 @@
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { AES, enc } from 'crypto-js';
+
+interface IProposal {
+  proposal_gid: string;
+  template_gid: string;
+  proposal_name: string;
+  raiseproposal_list: string;
+  enquiry_gid: string;
+  customer_name: any;
+
+  template_name: string;
+  proposal_document :string;
+}
+
+@Component({
+  selector: 'app-smr-trn-raiseproposal',
+  templateUrl: './smr-trn-raiseproposal.component.html',
+  styleUrls: ['./smr-trn-raiseproposal.component.scss']
+})
+export class SmrTrnRaiseproposalComponent {
+  file!: File;
+  data: any;
+  proposal!: IProposal;
+  enquiry_gid: any;
+  reactiveForm!: FormGroup;
+  document_list: any[] = [];
+  responsedata: any;
+  raiseproposal_list: any;
+  GetDocumentType: any;
+  postproposal_list :any;
+  proposal_list: any;
+  sample: any;
+  proposalsummary_list : any;
+
+
+  constructor(private renderer: Renderer2, private el: ElementRef, public service: SocketService, private ToastrService: ToastrService, private router: Router, private route: ActivatedRoute) {
+    this.proposal = {} as IProposal;
+
+  }
+  ngOnInit(): void {
+    this.reactiveForm = new FormGroup({
+      proposal_gid: new FormControl(''),
+      enquiry_gid: new FormControl(''),
+      proposal_name: new FormControl(this.proposal.proposal_name, [
+        Validators.required,
+      ]),
+      file: new FormControl(''),
+      customer_name: new FormControl(null),
+      proposal_document: new FormControl(''),
+      template_name : new FormControl('')
+      
+    });
+    // var api = 'SmrTrnCustomerEnquiry/GetDocumentType';
+    // this.service.get(api).subscribe((result: any) => {
+    //   this.responsedata = result;
+    //   this.document_list = this.responsedata.document_list;
+      
+
+    // });
+  
+
+
+    debugger
+    const enquiry_gid = this.route.snapshot.paramMap.get('enquiry_gid');
+    this.enquiry_gid = enquiry_gid;
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.enquiry_gid, secretKey).toString(enc.Utf8);
+    console.log(deencryptedParam)
+    this.GetSmrTrnRaiseProposal(deencryptedParam)
+   
+    
+  }
+  
+  GetSmrTrnRaiseProposal(enquiry_gid: any) {
+    debugger
+    var url1 = 'SmrTrnCustomerEnquiry/GetSmrTrnRaiseProposal'
+    let param = {
+      enquiry_gid: enquiry_gid
+    }
+    this.service.getparams(url1, param).subscribe((result: any) => {
+      this.proposal_list = result.proposal_list;
+      this.reactiveForm.get("customer_name")?.setValue(this.proposal_list[0].customer_name);
+      this.reactiveForm.get("enquiry_gid")?.setValue(this.proposal_list[0].enquiry_gid);
+      this.reactiveForm.get("customer_gid")?.setValue(this.proposal_list[0].customer_gid);
+      this.reactiveForm.get("document_path")?.setValue(this.proposal_list[0].document_path);
+
+    });
+  
+  }
+  GetProposalSummary() {
+    var url = 'SmrTrnCustomerSummary/GetProposalSummary'
+    this.service.get(url).subscribe((result: any) => {
+      $('#proposalsummary_list').DataTable().destroy();
+      this.responsedata = result;
+      this.proposalsummary_list = this.responsedata.Getproposal;
+      setTimeout(() => {
+        $('#proposalsummary_list').DataTable();
+      }, 1);
+  
+  
+    })
+    
+    
+  }
+   
+  get proposal_name() {
+    return this.reactiveForm.get('proposal_name')!;
+  }
+
+
+  onupload() {
+    console.log(this.reactiveForm.value)
+    this.proposal = this.reactiveForm.value;  
+
+      if (true) {
+      let formData = new FormData();
+      if (this.file != null && this.file != undefined) {
+        formData.append("file", this.file, this.file.name);
+       
+        
+        var api = 'SmrTrnCustomerEnquiry/Postpropsal'
+        this.service.post(api, formData).subscribe((result: any) => {
+          this.responsedata = result;
+          if (result.status == false) {
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            this.ToastrService.success(result.message)
+          }
+        });
+      }
+      this.reactiveForm.reset();
+      
+    }  
+    return;
+  } 
+  
+
+  validate() {
+    debugger
+    this.proposal = this.reactiveForm.value;
+    if (this.proposal.proposal_name != null) {
+      let formData = new FormData();
+      if (this.file != null && this.file != undefined) {
+        debugger
+        formData.append("proposal_name", this.proposal.proposal_name);
+        
+
+        var api = 'SmrTrnCustomerEnquiry/Postpropsal'
+        this.service.postfile(api, formData).subscribe((result: any) => {
+          debugger
+          this.responsedata = result;
+          if (result.status == false) {
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            this.router.navigate(['/smr/SmrTrnRaiseproposal']);
+            this.ToastrService.success(result.message)
+          }
+        });
+
+      }
+      else {
+        var api7 = 'SmrTrnCustomerEnquiry/Postpropsal'
+
+        this.service.post(api7, this.proposal).subscribe((result: any) => {
+
+          if (result.status == false) {
+            this.ToastrService.warning(result.message)
+          }
+          else {
+            this.router.navigate(['/smr/SmrTrnRaiseproposal']);
+            this.ToastrService.success(result.message)
+          }
+          this.responsedata = result;
+        });
+      }
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+    return;
+
+
+
+  }
+  onSubmit() {
+
+    console.log(this.reactiveForm)
+    var api = 'SmrTrnCustomerEnquiry/Postpropsal';
+    this.service.post(api, this.reactiveForm.value).subscribe((result: any) => {
+      this.router.navigate(['/smr/SmrTrnRaiseproposal']);
+    },
+
+    );
+
+  }
+
+  onChange2(event:any) {
+    this.file =event.target.files[0];
+    
+  
+
+}}

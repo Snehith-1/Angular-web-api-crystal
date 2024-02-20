@@ -1,0 +1,34 @@
+﻿using ems.sales.DataAccess;
+using ems.sales.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.sales.Controllers
+{
+    [RoutePrefix("api/SmrTrnSalesorder")]
+    [Authorize]
+    public class SmrTrnSalesorderController  : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaSmrTrnSalesorder objsales = new DaSmrTrnSalesorder();
+        // Module Summary
+        [ActionName("GetSmrTrnSalesordersummary")]
+        [HttpGet]
+        public HttpResponseMessage GetSmrTrnSalesordersummary()
+        {
+            MdlSmrTrnSalesorder values = new MdlSmrTrnSalesorder();
+            objsales.DaGetSmrTrnSalesordersummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+    }
+}

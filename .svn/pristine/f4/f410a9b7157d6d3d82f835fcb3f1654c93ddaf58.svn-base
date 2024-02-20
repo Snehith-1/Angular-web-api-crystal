@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EmsInventoryRoutingModule } from './ems.inventory-routing.module';
+import { ImsTrnOpeningstockSummaryComponent } from './Component/ims-trn-openingstock-summary/ims-trn-openingstock-summary.component';
+import { ImsTrnIssuematerialSummaryComponent } from './Component/ims-trn-issuematerial-summary/ims-trn-issuematerial-summary.component';
+import { ImsTrnStockadjustmentSummaryComponent } from './Component/ims-trn-stockadjustment-summary/ims-trn-stockadjustment-summary.component';
+
+
+@NgModule({
+  declarations: [
+    ImsTrnOpeningstockSummaryComponent,
+    ImsTrnIssuematerialSummaryComponent,
+    ImsTrnStockadjustmentSummaryComponent,
+  ],
+  imports: [
+    CommonModule,
+    EmsInventoryRoutingModule
+  ]
+})
+export class EmsInventoryModule { }

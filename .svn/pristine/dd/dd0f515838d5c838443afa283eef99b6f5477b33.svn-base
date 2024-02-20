@@ -1,0 +1,139 @@
+
+<div class="card card-bordered">
+    <div class="card-header  d-flex justify-content-center " style="background-color:#dfdede">
+        <h1 class="card-title fw-bold fs-3">System Dashboard</h1>
+    </div>
+
+    <div class="d-flex flex-wrap flex-row  ">
+         <div class="col-7 card m-3 ms-5 shadow-lg p-3 mb-5 bg-white rounded">
+
+          <div class="me-2">
+            <span class="fw-bolder text-gray-800 d-block fs-4 p-3">Month Wise Employees Summary</span>
+            <span class="text-gray-400 fw-bold p-3">Feb - Sep 2023</span>
+            <div class="card-body align-items-center position-relative ">
+           
+              <div class="d-flex flex-center me-5 pt-2">
+                <div id="kt_card_widget_17_chart">  </div>
+              </div>
+                          
+
+             
+         <div class="d-flex flex-wrap ">
+
+             
+                <div class="d-flex   fw-semibold  align-items-center " >
+             
+                  <div class=" w-10px h-10px p-1 me-3"  style="background-color: #06a813"></div>
+                
+                  <div class="text-gray-500 flex-grow-1 me-4">Active Users</div>
+                  
+                </div>
+                              
+                <div class="d-flex  fw-semibold align-items-center my-3" >
+              
+                  <div class=" w-10px h-10px p-1 me-3"  style="background-color: #eeac1f" ></div>
+                  <div class="text-gray-500 flex-grow-1 me-4">Inactive Users</div>                  
+                </div>
+                <div class="d-flex   fw-semibold align-items-center" >
+                  <div class=" w-10px h-10px p-1 me-3" style="background-color: #047beb"></div>
+          
+                  <div class="text-gray-500 flex-grow-1 me-4">Onboarding</div>
+              
+                </div>
+
+                <div class="d-flex fw-semibold align-items-center" >
+                  <div class=" w-10px h-10px p-1 me-3" style="background-color: #e63423"></div>
+          
+                  <div class="text-gray-500 flex-grow-1 me-4">Relieving</div>              
+                </div>
+              </div>
+            </div>
+          </div>
+         
+            <div #chartRef id="kt_charts_widget_1_chart">
+
+                <apx-chart
+            
+                  [series]="chartOptions.series"
+                  [chart]="chartOptions.chart"
+                  [xaxis]="chartOptions.xaxis"
+                  [yaxis]="chartOptions.yaxis"
+                  [dataLabels]="chartOptions.dataLabels"
+                  [stroke]="chartOptions.stroke"
+                  [legend]="chartOptions.legend"
+                  [fill]="chartOptions.fill"
+                  [states]="chartOptions.states"
+                  [tooltip]="chartOptions.tooltip"
+                  [colors]="chartOptions.colors"
+                  [markers]="chartOptions.markers"
+                  [plotOptions]="chartOptions.plotOptions"
+                ></apx-chart>
+            
+              </div> 
+                       
+    </div>
+   <div class="col-12 col-lg-4 card m-3 ms-0 ms-lg-12 shadow-lg p-3 mb-5 bg-white rounded"> 
+ 
+       <div class="card-header justify-content-center "style="background-color:#dfdede">
+        <h3 class="card-title fs-4 fw-bold">Masters</h3>
+        <div class="card-toolbar"> </div>
+       </div>
+   
+
+<div class="row d-flex flex-wrap m-4 ">
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(192, 231, 218);">
+    <p class="text-black mt-3 fw-bold fs-6 "> Employees </p>
+
+  </div>
+
+  <div class=" col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "  style="background-color: rgb(239, 203, 245);">
+    <p class="text-black mt-3 fw-bold fs-6"> Other Application</p>
+  
+  </div>
+
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(198, 224, 231);">
+    <p href="#" class="text-black fw-bold mt-3 fs-6">Trigger User </p>
+
+  </div>
+
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded "  style="background-color: rgb(245, 199, 199);">
+    <p href="#" class="text-black fw-bold mt-3 fs-6"> Blood Group </p>
+  
+  </div>
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded "  style="background-color: rgb(245, 238, 197);">
+    <p href="#" class="text-black mt-3 fw-bold fs-6"> Base Location </p>
+  
+  </div>
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(236, 194, 234);">
+    <p href="#" class="text-black mt-3 fw-bold fs-6"> Salutation </p>
+  
+  </div>
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(199, 194, 245);">
+    <p href="#" class="text-black fw-bold mt-3 fs-6"> Projects </p>
+
+  </div>
+
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(204, 240, 203);">
+    <p href="#" class="text-black fw-bold mt-3 fs-6"> Physical Status</p>
+ 
+  </div>
+
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(199, 213, 241);">
+    <p href="#" class="text-black fw-bold mt-3 fs-6"> Calendar Group</p>
+
+  </div>
+  <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="background-color: rgb(243, 204, 220);">
+    <p class="text-black fw-bold mt-3 fs-6"> Client Role</p>
+
+  </div>
+
+
+</div>
+   
+    
+   </div>
+  </div>
+  
+</div>
+
+

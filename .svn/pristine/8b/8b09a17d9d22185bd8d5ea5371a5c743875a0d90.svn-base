@@ -1,0 +1,44 @@
+import { HttpClient, HttpEvent, HttpHandler, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SocketService {
+  constructor(private http:HttpClient) { 
+  }
+  get(api:string){
+    return this.http.get(api);
+    
+  } 
+  getparams(api:string, params:any){
+    return this.http.get(api,{params:params});
+  }
+   //////Snehith code Start//////////////////
+  postfile(api:string, params:any){
+ 
+
+    return this.http.post(api,params);
+  }
+ 
+  //////Snehith code End//////////////////
+  post(api:string, params:any){
+    return this.http.post(api,params);
+  }
+  generateexcel(api:string){
+    return this.http.get(api);
+
+  }
+
+ 
+  downloadfile(path:any, file_name:any){
+    var params ={
+      file_path: path,
+      file_name: file_name
+    }
+    return this.http.post('azurestorage/DownloadDocument', params);
+  }
+}

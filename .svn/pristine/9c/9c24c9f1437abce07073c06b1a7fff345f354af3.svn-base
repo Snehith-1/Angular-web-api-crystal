@@ -1,0 +1,80 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AES } from 'crypto-js';
+
+@Component({
+  selector: 'app-smr-trn-customer-corporate',
+  templateUrl: './smr-trn-customer-corporate.component.html',
+  styleUrls: ['./smr-trn-customer-corporate.component.scss']
+})
+export class SmrTrnCustomerCorporateComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  customercount_list :any
+  parameter: any;
+  parameterValue: any;
+  parameterValue1: any;
+  smrcustomer_list: any[] = [];
+  getData: any;
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, private router: ActivatedRoute, private route: Router, public service: SocketService) {
+
+    
+  }
+  ngOnInit(): void {
+    this.GetSmrTrnCorporateSummary();
+
+}
+//// Summary Grid//////
+// GetSmrTrnCustomerSummary() {
+//   var url = 'SmrTrnCustomerSummary/GetSmrTrnCustomerSummary'
+//   this.service.get(url).subscribe((result: any) => {
+//     $('#smrcustomer_list').DataTable().destroy();
+//     this.responsedata = result;
+//     this.smrcustomer_list = this.responsedata.smrcustomer_list;
+//     setTimeout(() => {
+//       $('#smrcustomer_list').DataTable();
+//     }, 1);
+
+
+//   })
+  
+  
+// }
+GetSmrTrnCorporateSummary() {
+  var url = 'SmrTrnCustomerSummary/GetSmrTrnCorporateSummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#smrcustomer_list').DataTable().destroy();
+    this.responsedata = result;
+    this.smrcustomer_list = this.responsedata.smrcustomer_list;
+    setTimeout(() => {
+      $('#smrcustomer_list').DataTable();
+    }, 1);
+
+
+  })
+  
+  
+  var url  = 'SmrTrnCustomerSummary/GetSmrTrnCustomerCount';
+  this.service.get(url).subscribe((result:any) => {
+  this.responsedata = result;
+  this.customercount_list = this.responsedata.customercount_list; 
+  console.log(this.customercount_list,'testdata');
+  });
+
+}
+
+
+onview(){}
+onedit(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.route.navigate(['/smr/SmrTrnCustomeredit',encryptedParam]) 
+}
+onaddinfo(){}
+openModaldelete(){}
+
+}

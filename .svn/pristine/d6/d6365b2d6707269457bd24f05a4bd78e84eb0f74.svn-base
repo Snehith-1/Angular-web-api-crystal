@@ -1,0 +1,17 @@
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.calendar-filter {
+    display: flex;
+    align-items: center;
+}
+
+/* Add styles for your select elements here */
+.form-control {
+    margin-right: 10px; /* Adjust as needed for spacing between the selects */
+}

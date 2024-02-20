@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Edit Terms and Conditions</h3>
+        </div>
+    </div>
+
+    <div class="card m-3">
+        <form [formGroup]="templateformedit">
+            
+
+            <input formControlName="termsconditions_gid" hidden type="text" class="form-control form-control-lg form-control-solid bg-white custom-input mb-3 mb-lg-0 borderc-secondary" name="template_name" />
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Template Name</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="template_name" [ngStyle]="{'border-color': template_name.invalid && template_name.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="template_name.invalid && (template_name.dirty || template_name.touched)">
+                        <div *ngIf="template_name.invalid && template_name.touched" class="invalid-feedback">
+                            <div *ngIf="template_name.hasError('required')" class="text-red ms-3 fs-5">* Template name is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Template Type</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <select class="form-select" formControlName="template_type"
+                        placeholder="Template Type"  pattern="^(?!\s*$).+"  name="payment_terms" required>
+                          <option value="General">General</option>
+                          <option value="Payment Terms">Payment Terms</option>
+                          <option value="Delivery Details">Delivery Details</option>
+                        </select>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6 ms-3">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>Template Content</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <angular-editor [config]="config" formControlName="template_content"></angular-editor>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-6">
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4" (click)="templateupdate()">   
+                        <i class="bi bi-check-square fs-7 me-1"></i>
+                        Update
+                    </button>
+        
+                    <button class="btn-primary btn-sm text-white me-4" routerLink="/pmr/PmrMstTermsconditionssummary">
+                        <i class="bi bi-arrow-left-square fs-7 me-1"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>

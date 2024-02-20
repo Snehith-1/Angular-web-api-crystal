@@ -1,0 +1,138 @@
+<div class="card rounded-top">
+  <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+    <h3 class="fw-bolder text-white"><i class="fa-solid fa-arrows-up-to-line fs-6"></i> &nbsp;&nbsp;&nbsp; Raise Proposal
+    </h3>
+  </div>
+  <form [formGroup]="reactiveForm" #form="ngForm">
+          <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12">
+              <span class="font-bold">Proposal Ref No</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <span style="color:brown"><strong>New Ref.No.</strong></span>
+
+              </div>
+            </div>
+            
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12">
+              <span class="font-bold">Lead </span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input type="text " readonly formControlName="customer_name" class="
+                  form-control form-control-lg form-control-solid borderc-secondary
+                  custom-input
+                  mb-3 mb-lg-0
+                  bg-white
+                  custom-input
+                " placeholder=""  required style="height:40px;" />
+
+              </div>
+            </div>
+
+            <!-- </div> -->
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12">
+              <span class="font-bold required "> Proposal</span> 
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                <input type="text" formControlName="proposal_name" class="
+                    form-control form-control-lg form-control-solid borderc-secondary
+                    custom-input
+                    mb-3 mb-lg-0
+                    bg-white
+                    custom-input
+                  " placeholder="Proposal " name="proposal_name" required  style="height:40px;"/>
+                  <div *ngIf=" proposal_name.invalid &&
+                  (proposal_name.dirty || proposal_name.touched)
+           " class="text-red">
+              <div *ngIf="proposal_name.errors?.['required']">
+                  Proposal is required.
+              </div>
+            </div>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex flex-row m-6 flex-wrap">
+
+            <div class="col-12 col-lg-4 col-md-6 mt-2 col-sm-12"><span class="font-bold required">Attachment</span>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <input (change)="onChange2($event)" accept=".pdf, .xlsx, .xls, .jpg, .jpeg, .png" type="file"
+                           #fileInput class="form-control form-control-lg form-control-solid bg-white mb-3 mb-lg-0 borderc-secondary custom-input"
+                           name="fName" formControlName="proposal_document" style="height:40px;" />
+              </div>
+            </div>
+          </div>
+
+
+
+          
+          <div class="text-center my-4">
+            <button class="btn-success btn-sm text-white me-4 mt-3-center" [disabled]="reactiveForm.invalid" [ngClass]="{
+            'primary-button': !reactiveForm.invalid,
+            'secondary-button': reactiveForm.invalid
+          }" data-bs-dismiss="modal" (click)="onSubmit()"><i class="fas fa-check text-white fs-5"></i>
+                &nbsp;Submit
+            </button>
+            <button class="btn-primary btn-sm text-white me-4 mt-3-center"  routerLink="/smr/SmrTrnCustomerenquirySummary">
+                <i class="fas fa-arrow-left fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back
+            </button>
+        </div>
+
+
+
+      <div class="card m-3">
+        <div class="m-3 mt-5 border card">
+          <div class="table-responsive">
+           <!-- <div *ngFor="let data of postproposal_list;">  -->
+            <table id="proposalsummary_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+              <thead>
+                <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                  <th>Date</th>
+                  <th>Proposal Code</th>
+                  <th>Proposal </th>
+                  <th>Uploaded By</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr  *ngFor="let data of proposalsummary_list;">
+                  <td>{{data.created_date}}</td>
+                  <td>{{data.proposal_gid}}</td>
+                  <td>{{data.template_name}}</td>
+                  <td>{{data.created_by}}</td>
+                  <td>
+                    <!-- <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                   <i class="fas fa-download text-white fs-5 "></i></button>  -->
+
+                   <button title="Download" type="button"
+                   class="btn-danger btn-sm text-white me-4"
+                   (click)="downloadImage(data)"
+                   class="btn download-button">
+                   <span class="fa-solid fa-download text-white fs-4"
+                       style="color: #097495;"></span>
+               </button>
+
+
+
+
+
+
+
+
+
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          <!-- </div> -->
+        </div>
+        </div>
+      </div>
+   
+
+  </form>
+</div>

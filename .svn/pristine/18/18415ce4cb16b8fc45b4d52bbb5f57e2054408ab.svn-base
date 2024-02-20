@@ -1,0 +1,158 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ActivatedRoute } from '@angular/router';
+import { AES, enc } from 'crypto-js';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+export class IAssign {
+  mailsendchecklist: string[] = [];
+  mailmanagement_gid: string = "";
+  temp_mail_gid: string = "";
+  leadbank_gid: string = "";
+
+}
+
+@Component({
+  selector: 'app-crm-smm-mailcampaignsend',
+  templateUrl: './crm-smm-mailcampaignsend.component.html',
+  styleUrls: ['./crm-smm-mailcampaignsend.component.scss']
+})
+export class CrmSmmMailcampaignsendComponent {
+  mailtemplate_list: any;
+  responsedata: any;
+  mailtemplatesendsummary_list: any;
+  temp_mail_gid: any;
+  CurObj: IAssign = new IAssign();
+  selection = new SelectionModel<IAssign>(true, []);
+  pick: Array<any> = [];
+  mailsummarylist: any[] = [];
+  reactiveForm: any;
+  template_name: any;
+  mailtemplateview_list: any;
+  mail_from: any;
+  sub: any;
+  body: any;
+  created_date: any;
+  filteredData: IAssign[] = [];
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, public service: SocketService, private router: ActivatedRoute, private route: Router, private NgxSpinnerService: NgxSpinnerService) {
+ 
+  }
+  ngOnInit(): void {
+    const temp_mail_gid = this.router.snapshot.paramMap.get('temp_mail_gid');
+    this.temp_mail_gid = temp_mail_gid;
+    const secretKey = 'storyboarderp';
+    const deencryptedParam = AES.decrypt(this.temp_mail_gid, secretKey).toString(enc.Utf8);
+    this.temp_mail_gid = deencryptedParam;
+    this.GetMailTemplateSendSummary();
+    this.GetMailView(deencryptedParam);  
+ 
+  }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.mailtemplatesendsummary_list.length;
+    // console.log('numselected',numSelected)
+    // console.log('numrows',numRows)
+    return numSelected === numRows;
+  
+  }
+ 
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.mailtemplatesendsummary_list.forEach((row: IAssign) => this.selection.select(row));
+      //console.log('list',this.mailtemplatesendsummary_list)
+  }
+  GetMailTemplateSendSummary() {
+    this.NgxSpinnerService.show();
+    let param = {
+      temp_mail_gid: this.temp_mail_gid,
+    }
+   
+    var api = 'MailCampaign/MailTemplateSendSummary';
+    this.service.getparams(api,param).subscribe((result: any) => {
+      $('#mailtemplatesendsummary_list').DataTable().destroy();
+      this.responsedata = result;
+      this.mailtemplatesendsummary_list = this.responsedata.mailtemplatesendsummary_list;
+      this.template_name= this.mailtemplatesendsummary_list[0].template_name;
+      this.NgxSpinnerService.hide();
+      setTimeout(() => {
+        $('#mailtemplatesendsummary_list').DataTable();
+      }, 1);
+    });
+ 
+  }
+ 
+  public onsend(): void {
+    this.selection.selected.forEach(s => s.temp_mail_gid);
+    this.pick = this.selection.selected
+    let list = this.pick
+    this.CurObj.temp_mail_gid = this.temp_mail_gid;
+    this.CurObj.mailsendchecklist = list
+    // if (this.CurObj.mailsendchecklist.length != 0) {
+    //   var url = 'MailCampaign/SendTemplate'
+    //   this.service.post(url,this.CurObj).subscribe((result: any) => {
+ 
+    //     if (result.status == false) {
+    //       window.scrollTo({
+ 
+    //         top: 0, // Code is used for scroll top after event done
+ 
+    //       });
+    //       this.ToastrService.warning(result.message)
+    //       this.GetMailTemplateSendSummary();
+    //       this.reactiveForm.reset();
+ 
+    //     }
+    //     else {
+    //       window.scrollTo({
+ 
+    //         top: 0, // Code is used for scroll top after event done
+ 
+    //       });
+    //       this.ToastrService.success(result.message)
+    //       this.route.navigate(['/crm/CrmSmmMailcampaignsummary'])
+    //       this.reactiveForm.reset();
+ 
+    //     }
+    //     this.GetMailTemplateSendSummary();
+    //     this.reactiveForm.reset();
+ 
+    //   });
+ 
+    // }
+    // else {
+    //   this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    // }
+ 
+  }
+ 
+  onback() {
+    this.route.navigate(['/crm/CrmSmmMailcampaignsummary']);
+ 
+  }
+ 
+  
+  GetMailView(temp_mail_gid:any) {
+    this.NgxSpinnerService.show();
+    var url = 'MailCampaign/MailTemplateView';
+    let param = {
+      temp_mail_gid : temp_mail_gid 
+    }
+    this.service.getparams(url,param).subscribe((result: any) => {
+      this.mailtemplateview_list = result.mailtemplate_list;
+      this.mail_from = this.mailtemplateview_list[0].mail_from;
+      this.template_name = this.mailtemplateview_list[0].template_name
+      this.body = this.mailtemplateview_list[0].body;
+      this.sub = this.mailtemplateview_list[0].sub;
+      this.created_date = this.mailtemplateview_list[0].created_date;
+      this.NgxSpinnerService.hide();
+    });
+}
+
+}
+

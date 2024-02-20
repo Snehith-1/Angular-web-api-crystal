@@ -1,0 +1,129 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+@Component({
+  selector: 'app-pmr-trn-grnqcchecker',
+  templateUrl: './pmr-trn-grnqcchecker.component.html',
+  styleUrls: ['./pmr-trn-grnqcchecker.component.scss']
+})
+export class PmrTrnGrnqccheckerComponent {
+  GetGrnQcChecker_list : any;
+  GetGrnQcChecker_lists : any;
+  file: any;
+  reactiveForm!: FormGroup;
+  vendor: any;
+  responsedata: any;
+  grn_gid: any;
+  grninward: any;
+  grngid: any;
+  journal_refno : any;
+  grn_remarks : any;
+  grn_reference: any;
+  ToastrService: any;
+
+  constructor(private route:ActivatedRoute,private router:Router,ToastrService:ToastrService,public service :SocketService  ) { 
+
+  }
+  ngOnInit(): void {
+  
+    
+    debugger
+    
+        this.grninward= this.route.snapshot.paramMap.get('grn_gid');
+        const secretKey = 'storyboarderp';
+        const deencryptedParam = AES.decrypt(this.grninward,secretKey).toString(enc.Utf8);
+        console.log(deencryptedParam)
+        this.GetPmrTrnGrnQcchecker(deencryptedParam);    
+      }
+      GetPmrTrnGrnQcchecker(grn_gid: any) {
+        var url='PmrTrnGrnQcchecker/GetPmrTrnGrnQcchecker'
+        let param = {
+          grn_gid : grn_gid
+        }
+        this.service.getparams(url,param).subscribe((result:any)=>{
+        this.  GetGrnQcChecker_list = result.GetGrnQcChecker_list;
+        //console.log(this.employeeedit_list)
+    
+      });
+
+      this.grninward= this.route.snapshot.paramMap.get('grn_gid');
+        const secretKey = 'storyboarderp';
+        const deencryptedParam = AES.decrypt(this.grninward,secretKey).toString(enc.Utf8);
+        console.log(deencryptedParam)
+        this.GetPmrTrnGrnQccheckerpo(deencryptedParam);    
+      }
+      GetPmrTrnGrnQccheckerpo(grn_gid: any) {
+        var url='PmrTrnGrnQcchecker/GetPmrTrnGrnQccheckerpo'
+        let param = {
+          grn_gid : grn_gid
+        }
+        this.service.getparams(url,param).subscribe((result:any)=>{
+        this.  GetGrnQcChecker_lists = result.GetGrnQcChecker_lists;
+        //console.log(this.employeeedit_list)
+    
+      });
+      
+    
+      }
+
+      public validate(): void {
+        console.log(this.reactiveForm.value)
+        this.grninward = this.reactiveForm.value;
+        if(   this.grninward.qty_delivered !=null && this.grninward.Qty_Shortage !=null  && this.grninward.Qty_Delivered !=null){
+          let formData = new FormData();
+          if(this.file !=null &&  this.file != undefined){
+            
+         formData.append("Qty_Rejected", this.grninward.Qty_Rejected);
+         formData.append("Qty_Shortage", this.grninward.Qty_Shortage);
+         formData.append("Qty_Delivered", this.grninward.Qty_Delivered);
+
+             for (const item of this.grninward) {
+               const Qty_Rejected = parseFloat(item.Qty_Rejected);
+               const Qty_Shortage = parseFloat(item.Qty_Shortage);
+               const Qty_Delivered = parseFloat(item.Qty_Delivered);
+         
+               if (!isNaN(Qty_Rejected) && Qty_Rejected !== 0) {
+                 if (Qty_Rejected > Qty_Delivered) {
+                   this.grninward = `Qty Rejected cannot be greater than Qty Delivered for the product ${item.productName}`;
+                   return;
+                 }
+                 this.grninward = 'GRN QC Rejected';
+               } else if (Qty_Rejected === 0 || item.Qty_Rejected === '') {
+                 item.Qty_Rejected = '0.00';
+               } else {
+                 this.grninward = this.grninward.GetErrMsg('PMR_WAR_160');
+                 return;
+               }
+         
+               if (!isNaN(Qty_Shortage) && Qty_Shortage !== 0) {
+                 if (Qty_Shortage > Qty_Delivered) {
+                   this.grninward = `Qty Shortage cannot be greater than Qty Delivered for the product ${item.productName}`;
+                   return;
+                 }
+                 this.grninward = 'GRN Shortage';
+               } else if (Qty_Shortage === 0 || item.Qty_Shortage === '') {
+                 item.Qty_Shortage = '0.00';
+               } else {
+                 this.grninward = this.grninward.GetErrMsg('PMR_WAR_160');
+                 return;
+               }
+             }
+            }
+          }
+        }
+         
+    
+    
+    
+  
+  onChange2(event: any) {
+    this.file = event.target.files[0];
+
+  }
+  
+  
+
+}

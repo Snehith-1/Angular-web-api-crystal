@@ -1,0 +1,337 @@
+import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { formatPercent } from '@angular/common';
+import { AES, enc } from 'crypto-js';
+import { Options } from 'flatpickr/dist/types/options';
+import flatpickr from 'flatpickr';
+
+@Component({
+  selector: 'app-smrtrnquotetoorder',
+  templateUrl: './smrtrnquotetoorder.component.html',
+  styleUrls: ['./smrtrnquotetoorder.component.scss']
+})
+export class SmrtrnquotetoorderComponent {
+
+  OrderForm: FormGroup | any;
+  productform: FormGroup | any;
+  SO_list: any [] = [];
+  user_list: any [] = [];
+  currency_list: any [] = [];
+  product_list: any [] = [];
+  tax_list: any [] = [];
+  tax2_list: any [] = [];
+  tax3_list: any [] = [];
+  tax4_list: any [] = [];
+  QSOproductlist: any [] = [];
+  mdlTaxName1:any;
+  mdlTaxName2:any;
+  mdlTaxName3:any;
+  mdlProductName:any;
+  salesorder: any;
+
+  constructor(private http:HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private service: SocketService, private ToastrService: ToastrService) {
+    }
+
+    
+  ngOnInit(): void {
+
+    this.OrderForm = new FormGroup({
+      quotation_gid: new FormControl(''),
+      salesorder_date: new FormControl(''),
+      branch_name: new FormControl(''),
+      quotation_referenceno1: new FormControl(''),
+      customer_name: new FormControl(''),
+      so_referencenumber: new FormControl(''),
+      customercontact_names: new FormControl(''),
+      customer_mobile: new FormControl(''),
+      customer_email: new FormControl(''),
+      customer_address: new FormControl(''),
+      so_remarks: new FormControl(''),
+      shipping_to: new FormControl(''),
+      user_gid: new FormControl(''),
+      user_name: new FormControl(''),
+      start_date: new FormControl(''),
+      end_date: new FormControl(''),
+      freight_terms: new FormControl(''),
+      payment_terms: new FormControl(''),
+      currencyexchange_gid: new FormControl(''),
+      currency_code: new FormControl(''),
+      exchange_rate: new FormControl(''),
+      product_gid : new FormControl(''),
+      product_name: new FormControl(''),
+      productgroup_name: new FormControl(''),
+      productuom_name: new FormControl(''),
+      product_code: new FormControl(''),
+      product_price: new FormControl(''),
+      qty_quoted: new FormControl(''),
+      margin_percentage: new FormControl(''),
+      margin_amount: new FormControl(''),
+      selling_price: new FormControl(''),
+      product_requireddate: new FormControl(''),
+      product_requireddateremarks: new FormControl(''),
+      tax_gid: new FormControl(''),
+      tax_name: new FormControl(''),
+      tax_amount: new FormControl(''),
+      tax_name2: new FormControl(''),
+      tax_amount2: new FormControl(''),
+      tax_name3: new FormControl(''),
+      tax_amount3: new FormControl(''),
+      price: new FormControl(''),
+      additional_discount: new FormControl(''),
+      freight_charges: new FormControl(''),
+      buyback_charges: new FormControl(''),
+      packing_charges: new FormControl(''),
+      insurance_charges: new FormControl(''),
+      roundoff: new FormControl(''),
+      Grandtotal: new FormControl(''),
+      addon_charge: new FormControl(''),
+      payment_days: new FormControl(''),
+      delivery_days: new FormControl(''),
+      total_price: new FormControl(''),
+      customerproduct_code: new FormControl(''),
+      total_amount: new FormControl(''),
+      tax_name4: new FormControl(''),
+    });
+ 
+    this.productform = new FormGroup ({
+      product_gid : new FormControl(''),
+      product_name: new FormControl(''),
+      productgroup_name: new FormControl(''),
+      productuom_name: new FormControl(''),
+      product_code: new FormControl(''),
+      product_price: new FormControl(''),
+      qty_quoted: new FormControl(''),
+      margin_percentage: new FormControl(''),
+      margin_amount: new FormControl(''),
+      selling_price: new FormControl(''),
+      product_requireddate: new FormControl(''),
+      product_requireddateremarks: new FormControl(''),
+      tax_gid: new FormControl(''),
+      tax_name: new FormControl(''),
+      tax_amount: new FormControl(''),
+      tax_name2: new FormControl(''),
+      tax_amount2: new FormControl(''),
+      tax_name3: new FormControl(''),
+      tax_amount3: new FormControl(''),
+      price: new FormControl(''),
+      additional_discount: new FormControl(''),
+      freight_charges: new FormControl(''),
+      buyback_charges: new FormControl(''),
+      packing_charges: new FormControl(''),
+      insurance_charges: new FormControl(''),
+      roundoff: new FormControl(''),
+      Grandtotal: new FormControl(''),
+      addon_charge: new FormControl(''),
+      payment_days: new FormControl(''),
+      delivery_days: new FormControl(''),
+      total_price: new FormControl(''),
+      customerproduct_code: new FormControl(''),
+      total_amount: new FormControl(''),
+      tax_name4: new FormControl(''),
+
+    })
+
+    //// Sales Dropdown ////
+
+    var url = 'SmrTrnQuotation/GetSalesDtl'
+    this.service.get(url).subscribe((result: any) =>{
+      this.user_list= result.GetSalesDtl;
+    });
+
+    //// Currency Dropdown ////
+    
+    var url = 'SmrTrnQuotation/GetCurrencyCodeDtl'
+    this.service.get(url).subscribe((result: any) =>{
+      this.currency_list= result.GetCurrencyCodeDtl;
+    });
+
+
+     //// Product Dropdown ////
+    
+     var url = 'SmrTrnQuotation/GetProductNamesDtl'
+     this.service.get(url).subscribe((result: any) =>{
+       this.product_list= result.GetProductNamesDtl;
+     });
+
+      //// Tax 1 Dropdown ////
+    
+      var url = 'SmrTrnQuotation/GetTaxOnceDtl'
+      this.service.get(url).subscribe((result: any) =>{
+        this.tax_list= result.GetTaxOnceDtl;
+      });
+
+       //// Tax 2 Dropdown ////
+    
+     var url = 'SmrTrnQuotation/GetTaxTwiceDtl'
+     this.service.get(url).subscribe((result: any) =>{
+       this.tax2_list= result.GetTaxTwiceDtl;
+     });
+
+      //// Tax 3 Dropdown ////
+    
+      var url = 'SmrTrnQuotation/GetTaxThriceDtl'
+      this.service.get(url).subscribe((result: any) =>{
+        this.tax3_list= result.GetTaxThriceDtl;
+      });
+
+
+       //// Tax 4 Dropdown ////
+    
+     var url = 'SmrTrnQuotation/GetTaxFourSDtl'
+     this.service.get(url).subscribe((result: any) =>{
+       this.tax4_list= result.GetTaxFourSDtl;
+     });
+
+     this.salesorder = this.route.snapshot.paramMap.get('quotation_gid');
+
+     const secretKey = 'storyboarderp';
+ 
+     const deencryptedParam = AES.decrypt(this.salesorder, secretKey).toString(enc.Utf8);
+ 
+ 
+ 
+     this.GetRaiseSOSummary(deencryptedParam);
+ 
+
+    
+  } 
+  
+
+  GetRaiseSOSummary(quotation_gid: any) {
+    debugger;
+    
+        var url = 'SmrTrnQuotation/GetRaiseSOSummary'
+    
+        let param = {
+    
+          quotation_gid: quotation_gid
+    
+        }
+    
+        this.service.getparams(url, param).subscribe((result: any) => {
+    
+          this.SO_list = result.SO_list;
+          this.OrderForm.get("quotation_gid")?.setValue(this.SO_list[0].quotation_gid);
+          this.OrderForm.get("salesorder_date")?.setValue(this.SO_list[0].salesorder_date);
+          this.OrderForm.get("branch_name")?.setValue(this.SO_list[0].branch_name);
+          this.OrderForm.get("quotation_referenceno1")?.setValue(this.SO_list[0].quotation_referenceno1);
+          this.OrderForm.get("customer_name")?.setValue(this.SO_list[0].customer_name);
+          this.OrderForm.get("so_referencenumber")?.setValue(this.SO_list[0].so_referencenumber);
+          this.OrderForm.get("customercontact_names")?.setValue(this.SO_list[0].customercontact_names);
+          this.OrderForm.get("customer_mobile")?.setValue(this.SO_list[0].customer_mobile);
+          this.OrderForm.get("customer_email")?.setValue(this.SO_list[0].customer_email);
+          this.OrderForm.get("customer_address")?.setValue(this.SO_list[0].customer_address);
+          this.OrderForm.get("so_remarks")?.setValue(this.SO_list[0].so_remarks);
+          this.OrderForm.get("shipping_to")?.setValue(this.SO_list[0].shipping_to);
+          this.OrderForm.get("user_name")?.setValue(this.SO_list[0].user_name);
+          this.OrderForm.get("start_date")?.setValue(this.SO_list[0].start_date);
+          this.OrderForm.get("end_date")?.setValue(this.SO_list[0].end_date);
+          this.OrderForm.get("freight_terms")?.setValue(this.SO_list[0].freight_terms);
+          this.OrderForm.get("payment_terms")?.setValue(this.SO_list[0].payment_terms);
+          this.OrderForm.get("currency_code")?.setValue(this.SO_list[0].currency_code);
+          this.OrderForm.get("exchange_rate")?.setValue(this.SO_list[0].exchange_rate);
+          this.OrderForm.get("product_name")?.setValue(this.SO_list[0].product_name);
+          this.OrderForm.get("productgroup_name")?.setValue(this.SO_list[0].productgroup_name);
+          this.OrderForm.get("customerproduct_code")?.setValue(this.SO_list[0].customerproduct_code);
+          this.OrderForm.get("product_code")?.setValue(this.SO_list[0].product_code);
+          this.OrderForm.get("productuom_name")?.setValue(this.SO_list[0].productuom_name);
+          this.OrderForm.get("product_price")?.setValue(this.SO_list[0].product_price);
+          this.OrderForm.get("qty_quoted")?.setValue(this.SO_list[0].qty_quoted);
+          this.OrderForm.get("margin_percentage")?.setValue(this.SO_list[0].margin_percentage);
+          this.OrderForm.get("margin_amount")?.setValue(this.SO_list[0].margin_amount);
+          this.OrderForm.get("selling_price")?.setValue(this.SO_list[0].selling_price);
+          this.OrderForm.get("product_requireddate")?.setValue(this.SO_list[0].product_requireddate);
+          this.OrderForm.get("product_requireddateremarks")?.setValue(this.SO_list[0].product_requireddateremarks);
+          this.OrderForm.get("tax_name")?.setValue(this.SO_list[0].tax_name);
+          this.OrderForm.get("tax_amount")?.setValue(this.SO_list[0].tax_amount);
+          this.OrderForm.get("tax_name2")?.setValue(this.SO_list[0].tax_name2);
+          this.OrderForm.get("tax_amount2")?.setValue(this.SO_list[0].tax_amount2);
+          this.OrderForm.get("tax_name3")?.setValue(this.SO_list[0].tax_name3);
+          this.OrderForm.get("tax_amount3")?.setValue(this.SO_list[0].tax_amount3);
+          this.OrderForm.get("price")?.setValue(this.SO_list[0].price);
+          this.OrderForm.get("payment_days")?.setValue(this.SO_list[0].payment_days);
+          this.OrderForm.get("delivery_days")?.setValue(this.SO_list[0].delivery_days);
+          this.OrderForm.get("total_price")?.setValue(this.SO_list[0].total_price);
+          this.OrderForm.get("tax_name4")?.setValue(this.SO_list[0].tax_name4);
+          this.OrderForm.get("total_amount")?.setValue(this.SO_list[0].total_amount);
+          this.OrderForm.get("addon_charge")?.setValue(this.SO_list[0].addon_charge);
+          this.OrderForm.get("additional_discount")?.setValue(this.SO_list[0].additional_discount);
+          this.OrderForm.get("freight_charges")?.setValue(this.SO_list[0].freight_charges);
+          this.OrderForm.get("buyback_charges")?.setValue(this.SO_list[0].buyback_charges);
+          this.OrderForm.get("packing_charges")?.setValue(this.SO_list[0].packing_charges);
+          this.OrderForm.get("insurance_charges")?.setValue(this.SO_list[0].insurance_charges);
+          this.OrderForm.get("roundoff")?.setValue(this.SO_list[0].roundoff);
+          this.OrderForm.get("Grandtotal")?.setValue(this.SO_list[0].Grandtotal);
+     
+        });
+      }
+
+
+      
+  get currency_code() {
+    return this.OrderForm.get('currency_code')!;
+  }
+
+  OnChangeCurrency(event: Event){
+
+  }
+
+  onCurrencyCodeChange(event: Event){
+
+  }
+
+  OnChangeTaxAmount1(){
+
+  }
+
+  OnChangeTaxAmount2(){
+
+  }
+
+  OnChangeTaxAmount3(){
+
+  }
+
+  prodtotalcal(){
+
+  }
+
+  GetOnChangeProductName(){
+
+    debugger;
+    let product_gid = this.productform.value.product_name.product_gid;
+    let param = {
+      product_gid: product_gid
+    }
+    var url = 'SmrTrnQuotation/GetOnChangeProductsName';
+    this.service.getparams(url, param).subscribe((result: any) => {
+      this.productform.get("product_code")?.setValue(result.GetProductsCode[0].product_code);
+      this.productform.get("productuom_name")?.setValue(result.GetProductsCode[0].productuom_name);
+      this.productform.get("productgroup_name")?.setValue(result.GetProductsCode[0].productgroup_name);
+      this.productform.value.productgroup_gid = result.GetProductsCode[0].productgroup_gid,
+        this.productform.value.productuom_gid = result.GetProductsCode[0].productuom_gid
+    });
+
+  }
+
+  onedit(parameter: string){
+
+  }
+  ondelete(parameter:string){
+
+  }
+  onSubmit(){
+
+  }
+  OnSubmit(){
+
+  }
+
+  close(){
+     this.router.navigate(['/smr/SmrTrnQuotationSummary'])
+  }
+}

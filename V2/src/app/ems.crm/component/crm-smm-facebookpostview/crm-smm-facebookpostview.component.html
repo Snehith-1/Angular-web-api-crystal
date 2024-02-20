@@ -1,0 +1,89 @@
+<br>
+<div class="card " >
+
+
+    <div class="card-header bg-skyblue">
+        <h3 class="card-title " style="color: white;"><i class="fab fa-facebook-square"
+                style="color: white; font-size: 20px;"></i>
+            &nbsp; Post View </h3>
+        <div style="margin: 13px; ">
+            <!-- <button class="btn-secondary" type="button" data-kt-element="filter" data-bs-target="#mydropdown"
+                data-bs-toggle="modal" style="margin-right:20px; border:1px solid rgb(211, 208, 208)">
+                <i class="fa-solid fa-filter fs-4" style="color: rgb(163, 153, 153); font-size: 20px;"></i>&nbsp;Filter
+            </button> -->
+
+            <button title="Back" routerLink="/crm/CrmSmmFacebookPage" class="btn-secondary btn-sm text-black me-4 "><i
+                    class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back</button>
+        </div>
+    </div>
+    <div class="frame__container">
+        <div class="frame__headline">
+            <img class="headline__image" src="{{facebookuser_list[0].profile_picture}}">
+            <div class="frame__column">
+                <p class="headline__title">
+                    {{facebookuser_list[0].user_name}}
+                </p>
+                <p class="headline__subtitle">
+                    {{postcreated_time}}</p>
+            </div>
+        </div>
+        <div class="frame__content">
+            <p class="frame__text--small"  [innerHTML]="caption">
+            </p>
+            
+        </div>
+        <div class="frame__content">
+            <ng-container *ngIf="post_type === 'Picture' ">
+                <img class="frame__image" src="{{ post_url }}" alt="">
+            </ng-container>
+            <ng-container *ngIf="post_type === 'Videos'">
+                <video class="frame__image" controls>
+                    <source [src]="post_url" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </ng-container>
+        </div>
+        <div id="app">
+
+            <div class="feedback-info">
+
+                <div class="threads-and-share">
+                    <div class="threads" ><B> {{comments_count}} Comments</B></div>
+                </div>
+            </div>
+
+            <div class="feedback-action" (click)="toggleCommentVisibility()">
+                <div class="fb-wrapper" style="cursor: pointer;">
+                    <i class="fb-icon response far fa-comment-alt"></i>Comment
+                </div>
+            </div>
+
+
+
+        </div>
+        <td>
+            <div *ngIf="isCommentVisible">
+                <div *ngFor="let data of viewfacebook_list; let i=index;" id="test">
+                    <div class="frame__headline">
+                        <img src="https://static.xx.fbcdn.net/rsrc.php/v1/yi/r/odA9sNLrE86.jpg" alt="avatar"
+                            style="width: 35px;height: 30px;" />
+                        <div class="frame__column">
+                            <p class="comment__title"  [innerHTML]="data.comment_message ">
+                                &nbsp; 
+                            </p>
+                            <p class="headline__subtitle">
+                                &nbsp; {{ data.comment_time }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </td>
+        <br><br>
+
+    </div>
+</div>
+<br><br><br>

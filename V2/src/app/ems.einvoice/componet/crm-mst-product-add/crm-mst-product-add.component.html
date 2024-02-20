@@ -1,0 +1,240 @@
+<div class="card m-3">
+    <div class="card-header bg-lightblue card-height55">
+        <div class="card-title m-0 ">
+            <h5 class="fw-bolder text-blue">Add Product</h5>
+        </div>
+    </div>
+
+    <form [formGroup]="productform" novalidate="novalidate" (ngSubmit)="onadd()">
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Type<span style="color: red"> *</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select class="form-select form-select-solid bg-white form-select-lg custom-input select2"
+                        formControlName="producttype_name"
+                        [ngStyle]="{'border-color': producttypecontrol.invalid && producttypecontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                        pattern="^(?!\s*$).+"
+                        [class.is-invalid]="producttypecontrol.invalid && (producttypecontrol.dirty || producttypecontrol.touched)">
+                        <option value="">Select Product Type</option>
+                        <option *ngFor="let producttype of producttype_list" [value]="producttype.producttype_gid">
+                            {{producttype.producttype_name}}</option>
+                    </select>
+                    <div *ngIf="producttypecontrol.invalid && producttypecontrol.touched" class="invalid-feedback">
+                        <div *ngIf="producttypecontrol.hasError('required')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                            Product type is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Group<span style="color: red"> *</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <select class="form-select form-select-solid bg-white form-select-lg custom-input select2"
+                        formControlName="productgroup_name"
+                        [ngStyle]="{'border-color': productgroupcontrol.invalid && productgroupcontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                        pattern="^(?!\s*$).+"
+                        [class.is-invalid]="productgroupcontrol.invalid && (productgroupcontrol.dirty || productgroupcontrol.touched)">
+                        <option value="">Select Product Group</option>
+                        <option *ngFor="let productgroup of productgroup_list" [value]="productgroup.productgroup_gid">
+                            {{productgroup.productgroup_name}}</option>
+                    </select>
+                    <div *ngIf="productgroupcontrol.invalid && productgroupcontrol.touched" class="invalid-feedback">
+                        <div *ngIf="productgroupcontrol.hasError('required')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                            Product group is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                    <div class="d-flex flex-row">
+                        <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>Product Unit Class<span style="color: red">
+                                    *</span></b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <select
+                                    class="form-select form-select-solid bg-white form-select-lg custom-input select2"
+                                    formControlName="productuomclass_name"
+                                    [ngStyle]="{'border-color': productunitclasscontrol.invalid && productunitclasscontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                    pattern="^(?!\s*$).+"
+                                    [class.is-invalid]="productunitclasscontrol.invalid && (productunitclasscontrol.dirty || productunitclasscontrol.touched)">
+                                    <option value="">Select</option>
+                                    <option *ngFor="let productunitclass of productunitclass_list"
+                                        [value]="productunitclass.productuomclass_gid">
+                                        {{productunitclass.productuomclass_name}}</option>
+                                </select>
+                                <div *ngIf="productunitclasscontrol.invalid && productunitclasscontrol.touched"
+                                    class="invalid-feedback">
+                                    <div *ngIf="productunitclasscontrol.hasError('required')"
+                                        style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">
+                                        * Unit class is required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>Product Units<span style="color: red">
+                                    *</span></b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <select
+                                    class="form-select form-select-solid bg-white form-select-lg custom-input select2"
+                                    formControlName="productuom_name"
+                                    [ngStyle]="{'border-color': productunitscontrol.invalid && productunitscontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                    pattern="^(?!\s*$).+"
+                                    [class.is-invalid]="productunitscontrol.invalid && (productunitscontrol.dirty || productunitscontrol.touched)">
+                                    <option value="">Select </option>
+                                    <option *ngFor="let productunit of productunit_list"
+                                        [value]="productunit.productuom_gid">{{productunit.productuom_name}}</option>
+                                </select>
+                                <div *ngIf="productunitscontrol.invalid && productunitscontrol.touched"
+                                    class="invalid-feedback">
+                                    <div *ngIf="productunitscontrol.hasError('required')"
+                                        style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">
+                                        * Units is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Code<span style="color: red"> *</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text" class="
+                            form-control form-control-lg form-control-solid custom-input
+                            mb-3 mb-lg-0  border-secondary bg-white custom-input
+                          " placeholder="Product Code" formControlName="product_code" class="form-control"
+                        pattern="[A-Za-z0-9]+"
+                        [ngStyle]="{'border-color': productcodecontrol.invalid && productcodecontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                        pattern="^(?!\s*$).+"
+                        [class.is-invalid]="productcodecontrol.invalid && (productcodecontrol.dirty || productcodecontrol.touched)" />
+                    <div *ngIf="productcodecontrol.invalid && productcodecontrol.touched" class="invalid-feedback">
+                        <div *ngIf="productcodecontrol.hasError('required')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                            Product code is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Name<span style="color: red"> *</span></b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <input type="text"
+                        class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 border-secondary bg-white custom-input"
+                        placeholder="Product Name" formControlName="product_name" class="form-control"
+                        [ngStyle]="{'border-color': productnamecontrol.invalid && productnamecontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                        pattern="^(?!\s*$).+"
+                        [class.is-invalid]="productnamecontrol.invalid && (productnamecontrol.dirty || productnamecontrol.touched)" />
+                    <div *ngIf="productnamecontrol.invalid && productnamecontrol.touched" class="invalid-feedback">
+                        <div *ngIf="productnamecontrol.hasError('required')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                            Product name is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row ">
+                    <div class="d-flex flex-row">
+                        <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>MRP<span style="color: red"> *</span></b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="tel"
+                                    class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  border-secondary bg-white custom-input "
+                                    style="text-align: right;" placeholder="0.00" formControlName="mrp"
+                                    class="form-control"
+                                    [ngStyle]="{'border-color': mrpControl.invalid && mrpControl.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                    pattern="^(?!\s*$).+"
+                                    [class.is-invalid]="mrpControl.invalid && (mrpControl.dirty || mrpControl.touched)"/>
+                                <div *ngIf="mrpControl.invalid && mrpControl.touched" class="invalid-feedback">
+                                    <div *ngIf="mrpControl.hasError('required')"
+                                        style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">
+                                        * Enter only digits
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-lg-6 col-md-6 col-sm-6"><b>Cost Price<span style="color: red">
+                                    *</span></b>
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <input type="text"
+                                    class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  border-secondary bg-white custom-input"
+                                    style="text-align: right;" placeholder="0.00" formControlName="cost_price"
+                                    class="form-control"
+                                    [ngStyle]="{'border-color': costpricecontrol.invalid && costpricecontrol.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                    pattern="^(?!\s*$).+"
+                                    [class.is-invalid]="costpricecontrol.invalid && (costpricecontrol.dirty || costpricecontrol.touched)" />
+                                <div *ngIf="costpricecontrol.invalid && costpricecontrol.touched"
+                                    class="invalid-feedback">
+                                    <div *ngIf="costpricecontrol.hasError('required')"
+                                        style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">
+                                        * Cost price is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-4 col-md-6 col-sm-12"><b>Product Description</b>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                    <textarea type="text" rows="1" class="
+                    form-control form-control-lg form-control-solid custom-input
+                    mb-3 mb-lg-0  border-secondary bg-white custom-input
+                  " placeholder="Product Description" formControlName="product_desc" maxlength="200"
+                        class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-8 col-md-8 col-sm-12"><b>HSN Group<span style="color: red"> *</span></b>
+                <div class="col-lg-12 col-12 col-md-12 col-sm-12 fv-row mt-2">
+                    <select class="form-select form-select-solid bg-white form-select-lg custom-input select2"
+                    formControlName="hsngroup_code" (change)="hsngroupfetchdetails()" [ngStyle]="{'border-color': hsncodeControl.invalid && hsncodeControl.touched ? 'red' : 'rgb(209, 209, 209)'}" [class.is-invalid]="hsncodeControl.invalid && (hsncodeControl.dirty || hsncodeControl.touched)">
+                    <option value="">Select HSN Group</option>
+                    <option *ngFor="let hsngroupcode of hsngroup_list"
+                        [value]="hsngroupcode.hsngroup_code">
+                        {{hsngroupcode.hsngroup_desc}}</option>
+                </select>
+                    <div *ngIf="hsncodeControl.invalid && hsncodeControl.touched" class="invalid-feedback">
+                        <div *ngIf="hsncodeControl.hasError('required')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* HSN
+                            code is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+            <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>HSN Description</b>
+                <div class="col-lg-12 col-12 col-md-12 col-sm-12 fv-row mt-2">
+                    <select
+                    class="form-select form-select-solid border-secondary bg-white form-select-lg custom-input select2"
+                    formControlName="hsn">
+                    <option value="">Select HSN Description</option>
+                    <option *ngFor="let hsncode of hsngroupcodeanddesc_list"
+                        [value]="hsncode.hsn_code">
+                        {{hsncode.hsn_desc}}</option>
+                </select>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="text-center my-4">
+        <button (click)="onadd()" class="me-4" [disabled]="productform.invalid"
+            [ngClass]="{'primary-button': !productform.invalid, 'secondary-button': productform.invalid}"
+            data-bs-dismiss="modal">
+            <i class="bi bi-check-square fs-5"></i>
+            <span class="ms-3">Submit</span>
+        </button>
+        <button class="btn-danger btn-sm text-white me-4" (click)="redirecttolist()" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white fs-5"></i>
+            <span class="ms-3">Close</span>
+        </button>
+    </div>
+</div>

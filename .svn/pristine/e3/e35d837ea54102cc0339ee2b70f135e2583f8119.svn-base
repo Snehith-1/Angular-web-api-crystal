@@ -1,0 +1,229 @@
+﻿using ems.sales.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+
+namespace ems.sales.DataAccess
+{
+    public class DaSmrTrnCustomerEnquiry
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        HttpPostedFile httpPostedFile;
+        string msSQL = string.Empty;
+        private OdbcDataReader objodbcDataReader;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+
+        string msEmployeeGID, lsemployee_gid, lsuser_gid, lsentity_code, lsdesignation_code, lsCode, msGetGid, msGetGid1, msGetPrivilege_gid, msGetModule2employee_gid, status;
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5;
+
+        //Summary
+        public void DaGetCustomerEnquirySummary(MdlSmrTrnCustomerEnquiry values)
+        {
+            msSQL = " Select distinct concat(a.enquiry_gid,' / ',a.enquiry_type) as enquiry_refno,format(a.potorder_value,2)as potorder_value," +
+              " concat(s.source_name,' / ',m.referred_by)as source_name," +
+              " a.enquiry_gid,a.enquiry_date,m.referred_by,concat(b.user_firstname,' ',b.user_lastname) as campaign," +
+              " a.customer_name,a.branch_gid," +
+              " a.customer_gid,a.lead_status,z.branch_name, " +
+              " concat(o.region_name,' / ',m.leadbank_city,' / ',m.leadbank_state) as region_name," +
+              " a.enquiry_referencenumber,a.enquiry_status,a.enquiry_type, " +
+              " concat(f.user_firstname,' ',f.user_lastname) as user_firstname,a.enquiry_remarks,a.potorder_value ," +
+              " a.contact_person,a.contact_email,a.contact_address,p.customer_rating, " +
+              " case when a.contact_person is null then concat(n.leadbankcontact_name,' / ',n.mobile,' / ',n.email) " +
+              " when a.contact_person is not null then concat(a.contact_person,' / ',a.contact_number,' / ',a.contact_email) end" +
+              " as contact_details,a.enquiry_referencenumber, " +
+              " r.leadstage_name,a.enquiry_type from smr_trn_tsalesenquiry a  " +
+              " left join crm_trn_tleadbank m on m.leadbank_gid=a.customer_gid " +
+              " left join crm_trn_tleadbankcontact n on n.leadbank_gid=m.leadbank_gid " +
+              " left join crm_mst_tregion o on m.leadbank_region=o.region_gid " +
+              " left join crm_trn_tenquiry2campaign p on p.enquiry_gid=a.enquiry_gid " +
+              " left join crm_mst_tleadstage r on r.leadstage_gid=p.leadstage_gid " +
+              " left join smr_trn_tcampaign q on q.campaign_gid=p.campaign_gid " +
+              " left join hrm_mst_temployee d on d.employee_gid=p.assign_to " +
+              " left join adm_mst_tuser b on b.user_gid= d.user_gid " +
+              " left join hrm_mst_temployee k on k.employee_gid=a.created_by " +
+              " left join adm_mst_tuser f on f.user_gid= k.user_gid " +
+              " left join hrm_mst_tbranch z on a.branch_gid=z.branch_gid " +
+              " left join crm_mst_tsource s on s.source_gid=m.source_gid " +
+              " where 1=1 ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetCusEnquiry>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetCusEnquiry
+                    {
+                        enquiry_gid = dt["enquiry_gid"].ToString(),
+                        enquiry_date = dt["enquiry_date"].ToString(),
+                        enquiry_refno = dt["enquiry_refno"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        customer_name = dt["customer_name"].ToString(),
+
+                        enquiry_referencenumber = dt["enquiry_referencenumber"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        campaign = dt["campaign"].ToString(),
+                        potorder_value = dt["potorder_value"].ToString(),
+                        lead_status = dt["lead_status"].ToString(),
+                        enquiry_status = dt["enquiry_status"].ToString(),
+                        customer_rating = dt["customer_rating"].ToString(),
+                        user_firstname = dt["user_firstname"].ToString(),
+
+                    });
+                    values.cusenquiry_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Lead Dropdown
+        public void DaGetLeadDtl(MdlSmrTrnCustomerEnquiry values)
+        {
+            msSQL = " SELECT a.leadstage_gid,a.leadstage_name " +
+                " FROM crm_mst_tleadstage a" +
+                " WHERE (leadstage_gid='5' or leadstage_gid='7') ";
+
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetLeadDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetLeadDropdown
+                    {
+                        leadstage_gid = dt["leadstage_gid"].ToString(),
+                        leadstage_name = dt["leadstage_name"].ToString(),
+
+                    });
+                    values.GetLeadDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Update close
+        public void DaGetUpdatedCloseEnquiry(string user_gid, GetCusEnquiry values)
+        {
+            msSQL = " update crm_trn_tenquiry2campaign set " +
+                    " lead_status = 'Closed'," +
+                    " leadstage_gid = '" + values.leadstage_gid + "'," +
+                    " internal_notes = '" + values.internal_notes + "', " +
+                    " updated_by = '" + user_gid + "'," +
+                    " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' " +
+                    " where enquiry_gid = '" + values.enquiry_gid + "' ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            if (mnResult != 0)
+            {
+                msSQL = " update smr_trn_tsalesenquiry set " +
+                    " lead_status = 'Closed', " +
+                    " enquiry_status='Enquiry Closed' " +
+                    " where enquiry_gid = '" + values.enquiry_gid + "' ";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+            }
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = " Enquiry Closed Successfully";
+
+            }
+
+            else
+            {
+                values.status = false;
+                values.message = "Error While Closing Sales Enquiry";
+            }
+
+
+
+        }
+
+        // Team Dropdown
+        public void DaGetTeamDtl(MdlSmrTrnCustomerEnquiry values)
+        {
+            msSQL = "select campaign_title,campaign_gid " +
+                " from smr_trn_tcampaign ";
+
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetTeamDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetTeamDropdown
+                    {
+
+                        campaign_gid = dt["campaign_gid"].ToString(),
+                        campaign_title = dt["campaign_title"].ToString(),
+
+                    });
+                    values.GetTeamDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        //Employee Dropdown
+        public void DaGetEmployeeDtl(MdlSmrTrnCustomerEnquiry values)
+        {
+            msSQL = " select distinct a.employee_gid," +
+                " concat(c.user_firstname,' ',c.user_lastname)as employee_name" +
+                " from smr_trn_tcampaign2employee a" +
+                " inner join hrm_mst_temployee b on a.employee_gid=b.employee_gid" +
+                " inner join adm_mst_tuser c on b.user_gid=c.user_gid";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<GetEmployeeDropdown>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new GetEmployeeDropdown
+                    {
+                        employee_gid = dt["employee_gid"].ToString(),
+                        employee_name = dt["employee_name"].ToString(),
+
+                    });
+                    values.GetEmployeeDtl = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // Update Reassign
+        public void DaGetUpdatedReAssignEnquiry(string user_gid, GetCusEnquiry values)
+        {
+            msSQL = " update crm_trn_tenquiry2campaign set " +
+                    " assign_to = '" + values.employee_name + "'," +
+                    " campaign_gid = '" + values.campaign_title + "', " +
+                    " updated_by = '" + user_gid + "'," +
+                    " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' " +
+                    " where enquiry_gid = '" + values.enquiry_gid + "' ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult != 0)
+            {
+                values.status = true;
+                values.message = " Successfully Re-Assigned";
+
+            }
+
+            else
+            {
+                values.status = false;
+                values.message = "Error While Re-Assigning";
+            }
+
+
+
+        }
+
+    }
+}

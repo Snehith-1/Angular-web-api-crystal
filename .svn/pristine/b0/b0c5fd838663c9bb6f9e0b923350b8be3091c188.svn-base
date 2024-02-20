@@ -1,0 +1,307 @@
+<div class="card shadow-sm">
+    <div class="card-header bg-skyblue" style="color: white;">
+        <h3 class="card-title">Message Template</h3>
+        <div style="margin: 13px">
+            <button title="Publish" class="btn-secondary btn-sm text-black me-4 ">
+                Publish</button>
+              
+                    <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign" class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                      <i class="path1"></i>
+                      <i class="path2"></i>
+                  </i>&nbsp;Back</button>
+        </div>
+
+    </div>
+
+    <br>
+      
+    <form [formGroup]="reactiveForm" #form="ngForm" (ngSubmit)="onprojectcreate()">
+        <div class="card m-3">
+            <!-- <div class="card-header bg-lightblue card-height55">
+                <div class="card-title m-0">
+                    <h4 class="fw-bolder text-blue"> Project Details</h4>
+                </div>
+            </div> -->
+            <div class="d-flex flex-row m-6 flex-wrap">
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Project Type<span class="ms-1 text-red">*</span></span>
+                    <ng-select style=" width: 330px;" formControlName="type" [class.is-invalid]="
+                    project_type.invalid && (project_type.dirty || project_type.touched)"
+                        [ngClass]="{'invalid-border': project_type.invalid && project_type.touched}"
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="">
+                        <ng-option value="channelTemplate" selected>ChannelTemplate</ng-option>
+
+                    </ng-select>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Project Name</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="name" class="
+                            form-control form-control-lg form-control-solid
+                            borderc-secondary
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " placeholder="" name="project_name" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Project description</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="description" class="
+                            form-control form-control-lg form-control-solid
+                            borderc-secondary
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " placeholder="" name="project_description" />
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold fs-6">Category<span class="ms-1 text-red">*</span></span>
+                    <ng-select style=" width: 355px;" formControlName="category" [class.is-invalid]="
+                    category.invalid && (category.dirty || category.touched)"
+                        [ngClass]="{'invalid-border': category.invalid && category.touched}"
+                        class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="">
+                        <ng-option value="MARKETING" selected>Marketing</ng-option>
+                    </ng-select>
+                </div> -->
+
+            </div>
+
+            <!-- <div class="d-flex flex-row m-6 flex-wrap">
+
+
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <span class="font-bold z-n1 fs-6">Template Name<span class="ms-1 text-red">*</span></span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" formControlName="template_name" class="
+                            form-control form-control-lg form-control-solid
+                            borderc-secondary
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                          " placeholder="" name="template_name" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-check form-switch" style="margin-top: 30px;">
+                        <label class="form-check-label fs-6" for="flexSwitchCheckDefault" style="color: black;">Allow
+                            Category Change</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                            formControlName="category_change">
+                    </div>
+                </div>
+
+            </div> -->
+            <div style="padding-top: 15px; margin-left: 500px; ">
+                <button title="create project" class="btn-success btn-sm text-black me-4" type="submit"
+                    style="height: 30px; width: 110px;">
+                    Submit
+                </button>
+                
+               
+
+            </div>
+
+        </div>
+
+    </form>
+    <br>
+</div>
+
+<div class="table-responsive">
+    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="product" class="table table-striped table-row-bordered gy-5 gs-7 ">
+            <thead>
+                <tr class=" text-white fw-bold fs-6 text-nowrap bg-skyblue">
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Type </th>
+                    <th>Status</th>
+                    <th>Last Edited</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of template_list; let i=index;">
+                    <td>{{i+1}}</td>
+                    <td>{{data.p_name}}</td>
+                    <td>{{data.p_type}}</td>
+                    <td style="white-space: nowrap;color: rgb(37, 129, 28);"><b>Active</b></td>
+                    <td>{{data.created_date}}</td>
+
+                    <td class="text-center text-nowrap">
+                        <button title="Create Template" type="button" class="btn btn-icon btn-sm bg-view me-2"
+                         data-bs-toggle="modal" data-bs-target="#myModaladdtemplate" (click)="openModaledit(data.id)">
+                            <span class="fa-solid fa-plus text-white  fs-6"></span>
+                        </button>
+                        <!-- <button title="View" type="button" class="btn btn-icon btn-sm bg-view me-2">
+                            <span class="fa-solid fa-eye text-white  fs-6"></span>
+                        </button>
+                        <button title="Edit" type="button" class="btn btn-icon btn-sm bg-edit me-2"
+                            data-bs-toggle="modal" data-bs-target="#myModaledit" (click)="openModaledit(data)">
+                            <span class="fa-solid fa-pencil text-white  fs-6"></span>
+                        </button> -->
+                        <button title="Delete" type="button" data-bs-toggle="modal" data-bs-target="#myModaldelete"
+                            class="btn btn-icon btn-sm bg-danger me-2">
+                            <span class="fa-solid fa-trash text-white  fs-6"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Message Template-->
+<form [formGroup]="reactiveForm" #form="ngForm" (ngSubmit)="onsubmit()">
+    <div class="modal" id="myModaladdtemplate" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">
+                        &nbsp;&nbsp;Message Template</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <div class="row" style="padding-top: 20px;padding-bottom: 20px;"> -->
+                        <input formControlName="projectId" hidden
+    placeholder="Address Line 1"  type="text" class="
+        form-control form-control-lg form-control-solid
+        bg-white
+        custom-input
+        mb-3 mb-lg-0
+        borderc-secondary
+      " name="projectId" />
+                        <div class="mb-3" style="margin-top:10px ;">
+                            <span class="font-bold fs-6"><b>Body</b><span class="ms-1 text-red">*</span></span>
+
+                            <textarea class="form-control" formControlName="body" placeholder="Text Here" style="resize: none;"
+                                pattern="^(?![\s\n]*$)[\s\S]+$" id="exampleFormControlTextarea1" rows="5"></textarea>
+                        </div>
+
+                        <div class="mb-3" style="margin-top:10px ;">
+                            <span class="font-bold fs-6"><b>Footer</b></span>
+
+                            <input formControlName="footer" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                     borderc-secondary
+                   " placeholder="Text Here" pattern="^(?!\s*$).+" name="footer" required />
+                        </div>
+                        <div class="mb-3" style="margin-top:10px ;">
+                            <span class="font-bold fs-6"><b>Media</b></span>
+
+                            <input style="width: 100%;" (change)="onChange1($event)" accept=".xlsx, .xls ,image/*"
+                                type="file" #fileInput class="
+                              form-control form-control-lg form-control-solid bg-white
+                              mb-3 mb-lg-0  borderc-secondary custom-input
+                            " name="fName" />
+                        </div>
+                        <div class="mb-3" style="margin-top:10px ;">
+                            <span class="font-bold fs-6"><b>Category</b><span class="ms-1 text-red">*</span></span>
+                            <br>
+                            <ng-select style=" width: 460px;" formControlName="value1" [class.is-invalid]="
+                            value.invalid && (value.dirty || value.touched)"
+                                [ngClass]="{'invalid-border': value.invalid && value.touched}"
+                                class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="">
+                                <ng-option value="MARKETING" selected>Marketing</ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-check form-switch" style="margin-top: 30px;">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                                    formControlName="category_change">
+                                    <label class="form-check-label fs-6" for="flexSwitchCheckDefault" style="color: black;">Allow
+                                        Category Change</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <!-- (click)="onsubmit()" -->
+                        <button title="Create Template" class="btn-success btn-sm text-black me-4" type="submit"
+                        style="height: 30px; width: 110px;">
+                        Submit
+                    </button>
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+</form>
+<!--Modal Edit-->
+<form>
+    <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-skyblue">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-pencil fw-bolder fs-3"></i> &nbsp;&nbsp;Edit Message Template</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row" style="padding-top: 20px;padding-bottom: 20px;">
+                        <!-- <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2 ">
+                            <input style="width: 110%;" (change)="onChange1($event)" accept=".xlsx, .xls ,image/*"
+                                type="file" #fileInput class="
+              form-control form-control-lg form-control-solid bg-white
+              mb-3 mb-lg-0  borderc-secondary custom-input
+            " name="fName" />
+                        </div> -->
+                        <div class="mb-3" style="margin-top:10px ;">
+                            <textarea class="form-control" formControlName="project_editdescription" placeholder=""
+                                style="resize: none;" pattern="^(?![\s\n]*$)[\s\S]+$" id="exampleFormControlTextarea1"
+                                rows="5" name="project_editdescription"></textarea>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="footer" type="text" class="
+     form-control form-control-lg form-control-solid
+     custom-input
+     mb-3 mb-lg-0
+     bg-white
+     custom-input
+     borderc-secondary
+   " placeholder="Reply STOP to Unsubscribe" pattern="^(?!\s*$).+" name="footer" required />
+                        </div>
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <!-- (click)="onsubmit()" -->
+                        <button [disabled]="reactiveForm.invalid" [ngClass]="{
+'primary-button': !reactiveForm.invalid,
+'secondary-button': reactiveForm.invalid
+}" data-bs-dismiss="modal">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;submit
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

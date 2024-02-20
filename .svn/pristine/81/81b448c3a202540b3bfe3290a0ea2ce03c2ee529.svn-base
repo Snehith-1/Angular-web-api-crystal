@@ -1,0 +1,6 @@
+.table-responsive {
+    th,  td{
+       font-size: 12.7px ;
+    }
+
+}

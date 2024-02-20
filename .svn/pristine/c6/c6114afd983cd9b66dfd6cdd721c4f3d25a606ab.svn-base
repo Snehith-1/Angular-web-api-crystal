@@ -1,0 +1,1394 @@
+<div class="card shadow-lg rounded-top">
+  <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+    <h3 class="fw-bolder text-white"><i class="fa fa-user fw-bolder fs-3"></i> &nbsp;&nbsp;&nbsp; My Profile</h3>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3 col-md-12 col-sm-12">
+
+          <div class="card shadow-sm p-3 ">
+            <div class="col-lg-12 col-md-6 col-sm-12 text-center symbol symbol-150px symbol-circle">
+              <img src="assets\media\images\images.png" width="120%" height="200">
+            </div>
+
+            <div class="text-center mt-6">
+              <label for="">{{emp_code}}</label>
+            </div>
+            <div class="text-center mt-2">
+              <label for="">{{emp_name}}</label>
+            </div>
+            <div class="text-center mt-2">
+              <label for="">{{emp_designation}}</label>
+            </div>
+            <div class="text-center mt-2">
+              <label for="">{{emp_department}}</label>
+            </div>
+
+          <!-- <div class="text-center mt-2">
+            <label for="">{{emp_mobilenumber}}</label>
+          </div>
+        
+          <div class="text-center mt-2">
+            <label for="">{{emp_email}}</label>
+          </div> -->
+          </div>
+          
+          <!-- <div class="text-center mt-2">
+            <label>Gender:</label>&nbsp;
+            <label for="">{{emp_Gender}}</label>
+          </div>
+          <div class="text-center mt-2">
+            <label>Date Of Joining:</label>&nbsp;
+            <label for="">{{emp_Joiningdate}}</label>
+          </div>
+          <div class="text-center mt-2">
+            <label>Address:</label>&nbsp;
+            <label for="">{{emp_address}}</label>
+          </div> -->
+
+
+        </div>
+
+        <div class="col-lg-9 col-md-12 col-sm-12">
+
+          <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-8 fs-6">
+
+            <li class="nav-item">
+
+              <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_4">Personal Details</a>
+
+            </li>
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_5">Change Password</a>
+
+            </li>
+
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6">Work Experience</a>
+
+            </li>
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_7">Nomination</a>
+
+            </li>
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">Statutory</a>
+
+            </li>
+
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_9">Emergency Contact</a>
+
+            </li>
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_10">Dependent</a>
+
+            </li>
+
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_11">Education</a>
+
+            </li>
+
+            <li class="nav-item ms-9">
+
+              <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_12">Policy</a>
+
+            </li>
+
+
+          </ul>
+          <div class="card shadow-sm p-3">
+
+            <div class="tab-content" id="myTabContent">
+
+              <!-- Personal details -->
+
+              <div class="tab-pane fade show active ms-5" id="kt_tab_pane_4" role="tabpanel">
+
+                <form [formGroup]="reactiveForm7Edit" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa fa-info-circle"></i>&nbsp;&nbsp;&nbsp; Personal
+                        Details</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>First Name</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="firstedit_name" type="text" style="width:100%; margin-left:1px;" class="         
+                 form-control form-control-lg form-control-solid borderc-secondary
+                 custom-input
+                 mb-3 mb-lg-1
+                    bg-white
+                    custom-input
+                    " [ngStyle]="{
+                    'border-color':
+                    firstedit_name.invalid && firstedit_name.touched
+                    ? 'red'
+                   : 'rgb(209, 209, 209)'
+                    }" placeholder="Enter First Name" pattern="^(?!\s*$).+" name="firstedit_name" required />
+                      </div>
+                      <div *ngIf="firstedit_name.invalid && (firstedit_name.dirty || firstedit_name.touched)">
+                        <div *ngIf="firstedit_name.errors?.['required']">
+                          <span style="color:red; margin-left:-35px;">First Name</span>
+                        </div>
+                      </div>
+                      <div class="row"><span class="font-bold" style="margin-left:115px"><b>Last Name</b></span>
+                        <input formControlName="lastedit_name" style="margin-left:119px; width: 63%;" type="text" class="
+                    form-control form-control-lg form-control-solid borderc-secondary
+                    custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          lastedit_name.invalid && lastedit_name.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Last Name" pattern="^(?!\s*$).+" name="lastedit_name" />
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Gender</b></span>
+                        <label for="html" style="margin-left:1px;"><b>MALE</b>
+                          <input type="radio" value="male" formControlName="gender_edit" style="margin-left:10px;"
+                            value="MALE">
+                          <label for="html" style="margin-left:25px;"><b>FEMALE</b>
+                            <input type="radio" value="female" formControlName="gender_edit" style="margin-left:10px;"
+                              value="FEMALE"></label>
+                        </label>
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:160px"><b>Date Of Birth</b></span>
+                        <input formControlName="dateof_birthedit" style="margin-left:167px; width:49%;" type="date"
+                          class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          dateof_birthedit.invalid && dateof_birthedit.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Date" pattern="^(?!\s*$).+" name="dateof_birthedit" />
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Mobile Number</b></span>
+
+                        <input formControlName="mobile_edit" type="number" style="width:99%; margin-left:1px;" class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         mobile_edit.invalid && mobile_edit.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Enter Mobile Number" pattern="^(?!\s*$).+" name="mobile_edit" />
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:119px"><b>Personal Number</b></span>
+                        <input formControlName="personal_noedit" style="margin-left:125px; width: 63%;" type="number"
+                          class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          personal_noedit.invalid && personal_noedit.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Personal Number" pattern="^(?!\s*$).+" name="personal_noedit" />
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Qualification</b></span>
+
+                        <input formControlName="qualification_edit" type="text" style="width:87%; margin-left:1px;"
+                          class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         qualification_edit.invalid && qualification_edit.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Enter Qualification" pattern="^(?!\s*$).+" name="qualification_edit" />
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:90px"><b>Blood Group</b></span>
+                        <select formControlName="blood_groupedit" style="margin-left:97px; width:59%;" class="
+  form-control form-control-lg form-control-solid borderc-secondary
+  custom-input
+  mb-3 mb-lg-1
+  bg-white
+  custom-input" placeholder="Enter Blood Group">
+                          <option>--Select an option--</option>
+                          <option value="A+">A+</option>
+                          <option value="B+">B+</option>
+                          <option value="AB+">AB+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="O+">O+</option>
+                          <option value="O-">O-</option>
+                          <option value="A1B+">A1B+</option>
+                          <option value="A1B-">A1B-</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row"><span class="font-bold" style="margin-left:12px"><b>Experience</b></span>
+                      <input formControlName="experience_edit" style="margin-left:10px; width: 38.5%;" type="number" class="
+        form-control form-control-lg form-control-solid borderc-secondary
+        custom-input
+        mb-3 mb-lg-1
+        bg-white
+        custom-input
+        " [ngStyle]="{
+        'border-color':
+        experience_edit.invalid && experience_edit.touched
+        ? 'red'
+        : 'rgb(209, 209, 209)'
+        }" placeholder="Enter Experience" pattern="^(?!\s*$).+" name="experience_edit" />
+                    </div>
+                    <div class="text-center my-4">
+                      <button (click)="detailsupdate()" [disabled]="reactiveForm7Edit.invalid" [ngClass]="{
+                      'primary-button': !reactiveForm7Edit.invalid,
+                      'secondary-button': reactiveForm7Edit.invalid
+                    }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                      </button> &nbsp;&nbsp;
+                    </div>
+
+
+                  </div>
+                </form>
+              </div>
+
+              <!--Change Password-->
+
+
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_5" role="tabpanel">
+
+                <form [formGroup]="reactiveForm8Edit" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa fa-key"></i>&nbsp;&nbsp;&nbsp; Change Password
+                      </h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left: 150px;"><b>Current Password</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="curredit_pwd" type="text" style="margin-left:152px; width:40%;" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+        " [ngStyle]="{
+          'border-color':
+          curredit_pwd.invalid && curredit_pwd.touched
+              ? 'red'
+              : 'rgb(209, 209, 209)'
+        }" placeholder="Enter Current Password" pattern="^(?!\s*$).+" name="curredit_pwd" required />
+                      </div>
+                      <div *ngIf="curredit_pwd.invalid && (curredit_pwd.dirty || curredit_pwd.touched)">
+                        <div *ngIf="curredit_pwd.errors?.['required']">
+                          <span style="color:red; margin-left:-179px;">Current Password is required.</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 5px;">
+                      <div class="row"><span class="font-bold" style="margin-left:157px"><b>New Password</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="newedit_pwd" style="margin-left:157px; width: 40%;" type="password" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          newedit_pwd.invalid && newedit_pwd.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter New Password" pattern="^(?!\s*$).+" name="newedit_pwd" required />
+                      </div>
+                      <div *ngIf="newedit_pwd.invalid && (newedit_pwd.dirty || newedit_pwd.touched)">
+                        <div *ngIf="newedit_pwd.errors?.['required']">
+                          <span style="color:red; margin-left:-175px;">New Password is required.</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 5px;">
+                      <div class="row"><span class="font-bold" style="margin-left:157px"><b>Confirm Password</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="confedit_pwd" style="margin-left:160px; width: 39.5%;" type="password"
+                          class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          confedit_pwd.invalid && confedit_pwd.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+        }" placeholder="Enter Confirm Password" pattern="^(?!\s*$).+" name="confedit_pwd" required />
+                      </div>
+                      <div *ngIf="confedit_pwd.invalid && (confedit_pwd.dirty || confedit_pwd.touched)">
+                        <div *ngIf="confedit_pwd.errors?.['required']">
+                          <span style="color:red; margin-left:-140px;">Conf Password is required.</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center my-4">
+                      <button (click)="passwordupdate()" [disabled]="reactiveForm8Edit.invalid" [ngClass]="{
+                      'primary-button': !reactiveForm8Edit.invalid,
+                      'secondary-button': reactiveForm8Edit.invalid
+                    }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                      </button> &nbsp;&nbsp;
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!--Work Experience-->
+
+
+              <div class="tab-pane fade ms-5" id="kt_tab_pane_6" role="tabpanel">
+
+                <form [formGroup]="reactiveForm6" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa-solid fa-briefcase"></i>&nbsp;&nbsp;&nbsp; Work
+                        Experience</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Employee's Previous
+                            Company</b><span class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="empl_prevcomp" type="text" style="width:80%; margin-left:1px;" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+        " [ngStyle]="{
+          'border-color':
+          empl_prevcomp.invalid && empl_prevcomp.touched
+              ? 'red'
+              : 'rgb(209, 209, 209)'
+        }" placeholder=" Previous Company" pattern="^(?!\s*$).+" name="empl_prevcomp" required />
+                      </div>
+                      <div *ngIf="empl_prevcomp.invalid && (empl_prevcomp.dirty || empl_prevcomp.touched)">
+                        <div *ngIf="empl_prevcomp.errors?.['required']">
+                          <span style="color:red;">Employee's Previous Comp required.</span>
+                        </div>
+                      </div>
+
+                      <div class="row"><span class="font-bold" style="margin-left:70px"><b>Employee Code</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="empl_code" style="margin-left:75px; width: 66%;" type="text" class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         empl_code.invalid && empl_code.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Employee Code" pattern="^(?!\s*$).+" name="empl_code" required />
+                      </div>
+                      <div *ngIf="empl_code.invalid && (empl_code.dirty || empl_code.touched)">
+                        <div *ngIf="empl_code.errors?.['required']">
+                          <span style="color:red;">Empl Code</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Previous Occupation</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="prev_occp" type="text" style="width:93%; margin-left:1px;" class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         prev_occp.invalid && prev_occp.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Previous Occupation" pattern="^(?!\s*$).+" name="prev_occp" required />
+                      </div>
+                      <div *ngIf="prev_occp.invalid && (prev_occp.dirty || prev_occp.touched)">
+                        <div *ngIf="prev_occp.errors?.['required']">
+                          <span style="color:red;">Previous Occupation required.</span>
+                        </div>
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:115px"><b>Department</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="department" style="margin-left:118px; width: 59%;" type="text" class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         department.invalid && department.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Enter Department" pattern="^(?!\s*$).+" name="department" required />
+                      </div>
+                      <div *ngIf="department.invalid && (department.dirty || department.touched)">
+                        <div *ngIf="department.errors?.['required']">
+                          <span style="color:red;">Department</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Date of Joining</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="date_ofjoining" type="date" style="width:85%; margin-left:1px;"
+                          size="15" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          date_ofjoining.invalid && date_ofjoining.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Date of Joining" pattern="^(?!\s*$).+" name="date_ofjoining" required />
+                      </div>
+                      <div *ngIf="date_ofjoining.invalid && (date_ofjoining.dirty || date_ofjoining.touched)">
+                        <div *ngIf="date_ofjoining.errors?.['required']">
+                          <span style="color:red;">Date</span>
+                        </div>
+                      </div>
+
+                      <div class="row"><span class="font-bold" style="margin-left:178px"><b>Date of Relieving</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="date_ofreleiving" style="margin-left:183px; width: 35%;" type="date"
+                          class="
+        form-control form-control-lg form-control-solid borderc-secondary
+        custom-input
+        mb-3 mb-lg-1
+        bg-white
+        custom-input
+        " [ngStyle]="{
+        'border-color':
+        date_ofreleiving.invalid && date_ofreleiving.touched
+        ? 'red'
+        : 'rgb(209, 209, 209)'
+        }" placeholder="Enter Date of Relieving" pattern="^(?!\s*$).+" name="date_ofreleiving" required />
+                      </div>
+                      <div *ngIf="date_ofreleiving.invalid && (date_ofreleiving.dirty || date_ofreleiving.touched)">
+                        <div *ngIf="date_ofreleiving.errors?.['required']">
+                          <span style="color:red;">Date</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Working Period</b></span>
+
+                        <input formControlName="work_period" type="text" style="width:95%; margin-left:1px;" size="15"
+                          class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         work_period.invalid && work_period.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Working Period" pattern="^(?!\s*$).+" name="work_period" required />
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:200px"><b>HR Name & Contact
+                            Info</b><span class="ms-1 text-red">*</span></span>
+                        <input formControlName="HR_name" style="margin-left:205px; width: 47.5%;" type="text" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          HR_name.invalid && HR_name.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+           }" placeholder="Enter HR" pattern="^(?!\s*$).+" name="HR_name" required />
+                      </div>
+                      <div *ngIf="HR_name.invalid && (HR_name.dirty || HR_name.touched)">
+                        <div *ngIf="HR_name.errors?.['required']">
+                          <span style="color:red;">HR</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+              <div style="display: flex; flex-direction: row; margin: 10px;">
+              <div class="row"><span class="font-bold" style="margin-left:-5px;"><b>Reason To Leave Previous Company</b></span>
+
+                        <input formControlName="reason" type="text" style="width:73%; margin-left:1px;" class="
+        form-control form-control-lg form-control-solid borderc-secondary
+        custom-input
+        mb-3 mb-lg-1
+        bg-white
+        custom-input
+        " [ngStyle]="{
+        'border-color':
+        reason.invalid && reason.touched
+        ? 'red'
+        : 'rgb(209, 209, 209)'
+        }" placeholder="Enter Reason" pattern="^(?!\s*$).+" name="reason" required />
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:50px"><b>Reporting To</b></span>
+                        <input formControlName="report" style="margin-left: 50px; width: 72.5%;" type="text" class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+          report.invalid && report.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Reporting To" pattern="^(?!\s*$).+" name="report" required />
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                    <div class="row"><span class="font-bold" style="margin-left:-5px"><b>Remarks</b></span>
+                      <textarea id="w3review" formControlName="rmrks" rows="4" cols="18"
+                      style="resize:none; margin-left:1px;" placeholder="Enter Remarks"
+                      pattern="^(?!\s*$).+" name="rmrks" required></textarea>
+                    </div>
+                    </div>
+
+
+
+
+                    <div class="text-center my-4">
+                      <button (click)="workexperiencesubmit()" [disabled]="reactiveForm6.invalid" [ngClass]="{
+       'primary-button': !reactiveForm6.invalid,
+       'secondary-button': reactiveForm6.invalid
+       }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                      </button> &nbsp;&nbsp;
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+              <!--Nomination-->
+
+
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_7" role="tabpanel">
+
+                <form [formGroup]="reactiveForm5" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa-solid fa-award"></i>&nbsp;&nbsp;&nbsp; Nomination
+                      </h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Name</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="name" type="text" style="width:97%; margin-left:1px;" class="
+            form-control form-control-lg form-control-solid borderc-secondary
+            custom-input
+            mb-3 mb-lg-1
+            bg-white
+            custom-input
+            " [ngStyle]="{
+            'border-color':
+            name.invalid && name.touched
+            ? 'red'
+            : 'rgb(209, 209, 209)'
+            }" placeholder="Enter Name" pattern="^(?!\s*$).+" name="name" required />
+                      </div>
+                      <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                        <div *ngIf="name.errors?.['required']">
+                          <span style="color:red; margin-left:-15px;">Name</span>
+                        </div>
+                      </div>
+
+                      <div class="row"><span class="font-bold" style="margin-left:140px"><b>Date of Birth</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="dateofbirth" style="margin-left:143px; width: 45%;" type="date" class="
+             form-control form-control-lg form-control-solid borderc-secondary
+             custom-input
+             mb-3 mb-lg-1
+             bg-white
+             custom-input
+             " [ngStyle]="{
+             'border-color':
+             dateofbirth.invalid && dateofbirth.touched
+             ? 'red'
+             : 'rgb(209, 209, 209)'
+             }" placeholder="Enter Date of Birth" pattern="^(?!\s*$).+" name="dateofbirth" required />
+                      </div>
+                      <div *ngIf="dateofbirth.invalid && (dateofbirth.dirty || dateofbirth.touched)">
+                        <div *ngIf="dateofbirth.errors?.['required']">
+                          <span style="color:red; margin-left:-75px;">Date</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Age</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="age" type="number" style="width:80%; margin-left:1px;" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          age.invalid && age.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Age" pattern="^(?!\s*$).+" name="age" required />
+                      </div>
+                      <div *ngIf="age.invalid && (age.dirty || age.touched)">
+                        <div *ngIf="age.errors?.['required']">
+                          <span style="color:red;">Age</span>
+                        </div>
+                      </div>
+
+                      <div class="row"><span class="font-bold" style="margin-left:165px"><b>Mobile No</b></span>
+                        <input formControlName="mobile_no" style="margin-left:167px; width: 55%;" type="number" class="
+          form-control form-control-lg form-control-solid borderc-secondary
+          custom-input
+          mb-3 mb-lg-1
+          bg-white
+          custom-input
+          " [ngStyle]="{
+          'border-color':
+          mobile_no.invalid && mobile_no.touched
+          ? 'red'
+          : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Mobile No" pattern="^(?!\s*$).+" name="mobile_no" required />
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Relationship with
+                            Employee</b><span class="ms-1 text-red">*</span></span>
+
+                            <select formControlName="relt_employee" style="margin-left:5px; width:79%;" class="
+                            form-control form-control-lg form-control-solid borderc-secondary
+                            custom-input
+                            mb-3 mb-lg-1
+                            bg-white
+                            custom-input" placeholder="Enter Relationship">
+                                                    <option>--Select an option--</option>
+                                                    <option value="Father">Father</option>
+                                                    <option value="Grandfather">Grandfather</option>
+                                                    <option value="Mother">Mother</option>
+                                                    <option value="Grandmother">Grandmother</option>
+                                                    <option value="Son">Son</option>
+                                                    <option value="Daughter">Daughter</option>
+                                                    <option value="Husband">Husband</option>
+                                                    <option value="Wife">Wife</option>
+                                                    <option value="Uncle">Uncle</option>
+                                                    <option value="Aunt">Aunt</option>
+                                                    <option value="Brother">Brother</option>
+                                                    <option value="Sister">Sister</option>
+                                                    <option value="Nephew">Nephew</option>
+                                                    <option value="Niece">Niece</option>
+                                                    <option value="Cousin">Cousin</option>
+                                                    <option value="Grandson">Grandson</option>
+                                                    <option value="Granddaughter">Granddaughter</option>
+                                                  </select>
+                      </div>
+                      <div *ngIf="relt_employee.invalid && (relt_employee.dirty || relt_employee.touched)">
+                        <div *ngIf="relt_employee.errors?.['required']">
+                          <span style="color:red;">Relationship</span>
+                        </div>
+                      </div>
+
+                <div class="row"><span class="font-bold" style="margin-left:95px"><b>Whether residing employee</b></span>
+                <label for="yes" style="margin-left:97px;"><b>YES</b>
+                          <input type="radio" id="yes" name="fav_language" style="margin-left:10px;" value="YES">
+                          <label for="no" style="margin-left:40px;"><b>NO</b>
+                            <input type="radio" id="no" name="fav_language" style="margin-left:10px;"
+                              value="NO"></label>
+                        </label>
+                      </div>
+                    </div>
+
+                    
+                <div style="display: flex; flex-direction: row; margin: 10px;">
+                <div class="row"><span class="font-bold" style="margin-left:-1px"><b>Residing Address</b></span>
+                  <textarea id="w3review" formControlName="residing_addr" rows="4" cols="21"
+                  style="resize:none; margin-left:1px;" placeholder="Enter Residing Address"
+                  pattern="^(?!\s*$).+" name="residing_addr" required></textarea>
+                    </div>   
+                    
+                    <div class="row"><span class="font-bold" style="margin-left:150px"><b>Put As Nominee For</b></span>
+                      <input formControlName="nominee_for" style="margin-left:157px; width: 45%;" type="text" class="
+        form-control form-control-lg form-control-solid borderc-secondary
+        custom-input
+        mb-3 mb-lg-1
+        bg-white
+        custom-input
+        " [ngStyle]="{
+        'border-color':
+        nominee_for.invalid && nominee_for.touched
+        ? 'red'
+        : 'rgb(209, 209, 209)'
+        }" placeholder="Enter Nominee For" pattern="^(?!\s*$).+" name="nominee_for" required />
+                    </div>
+                    <div *ngIf="nominee_for.invalid && (nominee_for.dirty || nominee_for.touched)">
+                      <div *ngIf="nominee_for.errors?.['required']">
+                        <span style="color:red; margin-left:-50px;">Nominee</span>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="text-center my-4">
+                      <button (click)="nominationsubmit()" [disabled]="reactiveForm5.invalid" [ngClass]="{
+          'primary-button': !reactiveForm5.invalid,
+          'secondary-button': reactiveForm5.invalid
+          }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                      </button> &nbsp;&nbsp;
+
+                    </div>
+
+                    <div class="table-response">
+                      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                        <table id="department_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                          <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                              <th>S.NO</th>
+                              <th>Member Name</th>
+                              <th>Age </th>
+                              <th>Date of birth</th>
+                              <th>Relationship</th>
+                              <th>Residing with employee</th>
+                              <th>Residing Town / State</th>
+                              <th>Nominee</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of nominationdtllist; let i=index;">
+                              <td>{{i+1}}</td>
+                              <td>{{data.familymember_name}}</td>
+                              <td>{{data.age}}</td>
+                              <td>{{data.dob}}</td>
+                              <td>{{data.relationship}}</td>
+                              <td>{{data.residing_with}}</td>
+                              <td>{{data.residing_addr}}</td>
+                              <td>{{data.nominee_for}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+
+              <!-- Statutory -->
+
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_8" role="tabpanel">
+
+                <form [formGroup]="reactiveForm1" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa fa-gavel"></i>&nbsp;&nbsp;&nbsp; Statutory</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left: 150px;"><b>Provident Fund Account
+                            No</b><span class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="provident_no" type="text" style="margin-left:155px; width:47%;" class="
+        form-control form-control-lg form-control-solid borderc-secondary
+        custom-input
+        mb-3 mb-lg-1
+        bg-white
+        custom-input
+      " [ngStyle]="{
+        'border-color':
+        provident_no.invalid && provident_no.touched
+            ? 'red'
+            : 'rgb(209, 209, 209)'
+      }" placeholder="Enter Provident Fund Account No" pattern="^(?!\s*$).+" name="provident_no" required />
+                      </div>
+                      <div *ngIf="provident_no.invalid && (provident_no.dirty || provident_no.touched)">
+                        <div *ngIf="provident_no.errors?.['required']">
+                          <span style="color:red; margin-left:-169px;">PF Account No is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div style="display: flex; flex-direction: row; margin: 5px;">
+                      <div class="row"><span class="font-bold" style="margin-left:154px"><b>Employee's State Insurance
+                            No</b><span class="ms-1 text-red">*</span></span>
+                        <input formControlName="employee_no" style="margin-left:160px; width: 47%;" type="text" class="
+     form-control form-control-lg form-control-solid borderc-secondary
+     custom-input
+     mb-3 mb-lg-1
+     bg-white
+     custom-input
+     " [ngStyle]="{
+     'border-color':
+     employee_no.invalid && employee_no.touched
+     ? 'red'
+     : 'rgb(209, 209, 209)'
+     }" placeholder="Enter Employee's State Insurance No" name="employee_no" required />
+                      </div>
+
+                      <div *ngIf="employee_no.invalid && (employee_no.dirty || employee_no.touched)">
+                        <div *ngIf="employee_no.errors?.['required']">
+                          <span style="color:red; margin-left:-165px;">ESI No is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 5px;">
+                      <div class="row"><span class="font-bold" style="margin-left:155px"><b>Date of Join of PF</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="date_ofjoinPF" style="margin-left:160px; width: 30%;" type="date" class="
+    form-control form-control-lg form-control-solid borderc-secondary
+    custom-input
+    mb-3 mb-lg-1
+    bg-white
+    custom-input
+    " [ngStyle]="{
+    'border-color':
+    date_ofjoinPF.invalid && date_ofjoinPF.touched
+    ? 'red'
+    : 'rgb(209, 209, 209)'
+    }" placeholder="Enter Date of Join of PF" name="date_ofjoinPF" required />
+                      </div>
+
+                      <div *ngIf="date_ofjoinPF.invalid && (date_ofjoinPF.dirty || date_ofjoinPF.touched)">
+                        <div *ngIf="date_ofjoinPF.errors?.['required']">
+                          <span style="color:red; margin-left:-165px;">Date PF is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="text-center my-4">
+                      <button (click)="statutorysubmit()" [disabled]="reactiveForm1.invalid" [ngClass]="{
+    'primary-button': !reactiveForm1.invalid,
+    'secondary-button': reactiveForm1.invalid
+  }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                      </button> &nbsp;&nbsp;
+
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+
+              <!-- Emergency Contact -->
+
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_9" role="tabpanel">
+                <form [formGroup]="reactiveForm3" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa fa-address-book"></i>&nbsp;&nbsp;&nbsp; Emergency
+                        Contact</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Contact Person</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="contact_person" type="text" style="width:83%; margin-left:1px;" class="
+      form-control form-control-lg form-control-solid borderc-secondary
+      custom-input
+      mb-3 mb-lg-1
+      bg-white
+      custom-input
+      " [ngStyle]="{
+      'border-color':
+      contact_person.invalid && contact_person.touched
+      ? 'red'
+      : 'rgb(209, 209, 209)'
+      }" placeholder="Contact Person" pattern="^(?!\s*$).+" name="contact_person" required />
+                      </div>
+                      <div *ngIf="contact_person.invalid && (contact_person.dirty || contact_person.touched)">
+                        <div *ngIf="contact_person.errors?.['required']">
+                          <span style="color:red;">Contact Person is required.</span>
+                        </div>
+                      </div>
+
+                      <div class="row"><span class="font-bold" style="margin-left:55px"><b>Contact Address</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="cont_addr" style="margin-left:55px; width: 69%;" type="text" class="
+     form-control form-control-lg form-control-solid borderc-secondary
+     custom-input
+     mb-3 mb-lg-1
+     bg-white
+     custom-input
+     " [ngStyle]="{
+     'border-color':
+     cont_addr.invalid && cont_addr.touched
+     ? 'red'
+     : 'rgb(209, 209, 209)'
+     }" placeholder="Contact Address" pattern="^(?!\s*$).+" name="cont_addr" required />
+                      </div>
+                      <div *ngIf="cont_addr.invalid && (cont_addr.dirty || cont_addr.touched)">
+                        <div *ngIf="cont_addr.errors?.['required']">
+                          <span style="color:red;">Contact Address is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style=" margin-left:1px;"><b>Contact No</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="cont_no" type="number" style="width:90%;  margin-left:3px;" class="
+   form-control form-control-lg form-control-solid borderc-secondary
+   custom-input
+   mb-3 mb-lg-1
+   bg-white
+   custom-input
+   " [ngStyle]="{
+   'border-color':
+   cont_no.invalid && cont_no.touched
+   ? 'red'
+   : 'rgb(209, 209, 209)'
+   }" placeholder="Contact No" pattern="^(?!\s*$).+" name="cont_no" required />
+                      </div>
+                      <div *ngIf="cont_no.invalid && (cont_no.dirty || cont_no.touched)">
+                        <div *ngIf="cont_no.errors?.['required']">
+                          <span style="color:red;">Contact No is required.</span>
+                        </div>
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:75px"><b>Contact Email ID</b></span>
+                        <input formControlName="cont_emailid" style="margin-left:75px; width:65%;" type="text" class="
+     form-control form-control-lg form-control-solid borderc-secondary
+     custom-input
+     mb-3 mb-lg-1
+     bg-white
+     custom-input
+     " [ngStyle]="{
+     'border-color':
+     cont_emailid.invalid && cont_emailid.touched
+     ? 'red'
+     : 'rgb(209, 209, 209)'
+     }" placeholder="Contact Email ID" pattern="^(?!\s*$).+" name="cont_emailid" required />
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style=" margin-left:1px;"><b>Remarks</b></span>
+                        <textarea id="w3review" formControlName="remarks" rows="4" cols="15"
+                          style="resize:none; margin-left:1px;" placeholder="Enter Remarks" pattern="^(?!\s*$).+"
+                          name="remarks" required></textarea>
+                      </div>
+                    </div>
+                    <div class="text-center my-4">
+                      <button (click)="emergencysubmit()" [disabled]="reactiveForm3.invalid" [ngClass]="{
+        'primary-button': !reactiveForm3.invalid,
+        'secondary-button': reactiveForm3.invalid
+        }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                      </button> &nbsp;&nbsp;
+                    </div>
+
+                    <div class="table-responsive">
+                      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                        <table id="department_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                          <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                              <th>S.No</th>
+                              <th>Contact Person</th>
+                              <th>Contact Address</th>
+                              <th>Contact No</th>
+                              <th>Contact Email ID</th>
+                              <th>Remarks</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of emergencylist; let i=index;">
+                              <td>{{i+1}}</td>
+                              <td>{{data.contact_name}}</td>
+                              <td>{{data.contact_address}}</td>
+                              <td>{{data.contact_no}}</td>
+                              <td>{{data.contact_email}}</td>
+                              <td>{{data.reference_details}}</td>
+
+
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Dependent -->
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_10" role="tabpanel">
+                <form [formGroup]="reactiveForm2" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa-solid fa-user-group"></i>&nbsp;&nbsp;&nbsp;
+                        Dependent</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left: 150px;"><b>Name</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="name_user" type="text" style="margin-left:155px; width:42%;" class="
+            form-control form-control-lg form-control-solid borderc-secondary
+            custom-input
+            mb-3 mb-lg-1
+            bg-white
+            custom-input
+          " [ngStyle]="{
+            'border-color':
+            name_user.invalid && name_user.touched
+                ? 'red'
+                : 'rgb(209, 209, 209)'
+          }" placeholder="Enter Name" pattern="^(?!\s*$).+" name="name_user" required />
+                      </div>
+                      <div *ngIf="name_user.invalid && (name_user.dirty || name_user.touched)">
+                        <div *ngIf="name_user.errors?.['required']">
+                          <span style="color:red; margin-left:-171px;">Name is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 5px;">
+                      <div class="row"><span class="font-bold" style="margin-left:157px"><b>Relationship</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="relationship" style="margin-left:160px; width: 42%;" type="text" class="
+            form-control form-control-lg form-control-solid borderc-secondary
+            custom-input
+            mb-3 mb-lg-1
+            bg-white
+            custom-input
+            " [ngStyle]="{
+            'border-color':
+            relationship.invalid && relationship.touched
+            ? 'red'
+            : 'rgb(209, 209, 209)'
+            }" placeholder="Enter Relationship" pattern="^(?!\s*$).+" name="relationship" required />
+                      </div>
+                      <div *ngIf="relationship.invalid && (relationship.dirty || relationship.touched)">
+                        <div *ngIf="relationship.errors?.['required']">
+                          <span style="color:red; margin-left:-169px;">Relationship is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 5px;">
+                      <div class="row"><span class="font-bold" style="margin-left:158px"><b>Date of Birth</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="date_ofbirth" style="margin-left:162px; width: 30%;" type="date" class="
+      form-control form-control-lg form-control-solid borderc-secondary
+      custom-input
+      mb-3 mb-lg-1
+      bg-white
+      custom-input
+      " [ngStyle]="{
+      'border-color':
+       date_ofbirth.invalid && date_ofbirth.touched
+       ? 'red'
+       : 'rgb(209, 209, 209)'
+       }" placeholder="Enter Date of Birth" pattern="^(?!\s*$).+" name="date_ofbirth" required />
+                      </div>
+
+                      <div *ngIf="date_ofbirth.invalid && (date_ofbirth.dirty || date_ofbirth.touched)">
+                        <div *ngIf="date_ofbirth.errors?.['required']">
+                          <span style="color:red; margin-left:-169px;">Date of Birth is required.</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center my-4">
+                      <button (click)="dependentsubmit()" [disabled]="reactiveForm2.invalid" [ngClass]="{
+        'primary-button': !reactiveForm2.invalid,
+        'secondary-button': reactiveForm2.invalid
+        }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                      </button> &nbsp;&nbsp;
+                    </div>
+                    <div class="table-responsive">
+                      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                        <table id="department_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                          <thead>
+                            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                              <th>S.No</th>
+                              <th>Name</th>
+                              <th>Relationship</th>
+                              <th>Date of birth</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of dependentdtllist; let i=index;">
+                              <td>{{i+1}}</td>
+                              <td>{{data.name}}</td>
+                              <td>{{data.relationship}}</td>
+                              <td>{{data.dob}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!--Education-->
+
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_11" role="tabpanel">
+                <form [formGroup]="reactiveForm4" #form="ngForm">
+                  <div class="row" style="padding-right: 10px; padding-left: 10px;">
+                    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                      <h3 class="fw-bolder text-white"><i class="fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;&nbsp;
+                        Education</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style=" margin-left:1px;"><b>Institution Name</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="inst_name" type="text" style="width:78%;  margin-left:1px;" class="
+         form-control form-control-lg form-control-solid borderc-secondary
+         custom-input
+         mb-3 mb-lg-1
+         bg-white
+         custom-input
+         " [ngStyle]="{
+         'border-color':
+         inst_name.invalid && inst_name.touched
+         ? 'red'
+         : 'rgb(209, 209, 209)'
+         }" placeholder="Enter Institution" pattern="^(?!\s*$).+" name="inst_name" required />
+                      </div>
+                      <div *ngIf="inst_name.invalid && (inst_name.dirty || inst_name.touched)">
+                        <div *ngIf="inst_name.errors?.['required']">
+                          <span style="color:red; margin-left:-20px;">Institution is required.</span>
+                        </div>
+                      </div>
+
+                      <div class="row"><span class="font-bold" style="margin-left:70px"><b>Degree / Diploma</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="deg_dip" style="margin-left:75px; width: 60%;" type="text" class="
+    form-control form-control-lg form-control-solid borderc-secondary
+    custom-input
+    mb-3 mb-lg-1
+    bg-white
+    custom-input
+    " [ngStyle]="{
+    'border-color':
+    deg_dip.invalid && deg_dip.touched
+    ? 'red'
+    : 'rgb(209, 209, 209)'
+    }" placeholder="Degree / Diploma" pattern="^(?!\s*$).+" name="deg_dip" required />
+                      </div>
+                      <div *ngIf="deg_dip.invalid && (deg_dip.dirty || deg_dip.touched)">
+                        <div *ngIf="deg_dip.errors?.['required']">
+                          <span style="color:red;">Degree / Diploma is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style=" margin-left:1px;"><b>Field of Study</b><span
+                            class="ms-1 text-red">*</span></span>
+
+                        <input formControlName="field_ofstudy" type="text" style="width:74%;  margin-left:3px;" class="
+   form-control form-control-lg form-control-solid borderc-secondary
+   custom-input
+   mb-3 mb-lg-1
+   bg-white
+   custom-input
+   " [ngStyle]="{
+   'border-color':
+   field_ofstudy.invalid && field_ofstudy.touched
+   ? 'red'
+   : 'rgb(209, 209, 209)'
+   }" placeholder="Enter Course" pattern="^(?!\s*$).+" name="field_ofstudy" required />
+                      </div>
+                      <div *ngIf="field_ofstudy.invalid && (field_ofstudy.dirty || field_ofstudy.touched)">
+                        <div *ngIf="field_ofstudy.errors?.['required']">
+                          <span style="color:red; margin-left:5px;">Field of Study is required.</span>
+                        </div>
+                      </div>
+
+
+                      <div class="row"><span class="font-bold" style="margin-left:57px"><b>Date of Completion</b><span
+                            class="ms-1 text-red">*</span></span>
+                        <input formControlName="date_ofcompletion" style="margin-left:65px; width: 55%;" type="date"
+                          class="
+   form-control form-control-lg form-control-solid borderc-secondary
+   custom-input
+   mb-3 mb-lg-1
+   bg-white
+   custom-input
+   " [ngStyle]="{
+   'border-color':
+   date_ofcompletion.invalid && date_ofcompletion.touched
+   ? 'red'
+   : 'rgb(209, 209, 209)'
+   }" placeholder="Enter Date of Completion" pattern="^(?!\s*$).+" name="date_ofcompletion" required />
+                      </div>
+                      <div *ngIf="date_ofcompletion.invalid && (date_ofcompletion.dirty || date_ofcompletion.touched)">
+                        <div *ngIf="date_ofcompletion.errors?.['required']">
+                          <span style="color:red;">Date of Completion is required.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: row; margin: 10px;">
+                      <div class="row"><span class="font-bold" style="margin-left:1px;"><b>Additional Notes</b></span>
+
+                        <textarea id="w3review" formControlName="addn_notes" rows="4" cols="5"
+                          style="resize:none; margin-left:1px;" placeholder="Enter Additional Notes"
+                          pattern="^(?!\s*$).+" name="addn_notes" required></textarea>
+                      </div>
+
+                    </div>
+                    <div class="text-center my-4">
+                      <button (click)="educationsubmit()" [disabled]="reactiveForm4.invalid" [ngClass]="{
+   'primary-button': !reactiveForm4.invalid,
+   'secondary-button': reactiveForm4.invalid
+   }" data-bs-dismiss="modal">
+                        <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                      </button> &nbsp;&nbsp;
+                    </div>
+
+                    <div class="table-responsive">
+                      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                        <table id="department_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                          <thead>
+                            <tr class="fw-bold fs-5 bg-lightblue text-blue">
+                              <th>S.No</th>
+                              <th>Institution Name</th>
+                              <th>Degree / Diploma</th>
+                              <th>Field of Study</th>
+                              <th>Date of Completion</th>
+                              <th>Additional Notes</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let data of educationdtllist; let i=index;">
+                              <td>{{i+1}}</td>
+                              <td>{{data.institution_name}}</td>
+                              <td>{{data.degree_diploma}}</td>
+                              <td>{{data.field_study}}</td>
+                              <td>{{data.date_completion}}</td>
+                              <td>{{data.address_notes}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <!--Policy Management-->
+
+              <div class="row tab-pane fade ms-5" id="kt_tab_pane_12" role="tabpanel">
+                <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+                  <h3 class="fw-bolder text-white"><i class="fa-solid fa-shield-halved"></i>&nbsp;&nbsp;&nbsp; Policy Management</h3>
+                </div>
+             
+              <div class="table-responsive">
+                <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+                <table class="table table-striped table-row-bordered gy-5 gs-7">
+                <tbody>
+                <tr *ngFor="let policy of policies_list">
+                <td>
+                  <div class="card shadow-sm" style="width: 200px; background-color: #2196f3;">
+                  <div class="card-header text-right text-center mt-03">
+                  <div class="text-lightblue fw-bold mt-7 mr-2 ml-10" style="color: #ffffff;">
+                  {{ policy.policy_name }}
+                </div>
+                </div>
+                </div>
+                </td>
+                <td>
+                  <div class="card shadow-sm"
+                  style="width: 300px; background-color: #b5daf8; border: 1px solid #2196f3;">
+                  <div class="card-header">
+                  <div class="mt-4 mb-3" *ngFor="let point of policy.policy_desc.split('tab')">
+                  {{ point }}<br>
+                  </div>
+                  </div>
+                  </div>
+                  </td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  </div>
+                  </div>
+                  </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

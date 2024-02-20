@@ -1,0 +1,202 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">Lead Regsiter</h3>
+    </div>
+    <br>
+    <div> &nbsp; &nbsp;
+      <!-- ADD Function -->
+      <button title="Add Lead" class="btn-primary btn-sm text-white me-4" (click)="onadd()" >
+        <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp; Add Lead
+      </button>
+    </div>
+    <br>
+    <tabset>
+      <tab heading="Distributor">
+    <div class="table-responsive">
+      <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="leadmaster_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.No</th>
+              <th>Created Date </th>
+              <th>Company Name</th>
+              <th>Contact Details</th>
+              <th>Region</th>
+              <th>Customer Type</th>
+              <th>Created By</th>
+              <!-- <th>Remarks</th> -->
+              <th>Status</th>
+              <th>Assigned To</th>
+            
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of leadmaster_list; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.created_date}}</td>
+              <td>{{data.leadbank_name}}</td>
+              <td>{{data.contact_details}}</td>
+              <td>{{data.region_name}}</td>
+              <td>{{data.customer_type}}</td>
+              <td>{{data.created_by}}</td>
+              <!-- <td>{{data.remarks}}</td> -->
+              <td>{{data.lead_status}}</td>
+              <!-- <td>{{data.assign_to}}</td> -->
+              <!-- <td>{{data.approval_flag}}</td> -->
+              <td>{{data.assignedto}}</td>
+              <!-- <td>{{data.leadbank_gid}}</td> -->
+              <!-- <td>{{data.approval_flag}}</td> -->
+              <!-- <td>{{data.agent_name}}</td> -->
+
+              <td class="text-center text-nowrap">
+  
+                <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankview"><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankedit"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>      
+                <button title="Delete" type="button" (click)="openModaldelete(data.leadbank_gid)" data-bs-toggle="modal" data-bs-target="#myModaldelete"class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-trash text-white  fs-6"></span></button>
+                  <!-- <button title=" Branch" type="button" (click)="onbranch(data.country_gid,data.region_gid,data.leadbank_gid)" class="btn btn-icon btn-sm bg-warning me-2"><span class="fas fa-code-branch text-white fs-6"routerLink="/crm/CrmTrnLeadBankbranch"></span> </button>
+                  <button title="Contact" type="button" class="btn btn-icon btn-sm bg-info me-2">
+                    <span class="fas fa-phone text-white fs-6" (click)="oncontact(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankcontact"></span></button> -->
+<!-- (click)="onedit(data.leadmaster_gid)"  -->
+     
+           </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </tab>
+  <tab heading="Corporate">
+    <div class="table-responsive">
+      <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="GetRegisterLeadSummary_list1" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.No</th>
+              <th>Created Date </th>
+              <th>Company Name</th>
+              <th>Contact Details</th>
+              <th>Region</th>
+              <th>Customer Type</th>
+              <th>Created By</th>
+              <th>Remarks</th>
+              <th>Status</th>
+              <th>Assigned To</th>
+            
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of GetRegisterLeadSummary_list1; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.created_date}}</td>
+              <td>{{data.leadbank_name}}</td>
+              <td>{{data.contact_details}}</td>
+              <td>{{data.region_name}}</td>
+              <td>{{data.customer_type}}</td>
+              <td>{{data.created_by}}</td>
+              <td>{{data.remarks}}</td>
+              <td>{{data.lead_status}}</td>
+              <!-- <td>{{data.assign_to}}</td> -->
+              <!-- <td>{{data.approval_flag}}</td> -->
+              <td>{{data.assignedto}}</td>
+              <!-- <td>{{data.leadbank_gid}}</td> -->
+              <!-- <td>{{data.approval_flag}}</td> -->
+              <!-- <td>{{data.agent_name}}</td> -->
+
+              <td class="text-center text-nowrap">
+  
+               <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankview"><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankedit"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>      
+                <button title="Delete" type="button" (click)="openModaldelete(data.leadbank_gid)" data-bs-toggle="modal" data-bs-target="#myModaldelete"class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-trash text-white  fs-6"></span></button>
+                  <!-- <button title=" Branch" type="button" (click)="onbranch(data.country_gid,data.region_gid,data.leadbank_gid)" class="btn btn-icon btn-sm bg-warning me-2"><span class="fas fa-code-branch text-white fs-6"routerLink="/crm/CrmTrnLeadBankbranch"></span> </button>
+                  <button title="Contact" type="button" class="btn btn-icon btn-sm bg-info me-2">
+                    <span class="fas fa-phone text-white fs-6" (click)="oncontact(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankcontact"></span></button> -->
+<!-- (click)="onedit(data.leadmaster_gid)"  -->
+     
+           </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </tab>
+  <tab heading="Retailer">
+    <div class="table-responsive">
+      <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+        <table id="GetRegisterLeadSummary_list2" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.No</th>
+              <th>Created Date </th>
+              <th>Company Name</th>
+              <th>Contact Details</th>
+              <th>Region</th>
+              <th>Customer Type</th>
+              <th>Created By</th>
+              <th>Remarks</th>
+              <th>Status</th>
+              <th>Assigned To</th>
+            
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of GetRegisterLeadSummary_list2; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.created_date}}</td>
+              <td>{{data.leadbank_name}}</td>
+              <td>{{data.contact_details}}</td>
+              <td>{{data.region_name}}</td>
+              <td>{{data.customer_type}}</td>
+              <td>{{data.created_by}}</td>
+              <td>{{data.remarks}}</td>
+              <td>{{data.lead_status}}</td>
+              <!-- <td>{{data.assign_to}}</td> -->
+              <!-- <td>{{data.approval_flag}}</td> -->
+              <td>{{data.assignedto}}</td>
+              <!-- <td>{{data.leadbank_gid}}</td> -->
+              <!-- <td>{{data.approval_flag}}</td> -->
+              <!-- <td>{{data.agent_name}}</td> -->
+
+              <td class="text-center text-nowrap">
+  
+                <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankview"><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="onedit(data.leadbank_gid)" routerLink="/crm/CrmTrnLeadbankedit"><span class="fa-solid fa-pencil text-white  fs-6"></span></button>      
+                <button title="Delete" type="button" (click)="openModaldelete(data.leadbank_gid)" data-bs-toggle="modal" data-bs-target="#myModaldelete"class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-trash text-white  fs-6"></span></button>
+     
+           </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </tab>
+      
+  <div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center my-4">
+            <h2><b>Are you sure?</b></h2>
+            <br>
+            <p style="display: block;">Do You Want To Delete the Record ?</p>
+            <br>
+          <div class="text-center my-4">
+            <button class="btn-primary btn-sm text-white me-2"  data-bs-dismiss="modal">
+                <i class="fas fa-close text-white"></i> &nbsp;Close
+                </button>&nbsp;
+            <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()"  data-bs-dismiss="modal" >          
+                <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+            </button>
+           
+            <!-- (click)="ondelete()"  -->
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  
+  <br> 

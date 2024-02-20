@@ -1,0 +1,218 @@
+<div class="card rounded-top">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+        <h3 class="fw-bolder text-white">
+            <i class="bi bi-gear fw-bolder fs-3 me-4"></i>Sales Configuration
+        </h3>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-20x mb-3 fs-6 border-bottom">
+                    <li class="nav-item">
+                        <a class="nav-link active btn btn-flex btn-active-light-primary" data-bs-toggle="tab"
+                            href="#kt_tab_pane_1">
+                            <span class="bi bi-gear fw-bolder fs-3 me-4"></span>Optional
+                        </a>
+                    </li>
+                    <li class="nav-item ms-9">
+                        <a class="nav-link btn btn-flex btn-active-light-primary" data-bs-toggle="tab" href="#kt_tab_pane_5" > <span class="bi bi-gear fw-bolder fs-3 me-4"></span>Exchange
+                            Rate</a>
+                    </li>
+                </ul>
+
+                <form [formGroup]="salesconfigform">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active ms-5" id="kt_tab_pane_1" role="tabpanel">
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Add On Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="addoncharges"
+                                                    (change)="addonchargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Additional Discount</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary"
+                                                    formControlName="additionaldiscount"
+                                                    (change)="additionaldiscounttoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Freight Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary" formControlName="freightcharges"
+                                                    (change)="freightchargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Packing / Forwarding Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary"
+                                                    formControlName="packing_forwardingcharges"
+                                                    (change)="packing_forwardingchargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center m-6 flex-wrap">
+                                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <span class="font-bold fs-3">Insurance Charges</span>
+                                            <label class="switch">
+                                                <input type="checkbox" class="primary"
+                                                    formControlName="insurancecharges"
+                                                    (change)="insurancechargestoggle()">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row tab-pane fade ms-5 " id="kt_tab_pane_5" role="tabpanel" style="padding-bottom: 50px;">
+                    <form [formGroup]="salesconfigform" #form="ngForm">
+
+                        <div id="kt_app_content" class="app-content  flex-column-fluid ">
+                            <h2 class="text-center" style="margin-top:-35px;"><i class="fa fa-money" 
+                                    style="font-size:20px;font-weight: bolder;"></i>&nbsp;
+                                Exchange Rate API Credentials</h2>
+                            <!-- <div> -->
+                            <!-- <div class="d-flex justify-content-center mt-4 ms-2 text-center">
+                                <div
+                                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm">
+                                    <input class="form-check-input" type="radio" [(ngModel)]="ratestatus" id="Yes"
+                                        formControlName="shopify_status" value="Y">
+                                    <label style="font-weight: bolder; font-size: 13px;"
+                                        class="form-check-label text-gray-700 text-nowrap" for="Yes">Enable</label>
+                                </div>
+                                <div
+                                    class="form-check form-check-custom form-check-success form-check-solid form-check-sm ms-10">
+                                    <input class="form-check-input" type="radio" [(ngModel)]="ratestatus"
+                                        formControlName="shopify_status" value="N" id="No">
+                                    <label style="font-weight: bolder; font-size: 13px;"
+                                        class="form-check-label text-gray-700 text-nowrap" for="No">Disable</label>
+                                </div>
+                            </div> -->
+                            <!-- </div> -->
+                         
+                            <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                    >
+                                    <span class="font-bold">Base URL<span
+                                            class="ms-1 text-red">*</span></span>
+                                    <input formControlName="exchangerate_baseurl" type="text" class="
+                                                            form-control form-control-lg form-control-solid
+                                                            bg-white
+                                                            custom-input
+                                                            mb-3 mb-lg-0
+                                                            borderc-secondary "  name="exchangerate_baseurl" />
+                                </div>
+                                
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                   >
+                                    <span class="font-bold">API Key<span
+                                            class="ms-1 text-red">*</span></span>
+
+                                    <input formControlName="exchangerate_apikey" type="text" class="
+                                                              form-control form-control-lg form-control-solid
+                                                              bg-white
+                                                              custom-input
+                                                              mb-3 mb-lg-0
+                                                              borderc-secondary "  name="exchangerate_apikey" />
+
+                                </div>
+                               
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                   >
+                                    <span class="font-bold">API Host<span class="ms-1 text-red">*</span></span>
+                                    <input formControlName="exchangerate_apihost" type="text" class="
+                                                        form-control form-control-lg form-control-solid
+                                                        bg-white
+                                                        custom-input
+                                                        mb-3 mb-lg-0
+                                                        borderc-secondary " name="exchangerate_apihost" />
+
+                                </div>
+                                
+                            </div><br>
+                            <!-- <div class="card border borderc-secondary"> -->
+                            <div *ngIf="shopifystatus == 'N'" class="text-center fw-bold fs-3 ">Note:
+                                Kindly Enable To Add Shopify Details</div>
+
+                            <!-- </div> -->
+                            <!-- <h5  class="note" *ngIf="shopifystatus == 'N'">Note: Kindly Enable To Add Shopify Details</h5> -->
+                            <div class="text-center my-4 mt-7">
+
+                                <button (click)="onrateupdate()" [disabled]="salesconfigform.invalid" [ngClass]="{
+                                                'primary-button': !salesconfigform.invalid,
+                                                'secondary-button': salesconfigform.invalid
+                                                 }">
+                                    <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                                </button>
+                            </div>
+                            <div *ngIf="shopifystatus == 'N'"></div>
+
+                            <div class="table-responsive">
+                                <div class="card card-body m-0  p-3 mb-5 bg-white rounded table-responsive">
+                                  <table id="GetExchangeRateAPI_List" class="table table-striped table-row-bordered gy-4 gs-2">
+                                    <thead class="table_head">
+                                      <tr class="text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                        <th style="text-align:center;">S.No</th>
+                                        <th style="text-align:center;">Created Date </th>
+                                        <th style="text-align:center;">Currency Code</th>                                     
+                                        <th style="text-align:end;">Exchange Rate</th>   
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of GetExchangeRateAPI_List; let i=index;">
+                                        <td style="text-align:center;">{{i+1}}</td>
+                                        <td style="text-align:center;">{{data.created_date}}</td>                                       
+                                        <td style="text-align:center;">{{data.currency_code}}</td>                                     
+                                        <td style="text-align:end;">{{data.exchange_rate| currency:'2'}}</td>                              
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                        </div>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>

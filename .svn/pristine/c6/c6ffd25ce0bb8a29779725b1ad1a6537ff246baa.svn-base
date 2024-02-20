@@ -1,0 +1,16 @@
+.link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue; 
+}
+
+.table {
+    font-size: 0.9rem;   /* adjust this value as needed */
+}
+.table td, .table th {
+    font-size: 0.9rem;     /* adjust this value as needed */
+}

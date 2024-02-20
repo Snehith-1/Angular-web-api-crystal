@@ -1,0 +1,427 @@
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { ToastrService } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+interface IMycalls {
+  campaign_title: string;
+  leadbank_name: string;
+  contact_details: string;
+  regionname: string;
+  remarks: string;
+  lead_notes: string;
+  schedule_type: string;
+  schedule: string;
+  schedule_remarks: string;
+  details: string;
+  dialed_number: string;
+  call_response: string;
+  prosperctive_percentage: string;
+  product_name: string;
+  productgroup_name: string;
+  call_feedback: string;
+  productgroup_gid:string;
+  product_gid:string;
+  schedule_date:string;
+  Select_Response:string;
+  schedule_time:string;
+  leadbank_gid:string;
+  lead2campaign_gid:string;
+
+ 
+}
+@Component({
+  selector: 'app-crm-trn-telemycampaign',
+  templateUrl: './crm-trn-telemycampaign.component.html',
+  styleUrls: ['./crm-trn-telemycampaign.component.scss']
+})
+export class CrmTrnTelemycampaignComponent {
+  
+  parameterValue: any;
+  responsedata: any;
+  parameterValue1: any;
+  new_list: any[] = [];
+  new_pending_list: any[] = [];
+  followup_list: any[] = [];
+  closed_list: any[] = [];
+  drop_list: any[] = [];
+  product_list: any[] = [];
+  product_group_list: any[] = [];
+  mycalls!: IMycalls;
+  reactiveForm!: FormGroup;
+  reactiveFormfollow!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, private route: Router, public service: SocketService) {
+    this.mycalls = {} as IMycalls;
+  }
+  ngOnInit(): void {
+    this.GetNewSummary();
+    this.GetPendingSummary();
+    this.GetFollowupSummary();
+    this.GetClosedSummary();
+    this.GetDropSummary();
+
+    this.reactiveForm = new FormGroup({
+
+      dialed_number: new FormControl(this.mycalls.dialed_number, [
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+      leadbank_gid:new FormControl(''),
+      lead2campaign_gid:new FormControl(''),
+
+      call_response: new FormControl(this.mycalls.call_response, [
+        Validators.required,
+        // Validators.pattern( '^[a-zA-Z]+$')
+      ]),
+      prosperctive_percentage: new FormControl(this.mycalls.prosperctive_percentage, [
+        Validators.required,
+
+      ]),
+      product_name: new FormControl(this.mycalls.product_name, [
+        Validators.required,
+
+      ]),
+      productgroup_name: new FormControl(this.mycalls.productgroup_name, [
+        Validators.required,
+
+      ]),
+      call_feedback: new FormControl(''),
+      productgroup_gid: new FormControl(''),
+
+    }
+   
+    );
+
+    this.reactiveFormfollow= new FormGroup({
+      schedule_date: new FormControl(this.mycalls.schedule_date, [
+        Validators.required,
+
+      ]),
+      schedule_time: new FormControl(this.mycalls.schedule_time, [
+        Validators.required,
+
+      ]),
+
+      schedule_type: new FormControl(this.mycalls.schedule_type, [
+        Validators.required,
+
+      ]),
+      schedule_remarks: new FormControl(''),
+
+     
+      leadbank_gid:new FormControl(''),
+      lead2campaign_gid:new FormControl(''),
+    });
+
+    var api = 'Mycalls/GetProductdropdown'
+    this.service.get(api).subscribe((result: any) => {
+      this.responsedata=result;
+      this.product_list = this.responsedata.product_list3;
+    });
+
+    // var api6 = 'Mycalls/GetProductGroupdropdown'
+    // this.service.get(api6).subscribe((result: any) => {
+    // this.responsedata=result;
+    //   this.product_group_list = this.responsedata.product_group_list1;
+    // });
+
+    
+
+    
+  }
+  // product_group(value:any){
+    
+  //   let product_gid = this.reactiveForm.get("product_name")?.value;
+  //   this.product_list=value.product_gid(product_gid).subscribe((result: any) => {
+  //     this.responsedata = result;
+  //     this.product_group_list = this.responsedata.GetProductGroupdropdown;
+  //   });
+  // }
+
+  GetNewSummary() {
+    var url = 'Mycalls/GetNewSummary'
+    this.service.get(url).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.new_list = this.responsedata.new_list;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#new_list').DataTable();
+      }, 1);
+    });
+  }
+  GetPendingSummary() {
+    var api = 'Mycalls/GetPendingSummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.new_pending_list = this.responsedata.new_pending_list;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#new_pending_list').DataTable();
+      }, 1);
+    });
+  }
+  GetFollowupSummary() {
+    var api = 'Mycalls/GetFollowupSummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.followup_list = this.responsedata.followup_list;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#followup_list').DataTable();
+      }, 1);
+    });
+  }
+  GetClosedSummary() {
+    var api = 'Mycalls/GetClosedSummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.closed_list = this.responsedata.closed_list;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#closed_list').DataTable();
+      }, 1);
+    });
+  }
+  GetDropSummary() {
+    var api = 'Mycalls/GetDropSummary'
+    this.service.get(api).subscribe((result: any) => {
+
+      this.responsedata = result;
+      this.drop_list = this.responsedata.drop_list;
+      //console.log(this.entity_list)
+      setTimeout(() => {
+        $('#drop_list').DataTable();
+      }, 1);
+    });
+  }
+  get dialed_number() {
+    return this.reactiveForm.get('dialed_number')!;
+  }
+  get call_response() {
+    return this.reactiveForm.get('call_response')!;
+  }
+  get prosperctive_percentage() {
+    return this.reactiveForm.get('prosperctive_percentage')!;
+  }
+  get product_name() {
+    return this.reactiveForm.get('product_name')!;
+  }
+  get productgroup_name() {
+    return this.reactiveForm.get('productgroup_name')!;
+  }
+  get call_feedback() {
+    return this.reactiveForm.get('call_feedback')!;
+  }
+  get  schedule_date() {
+    return this.reactiveFormfollow.get('schedule_date')!;
+  }
+  get  schedule_time() {
+    return this.reactiveFormfollow.get('schedule_time')!;
+  }
+  get  schedule_type() {
+    return this.reactiveFormfollow.get('schedule_type')!;
+  }
+  get  schedule_remarks() {
+    return this.reactiveFormfollow.get('schedule_remarks')!;
+  }
+
+
+  public onsubmit(): void {
+    if (this.reactiveForm.value.dialed_number != null && this.reactiveForm.value.call_response != null && this.reactiveForm.value.prosperctive_percentage != null && this.reactiveForm.value.product_name != null && this.reactiveForm.value.productgroup_name != null ) {
+
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      console.log(this.reactiveForm.value);
+      var url = 'MyCalls/PostNewlog'
+      this.service.post(url,this.reactiveForm.value).pipe().subscribe((result:any)=>{
+
+        if (result.status == false) {
+          this.ToastrService.warning(result.message)
+          this.GetNewSummary();
+        }
+        else {
+          this.reactiveForm.get("dialed_number")?.setValue(null);
+          this.reactiveForm.get("call_response")?.setValue(null);
+          this.reactiveForm.get("prosperctive_percentage")?.setValue(null);
+          this.reactiveForm.get("product_name")?.setValue(null);
+          this.reactiveForm.get("productgroup_name")?.setValue(null);
+          this.ToastrService.success(result.message)
+          this.GetNewSummary();
+        }
+        this.GetNewSummary();
+      });
+
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+  
+  public onsubmit2(): void {
+    if (this.reactiveForm.value.dialed_number != null && this.reactiveForm.value.call_response != null && this.reactiveForm.value.prosperctive_percentage != null && this.reactiveForm.value.product_name != null && this.reactiveForm.value.productgroup_name != null ) {
+
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      console.log(this.reactiveForm.value);
+      var url = 'MyCalls/PostPendinglog'
+      this.service.post(url,this.reactiveForm.value).pipe().subscribe((result:any)=>{
+
+        if (result.status == false) {
+          this.ToastrService.warning(result.message)
+          this.GetPendingSummary();
+        }
+        else {
+          this.reactiveForm.get("dialed_number")?.setValue(null);
+          this.reactiveForm.get("call_response")?.setValue(null);
+          this.reactiveForm.get("prosperctive_percentage")?.setValue(null);
+          this.reactiveForm.get("product_name")?.setValue(null);
+          this.reactiveForm.get("productgroup_name")?.setValue(null);
+          this.ToastrService.success(result.message)
+          this.GetPendingSummary();
+        }
+        this.GetPendingSummary();
+      });
+
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+  public onsubmit3(): void {
+    if (this.reactiveForm.value.dialed_number != null && this.reactiveForm.value.call_response != null && this.reactiveForm.value.prosperctive_percentage != null && this.reactiveForm.value.product_name != null && this.reactiveForm.value.productgroup_name != null ) {
+
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      console.log(this.reactiveForm.value);
+      var url = 'MyCalls/PostFollowuplog'
+      this.service.post(url,this.reactiveForm.value).pipe().subscribe((result:any)=>{
+
+        if (result.status == false) {
+          this.ToastrService.warning(result.message)
+          this.GetFollowupSummary();
+        }
+        else {
+          this.reactiveForm.get("dialed_number")?.setValue(null);
+          this.reactiveForm.get("call_response")?.setValue(null);
+          this.reactiveForm.get("prosperctive_percentage")?.setValue(null);
+          this.reactiveForm.get("product_name")?.setValue(null);
+          this.reactiveForm.get("productgroup_name")?.setValue(null);
+          this.ToastrService.success(result.message)
+          this.GetFollowupSummary();
+        }
+        this.GetFollowupSummary();
+      });
+
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+  
+  
+  public schedule(): void {
+    if (this.reactiveFormfollow.value.schedule_date!= null && this.reactiveFormfollow.value.schedule_time != null ) {
+
+      for (const control of Object.keys(this.reactiveFormfollow.controls)) {
+        this.reactiveFormfollow.controls[control].markAsTouched();
+      }
+      this.reactiveFormfollow.value;
+      var url = 'MyCalls/PostFollowschedulelog'
+      this.service.post(url, this.reactiveFormfollow.value).subscribe((result: any) => {
+
+        console.log(this.reactiveFormfollow.value);
+        
+        if (result.status == false) {
+          this.ToastrService.warning(result.message)
+          this.GetFollowupSummary();
+        }
+        else {
+          this.reactiveFormfollow.get("schedule_date")?.setValue(null);
+          this.reactiveFormfollow.get("schedule_time")?.setValue(null);
+          this.ToastrService.success(result.message)
+          this.GetFollowupSummary();
+        }
+        this.GetFollowupSummary();
+      });
+
+    }
+    else {
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+
+  }
+  new_redirecttolist() {
+    this.GetNewSummary();  }
+
+  pending_redirecttolist() {
+    //this.route.navigate(['crm/GetPendingSummary'])
+    this.GetPendingSummary();
+  }
+  followup_redirecttolist1() {
+    this.route.navigate(['crm/GetFollowupSummary'])
+  }
+  close_redirecttolist2() {
+    this.route.navigate(['crm/GetClosedSummary'])
+  }
+  
+  onclose() {
+    this.reactiveForm.reset();
+  }
+  openModal1(parameter: string) {
+    this.reactiveForm.get("leadbank_gid")?.setValue(parameter);
+  
+  }
+  openModal2(parameter: string) {
+    this.reactiveForm.get("leadbank_gid")?.setValue(parameter);
+  }
+  openModal3(parameter: string,parameter1: string) {
+    this.reactiveFormfollow.get("leadbank_gid")?.setValue(parameter);
+    this.reactiveFormfollow.get("lead2campaign_gid")?.setValue(parameter1);
+  }
+  openModal4(parameter: string) {
+    this.reactiveForm.get("leadbank_gid")?.setValue(parameter);
+    
+  }
+  productname() {
+
+    let product_gid = this.reactiveForm.get("product_name")?.value;
+
+ 
+
+    let params = {
+
+      product_gid: product_gid
+
+    }
+
+     var url = 'MyCalls/GetProductGroupdropdown'
+
+ 
+
+    this.service.getparams(url, params).subscribe((result: any) => {
+
+      this.responsedata=result;
+
+ 
+
+      this.product_group_list = this.responsedata.product_group_list1;
+
+ 
+
+    });
+
+  }
+
+}
+
+

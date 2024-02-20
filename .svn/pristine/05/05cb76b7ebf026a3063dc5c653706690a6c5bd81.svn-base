@@ -1,0 +1,156 @@
+﻿using ems.system.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.crm.Models
+{
+    public class MdlMyCalls : result
+    {
+        public List<new_list> new_list { get; set; }
+        public List<new_pending_list> new_pending_list { get; set; }
+        public List<followup_list> followup_list { get; set; }
+        public List<closed_list> closed_list { get; set; }
+        public List<drop_list> drop_list { get; set; }
+        public List<product_list3> product_list3 { get; set; }
+        public List<product_group_list1> product_group_list1 { get; set; }
+
+    }
+    public class new_list : result
+    {
+        public string leadbank_gid { get; set; }
+        public string lead2campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+        public string leadbank_name { get; set; }
+        public string contact_details { get; set; }
+        public string regionname { get; set; }
+        public string call_response { get; set; }
+        public string schedule_type { get; set; }
+        public string schedule { get; set; }
+        public string lead_base { get; set; }
+        public string user_gid { get; set; }
+        public string prosperctive_percentage { get; set; }
+        public string schedule_remarks { get; set; }
+        public string call_feedback { get; set; }
+        public string dialed_number { get; set; }
+
+        
+
+
+    }
+    public class new_pending_list : result
+    {
+
+        public string leadbank_gid { get; set; }
+        public string lead2campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+        public string leadbank_name { get; set; }
+        public string contact_details { get; set; }
+        public string regionname { get; set; }
+
+        public string call_response { get; set; }
+        public string schedule_type { get; set; }
+        public string schedule { get; set; }
+        public string lead_base { get; set; }
+        public string user_gid { get; set; }
+      
+        public string schedule_remarks { get; set; }
+        public string prosperctive_percentage { get; set; }
+        public string call_feedback { get; set; }
+        public string dialed_number { get; set; }
+
+
+    }
+    public class followup_list : result
+    {
+
+        public string leadbank_gid { get; set; }
+        public string lead2campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+        public string leadbank_name { get; set; }
+        public string contact_details { get; set; }
+        public string regionname { get; set; }
+        public string call_response { get; set; }
+        public string schedule_type { get; set; }
+        public string schedule { get; set; }
+        public string lead_base { get; set; }
+        public string user_gid { get; set; }
+       
+        public string schedule_remarks { get; set; }
+        public string schedule_time { get; set; }
+        public string schedule_date { get; set; }
+        public string prosperctive_percentage { get; set; }
+       
+        public string call_feedback { get; set; }
+        public string dialed_number { get; set; }
+
+
+
+
+    }
+    public class closed_list : result
+    {
+
+        public string leadbank_gid { get; set; }
+        public string lead2campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+        public string leadbank_name { get; set; }
+        public string contact_details { get; set; }
+        public string regionname { get; set; }
+        public string schedule_type { get; set; }
+        public string schedule { get; set; }
+        public string call_response { get; set; }
+        public string lead_base { get; set; }
+        public string user_gid { get; set; }
+        public string prospective_percentage { get; set; }
+        public string schedule_remarks { get; set; }
+
+
+
+    }
+    public class drop_list : result
+    {
+
+        public string leadbank_gid { get; set; }
+        public string lead2campaign_gid { get; set; }
+        public string campaign_title { get; set; }
+        public string leadbank_name { get; set; }
+        public string contact_details { get; set; }
+        public string regionname { get; set; }
+        public string lead_base { get; set; }
+        public string call_response { get; set; }
+        public string schedule_type { get; set; }
+        public string schedule { get; set; }
+        public string user_gid { get; set; }
+        public string prospective_percentage { get; set; }
+        public string schedule_remarks { get; set; }
+
+
+
+    }
+
+    public class product_list3 : result
+    {
+
+        public string product_gid { get; set; }
+        public string product_name { get; set; }
+
+
+
+    }
+    public class product_group_list1 : result
+    {
+
+        public string productgroup_gid { get; set; }
+        public string productgroup_name { get; set; }
+    }
+
+
+
+
+
+
+
+
+}

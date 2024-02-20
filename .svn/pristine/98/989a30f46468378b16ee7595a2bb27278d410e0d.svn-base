@@ -1,0 +1,38 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmsPayrollRoutingModule } from './ems.payroll-routing.module';
+import { PayTrnEmployeebankdetailsComponent } from './component/pay-trn-employeebankdetails/pay-trn-employeebankdetails.component';
+import { PayTrnLoansummaryComponent } from './component/pay-trn-loansummary/pay-trn-loansummary.component';
+import { PayTrnLoanaddComponent } from './component/pay-trn-loanadd/pay-trn-loanadd.component';
+import { PayTrnLoanviewComponent } from './component/pay-trn-loanview/pay-trn-loanview.component';
+import { PayTrnLoaneditComponent } from './component/pay-trn-loanedit/pay-trn-loanedit.component';
+import { DataTablesModule } from 'angular-datatables';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { PayTrnSalaryManagementComponent } from './component/pay-trn-salary-management/pay-trn-salary-management.component';
+
+@NgModule({
+  declarations: [
+    PayTrnEmployeebankdetailsComponent,
+    PayTrnLoansummaryComponent,
+    PayTrnLoanaddComponent,
+    PayTrnLoanviewComponent,
+    PayTrnLoaneditComponent,
+    PayTrnSalaryManagementComponent
+  ],
+  imports: [
+    CommonModule,
+    EmsPayrollRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DataTablesModule,
+    AngularEditorModule,
+    NgSelectModule,
+    NgApexchartsModule
+
+  ]
+})
+export class EmsPayrollModule {}
+ 

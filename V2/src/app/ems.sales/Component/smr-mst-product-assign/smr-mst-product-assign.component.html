@@ -1,0 +1,172 @@
+<div class="card shadow-sm">
+  <div class="card-header bg-lightblue card-height55">
+  <div class="card-header" *ngFor="let data of producthead_list;">
+    <h3 class="card-title">RATE CONTRACT TO PRODUCT FOR  {{data.pricesegment_name}}</h3>
+  </div>
+  </div><br>
+  <form [formGroup]="ProductForm" (ngSubmit)="onsubmit()">
+    <div class="d-flex flex-row m-6 flex-wrap">
+           
+      <div class="col-10 col-lg-3 col-md-6 col-sm-12">
+        <span class="font-bold">Product Group</span>
+
+        <ng-select [items]="group_list" class="
+        custom
+        col-lg-9 col-12
+        fv-row
+        mt-2
+      " bindLabel="productgroup_name"  formControlName="productgroup_name" bindValue="productgroup_gid"  placeholder="Select an option" [(ngModel)]="mdlProducGrouptName"></ng-select>
+      </div>
+
+      <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+        <span class="font-bold">Product<span class="ms-1 text-red">*</span></span>
+
+        <ng-select [items]="product_list" class="
+        custom
+        col-lg-9 col-12
+        fv-row
+        mt-2
+        
+      " [ngStyle]="{
+        'border-color':
+        product_name.invalid && product_name.touched
+            ? 'red'
+            : 'rgb(209, 209, 209)'
+      }"
+      bindLabel="product_name" formControlName="product_name" 
+      bindValue="product_gid"
+       (change)="GetOnChangeProductName()" placeholder="Select an option" [(ngModel)]="mdlProductName"> </ng-select>
+       <div *ngIf="product_name.invalid && (product_name.dirty || product_name.touched)">
+        <div *ngIf="product_name.errors?.['required']">
+                    <span style="color:red;">Select Product!</span>
+        </div>
+      </div>
+      </div>
+
+      <div class="col-10 col-lg-3 col-md-6 col-sm-12">
+        <span class="font-bold">Product Unit</span>
+
+        <ng-select [items]="productuom_list" class="
+        custom
+        col-lg-9 col-12
+        fv-row
+        mt-2
+      " bindLabel="productuom_name" formControlName="productuom_name" bindValue="productuom_gid" placeholder="Select an option" [(ngModel)]="mdlProductUom"></ng-select>
+      </div>
+
+      <div class="col-12 col-lg-3 col-md-6 col-sm-12">
+        <span class="font-bold">Product Price<span class="ms-1 text-red">*</span></span>
+        <div class="col-lg-9 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input type="numeric" class="
+            form-control 
+          "  class="custom col-12 col-lg-3 col-md-6 col-sm-12" [ngStyle]="{
+            'border-color':
+            product_price.invalid && product_price.touched
+                ? 'red'
+                : 'rgb(209, 209, 209)'
+          }" placeholder="Product Price " formControlName="product_price"  oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-control"/>
+        </div>
+        <div *ngIf="product_price.invalid && (product_price.dirty || product_price.touched)">
+          <div *ngIf="product_price.errors?.['required']">
+                      <span style="color:red;">Enter Product Price</span>
+          </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap ">
+      <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        <span class="font-bold">Customer Product Code</span>
+        
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+            <input type="text" class="
+            form-control form-control-lg form-control-solid
+            mb-3 mb-lg-0 borderc-secondary bg-white custom-input
+          " placeholder="Customer Product Code" formControlName="customerproduct_code" class="form-control" style="width:375px"/>
+        </div>
+    </div> -->
+      
+  
+
+     
+      
+  
+  
+    <div class="col-12 m-10">
+      <button title="Assign" type="submit" class="btn btn-icon btn-sm bg-success me-2" style="width:100px">ADD</button>
+    </div>
+  </div>
+  </form> 
+
+  
+  <div class="card-header bg-lightblue card-height55">
+    <div class="card-header">
+      <h3 class="card-title">RATE CONTRACT TO PRODUCT</h3>
+    </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+        <table id="productgroup_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+              <th>S.No</th>
+              <th>Product Group</th>
+              <th>Product</th>
+              <th>Unit</th>
+              <th>Unit Price</th>
+           
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of productgroup_list; let i=index;" style="white-space: nowrap;">
+              <td>{{i+1}}</td>
+              <td>{{data.productgroup_name}}</td>
+              <td>{{data.product_name}}</td>
+              <td>{{data.productuom_name}}</td>
+              <td>
+                <div *ngIf="data.isEdit">
+                <input type="numeric" class="form-control custom-input borderc-secondary bg-white" [(ngModel)]="data.product_price">
+              </div>
+              <div *ngIf="!data.isEdit">
+                {{data.product_price}}
+              </div>
+          </td>
+              <!-- <td> <div *ngIf="data.isEdit">
+                <input type="text" class="form-control custom-input borderc-secondary bg-white" style="width:150px" [(ngModel)]="data.customerproduct_code">
+              </div>
+              <div *ngIf="!data.isEdit">
+                {{data.customerproduct_code}}
+              </div>
+            </td> -->
+              <td class="text-center nowrap">
+                <div class="row">
+                  <div class="col-md-6">
+             <div *ngIf="!data.isEdit">
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-warning me-4"
+                  (click)="openModaledit(data)"><span
+                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                  </div>
+                  <div *ngIf="data.isEdit">
+                    <button title="Update" type="button" class="btn btn-icon btn-sm bg-success me-1"
+                  (click)="edupdate()"><span
+                    class="fa-solid fa-cloud text-white  fs-6"></span></button>&nbsp;
+                    <button title="Close" type="button" class="btn btn-icon btn-sm bg-danger me-1"
+                    (click)="onclose(data)"><span
+                      class="fa-solid fa-times-circle text-white  fs-6"></span></button>
+                  </div></div>
+                <div class="col-md-5">
+                <button title="Un Assign" type="button" (click)="update(data.product_gid)" class="btn btn-icon btn-sm bg-danger me-2"><span
+                    class="fa-solid fa-arrow-up text-white   fs-6"></span></button>
+                </div>
+              </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  

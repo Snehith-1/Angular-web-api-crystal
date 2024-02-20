@@ -1,0 +1,248 @@
+<div class="card">
+    <div class="card-header" style="background-color: rgb(148, 200, 248);">
+        <h3 class="card-title"><i class="bi bi-globe" style="font-size: 20px;"></i>&nbsp;&nbsp;<b>Website Analytics</b>
+        </h3>
+    </div>
+
+    <br>
+    <div class="row ms-2 me-2">
+        <div class=" col-md-4 col-sm-12">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-green ">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">New User</h5>
+
+                            <h4 class="my-1 text-info">{{newUsers}}</h4>
+
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i
+                                class="bi bi-calendar3"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" col-md-4 col-sm-12">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-violet">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5 class="mb-0 text-secondary">Total Users</h5>
+
+                            <h4 class="my-1 text-info">{{total_user}}</h4>
+
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i
+                                class="fa-solid fa-person"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" col-md-4 col-sm-12">
+            <div class="cardHeadLeads radius-10 border-start border-0 border-3 border-pink">
+                <div class="card-body12">
+                    <div class="d-flex align-items-center">
+                        <div class="ms-1">
+                            <h5 style="color:#9e28db;">{{toDate}} &nbsp; {{currentDayName}}</h5>
+                            <h1> {{ rxTime | date: 'hh:mm:ss a' }} </h1>
+                        </div>
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-purple text-white ms-auto"><i
+                                class="bi bi-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="row ms-2 me-2">
+        <div class="col-lg-6 col-md-12 col-sm-12 me-2 ms-2 mb-2" style="width:49%;">
+            <div class="card-header " style="background-color: rgb(148, 200, 248);">
+                <div class="card-title">
+                    <h1>Users</h1>
+                </div>
+            </div>
+            <br>
+            <div class="row ">
+                <div class="col-12">
+                    <b>Town/Cities</b>
+                   <div class="float-end me-5"><b>User</b></div> 
+                    <div style="max-height: 150px;" id="kt_chat_contacts_body">
+                            <div  *ngFor="let progress of analytics_summarylist2">
+                                <div>
+                                    <ng-container>
+                                        <span>
+                                            <ng-template [ngIf]="progress.city !== '(not set)'">
+                                                <div class="row "> 
+                                                    <div class="col-11"> {{ progress.city }}</div>
+                                                    <div class=" col-1 ps-8">
+                                                        {{progress.total_users}}
+                                                    </div>
+                                                </div>
+        
+                                                <div class="progress" style="width: 90%; height: 5px;">
+                                                    <div class="progress-bar" [ngStyle]="{ 'width.%': progress.total_users}">
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+                                        </span>
+                                        <br>
+                                    </ng-container>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+           
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 border-1  me-2 ms-2 mb-2" style="width:49%;">
+            <div class="card-header" style="background-color: rgb(148, 200, 248);">
+                <div class="card-title">
+                    <h1>Sessions</h1>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-11">
+                    <b>Sessions</b>
+                </div>
+                <div class="col-1">
+                    <b>User</b>
+                </div><br>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-11">
+                    <h6>Direct</h6>
+
+                    <div class="progress" style="width: 90%; height: 5px;">
+                        <div class="progress-bar" [ngStyle]="{ 'width.%': direct }" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <h6>{{direct}}</h6>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-11">
+                    <h6>Referal</h6>
+
+                    <div class="progress" style="width: 90%; height: 5px;">
+                        <div class="progress-bar" [ngStyle]="{ 'width.%': referral }" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <h6>{{referral}}</h6>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-11">
+                    <h6>Organic</h6>
+
+                    <div class="progress" style="width: 90%; height: 5px;">
+                        <div class="progress-bar" [ngStyle]="{ 'width.%': organic }" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-1">
+                    <h6>{{organic}}</h6>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <br><br>
+    <div class="card-title ms-5">
+        <h1>Analytics Summary</h1>
+    </div>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded radius-10">
+            <table id="analytics_summarylist1" class="table table-striped table-row-bordered border-bottom gs-7">
+                <thead>
+                    <tr class="fw-bolder fs-5 text-nowrap bg-mail text-black align-middle radius-10"
+                        style="background-color: rgb(148, 200, 248);">
+
+                        <th>S.No</th>
+                        <th>Country</th>
+                        <th>City</th>
+                        <th>Users</th>
+                        <th>Website Visit</th>
+                        <th>Page Title</th>
+                        <th>Device</th>
+                        <th>Event</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of analytics_summarylist1; let i=index;" class="align-middle">
+
+                        <td>{{i+1}}</td>
+                        <td>{{data.country}}</td>
+                        <td>
+                            <ng-container *ngIf="data.city === '(not set)'; else definedCity">
+                                Not Defined
+                            </ng-container>
+                            <ng-template #definedCity>
+                                {{ data.city }}
+                            </ng-template>
+                        </td>
+                        <td>{{data.newUsers}}</td>
+                        <td><span *ngIf="data.firstUserCampaignName ==='(direct)'">Direct</span><span
+                                *ngIf="data.firstUserCampaignName ==='(referral)'">Referral</span>
+                            <span *ngIf="data.firstUserCampaignName ==='(organic)'">Organic</span>
+                        </td>
+                        <td>{{data.pageTitle}}</td>
+                        <td>{{data.deviceCategory}}</td>
+                        <td>{{data.eventCount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row ms-2 me-2">
+        <div class="col-lg-6 col-md-12 col-sm-12 pe-2">
+            <div class="card-header " style="background-color: rgb(148, 200, 248);">
+                <div class="card-title">
+                    <h1>Weekwise Chart</h1>
+                </div>
+            </div>
+            <apx-chart [series]="weekchart.series" [chart]="weekchart.chart" [xaxis]="weekchart.xaxis"
+                [title]="weekchart.title">
+            </apx-chart>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12 pe-2">
+            <div class="card-header " style="background-color: rgb(148, 200, 248);">
+                <div class="card-title">
+                    <h1>Monthwise Chart</h1>
+                </div>
+            </div>
+            <div class=" col-lg-12 " style="width: 100%">
+                <apx-chart [series]="monthchart.series " [chart]="monthchart.chart" [xaxis]="monthchart.xaxis"
+                    [title]="monthchart.title">
+                </apx-chart>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="col-lg-12 col-md-12 col-sm-12  ms-2 me-2">
+        <div class="card-header " style="background-color: rgb(148, 200, 248);">
+            <div class="card-title">
+                <h1>Yearwise Chart</h1>
+            </div>
+        </div>
+        <apx-chart [series]="yearchart.series " [chart]="yearchart.chart" [xaxis]="yearchart.xaxis"
+            [title]="yearchart.title">
+        </apx-chart>
+    </div>
+
+</div>

@@ -1,0 +1,250 @@
+/* border color custom */
+.borderc-secondary{
+    border-color: rgb(209, 209, 209) !important;
+}
+
+// .border-danger {
+//   border-color: red;
+// }
+
+
+
+.text-red{
+  color: red !important;
+}
+
+.text-white{
+  color: #fff !important;
+}
+
+
+/* background color custom blue */
+.bg-lightblue{
+    background-color: rgb(222, 240, 255) !important;
+}
+
+.card-height55{
+    min-height: 55px !important;
+}
+
+/* text color custom blue */
+.text-blue{
+    color:#2599ff !important
+}
+
+.font-bold{
+  font-weight: 420;
+}
+
+/* inpu field placeholder color*/
+::placeholder{
+    font-size: 13px !important;
+}
+
+.custom-input{
+    font-size: 13px !important
+}
+
+
+
+.btn-primary{
+color: #fff !important;
+background-color: #009ef7 !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+}
+
+.btn-primary:hover {
+    background-color: #038fe0 !important;
+    
+  }
+
+.btn-secondary{
+background-color: #e1e3ea !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+}
+
+.btn-secondary:hover {
+    background-color: #c2c3ca !important;  
+  }
+
+
+.btn-success{
+background-color: #50cd89 !important;
+color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+}
+
+.btn-success:hover {
+    background-color: #42ac72 !important;  
+  }
+
+.btn-danger{
+background-color: #f1416c !important;
+color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: 9px 16px 9px 13px  !important;
+border-radius: 3px ;
+border: 0;
+}
+
+.btn-danger:hover {
+    background-color: #d3395f !important;  
+  }
+
+.btn-warning{
+background-color: #ffc701 !important;
+color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: calc(0.775rem + 1px) calc(1.5rem + 1px) !important;
+border-radius: 3px ;
+border: 0;
+}
+
+.btn-warning:hover {
+    background-color: #ddad01 !important;  
+  }
+
+.btn-info{
+background-color: #7239ea !important;
+color: #fff !important;
+font-size: 1.1rem !important;
+font-weight: 630 !important;
+padding: calc(0.775rem + 1px) calc(1.5rem + 1px) !important;
+border-radius: 3px ;
+border: 0;
+}
+
+.btn-info:hover {
+    background-color: #6533d1 !important;  
+  }
+
+.table-striped tr:nth-child(even) {
+    background-color: #d7f0fa54;
+  }
+
+  .btn-icon{
+    border-radius: 7px !important;
+    color: #fff !important;
+    // font-size: 1.1rem !important;
+    // font-weight: 630 !important;
+    height: 26px  !important;
+    padding-bottom: 13px !important;
+    border-radius: 3px;
+    padding-top: 13px !important;
+    transition: 0.3s !important;
+    cursor: pointer;
+  }
+
+.btn-icon:hover{
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-2px) !important;
+  cursor: pointer;
+}
+/* Password Toogle icon*/
+.input-group {
+  position: relative;
+}
+
+.password-toggle {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+}
+
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating), .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-control, .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select {
+  border-top-right-radius: 9px !important;
+  border-bottom-right-radius: 9px !important;
+}
+
+input::file-selector-button {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  padding: 0.5em 12px ;
+  border: thin solid dodgerblue;
+  background-color: #009ef7;
+  border-radius: 3px;
+}
+
+.invalid-border {
+  border: 1px solid rgb(255, 63, 63);
+  border-radius: 9px;
+}
+
+// .ng-dropdown-panel {
+//   z-index: 1 !important;
+// }
+
+// .ng-select {
+//   z-index: 3 !important;
+// }
+
+.bg-view{
+  background-color: #154360;
+ 
+}
+
+.bg-view:hover {
+  background-color: #154360; 
+  
+}
+
+.bg-excel {
+  background-color: #229954;
+}
+
+.bg-excel:hover {
+  background-color: #229954;
+  
+}
+
+.bg-export {
+  background-color: #e67e22 ;
+}
+.bg-export:hover {
+  background-color: #e67e22;
+  
+}
+
+.bg-edit{
+  background-color: #28b463;
+}
+
+.bg-edit:hover {
+  background-color: #28b463;
+  
+}
+.bg-question{
+  background-color: #ee68f5;
+}
+
+.bg-question:hover {
+  background-color: #ee68f5!important;
+  
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.40rem 0.75rem !important;
+}
+ 
+thead tr {
+  height: 27px !important;
+}

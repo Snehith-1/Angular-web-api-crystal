@@ -1,0 +1,103 @@
+<div class="card rounded-top">
+  <form [formGroup]="roleForm">
+    <div class="card-title p-5 pb-6 pt-6 rounded-top bg-primary">
+      <h3 class="fw-bolder text-white">
+        <i class="fas fa-plus fw-bolder fs-3 me-4"></i>Add Role
+      </h3>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Role Code</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" formControlName="Role_Code"
+            [ngStyle]="{ 'border-color': roleForm.get('Role_Code')?.hasError('required') && roleForm.get('Role_Code')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input  mb-3 mb-lg-0"
+            placeholder="Role Code" />
+          <div
+            *ngIf="roleForm.get('Role_Code')?.hasError('required') && roleForm.get('Role_Code')?.touched || roleForm.get('Role_Code')?.hasError('pattern')"
+            class="text-red">Role code is required.</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Role Title</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <input type="text" formControlName="Role_Title"
+            [ngStyle]="{ 'border-color': roleForm.get('Role_Title')?.hasError('required') && roleForm.get('Role_Title')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input  mb-3 mb-lg-0"
+            placeholder="Role Title" />
+          <div
+            *ngIf="roleForm.get('Role_Title')?.hasError('required') && roleForm.get('Role_Title')?.touched || roleForm.get('Role_Title')?.hasError('pattern')"
+            class="text-red">Role title is required.</div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Reporting To Role</span>
+        <ng-select class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" formControlName="Reporting_to"
+          bindLabel="role_name" bindValue="role_gid" [items]="reportingtoList" placeholder="Select an option"
+          required></ng-select>
+      </div>
+
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap">
+
+      <div class="col-12 col-lg-4 col-md-4 col-sm-12"><span class="font-bold required">Probation Period</span>
+        <div class="d-flex flex-row flex-wrap">
+          <div class="col-12 col-lg-9 col-md-9 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              <input type="number" formControlName="Probation_Period"
+                [ngStyle]="{ 'border-color': roleForm.get('Probation_Period')?.hasError('required') && roleForm.get('Probation_Period')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+                class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input  mb-3 mb-lg-0"
+                placeholder="Probation Period" />
+              <div
+                *ngIf="roleForm.get('Probation_Period')?.hasError('required') && roleForm.get('Probation_Period')?.touched || roleForm.get('Probation_Period')?.hasError('pattern')"
+                class="text-red">Probation period is required.</div>
+
+
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-6">
+              <span><b>Month(s)</b></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold required">Job Description</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+          <textarea formControlName="Job_Description"
+            [ngStyle]="{ 'border-color': roleForm.get('Job_Description')?.hasError('required') && roleForm.get('Job_Description')?.touched ? 'red' : 'rgb(209, 209, 209)' }"
+            class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0 bg-white custom-input  mb-3 mb-lg-0"
+            placeholder="" rows="2"></textarea>
+          <div
+            *ngIf="roleForm.get('Job_Description')?.hasError('required') && roleForm.get('Job_Description')?.touched || roleForm.get('Job_Description')?.hasError('pattern')"
+            class="text-red">Job description is required.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4 col-md-6 col-sm-12"><span class="font-bold">Role Responsible</span>
+        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+          <textarea class="form-control rounded" formControlName="Role_Responsible" [(ngModel)]="txtroleresponsible"
+            rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center my-4">
+      <button type="submit" class="btn-success btn-sm text-white me-2" [disabled]="roleForm.invalid"
+        (click)="AddSubmit()">
+        <i class="fas fa-check text-white fs-5 me-3"></i>Submit
+      </button>
+
+      <button class="btn-primary btn-sm text-white me-4" (click)="backbutton()">
+        <i class="fas fa-arrow-left me-3"></i>Back
+      </button>
+    </div>
+
+  </form>
+</div>

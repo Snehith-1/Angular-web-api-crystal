@@ -1,0 +1,244 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AES, format } from 'crypto-js';
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  CountryISO,
+  SearchCountryField,
+
+} from "ngx-intl-tel-input";
+import { saveAs } from 'file-saver';
+
+
+@Component({
+  selector: 'app-crm-smm-websitechats',
+  templateUrl: './crm-smm-websitechats.component.html',
+  styleUrls: ['./crm-smm-websitechats.component.scss']
+})
+export class CrmSmmWebsitechatsComponent {
+
+  responsedata: any;
+  parameterValue: any;
+
+  // chatused
+  reactiveMessageForm!: FormGroup;
+
+  listof_chat: any[] = [];
+  viewchat_list: any[] = [];
+  user_details: any[] = [];
+  inlinechat_gid: any;
+  id: any;
+  user_name: any;
+  user_id: any;
+  user_mail: any;
+  created_date: any;
+  location: any;
+  user_agent: any;
+  ip_address: any;
+  first_letter: any;
+  thread_id: any;
+  chat_id: any;
+  chatdetails: any[] = [];
+
+  // chatused
+
+
+  chatWindow: string = "Default";
+
+  parameterValue1: any;
+  firstName: any;
+  lastName: any;
+  windowInterval: any;
+  windowInterval1: any;
+  contact_id: any;
+
+
+  constructor(private formBuilder: FormBuilder, private route: Router, private router: Router,
+    private ToastrService: ToastrService, public service: SocketService,
+    private NgxSpinnerService: NgxSpinnerService) {
+  }
+  ngOnInit(): void {
+    this.GetchatSummarydetails();
+
+    var url3 = 'website/Getlistofchat'
+    this.service.get(url3).subscribe((result,) => {
+    });
+    var url6 = 'website/Getlistofthreads'
+    this.service.get(url6).subscribe((result,) => {
+    });
+    this.reactiveMessageForm = new FormGroup({
+      inlinechat_gid: new FormControl(''),
+      chat_id: new FormControl(''),
+      sendtext: new FormControl(''),
+    });
+  }
+
+  //User summary start//
+  GetchatSummarydetails() {
+    this.NgxSpinnerService.show();
+    var url = 'website/chatSummary'
+    this.service.get(url).subscribe((result: any) => {
+      this.responsedata = result;
+      this.listof_chat = this.responsedata.listof_chat;
+      this.chat_id = this.responsedata.listof_chat[0].chat_id,
+        this.inlinechat_gid = this.responsedata.listof_chat[0].inlinechat_gid,
+  
+
+        this.NgxSpinnerService.hide();
+      setTimeout(() => {
+        $('#listof_chat').DataTable();
+      }, 100);
+    });
+
+  }
+ 
+  //Individual Chat Insert event //
+  Getindividualchatsummary(inlinechat_gid: any, chat_id: any) {
+    this.NgxSpinnerService.show();
+    var url5 = 'website/Getindividualchat'
+    let param = {
+      inlinechat_gid: inlinechat_gid,
+      chat_id: chat_id
+
+    }
+    this.service.getparams(url5, param).subscribe((result: any) => {
+      if (result != null) {
+        this.viewchat_list = result.GetViewchatsummary;
+        this.inlinechat_gid = result.inlinechat_gid
+        this.user_id = result.user_id
+        this.user_name = result.user_name
+        this.user_mail = result.user_mail
+        this.first_letter = result.first_letter
+        this.NgxSpinnerService.hide();
+        setTimeout(() => {
+          $('#viewchat_list').DataTable();
+        }, 1000);
+      }
+      else {
+        clearInterval(this.windowInterval1)
+      }
+    });
+  }
+  //Individual Chat Insert end //
+
+
+  // contact to message//
+  showResponsiveOutput(inlinechat_gid: string, chat_id: string) {
+    this.inlinechat_gid = inlinechat_gid
+    this.chat_id = chat_id;
+
+    this.chatWindow = "Chat"
+    this.Getindividualchatsummary(inlinechat_gid, chat_id);
+
+
+  }
+  getfulluserdetails(inlinechat_gid: string) {
+    this.chatWindow = "About"
+    var url = 'website/Getuserdeatils'
+    var params = {
+      inlinechat_gid: inlinechat_gid
+    }
+    this.service.getparams(url, params).subscribe((result: any) => {
+      $('#user_details').DataTable().destroy();
+      if (result != null) {
+        this.responsedata = result;
+        this.user_details = this.responsedata.user_details;
+        this.inlinechat_gid = this.user_details[0].inlinechat_gid;
+        this.first_letter = this.user_details[0].first_letter;
+        this.user_name = this.user_details[0].user_name;
+        this.user_mail = this.user_details[0].user_mail;
+        this.created_date = this.user_details[0].created_date;
+        this.location = this.user_details[0].location;
+        this.ip_address = this.user_details[0].ip_address;
+        this.user_agent = this.user_details[0].user_agent;
+
+      }
+      else {
+        clearInterval(this.windowInterval1)
+      }
+    });
+  }
+  getchatreferesh(inlinechat_gid: string,chat_id: string) {
+    this.NgxSpinnerService.show();
+    var url5 = 'website/Getindividualchat'
+    let param = {
+      inlinechat_gid: inlinechat_gid,
+      chat_id: chat_id
+
+    }
+    this.service.getparams(url5, param).subscribe((result: any) => {
+      if (result != null) {
+        this.viewchat_list = result.GetViewchatsummary;
+        this.inlinechat_gid = result.inlinechat_gid
+        this.user_id = result.user_id
+        this.user_name = result.user_name
+        this.user_mail = result.user_mail
+        this.first_letter = result.first_letter
+        this.NgxSpinnerService.hide();
+        setTimeout(() => {
+          $('#viewchat_list').DataTable();
+        }, 1000);
+      }
+      else {
+        clearInterval(this.windowInterval1)
+      }
+    });
+  }
+  backtochat() {
+    this.chatWindow = "Chat"
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.windowInterval)
+    clearInterval(this.windowInterval1)
+  }
+  
+  i: number = 0;
+  onSubmit() {
+    if (this.i === 0) {
+      this.onMessagesent(this.inlinechat_gid,this.chat_id);
+    }
+  }
+
+  // Message send //
+  public onMessagesent(inlinechat_gid: string, chat_id: string): void {
+    this.reactiveMessageForm.value.inlinechat_gid = inlinechat_gid;
+    this.reactiveMessageForm.value.chat_id = chat_id;
+
+    if (this.reactiveMessageForm.value.sendtext != null) {
+
+      var url = 'website/Messagesend'
+      this.service.post(url, this.reactiveMessageForm.value).subscribe((result: any) => {
+        if (result.status == false) {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.warning(result.message)
+          this.reactiveMessageForm.reset();
+        }
+        else {
+          window.scrollTo({
+            top: 0, // Code is used for scroll top after event done
+          });
+          this.ToastrService.success(result.message)
+          this.reactiveMessageForm.reset();
+        }
+        this.Getindividualchatsummary(this.inlinechat_gid,this.chat_id);
+      });
+    }
+
+    else {
+      window.scrollTo({
+        top: 0, // Code is used for scroll top after event done
+      });
+      this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+    }
+  }
+
+}
+
+
+
+

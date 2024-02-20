@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SysMstEmployeeAddComponent } from './component/sys-mst-employee-add/sys-mst-employee-add.component';
+import { SysMstMenuMappingComponent } from './component/sys-mst-menu-mapping/sys-mst-menu-mapping.component';
+import { SystemDashboardComponent } from './component/system-dashboard/system-dashboard.component';
+import { SysMstEmployeePendingSummaryComponent } from './component/sys-mst-employee-pending-summary/sys-mst-employee-pending-summary.component';
+import { SysMstEmployeeEditComponent } from './component/sys-mst-employee-edit/sys-mst-employee-edit.component';
+import { SysMstEmployeeViewComponent } from './component/sys-mst-employee-view/sys-mst-employee-view.component';
+import { SysMstEmployeeSummaryComponent } from './component/sys-mst-employee-summary/sys-mst-employee-summary.component';
+import { SysMstEntitySummaryComponent } from './component/sys-mst-entity-summary/sys-mst-entity-summary.component';
+const routes: Routes = [
+
+  { path: 'SysMstEmployeeAdd', component: SysMstEmployeeAddComponent},
+  { path: 'SysMstMenuMapping', component: SysMstMenuMappingComponent},
+  { path: 'SystemDashboard', component: SystemDashboardComponent},
+  { path: 'SysMstEmployeePendingSummary', component:SysMstEmployeePendingSummaryComponent},
+  { path: 'SysMstEmployeeEdit/:employee_gid', component:SysMstEmployeeEditComponent},
+  { path: 'SysMstEmployeeView/:employee_gid', component:SysMstEmployeeViewComponent},
+  { path: 'SysMstEmployeeSummary', component: SysMstEmployeeSummaryComponent},
+  { path: 'SysMstEntitySummary', component: SysMstEntitySummaryComponent},
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class EmsSystemRoutingModule { }

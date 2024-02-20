@@ -1,0 +1,79 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DataTablesModule } from 'angular-datatables';
+import { PmrTrnVendorregisterSummaryComponent } from './Component/pmr-trn-vendorregister-summary/pmr-trn-vendorregister-summary.component';
+import { EmsPmrRoutingModule } from './ems.pmr-routing.module';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { PmrMstProductunitComponent } from './Component/pmr-mst-productunit/pmr-mst-productunit.component';
+import { PmrMstCurrencySummaryComponent } from './Component/pmr-mst-currency-summary/pmr-mst-currency-summary.component';
+import { PmrMstProductgroupComponent } from './Component/pmr-mst-productgroup/pmr-mst-productgroup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PmrTrnVendorregisterAddComponent } from './Component/pmr-trn-vendorregister-add/pmr-trn-vendorregister-add.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { PmrMstProductAddComponent } from './Component/pmr-mst-product-add/pmr-mst-product-add.component';
+import { PmrMstProductSummaryComponent } from './Component/pmr-mst-product-summary/pmr-mst-product-summary.component';
+import { PmrMstTaxSummaryComponent } from './Component/pmr-mst-tax-summary/pmr-mst-tax-summary.component';
+import { EmsUtilitiesModule } from '../ems.utilities/ems.utilities.module';
+import { PmrTrnDirectpoAddComponent } from './Component/pmr-trn-directpo-add/pmr-trn-directpo-add.component';
+import { PmrTrnGrninwardAddComponent } from './Component/pmr-trn-grninward-add/pmr-trn-grninward-add.component';
+import { PmrTrnGrninwardaddComponent } from './Component/pmr-trn-grninwardadd/pmr-trn-grninwardadd.component';
+import { PmrTrnGrninwardComponent } from './Component/pmr-trn-grninward/pmr-trn-grninward.component';
+import { PmrTrnPurchaseorderSummaryComponent } from './Component/pmr-trn-purchaseorder-summary/pmr-trn-purchaseorder-summary.component';
+import { PmrMstTermsconditionssummaryComponent } from './Component/pmr-mst-termsconditionssummary/pmr-mst-termsconditionssummary.component';
+import { PmrMstTermsconditionsaddComponent } from './Component/pmr-mst-termsconditionsadd/pmr-mst-termsconditionsadd.component';
+import { PmrTrnVendorregisterEditComponent } from './Component/pmr-trn-vendorregister-edit/pmr-trn-vendorregister-edit.component';
+import { PmrTrnVendorregisterViewComponent } from './Component/pmr-trn-vendorregister-view/pmr-trn-vendorregister-view.component';
+import { PmrTrnPurchaseorderViewComponent } from './Component/pmr-trn-purchaseorder-view/pmr-trn-purchaseorder-view.component';
+import { PmrRptPurchaseorderdetailedreportComponent } from './Component/pmr-rpt-purchaseorderdetailedreport/pmr-rpt-purchaseorderdetailedreport.component';
+import { PmrMstProductViewComponent } from './Component/pmr-mst-product-view/pmr-mst-product-view.component';
+import { PmrMstProductEditComponent } from './Component/pmr-mst-product-edit/pmr-mst-product-edit.component';
+import { PmrMstVendorAdditionalinformationComponent } from './Component/pmr-mst-vendor-additionalinformation/pmr-mst-vendor-additionalinformation.component';
+import { PmrMstVendorregisterdocumentComponent } from './Component/pmr-mst-vendorregisterdocument/pmr-mst-vendorregisterdocument.component';
+import { PmrMstVendorregisterimportexcelComponent } from './Component/pmr-mst-vendorregisterimportexcel/pmr-mst-vendorregisterimportexcel.component';
+import { PmrTrnGrninwardViewComponent } from './Component/pmr-trn-grninward-view/pmr-trn-grninward-view.component';
+import { PmrTrnGrncheckerComponent } from './Component/pmr-trn-grnchecker/pmr-trn-grnchecker.component';
+import { PmrTrnGrnqccheckerComponent } from './Component/pmr-trn-grnqcchecker/pmr-trn-grnqcchecker.component';
+@NgModule({
+  declarations: [
+    PmrMstTaxSummaryComponent,
+    PmrMstCurrencySummaryComponent,
+    PmrMstProductSummaryComponent,
+    PmrMstProductAddComponent,
+    PmrMstProductgroupComponent,
+    PmrMstProductunitComponent,
+    PmrTrnVendorregisterSummaryComponent,
+    PmrTrnVendorregisterAddComponent,
+    PmrTrnDirectpoAddComponent,
+    PmrTrnGrninwardAddComponent,
+    PmrTrnGrninwardaddComponent,
+    PmrTrnGrninwardComponent,
+    PmrTrnPurchaseorderSummaryComponent,
+    PmrMstTermsconditionssummaryComponent,
+    PmrMstTermsconditionsaddComponent,
+    PmrTrnVendorregisterEditComponent,
+    PmrTrnVendorregisterViewComponent,
+    PmrRptPurchaseorderdetailedreportComponent,
+    PmrTrnPurchaseorderViewComponent,
+    PmrMstProductViewComponent,
+    PmrMstProductEditComponent,
+    PmrMstVendorAdditionalinformationComponent,
+    PmrMstVendorregisterdocumentComponent,
+    PmrMstVendorregisterimportexcelComponent,
+    PmrTrnGrninwardViewComponent,
+    PmrTrnGrncheckerComponent,
+    PmrTrnGrnqccheckerComponent
+
+   
+  ],
+
+  imports: [
+     CommonModule,
+     EmsPmrRoutingModule,
+     FormsModule, ReactiveFormsModule,EmsUtilitiesModule,
+     FormsModule,NgApexchartsModule,ReactiveFormsModule,DataTablesModule,
+     NgSelectModule,AngularEditorModule,
+ 
+   ]
+})
+export class EmsPmrModule { }

@@ -1,0 +1,246 @@
+<div style="background-color: white;">
+<div class="card card-bordered" style="background-color: white;height:500px;">
+    <div class="card-header  d-flex justify-content-center " style="background: rgb(24, 18, 134);background:  radial-gradient(circle, #5c0067 0%, #00d4ff 100%);">
+        <h1 class="card-title fw-bold fs-3"  style="color:white;">Social Media Dashboard</h1>
+    </div>
+    <div class="d-flex flex-wrap flex-row justify-content-center">
+      <div class="col-4 col-lg-3 card m-3 ms-0 ms-lg-4 shadow-lg p-3 mb-5 bg-white rounded"> 
+ 
+        <div class="card-header justify-content-center "style="background-color:#dfdede">
+         <h3 class="card-title fs-4 fw-bold" ><i class="bi bi-shop" style="font-size:20px;font-weight: bolder;background-color: #c569c9;color:white;"></i> &nbsp; <a routerLink="/crm/CrmSmmShopifycustomer" >Shopify Store</a>: {{store_name}} </h3>
+         <div class="card-toolbar"> </div>
+        </div>
+    
+  
+  <div class="row d-flex flex-wrap m-4 ">
+   <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #57e234 !important; background: white;border-radius:15px;
+   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  ">
+  <span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#57e234">Product Count</b> </span>
+     <div>
+       <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+         <br>
+          <b>{{product_count}}</b>
+       </h1>
+  
+       </div>
+  
+   </div>
+  
+   <div class=" col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "  style="border-left: 10px solid  #fc9904 !important; background: white;border-radius:15px;
+   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  ">
+  <span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#fc9904;">Customer Count</b> </span>
+     <div>
+       <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -65px;">
+         <br>
+          <b>{{customer_count}}</b>
+       </h1>
+  
+  
+      </div>
+   
+   </div>
+  
+   <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #fa78e4 !important; background: white;border-radius:15px;
+   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  ">
+  <span class="d-flex justify-content-center text-nowrap" style="font-size:11px ;margin-top:-30px;"><b style="color:#fa78e4;">Customer Unassign</b> </span>
+     <div>
+       <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -75px;">
+         <br>
+           <b>{{unassign_count}}</b>
+       </h1>
+  
+       
+  
+      </div>
+  
+   </div>
+   <div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #788bfa !important; background: white;border-radius:15px;
+   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  ">
+  <span class="d-flex justify-content-center text-nowrap" style="font-size:11px ;margin-top:-30px;"><b style="color:#788bfa;">Customer Assign</b> </span>
+     <div>
+       <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -60px;">
+         <br>
+           <b>{{customer_assigncount}}</b>
+       </h1>
+  
+       
+  
+      </div>
+  
+   </div>
+  
+  </div>
+    
+  </div>
+  <div class="col-4 col-lg-3 card m-3 ms-0 ms-lg-4 shadow-lg p-3 mb-5 bg-white rounded"> 
+ 
+    <div class="card-header justify-content-center "style="background-color:#dfdede">
+     <h3 class="card-title fs-4 fw-bold" ><i class="bi bi-whatsapp" style="font-size:20px;font-weight: bolder;color:white;background-color: #57e234;"></i> &nbsp;<a routerLink="/crm/CrmSmmWatsapp" >WhatsApp </a>  </h3>
+     <div class="card-toolbar"> </div>
+    </div>
+
+
+<div class="row d-flex flex-wrap m-4 ">
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #57e234 !important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#57e234;">Contact Count</b> </span>
+ <div>
+   <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+     <br>
+       <b>{{contact_count}}</b>
+   </h1>
+
+   </div>
+
+</div>
+
+<div class=" col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "  style="border-left: 10px solid  #fc9904 !important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#fc9904;">Message Count</b> </span>
+ <div>
+   <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+     <br>
+      <b>{{message_count}}</b>
+   </h1>
+
+
+  </div>
+
+</div>
+
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #fa78e4 !important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#fa78e4;">Outgoing Count</b> </span>
+ <div>
+   <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+     <br>
+       <b>{{sent_count}}</b>
+   </h1>
+
+   
+
+  </div>
+
+</div>
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #788bfa!important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#788bfa;">Incoming Count</b> </span>
+ <div>
+   <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+     <br>
+   <b>{{incoming_count}}</b>
+   </h1>
+
+   
+
+  </div>
+
+</div>
+
+</div>
+
+</div>
+<div class="col-4 col-lg-3 card m-3 ms-0 ms-lg-4 shadow-lg p-3 mb-5 bg-white rounded"> 
+ 
+  <div class="card-header justify-content-center "style="background-color:#dfdede">
+   <h3 class="card-title fs-4 fw-bold" ><i class="bi bi-envelope" style="font-size:20px;font-weight: bolder;background-color:rgb(211, 72, 72);color:white;"></i> &nbsp;<a routerLink="/crm/CrmSmmEmailmanagement" >Email </a>   </h3>
+   <div class="card-toolbar"> </div>
+  </div>
+
+
+<div class="row d-flex flex-wrap m-4 ">
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #57e234 !important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#57e234;">Sent Count </b> </span>
+<div>
+ <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+   <br>
+     <b>{{mail_sent}}</b>
+ </h1>
+
+ </div>
+
+</div>
+
+<div class=" col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 rounded "  style="border-left: 10px solid  #4604fc!important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#4604fc;">Draft Count</b> </span>
+<div>
+ <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+   <br>
+    <b>5</b>
+ </h1>
+
+
+</div>
+
+</div>
+
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #fa78e4 !important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#fa78e4;">DeliveryCount</b> </span>
+<div>
+ <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+   <br>
+     <b>{{deliverytotal_count}}</b>
+ </h1>
+
+ 
+
+</div>
+
+</div>
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #788bfa!important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#788bfa;">Open Count</b> </span>
+<div>
+ <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+   <br>
+ <b>{{opentotal_count}}</b>
+ </h1>
+
+ 
+
+</div>
+
+</div>
+<div class="col-5 h-60px d-flex justify-content-center align-items-center hover-elevate-up ms-3 mb-7 rounded"  style="border-left: 10px solid  #1fc5db!important; background: white;border-radius:15px;
+box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+">
+<span class="d-flex justify-content-center text-nowrap" style="font-size:12px ;margin-top:-30px;"><b style="color:#1fc5db;">Click Count</b> </span>
+<div>
+ <h1 class="justify-content-center" style="font-size:16px ;color: black ;padding-top: 4px;margin-left: -50px;">
+   <br>
+ <b>{{clicktotal_count}}</b>
+ </h1>
+
+ 
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+  </div>
+ 
+
+  
+</div>
+</div>
+
+
+

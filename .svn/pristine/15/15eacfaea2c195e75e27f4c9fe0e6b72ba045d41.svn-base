@@ -1,0 +1,45 @@
+﻿using StoryboardAPI.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.sales.Models
+{
+    public class MdlSmrMstProductUnit :result
+    {
+        public List<salesproductunit_list> salesproductunit_list { get; set; }
+        public List<salesproductunitgrid_list> salesproductunitgrid_list { get; set; }
+    }
+    public class salesproductunit_list : result
+    {
+
+        public string productuomclass_gid { get; set; }
+        public string productuomclass_code { get; set; }
+        public string productuomclass_name { get; set; }
+        public string productuomclassedit_code { get; set; }
+        public string productuomclassedit_name { get; set; }
+        public string created_by { get; set; }
+        public string created_date { get; set; }
+
+
+    }
+
+    public class salesproductunitgrid_list : result
+    {
+
+        public string productuom_gid { get; set; }
+        public string productuom_code { get; set; }
+        public string productuom_name { get; set; }
+        public string sequence_level { get; set; }
+        public string convertion_rate { get; set; }
+        public string baseuom_flag { get; set; }
+        public string total_count { get; set; }
+        public string productuomclass_gid { get; set; }
+        public string productuomclass_name { get; set; }
+        public string created_by { get; set; }
+        public string created_date { get; set; }
+
+
+    }
+}

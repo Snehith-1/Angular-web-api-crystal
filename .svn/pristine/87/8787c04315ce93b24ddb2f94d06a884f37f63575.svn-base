@@ -1,0 +1,267 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormRecord, Validators } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES, enc } from 'crypto-js';
+import { ActivatedRoute, Router } from '@angular/router';
+
+
+interface IInvoiceadd{
+  vendor_gid: string;
+serviceorder_gid:string;
+serviceorder_date: string;
+invoice_reference: string;
+invoice_refno: string;
+payment_term: string;
+payment_date:string;
+invoice_date: string;
+invoice_gid: string;
+branch_name: string;
+email_id: string;
+contactperson_name: string;
+currency_code: string;
+vendor_companyname: string;
+exchange_rate: string;
+invoice_remarks: string;
+  purchasetype_name: string;
+  product_name: string;
+  description: string;
+  quantity: string;
+  unit_price: string;
+  discount_amount: string;
+  total_amount: string;
+  tax_name1: string;
+  tax_amount1: string;
+  tax_name2: string;
+  tax_amount2: string;
+  tax_name3: string;
+  tax_amount3: string;
+  product_price: string;
+  invoice_amount:string;
+  grand_total:string;
+  product_total: string;
+  tax_gid:string;  
+
+}
+
+@Component({
+  selector: 'app-pmr-trn-invoice-accountingaddconfirm',
+  templateUrl: './pmr-trn-invoice-accountingaddconfirm.component.html',
+  styleUrls: ['./pmr-trn-invoice-accountingaddconfirm.component.scss']
+})
+export class PmrTrnInvoiceAccountingaddconfirmComponent {
+
+  addinvoiceform: FormGroup | any;
+  invoiceaddcomfirm_list: any[] = [];
+  purchasetype_list: any[] = [];
+taxcalculation_list: any[] = [];
+taxcalculation2_list: any[] = [];
+taxcalculation3_list: any[] = [];
+  invoiceaadd!: IInvoiceadd;
+  invoicegid: any;
+  serviceorder: any;
+  product_total:number = 0;
+  product_price:number=0;
+ tax_name1:number=0;
+  tax_name2:number  = 0;
+  tax_name3:number  = 0;
+  parameter: any;
+  parameter1:any;
+  parameterValue1: any;
+  tax_percentage: number = 0;
+  tax_amount: number = 0;
+  tax_amount2: number = 0;
+  tax_amount3: number = 0;
+  percentage1: number = 0;
+  percentage2: number = 0;
+  percentage3: number = 0;
+
+  constructor(private formBuilder: FormBuilder, private ToastrService: ToastrService, private router:ActivatedRoute, private route:Router, public service: SocketService) {
+    this.invoiceaadd = {} as IInvoiceadd;
+  
+  }
+  ngOnInit(): void {
+    this.addinvoiceform = new FormGroup({
+  
+      purchasetype_name: new FormControl(this.invoiceaadd.purchasetype_name, [
+        Validators.required]),
+        
+vendor_gid: new FormControl(''),
+      serviceorder_gid: new FormControl(''),
+      tax_gid: new FormControl(''),
+      invoice_reference: new FormControl(''),
+serviceorder_date:  new FormControl(''),
+invoice_refno:  new FormControl(''),
+payment_term:  new FormControl(''),
+payment_date: new FormControl(''),
+invoice_date:  new FormControl(''),
+invoice_gid:  new FormControl(''),
+email_id:  new FormControl(''),
+contactperson_name:  new FormControl(''),
+currency_code:  new FormControl(''),
+vendor_companyname:  new FormControl(''),
+exchange_rate:  new FormControl(''),
+      branch_name: new FormControl(''),
+      invoice_remarks: new FormControl(''),
+      product_name: new FormControl(''),
+  description:new FormControl(''),
+  quantity:new FormControl(''),
+  unit_price:new FormControl(''),
+  discount_amount: new FormControl(''),
+  total_amount:new FormControl(''),
+  tax_name1: new FormControl(''),
+  tax_amount1: new FormControl(''),
+  tax_name2: new FormControl(''),
+  tax_amount2: new FormControl(''),
+  tax_name3:new FormControl(''),
+  tax_amount3: new FormControl(''),
+  product_price: new FormControl(''),
+  invoice_amount: new FormControl(''),
+  grand_total:new FormControl(''),
+  product_total: new FormControl(''),
+  tax_amount:new FormControl(''),
+  percentage1: new FormControl(''),
+  percentage2: new FormControl(''),
+  percentage3: new FormControl('')
+
+    });
+
+    this.serviceorder = this.router.snapshot.paramMap.get('vendor_gid');
+
+    const secretKey = 'storyboarderp';
+
+    const deencryptedParam = AES.decrypt(this.serviceorder, secretKey).toString(enc.Utf8);
+
+
+
+    this.GetEditInvoiceSummary(deencryptedParam);
+
+  }
+
+  GetEditInvoiceSummary(vendor_gid: any) {
+debugger;
+
+    var url = 'PmrTrnInvoice/GetEditInvoiceSummary'
+
+    let param = {
+
+      vendor_gid: vendor_gid
+
+    }
+
+    this.service.getparams(url, param).subscribe((result: any) => {
+
+      this.invoiceaddcomfirm_list = result.invoiceaddcomfirm_list;
+      this.addinvoiceform.get("invoice_refno")?.setValue(this.invoiceaddcomfirm_list[0].invoice_refno);
+      this.addinvoiceform.get("invoice_gid")?.setValue(this.invoiceaddcomfirm_list[0].invoice_gid);
+      this.addinvoiceform.get("invoice_date")?.setValue(this.invoiceaddcomfirm_list[0].invoice_date);
+      this.addinvoiceform.get("payment_term")?.setValue(this.invoiceaddcomfirm_list[0].payment_term);
+      this.addinvoiceform.get("payment_date")?.setValue(this.invoiceaddcomfirm_list[0].payment_date);
+      this.addinvoiceform.get("branch_name")?.setValue(this.invoiceaddcomfirm_list[0].branch_name);
+      this.addinvoiceform.get("serviceorder_gid")?.setValue(this.invoiceaddcomfirm_list[0].serviceorder_gid);
+      this.addinvoiceform.get("serviceorder_date")?.setValue(this.invoiceaddcomfirm_list[0].serviceorder_date);
+      this.addinvoiceform.get("vendor_companyname")?.setValue(this.invoiceaddcomfirm_list[0].vendor_companyname);
+      this.addinvoiceform.get("email_id")?.setValue(this.invoiceaddcomfirm_list[0].email_id);
+      this.addinvoiceform.get("contactperson_name")?.setValue(this.invoiceaddcomfirm_list[0].contactperson_name);
+      this.addinvoiceform.get("currency_code")?.setValue(this.invoiceaddcomfirm_list[0].currency_code);
+      this.addinvoiceform.get("exchange_rate")?.setValue(this.invoiceaddcomfirm_list[0].exchange_rate);
+      this.addinvoiceform.get("invoice_remarks")?.setValue(this.invoiceaddcomfirm_list[0].invoice_remarks);
+      this.addinvoiceform.get("purchasetype_name")?.setValue(this.invoiceaddcomfirm_list[0].purchasetype_name);
+      this.addinvoiceform.get("tax_name1")?.setValue(this.invoiceaddcomfirm_list[0].tax_name1);
+      this.addinvoiceform.get("tax_amount1")?.setValue(this.invoiceaddcomfirm_list[0].tax_amount1);
+      this.addinvoiceform.get("tax_name2")?.setValue(this.invoiceaddcomfirm_list[0].tax_name2);
+      this.addinvoiceform.get("tax_amount2")?.setValue(this.invoiceaddcomfirm_list[0].tax_amount2);
+      this.addinvoiceform.get("tax_name3")?.setValue(this.invoiceaddcomfirm_list[0].tax_name3);
+      this.addinvoiceform.get("tax_amount3")?.setValue(this.invoiceaddcomfirm_list[0].tax_amount3);
+      this.addinvoiceform.get("invoice_amount")?.setValue(this.invoiceaddcomfirm_list[0].invoice_amount);
+      this.addinvoiceform.get("grand_total")?.setValue(this.invoiceaddcomfirm_list[0].grand_total);
+
+    });
+
+ 
+
+    // var url = 'PmrTrnInvoice/GetPmrPurchaseDtl'
+    // this.service.get(url).subscribe((result: any) => {
+    //   this.purchasetype_list = result.GetPmrPurchaseDtl;
+
+    // });
+
+
+    // var url = 'PmrTrnInvoice/GetTaxCalculation'
+    // debugger
+ 
+    // this.service.get(url).subscribe((result: any) => {
+    //   this.taxcalculation_list = result.taxcalculation_list;
+
+    // });
+
+
+    // var url = 'PmrTrnInvoice/GetTax2Calculation '
+    // this.service.get(url).subscribe((result: any) => {
+    //   this.taxcalculation2_list = result.taxcalculation2_list;
+
+    // });
+
+    // var url = 'PmrTrnInvoice/GetTax3Calculation'
+    // this.service.get(url).subscribe((result: any) => {
+    //   this.taxcalculation3_list = result.taxcalculation3_list;
+
+    // });
+  }
+
+  getDimensionsByFilter(tax_gid: any) {
+ debugger
+    return this.invoiceaddcomfirm_list.filter((x: { tax_gid: any; }) => x.tax_gid === tax_gid);
+
+  }
+  taxamount() {
+    let tax_gid = this.addinvoiceform.get('tax_name1')?.value;
+
+    this.invoiceaddcomfirm_list = this.getDimensionsByFilter(tax_gid);
+    console.log(this.invoiceaddcomfirm_list);
+
+    let product_price = this.invoiceaddcomfirm_list[0].product_price;
+    console.group(product_price)
+
+    this.tax_amount = (this.product_price * (this.tax_name1) / 100);
+  }
+  taxamount2() {
+    let tax_gid = this.addinvoiceform.get('tax_name2')?.value;
+
+    this.invoiceaddcomfirm_list = this.getDimensionsByFilter(tax_gid);
+    console.log(this.invoiceaddcomfirm_list);
+
+    let product_price = this.invoiceaddcomfirm_list[0].product_price;
+    console.group(product_price)
+
+    this.tax_amount2 = (this.product_price * (this.tax_name2) / 100);
+  }
+
+  taxamount3() {
+    let tax_gid = this.addinvoiceform.get('tax_name3')?.value;
+
+    this.invoiceaddcomfirm_list = this.getDimensionsByFilter(tax_gid);
+    console.log(this.invoiceaddcomfirm_list);
+
+    let product_price = this.taxcalculation3_list[0].product_price;
+    console.group(product_price)
+
+    this.tax_amount3 = (this.product_price * this.tax_name3) / 100;
+  }
+
+  prodtotalcal() {
+debugger
+    this.product_total = this.product_price +this.tax_amount + this. tax_amount2 +this. tax_amount3;
+    
+  }
+  
+  
+  
+  
+  onSubmit(){}
+  
+  close(){
+    this.route.navigate(['/payable/PmrTrnInvoiceAddselect']);
+  }
+
+}

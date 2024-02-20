@@ -1,0 +1,7 @@
+.card_heading {
+    h6 {
+        background-color: #a3d9f1;
+        height: 25px;
+        padding: 6px;
+    }
+}

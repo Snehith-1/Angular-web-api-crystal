@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using ems.system.DataAccess;
+using ems.system.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+
+namespace ems.system.Controllers
+{
+    [Authorize]
+    [RoutePrefix("api/SystemRptEmployeeReport")]
+    public class SystemRptEmployeeReportController : ApiController
+    {
+        session_values objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaSystemRptEmployeeReport objdaemployeereportlist = new DaSystemRptEmployeeReport();
+
+        [ActionName("GetEmployeeReportSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetEmployeeReportSummary()
+        {
+            MdlSystemRptEmployeeReport values = new MdlSystemRptEmployeeReport();
+            objdaemployeereportlist.DaGetEmployeeReportSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+    }
+}

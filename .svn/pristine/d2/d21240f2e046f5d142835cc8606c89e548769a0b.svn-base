@@ -1,0 +1,54 @@
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+
+@Component({
+  selector: 'app-pmr-mst-vendorregisterimportexcel',
+  templateUrl: './pmr-mst-vendorregisterimportexcel.component.html',
+  styleUrls: ['./pmr-mst-vendorregisterimportexcel.component.scss']
+})
+export class PmrMstVendorregisterimportexcelComponent {
+  file!: File;
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  constructor(public service: SocketService, private ToastrService: ToastrService, private router: Router) {  }
+
+  onback(){
+    this.router.navigate(['/pmr/PmrMstVendorregister']);
+  }
+
+  downloadfileformat() {
+    debugger;
+    let link = document.createElement("a");
+    link.download = "Purchase VendorExcel";
+     window.location.href = "https://"+ environment.host + "/Templates/Purchase VendorExcel.xls";
+    link.click();
+  }
+  onChange1(event: any) {
+    this.file = event.target.files[0];
+  } 
+  importexcel()
+  {
+    debugger
+   let formData = new FormData();
+   if (this.file != null && this.file != undefined) {
+     window.scrollTo({
+       top: 0, // Code is used for scroll top after event done
+     });
+     formData.append("file", this.file, this.file.name);
+     var api = 'PmrMstVendorRegister/VendorImportExcel'
+     this.service.postfile(api, formData).subscribe((result: any) => {
+       this.responsedata = result;
+       if(result.status == true)
+       {
+       window.location.reload();
+       this.ToastrService.success("Excel Uploaded Successfully")
+       this.router.navigate(['/pmr/PmrMstVendorRegisterImportExcel'])
+       }
+     });
+   }
+ }
+}

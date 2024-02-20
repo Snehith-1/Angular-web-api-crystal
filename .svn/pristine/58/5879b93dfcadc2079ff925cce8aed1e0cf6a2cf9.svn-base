@@ -1,0 +1,50 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+      <h3 class="card-title">GRN Checker</h3>
+    </div>
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded table-responsive">
+        <table id="GetGrnChecker_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No </th>
+                        <th>Delivery Date </th>
+                         <th>GRN Ref.No</th>
+                        <th>PO Ref.No</th> 
+                        <th>Ref. No</th>
+                        <th>Vendor</th>
+                        <th>PO Amount</th>
+                        <th>Inward On</th>
+                        <th>Status</th>
+                        <th>DC No</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of GetGrnChecker_list; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.grn_date| date:'dd-MM-yyyy'}}</td>
+                        <td>{{data.grn_gid}}</td>
+                        <td>{{data.purchaseorder_gid}}</td> 
+                        <td>{{data.reference_no}}</td>
+                        <td>{{data.vendor_companyname}} </td>                
+                        <td>{{data.po_amount}}</td>
+                        <td>{{data.created_date| date:'dd-MM-yyyy'}}</td>
+                        <td>{{data.overall_status}}</td>
+                        <td>{{data.dc_no}}</td>
+                        <td class="text-center text-nowrap">
+
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview()" >  <span
+                                class="fa-solid fa-eye text-white  fs-6"></span></button>       
+
+                           <button title="Qc Checker" type="button" class="btn btn-icon btn-sm bg-info me-2" (click)="oncheck(data.grn_gid)" >  <span
+                                    class="fa-solid fa-square-check text-white  fs-3"></span></button>       
+    
+                                   
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+</div>
+</div>

@@ -1,0 +1,37 @@
+import { Component } from '@angular/core';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+
+@Component({
+  selector: 'app-crm-smm-composemail',
+  templateUrl: './crm-smm-composemail.component.html',
+  styleUrls: ['./crm-smm-composemail.component.scss']
+})
+export class CrmSmmComposemailComponent {
+  file:any
+  onChange1(event: any) {
+    this.file = event.target.files[0];
+    
+  }
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '12rem',
+    minHeight: '5rem',
+    width: '1050px',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+
+  };
+  isDropdownOpen = false;
+
+  sendMessage() {
+    // Add your send message logic here
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+}

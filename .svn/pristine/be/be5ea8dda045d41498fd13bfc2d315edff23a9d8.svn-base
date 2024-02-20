@@ -1,0 +1,155 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CrmTrnSalesordersummaryComponent } from './component/crm-trn-salesordersummary/crm-trn-salesordersummary.component';
+import { CrmTrnSalesorderaddComponent } from './component/crm-trn-salesorderadd/crm-trn-salesorderadd.component';
+import { CrmMstSourcesummaryComponent } from './component/crm-mst-sourcesummary/crm-mst-sourcesummary.component';
+import { CrmMstProductgroupsummaryComponent } from './component/crm-mst-productgroupsummary/crm-mst-productgroupsummary.component';
+import { CrmMstCategoryindustrySummaryComponent } from './component/crm-mst-categoryindustry-summary/crm-mst-categoryindustry-summary.component';
+import { CrmMstRegionsummaryComponent } from './component/crm-mst-regionsummary/crm-mst-regionsummary.component';
+import { CrmSmmFacebookaccountComponent } from './component/crm-smm-facebookaccount/crm-smm-facebookaccount.component';
+import { CrmSmmFacebookpageComponent } from './component/crm-smm-facebookpage/crm-smm-facebookpage.component';
+import { CrmSmmTelegramaccountComponent } from './component/crm-smm-telegramaccount/crm-smm-telegramaccount.component';
+import { CrmSmmLinkedaccountComponent } from './component/crm-smm-linkedaccount/crm-smm-linkedaccount.component';
+import { CrmMstProductsummaryComponent } from './component/crm-mst-productsummary/crm-mst-productsummary.component';
+import { CrmMstProductAddComponent } from './component/crm-mst-product-add/crm-mst-product-add.component';
+import { CrmMstProductEditComponent } from './component/crm-mst-product-edit/crm-mst-product-edit.component';
+import { CrmMstProductViewComponent } from './component/crm-mst-product-view/crm-mst-product-view.component';
+import { CrmTrnLeadbanksummaryComponent } from './component/crm-trn-leadbanksummary/crm-trn-leadbanksummary.component';
+import { CrmTrnLeadbankaddComponent } from './component/crm-trn-leadbankadd/crm-trn-leadbankadd.component';
+import { CrmTrnLeadbankviewComponent } from './component/crm-trn-leadbankview/crm-trn-leadbankview.component';
+import { CrmTrnLeadbankeditComponent } from './component/crm-trn-leadbankedit/crm-trn-leadbankedit.component';
+import { CrmTrnTelemycampaignComponent } from './component/crm-trn-telemycampaign/crm-trn-telemycampaign.component';
+import { CrmTrnMyvisitComponent } from './component/crm-trn-myvisit/crm-trn-myvisit.component';
+import { CrmCampaignMailmanagementComponent } from './component/crm-campaign-mailmanagement/crm-campaign-mailmanagement.component';
+import { CrmTrnMarketingmanagersummaryComponent } from './component/crm-trn-marketingmanagersummary/crm-trn-marketingmanagersummary.component';
+import { CrmTrnCampaignmanagerComponent } from './component/crm-trn-campaignmanager/crm-trn-campaignmanager.component';
+import { CrmTrnLeadbankbranchComponent } from './component/crm-trn-leadbankbranch/crm-trn-leadbankbranch.component';
+import { CrmTrnLeadmasteraddComponent } from './component/crm-trn-leadmasteradd/crm-trn-leadmasteradd.component';
+import { CrmTrnLeadmastersummaryComponent } from './component/crm-trn-leadmastersummary/crm-trn-leadmastersummary.component';
+import { CrmTrnLeadbankbrancheditComponent } from './component/crm-trn-leadbankbranchedit/crm-trn-leadbankbranchedit.component';
+import { CrmTrnAssignvisitsummaryComponent } from './component/crm-trn-assignvisitsummary/crm-trn-assignvisitsummary.component';
+import { CrmSmmInstagramComponent } from './component/crm-smm-instagram/crm-smm-instagram.component';
+import { CrmMstCampaignsummaryComponent } from './component/crm-mst-campaignsummary/crm-mst-campaignsummary.component';
+import { CrmTrnLeadbankcontactComponent } from './component/crm-trn-leadbankcontact/crm-trn-leadbankcontact.component';
+import { CrmTrnLeadbankcontactEditComponent } from './component/crm-trn-leadbankcontact-edit/crm-trn-leadbankcontact-edit.component';
+import { CrmTrnCampaignleadallocationComponent } from './component/crm-trn-campaignleadallocation/crm-trn-campaignleadallocation.component';
+import { CrmTrnMycampaignComponent } from './component/crm-trn-mycampaign/crm-trn-mycampaign.component';
+import { CrmTrnAddtocustomerComponent } from './component/crm-trn-addtocustomer/crm-trn-addtocustomer.component';
+import { CrmDashboardComponent } from './component/crm-dashboard/crm-dashboard.component';
+import { CrmSmmTelegramsummaryComponent } from './component/crm-smm-telegramsummary/crm-smm-telegramsummary.component';
+import { CrmCampaignMailmanagementsummaryComponent } from './component/crm-campaign-mailmanagementsummary/crm-campaign-mailmanagementsummary.component';
+import { CrmTrnUpcomingmeetingsComponent } from './component/crm-trn-upcomingmeetings/crm-trn-upcomingmeetings.component';
+import { CrmTrnNewtaskComponent } from './component/crm-trn-newtask/crm-trn-newtask.component';
+import { CrmTrnProspectsComponent } from './component/crm-trn-prospects/crm-trn-prospects.component';
+import { CrmTrnPotentialsComponent } from './component/crm-trn-potentials/crm-trn-potentials.component';
+import { CrmTrnCompletedComponent } from './component/crm-trn-completed/crm-trn-completed.component';
+import { CrmTrnDropleadsComponent } from './component/crm-trn-dropleads/crm-trn-dropleads.component';
+import { CrmTrnAllleadsComponent } from './component/crm-trn-allleads/crm-trn-allleads.component';
+import { CrmMstCallresponseComponent } from './component/crm-mst-callresponse/crm-mst-callresponse.component';
+import { CrmSmmWatsappComponent } from './component/crm-smm-watsapp/crm-smm-watsapp.component';
+import { CrmSmmComposemailComponent } from './component/crm-smm-composemail/crm-smm-composemail.component';
+import { CrmSmmShopifycustomerComponent } from './component/crm-smm-shopifycustomer/crm-smm-shopifycustomer.component';
+import { CrmSmmWhatsappmessagetemplateComponent } from './component/crm-smm-whatsappmessagetemplate/crm-smm-whatsappmessagetemplate.component';
+import { CrmTrnCorporateregisterleadComponent } from './component/crm-trn-corporateregisterlead/crm-trn-corporateregisterlead.component';
+import { CrmTrnRetailerregisterleadComponent } from './component/crm-trn-retailerregisterlead/crm-trn-retailerregisterlead.component';
+import { CrmTrnCorporateleadbankComponent } from './component/crm-trn-corporateleadbank/crm-trn-corporateleadbank.component';
+import { CrmTrnRetailerleadbankComponent } from './component/crm-trn-retailerleadbank/crm-trn-retailerleadbank.component';
+import { CrmSmmSendmailComponent } from './component/crm-smm-sendmail/crm-smm-sendmail.component';
+import { CrmSmmEmailmanagementComponent } from './component/crm-smm-emailmanagement/crm-smm-emailmanagement.component';
+import { CrmSocailMediaDashboardComponent } from './component/crm-socail-media-dashboard/crm-socail-media-dashboard.component';
+import { CrmSmmShopifycustomerassignedComponent } from './component/crm-smm-shopifycustomerassigned/crm-smm-shopifycustomerassigned.component';
+import { CrmSmmShopifycustomerunassignedComponent } from './component/crm-smm-shopifycustomerunassigned/crm-smm-shopifycustomerunassigned.component';
+import { CrmSmmMailcampaigntemplateComponent } from './component/crm-smm-mailcampaigntemplate/crm-smm-mailcampaigntemplate.component';
+import { CrmSmmMailcampaignsummaryComponent } from './component/crm-smm-mailcampaignsummary/crm-smm-mailcampaignsummary.component';
+import { CrmSmmMailcampaignsendComponent } from './component/crm-smm-mailcampaignsend/crm-smm-mailcampaignsend.component';
+import { CrmSmmMailcampaigntemplateviewComponent } from './component/crm-smm-mailcampaigntemplateview/crm-smm-mailcampaigntemplateview.component';
+import { CrmSmmMailcampaignsendstatusComponent } from './component/crm-smm-mailcampaignsendstatus/crm-smm-mailcampaignsendstatus.component';
+import { CrmSmmWhatsappcampaignComponent } from './component/crm-smm-whatsappcampaign/crm-smm-whatsappcampaign.component';
+import { CrmMstWabulkmessageComponent } from './component/crm-mst-wabulkmessage/crm-mst-wabulkmessage.component';
+import { CrmSmmWhatsapplogComponent } from './component/crm-smm-whatsapplog/crm-smm-whatsapplog.component';
+import { CrmTrnRetaileraddComponent } from './component/crm-trn-retaileradd/crm-trn-retaileradd.component';
+import { CrmTrnRetailerviewComponent } from './component/crm-trn-retailerview/crm-trn-retailerview.component';
+import { CrmTrnRetailereditComponent } from './component/crm-trn-retaileredit/crm-trn-retaileredit.component';
+import { CrmTrnOverallviewComponent } from './component/crm-trn-overallview/crm-trn-overallview.component';
+ 
+const routes: Routes = [
+
+  { path: 'CrmTrnSalesOrderSummary', component: CrmTrnSalesordersummaryComponent },
+  { path: 'CrmTrnSalesOrderAdd', component: CrmTrnSalesorderaddComponent },
+  { path: 'CrmMstSourcesummary', component: CrmMstSourcesummaryComponent },
+  { path: 'CrmMstProductgroupsummary', component: CrmMstProductgroupsummaryComponent },
+  { path: 'CrmMstCategoryindustrySummary', component: CrmMstCategoryindustrySummaryComponent },
+  { path: 'CrmMstRegionsummary', component: CrmMstRegionsummaryComponent },
+  { path: 'CrmSmmFacebookaccount', component: CrmSmmFacebookaccountComponent },
+  { path: 'CrmSmmFacebookPage', component: CrmSmmFacebookpageComponent },
+  { path: 'CrmSmmTelegramaccount', component: CrmSmmTelegramaccountComponent },
+  { path: 'CrmSmmLinkedaccount', component: CrmSmmLinkedaccountComponent },
+  { path: 'CrmMstProductsummary', component: CrmMstProductsummaryComponent },
+  { path: 'CrmMstProductAdd', component: CrmMstProductAddComponent },
+  { path: 'CrmMstProductEdit/:product_gid', component: CrmMstProductEditComponent },
+  { path: 'CrmMstProductView/:product_gid', component: CrmMstProductViewComponent },
+  { path: 'CrmTrnLeadbanksummary', component: CrmTrnLeadbanksummaryComponent },
+  { path: 'CrmTrnLeadbankadd/:lspage', component: CrmTrnLeadbankaddComponent },
+  { path: 'CrmTrnLeadbankview/:leadbank_gid/:lspage', component: CrmTrnLeadbankviewComponent },
+  { path: 'CrmTrnLeadbankedit/:leadbank_gid/:lspage', component: CrmTrnLeadbankeditComponent },
+  { path: 'CrmTrnTelemycampaign', component: CrmTrnTelemycampaignComponent },
+  { path: 'CrmTrnMyvisit', component: CrmTrnMyvisitComponent },
+  { path: 'CrmCampaignMailmanagement', component: CrmCampaignMailmanagementComponent },
+  { path: 'CrmTrnMarketingManagerSummary', component: CrmTrnMarketingmanagersummaryComponent },
+  { path: 'CrmTrnCampaignmanager/:campaign_gid/:assign_to/:stage', component: CrmTrnCampaignmanagerComponent },
+  { path: 'CrmTrnLeadMasterSummary', component: CrmTrnLeadmastersummaryComponent },
+  { path: 'CrmTrnLeadmasteradd/:lspage', component: CrmTrnLeadmasteraddComponent },
+  { path: 'CrmTrnLeadBankbranch/:leadbank_gid', component: CrmTrnLeadbankbranchComponent },
+  { path: 'CrmTrnLeadbankbranchedit/:leadbank_gid/:leadbankcontact_gid', component: CrmTrnLeadbankbrancheditComponent },
+  { path: 'CrmTrnAssignvisitsummary', component: CrmTrnAssignvisitsummaryComponent },
+  { path: 'CrmSmmInstagram', component: CrmSmmInstagramComponent },
+  { path: 'CrmMstCampaignsummary', component: CrmMstCampaignsummaryComponent },
+  { path: 'CrmTrnLeadbankcontact/:leadbank_gid', component: CrmTrnLeadbankcontactComponent },
+  { path: 'CrmTrnLeadbankcontactEdit/:leadbank_gid/:leadbankcontact_gid', component: CrmTrnLeadbankcontactEditComponent },
+  { path: 'CrmTrnCampaignleadallocation/:campaign_gid/:employee_gid', component: CrmTrnCampaignleadallocationComponent },
+  { path: 'CrmTrnMycampaign', component:CrmTrnMycampaignComponent},
+{path:'CrmTrnAddtocustomer/:leadbank_gid',component:CrmTrnAddtocustomerComponent},
+{ path: 'CrmDashboard', component: CrmDashboardComponent},
+ { path: 'CrmSmmTelegramsummary', component: CrmSmmTelegramsummaryComponent },
+ { path: 'CrmCampaignMailmanagementsummary', component: CrmCampaignMailmanagementsummaryComponent },
+ { path: 'CrmTrnUpcomingMeetings', component: CrmTrnUpcomingmeetingsComponent },
+ { path: 'CrmTrnNewtask', component: CrmTrnNewtaskComponent },
+ { path: 'CrmTrnProspects', component: CrmTrnProspectsComponent },
+ { path: 'CrmTrnPotentials', component: CrmTrnPotentialsComponent },
+ { path: 'CrmTrnCompleted', component: CrmTrnCompletedComponent },
+ { path: 'CrmTrnDropleads', component: CrmTrnDropleadsComponent },
+ { path: 'CrmTrnAllleads', component: CrmTrnAllleadsComponent },
+ {path:'CrmMstCallresponse',component:CrmMstCallresponseComponent},
+ {path:'CrmSmmWatsapp',component:CrmSmmWatsappComponent},
+ {path:'CrmSmmComposemail',component:CrmSmmComposemailComponent},
+ { path: 'CrmSmmShopifycustomer', component: CrmSmmShopifycustomerComponent },
+  {path: 'CrmSmmWhatsappmessagetemplate',component:CrmSmmWhatsappmessagetemplateComponent},
+  { path: 'CrmTrnCorporateRegisterLead', component: CrmTrnCorporateregisterleadComponent },
+  { path: 'CrmTrnRetailerRegisterLead', component: CrmTrnRetailerregisterleadComponent },
+  { path: 'CrmTrnCorporateLeadBank', component: CrmTrnCorporateleadbankComponent },
+  { path: 'CrmTrnRetailerLeadBank', component: CrmTrnRetailerleadbankComponent },
+  { path: 'CrmSmmSendmail/:mailmanagement_gid', component: CrmSmmSendmailComponent },
+  { path: 'CrmSmmEmailmanagement', component: CrmSmmEmailmanagementComponent },
+  { path: 'CrmSocailMediaDashboard', component: CrmSocailMediaDashboardComponent },
+  { path: 'CrmSmmShopifycustomerassigned', component: CrmSmmShopifycustomerassignedComponent },
+  { path: 'CrmSmmShopifycustomerunassigned', component: CrmSmmShopifycustomerunassignedComponent },
+  { path: 'CrmSmmMailcampaigntemplate', component: CrmSmmMailcampaigntemplateComponent },
+  { path: 'CrmSmmMailcampaignsummary', component: CrmSmmMailcampaignsummaryComponent },
+  { path: 'CrmSmmMailcampaignsend/:temp_mail_gid', component: CrmSmmMailcampaignsendComponent },
+  { path: 'CrmSmmMailcampaigntemplateview/:temp_mail_gid', component: CrmSmmMailcampaigntemplateviewComponent},
+  { path: 'CrmSmmMailcampaignsendstatus/:temp_mail_gid', component: CrmSmmMailcampaignsendstatusComponent },
+  { path: 'CrmSmmWhatsappcampaign', component: CrmSmmWhatsappcampaignComponent },
+  { path: 'CrmMstWabulkmessage', component: CrmMstWabulkmessageComponent },
+  { path: 'CrmSmmWhatsapplog', component: CrmSmmWhatsapplogComponent },
+  { path: 'CrmTrnRetaileradd/:lspage', component: CrmTrnRetaileraddComponent },
+  { path: 'CrmTrnRetailerview/:leadbank_gid/:lspage', component: CrmTrnRetailerviewComponent },
+  { path: 'CrmTrnRetaileredit/:leadbank_gid/:lspage', component: CrmTrnRetailereditComponent },
+  { path: 'CrmTrn360view', component: CrmTrnOverallviewComponent },
+];
+
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class EmsCrmRoutingModule { }

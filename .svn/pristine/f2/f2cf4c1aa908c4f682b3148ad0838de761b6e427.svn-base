@@ -1,0 +1,341 @@
+<div class="card card-bordered">
+    <div class="card-header d-flex justify-content-center">
+        <h1 class="card-title fw-bold fs-3">My Leave</h1>
+    </div>
+    
+    <div class="back-icon">
+        <i class="bi bi-arrow-left-square-fill" (click)="back()"></i>
+    </div>
+
+    <div class="d-flex flex-row m-6 flex-wrap row">
+        <div class="col-12 col-lg-9 col-md-9 col-sm-12">
+            <div class="d-flex flex-row flex-wrap row">
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end leave_1">
+                            <div class="card-body">
+                                <div class="card-heading">
+                                    <h2 class="mb-3">Sick Leave</h2>
+                                </div>
+                                <div class="card-heading1 ms-6 mt-6 mb-3">
+                                    <p>Leave Taken: <span class="leavecount ms-2">{{leavetaken}}</span></p>
+                                    <p>Available: <span class="avlcount ms-9">{{available}}</span></p>
+                                </div>
+                                <div class="submit-button">
+                                    <button type="button" class="btn-success" data-bs-toggle="modal"  data-bs-target="#myModaladd">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply Leave</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row d-flex">
+                        <div class="row box-widget rounded-start rounded-end leave_2">
+                            <div class="card-body">
+                                <div class="card-heading">
+                                    <h2 class="mb-3">Casual Leave</h2>
+                                </div>
+                                <div class="card-heading1 ms-6 mt-6 mb-3">
+                                    <p>Leave Taken: <span class="leavecount ms-2">{{leavetaken}}</span></p>
+                                    <p>Available: <span class="avlcount ms-9">{{available}}</span></p>
+                                </div>
+                                <div class="submit-button">
+                                    <button type="button" class="btn-success" data-bs-toggle="modal"  data-bs-target="#applyleave">
+                                        <i class="fa fa-hand-point-right"></i>
+                                        <span class="btn-text ms-3">Apply Leave</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>        
+    </div>
+</div>
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header1">
+        <h3 class="card-title">Applied Leave Summary</h3>        
+    </div>
+    
+    <div class="d-flex flex-row table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="leave_details" class="table table-striped table-row-bordered gy-5 gs-7">
+                <thead class="table_head">
+                    <tr class="text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Applied Date</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>No of Days</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Approved By</th>
+                        <th style="text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table_body">
+                    <tr *ngFor="let data of leave_details; let i=index;">     
+                        <td >{{i+1}}</td>
+                        <td>{{data.leave_applydate}}</td>
+                        <td>{{data.leavetype_name}}</td>
+                        <td>{{data.leave_from}}</td>
+                        <td>{{data.leave_to}}</td>
+                        <td>{{data.noofdays_leave}}</td>
+                        <td>{{data.leave_reason}}</td> 
+                        <td>{{data.approval_status}}</td>
+                        <td>{{data.approved_by}}</td> 
+                        <td class="text-center text-nowrap">
+                            <button title="Delete" type="button" data-bs-toggle="modal" data-bs-target="#Myleavedelete" (click)="delete(data.leave_gid)" class="btn btn-icon btn-sm bg-danger me-2">
+                                <span class="bi bi-trash-fill fs-6" style="color: #ffffff;"></span>
+                            </button>
+
+                            <button title="Document" type="button" data-bs-toggle="modal" data-bs-target="#myModaldocument" class="btn btn-icon btn-sm bg-info me-2">
+                                <span class="bi bi-file-earmark-fill fs-6" style="color: #ffffff;"></span>
+                            </button>                          
+                          
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModaladd" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered applyleavepopup">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Apply Leave</h4>
+                <i class="bi bi-x-square fs-1 me-2" data-bs-dismiss="modal"></i>
+            </div>
+
+            <div class="modal-body applyleavepopupbody">
+                <div class="d-flex flex-row flex-wrap">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Period</b>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                                <input class="form-check-input" type="radio" value="Full" name="leave_confirmed" [(ngModel)]="radioSelected" (change)="leavePeriod()"/>
+                                <label class="form-check-label text-gray-700 text-nowrap" for="leavedayconfirmedFull">Full</label>
+
+                                <input class="form-check-input ms-6" type="radio" value="Half" name="leave_confirmed" [(ngModel)]="radioSelected" (change)="leavePeriod()"/>
+                                <label class="form-check-label text-gray-700 text-nowrap" for="leavedayconfirmedHalf">Half</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex flex-row flex-wrap" *ngIf="leaveperiod=== 'Full'">
+                    <form [formGroup]="reactiveFormadd" #form="ngForm">
+                        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <div class="d-flex flex-row flex-wrap mt-4">
+                                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Date (From)</b>
+                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                            <input type="date"
+                                                class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input" formControlName="leave_datefrom"
+                                                placeholder="DD-MM-YYYY" />
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Date (To)</b>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                            <input type="date"
+                                                class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input" formControlName="leave_dateto"
+                                                placeholder="DD-MM-YYYY" />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Days</b>
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <input type="text"
+                                                    class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input" formControlName="leave_days"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                
+                                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Type</b>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                                <input type="text"
+                                                    class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input" formControlName="leave_type"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>Leave Reason<span style="color: rgb(255, 0, 0)"> *</span></b>                                                                             
+                                                <textarea type="text" rows="2" cols="50" type="text" class="form-control mt-2" formControlName="leave_reason"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>File Upload</b>
+                                            <div class="col-lg-12 col-12 col-md-12 col-sm-12 fv-row mt-2">
+                                                <input accept="image/*" type="file" #fileInput class="form-control form-control-lg form-control-solid bg-white mb-3 mb-lg-0 borderc-secondary custom-input"  formControlName="file_uploadleave" name="fName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <div class="table-responsive">
+                                                    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                                        <table id="login" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                                            <thead>
+                                                                <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                                    <th>S.No</th>
+                                                                    <th>Document Name</th>
+                                                                    <th class="text-center">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td title="S.No"></td>
+                                                                    <td title="Document Name"></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center contain">
+                                    <button type="button" class="btn-success"(click)="validate()" [disabled]="reactiveFormadd.invalid"
+                                        [ngClass]="{'primary-button': !reactiveFormadd.invalid, 'secondary-button': reactiveFormadd.invalid}" data-bs-dismiss="modal">
+                                        <i class="bi bi-check-square fs-8 me-2" ></i>Submit
+                                    </button>
+                                    <button type="button" class="btn-danger ms-4" data-bs-dismiss="modal">
+                                        <i class="bi bi-x-square fs-8 me-2"></i>Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="d-flex flex-row flex-wrap" *ngIf="leaveperiod=== 'Half'">
+                    <form action="">
+                        <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                <div class="d-flex flex-row flex-wrap mt-4">
+                                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Date (From)</b>
+                                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                            <input type="date"
+                                                class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                                placeholder="DD-MM-YYYY" />
+                                        </div>
+                                    </div>
+                
+                                    <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Session</b>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                            <div class="form-check form-check-custom form-check-primary form-check-solid form-check-sm">
+                                                <input class="form-check-input" type="radio" name="session_confirmed" value="FN" />
+                                                <label class="form-check-label text-gray-700 text-nowrap" for="leavesessionconfirmedFN">Full</label>
+                
+                                                <input class="form-check-input ms-6" type="radio" name="session_confirmed" value="AN" />
+                                                <label class="form-check-label text-gray-700 text-nowrap" for="leavesessionconfirmedAN">Half</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Days</b>
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <input type="text"
+                                                    class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                
+                                        <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Leave Type</b>
+                                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                                <input type="text"
+                                                    class="form-control form-control-lg form-control-solid date-picker mb-3 mb-lg-0 borderc-secondary bg-white custom-input"
+                                                    readonly />
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>Leave Reason<span style="color: rgb(255, 0, 0)"> *</span></b>                                                                             
+                                                <textarea type="text" rows="2" cols="50" type="text" class="form-control mt-2"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12"><b>File Upload</b>
+                                            <div class="col-lg-12 col-12 col-md-12 col-sm-12 fv-row mt-2">
+                                                <input accept="image/*" type="file" #fileInput class="form-control form-control-lg form-control-solid bg-white mb-3 mb-lg-0 borderc-secondary custom-input" name="fName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <div class="d-flex flex-row flex-wrap mt-4">
+                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                                            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                                <div class="table-responsive">
+                                                    <div class="card card-body m-3 shadow-xl p-3 mb-5 bg-white rounded">
+                                                        <table id="login" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                                                            <thead>
+                                                                <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                                                                    <th>S.No</th>
+                                                                    <th>Document Name</th>
+                                                                    <th class="text-center">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td title="S.No"></td>
+                                                                    <td title="Document Name"></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center contain">
+                                    <button type="button" class="btn-success">
+                                        <i class="bi bi-check-square fs-8 me-2"></i>Submit
+                                    </button>
+                                    <button type="button" class="btn-danger ms-4" data-bs-dismiss="modal">
+                                        <i class="bi bi-x-square fs-8 me-2"></i>Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal Delete -->
+<div id="Myleavedelete" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h4 class="w-100  fw-bolder fs-1 mt-5">Are you sure?</h4>  
+                <p class="fw-bold fs-5 mt-4">Do You Want To Delete The Record ?</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-danger" data-bs-dismiss="modal" (click)="ondelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

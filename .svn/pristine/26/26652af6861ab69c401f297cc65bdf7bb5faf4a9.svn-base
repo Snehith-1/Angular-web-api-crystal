@@ -1,0 +1,20 @@
+.del_modal-dialog {
+    margin-top: 200px;
+    
+    .del_modal-content{
+        height: 200px;
+        width: 350px;
+
+        h2 {
+            margin-top: 20px;
+        }
+        
+        p {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+}

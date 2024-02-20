@@ -1,0 +1,196 @@
+﻿using ems.system.Models;
+using ems.utilities.Functions;
+using Microsoft.SqlServer.Server;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Odbc;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.InteropServices;
+using System.Web;
+using static OfficeOpenXml.ExcelErrorValue;
+using static System.Collections.Specialized.BitVector32;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using ems.crm.DataAccess;
+using ems.crm.Models;
+using ems.system.DataAccess;
+using ems.system.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+
+
+
+
+namespace ems.crm.DataAccess
+{
+    public class DaProductGroup
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objodbcDataReader;
+        DataTable dt_datatable;
+        int mnResult;
+        string msGetGid, msGetGid1, lsindustry_name, lsproductgroup_code;
+        public void DaProductgroupSummary(MdlProductGroup values)
+        {
+            msSQL = " select  productgroup_gid, productgroup_name,productgroup_code, CONCAT(b.user_firstname,' ',b.user_lastname) as created_by,date_format(a.created_date,'%d-%m-%Y')  as created_date " +
+                    " from crm_mst_tproductgroup a " +
+                    " left join adm_mst_tuser b on b.user_gid=a.created_by order by a.productgroup_gid desc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<productgroup_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new productgroup_list
+                    {
+                        productgroup_gid = dt["productgroup_gid"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        productgroup_code = dt["productgroup_code"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                    });
+                    values.productgroup_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaPostProductgroup(string user_gid, productgroup_list values)
+        {
+
+            
+                msSQL = " select productgroup_code from crm_mst_tproductgroup where productgroup_code = '" + values.productgroup_code + "' ";
+                objodbcDataReader = objdbconn.GetDataReader(msSQL);
+                if (objodbcDataReader.HasRows)
+                {
+                lsproductgroup_code = objodbcDataReader["productgroup_code"].ToString();
+                values.status = false;
+                return;
+
+            }
+           
+            if (lsproductgroup_code != values.productgroup_code)
+            {
+                msGetGid = objcmnfunctions.GetMasterGID("PPGM");
+               
+
+
+                msSQL = " insert into crm_mst_tproductgroup (" +
+                            " productgroup_gid," +
+                            " productgroup_code," +
+                            " productgroup_name," +
+                            " created_by, " +
+                            " created_date)" +
+                            " values(" +
+                            " '" + msGetGid + "'," +
+                            " '" + values.productgroup_code + "'," +
+                            "'" + values.productgroup_name + "'," +
+                            "'" + user_gid + "'," +
+                             "'" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Productgroup Added Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Adding Productgroup";
+                }
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Same Productgroup code Already Exist !!";
+            }
+        }
+
+
+
+    
+            public void DaUpdatedProductgroup(string user_gid, productgroup_list values)
+            {
+
+            msSQL = " select productgroup_code from crm_mst_tproductgroup where productgroup_code = '" + values.productgroup_codeedit + "' ";
+            objodbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objodbcDataReader.HasRows)
+            {
+                lsproductgroup_code = objodbcDataReader["productgroup_code"].ToString();
+                values.status = false;
+                return;
+
+            }
+
+            if (lsproductgroup_code != values.productgroup_codeedit)
+            {
+
+                msSQL = " update  crm_mst_tproductgroup  set " +
+                     " productgroup_code = '" + values.productgroup_codeedit + "'," +
+              " productgroup_name = '" + values.productgroup_nameedit + "'," +
+              " updated_by = '" + user_gid + "'," +
+              " updated_date = '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "' where productgroup_gid='" + values.productgroup_gid + "'  ";
+
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult == 1)
+                {
+                    values.status = true;
+                    values.message = "Productgroup Updated Successfully !!";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Updating Entity !!";
+                }
+            }
+            else
+            {
+                values.status = false;
+                values.message = "Same Productgroup code Already Exist !!";
+            }
+        }
+
+
+
+
+            public void DadeleteProductgroupSummary(string productgroup_gid, productgroup_list values)
+            {
+                msSQL = "  delete from crm_mst_tproductgroup where productgroup_gid='" + productgroup_gid + "'  ";
+                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                if (mnResult != 0)
+                {
+                    values.status = true;
+                    values.message = "Productgroup Deleted Successfully";
+                }
+                else
+                {
+                    values.status = false;
+                    values.message = "Error While Deleting Productgroup";
+                }
+
+            }
+        }
+    } 
+
+
+
+        
+
+    

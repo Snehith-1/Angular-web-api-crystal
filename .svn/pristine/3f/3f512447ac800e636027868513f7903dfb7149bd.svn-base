@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title"><b>GRN Inward </b></h3>
+        </div>
+
+        <div class="col me-5">
+            <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal"
+                data-bs-target="#myModaladd" (click)="onadd()">
+                <i class="fas fa-plus"></i>&nbsp; Add GRN Inward
+            </button>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+            <table id="GrnInward_lists" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                        <th>S.No </th>
+                        <th>GRN Date  </th>
+                        <th>GRN Ref.No.</th>
+                        <th>PO Ref.No.</th>
+                        <!-- <th>Ref. No</th> -->
+                        <th>Vendor</th>
+                        <!-- <th>Cost Center </th> -->
+                        <th>PO Amount</th>
+                        <th>Inward On</th>
+                        <th>GRN Status</th>
+                        <th>DC No</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of GrnInward_lists; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.grn_date | date:'dd-MM-yyyy'}}</td>
+                        <td>{{data.grn_gid}}</td>
+                        <td>{{data.grnrefno}}</td>
+                        <!-- <td>{{data.refrence_no}}</td> -->
+                        <td>{{data.vendor_companyname}}</td>
+                        <!-- <td>{{data.costcenter_name}}</td> -->
+                        <td>{{data.po_amount}}</td>
+                        <td>{{data.created_date | date:'dd-MM-yyyy'}}</td>
+                        <td>{{data.invoice_flag}}</td>
+                        <td>{{data.dc_no}}</td>
+                        <td class="text-center text-nowrap">
+
+                            <!-- routerLink="/pmr/PmrTrnGrninwardView -->
+
+                            <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.grn_gid)" >  <span
+                                 class="fa-solid fa-eye text-white  fs-6"></span></button>       
+
+
+                            <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button> 
+                                    
+                          
+                            <button title="PDF" type="button" class="btn btn-icon btn-sm bg-secondary me-2 mt-2"
+                                (click)="PrintPDF(data.grn_gid)">
+                                <span class="fa-solid fa-file-pdf fs-2" style="color: #000000;"></span>
+                            </button>    
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,289 @@
+﻿using ems.sales.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Runtime.Remoting;
+
+namespace ems.sales.DataAccess
+{
+    public class DaSmrDashboard
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msGetGid;
+        int mnResult, mnResult1;
+        string lsemployee_gid_list;
+
+        // Recursive Looping ChildLoop Function to get Employee GID Hierarchywise
+
+        public void DaGetChildLoop(string employee_gid, MdlSmrDashboard values)
+        {
+            msSQL = " select a.employee_gid, concat(b.user_firstname, '-', b.user_code) as user  from adm_mst_tmodule2employee a  " +
+                 " inner join hrm_mst_temployee c on a.employee_gid = c.employee_gid   " +
+                 " inner join adm_mst_tuser b on c.user_gid = b.user_gid   " +
+                 " where a.module_gid = 'MKT'  " +
+                 " and a.employeereporting_to = '" + employee_gid + "' ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var SalesPerformanceChart_List = new List<GetSalesPerformanceChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    string lsemployee_gid = dt["employee_gid"].ToString();
+                    msSQL = " select a.*, b.user_gid,c.employee_gid  from adm_mst_tmodule2employee a  " +
+                " inner join hrm_mst_temployee c on a.employee_gid = c.employee_gid  " +
+                " inner join adm_mst_tuser b on c.user_gid = b.user_gid  " +
+                " where a.module_gid = 'MKT' " +
+                " and a.employee_gid ='" + lsemployee_gid + "'";
+                    dt_datatable = objdbconn.GetDataTable(msSQL);
+                    if (dt_datatable.Rows.Count != 0)
+                    {
+                        lsemployee_gid_list = lsemployee_gid + "," + dt["employee_gid"].ToString() + ",";
+                        //SalesPerformanceChart_List.Add(new GetSalesPerformanceChart_List
+                        //{
+                        //    lsemployee_gid_list = lsemployee_gid + (dt["employee_gid"].ToString()) +",",
+                        //});
+                        //values.GetSalesPerformanceChart_List = SalesPerformanceChart_List;
+                    }
+                    DaGetChildLoop(lsemployee_gid, values);
+                }
+                
+            }
+        }
+
+        // SalesPerformanceChart
+            public void DaGetSalesPerformanceChart(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            msSQL = " select sum(a.grandtotal) as order_amount,sum(a.received_amount) as payment_amount, sum(a.invoice_amount) as invoice_amount, " +
+                 " cast(MONTHNAME(a.salesorder_date) as char) as orderdate, " +
+                 " sum(a.invoice_amount-a.received_amount)  as outstanding_amount " +
+                 " from smr_trn_tsalesorder a " +
+                 " where a.salesorder_status in ('Delivery Completed','Approved') " +
+                 " and created_by in ( '" + user_gid + "') " +
+                 " and a.salesorder_date BETWEEN CURDATE() - INTERVAL 6 MONTH AND CURDATE() " +
+                 " group by MONTH(salesorder_date) desc order by a.salesorder_date desc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var SalesPerformanceChart_List = new List<GetSalesPerformanceChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    SalesPerformanceChart_List.Add(new GetSalesPerformanceChart_List
+                    {
+                        order_amount = (dt["order_amount"].ToString()),
+                        payment_amount = (dt["payment_amount"].ToString()),
+                        invoice_amount = (dt["invoice_amount"].ToString()),
+                        orderdate = (dt["orderdate"].ToString()),
+                        outstanding_amount = (dt["outstanding_amount"].ToString()),
+                        
+                    });
+                    values.GetSalesPerformanceChart_List = SalesPerformanceChart_List;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        
+
+        // GetSalesOrderCount
+        public void DaGetSalesOrderCount(string employee_gid, string user_gid,  MdlSmrDashboard values)
+        {
+            msSQL = " select(select count(*) as total_so from smr_trn_tsalesorder b where b.created_by in ( '" + employee_gid + "' )  and b.salesorder_status not in ('SO Amended')) as total_so, " +
+                      " (select count(*) as approved_So from smr_trn_tsalesorder c where c.salesorder_status = 'Approved'  and c.created_by in ( '" + employee_gid + "')) as approved_so, " +
+                      " (select count(*) as pending_So from smr_trn_tsalesorder d where d.salesorder_status = 'Approve Pending'  and d.created_by in ( '" + employee_gid + "'))as pending_So, " +
+                      " (select count(*) as rejected_so from smr_trn_tsalesorder e where e.salesorder_status = 'Rejected'  and e.created_by in ( '" + employee_gid + "')) as rejected_so, " +
+                      " (select count(*) as work_in_progress from smr_trn_tsalesorder f  where f.salesorder_status = 'Work In Progress' and f.created_by in ( '" + employee_gid + "')) as work_in_progress, " +
+                       "  (select count(*) as delivery_done_partial from smr_trn_tsalesorder g where g.salesorder_status = 'Delivery Done Partial'  and g.created_by in ( '" + employee_gid + "')) as delivery_done_partial,  " +
+                       "  (select count(*) as advanced_paid from smr_trn_tsalesorder h where h.salesorder_status = 'Advance Paid'  and h.created_by in ( '" + employee_gid + "')) as advanced_paid,  " +
+                       "  (select count(*) as delivery_completed from smr_trn_tsalesorder i where i.salesorder_status = 'Delivery Completed'  and i.created_by in ('" + employee_gid + "')) as delivery_completed,  " +
+                        "  (select count(*) as invoice_raised from smr_trn_tsalesorder k where k.salesorder_status = 'Invoice Raised'  and k.created_by in ( '" + employee_gid + "')) as invoice_raised,  " +
+                       " (select count(*) as so_amended from smr_trn_tsalesorder j where j.salesorder_status = 'SO Amended'  and j.created_by in ( '" + employee_gid + "') ) as so_amended , " +
+                       "  (SELECT count(invoice_gid) as totalinvoice FROM rbl_trn_tinvoice where invoice_flag<> 'Invoice Cancelled' and user_gid in ( '" + employee_gid + "') ) as totalinvoice,  " +
+                       "  (SELECT count(invoice_gid) as approval_pending FROM rbl_trn_tinvoice where invoice_flag = 'Invoice Approved' and user_gid in ('" + user_gid + "') ) as approval_pending , " +
+                       " (select count(invoice_gid) as payment_pending from rbl_trn_tinvoice where payment_amount = '0.00' and user_gid in ('" + user_gid + "') ) as payment_pending , " +
+                       "  (SELECT count(invoice_gid) as totalinvoice FROM rbl_trn_tinvoice where invoice_flag = 'Invoice Approval Pending' and user_gid in ('" + user_gid + "') ) as approvalpendinginnvoice , " +
+                       "  (select count(invoice_gid) from rbl_trn_tinvoice where invoice_status = 'payment done') as total_payment,  " +
+                       "  (select count(quotation_gid)  from smr_trn_treceivequotation )as total_quotation,   " +
+                       "  (select count(quotation_gid)  from smr_trn_treceivequotation where quotation_status = 'Quotation Amended') as quotation_canceled " +
+                       " from smr_trn_tsalesorder a " +
+                      " where a.created_by in ( '" + employee_gid + "') and a.salesorder_status<>'SO Amended' " +
+                        "  group by salesorder_gid ";
+
+
+
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var GetSalesOrderCount_List = new List<GetSalesOrderCount_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    GetSalesOrderCount_List.Add(new GetSalesOrderCount_List
+                    {
+                        total_so = (dt["total_so"].ToString()),
+                        approved_so = (dt["approved_so"].ToString()),
+                        pending_So = (dt["pending_So"].ToString()),
+                        rejected_so = (dt["rejected_so"].ToString()),
+                        work_in_progress = (dt["work_in_progress"].ToString()),
+                        delivery_done_partial = (dt["delivery_done_partial"].ToString()),
+                        advanced_paid = (dt["advanced_paid"].ToString()),
+                        delivery_completed = (dt["delivery_completed"].ToString()),
+                        invoice_raised = (dt["invoice_raised"].ToString()),
+                        so_amended = (dt["so_amended"].ToString()),
+                        totalinvoice = (dt["totalinvoice"].ToString()),
+                        approval_pending = (dt["approval_pending"].ToString()),
+                        payment_pending = (dt["payment_pending"].ToString()),
+                        approvalpendinginnvoice = (dt["approvalpendinginnvoice"].ToString()),
+                        total_quotation = (dt["total_quotation"].ToString()),
+                        total_payment = (dt["total_payment"].ToString()),
+                        quotation_canceled = (dt["quotation_canceled"].ToString()),
+
+                    });
+                    values.GetSalesOrderCount_List = GetSalesOrderCount_List;
+                }
+            }
+            dt_datatable.Dispose();
+
+        }
+       
+        // GetSalesMoreOrderCount
+        public void DaGetMoreSalesOrderCount(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            msSQL = " SELECT count(invoice_gid) as totalinvoice FROM rbl_trn_tinvoice where invoice_flag <> 'Invoice Cancelled' and user_gid in ( '" + user_gid + "') ";
+            values.totalinvoice = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = " SELECT count(invoice_gid) as approval_pending FROM rbl_trn_tinvoice where invoice_flag = 'Invoice Approved' and user_gid in ( '" + user_gid + "') ";
+            values.approval_pending = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = " select count(invoice_gid) as payment_pending from rbl_trn_tinvoice where  payment_amount='0.00' and user_gid in ( '" + user_gid + "') ";
+            values.payment_pending = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = " SELECT count(invoice_gid) as totalinvoice FROM rbl_trn_tinvoice where invoice_flag = 'Invoice Approval Pending' and user_gid in ( '" + user_gid + "') ";
+            values.approvalpendinginnvoice = objdbconn.GetExecuteScalar(msSQL);
+            msSQL = " select count(lead2campaign_gid) as potentialleadcount from crm_trn_tenquiry2campaign where leadstage_gid='5' and created_by in ( ( '" + employee_gid + "') ";
+            values.potentialleadcount = objdbconn.GetExecuteScalar(msSQL);
+        }
+        // GetOwnOverallSalesOrderChart
+        public void DaGetOwnOverallSalesOrderChart(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            msSQL = " select count(*) as count_own,salesorder_status as status from smr_trn_tsalesorder where " +
+                " created_by='" + employee_gid + "' and so_type='Sales' " +
+                " group by salesorder_status ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var OverallSalesOrderChart_List = new List<GetOverallSalesOrderChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    OverallSalesOrderChart_List.Add(new GetOverallSalesOrderChart_List
+                    {
+                        count_own = (dt["count_own"].ToString()),
+                        salesorder_status_own = (dt["salesorder_status_own"].ToString()),                        
+
+                    });
+                    values.GetOverallSalesOrderChart_List = OverallSalesOrderChart_List;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        // GetHierarchyOverallSalesOrderChart
+        public void DaGetHierarchyOverallSalesOrderChart(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            
+            msSQL = " select count(*) as count_Hierarchy,salesorder_status_Hierarchy as status from smr_trn_tsalesorder where " +
+                " created_by in ('" + employee_gid + "') and so_type='Sales' " +
+                " group by salesorder_status ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var OverallSalesOrderChart_List = new List<GetOverallSalesOrderChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    OverallSalesOrderChart_List.Add(new GetOverallSalesOrderChart_List
+                    {
+                        count_Hierarchy = (dt["count_Hierarchy"].ToString()),
+                        salesorder_status_Hierarchy = (dt["salesorder_status_Hierarchy"].ToString()),
+
+                    });
+                    values.GetOverallSalesOrderChart_List = OverallSalesOrderChart_List;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        // GetOwnOverallDeliveryOrderChart
+        public void DaGetOwnOverallDeliveryOrderChart(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            msSQL = " select count(*) as do_count_own,delivery_status as delivery_status_own from smr_trn_tdeliveryorder where " +
+                " created_name='" + employee_gid + "' " +
+                " group by delivery_status ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var OverallSalesOrderChart_List = new List<GetOverallSalesOrderChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    OverallSalesOrderChart_List.Add(new GetOverallSalesOrderChart_List
+                    {
+                        do_count_own = (dt["do_count_own"].ToString()),
+                        delivery_status_own = (dt["delivery_status_own"].ToString()),
+
+                    });
+                    values.GetOverallSalesOrderChart_List = OverallSalesOrderChart_List;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // GetHierarchyOverallDeliveryOrderChart
+        public void DaGetHierarchyOverallDeliveryOrderChart(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            msSQL = " select count(*) as count,delivery_status as delivery_status_own from smr_trn_tdeliveryorder where " +
+                " created_name in ('" + employee_gid + "') " +
+                " group by delivery_status ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var OverallSalesOrderChart_List = new List<GetOverallSalesOrderChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    OverallSalesOrderChart_List.Add(new GetOverallSalesOrderChart_List
+                    {
+                        do_count_Hierarchy = (dt["do_count_Hierarchy"].ToString()),
+                        delivery_status_Hierarchy = (dt["delivery_status_own"].ToString()),
+
+                    });
+                    values.GetOverallSalesOrderChart_List = OverallSalesOrderChart_List;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        // GetMonthlySalesPipelineChart
+        public void DaGetMonthlySalesPipelineChart(string employee_gid, string user_gid, MdlSmrDashboard values)
+        {
+            msSQL = " SELECT cast(concat(monthname(payment_date),'-',year(payment_date)) as char) as payment_day,  " +
+                "(sum(amount)*exchange_rate) as amount " +
+                " FROM rbl_trn_tpayment group by YEAR(payment_date),MONTH(payment_date) ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var OverallSalesOrderChart_List = new List<GetOverallSalesOrderChart_List>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    OverallSalesOrderChart_List.Add(new GetOverallSalesOrderChart_List
+                    {
+                        payment_day = (dt["payment_day"].ToString()),
+                        amount = (dt["amount"].ToString()),
+
+                    });
+                    values.GetOverallSalesOrderChart_List = OverallSalesOrderChart_List;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    }
+}

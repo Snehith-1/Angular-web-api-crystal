@@ -1,0 +1,493 @@
+<div class="card">
+  <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <h3 class="card-title">Product Group</h3>
+    </div>
+
+    <div class="col me-5">
+      <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal"
+        data-bs-target="#myModaladd">
+        &nbsp;&nbsp;&nbsp; Add Product Group
+      </button>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+      <table id="salesproductgroup_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+        <thead>
+          <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+            <th>S.No</th>
+            <th>Product Group Code </th>
+            <th>Product Group Name</th>
+            <th>Created By</th>
+            <th>Created Date</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of salesproductgroup_list; let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{data.productgroup_code}}</td>
+            <td>{{data.productgroup_name}}</td>
+            <td>{{data.created_by}}</td>
+            <td>{{data.created_date}}</td>
+            <td class="text-center text-nowrap">
+
+              <button title="Edit" type="button" class="btn btn-icon btn-sm bg-warning me-2"
+                (click)="openModaledit(data)" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                  class="fa-solid fa-pencil text-white  fs-6"></span></button>
+              <button title="Add Tax" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="openModaladd(data)"
+                data-bs-toggle="modal" data-bs-target="#myModaladd"><span
+                  class="fa-solid fa-bar-chart text-white  fs-6"></span></button>
+              <button title="Delete" type="button" (click)="openModaldelete(data.productgroup_gid)"
+                data-bs-toggle="modal" data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span
+                  class="fa-solid fa-trash text-white  fs-6"></span></button>
+
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- The Modal ADD -->
+<form [formGroup]="salesproductForm" #form="ngForm">
+  <div class="modal" id="myProductadd" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+          <div>
+            <h2 class="fw-bolder text-white">&nbsp;Add Product Group</h2>
+          </div>
+
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="row">
+            <span class="font-bold"><b>Product Group Code</b><span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+              <input formControlName="productgroup_code" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     productgroupcontrol_code.invalid && productgroupcontrol_code.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="Enter Product Group Code" pattern="^(?!\s*$).+" pattern="^(PGC)[0-9]{4}$"
+                pattern="^(PGC)[0-9]{4}$" minlength="7" maxlength="7" name="productgroup_code" required />
+            </div>
+
+          </div>
+          <div
+            *ngIf="productgroupcontrol_code.invalid && (productgroupcontrol_code.dirty || productgroupcontrol_code.touched)">
+            <div *ngIf="productgroupcontrol_code.errors?.['required']">
+              <span style="color:red;">Product Group Code is required.</span>
+
+            </div>
+            <div
+              *ngIf="productgroupcontrol_code.invalid && (productgroupcontrol_code.dirty || productgroupcontrol_code.touched)">
+              <div *ngIf="productgroupcontrol_code.errors?.['pattern']">
+                <span style="color:red;">Product Group Code Like "PGC0000".</span>
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="row">
+            <span class="font-bold"><b>Product Group Name</b><span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+              <input formControlName="productgroup_name" type="text" class="
+                   form-control form-control-lg form-control-solid
+                   custom-input
+                   mb-3 mb-lg-0
+                   bg-white
+                   custom-input
+                 " [ngStyle]="{
+                   'border-color':
+                   productgroupcontrol_name.invalid && productgroupcontrol_name.touched
+                       ? 'red'
+                       : 'rgb(209, 209, 209)'
+                 }" placeholder="Enter Product Group Name" pattern="^(?!\s*$).+" name="productgroup_name" required />
+            </div>
+
+          </div>
+          <div
+            *ngIf="productgroupcontrol_name.invalid && (productgroupcontrol_name.dirty || productgroupcontrol_name.touched)">
+            <div *ngIf="productgroupcontrol_name.errors?.['required']">
+              <span style="color:red;">Product Group Name is required.</span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Modal footer -->
+        <div class="text-center my-4">
+          <button (click)="onsubmit()" class="btn-success text-white me-4" [disabled]="salesproductForm.invalid"
+            [ngClass]="{
+                'primary-button': !salesproductForm.invalid,
+                'secondary-button': salesproductForm.invalid
+              }" data-bs-dismiss="modal">
+            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+          </button> &nbsp;&nbsp;
+          <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white"></i> &nbsp;Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+<!-- The Modal Edit -->
+<form [formGroup]="salesproductFormEdit" #form="ngForm">
+  <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+          <div><br>
+            <h2 class="fw-bolder text-white">&nbsp;&nbsp;<i class="fas fa-pencil fw-bolder fs-3"></i> &nbsp;&nbsp;Edit
+              Product Group</h2>
+          </div>
+
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <input class="form-control form-control-lg" formControlName="productgroup_gid" hidden pattern="^(?!\s*$).+"
+            type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required>
+
+          <div class="row">
+            <span class="font-bold"><b>Product Group Code</b><span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mb-2 mt-2 d-flex ">
+
+
+              <input formControlName="productgroupedit_code" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     productgroupedit_code.invalid && productgroupedit_code.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="Enter Product Group Code" pattern="^(?!\s*$).+" pattern="^(PGC)[0-9]{4}$" name="productgroupedit_code"
+                required />
+              </div>
+
+            <div
+              *ngIf="productgroupedit_code.invalid && (productgroupedit_code.dirty || productgroupedit_code.touched)">
+              <div *ngIf="productgroupedit_code.errors?.['required']">
+                <span style="color:red;">Product Code is required.</span>
+              </div>
+              <div
+                *ngIf="productgroupedit_code.invalid && (productgroupedit_code.dirty || productgroupedit_code.touched)">
+                <div *ngIf="productgroupedit_code.errors?.['pattern']">
+                  <span style="color:red;">Product Group Code Like "PGC0000".</span>
+                </div>
+              </div>
+            </div></div>
+            <br>
+
+            <span class="font-bold"><b>Product Group Name</b><span class="ms-1 text-red">*</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 mb-2 d-flex ">
+
+
+              <input formControlName="productgroupedit_name" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     productgroupedit_name.invalid && productgroupedit_name.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="Enter Product Group Name" pattern="^(?!\s*$).+" name="productgroupedit_name"
+                required />
+            </div>
+
+          </div>
+          <div *ngIf="productgroupedit_name.invalid && (productgroupedit_name.dirty || productgroupedit_name.touched)">
+            <div *ngIf="productgroupedit_name.errors?.['required']">
+              <span style="color:red;">Product Group Name is required.</span>
+            </div>
+          </div>
+          <div *ngIf="productgroupedit_name.invalid && (productgroupedit_name.dirty || productgroupedit_name.touched)">
+            <div *ngIf="productgroupedit_name.errors?.['pattern']">
+              <span style="color:red;">Space Not Accepted.</span>
+            </div>
+          </div>
+        
+        <!-- Modal footer -->
+        <div class="text-center my-4">
+          <button class="btn-success btn-sm text-white me-4" (click)="onupdate()"
+            [disabled]="salesproductFormEdit.invalid" [ngClass]="{
+                    'primary-button': !salesproductFormEdit.invalid,
+                    'secondary-button': salesproductFormEdit.invalid
+                  }" data-bs-dismiss="modal">
+            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+          </button> &nbsp;&nbsp;
+          <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white"></i> &nbsp;Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- The Modal Delete -->
+<div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="text-center my-4">
+        <h2><b>Are you sure?</b></h2>
+        <br>
+        <p style="display: block;">Do You Want To Delete the Record ?</p>
+        <div class="text-center my-4">
+          <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+            <i class="fas fa-close text-white"></i> &nbsp;Close
+          </button>&nbsp;
+          <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+            <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+          </button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+
+<!--Add Tax-->
+
+<form [formGroup]="salesproductFormTax" #form="ngForm">
+
+  <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+
+
+
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-3 pt-2 rounded-top bg-primary">
+
+          <div>
+            <h2 class="fw-bolder text-white">&nbsp;&nbsp;<i class="fas fa-bar-chart fw-bolder fs-3"></i> &nbsp;&nbsp;Add
+              Tax</h2>
+          </div>
+
+
+
+        </div>
+
+
+
+        <div class="modal-body">
+
+          <input class="form-control form-control-lg" formControlName="productgroup_gid" hidden pattern="^(?!\s*$).+"
+            type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required>
+
+
+
+          <div class="row">
+
+            <span class="font-bold"><b>Product Group Code</b></span>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 mb-3 d-flex ">
+
+
+
+
+
+              <input formControlName="productgroup_code" type="text" class="
+
+                 form-control form-control-lg form-control-solid
+
+                 custom-input
+
+                 mb-2
+
+                 bg-white
+
+                 custom-input borderc-secondary
+
+               " placeholder="Enter Product Group Code" readonly pattern="^(?!\s*$).+" name="productgroup_code" required />
+
+            </div>
+
+
+
+
+
+            <br>
+
+
+
+            <span class="font-bold"><b>Product Group Name</b></span>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mb-3 mt-2 d-flex ">
+
+
+
+
+
+              <input formControlName="productgroup_name" type="text" class="
+
+                 form-control form-control-lg form-control-solid
+
+                 custom-input
+
+                 mb-2 
+
+                 bg-white
+
+                 custom-input borderc-secondary
+
+               " placeholder="Enter Product Group Name" readonly pattern="^(?!\s*$).+" name="productgroup_name" required />
+
+            </div>
+
+
+
+            <span class="font-bold"><b>Tax 1</b></span>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-1 mb-2 d-flex ">
+
+
+
+
+
+              <ng-select formControlName="tax1_name" [items]="tax1_list" class="
+
+              custom
+
+              col-lg-12 col-14
+              mb-2
+
+              fv-row
+
+              mt-2
+
+            " bindLabel="tax1_name" bindValue="tax1_gid" placeholder="Select an option"
+                style="border: 1px solid grey; border-radius: 10px;"></ng-select>
+
+            </div>
+
+            <span class="font-bold"><b>Tax 2</b></span>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mb-1 mt-2 d-flex ">
+
+
+
+
+
+              <ng-select formControlName="tax2_name" [items]="tax2_list" class="
+
+              custom
+
+              col-lg-12 col-14
+
+              fv-row
+              mb-2
+
+              mt-2
+
+            " bindLabel="tax2_name" bindValue="tax2_gid" placeholder="Select an option"
+                style="border: 1px solid grey; border-radius: 10px;"></ng-select>
+
+            </div>
+
+            <span class="font-bold"><b>Tax 3</b></span>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mb-1 mt-2 d-flex ">
+
+
+
+
+
+              <ng-select formControlName="tax3_name" [items]="tax3_list" class="
+
+              custom
+
+              col-lg-12 col-14
+
+              fv-row mb-2
+
+              mt-2
+
+            " bindLabel="tax3_name" bindValue="tax3_gid" placeholder="Select an option"
+                style="border: 1px solid grey; border-radius: 10px;"></ng-select>
+
+            </div>
+
+
+
+
+          </div>
+
+          <div class="text-center my-4">
+
+            <button class="btn-success btn-sm text-white me-4" (click)="update()"
+               [ngClass]="{
+
+              'primary-button': !salesproductFormTax.invalid,
+
+              'secondary-button': salesproductFormTax.invalid
+
+            }" data-bs-dismiss="modal">
+
+              <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+
+            </button> &nbsp;&nbsp;
+
+            <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+
+              <i class="fas fa-close text-white"></i> &nbsp;Close
+
+            </button>
+
+          </div>
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</form>

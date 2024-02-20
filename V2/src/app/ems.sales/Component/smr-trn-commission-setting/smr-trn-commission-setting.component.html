@@ -1,0 +1,123 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Commission Setting</h3>
+        </div>
+
+        <br>
+
+        <div class="table-responsive">
+            <div class="card card-body m-3  bg-white rounded">
+                <table id="commissionset_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                    <thead>
+                        <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue align-middle">
+                            <th>Sales Type</th>
+                            <th class="text-center">New Order Percentage</th>
+                            <th class="text-center">Repeat Order Percentage</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let data of commissionset_list;">
+                            <td>{{data.sales_type}}</td>
+                            <td class="text-center">{{data.neworder_percentage}}</td>
+                            <td class="text-center">{{data.repeatorder_percentage}}</td>
+                            <td>
+                                <button title="Set Percentage" type="button" class="btn btn-icon btn-sm bg-primary me-1"
+                                    data-bs-toggle="modal" (click)="OnsetPercent(data)" data-bs-target="#myModalpercentage"><span
+                                        class="fa-solid fa-arrow-up text-white  fs-6"></span></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Commission Add -->
+        <form [formGroup]="reactiveForm" #form="ngForm">
+            <div class="modal" id="myModalpercentage" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog p-10">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="card-header pb-3 pt-6 rounded-top bg-primary">
+                            <div>
+                                <h2 class="fw-bolder text-white">
+                                    &nbsp;&nbsp;Add Commission </h2>
+                            </div>
+
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row"><span class="font-bold"><b>Sales Type</b></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                            <input formControlName="sales_type" type="text" class="
+             form-control form-control-lg form-control-solid
+             custom-input
+             mb-3 mb-lg-0 
+             bg-white
+             custom-input " style="width: 420px;border: 1px solid grey;"
+                                placeholder="Enter Sales Type" name="sales_type" required readonly/>
+                        </div>
+
+
+                    </div>
+
+                            <div class="row"><span class="font-bold"><b>New Order Commission</b><span
+                                        class="ms-1 text-red">*</span></span>
+                                <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                                    <input formControlName="neworder_percentage" type="number" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0 
+                     bg-white
+                     custom-input " style="width: 420px;border: 1px solid grey;"
+                                        placeholder="Enter New Commission Percentage" name="new_commission" required />
+                                </div>
+
+
+                            </div>
+                            <br>
+                            <div class="row"><span class="font-bold"><b>Repeat Order Percentage</b><span
+                                        class="ms-1 text-red">*</span></span>
+                                <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+
+
+                                    <input formControlName="repeatorder_percentage" type="number" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " style="width: 420px;border: 1px solid grey;" placeholder="Enter Repeat Order Percentage"
+                                        name="repeatorder_percentage" required />
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="text-center my-4">
+                            <button data-bs-dismiss="modal" class="btn btn-success btn-sm bg-success me-2" (click)="onupdate()">
+                                <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                            </button> &nbsp;&nbsp;
+                            <button class="btn-danger btn-sm text-white me-4" data-bs-dismiss="modal">
+                                <i class="fas fa-close text-white"></i> &nbsp;Close
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

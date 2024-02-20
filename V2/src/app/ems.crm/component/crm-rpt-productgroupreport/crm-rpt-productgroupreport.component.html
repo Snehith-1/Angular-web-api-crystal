@@ -1,0 +1,56 @@
+<div class="card card-bordered">
+    <div class="row ms-3 mt-3">
+        <h3 class="card-title">Product Groupwise Report</h3>
+    </div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-md-2 mt-3 row">
+                <label for="FromDate"><b>From Date:</b></label>
+                <input type="date" [(ngModel)]="from_date" class="form-control form-control-lg form-control-solid custom-input
+          mb-1 mb-lg-0  borderc-secondary bg-white custom-input" />
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="ToDate"><b>To Date:</b></label>
+                <input type="date" [(ngModel)]="to_date" class="form-control form-control-lg form-control-solid custom-input
+        mb-1 mb-lg-0  borderc-secondary bg-white custom-input" />
+            </div>
+            <div class="col-md-1 mt-9 row">
+                <button class="btn-primary btn-sm text-black me-1" (click)="onSearchClick()"
+                    style="background-color:blue #1146f5 !important;">Search</button>
+            </div>
+            <div class="col-md-1 mt-9 row">
+                <button class="btn-primary btn-sm text-black ms-1" (click)="onrefreshclick()"
+                    style="background-color:blue #1146f5 !important;">Refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <div class=" col-12 mb-7 shadow-lg p-3 rounded">
+
+
+        <div class="card-header"
+            style="background: rgb(81,183,204);
+                  background: linear-gradient(90deg, rgba(81,183,204,1) 0%, rgba(173,221,211,1) 35%, rgba(209,242,255,1) 100%);color:black;font-size: 14px;">
+            <b style="padding-top: 12px;">Order For The Last Six Months</b>
+        </div>
+        <div>
+            <ng-container *ngIf="emptyFlag">
+                <br>
+                <br>
+                <p style="margin-top:-26px;font-size: 12px;text-align: center;color: rgb(14, 13, 13);">No Records Found...
+                </p>
+            </ng-container>
+            <ng-container>
+                <div id="chart" class="chart ">
+
+                    <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                        [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                        [yaxis]="chartOptions.yaxis" [xaxis]="chartOptions.xaxis" [fill]="chartOptions.fill"
+                        [title]="chartOptions.title">
+                    </apx-chart>
+                </div>
+            </ng-container>
+
+        </div>
+    </div>
+</div>

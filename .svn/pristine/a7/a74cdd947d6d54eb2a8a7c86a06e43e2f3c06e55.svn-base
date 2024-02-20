@@ -1,0 +1,374 @@
+﻿using ems.crm.Models;
+using ems.utilities.Functions;
+using Microsoft.SqlServer.Server;
+using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Odbc;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Web;
+using static OfficeOpenXml.ExcelErrorValue;
+using static System.Collections.Specialized.BitVector32;
+namespace ems.crm.DataAccess
+{
+    public class DaMailManagement
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objodbcDataReader;
+
+        DataTable dt_datatable;
+        int mnResult, ls_port;
+        string msUserGid, msEmployeeGID, msBiometricGID, msGetemployeetype, msTemporaryAddressGetGID, msPermanentAddressGetGID, usercode, lsuser_gid, lsemployee_gid, lsuser_code, lscountry_gid2, lscountry_gid, ls_server, ls_username, ls_password;
+
+
+        public void DaGetfrommaildropdown(MdlMailmanagement values)
+        {
+            msSQL = " SELECT company_gid,pop_server, pop_port, pop_username, pop_password  FROM adm_mst_tcompany";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<from_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new from_list
+                    {
+                        mail = dt["pop_username"].ToString(),
+                        company_gid = dt["company_gid"].ToString(),
+
+
+
+
+                    });
+                    values.from_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        public void Damailmanagementupload(HttpRequest httpRequest, result objResult, string user_gid)
+        {
+
+            HttpFileCollection httpFileCollection;
+            string lsfilepath = string.Empty;
+            string lsdocument_gid = string.Empty;
+            MemoryStream ms_stream = new MemoryStream();
+            string document_gid = string.Empty;
+            string lscompany_code = string.Empty;
+            HttpPostedFile httpPostedFile;
+
+            string lspath;
+            string msGetGid;
+
+            msSQL = " SELECT a.company_code FROM adm_mst_tcompany a ";
+            lscompany_code = objdbconn.GetExecuteScalar(msSQL);
+
+
+            MemoryStream ms = new MemoryStream();
+            lspath = ConfigurationManager.AppSettings["mailuploadfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "MailManagement/Upload/" + DateTime.Now.Year + "/" + DateTime.Now.Month;
+            string mail_from = httpRequest.Form[0];
+            string sub = httpRequest.Form[1];
+            string to = httpRequest.Form[2];
+            string body = httpRequest.Form[3];
+
+            {
+                if ((!System.IO.Directory.Exists(lspath)))
+                    System.IO.Directory.CreateDirectory(lspath);
+            }
+            try
+            {
+                if (httpRequest.Files.Count > 0)
+                {
+                    string lsfirstdocument_filepath = string.Empty;
+                    httpFileCollection = httpRequest.Files;
+                    for (int i = 0; i < httpFileCollection.Count; i++)
+                    {
+                        string msdocument_gid = objcmnfunctions.GetMasterGID("UPLF");
+                        httpPostedFile = httpFileCollection[i];
+                        string FileExtension = httpPostedFile.FileName;
+                        //string lsfile_gid = msdocument_gid + FileExtension;
+                        string lsfile_gid = msdocument_gid;
+                        string lscompany_document_flag = string.Empty;
+                        FileExtension = Path.GetExtension(FileExtension).ToLower();
+                        lsfile_gid = lsfile_gid + FileExtension;
+                        Stream ls_readStream;
+                        ls_readStream = httpPostedFile.InputStream;
+                        ls_readStream.CopyTo(ms);
+                        lspath = ConfigurationManager.AppSettings["mailuploadfile_path"] + "/erpdocument" + "/" + lscompany_code + "/" + "MailManagement/Upload/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                        string status;
+                        status = objcmnfunctions.uploadFile(lspath + msdocument_gid, FileExtension);
+                        //string local_path = "E:/Angular15/AngularUI/src";
+                        ms.Close();
+                        lspath = "/assets/media/images/erpdocument" + "/" + lscompany_code + "/" + "MailManagement/Upload/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/";
+                        string final_path = lspath + msdocument_gid + FileExtension;
+
+                    }
+
+
+                    {
+                        msSQL = " SELECT pop_server, pop_port, pop_username, pop_password  FROM adm_mst_tcompany";
+
+                        objodbcDataReader = objdbconn.GetDataReader(msSQL);
+
+                        if (objodbcDataReader.HasRows == true)
+                        {
+
+                            ls_server = objodbcDataReader["pop_server"].ToString();
+
+                            ls_port = Convert.ToInt32(objodbcDataReader["pop_port"]);
+
+                            ls_username = objodbcDataReader["pop_username"].ToString();
+
+                            ls_password = objodbcDataReader["pop_password"].ToString();
+
+                        }
+                        objodbcDataReader.Close();
+
+
+
+                        MailMessage message = new MailMessage();
+
+                        SmtpClient smtp = new SmtpClient();
+
+                        message.From = new MailAddress(ls_username);
+
+                        message.To.Add(new MailAddress(to));
+
+
+                        message.Subject = sub;
+
+                        message.IsBodyHtml = true; //to make message body as html  
+
+                        message.Body = body;
+
+                        smtp.Port = ls_port;
+
+                        smtp.Host = ls_server; //for gmail host  
+
+                        smtp.EnableSsl = true;
+
+                        smtp.UseDefaultCredentials = false;
+
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                        smtp.Credentials = new NetworkCredential(ls_username, ls_password);
+
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        try
+                        {
+
+                            smtp.Send(message);
+
+                            //mail_send_result = true;
+
+                            //result = "Mail Send Successfully";
+
+
+
+                        }
+                        catch (Exception ex)
+
+                        {
+
+                            //mail_send_result = false;
+
+                            //result = ex.ToString();
+
+                        }
+
+                    }
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                objResult.message = ex.ToString();
+            }
+            //return true;
+
+        }
+
+        public void Damailmanagementsend(HttpRequest httpRequest, from_list values)
+
+        {
+
+            try
+
+            {
+
+                msSQL = " SELECT pop_server, pop_port, pop_username, pop_password  FROM adm_mst_tcompany";
+
+                objodbcDataReader = objdbconn.GetDataReader(msSQL);
+
+                if (objodbcDataReader.HasRows == true)
+
+                {
+
+                    ls_server = objodbcDataReader["pop_server"].ToString();
+
+                    ls_port = Convert.ToInt32(objodbcDataReader["pop_port"]);
+
+                    ls_username = objodbcDataReader["pop_username"].ToString();
+
+                    ls_password = objodbcDataReader["pop_password"].ToString();
+
+                }
+
+                objodbcDataReader.Close();
+
+
+
+                MailMessage message = new MailMessage();
+
+                SmtpClient smtp = new SmtpClient();
+
+                message.From = new MailAddress(ls_username);
+
+                message.To.Add(new MailAddress(values.to));
+
+
+                message.Subject = values.sub;
+
+                message.IsBodyHtml = true; //to make message body as html  
+
+                message.Body = values.body;
+
+                smtp.Port = ls_port;
+
+                smtp.Host = ls_server; //for gmail host  
+
+                smtp.EnableSsl = true;
+
+                smtp.UseDefaultCredentials = false;
+
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                smtp.Credentials = new NetworkCredential(ls_username, ls_password);
+
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                try
+                {
+
+                    smtp.Send(message);
+
+                    //mail_send_result = true;
+
+                    //result = "Mail Send Successfully";
+
+
+
+                }
+
+                catch (Exception ex)
+
+                {
+
+                    //mail_send_result = false;
+
+                    //result = ex.ToString();
+
+                }
+
+                //mail_details_result = true;
+
+            }
+
+            catch (Exception ex)
+
+            {
+
+                //result = ex.ToString();
+
+                //mail_details_result = false;
+
+            }
+
+
+
+            //Mail Log
+
+            //msSQL = "Insert into ocs_mst_tcustomermaillog( " +
+
+            //                       " application_gid," +
+
+            //                       " application_number," +
+
+            //                       " from_mailid," +
+
+            //                       " cc," +
+
+            //                       " bcc," +
+
+            //                       " email_to," +
+
+            //                       " email_date," +
+
+            //                       " email_subject," +
+
+            //                       " email_content," +
+
+            //                       " status," +
+
+            //                       " created_date)" +
+
+            //                       " values(" +
+
+            //                       "'" + application_gid + "'," +
+
+            //                       "'" + arn_no + "'," +
+
+            //                       "'" + ls_username + "'," +
+
+            //                       "'" + cc_mailid + "'," +
+
+            //                       "'" + lsBccmail_id + "'," +
+
+            //                       "'" + tomail_id + "'," +
+
+            //                       "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'," +
+
+            //                       "'" + sub.Replace("'", "") + "'," +
+
+            //                       "'" + body.Replace("'", "") + "'," +
+
+            //                       "'" + result + "'," +
+
+            //                       "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+
+            //mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+
+
+            //if (mail_send_result == true && mail_details_result == true)
+
+            //{
+
+            //    return true;
+
+            //}
+
+            //else
+
+            //{
+
+            //    return false;
+
+            //}
+
+        }
+    }
+}

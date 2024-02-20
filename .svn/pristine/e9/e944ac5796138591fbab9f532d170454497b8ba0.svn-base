@@ -1,0 +1,95 @@
+<main>
+    
+    <header>
+      <div class="tb">
+        <div class="td" id="logo">
+          <a><i class="fab fa-facebook-square"></i></a>
+        </div>
+  
+       
+        <div class="td" id="i-links">
+          <div class="tb">
+    <div class="row">
+            <span> <img id="p-link" src={{picture}}></span>
+          </div>
+          <span class="td" id="f-name-l">{{username}}</span>
+        </div>
+        </div>
+      </div>
+    </header>
+    <div id="profile-upper">
+      <div id="profile-banner-image">
+        <img src="" alt="Banner image">
+      </div>
+      <div id="profile-d">
+        <div id="profile-pic">
+          <img src={{picture}}>
+           
+        </div>
+        <div id="u-name">{{username}} 
+            <button class="btn btn-sm text-white me-4"  routerLink="/crm/CrmSmmFacebookPage"  style="margin-left:100px;background-color:#385591;">
+               Facebook Page</button>
+                <br>
+            <span><b style="font-size: 16px;color:black;">Friends Count</b> <span style="font-size: 14px;color:blue">&nbsp; {{friends}}</span></span>
+
+
+             </div>
+ 
+       
+      </div>
+      <div id="black-grd"></div>
+    </div>
+   <br> <br>
+    <tabset style="align-items:center;">
+        <tab heading="Abous Us" style="background-color:white;"><div class="cnt-label">
+            <i style="margin-left: 20px;"class="l-i" id="l-i-i"></i>
+            <span>Intro</span>
+            <br>
+            <span ><b style="font-size:18px;margin-left: 20px;">Name :</b> {{username}}</span>
+            <br>
+            <span><b style="font-size:18px;margin-left: 20px;">Gender :</b>{{gender}}</span>
+            <br>
+            <span><b style="font-size:18px;margin-left: 20px;">Email :</b>{{email}}</span>
+            <br>
+            <span><b style="font-size:18px;margin-left: 20px;">Home Town :</b>{{hometown}}</span>
+            <br>
+            <span><b style="font-size:18px;margin-left: 20px;">Present Location :</b>{{present}}</span>
+            <br><br><br><div class="lb-action"></div>
+          </div></tab>
+      
+        <tab heading="Post Image" style="background-color:white;"> 
+            <br> <br>
+            <div class="image-gallery">
+
+              <div class="image" *ngFor="let imageurl of posts">
+            
+                <img [src]="imageurl.full_picture" alt="Image">
+            
+              </div>
+            
+            </div>
+
+          </tab>
+        <tab heading="Post Video" style="background-color:white;">
+      <div class="video-gallery">
+
+            <div class="video-item" *ngFor="let videourl of videos">
+          
+              <video controls>
+          
+                <source [src]="videourl.source" type="video/mp4">
+          
+          
+              </video>
+         
+          
+            </div>
+          
+          </div>
+          
+          </tab>
+      </tabset>
+
+    
+  
+  </main>

@@ -1,0 +1,576 @@
+﻿using ems.crm.Models;
+using ems.system.Models;
+using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
+using System.Net.NetworkInformation;
+
+namespace ems.crm.DataAccess
+{
+    public class DaMyLead
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msEmployeeGID, lsemployee_gid, lsentity_code, lsdesignation_code, lsCode, msGetPrivilege_gid, msGetModule2employee_gi,
+         lssource_name, lsleadbank_name, lscategoryindustry_name, lscountry_name, lsregion_name, lsbankcontact, msGetGid, msGetGid1, msGetGid2, msGetGid3, msGetGid4, msGetGid5, msGetGid6, msGetGid7, msGetGid8, msGetGid9, msGetGid10;
+
+        int mnResult, mnResult1, mnResult2, mnResult3, mnResult4, mnResult5, mnResult6, mnResult7, mnResult8, mnResult9, mnResult10, mnResult11, mnResult12, mnResult13, mnResult14;
+
+        public void DaGetMyleadsSummary(MdlMyLead values, string employee_gid)
+
+        {
+            msSQL = " Select b.leadbank_name, k.campaign_title, i.schedule_type," +
+                " concat(g.leadbankcontact_name,' / ',g.mobile,' / ',g.email) as contact_details," +
+                " concat(d.region_name,'/',b.leadbank_city,'/',b.leadbank_state,'/',h.source_name) as region_name," +
+                    " Case when a.internal_notes is not null then a.internal_notes" +
+                    " when a.internal_notes is null then b.remarks  end as internal_notes," +
+                   " cast(concat(i.schedule_date,' ', i.schedule_time) as datetime) as schedule," +
+                    " z.leadstage_name," +
+                    " a.lead2campaign_gid, a.leadbank_gid, a.campaign_gid, g.leadbankcontact_gid" +
+                    " From crm_trn_tlead2campaign a" +
+                    " left join crm_trn_tleadbank b on a.leadbank_gid = b.leadbank_gid        " +
+                    " left join crm_mst_tregion d on b.leadbank_region=d.region_gid           " +
+                    " left join crm_trn_tleadbankcontact g on b.leadbank_gid = g.leadbank_gid " +
+                    " left join crm_mst_tsource h on b.source_gid=h.source_gid                " +
+                    " left join crm_trn_tcampaign k on a.campaign_gid=k.campaign_gid          " +
+                    " left join crm_trn_tschedulelog i on a.leadbank_gid = i.leadbank_gid " +
+                    " left join crm_mst_tleadstage z on a.leadstage_gid=z.leadstage_gid" +
+                    " where a.assign_to = '" + employee_gid + "' " +
+                    " and i.schedule_date = '" + DateTime.Now.ToString("yyyy-MM-dd") + "' or i.schedule_date='" + DateTime.Now.ToString("yyyy-MM-dd") + "'" +
+                    " and g.status='Y' and g.main_contact='Y' and i.assign_to=  '" + employee_gid + "' " +
+                    " order by b.leadbank_name asc";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<myleads_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new myleads_list
+                    {
+                        leadbank_gid = dt["leadbank_gid"].ToString(),
+                        lead2campaign_gid = dt["lead2campaign_gid"].ToString(),
+                        campaign_title = dt["campaign_title"].ToString(),
+                        leadbank_name = dt["leadbank_name"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+                        schedule_type = dt["schedule_type"].ToString(),
+                        schedule = dt["schedule"].ToString(),
+                        internal_notes = dt["internal_notes"].ToString(),
+
+                    });
+
+                    values.myleadslist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetInprogressSummary(MdlMyLead values, string employee_gid)
+        {
+            msSQL = "Select  b.leadbank_name," +
+               "concat(g.leadbankcontact_name,' / ',g.mobile,' / ',g.email) as contact_details," +
+               "concat(d.region_name,'/',b.leadbank_city,'/',b.leadbank_state,'/',h.source_name) as region_name, " +
+               "Case when a.internal_notes is not null then a.internal_notes " +
+               "when a.internal_notes is null then b.remarks  end as internal_notes, " +
+               "z.leadstage_name,k.campaign_title, " +
+               "a.lead2campaign_gid, a.leadbank_gid, a.campaign_gid, g.leadbankcontact_gid " +
+               "From crm_trn_tlead2campaign a " +
+               "left join crm_trn_tleadbank b on a.leadbank_gid = b.leadbank_gid  " +
+               "left join crm_mst_tregion d on b.leadbank_region=d.region_gid  " +
+               "left join crm_trn_tleadbankcontact g on b.leadbank_gid = g.leadbank_gid " +
+               "left join crm_mst_tsource h on b.source_gid=h.source_gid " +
+               "left join crm_trn_tcampaign k on a.campaign_gid=k.campaign_gid  " +
+               "left join crm_mst_tleadstage z on a.leadstage_gid=z.leadstage_gid " +
+               "where a.assign_to= '" + employee_gid + "' " +
+               " and a.leadstage_gid='3' and  g.status='Y' and g.main_contact='Y' order by b.leadbank_name asc";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<inprogress_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new inprogress_list
+                    {
+                        leadbank_gid = dt["leadbank_gid"].ToString(),
+                        lead2campaign_gid = dt["lead2campaign_gid"].ToString(),
+                        campaign_title = dt["campaign_title"].ToString(),
+                        leadbank_name = dt["leadbank_name"].ToString(),
+                        internal_notes = dt["internal_notes"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+
+                    });
+
+                    values.inprogresslist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+
+        public void DaGetCustomerSummary(MdlMyLead values, string employee_gid)
+        {
+            msSQL = " Select b.leadbank_name, k.campaign_title, i.schedule_type," +
+                " concat(g.leadbankcontact_name,' / ',g.mobile,' / ',g.email) as contact_details," +
+                " concat(d.region_name,'/',b.leadbank_city,'/',b.leadbank_state,'/',h.source_name) as region_name," +
+                    " Case when a.internal_notes is not null then a.internal_notes" +
+                    " when a.internal_notes is null then b.remarks  end as internal_notes," +
+                   " cast(concat(i.schedule_date,' ', i.schedule_time) as datetime) as schedule," +
+                    " z.leadstage_name," +
+                    " a.lead2campaign_gid, a.leadbank_gid, a.campaign_gid, g.leadbankcontact_gid" +
+                    " From crm_trn_tlead2campaign a" +
+                    " left join crm_trn_tleadbank b on a.leadbank_gid = b.leadbank_gid        " +
+                    " left join crm_mst_tregion d on b.leadbank_region=d.region_gid           " +
+                    " left join crm_trn_tleadbankcontact g on b.leadbank_gid = g.leadbank_gid " +
+                    " left join crm_mst_tsource h on b.source_gid=h.source_gid                " +
+                    " left join crm_trn_tcampaign k on a.campaign_gid=k.campaign_gid          " +
+                    " left join crm_trn_tschedulelog i on a.leadbank_gid = i.leadbank_gid " +
+                    " left join crm_mst_tleadstage z on a.leadstage_gid=z.leadstage_gid" +
+                     " where a.assign_to =  '" + employee_gid + "' " +
+              " and (a.leadstage_gid ='6')" +
+              " and g.status='Y' and g.main_contact='Y' " +
+                    " order by b.leadbank_name asc";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<customer_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new customer_list
+                    {
+                        campaign_title = dt["campaign_title"].ToString(),
+                        internal_notes = dt["internal_notes"].ToString(),
+                        leadbank_name = dt["leadbank_name"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+                    });
+
+                    values.customerlist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetDropSummary(MdlMyLead values, string employee_gid)
+        {
+            msSQL = "Select  b.leadbank_name,k.campaign_title,a.assign_to, " +
+               "concat(g.leadbankcontact_name,' / ',g.mobile,' / ',g.email) as contact_details, " +
+               "concat(d.region_name,'/',b.leadbank_city,'/',b.leadbank_state,'/',h.source_name) as region_name, " +
+               "Case when a.internal_notes is not null then a.internal_notes " +
+               "when a.internal_notes is null then b.remarks  end as internal_notes, " +
+               "z.leadstage_name, " +
+               "a.lead2campaign_gid,a.lead_base, a.leadbank_gid, a.campaign_gid, g.leadbankcontact_gid " +
+               "From crm_trn_tlead2campaign a  " +
+               "left join crm_trn_tleadbank b on a.leadbank_gid = b.leadbank_gid  " +
+               "left join crm_mst_tregion d on b.leadbank_region=d.region_gid  " +
+               "left join crm_trn_tleadbankcontact g on b.leadbank_gid = g.leadbank_gid  " +
+               "left join crm_mst_tsource h on b.source_gid=h.source_gid  " +
+               "left join crm_trn_tcampaign k on a.campaign_gid=k.campaign_gid  " +
+               "left join crm_mst_tleadstage z on a.leadstage_gid=z.leadstage_gid " +
+               "where a.assign_to= '" + employee_gid + "' and a.leadstage_gid='5' " +
+               "and g.status='Y' and g.main_contact='Y' order by b.leadbank_name asc ";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<drop_list1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new drop_list1
+                    {
+                        campaign_title = dt["campaign_title"].ToString(),
+                        internal_notes = dt["internal_notes"].ToString(),
+                        leadbank_name = dt["leadbank_name"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+                        leadstage_name = dt["leadstage_name"].ToString(),
+                        drop_stage = dt["lead_base"].ToString(),
+                    });
+
+                    values.droplist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetAllSummary(MdlMyLead values, string employee_gid)
+        {
+            msSQL = " Select b.leadbank_name, k.campaign_title, i.schedule_type," +
+                " concat(g.leadbankcontact_name,' / ',g.mobile,' / ',g.email) as contact_details," +
+                " concat(d.region_name,'/',b.leadbank_city,'/',b.leadbank_state,'/',h.source_name) as region_name," +
+                    " Case when a.internal_notes is not null then a.internal_notes" +
+                    " when a.internal_notes is null then b.remarks  end as internal_notes," +
+                   " cast(concat(i.schedule_date,' ', i.schedule_time) as datetime) as schedule," +
+                    " z.leadstage_name," +
+                    " a.lead2campaign_gid, a.leadbank_gid, a.campaign_gid, g.leadbankcontact_gid" +
+                    " From crm_trn_tlead2campaign a" +
+                    " left join crm_trn_tleadbank b on a.leadbank_gid = b.leadbank_gid        " +
+                    " left join crm_mst_tregion d on b.leadbank_region=d.region_gid           " +
+                    " left join crm_trn_tleadbankcontact g on b.leadbank_gid = g.leadbank_gid " +
+                    " left join crm_mst_tsource h on b.source_gid=h.source_gid                " +
+                    " left join crm_trn_tcampaign k on a.campaign_gid=k.campaign_gid          " +
+                    " left join crm_trn_tschedulelog i on a.leadbank_gid = i.leadbank_gid " +
+                    " left join crm_mst_tleadstage z on a.leadstage_gid=z.leadstage_gid" +
+                     " where a.assign_to =  '" + employee_gid + "' " +
+                    " and g.status='Y' and g.main_contact='Y' " +
+                    " order by b.leadbank_name asc";
+
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<all_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new all_list
+                    {
+                        campaign_title = dt["campaign_title"].ToString(),
+                        internal_notes = dt["internal_notes"].ToString(),
+                        leadbank_name = dt["leadbank_name"].ToString(),
+                        contact_details = dt["contact_details"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+                        leadstage_name = dt["leadstage_name"].ToString(),
+                    });
+
+                    values.alllist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+       
+        public void DaGetleadbankeditSummary(string leadbank_gid, MdlMyLead values)
+        {
+            msSQL = "Select  a.leadbank_gid,a.leadbank_name,a.leadbank_city, a.leadbank_address1, a.leadbank_address2, a.leadbank_state,a.leadbank_country," +
+                 "a.leadbank_pin, a.leadbank_region, a.company_website, c.leadbankcontact_name, c.email, c.mobile, c.designation,c.fax, c.phone1 " +
+                 "From crm_trn_tleadbank a left Join crm_trn_tlead2campaign b on b.leadbank_gid = a.leadbank_gid " +
+                 "Left Join crm_trn_tleadbankcontact c on c.leadbank_gid = a.leadbank_gid " +
+                 "where a.leadbank_gid ='" + leadbank_gid + "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<leadbankedit_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                        getModuleList.Add(new leadbankedit_list
+                        {
+                            leadbank_gid = dt["leadbank_gid"].ToString(),
+                            leadbank_name = dt["leadbank_name"].ToString(),
+                            leadbankcontact_name = dt["leadbankcontact_name"].ToString(),
+                            designation = dt["designation"].ToString(),
+                            mobile = dt["mobile"].ToString(),
+                            email = dt["email"].ToString(),
+                            company_website = dt["company_website"].ToString(),
+                            fax = dt["fax"].ToString(),
+                            phone1 = dt["phone1"].ToString(),
+                            leadbank_address1 = dt["leadbank_address1"].ToString(),
+                            leadbank_address2 = dt["leadbank_address2"].ToString(),
+                            leadbank_pin = dt["leadbank_pin"].ToString(),
+                            country_gid = dt["leadbank_country"].ToString(),
+                            region_gid = dt["leadbank_region"].ToString(),
+                        });
+                        values.leadbankedit_list = getModuleList;
+                }
+                dt_datatable.Dispose();
+            }
+        }
+
+        
+
+        public void DaGetregiondropdown(MdlMyLead values)
+        {
+            msSQL = "SELECT region_gid, region_name FROM crm_mst_tregion Order by region_name asc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<regionname_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new regionname_list
+                    {
+                        region_gid = dt["region_gid"].ToString(),
+                        region_name = dt["region_name"].ToString(),
+
+                    });
+                    values.regionname_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaGetindustrydropdown(string user_gid, MdlMyLead values)
+        {
+            msSQL = "select categoryindustry_gid,categoryindustry_name  from crm_mst_tcategoryindustry";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<industryname_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new industryname_list
+                    {
+                        categoryindustry_gid = dt["categoryindustry_gid"].ToString(),
+                        categoryindustry_name = dt["categoryindustry_name"].ToString(),
+
+                    });
+                    values.industryname_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+       
+        public void DaGetcountrydropdown(MdlMyLead values)
+        {
+            msSQL = "Select country_gid,country_name from adm_mst_tcountry";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<country_list1>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new country_list1
+                    {
+                        country_gid = dt["country_gid"].ToString(),
+                        country_name = dt["country_name"].ToString(),
+                    });
+                    values.country_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetcurrencydropdown(MdlMyLead values)
+        {
+            msSQL = "Select currencyexchange_gid,currency_code from crm_trn_tcurrencyexchange";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<currency_codelist>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new currency_codelist
+                    {
+                        currencyexchange_gid = dt["currencyexchange_gid"].ToString(),
+                        currency_code = dt["currency_code"].ToString(),
+                    });
+                    values.currencycodelist = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void DaPostleadbank(string user_gid, leadbank_list values)
+        {
+
+            msSQL = "Select * from crm_mst_tcustomer where customer_name ='" + values.leadbank_name+ "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            if (dt_datatable.Rows.Count == 0)
+            {
+
+                msGetGid3 = objcmnfunctions.GetMasterGID("BCRM");
+                if (msGetGid3 == "E")
+                {
+                    values.Status = false;
+                    values.message = "Create sequence code BCRM for lead bank";
+                }
+
+                msSQL = " INSERT INTO crm_mst_tcustomer" +
+                           " (customer_gid," +
+                           " customer_name," +
+                           " company_website," +
+                           " customer_code," +
+                           " customer_address," +
+                           " customer_address2," +
+                           " customer_country," +
+                           " customer_city," +
+                           " customer_pin," +
+                           " customer_region," +
+                           " main_branch," +
+                           " status," +
+                           " created_by," +
+                           " created_date)" +
+                           " values( " +
+                           " '" + msGetGid3 + "'," +
+                           " '" + values.leadbank_name + "'," +
+                           " '" + values.company_website + "'," +
+                           " '  H.Q  '," +
+                           " '" + values.leadbank_address1 + "'," +
+                           " '" + values.leadbank_address2 + "'," +
+                           " '" + values.country_name + "'," +
+                           " '" + values.leadbank_city + "'," +
+                           " '" + values.leadbank_pin + "'," +
+                           " '" + values.region_name + "'," +
+                           " '  y  '," +
+                           " '  Active  '," +
+                           " '" + user_gid + "'," +
+                           " '" + DateTime.Now.ToString("yyyy-MM-dd") + "')";
+
+                mnResult3 = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                if (mnResult3 == 1)
+                {
+                    msSQL = " update crm_trn_tleadbank set" +
+                   " customer_gid = '" + msGetGid3 + "'" +
+                  " where leadbank_gid = '" + values.leadbank_gid + "'";
+                    mnResult4 = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+
+                if( mnResult4 == 1)
+                {
+                    msGetGid4 = objcmnfunctions.GetMasterGID("BCCM");
+                    if (msGetGid4 == "E")
+                    {
+                        values.Status = false;
+                        values.message = "Create sequence code BCCM for lead bank";
+                    }
+
+                    msSQL = " INSERT INTO crm_mst_tcustomercontact" +
+                   " (customercontact_gid," +
+                   " customer_gid," +
+                   " customerbranch_name, " +
+                   " customercontact_name," +
+                   " email," +
+                   " mobile," +
+                   " designation," +
+                   " created_date," +
+                   " created_by," +
+                   " address1, " +
+                   " address2, " +
+                   " country_gid, " +
+                   " region, " +
+                   " zip_code, " +
+                   " main_contact," +
+                   " phone," +
+                   " fax)" +
+                   " values( " +
+                   "'" + msGetGid4 + "'," +
+                   "'" + msGetGid3 + "'," +
+                   "'H.Q', " +
+                   "'" + values.leadbankcontact_name + "'," +
+                   "'" + values.email + "'," +
+                   "'" + values.mobile + "'," +
+                   "'" + values.designation + "'," +
+                   "'" + DateTime.Now.ToString("yyyy-MM-dd") + "'," +
+                   "'" + user_gid + "', " +
+                   "'" + values.leadbank_address1 + "'," +
+                   "'" + values.leadbank_address2 + "'," +
+                   "'" + values.country_gid + "'," +
+                   "'" + values.region_name + "', " +
+                   "'" + values.leadbank_pin + "'," +
+                   "'Y'," +
+                   "'" + values.phone1 + "'," +
+                   "'" + values.fax + "')";
+
+                    mnResult5 = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+                
+                    msSQL = " update crm_trn_tlead2campaign set leadstage_gid = '6' " +
+                              " where leadbank_gid ='"+values.leadbank_gid+ "' and leadstage_gid = '3'";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    values.message = "Added to customer successfully";
+                }
+            }
+            else
+            {
+                values.message = "customer already exisits";
+            }
+
+        }
+
+      
+
+        public void DaMovetodrop(string user_gid, leadbank_list values)
+        {
+            msSQL = " update crm_trn_tlead2campaign set leadstage_gid='5',lead_base='In Progress'" +
+                " where leadbank_gid='" + values.leadbank_gid + "' and (leadstage_gid='3') ";
+            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+
+            if (mnResult == 1)
+            {
+                values.message = "lead moved to drop successfully";
+            }
+            else
+            {
+                values.message = "error while drop lead ";
+            }
+
+        }
+
+        public void DaGetleadbankcontactSummary(string leadbank_gid, MdlMyLead values)
+
+        {
+            msSQL = " select a.leadbankbranch_name,concat (a.address1,a.address2) As Address,a.city,a.state, " +
+                    " a.pincode,b.country_name from crm_trn_tleadbankcontact a " +
+                    " left join adm_mst_tcountry b on a.country_gid=b.country_gid " +
+                    " where a.leadbank_gid ='" + leadbank_gid + "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<leadbankcontact_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new leadbankcontact_list
+                    {
+                        leadbankbranch_name = dt["leadbankbranch_name"].ToString(),
+                        Address = dt["Address"].ToString(),
+                        city = dt["city"].ToString(),
+                        state = dt["state"].ToString(),
+                        pincode = dt["pincode"].ToString(),
+                        country_name = dt["country_name"].ToString(),
+                    });
+                    values.leadbankcontact_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        //public void DaGetbreadcrumb(string user_gid, string module_gid, MdlMyLead values)
+        //{
+        //    msSQL = "   select a.module_name as module_name3,a.sref as sref3,b.module_name as module_name2 ,b.sref as sref2,c.module_name as module_name1,c.sref as sref1  from adm_mst_tmodule a " +
+        //                " left join adm_mst_tmodule  b on b.module_gid=a.module_gid_parent" +
+        //                " left join adm_mst_tmodule  c on c.module_gid=b.module_gid_parent" +
+        //                " where a.module_gid='" + module_gid + "' ";
+
+        //    dt_datatable = objdbconn.GetDataTable(msSQL);
+        //    var getModuleList = new List<breadcrumb_list>();
+        //    if (dt_datatable.Rows.Count != 0)
+        //    {
+        //        foreach (DataRow dt in dt_datatable.Rows)
+        //        {
+        //            getModuleList.Add(new breadcrumb_list
+        //            {
+
+
+        //                module_name1 = dt["module_name1"].ToString(),
+        //                sref1 = dt["sref1"].ToString(),
+        //                module_name2 = dt["module_name2"].ToString(),
+        //                sref2 = dt["sref2"].ToString(),
+        //                module_name3 = dt["module_name3"].ToString(),
+        //                sref3 = dt["sref3"].ToString(),
+
+        //            });
+        //            values.breadcrumb_list = getModuleList;
+        //        }
+        //    }
+        //    dt_datatable.Dispose();
+        //}
+
+
+    }
+}

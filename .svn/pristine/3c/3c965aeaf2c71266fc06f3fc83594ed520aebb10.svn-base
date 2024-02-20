@@ -1,0 +1,783 @@
+<div class="card " style="border: 1px solid rgb(185, 184, 184);">
+
+    <div class="card-header bg-skyblue">
+        <h3 class="card-title " style="color: white;"><i class="fab fa-whatsapp"
+                style="color: white; font-size: 20px;"></i>
+            &nbsp; Chats </h3>
+        <div style="margin: 13px; ">
+            <!-- <button class="btn-secondary" type="button" data-kt-element="filter" data-bs-target="#mydropdown"
+                    data-bs-toggle="modal" style="margin-right:20px; border:1px solid rgb(211, 208, 208)">
+                    <i class="fa-solid fa-filter fs-4" style="color: rgb(163, 153, 153); font-size: 20px;"></i>&nbsp;Filter
+                </button> -->
+            <button type="button" title="Create Contact" class="btn-secondary" data-bs-toggle="modal"
+                data-bs-target="#myModaladd"><i class="fas fa-plus"></i> &nbsp;
+                Create contact
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button title="Back" routerLink="/crm/CrmSmmWhatsappcampaign"
+                class="btn-secondary btn-sm text-black me-4 "><i class="ki-duotone ki-entrance-right fs-5">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>&nbsp;Back</button>
+        </div>
+    </div>
+    <div id="kt_app_content" class="app-content flex-column-fluid" style="max-height: 400px;">
+        <div id="kt_app_content_container" class="app-container container-xxl"
+            style="margin-top: -30px;padding-right:0px !important">
+            <div class="d-flex flex-column flex-lg-row">
+                <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
+                    <!---contact card header---->
+                    <div class="card card-flush bg-white" style="min-height: 400px; margin-left:-30px;">
+                        <div class="card-header pt-7" id="kt_chat_contacts_header">
+                            <form class="w-100 position-relative " autocomplete="off">
+                                <div class="input-group">
+                                    <span class="input-group-text search-icon"><i
+                                            class="fas fa-search"></i></span>&nbsp;&nbsp;
+                                    <input type="text" class="form-control form-control-solid px-15 search-input"
+                                        name="search" [(ngModel)]="searchText"
+                                        placeholder="Search by username or number" />
+                                    <div class="input-group-append"> </div>
+                                </div>
+                                <br />
+                                <div *ngFor="let data of count_list; let i=index;">
+                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                        data.contact_count}} contacts</span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-body pt-5" id="kt_chat_contacts_body"
+                            style="max-height: 290px; overflow-y: auto;">
+                            <div data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}"
+                                data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_toolbar, #kt_app_toolbar, #kt_footer, #kt_app_footer, #kt_chat_contacts_header"
+                                data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_contacts_body"
+                                data-kt-scroll-offset="5px">
+                                <!-- contact card body -->
+                                <div *ngFor="let data of whatsapp_list; let i=index;"
+                                    (click)="showResponsiveOutput(data.whatsapp_gid)" [hidden]="!matchesSearch(data)">
+                                    <!-- Update the matchesSearch function to filter the displayed items -->
+                                    <div class="d-flex flex-stack py-4 nassar">
+                                        <div class="d-flex align-items-center">
+                                            <div class="symbol symbol-45px symbol-circle bg-secondary">
+                                                <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                                    data.first_letter}}</span>
+                                            </div>
+                                            <div class="ms-5">
+                                                <a class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{
+                                                    data.displayName }}</a>
+                                                <div class="fw-semibold text-muted">{{ data.value }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-end ms-2">
+                                            <span class="text-muted fs-7 mb-1">{{data.last_seen}}</span>
+                                            <div *ngIf="data.read_flag > 0">
+                                                <span
+                                                    class="badge badge-success rounded-pill text-white ">{{data.read_flag}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="separator separator-dashed d-none"></div>
+                                </div>
+                                <!-- *******************-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Default Window-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5 d-flex align-items-center justify-content-center"
+                    *ngIf="chatWindow==='Default'">
+                    <div>
+                        <h3>Kindly select a chat to display messages</h3>
+                    </div>
+                </div>
+                <!--Chat Window-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5" *ngIf="chatWindow==='Chat'">
+                    <!----message card header-->
+                    <div class="card bg-secondary" id="kt_chat_messenger"
+                        style="max-height: 360px; min-height: 400px;margin-left: -10px;">
+                        <div class="card-header row" id="kt_chat_messenger_header">
+
+
+                            <div class=" col card-title">
+                                <div class="symbol symbol-35px symbol-circle bg-white">
+                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                        initial}}</span>
+                                </div>
+
+                                <div class="text-nowrap">
+                                    <div class="d-flex justify-content-center flex-column me-3">
+                                        <a href="#" class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1"
+                                            style="margin-left: 10px;">{{name}}</a>
+                                        <!-- <div class="mb-0 lh-1">
+                                            <span class="badge badge-success badge-circle w-10px h-10px me-1"
+                                                style="margin-left: 15px;"></span>
+                                            <span class="fs-7 fw-semibold text-muted"
+                                                style="margin-left: 5px;">Active</span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="float-end">
+                                    <button class="head-menu-item-btn m-5" style="margin-left:100px ;"
+                                        data-bs-toggle="modal" data-bs-target="#myModaledit" (click)="openModaledit()"
+                                        title="Edit Contact">
+                                        <i class="fas fa-edit fs-2"></i></button>
+                                    <button class="head-menu-item-btn m-5" (click)="getDocument(chat_gid)"
+                                        title="option">
+                                        <i class="fa-solid fa-ellipsis-vertical fs-1"></i>
+                                    </button>
+                                    <div *ngIf="OpenOption"></div>
+                                    <!-- <i class="fa-solid fa-ellipsis-vertical float-end fs-1 m-5"></i> -->
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Message card body-->
+
+                        <div class="card-body bg-message" id="kt_chat_messenger_body"
+                            style=" max-height: 300px; overflow-y: auto;">
+                            <div class="scroll-y me-n5 pe-5 h-300px h-lg-auto" data-kt-element="messages"
+                                id="kt_chat_messenger_body" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll="true"
+                                data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+                                data-kt-scroll-dependencies="#kt_header, #kt_app_header, #kt_app_toolbar, #kt_toolbar, #kt_footer, #kt_app_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
+                                data-kt-scroll-wrappers="#kt_content, #kt_app_content, #kt_chat_messenger_body"
+                                data-kt-scroll-offset="5px">
+                                <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                    <div *ngIf="data.direction === 'incoming'"
+                                        class="d-flex justify-content-start mb-10">
+                                        <div *ngIf="data.type === 'text'" class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="p-5 rounded bg-white text-dark fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text">{{data.message_text}}</div>
+                                        </div>
+                                        <div *ngIf="data.type === 'image'" class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="bordered-image" data-kt-element="message-text">
+                                                <img src="{{data.document_path}}" alt=""
+                                                    style="width:100px;height:150px;">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="data.document_path.endsWith('.mp4')"
+                                            class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="bordered-image" data-kt-element="message-text">
+                                                <video controls style="width:100px;height:150px;">
+                                                    <source src="{{data.document_path}}">
+                                                </video>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-start">
+                                            <ng-container
+                                                *ngIf="whatsappmessage_list[i] &&  whatsappmessage_list[i].document_path.endsWith('.pdf?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.doc?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.docx?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.txt?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.xlsx?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.xls?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D')">
+                                                <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                                <div class="p-5 rounded bg-lightgreen text-dark fw-semibold mw-lg-400px text-start"
+                                                    data-kt-element="message-text"> <a
+                                                        [href]="whatsappmessage_list[i]?.document_path" title="Download"
+                                                        target="_blank"><i
+                                                            class="fa fa-download"></i>&nbsp;&nbsp;{{whatsappmessage_list[i]?.document_name}}</a>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="data.direction === 'outgoing'" class="d-flex justify-content-end mb-10">
+                                        <div *ngIf="data.type === 'text'" class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="p-5 rounded bg-lightgreen text-dark fw-semibold mw-lg-400px text-start"
+                                                data-kt-element="message-text">{{data.message_text}}</div>
+                                        </div>
+                                        <div *ngIf="data.type === 'image'" class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="bordered-image" data-kt-element="message-text">
+                                                <img src="{{data.document_path}}" alt=""
+                                                    style="width:100px;height:150px;">
+                                            </div>
+                                        </div>
+                                        <div *ngIf="data.document_path.endsWith('.mp4')"
+                                            class="d-flex flex-column align-items-start">
+                                            <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                            <div class="bordered-image" data-kt-element="message-text">
+                                                <video controls style="width:100px;height:150px;">
+                                                    <source src="{{data.document_path}}">
+                                                </video>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-start">
+                                            <ng-container
+                                                *ngIf="whatsappmessage_list[i] &&  whatsappmessage_list[i].document_path.endsWith('.pdf?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.doc?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.docx?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.txt?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.xlsx?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                        whatsappmessage_list[i].document_path.endsWith('.xls?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D')">
+                                                <span class="text-muted fs-7 mb-1">{{data.time}}</span>
+                                                <div class="p-5 rounded bg-lightgreen text-dark fw-semibold mw-lg-400px text-start"
+                                                    data-kt-element="message-text"> <a
+                                                        [href]="whatsappmessage_list[i]?.document_path" title="Download"
+                                                        target="_blank"><i
+                                                            class="fa fa-download"></i>&nbsp;&nbsp;{{whatsappmessage_list[i]?.document_name}}</a>
+                                                </div>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!------Message card footer------->
+                        <form [formGroup]="reactiveMessageForm" (ngSubmit)="onSubmit()" #form="ngForm"
+                            (click)="onDocumentClick($event)">
+                            <div class="card-footer pt-4" id="kt_chat_messenger_footer" style="padding: 0;">
+                                <div class="d-flex flex-row m-6 mt-0 flex-wrap">
+
+                                    <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                        <input type="hidden" [formControlName]="'identifierValue'"
+                                            [value]="data.identifierValue" />
+                                    </div>
+
+                                    <div>
+                                        <div *ngIf="openDiv" class="sampel card border ">
+                                            <div class="nassar rounded-top p-3 ">
+                                                <button type="button" class="btn-wts-icon"
+                                                    style="background-color: transparent;" data-bs-toggle="modal"
+                                                    data-bs-target="#myModalUpdatedocument"
+                                                    (click)="setFileType('file')"> <i
+                                                        class="fa-solid fa-file fs-default-icon text-blue"></i>
+                                                    &nbsp;&nbsp;<span class="text-black">Document</span></button>
+                                            </div>
+                                            <div class="nassar rounded-top p-3">
+                                                <button type="button" class="btn-wts-icon"
+                                                    style="background-color: transparent;" data-bs-toggle="modal"
+                                                    data-bs-target="#myModalUpdateimage" (click)="setFileType('image')">
+                                                    <i class="fa-solid fa-image fs-default-icon text-green"></i>
+                                                    &nbsp;&nbsp;<span class="text-black">Image</span></button>
+                                            </div>
+                                        </div>
+                                        <button title="Attach Files" type="button" id="notification"
+                                            class="btn btn-icon btn-sm btn-attach me-2" (click)="attachments()">
+                                            <i class="fas fa-paperclip fw-bolder fs-3"></i>
+                                        </button>
+                                    </div>
+
+
+
+
+                                    <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                        <button title="Attach Templates" type="button"
+                                            class="btn btn-icon btn-sm bg-view me-2" data-kt-element="template"
+                                            data-bs-target="#template" data-bs-toggle="modal"
+                                            (click)="poptemplatemodal(data.identifierValue)" *ngIf="i === 0">
+                                            <i class="fas fa-plus fw-bolder fs-3"></i>
+                                        </button>
+                                    </div>
+
+                                    <input formControlName="sendtext" type="text" style="width:80%;" class="
+                                form-control form-control-lg form-control-solid
+                                custom-input
+                                mb-1 mb-lg-0
+                                bg-white
+                                custom-input
+                              " placeholder="Type a message" name="sendtext" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div *ngFor="let data of whatsappmessage_list; let i=index;">
+                                        <button title="Send" type="button" class="btn btn-icon btn-sm bg-skyblue me-2"
+                                            (click)="onMessagesent(data.identifierValue, data.contact_id)"
+                                            *ngIf="i === 0">
+                                            <i class="fas fa-paper-plane fs-3"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--Files Window-->
+                <div class="flex-lg-row-fluid ms-lg-7 ms-xl-5" *ngIf="chatWindow==='Files'">
+                    <div class="card bg-secondary" id="kt_chat_messenger"
+                        style="max-height: 360px; min-height: 400px;margin-left: -10px;">
+                        <div class="card-header row" id="kt_chat_messenger_header">
+
+
+                            <div class=" col card-title">
+                                <div class="symbol symbol-35px symbol-circle bg-white">
+                                    <span class="symbol-label bg-light-danger text-danger fs-6 fw-bolder">{{
+                                        initial}}</span>
+                                </div>
+
+                                <div class="text-nowrap">
+                                    <div class="d-flex justify-content-center flex-column me-3">
+                                        <a href="#" class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1"
+                                            style="margin-left: 10px;">{{name}}</a>
+                                        <!-- <div class="mb-0 lh-1">
+                                            <span class="badge badge-success badge-circle w-10px h-10px me-1"
+                                                style="margin-left: 15px;"></span>
+                                            <span class="fs-7 fw-semibold text-muted"
+                                                style="margin-left: 5px;">Active</span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button class="head-menu-item-btn float-end m-5" (click)="backtochat()" title="back">
+                                    <i class="fa-solid fa-chevron-left fs-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <mat-tab-group>
+                            <mat-tab label="Images">
+                                <div class="image-box">
+                                    <div class="image-grid">
+                                        <div *ngFor="let data of image_list;" class="image-container">
+                                            <img src="{{data.file_path}}" alt="Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Files">
+                                <table id="mailtemplate_list" class="table table-striped table-row-bordered border-bottom
+                                gs-7">
+                                    <thead>
+                                        <tr class="fw-bolder fs-5 text-nowrap bg-mail text-black align-middle">
+                                            <th>S.No</th>
+                                            <th>File Name</th>
+                                            <!-- <th>Sent Date</th> -->
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of file_list; let i=index;" class="align-middle">
+                                            <td>{{i+1}}</td>
+                                            <td>{{data.file_name}}</td>
+                                            <!-- <td>{{data.created_date}}</td> -->
+                                            <td class="text-center text-nowrap">
+                                                <ng-container
+                                                    *ngIf="file_list[i].file_path.endsWith('.doc?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                                file_list[i].file_path.endsWith('.docx?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                                file_list[i].file_path.endsWith('.txt?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                                file_list[i].file_path.endsWith('.xlsx?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D') ||
+                                                file_list[i].file_path.endsWith('.xls?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D')||
+                                                file_list[i].file_path.endsWith('.mp4?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D')||
+                                                file_list[i].file_path.endsWith('.pdf?sp=r&st=2024-01-25T07:29:54Z&se=2026-02-07T15:29:54Z&spr=https&sv=2022-11-02&sr=c&sig=dtTvzW9LVXWG1R8yXWXdSy5wKLsoyrOtm9XsOxc2SwQ%3D')">
+                                                    <a [href]="file_list[i]?.file_path" title="Download"
+                                                        target="_blank">&nbsp;&nbsp;<i
+                                                            class="fa fa-download"></i>&nbsp;&nbsp;{{file_list[i]?.file_name}}</a>
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+            <!--center nav -->
+        </div>
+    </div>
+</div>
+<!-- The Modal ADD -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModaladd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;Create New Contact</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row"><span class="font-bold"><b>Display Name</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="displayName" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     displayName.invalid && displayName.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="displayName" required />
+                        </div>
+                    </div>
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['required']">
+                            <span style="color:red;">Customer name is required.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format</span>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                        <div class="row"> <span class="font-bold"><b>Mobile Number</b>
+                                <span class="ms-1 text-red">*</span></span>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                <ngx-intl-tel-input [cssClass]="'form-control custom-width'"
+                                    [preferredCountries]="[CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="true"
+                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                    [selectedCountryISO]="CountryISO.UnitedKingdom" [phoneValidation]="true"
+                                    name="phone" [maxLength]="15" formControlName="phone"
+                                    [disabled]="true"></ngx-intl-tel-input>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row"><span class="font-bold"><b>Customer Type</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-14 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                            <ng-select formControlName="customer_type" [class.is-invalid]="
+              customer_type.invalid && (customer_type.dirty || customer_type.touched)" [items]="customertype_list"
+                                class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                bindLabel="customer_type2" bindValue="customertype_gid2"
+                                placeholder="--Select Customer Type--"></ng-select>
+
+                        </div>
+                    </div>
+                    <br><br>
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button title="Submit" (click)="onsubmit()" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-2" data-bs-dismiss="modal" (click)="onclose()">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form [formGroup]="reactiveFormContactEdit" #form="ngForm">
+    <div class="modal" id="myModaledit" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fas fa-edit fs-1"></i>&nbsp;&nbsp;Edit Contact</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input class="form-control form-control-lg" formControlName="whatsapp_gid" hidden
+                        pattern="^(?!\s*$).+" type="text" aria-label=".form-control-lg example" autocomplete="off"
+                        required pattern="^(?!\s*$).+" />
+                    <div class="row"><span class="font-bold"><b>Display Name</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                            <input formControlName="displayName_edit" type="text" class="
+                     form-control form-control-lg form-control-solid
+                     custom-input
+                     mb-3 mb-lg-0
+                     bg-white
+                     custom-input
+                   " [ngStyle]="{
+                     'border-color':
+                     displayName.invalid && displayName.touched
+                         ? 'red'
+                         : 'rgb(209, 209, 209)'
+                   }" placeholder="" pattern="^(?!\s*$).+" name="displayName_edit" required />
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['required']">
+                            <span style="color:red;">Customer name is required.</span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="displayName.invalid && (displayName.dirty || displayName.touched)">
+                        <div *ngIf="displayName.errors?.['pattern']">
+                            <span style="color:red;">Invalid Format</span>
+                        </div>
+                    </div> -->
+                    <br>
+
+                    <div class="form-group">
+                        <div class="row"> <span class="font-bold"><b>Mobile Number</b>
+                                <span class="ms-1 text-red">*</span></span>
+                            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                                <ngx-intl-tel-input [cssClass]="'form-control custom-width'"
+                                    [preferredCountries]="[CountryISO.UnitedKingdom]" [enableAutoCountrySelect]="true"
+                                    [enablePlaceholder]="true" [searchCountryFlag]="true"
+                                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                    [selectedCountryISO]="CountryISO.UnitedKingdom" [phoneValidation]="true"
+                                    name="phone" [maxLength]="15" formControlName="phone_edit" [disabled]="true">
+                                </ngx-intl-tel-input>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row"><span class="font-bold"><b>Customer Type</b>
+                            <span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                            <ng-select formControlName="customertype_edit" [class.is-invalid]="
+                                      customer_type.invalid && (customer_type.dirty || customer_type.touched)"
+                                [items]="customertype_list"
+                                class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                                bindLabel="customer_type2" bindValue="customertype_gid2"
+                                placeholder="--Select Customer Type--"></ng-select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row"><span class="font-bold"><b>First Name</b></span>
+                        <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                            <input type="text" class="
+                            form-control form-control-lg form-control-solid
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                      " formControlName="firstname_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row"><span class="font-bold"><b>Last Name</b></span>
+                        <div class="ccol-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+                            <input type="text" class="
+                            form-control form-control-lg form-control-solid
+                            custom-input
+                            mb-3 mb-lg-0
+                            bg-white
+                            custom-input
+                      " formControlName="lastname_edit" class="form-control" />
+                        </div>
+                    </div>
+                    <br>
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button title="Update" (click)="onupdatecontact()" [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Update
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-2" data-bs-dismiss="modal" (click)="onclose()">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Filter dropdown -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="mydropdown" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width: 250px; max-height: 600px; margin-top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top bg-white"
+                    style="border-bottom: 1px solid rgb(173, 173, 173);">
+                    <h2 style="margin-top:10px;color:rgb(3, 2, 2);font-weight: bold;">
+                        &nbsp;&nbsp;Filter Options
+                    </h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <span class="font-bold"><b>Status</b></span>
+                        <ng-select style="width: 100%;" formControlName="moving_stage"
+                            class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2" placeholder="Select option">
+                            <ng-option value="1">New</ng-option>
+                            <ng-option value="3">Prospect</ng-option>
+                            <ng-option value="4">Potential</ng-option>
+                            <ng-option value="5">Drop</ng-option>
+                            <ng-option value="6">Customer</ng-option>
+                        </ng-select>
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex ">
+                        <div class="col-lg-6 col-md-6 col-sm-6 fv-row mt-2">
+                            <span class="font-bold"><b>View Type</b></span>
+                            <div class="d-flex justify-content-start mt-4 ms-2">
+                                <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                            ">
+                                    <input class="form-check-input" type="radio" name="contact" checked="checked"
+                                        formControlName="contact" value="all_contact" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="kt_builder_header_content_menu">All Contacts</label>
+                                </div>
+                                <div class="
+                              form-check
+                              form-check-custom
+                              form-check-primary
+                              form-check-solid
+                              form-check-sm
+                              ms-10
+                            ">
+                                    <input class="form-check-input" type="radio" name="contact"
+                                        formControlName="contact" value="my_contact" />
+                                    <label class="form-check-label text-gray-700 text-nowrap"
+                                        for="kt_builder_header_content_page-title">My Contact</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br /><br />
+                    <div class="text-center my-4">
+                        <button [ngClass]="{
+                'primary-button': !reactiveForm.invalid,
+                'secondary-button': reactiveForm.invalid
+              }" data-bs-dismiss="modal" class="btn-send">
+                            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Apply
+                        </button> &nbsp;&nbsp;
+                        <button class="btn-danger btn-sm text-white me-4" (click)="onclose()" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<!-- Template Popup -->
+<form [formGroup]="reactiveTemplateMessageForm" #form="ngForm">
+    <div class="modal" id="template" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog" style="max-width: 400px; max-height: 800px; margin-top: 100px;">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send"
+                    style="border-bottom: 1px solid rgb(173, 173, 173);">
+                    <h2 style="margin-top: 10px; color: white; font-weight: bold;">&nbsp;&nbsp;Templates</h2>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="kt_chat_messenger_body" style="max-height: 250px; overflow-y: auto; ">
+                        <!-- contact card body -->
+                        <div *ngFor="let data of whatsappMessagetemplatelist; let i=index;"
+                            (click)="onTemplatesent(data.id,data.version)" data-bs-dismiss="modal">
+                            <div class="d-flex flex-stack py-4 nassar">
+                                <div class="d-flex align-items-center">
+                                    <div class="ms-5">
+                                        <div class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2"
+                                            title="Click to send">{{data.p_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="separator separator-dashed d-none"></div>
+                        </div>
+                    </div>
+                    <div class="text-center my-4">
+                        <button class="btn-danger btn-sm text-white me-2" data-bs-dismiss="modal" (click)="onclose()">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModalUpdatedocument" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fa-solid fa-file fs-default-icon"></i> &nbsp;&nbsp;Upload Document</h2>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Upload Document</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input style="width: 300%;" (change)="onChange1($event)" type="file" #fileInput class="
+                          form-control form-control-lg form-control-solid bg-white
+                          mb-3 mb-lg-0  borderc-secondary custom-input
+                        " name="fName" />
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="text-center my-4">
+                        <button type="submit" title="Send" class="btn-success btn-sm text-white me-2"
+                            data-bs-dismiss="modal" (click)="onupload()">
+                            <i class="fas fa-paper-plane fs-3"></i>&nbsp;&nbsp;Send</button>
+
+                        <button class="btn-danger btn-sm text-white me-2" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form [formGroup]="reactiveForm" #form="ngForm">
+    <div class="modal" id="myModalUpdateimage" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+
+                <div class="card-header p-1 pb-2 pt-1 rounded-top btn-send">
+                    <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                            class="fa-solid fa-image fs-default-icon"></i> &nbsp;&nbsp;Upload Image</h2>
+
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                        <span class="font-bold"><b>Upload Image</b><span class="ms-1 text-red">*</span></span>
+                        <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                            <input style="width: 300%;" (change)="onChange2($event)" accept="image/*" type="file"
+                                #fileInput class="
+                              form-control form-control-lg form-control-solid bg-white
+                              mb-3 mb-lg-0  borderc-secondary custom-input
+                            " name="fName" />
+
+                        </div>
+                    </div>
+                    <br>
+                    <!-- Modal footer -->
+                    <div class="text-center my-4">
+                        <button type="submit" title="Send" class="btn-success btn-sm text-white me-2"
+                            (click)="onupload()" data-bs-dismiss="modal">
+                            <i class="fas fa-paper-plane fs-3"></i>&nbsp;&nbsp;Send</button>
+
+                        <button class="btn-danger btn-sm text-white me-2" (click)="onclose()" data-bs-dismiss="modal">
+                            <i class="fas fa-close text-white"></i> &nbsp;Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

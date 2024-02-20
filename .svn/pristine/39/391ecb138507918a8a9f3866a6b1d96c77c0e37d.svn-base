@@ -1,0 +1,34 @@
+﻿using ems.pmr.DataAccess;
+using ems.pmr.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.pmr.Controllers
+{
+    [RoutePrefix("api/PmrTrnGrn")]
+    [Authorize]
+    public class PmrTrnGrnController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaPmrTrnGrn objpurchase = new DaPmrTrnGrn();
+
+        [ActionName("GetGrninwardSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetGrninwardSummary()
+        {
+            MdlPmrTrnGrn values = new MdlPmrTrnGrn();
+            objpurchase.DaGrninwardSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+
+        }
+    }
+}

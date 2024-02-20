@@ -1,0 +1,163 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AES } from 'crypto-js';
+
+import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+
+interface ILeadmaster {
+
+  leadbank_gid: string;
+  company_name: string;
+  contact_details: string;
+  region_city_state: string;
+  source: string;
+  remarks: string;
+  status: string;
+  assigned_to: string;
+}
+@Component({
+  selector: 'app-crm-trn-leadmastersummary',
+  templateUrl: './crm-trn-leadmastersummary.component.html',
+  styleUrls: ['./crm-trn-leadmastersummary.component.scss']
+})
+export class CrmTrnLeadmastersummaryComponent {
+
+  reactiveForm!: FormGroup;
+  reactiveFormEdit!: FormGroup;
+  responsedata: any;
+  parameterValue: any;
+  parameterValue1: any;
+  leadmaster_list: any[] = [];
+
+  leadmaster!: ILeadmaster;
+
+  constructor(public service :SocketService,private route:Router,private ToastrService: ToastrService) {
+  
+    this.leadmaster = {} as ILeadmaster;
+
+  }
+  ngOnInit(): void {
+
+    this.GetRegisterLeadSummary();
+
+    // Form values for Add popup/////
+
+    this.reactiveForm = new FormGroup({
+
+      leadbank_gid: new FormControl(this.leadmaster.leadbank_gid, [
+        Validators.required,
+      ]),
+
+      company_name: new FormControl(this.leadmaster.company_name, [
+        Validators.required,
+
+      ]),
+      // industry_description: new FormControl(''),
+
+    });
+
+    // Form values for Edit popup/////
+
+  }
+
+
+  GetRegisterLeadSummary() {
+
+    var api3 = 'registerlead/GetRegisterLeadSummary'
+
+    this.service.get(api3).subscribe((result: any) => {
+
+      this.responsedata = result;
+
+      this.leadmaster_list = this.responsedata.GetRegisterLeadSummary_list;
+
+      //console.log(this.source_list)
+
+      setTimeout(() => {
+
+        $('#leadmaster_list').DataTable();
+
+      }, 1);
+
+    });
+
+  }
+    ////////////Delete ////////
+    openModaldelete(parameter: string) {
+
+      this.parameterValue = parameter
+    
+     
+    
+    }
+
+    ondelete() {
+
+      console.log(this.parameterValue);
+  
+      var url = 'registerlead/deleteregisterleadSummary'
+  
+      let param = {
+  
+        leadbank_gid: this.parameterValue
+  
+      }
+  
+      this.service.getparams(url, param).subscribe((result: any) => {
+  
+        if (result.status == false) {
+  
+          this.ToastrService.warning(result.message)
+  
+        }
+  
+        else {
+  
+          this.ToastrService.success(result.message)
+  
+        }
+  
+        this.GetRegisterLeadSummary();
+  
+      });
+  
+    }
+    // onbranch(parameter: string,parameter1: string,parameter2: string) {
+
+    //   this.reactiveForm.get("country_gid")?.setValue(parameter);
+    
+    //   this.reactiveForm.get("region_gid")?.setValue(parameter1);
+    //   this.reactiveForm.get("leadbank_gid")?.setValue(parameter2);
+    
+    // }
+    // oncontact(params:any){
+    //   const secretKey = 'storyboarderp';
+    //   const param = (params);
+    //   //console.log(param);
+    //   const encryptedParam = AES.encrypt(param,secretKey).toString();
+    //   console.log(encryptedParam);
+    //   this.route.navigate(['/crm/CrmTrnLeadbankcontact',encryptedParam]) 
+    // }
+    // onview(params:any){
+    //   const secretKey = 'storyboarderp';
+    //   const param = (params);
+    //   //console.log(param);
+    //   const encryptedParam = AES.encrypt(param,secretKey).toString();
+    //   console.log(encryptedParam);
+    //   this.route.navigate(['/crm/CrmTrnLeadbankview',encryptedParam]) 
+    // }
+    
+    
+  
+  
+   
+  // onedit(params:any){
+  //   const secretKey = 'storyboarderp';
+  //   const param = (params);
+  //   const encryptedParam = AES.encrypt(param,secretKey).toString();
+  //   this.route.navigate(['/crm/CrmTrnLeadbankedit',encryptedParam]) 
+  // }
+
+}

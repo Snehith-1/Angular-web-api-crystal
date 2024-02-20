@@ -1,0 +1,73 @@
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from '../../../ems.utilities/services/socket.service';
+import { AES } from 'crypto-js';
+
+@Component({
+  selector: 'app-crm-mst-product',
+  templateUrl: './crm-mst-product.component.html',
+  styleUrls: ['./crm-mst-product.component.scss']
+})
+export class CrmMstProductComponent {
+  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+  products: any[] = [];
+  response_data :any;
+  parameterValue: any;
+  constructor(private fb: FormBuilder,private route: ActivatedRoute,private router: Router,private service: SocketService,) {} 
+  
+
+  ngOnInit(): void {
+    var api = 'Product/GetProductSummary';
+    this.service.get(api).subscribe((result:any) => {
+      this.response_data = result;
+      this.products = this.response_data.product_list;
+      setTimeout(()=>{  
+        $('#product').DataTable();
+      }, 1);
+    });
+  }
+
+  openModaldelete(parameter: string) {
+    this.parameterValue = parameter
+
+  }
+
+  ondelete() {
+    console.log(this.parameterValue);
+    var url3 = 'Product/deleteProductSummary'
+    this.service.getid(url3, this.parameterValue).subscribe((result: any) => {
+      if (result.status == false) {
+        // this.ToastrService.warning(result.message)
+      }
+      else {
+        // this.ToastrService.success(result.message)
+      }
+      window.location.reload();
+
+    });
+  }
+
+  onedit(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.router.navigate(['/einvoice/CrmMstProductEdit',encryptedParam]) 
+  }
+
+  onview(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.router.navigate(['/einvoice/CrmMstProductView',encryptedParam]) 
+  }
+
+  onadd()
+  {
+    this.router.navigate(['/einvoice/CrmMstProductAdd'])
+  }
+}
+
+

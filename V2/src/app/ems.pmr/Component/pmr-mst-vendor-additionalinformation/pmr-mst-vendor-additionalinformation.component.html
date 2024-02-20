@@ -1,0 +1,282 @@
+<div class="m-5">
+    <form  [formGroup]="reactiveForm" #form="ngForm">
+      <div class="card">
+       
+   
+        <div class="card-header bg-primary card-height55">
+                <div class="card-title m-0">
+                  <h3 class="fw-bolder text-white"> <i class="fas fa-plus fw-bolder fs-3"></i>&nbsp;&nbsp;&nbsp;Additional Information</h3>
+                </div>
+       </div>
+
+
+
+
+        <div class="d-flex flex-row m-6 flex-wrap">      
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">RTGS Code<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                  <input formControlName="vendorregister_gid" hidden
+          placeholder="vendorregister hidden" type="text" class="
+              form-control form-control-lg form-control-solid
+              bg-white
+              custom-input
+              mb-3 mb-lg-0
+              borderc-secondary
+            " name="vendorregister_gid" />
+                  <input type="text" formControlName="rtgs_code" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      rtgs_code.invalid && rtgs_code.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="RTGS Code" style="height:40px;" name="rtgs_code"  maxlength="11" pattern="^(?!\s*$).+" required />
+                  <div *ngIf="
+                  rtgs_code.invalid &&
+                      (rtgs_code.dirty || rtgs_code.touched)
+                    " class="text-red">
+                    <div *ngIf="rtgs_code.errors?.['required']">
+                      RTGS Code is required.
+                    </div>
+                    <div *ngIf="rtgs_code.errors?.['pattern']">
+                      RTGS Code is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                <span class="font-bold">TIN Number<span class="ms-1 text-red"></span></span>
+                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                 <input type="text" formControlName="tin_number" class="
+                      form-control form-control-lg form-control-solid
+                      custom-input
+                      mb-3 mb-lg-0
+                      bg-white
+                      custom-input
+                    " [ngStyle]="{
+                      'border-color':
+                      tin_number.invalid && tin_number.touched
+                          ? 'red'
+                          : 'rgb(209, 209, 209)'
+                    }" placeholder="TIN Number" name="tin_number"  style="height:40px;"  maxlength="11" pattern="^(?!\s*$).+" required  />
+                  <div *ngIf="
+                  tin_number.invalid &&
+                      (tin_number.dirty || tin_number.touched)
+                    " class="text-red">
+                    <div *ngIf="tin_number.errors?.['required']">
+                      TIN Number is required.
+                    </div>
+                    <div *ngIf="tin_number.errors?.['pattern']">
+                      TIN Number is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">PAN Number<span class="ms-1 text-red"></span></span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              
+              <input type="text" formControlName="pan_number" class="
+                  form-control form-control-lg form-control-solid
+                  custom-input
+                  mb-3 mb-lg-0
+                  bg-white
+                  custom-input
+                " [ngStyle]="{
+                  'border-color':
+                  pan_number.invalid && pan_number.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                }" placeholder="PAN Number" name="pan_number" style="height:40px;"  maxlength="10" pattern="^(?!\s*$).+" required />
+              <div *ngIf="
+              pan_number.invalid &&
+                  (pan_number.dirty || pan_number.touched)
+                " class="text-red">
+                <div *ngIf="pan_number.errors?.['required']">
+                  PAN Number is required.
+                </div>
+                <div *ngIf="pan_number.errors?.['pattern']">
+                  PAN Number is required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+              
+       </div>
+     
+       <div class="d-flex flex-row m-6 flex-wrap">      
+       
+
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">CST Number<span class="ms-1 text-red"></span></span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+             <input type="text" formControlName="cst_number" class="
+                  form-control form-control-lg form-control-solid
+                  custom-input
+                  mb-3 mb-lg-0
+                  bg-white
+                  custom-input
+                " [ngStyle]="{
+                  'border-color':
+                  cst_number.invalid && cst_number.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                }" placeholder="CST Details" name="cst_number" style="height:40px;"  maxlength="11" pattern="^(?!\s*$).+" required  />
+              <div *ngIf="
+              cst_number.invalid &&
+                  (cst_number.dirty || cst_number.touched)
+                " class="text-red">
+                <div *ngIf="cst_number.errors?.['required']">
+                  CST Details is required.
+                </div>
+                <div *ngIf="cst_number.errors?.['pattern']">
+                  CST Details is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">Service Tax Number<span class="ms-1 text-red"></span></span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              
+              <input type="text" formControlName="servicetax_number" class="
+                  form-control form-control-lg form-control-solid
+                  custom-input
+                  mb-3 mb-lg-0
+                  bg-white
+                  custom-input
+                " [ngStyle]="{
+                  'border-color':
+                  servicetax_number.invalid && servicetax_number.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                }" placeholder="Service Tax Number" name="servicetax_number" style="height:40px;"  maxlength="15" pattern="^(?!\s*$).+" required />
+              <div *ngIf="
+              servicetax_number.invalid &&
+                  (servicetax_number.dirty || servicetax_number.touched)
+                " class="text-red">
+                <div *ngIf="servicetax_number.errors?.['required']">
+                  Service Tax Number is required.
+                </div>
+                <div *ngIf="servicetax_number.errors?.['pattern']">
+                  Service Tax Number is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <span class="font-bold">IFSC Code<span class="ms-1 text-red"></span></span>
+            <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+              
+              <input type="text" formControlName="ifsc_code" class="
+                  form-control form-control-lg form-control-solid
+                  custom-input
+                  mb-3 mb-lg-0
+                  bg-white
+                  custom-input
+                " [ngStyle]="{
+                  'border-color':
+                  ifsc_code.invalid && ifsc_code.touched
+                      ? 'red'
+                      : 'rgb(209, 209, 209)'
+                }" placeholder="IFSC Code" name="ifsc_code"   style="height:40px;" maxlength="11" pattern="^(?!\s*$).+" required />
+              <div *ngIf="
+              ifsc_code.invalid &&
+                  (ifsc_code.dirty || ifsc_code.touched)
+                " class="text-red">
+                <div *ngIf="ifsc_code.errors?.['required']">
+                  IFSC Code is required.
+                </div>
+                <div *ngIf="ifsc_code.errors?.['pattern']">
+                  IFSC Code is required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+   </div>
+
+<!--  -->
+<div class="d-flex flex-row m-6 flex-wrap">      
+  
+  <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+    <span class="font-bold">Bank Details<span class="ms-1 text-red"></span></span>
+    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+     <textarea type="text" formControlName="bank_details" class="
+          form-control form-control-lg form-control-solid
+         
+          mb-3 mb-lg-0
+          bg-white
+          
+        " [ngStyle]="{
+          'border-color':
+          bank_details.invalid && bank_details.touched
+              ? 'red'
+              : 'rgb(209, 209, 209)'
+        }" placeholder="Bank Details" style="height:40px;" name="bank_details" required pattern="^(?!\s*$).+" ></textarea>
+      <div *ngIf="
+      bank_details.invalid &&
+          (bank_details.dirty || bank_details.touched)
+        " class="text-red">
+        <div *ngIf="bank_details.errors?.['required']">
+          Bank Details is required.
+        </div>
+        <div *ngIf="bank_details.errors?.['pattern']">
+          Bank Details is required.
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+      <span class="font-bold">Excise Details<span class="ms-1 text-red"></span></span>
+      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+       <textarea type="text" formControlName="excise_details" class="
+            form-control form-control-lg form-control-solid
+           
+            mb-3 mb-lg-0
+            bg-white
+            
+          " [ngStyle]="{
+            'border-color':
+            excise_details.invalid && excise_details.touched
+                ? 'red'
+                : 'rgb(209, 209, 209)'
+          }" placeholder="Excise Details" style="height:40px;" name="excise_details" required pattern="^(?!\s*$).+" ></textarea>
+        <div *ngIf="
+        excise_details.invalid &&
+            (excise_details.dirty || excise_details.touched)
+          " class="text-red">
+          <div *ngIf="excise_details.errors?.['required']">
+            Excise Details is required.
+          </div>
+          <div *ngIf="excise_details.errors?.['pattern']">
+            Excise Details is required.
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+ 
+  <div class="text-center my-4">
+    <button class="btn-sm text-white me-2"  [ngClass]="{
+        'primary-button': !reactiveForm.invalid,
+        'secondary-button': reactiveForm.invalid
+      }" (click)="validate()">
+      <i class="fas fa-check text-white fs-5"></i> &nbsp; Submit
+    </button>
+
+    <button class="btn-primary btn-sm text-white me-4" routerLink="/pmr/PmrMstVendorregister">
+      <i class="fas fa-arrow-left"></i> &nbsp; Back
+    </button>
+  </div>          
+ 
+</div>
+</form></div>

@@ -1,0 +1,307 @@
+<div class="card shadow-sm">
+
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">Task</h3>
+        </div>
+
+        <div class="col me-5">
+            <button title="Add Task" class="btn-primary btn-sm text-white me-4 mb-2 mt-2 float-end"
+                data-bs-toggle="modal" (click)="AddTask()" data-bs-target="#AdTask">
+                <i class="fas fa-plus"></i> &nbsp;&nbsp;&nbsp;
+                Add Task</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AdTask" data-bs-backdrop='static' tabindex="-1" aria-labelledby="AdTaskLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form [formGroup]="TaskAddForm">
+                    <div class="modal-header bg-primary rounded-top">
+                        <h4 class="modal-title text-white" id="AdTaskLabel"> Add Task
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="form-label required">Task</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" [(ngModel)]="addtaskFormData.txt_task_name"
+                                pattern="^(?!\s*$).+" formControlName="txt_task_name"
+                                [ngStyle]="{'border-color': TaskAddForm.invalid && TaskAddForm.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                pattern="^(?!\s*$).+"
+                                [class.is-invalid]="TaskAddForm.invalid && (TaskAddForm.dirty || TaskAddForm.touched)">
+                            <div *ngIf="TaskAddForm.get('txt_task_name')?.hasError('required') && TaskAddForm.get('txt_task_name')?.touched || TaskAddForm.get('txt_task_name')?.hasError('pattern') "
+                                class="invalid-feedback"
+                                style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                                Task is required</div>
+                        </div>
+                        <label class="form-label">Assigned Team</label><span class="ms-1 text-red">*</span>
+
+                        <ng-select [items]="team_list" class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row "
+                            bindLabel="team_name" [(ngModel)]="addtaskFormData.cboteam" formControlName="cboteam"
+                            placeholder="Select an option"></ng-select>
+                        <div *ngIf="TaskAddForm.get('cboteam')?.hasError('required') && TaskAddForm.get('cboteam')?.touched"
+                            class="invalid-feedback">
+                            <div *ngIf="TaskAddForm.hasError('required')"
+                                style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                                Product type is required</div>
+                        </div>
+
+                        <label for="exampleFormControlTextarea2" class="required mb-2 mt-3 font-bold">Description
+                        </label>
+                        <br>
+                        <textarea class="form-control rounded-0" ng-trim="true" id="exampleFormControlTextarea2"
+                            [(ngModel)]="addtaskFormData.txt_task_description" rows="3"
+                            formControlName="txt_task_description" pattern="^(?!\s*$).+"
+                            [ngStyle]="{'border-color': TaskAddForm.invalid && TaskAddForm.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                            [class.is-invalid]="TaskAddForm.invalid && (TaskAddForm.dirty || TaskAddForm.touched)"
+                            placeholder="Description"></textarea>
+                        <div *ngIf="TaskAddForm.get('txt_task_description')?.hasError('required') && TaskAddForm.get('txt_task_description')?.touched || TaskAddForm.get('txt_task_description')?.hasError('pattern')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                            Description is required</div>
+
+                        <br>
+                        <div class="text-center mb-10">
+                            <button type="button" class="btn-success text-white" data-bs-dismiss="modal"
+                                [disabled]="TaskAddForm.invalid" (click)="addtask()">
+                                <i class="fas fa-check text-white fs-5"></i>
+                                Submit
+                            </button> &nbsp; &nbsp;
+                            <button type="button" class="btn-danger text-white" data-bs-dismiss="modal">
+                                <i class="fa fa-close fs-5 text-center"></i>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <table id="Tasksummary" class="table table-striped table-row-bordered gy-5 gs-7 ">
+                <thead>
+                    <tr class=" text-white fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+                        <th>S.No</th>
+                        <th>Task </th>
+                        <th>Team name</th>
+                        <th>Created By</th>
+                        <th>Created Date</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of task_list; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{data.task_name}}</td>
+                        <td>{{data.team_name}}</td>
+                        <td>{{data.created_by}}</td>
+                        <td>{{data.created_date}} </td>
+                        <td [ngSwitch]="data.status">
+                            <label *ngSwitchCase="'Active'" class="ms-3">Active</label>
+                            <label *ngSwitchCase="'Inactive'" class="ms-3 ">Inactive</label>
+                        </td>
+                        <td [ngSwitch]="data.status" class="text-center text-nowrap">
+                            <button [disabled]="data.status === 'Inactive'" title="Edit" type="button"
+                                class="btn btn-icon btn-sm bg-info me-2" data-bs-toggle="modal"
+                                data-bs-target="#editmodal" (click)="edittask(data.task_gid )"><span
+                                    class="fa-solid fa-pencil text-white  fs-6"></span></button>
+                            <button *ngSwitchCase="'Active'" title="Status" type="button"
+                                class="btn btn-icon btn-sm bg-success me-2" data-bs-toggle="modal"
+                                data-bs-target="#kt_modal" (click)="Status_update(data.task_gid)"><span
+                                    class="bi-hand-thumbs-up-fill text-white fs-6"></span></button>
+                            <button *ngSwitchCase="'Inactive'" title="Status" type="button"
+                                class="btn btn-icon btn-sm bg-warning me-2" data-bs-toggle="modal"
+                                data-bs-target="#kt_modal" (click)="Status_update(data.task_gid)"><span
+                                    class="bi-hand-thumbs-down-fill text-white fs-6"></span></button>
+                            <button title="Delete" type="button" class="btn btn-icon btn-sm bg-danger me-2"
+                                data-bs-target="#Taskdelete" data-bs-toggle="modal"
+                                (click)="deletetask(data.task_gid)"><span
+                                    class="fa-solid fa-trash text-white  fs-6"></span></button>
+
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal fade" id="editmodal" data-bs-backdrop='static' tabindex="-1" aria-labelledby="AdTaskLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form (ngSubmit)="update()" [formGroup]="TaskEditForm">
+                    <div class="modal-header bg-primary rounded-top">
+                        <h4 class="modal-title text-white" id="AdTaskLabel"> Edit Task
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12 col-md-12 col-sm-12 "> <span class="font-bold">Task Code</span>
+                            <div class="col-lg-12 col-12 col-md-11 col-sm-11 fv-row mt-2">
+
+                                <label placeholder="Auto Generate">{{edittaskFormData.txttask_code}}</label>
+                            </div>
+                        </div>
+                        <br>
+                        <label class="form-label required">Task</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" [(ngModel)]="edittaskFormData.txt_edit_task_name"
+                                pattern="^(?!\s*$).+" formControlName="txt_edit_task_name"
+                                [ngStyle]="{'border-color': TaskEditForm.invalid && TaskEditForm.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                                pattern="^(?!\s*$).+"
+                                [class.is-invalid]="TaskEditForm.invalid && (TaskEditForm.dirty || TaskEditForm.touched)">
+                            <div *ngIf="TaskEditForm.get('txt_edit_task_name')?.hasError('required') && TaskEditForm.get('txt_edit_task_name')?.touched || TaskEditForm.get('txt_edit_task_name')?.hasError('pattern') "
+                                class="invalid-feedback"
+                                style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                                Task is required</div>
+                        </div>
+
+                        <label class="form-label">Assigned Team</label><span class="ms-1 text-red">*</span>
+
+                        <ng-select [items]="team_list" class="custom col-lg-12 col-12 col-md-11 col-sm-11 fv-row "
+                            bindLabel="team_name" [(ngModel)]="edittaskFormData.cboteamedit"
+                            formControlName="cboteamedit" placeholder="Select an option"></ng-select>
+                        <div *ngIf="TaskEditForm.get('cboteamedit')?.hasError('required') && TaskEditForm.get('cboteamedit')?.touched"
+                            class="text-red">
+                            Assigned Team is required.
+                        </div>
+
+
+
+
+                        <label for="exampleFormControlTextarea2" class="required mb-2 mt-1 font-bold">Description
+                        </label>
+                        <br>
+
+
+                        <textarea class="form-control rounded-0" ng-trim="true" id="exampleFormControlTextarea2"
+                            [(ngModel)]="edittaskFormData.txt_edit_task_description" rows="3"
+                            formControlName="txt_edit_task_description" pattern="^(?!\s*$).+"
+                            [ngStyle]="{'border-color': TaskEditForm.invalid && TaskEditForm.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                            [class.is-invalid]="TaskEditForm.invalid && (TaskEditForm.dirty || TaskEditForm.touched)"
+                            placeholder="Description"></textarea>
+                        <div *ngIf="TaskEditForm.get('txt_edit_task_description')?.hasError('required') && TaskEditForm.get('txt_edit_task_description')?.touched || TaskEditForm.get('txt_edit_task_description')?.hasError('pattern')"
+                            style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                            Description is required</div>
+
+                        <br>
+                        <div class="text-center mb-10">
+                            <button type="submit" class="btn-success text-white" [disabled]="TaskEditForm.invalid"
+                                data-bs-dismiss="modal">
+                                <i class="fas fa-check text-white fs-5"></i>
+                                Update
+                            </button> &nbsp; &nbsp;
+                            <button type="button" class="btn-danger text-white" data-bs-dismiss="modal">
+                                <i class="fa fa-close fs-5 text-center"></i>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="modal fade" id="kt_modal" data-bs-backdrop='static' tabindex="-1" aria-labelledby="statuschangeLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content ">
+            <div class="modal-header bg-primary ">
+                <h4 class="modal-title text-white"><i class="bi bi-hand-thumbs-up-fill fs-3"></i>&nbsp;&nbsp; Status
+                </h4>
+            </div>
+            <form [formGroup]="stsform">
+                <div class="modal-body">
+
+                    <div class="mb-3 text-start">
+                        <label>Task</label> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                        {{statusFormData.txttask_name}}
+                    </div>
+                    <div class="d-flex justify-content-start mt-4">
+                        <label>Status</label>
+                        <div class="form-check ps-20 ms-10 ">
+                            <input value="Y" type="radio" formControlName="rbo_status"
+                                [(ngModel)]="statusFormData.rbo_status" data-toggle="toggle">
+                            <label class="ms-3" for="flexRadioDefault1">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input value="N" type="radio" formControlName="rbo_status"
+                                [(ngModel)]="statusFormData.rbo_status" data-toggle="toggle" checked>
+                            <label class="ms-3" for="flexRadioDefault2">
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
+
+                    <br>
+                    <label for="exampleFormControlTextarea2" class="required">Remarks </label>
+                    <textarea class="form-control rounded-0 mt-3" ng-trim="true" id="exampleFormControlTextarea2"
+                        pattern="^(?!\s*$).+" formControlName="txtremarks" required
+                        [(ngModel)]="statusFormData.txtremarks" rows="3"></textarea>
+                </div>
+
+                <div class="text-center contain">
+                    <button type="button" class=" btn-success" (click)="update_status()" data-bs-dismiss="modal"
+                        [disabled]="stsform.invalid"> <i class="fas fa-check"></i>&nbsp;&nbsp;Update</button> &nbsp;
+                    <button type="button" class=" btn-danger" data-bs-dismiss="modal"><i
+                            class="fa fa-close fs-5 text-center"></i> &nbsp;&nbsp;Close</button>
+                    <br /><br>
+                    <div class="table-responsive ms-5 me-5">
+                        <div class="table">
+                            <table class="table table-hover ">
+                                <thead>
+                                    <tr class="tableheading bg-lightblue">
+                                        <th>S.No</th>
+                                        <th>Status</th>
+                                        <th>Updated By</th>
+                                        <th>Updated Date</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of taskinactivelog_list; let i=index;">
+                                        <td>{{i+1}}</td>
+                                        <td [ngSwitch]="data.status">
+                                            <label *ngSwitchCase="'Active'">Active</label>
+                                            <label *ngSwitchCase="'Inactive'">Inactive</label>
+                                        </td>
+                                        <td>{{data.updated_by}}</td>
+                                        <td>{{data.updated_date}}</td>
+                                        <td>{{data.remarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal mt-20" id="subfunctiondelete" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog del_modal-dialog">
+        <div class="modal-content del_modal-content">
+            <div class="text-center my-4">
+                <h2><b>Are you sure?</b></h2>
+                <p style="display: block;">Do You Want To Delete the Record ?</p>
+                <div class="text-center my-4">
+                    <button class="btn-danger btn-sm text-white me-4" (click)="ondelete()" data-bs-dismiss="modal">
+                        <i class="bi bi-trash-fill text-white fs-5 me-2"></i>Delete
+                    </button>
+                    <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                        <i class="fas fa-close text-white me-2"></i>Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

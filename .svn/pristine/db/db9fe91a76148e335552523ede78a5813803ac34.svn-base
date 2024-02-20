@@ -1,0 +1,633 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.crm.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Net;
+using System.Configuration;
+using System.IO;
+using static OfficeOpenXml.ExcelErrorValue;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
+
+namespace ems.crm.DataAccess
+{
+    public class daWebsite
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objOdbcDataReader;
+        DataTable dt_datatable;
+        string lscustomer_gid, msGetGid, msGetGid1, msGetGid2, customer, lschat_id;
+        int mnResult, mnResult3;
+
+        public void DachatSummary(MdlWebsite values)
+        { ///code for get no of customers////
+            result objresult = new result();
+            inlinechatconfiguration getinlinechatcredentials = inlinechatcredentials();
+            MdlWebsite objMdlWebsite = new MdlWebsite();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://api.livechatinc.com");
+            var request = new RestRequest("/v3.4/agent/action/list_customers", Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "" + getinlinechatcredentials.access_token + "");
+            var body = @"{}";
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            objMdlWebsite = JsonConvert.DeserializeObject<MdlWebsite>(response.Content);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+
+                var listcustomer = objMdlWebsite.customers;
+                foreach (var item in listcustomer)
+                {
+                    DateTime createdDateTime = item.created_at;
+                    DateTime openedAtDateTime = item.last_visit.last_pages[0].opened_at;
+                    TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                    DateTime istCreatedDateTime = TimeZoneInfo.ConvertTimeFromUtc(createdDateTime, istTimeZone);
+                    DateTime istOpenedAtDateTime = TimeZoneInfo.ConvertTimeFromUtc(openedAtDateTime, istTimeZone);
+                    string formattedCreatedDateTime = istCreatedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                    string formattedOpenedAtDateTime = istOpenedAtDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    if (item.type == "customer")
+                    {
+
+                        msSQL = "select user_id from  crm_smm_tinlinechat where user_id ='" + item.id + "'";
+                        objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+                        if (objOdbcDataReader.HasRows != true)
+
+                        {
+                            msSQL = "insert into crm_smm_tinlinechat(" +
+                                             "user_id," +
+                                            "user_name," +
+                                            "user_mail," +
+                                            "email_verified," +
+                                             "user_type," +
+                                            "created_date," +
+                                            "ip_address," +
+                                            "country," +
+                                             "country_code," +
+                                            "region," +
+                                            "city," +
+                                            "timezone," +
+                                             "latitude," +
+                                            "longitude," +
+                                            "page_openedat," +
+                                             "page_url," +
+                                            "title," +
+                                             "threads_count," +
+                                            "visits_count," +
+                                            "user_agent," +
+                                             "page_views_count)" +
+                                             "values(" +
+                                             "'" + item.id + "'," +
+                                             "'" + item.name + "'," +
+                                              "'" + item.email + "'," +
+                                               "'" + item.email_verified + "'," +
+                                             "'" + item.type + "'," +
+                                           "'" + formattedCreatedDateTime + "'," +
+                                              "'" + item.last_visit.ip + "'," +
+                                               "'" + item.last_visit.geolocation.country + "'," +
+                                             "'" + item.last_visit.geolocation.country_code + "'," +
+                                             "'" + item.last_visit.geolocation.region + "'," +
+                                              "'" + item.last_visit.geolocation.city + "'," +
+                                               "'" + item.last_visit.geolocation.timezone + "'," +
+                                             "'" + item.last_visit.geolocation.latitude + "'," +
+                                             "'" + item.last_visit.geolocation.longitude + "'," +
+                                              "'" + formattedOpenedAtDateTime + "'," +
+                                               "'" + item.last_visit.last_pages[0].url + "'," +
+                                             "'" + item.last_visit.last_pages[0].title + "'," +
+                                             "'" + item.statistics.threads_count + "'," +
+                                              "'" + item.statistics.visits_count + "'," +
+                                              "'" + item.last_visit.user_agent + "'," +
+                                             "'" + item.statistics.page_views_count + "')";
+
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+                                objresult.status = true;
+                                objresult.message = "Record Added!";
+                            }
+                            else
+                            {
+                                objresult.message = "Failed!";
+                            }
+
+                        }
+                        else
+                        {
+                            msSQL = " update  crm_smm_tinlinechat set " +
+                            " threads_count = '" + item.statistics.threads_count + "'," +
+                            " visits_count = '" + item.statistics.visits_count + "'," +
+                            " page_views_count = '" + item.statistics.page_views_count + "' where user_id='" + item.id + "' ";
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+                                objresult.status = true;
+                                objresult.message = " Updated Successfully !!";
+                            }
+                            else
+                            {
+                                objresult.status = false;
+                                objresult.message = "Error While Updating !!";
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            msSQL = " select a.inlinechat_gid,a.user_id,b.user_name,b.user_mail,TIME(b.created_date) as chatted_time ,(SELECT CASE WHEN DATE(b.created_date) = CURDATE() " +
+               " THEN DATE_FORMAT(b.created_date, '%d-%m-%y')   WHEN DATE(b.created_date) = CURDATE() - INTERVAL 1 DAY THEN 'Yesterday' " +
+               " ELSE DATE_FORMAT(b.created_date, '%d/%m/%y') END AS formatted_date ) AS chatted_at,SUBSTRING(b.user_name, 1,2) AS first_letter,b.chat_id from crm_smm_tinlinechat a" +
+               " left join crm_smm_tchatmessage b on b.user_id=a.user_id order by b.created_date desc ";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<listof_chat>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new listof_chat
+                    {
+                        inlinechat_gid = dt["inlinechat_gid"].ToString(),
+                        user_id = dt["user_id"].ToString(),
+                        user_name = dt["user_name"].ToString(),
+                        user_mail = dt["user_mail"].ToString(),
+                        first_letter = dt["first_letter"].ToString(),
+                        chatted_at = dt["chatted_at"].ToString(),
+                        chatted_time = dt["chatted_time"].ToString(),
+                        chat_id = dt["chat_id"].ToString(),
+
+                    });
+                    values.listof_chat = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+        public void DaGetuserdeatils(MdlWebsite values, string inlinechat_gid)
+        {
+
+            msSQL = " select a.inlinechat_gid,a.user_id,a.user_name,a.user_mail,SUBSTRING(a.user_name, 1,2) AS first_letter,a.user_type,concat(a.city,', ',ifnull(a.region,''),', ',ifnull(a.country,''))as location," +
+               "a.page_openedat,a.page_url,a.title,a.threads_count,a.visits_count,a.page_views_count,a.created_date,a.ip_address,a.user_agent  " +
+               " from crm_smm_tinlinechat a WHERE  inlinechat_gid = '" + inlinechat_gid + "'";
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<user_details>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new user_details
+                    {
+                        inlinechat_gid = dt["inlinechat_gid"].ToString(),
+                        user_id = dt["user_id"].ToString(),
+                        user_name = dt["user_name"].ToString(),
+                        user_mail = dt["user_mail"].ToString(),
+                        first_letter = dt["first_letter"].ToString(),
+                        user_type = dt["user_type"].ToString(),
+                        location = dt["location"].ToString(),
+                        page_openedat = dt["page_openedat"].ToString(),
+                        page_url = dt["page_url"].ToString(),
+                        title = dt["title"].ToString(),
+                        threads_count = dt["threads_count"].ToString(),
+                        visits_count = dt["visits_count"].ToString(),
+                        page_views_count = dt["page_views_count"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        ip_address = dt["ip_address"].ToString(),
+                        user_agent = dt["user_agent"].ToString(),
+
+
+                    });
+                    values.user_details = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+
+        public void Dalistofchat(MdlWebsite values)
+        {
+            //Get chat and thread id///
+            result objresult = new result();
+            inlinechatconfiguration getinlinechatcredentials = inlinechatcredentials();
+            MdlWebsite objMdlWebsite = new MdlWebsite();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://api.livechatinc.com");
+            var request = new RestRequest("/v3.4/agent/action/list_chats", Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "" + getinlinechatcredentials.access_token + "");
+            var body = @"{}";
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            objMdlWebsite = JsonConvert.DeserializeObject<MdlWebsite>(response.Content);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                    var listchat = objMdlWebsite.chats_summary;
+
+                    foreach (var item in listchat)
+                    {
+                        
+                    if (item.last_event_per_type.filled_form != null)
+                    {
+                        DateTime createdDateTime = item.last_event_per_type.filled_form.thread_created_at;
+                        TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                        DateTime istCreatedDateTime = TimeZoneInfo.ConvertTimeFromUtc(createdDateTime, istTimeZone);
+                        string formattedCreatedDateTime = istCreatedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                        msSQL = "select chat_id from  crm_smm_tchatmessage where chat_id ='" + item.id + "'";
+                        objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+                        if (objOdbcDataReader.HasRows != true)
+                        {
+                            msSQL = "insert into crm_smm_tchatmessage(" +
+                                         "chat_id," +
+                                        "created_date," +
+                                        "user_id," +
+                                         "user_name," +
+                                        "user_mail," +
+                                        "event_id," +
+                                         "event_type)" +
+                                         "values(" +
+                                         "'" + item.id + "'," +
+                                           "'" + formattedCreatedDateTime + "'," +
+                                          "'" + item.last_event_per_type.filled_form.@event.author_id + "'," +
+                                         "'" + item.last_event_per_type.filled_form.@event.fields[0].answer + "'," +
+                                          "'" + item.last_event_per_type.filled_form.@event.fields[1].answer + "'," +
+                                           "'" + item.last_event_per_type.filled_form.@event.id + "'," +
+                                         "'" + item.last_event_per_type.filled_form.@event.type + "')";
+
+                            mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                            if (mnResult == 1)
+                            {
+                                objresult.status = true;
+                                objresult.message = "Record Added!";
+                            }
+                            else
+                            {
+                                objresult.message = "Failed!";
+                            }
+                        }
+                    }
+                    }
+            }
+       
+        }
+        public void Dalistofthreads(Rootobject2 values)
+        {
+            msSQL = "select chat_id from crm_smm_tchatmessage";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+
+            var getModuleList = new List<listof_threads>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new listof_threads
+                    {
+                        chat_id = dt["chat_id"].ToString()
+                    });
+                    values.listof_threads = getModuleList;
+                }
+            }
+            if (values.listof_threads != null)
+            {
+                for (int i = 0; i < values.listof_threads.ToArray().Length; i++)
+                {
+                    result objresult = new result();
+                    inlinechatconfiguration getinlinechatcredentials = inlinechatcredentials();
+                    Rootobject2 objMdlWebsite = new Rootobject2();
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    var client = new RestClient("https://api.livechatinc.com");
+                    var request = new RestRequest("/v3.4/agent/action/list_threads", Method.POST);
+                    request.AddHeader("Content-Type", "application/json");
+                    request.AddHeader("Authorization", "" + getinlinechatcredentials.access_token + "");
+                    var body = "{\"chat_id\":\"" + values.listof_threads[i].chat_id + "\"}";
+                    request.AddParameter("application/json", body, ParameterType.RequestBody);
+                    IRestResponse response = client.Execute(request);
+                    objMdlWebsite = JsonConvert.DeserializeObject<Rootobject2>(response.Content);
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var listthreads = objMdlWebsite.threads;
+                        foreach (var item in listthreads)
+                        {
+                            msSQL = "select thread_id from  crm_smm_tchatmessagethread where thread_id ='" + item.id + "'";
+                            objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+                            if (objOdbcDataReader.HasRows != true)
+                            {
+                            DateTime createdDateTime = item.created_at;
+                            TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                            DateTime istCreatedDateTime = TimeZoneInfo.ConvertTimeFromUtc(createdDateTime, istTimeZone);
+                            string formattedCreatedDateTime = istCreatedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                            msSQL = "insert into crm_smm_tchatmessagethread(" +
+                                             "chat_id," +
+                                            "thread_id," +
+                                            "created_date," +
+                                            "nextthread_id," +
+                                             "previousthread_id," +
+                                             "next_page_id)" +
+                                             "values(" +
+                                              "'" + values.listof_threads[i].chat_id + "'," +
+                                             "'" + item.id + "'," +
+                                             "'" + formattedCreatedDateTime + "'," +
+                                              "'" + item.next_thread_id + "'," +
+                                             "'" + item.previous_thread_id + "'," +
+                                             "'" + objMdlWebsite.next_page_id + "')";
+
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                if (mnResult == 1)
+                                {
+                                    objresult.status = true;
+                                    objresult.message = "Record Added!";
+                                }
+                                else
+                                {
+                                    objresult.message = "Failed!";
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+            }
+        }
+        public void Daindividualchat(mdlinlinechat values, string inlinechat_gid, string chat_id)
+        {
+            msSQL = "select thread_id from crm_smm_tchatmessagethread where chat_id='" + chat_id + "'";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+
+            var getModuleList = new List<listof_threads>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new listof_threads
+                    {
+                        thread_id = dt["thread_id"].ToString()
+                    });
+                    values.listof_threads = getModuleList;
+                }
+            }
+            if (values.listof_threads != null)
+            {
+                for (int i = 0; i < values.listof_threads.ToArray().Length; i++)
+                {
+                    result objresult = new result();
+                    inlinechatconfiguration getinlinechatcredentials = inlinechatcredentials();
+                    mdlinlinechat objMdlWebsite = new mdlinlinechat();
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                    var client = new RestClient("https://api.livechatinc.com");
+                    var request = new RestRequest("/v3.4/agent/action/get_chat", Method.POST);
+                    request.AddHeader("Content-Type", "application/json");
+                    request.AddHeader("Authorization", "" + getinlinechatcredentials.access_token + "");
+                    var body = "{\"chat_id\":\"" + chat_id + "\",\"thread_id\":\"" + values.listof_threads[i].thread_id + "\"}";
+                    request.AddParameter("application/json", body, ParameterType.RequestBody);
+                    IRestResponse response = client.Execute(request);
+                    objMdlWebsite = JsonConvert.DeserializeObject<mdlinlinechat>(response.Content);
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+
+                        for (int j = 0; j < objMdlWebsite.thread.events.ToArray().Length; j++)
+                        {
+
+                            msSQL = "select event_id from  crm_smm_tchatmessagedtl where event_id ='" + objMdlWebsite.thread.events[j].id + "'";
+                            objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+                            if (objOdbcDataReader.HasRows != true)
+                            {
+                            DateTime createdDateTime = objMdlWebsite.thread.created_at;
+                            DateTime chatedAtDateTime = objMdlWebsite.thread.events[j].created_at;
+                            TimeZoneInfo istTimeZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                            DateTime istCreatedDateTime = TimeZoneInfo.ConvertTimeFromUtc(createdDateTime, istTimeZone);
+                            DateTime istchatedAtDateTime = TimeZoneInfo.ConvertTimeFromUtc(chatedAtDateTime, istTimeZone);
+                            string formattedCreatedDateTime = istCreatedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                            string formattedChatedAtDateTime = istchatedAtDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+                                if (objMdlWebsite.thread.events[j].type == "message" || objMdlWebsite.thread.events[j].type == "system_message")
+                                {
+                                    string agentId = objMdlWebsite.users.Length > 1 ? objMdlWebsite.users[1]?.id ?? "null" : "null";
+
+                                    msSQL = "insert into crm_smm_tchatmessagedtl(" +
+                                                   "user_id," +
+                                                   "chat_id," +
+                                                   "thread_id," +
+                                                   "created_date," +
+                                                   "event_type," +
+                                                   "event_id," +
+                                                   "chatted_at," +
+                                                   "message," +
+                                                   "agent_id," +
+                                                   "author_id)" +
+                                                   "values(" +
+                                                   "'" + objMdlWebsite.users[0].id + "'," +
+                                                   "'" + objMdlWebsite.id + "'," +
+                                                   "'" + objMdlWebsite.thread.id + "'," +
+                                                   "'" + formattedCreatedDateTime + "'," +
+                                                   "'" + objMdlWebsite.thread.events[j].type + "'," +
+                                                   "'" + objMdlWebsite.thread.events[j].id + "'," +
+                                                   "'" + formattedChatedAtDateTime + "'," +
+                                                   "'" + objMdlWebsite.thread.events[j].text.Replace("'", "''") + "'," +
+                                                   "'" + agentId + "'," +
+                                                   "'" + objMdlWebsite.thread.events[j].author_id + "')";
+
+
+                                mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    if (mnResult == 1)
+                                    {
+                                        objresult.status = true;
+                                        objresult.message = "Record Added!";
+                                    }
+                                    else
+                                    {
+                                        objresult.message = "Failed!";
+                                    }
+                                }
+                                else if (objMdlWebsite.thread.events[j].type == "filled_form")
+                                {
+                                    msSQL = "insert into crm_smm_tchatmessagedtl(" +
+                                                       "user_id," +
+                                                        "chat_id," +
+                                                       "thread_id," +
+                                                       "created_date," +
+                                                        "event_type," +
+                                                       "event_id," +
+                                                       "chatted_at," +
+                                                       "message," +
+                                                        "author_id)" +
+                                                        "values(" +
+                                                         "'" + objMdlWebsite.users[0].id + "'," +
+                                                         "'" + objMdlWebsite.id + "'," +
+                                                         "'" + objMdlWebsite.thread.id + "'," +
+                                                       "'" + formattedCreatedDateTime + "'," +
+                                                         "'" + objMdlWebsite.thread.events[j].type + "'," +
+                                                         "'" + objMdlWebsite.thread.events[j].id + "'," +
+                                                        "'" + formattedChatedAtDateTime + "'," +
+                                                         "'" + objMdlWebsite.thread.events[j].text + "'," +
+                                                        "'" + objMdlWebsite.thread.events[j].author_id + "')";
+
+                                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                                    if (mnResult == 1)
+                                    {
+                                        objresult.status = true;
+                                        objresult.message = "Delivered!";
+                                    }
+                                    else
+                                    {
+                                        objresult.message = "Failed!";
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                    msSQL = " select a.user_id,a.user_name,SUBSTRING(a.user_name, 1,2) AS first_letter,a.user_mail,b.inlinechat_gid  " +
+                      " from crm_smm_tchatmessage a left join crm_smm_tinlinechat b on b.user_id=a.user_id WHERE  chat_id = '" + chat_id + "'";
+
+                    objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+                    if (objOdbcDataReader.HasRows)
+                    {
+                        values.user_id = objOdbcDataReader["user_id"].ToString();
+                        values.user_name = objOdbcDataReader["user_name"].ToString();
+                        values.user_mail = objOdbcDataReader["user_mail"].ToString();
+                        values.first_letter = objOdbcDataReader["first_letter"].ToString();
+                        values.inlinechat_gid = objOdbcDataReader["inlinechat_gid"].ToString();
+
+                    }
+                    objOdbcDataReader.Close();
+                    msSQL = " Select a.user_id,a.chat_id,a.thread_id,a.created_date,a.event_id,a.event_type,a.chatted_at,a.author_id, " +
+                        " a.agent_id,CASE WHEN a.event_type = 'filled_form' THEN CONCAT('Form',' - ',IFNULL(b.user_name, ''), ' ', IFNULL(b.user_mail, ''))  ELSE a.message END AS message" +
+                        " from crm_smm_tchatmessagedtl a left join crm_smm_tinlinechat b on b.user_id=a.user_id where a.chat_id ='" + chat_id + "' order BY  a.chatted_at desc";
+
+                    dt_datatable = objdbconn.GetDataTable(msSQL);
+                    var getModuleLists = new List<GetViewchatsummary>();
+                    if (dt_datatable.Rows.Count != 0)
+                    {
+                        foreach (DataRow dt in dt_datatable.Rows)
+                        {
+                            getModuleLists.Add(new GetViewchatsummary
+                            {
+                                user_id = dt["user_id"].ToString(),
+                                chat_id = dt["chat_id"].ToString(),
+                                created_date = dt["created_date"].ToString(),
+                                chatted_at = dt["chatted_at"].ToString(),
+                                message = dt["message"].ToString(),
+                                author_id = dt["author_id"].ToString(),
+                                agent_id = dt["agent_id"].ToString(),
+                                event_type = dt["event_type"].ToString(),
+
+                            });
+                            values.GetViewchatsummary = getModuleLists;
+                        }
+                    }
+                    dt_datatable.Dispose();
+                }
+            }
+        }
+
+        public result DaMessagesend(messagesend values, string user_gid)
+        {
+            inlinechatconfiguration getinlinechatcredentials = inlinechatcredentials();
+            msSQL = "select useradd_flag from  crm_smm_tchatmessage where chat_id ='" + values.chat_id + "' and useradd_flag ='Unassigned'";
+            objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objOdbcDataReader.HasRows == true)
+            {
+
+                result objresults = new result();
+                MdlWebsite objMdlWebsites = new MdlWebsite();
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var clients = new RestClient("https://api.livechatinc.com");
+                var requests = new RestRequest("/v3.4/agent/action/add_user_to_chat", Method.POST);
+                requests.AddHeader("Content-Type", "application/json");
+                requests.AddHeader("Authorization", "" + getinlinechatcredentials.access_token + "");
+                var bodycontent = @"{" + "\n" +
+           @"   ""chat_id"": """ + values.chat_id + @"""," + "\n" +
+           @"    ""user_id"": "" " + getinlinechatcredentials.id + @"""," + "\n" +
+           @"     ""user_type"": ""agent""," + "\n" +
+           @"     ""visibility"":  ""all""," + "\n" +
+           @"     ""ignore_requester_presence"": true" + "\n" +
+           @"}";
+                requests.AddParameter("application/json", bodycontent, ParameterType.RequestBody);
+                IRestResponse responses = clients.Execute(requests);
+                objMdlWebsites = JsonConvert.DeserializeObject<MdlWebsite>(responses.Content);
+                if (responses.StatusCode == HttpStatusCode.OK)
+                {
+                    msSQL = " update  crm_smm_tchatmessage  set " +
+                            " useradd_flag = 'Assigned' where chat_id='" + values.chat_id + "'  ";
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        objresults.status = true;
+                        objresults.message = "Updated!";
+                    }
+                    else
+                    {
+                        objresults.message = "Failed!";
+                    }
+
+                }
+            }
+            result objresult = new result();
+            mdlinlinechat objMdlWebsite = new mdlinlinechat();
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://api.livechatinc.com");
+            var request = new RestRequest("/v3.4/agent/action/send_event", Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Authorization", "" + getinlinechatcredentials.access_token + "");
+            //var body = "{\"chat_id\":\"" + values. + "\",\"thread_id\":\"" + thread_id + "\"}";
+            var body = @"{" + "\n" +
+               @"   ""chat_id"": """ + values.chat_id + @"""," + "\n" +
+               @"   ""event"": {" + "\n" +
+               @"     ""type"": ""message""," + "\n" +
+               @"     ""text"": """ + values.sendtext + @"""," + "\n" +
+               @"     ""visibility"": ""all""" + "\n" +
+               @"   }" + "\n" +
+               @"}";
+
+
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            objMdlWebsite = JsonConvert.DeserializeObject<mdlinlinechat>(response.Content);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                objresult.status = true;
+                objresult.message = "Message Send Successfully!";
+
+
+            }
+            else
+            {
+
+                objresult.status = false;
+                objresult.message = "Failed to Send!!!";
+
+            }
+
+            return objresult;
+        }
+        public inlinechatconfiguration inlinechatcredentials()
+        {
+            inlinechatconfiguration getinlinechatcredentials = new inlinechatconfiguration();
+
+            msSQL = " select id,access_token from crm_smm_tinlinechatservice";
+            objOdbcDataReader = objdbconn.GetDataReader(msSQL);
+            if (objOdbcDataReader.HasRows == true)
+            {
+                objOdbcDataReader.Read();
+                getinlinechatcredentials.id = objOdbcDataReader["id"].ToString();
+                getinlinechatcredentials.access_token = objOdbcDataReader["access_token"].ToString();
+
+                objOdbcDataReader.Close();
+            }
+            else
+                objOdbcDataReader.Close();
+            return getinlinechatcredentials;
+        }
+    }
+
+}
+
+

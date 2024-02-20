@@ -1,0 +1,646 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+        <div class="col">
+            <h3 class="card-title">
+                Confirm Proforma Invoice
+                <i class="bi bi-arrow-left-square-fill float-end fs-1 me-6" (click)="back()"></i>
+            </h3>
+        </div>
+    </div>
+
+    <div class="card m-3">
+        <form [formGroup]="proformainvoiceconfirmform">
+            <div class="card_heading">
+                <h6>Heading 1</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Invoice Reference No</b><span class="ms-1 text-red">*</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="proforma_invoice_refno" [ngStyle]="{'border-color': proformainvoicerefnoControl.invalid && proformainvoicerefnoControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="proformainvoicerefnoControl.invalid && (proformainvoicerefnoControl.dirty || proformainvoicerefnoControl.touched)">
+                        <div *ngIf="proformainvoicerefnoControl.invalid && proformainvoicerefnoControl.touched" class="invalid-feedback">
+                            <div *ngIf="proformainvoicerefnoControl.hasError('required')" class="text-red ms-3 fs-5">* Invoice ref.no is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Invoice Date</b><span class="ms-1 text-red"> *</span>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="date" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="proforma_invoice_date" [ngStyle]="{'border-color': proformainvoicedateControl.invalid && proformainvoicedateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="proformainvoicedateControl.invalid && (proformainvoicedateControl.dirty || proformainvoicedateControl.touched)">
+                        <div *ngIf="proformainvoicedateControl.invalid && proformainvoicedateControl.touched" class="invalid-feedback">
+                            <div *ngIf="proformainvoicedateControl.hasError('required')" class="text-red ms-3 fs-5">* Invoice date is required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Payment Term (In Days)</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <select name="" id="" class="form-select form-select-solid mt-2 mb-3 mb-lg-0 bg-white border-secondary form-select-lg custom-input select2" formControlName="proforma_invoice_payterm">
+                                        <option value="">Select</option>
+                                        <option value="0">0 Days</option>
+                                        <option value="7">7 Days</option>
+                                        <option value="15">15 Days</option>
+                                        <option value="30">30 Days</option>
+                                        <option value="45">45 Days</option>
+                                        <option value="60">60 Days</option>
+                                        <option value="90">90 Days</option>
+                                        <option value="120">120 Days</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Due Date</b>
+                                <input type="date" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="proforma_invoice_due_date" [ngStyle]="{'border-color': proformainvoicedateControl.invalid && proformainvoicedateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="proformainvoicedateControl.invalid && (proformainvoicedateControl.dirty || proformainvoicedateControl.touched)">
+                            </div>
+
+                            <!-- <div class="col-12 col-lg-2 col-md-2 col-sm-12"><b>Due Date</b><span class="ms-1 text-red"> *</span>
+                                    <input type="date" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white custom-input" formControlName="proforma_invoice_due_date" [ngStyle]="{'border-color': proformainvoicedateControl.invalid && proformainvoicedateControl.touched ? 'red' : 'rgb(209, 209, 209)'}" pattern="^(?!\s*$).+" [class.is-invalid]="proformainvoicedateControl.invalid && (proformainvoicedateControl.dirty || proformainvoicedateControl.touched)">
+                                    <div *ngIf="proformainvoicedateControl.invalid && proformainvoicedateControl.touched" class="invalid-feedback">
+                                        <div *ngIf="proformainvoicedateControl.hasError('required')" class="text-red ms-3 fs-5">* Due date is required</div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-md-4 col-sm-12"><b>Invoice Raised By</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input text-red" formControlName="proforma_invoice_raised_by" readonly>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card_heading mt-6">
+                <h6>Heading 2</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Branch</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_branch" >
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Customer Reference No</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_cust_ref_no" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>SO Reference No</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_so_ref_no" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>SO Date</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_so_date" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Customer Name</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_customer_name" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Contact Person</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_contact_person" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Contact Number</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_contact_no" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Email Address</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_email_address" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Address</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary border-secondary custom-input text-red" formControlName="proforma_address" readonly></textarea>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Remarks</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="proforma_remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card_heading mt-6">
+                <h6>Heading 3</h6>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Sales Person</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_sales_person" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Expected Start Date</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_expected_start_date" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Estimated Arrival Time</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_estimated_arrival_time" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Freight Terms</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_freight_terms" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Payment Terms</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_payment_terms" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Currency</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input text-red" formControlName="proforma_currency" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Exchange Rate</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-white border-secondary custom-input" formControlName="proforma_exchange_rate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <div class="card card-body m-0 shadow-lg p-3 mb-5 bg-white rounded mt-7">
+                    <table id="product" class="table table-striped table-row-bordered gy-4 gs-2">
+                        <thead class="table_head">
+                            <tr class="text-white fw-bold fs-5 text-nowrap text-blue">
+                                <th>S.No</th>
+                                <th>Product Group</th>
+                                <th>Customer Product Code</th>
+                                <th>Product & Description</th>
+                                <th>Unit</th>
+                                <th style="text-align: right;">Billed Quantity</th>
+                                <th style="text-align: right;">MRP</th>
+                                <th style="text-align: center;">Discount</th>
+                                <th style="text-align: right;">	Unit Price</th>
+                                <th style="text-align: center; width: 120px;">Tax</th>
+                                <th style="text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of proformainvoiceproductlist; let i=index;">
+                                <td>{{i+1}}</td>
+                                <td>{{data.productgroup_name}}</td>
+                                <td>{{data.customerproduct_code}}</td>
+                                <td>{{data.product_description}}</td>
+                                <td>{{data.productuom_name}}</td>
+                                <td>{{data.qty_invoice}}</td>
+                                <td style="text-align: right;">{{data.Vendor_price}}</td>
+                                <td style="text-align: right;">{{data.margin_percentage}}</td>
+                                <td style="text-align: center;">{{data.product_price}}</td>
+                                <td style="text-align: right;">{{data.final_amount}}</td>
+                                <td style="text-align: left;">{{data.tax}}</td>
+                                <td class="text-center text-nowrap">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- <div class="card_heading mt-6">
+                <h6>Product Details</h6>
+            </div> -->
+
+            <!-- <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product Name</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_product_name" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product Code</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_product_code" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product Group</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_product_group" readonly>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Product Description</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <textarea type="text" rows="1" class="form-control form-control-lg form-control-solid bg-secondary custom-input" formControlName="proforma_product_description" readonly></textarea>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Unit</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_unit" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Unit Price</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_unit_price" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Billed Quantity</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_billed_quantity" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>MRP</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_mrp" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><b>Discount(%)</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_discountpercentage" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_discountamount" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 1</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_taxname1" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_taxamount1" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap mt-6">
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row m-0 flex-wrap">
+                            <div class="col-lg-6 col-md-6 col-sm-6"><b>Tax 2</b>
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_taxname2" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-8">
+                                    <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_taxamount2" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3 col-md-3 col-sm-12"><b>Total Amount</b>
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                        <input type="text" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 bg-secondary custom-input" formControlName="proforma_total_amount" readonly>
+                    </div>
+                </div>                
+            </div> -->
+
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-6">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Net Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary" formControlName="proforma_net_amount" readonly style="border: none; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Overall Tax :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary" formControlName="proforma_overall_tax" readonly style="border: none; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Total Amount with Tax :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary" formControlName="proforma_total_amount_tax" style="border: none; height: 25px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Maximum Addon Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary" formControlName="proforma_maximum_addon_amount" style="border: none; height: 25px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Maximum Addon Discount Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary" formControlName="proforma_maximum_addon_discount_amount" style="border: none; height: 25px; text-align: right;" readonly><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Freight Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_freight_charges" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Buy Back/Scrap Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_buy_back_scrap_charges" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Packing/Forwarding Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_packing_forwarding_charges" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Insurance Charges :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_insurance_charges" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Round Off :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_roundoff" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Grand Total :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" class="text-red bg-secondary" formControlName="proforma_grandtotal" readonly style="border: none; height: 25px; text-align: right;"><span class="fw-bold ms-4 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Advance Amount :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_advance_percentage" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">%</span>
+                                    <input type="text" class=" mt-2" formControlName="proforma_advance_amount" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-row flex-wrap justify-content-end mt-4">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12" style="text-align: right;">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <label class="fw-bold mt-2">Advance Roundoff :</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row">
+                                    <input type="text" formControlName="proforma_advance_roundoff" style="height: 25px; text-align: right;"><span class="fw-bold ms-3 text-red">INR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card_heading mt-6">
+                <h6>Terms and Condition</h6>
+            </div>
+            <div class="d-flex flex-row flex-wrap m-2">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                  <textarea type="text" class="form-control form-control-lg form-control-solid custom-input mb-3 mb-lg-0  borderc-secondary bg-white custom-input" placeholder="" formControlName="proforma_termsandconditions"></textarea>
+                </div>
+            </div>
+
+            <div class="card" m-3>
+                <div class="text-center my-4">
+                    <button type="submit" class="btn-success btn-sm text-white me-4"(click)="proformainvoicesubmit()">   
+                        <i class="bi bi-check-square fs-7 me-1"></i>
+                        Submit
+                    </button>
+        
+                    <button class="btn-primary btn-sm text-white me-4" (click)="back()">
+                        <i class="bi bi-arrow-left-square fs-7 me-1"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

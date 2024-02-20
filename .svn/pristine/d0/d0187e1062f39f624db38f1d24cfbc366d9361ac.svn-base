@@ -1,0 +1,379 @@
+<div class="card">
+
+  <div class="row ms-3 mt-3 d-flex align-items-center">
+    <div class="col">
+      <h3 class="card-title">Employee Bank Details Summary</h3>
+    </div>
+  </div>
+ 
+  <div class="col me-3 ">
+  <button title="Import Excel" class="btn btn-icon btn-sm bg-success me-2 float-end "  
+  data-bs-toggle="modal" data-bs-target="#myModalexcelimport"><span class="fas fa-file-excel text-white 
+   fs-2"></span>  
+  </button>
+  </div>
+
+  <div class="table-responsive">
+    <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded d-flex">
+      <table id="employeebankdetailslist" class="table table-striped table-row-bordered gy-5 gs-7">
+        <thead>
+          <tr class="fw-bold fs-5 bg-lightblue text-blue align-middle">
+            <th>S.No</th>
+            <th>Branch</th>
+            <th>Department</th>
+            <th>Employee Code</th>
+            <th>Employee Name</th>
+            <th>Designation </th>
+            <th>Bank Details</th>
+            <th>Action</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of employeebankdetailslist; let i=index;" class="fs-8 align-middle">
+            <td>{{i+1}}</td>
+            <td>{{data.branch_name}}</td>
+            <td>{{data.department_name}}</td>
+            <td>{{data.user_code}}</td>
+            <td>{{data.empname}}</td>
+            <td>{{data.designation_name}}</td>
+            <td class="text-center text-nowrap">
+
+              <button title="Bank Details" type="button" (click)="openBankDetails(data)" data-bs-toggle="modal"
+                data-bs-target="#mymodelBank" class="btn btn-icon btn-sm bg-primary me-2"><span
+                  class="fa fa-question-circle fs-6"></span></button>
+
+            </td>
+            <td class="text-center text-nowrap">
+
+              <button title="Bank" type="button" (click)="openBank(data)" data-bs-toggle="modal"
+                data-bs-target="#mymodelAddBank" class="btn btn-icon btn-sm bg-success me-2"><span
+                  class="fa fa-university fs-6"></span></button>
+
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- The Modal Add -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="mymodelAddBank" style="margin-top: 90px;" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog" style="width:45%;">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+
+        <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+          <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i class="fa fa-university fs-6"></i>
+            &nbsp;&nbsp;Bank Details</h2>
+
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- <input class="form-control form-control-lg" formControlName="entity_gid" hidden pattern="^(?!\s*$).+" type="text" placeholder="Enter Entity" aria-label=".form-control-lg example" autocomplete="off" required > -->
+
+          <div class="d-flex flex-row flex-wrap">
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12"><b>Bank Name<span style="color:red"> *</span></b>
+              <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                <ng-select formControlName="bank_name" [class.is-invalid]="
+                        bank_name.invalid &&
+                        (bank_name.dirty || bank_name.touched)
+                      " [ngClass]="{'invalid-border': bank_name.invalid && bank_name.touched}"
+                  [items]="bankdetailslist" required class="custom col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2"
+                  bindLabel="bank_name" bindValue="bank_name" placeholder="Select an option"
+                  style="width:100%;"></ng-select>
+                <div *ngIf="bank_name.invalid && (bank_name.dirty || bank_name.touched)" class="invalid-feedback">
+                  <div *ngIf="bank_name.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Bank
+                      Name is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <span class="font-bold"><b>Bank Code</b><span style="color:red"> *</span></span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input formControlName="bankcode_no" type="text"
+                  class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': bankcode_no?.invalid && bankcode_no?.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Bank Code No" name="bankcode_no" required pattern="^[A-Z]{4}[0-9]{7}$"
+                  [class.is-invalid]="bankcode_no?.invalid && (bankcode_no?.dirty || bankcode_no?.touched)" />
+
+                <div *ngIf="bankcode_no?.invalid && (bankcode_no?.dirty || bankcode_no?.touched)"
+                  class="invalid-feedback">
+                  <div *ngIf="bankcode_no?.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Bank
+                      code is required</span>
+                  </div>
+                  <div *ngIf="bankcode_no?.errors?.['pattern']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Invalid Bank Code.
+                      It should be a 4 capital alphabet and 7 numbers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+          <br>
+
+          <div class="d-flex flex-row flex-wrap">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <b>Bank Account Number<span style="color:red"> *</span></b>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input formControlName="bankacc_no" type="text" style="width:93%;"
+                  class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': bankacc_no?.invalid && bankacc_no?.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter Bank Account No" name="bankacc_no" required maxlength="18" pattern="[0-9]*"
+                  [class.is-invalid]="bankacc_no?.invalid && (bankacc_no?.dirty || bankacc_no?.touched)" />
+
+                <div *ngIf="bankacc_no?.invalid && (bankacc_no?.dirty || bankacc_no?.touched)" class="invalid-feedback">
+                  <div *ngIf="bankacc_no?.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Bank
+                      account number is required</span>
+                  </div>
+                  <div *ngIf="bankacc_no?.errors?.['pattern']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Only
+                      numeric characters allowed</span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <b>PF Account Number<span style="color:red"> *</span></b>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input formControlName="pf_no" type="text"
+                  class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': pf_no?.invalid && pf_no?.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter PF Account No" name="pf_no" required pattern="^[A-Z]{5}[0-9]{14,17}$"
+                  [class.is-invalid]="pf_no?.invalid && (pf_no?.dirty || pf_no?.touched)" />
+
+                <div *ngIf="pf_no?.invalid && (pf_no?.dirty || pf_no?.touched)" class="invalid-feedback">
+                  <div *ngIf="pf_no?.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* PF
+                      account number is required</span>
+                  </div>
+                  <div *ngIf="pf_no?.errors?.['pattern']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* PF
+                      Number format 5 capital alphabet and 14-17 numbers</span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+
+          <div class="d-flex flex-row flex-wrap">
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <span class="font-bold"><b>ESI Account Number</b><span style="color:red"> *</span></span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input formControlName="esi_no" type="text" style="width:93%;"
+                  class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': esi_no?.invalid && esi_no?.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter ESI Account No" name="esi_no" required pattern="[0-9]{17}" 
+                  maxlength="17" [class.is-invalid]="esi_no?.invalid && (esi_no?.dirty || esi_no?.touched)" />
+
+                <div *ngIf="esi_no?.invalid && (esi_no?.dirty || esi_no?.touched)" class="invalid-feedback">
+                  <div *ngIf="esi_no?.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* ESI
+                      account number is required</span>
+                  </div>
+                  <div *ngIf="esi_no?.errors?.['maxlength']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">*
+                      Maximum length is 17 characters.</span>
+                  </div>
+                  <div *ngIf="esi_no?.errors?.['pattern']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Invalid
+                      ESI format. It should be a 17-digit number.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <br>
+
+            <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+              <span class="font-bold"><b>PAN Number</b><span style="color:red"> *</span></span>
+              <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2">
+                <input formControlName="pan_no" type="text"
+                  class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                  [ngStyle]="{'border-color': pan_no?.invalid && pan_no?.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                  placeholder="Enter PAN No" name="pan_no" required pattern="^[A-Z]{5}\d{4}[A-Z]{1}$"
+                  [class.is-invalid]="pan_no && pan_no.invalid && (pan_no.dirty || pan_no.touched)" />
+
+                <div *ngIf="pan_no?.invalid && (pan_no?.dirty || pan_no?.touched)" class="invalid-feedback">
+                  <div *ngIf="pan_no?.errors?.['required']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* PAN
+                      number is required</span>
+                  </div>
+                  <div *ngIf="pan_no?.errors?.['pattern']">
+                    <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Invalid PAN
+                     format. It should be a 5 capital alphabet and 4 numbers and 1 capital alphabet</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+          <div class="row">
+            <span class="font-bold"><b>UAN Number</b><span style="color:red"> *</span></span>
+            <div class="col-lg-12 col-md-12 col-sm-12 fv-row mt-2 d-flex">
+              <input formControlName="uan_no" type="text" style="width:47%;"
+                class="form-control form-control-lg form-control-solid borderc-secondary custom-input mb-3 mb-lg-0 bg-white custom-input"
+                [ngStyle]="{'border-color': uan_no?.invalid && uan_no?.touched ? 'red' : 'rgb(209, 209, 209)'}"
+                placeholder="Enter UAN No" name="uan_no" required pattern="[0-9]{12}"
+                [class.is-invalid]="uan_no && uan_no.invalid && (uan_no.dirty || uan_no.touched)" />
+
+              <div *ngIf="uan_no?.invalid && (uan_no?.dirty || uan_no?.touched)" class="invalid-feedback">
+                <div *ngIf="uan_no?.errors?.['required']">
+                  <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* UAN
+                    number is required</span>
+                </div>
+                <div *ngIf="uan_no?.errors?.['pattern']">
+                  <span style="color: red; width: 200px; margin-top: 1px; margin-left: 8px; font-size: 11px;">* Invalid
+                    UAN format. It should be a 12-digit number.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="text-center my-4">
+          <button id="mymodelAddBank" (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                    'primary-button': !reactiveForm.invalid,
+                    'secondary-button': reactiveForm.invalid
+                  }" data-bs-dismiss="modal">
+            <i class="fas fa-check text-white fs-5 "></i> &nbsp;Submit
+          </button> &nbsp;&nbsp;
+          <button class="btn-danger btn-sm text-white me-4" id="mymodelAddBank" (click)="onback()"
+            data-bs-dismiss="modal">
+            <i class="fa fa-arrow-left"></i> &nbsp;Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!-- The Modal View -->
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="mymodelBank" style="margin-top: 215px;" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="table-responsive">
+          <div class="card card-body m-3 shadow-lg p-3 mb-5 bg-white rounded d-flex">
+            <table id="bankdetails" class="table table-striped table-row-bordered gy-5 gs-7">
+              <thead>
+                <tr class="fw-bold fs-5 bg-lightblue text-blue">
+                  <th>S.No</th>
+                  <th>Bank Name</th>
+                  <th>Bank Code No</th>
+                  <th>Account No</th>
+                  <th>PF No</th>
+                  <th>ESIC No</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of bankdetails; let i=index;">
+
+                  <td>{{i+1}}</td>
+                  <td>{{data.bank}}</td>
+                  <td>{{data.bank_code}}</td>
+                  <td>{{data.ac_no}}</td>
+                  <td>{{data.pf_no}}</td>
+                  <td>{{data.esi_no}}</td>
+
+
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center my-4">
+              <button class="btn-danger btn-sm text-white me-4" id="mymodelAddBank" (click)="onback()"
+                data-bs-dismiss="modal">
+                <i class="fa fa-arrow-left"></i> &nbsp;Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form [formGroup]="reactiveForm" #form="ngForm">
+  <div class="modal" id="myModalexcelimport" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+
+              <!-- Modal Header -->
+
+              <div class="card-header p-1 pb-2 pt-1 rounded-top bg-primary">
+                  <h2 style="margin-top:10px;color:white;font-weight: bold;">&nbsp;&nbsp;<i
+                          class="fas fa-lock fw-bolder fs-3"></i> &nbsp;&nbsp;BANK EXCEL FILE IMPORT</h2>
+
+              </div>
+
+              <!-- Modal body -->
+              <div class="modal-body">
+
+                  <button type="submit" style="margin-left: 290px;" class="btn-danger btn-sm text-white me-2"
+                  (click)="downloadfileformat()" >
+                      <i class="fa fa-download fs-5 me-2"></i>&nbsp;&nbsp;Download</button>
+                  <br>
+                  <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                      <span class="font-bold"><b>Select an Excel File to Import</b><span
+                              class="ms-1 text-red">*</span></span>
+                      <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row mt-2">
+                         
+                          <input style="width: 300%;" (change)="onChange1($event)" accept=".xlsx, .xls"
+                              type="file" #fileInput class="
+                        form-control form-control-lg form-control-solid bg-white
+                        mb-3 mb-lg-0  borderc-secondary custom-input
+                      " name="fName" />
+
+
+                      </div>
+                  </div>
+                  <br>
+                  <!-- Modal footer -->
+                  <div class="text-center my-4">
+                      <button type="submit" class="btn-success btn-sm text-white me-2" (click)="importexcel()">
+                          <i class="fa fa-upload fs-5 me-2"></i>&nbsp;Upload</button>
+
+                      <button class="btn-primary btn-sm text-white me-2" data-bs-dismiss="modal">
+                          <i class="fas fa-arrow-left fs-5 me-2"></i> &nbsp;Back
+                      </button>&nbsp;
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+</form>

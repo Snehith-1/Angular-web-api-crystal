@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+        <h3 class="card-title">Enquiry Summary</h3>
+      </div>
+  
+      <div class="col me-5">
+        <button type="button" class="btn-primary btn-sm text-white me-4 float-end" data-bs-toggle="modal"
+          data-bs-target="#myModaladd" (click)="onadd()"><i class="fas fa-plus"></i>&nbsp;
+         Raise Enquiry
+        </button>
+      </div>
+    </div>
+      <div class="table-responsive ">
+        <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded  ">
+          <table id="cusenquiry_list" class="table table-striped table-row-bordered gy-5 gs-9">
+            <thead>
+              <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle" style="white-space: nowrap;">
+                <th>Enquiry Date</th>
+                <th>Enquiry Ref. No</th>
+                <th>Branch</th>
+                <th>Vendor</th>
+                <!-- <th>Vendor Enquiry Ref. No</th> -->
+                <th>Contact Details</th>
+                <th>Assigned Member</th>
+                <th>Potential Order Value</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Created By</th>
+               
+                <th class="text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of cusenquiry_list;" style="white-space: nowrap;">
+                <td>{{data.enquiry_date | date:'dd-MM-yyyy'}}</td>
+                <td>{{data.enquiry_refno}}</td>
+                <td>{{data.branch_name}}</td>
+                <td>{{data.vendor_name}}</td>
+                <!-- <td>{{data.enquiry_referencenumber}}</td> -->
+                <td>{{data.contact_details}}</td>
+                <td></td>
+                <td>{{data.potorder_value}}</td>
+               <td>{{data.enquiry_status}}</td>
+                <td>{{data.vendor_rating}}</td> 
+                <td>{{data.created_by}}</td> 
+                
+                <td class="text-center text-nowrap">
+
+                  <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.enquiry_gid)" >
+                    <span class="fa-solid fa-eye text-white  fs-6">
+                    </span></button>
+
+                  <!-- <button title="Edit" type="button" class="btn btn-icon btn-sm bg-success me-2"
+                    (click)="openModaledit()" data-bs-toggle="modal" data-bs-target="#myModaledit"><span
+                      class="fa-solid fa-pencil text-white  fs-6"></span></button> -->
+                  <!-- <button title="close" type="button" class="btn btn-icon btn-sm bg-danger me-2" (click)="openModalclose()"
+                    data-bs-toggle="modal" data-bs-target="#myModalclose"><span
+                      class="fa-solid fa-close text-white  fs-6"></span></button> -->
+                      <!-- <button title="close" type="button" class="btn btn-icon btn-sm bg-info me-2" (click)="openModal(data)"
+                      data-bs-toggle="modal" data-bs-target="#myModalassign"><span
+                        class="fa-solid fa-tasks text-white  fs-6"></span></button> -->
+  
+                        <button title="Raise Proposal" type="button" class="btn btn-icon btn-sm background-color1 me-2" (click)="openrequest(data.enquiry_gid)" ><span
+                        class="fa-solid fa-arrow-up-right-from-square fs-6"></span></button>
+  
+                        <button title="Raise Qoute" type="button" class="btn btn-icon btn-sm background-color2 me-2" (click)="openquote(data.enquiry_gid)" ><span
+                         class="fa-solid fa-up-long fs-6"></span></button>
+  
+               
+                   
+    
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>

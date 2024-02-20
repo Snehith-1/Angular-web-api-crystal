@@ -1,0 +1,270 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A116B0B-756D-41B5-AEC3-61175876C163}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ems.pmr</RootNamespace>
+    <AssemblyName>ems.pmr</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44367</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DocumentFormat.OpenXml.3.0.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.0.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DocumentFormat.OpenXml.Framework.3.0.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WindowsAzure.Storage.9.3.2\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\PayableDashboardController.cs" />
+    <Compile Include="Controllers\PblTrnPaymentRptController.cs" />
+    <Compile Include="Controllers\PmrDashboardController.cs" />
+    <Compile Include="Controllers\PmrMstCurrencyController.cs" />
+    <Compile Include="Controllers\PmrMstProductController.cs" />
+    <Compile Include="Controllers\PmrMstProductGroupController.cs" />
+    <Compile Include="Controllers\PmrMstProductUnitController.cs" />
+    <Compile Include="Controllers\PmrMstPurchaseConfigController.cs" />
+    <Compile Include="Controllers\PmrMstTaxController.cs" />
+    <Compile Include="Controllers\PmrMstTermsConditionsController.cs" />
+    <Compile Include="Controllers\PmrMstVendorRegisterController.cs" />
+    <Compile Include="Controllers\PmrRptOutstandingAmountReportController.cs" />
+    <Compile Include="Controllers\PmrRptOverallReportController.cs" />
+    <Compile Include="Controllers\PmrRptPurchaseorderdetailedreportController.cs" />
+    <Compile Include="Controllers\PmrRptVendorledgerreportController.cs" />
+    <Compile Include="Controllers\PmrTrnDirectInvoiceController.cs" />
+    <Compile Include="Controllers\PmrTrnGrncheckerController.cs" />
+    <Compile Include="Controllers\PmrTrnGrnController.cs" />
+    <Compile Include="Controllers\PmrTrnGrnInwardController.cs" />
+    <Compile Include="Controllers\PmrTrnGrnqccheckerController.cs" />
+    <Compile Include="Controllers\PmrTrnInvoiceController.cs" />
+    <Compile Include="Controllers\PmrTrnOpeningInvoiceController.cs" />
+    <Compile Include="Controllers\PmrTrnPurchaseOrderController.cs" />
+    <Compile Include="Controllers\PmrTrnPurchaseQuotationController.cs" />
+    <Compile Include="Controllers\PmrTrnPurchaseRequisitionController.cs" />
+    <Compile Include="Controllers\PmrTrnRaiseEnquiryController.cs" />
+    <Compile Include="Controllers\PmrTrnRequestforQuoteController.cs" />
+    <Compile Include="DataAccess\DaAccMstOpeningbalance.cs" />
+    <Compile Include="DataAccess\DaPayableDashboard.cs" />
+    <Compile Include="DataAccess\DaPblTrnPaymentRpt.cs" />
+    <Compile Include="DataAccess\DaPmrDashboard.cs" />
+    <Compile Include="DataAccess\DaPmrMstCurrency.cs" />
+    <Compile Include="DataAccess\DaPmrMstProduct.cs" />
+    <Compile Include="DataAccess\DaPmrMstProductGroup.cs" />
+    <Compile Include="DataAccess\DaPmrMstProductUnit.cs" />
+    <Compile Include="DataAccess\DaPmrMstPurchaseConfig.cs" />
+    <Compile Include="DataAccess\DaPmrMstTax.cs" />
+    <Compile Include="DataAccess\DaPmrMstTermsConditions.cs" />
+    <Compile Include="DataAccess\DaPmrMstVendorRegister.cs" />
+    <Compile Include="DataAccess\DaPmrRptOutstandingAmountReport.cs" />
+    <Compile Include="DataAccess\DaPmrRptOverallReport.cs" />
+    <Compile Include="DataAccess\DaPmrRptPurchaseorderdetailedreport.cs" />
+    <Compile Include="DataAccess\DaPmrRptVendorledgerreport.cs" />
+    <Compile Include="DataAccess\DaPmrTrnDirectInvoice.cs" />
+    <Compile Include="DataAccess\DaPmrTrnGrn.cs" />
+    <Compile Include="DataAccess\DaPmrTrnGrnchecker.cs" />
+    <Compile Include="DataAccess\DaPmrTrnGrnInward.cs" />
+    <Compile Include="DataAccess\DaPmrTrnGrnqcchecker.cs" />
+    <Compile Include="DataAccess\DaPmrTrnInvoice.cs" />
+    <Compile Include="DataAccess\DaPmrTrnOpeningInvoice.cs" />
+    <Compile Include="DataAccess\DaPmrTrnPurchaseOrder.cs" />
+    <Compile Include="DataAccess\DaPmrTrnPurchaseQuotaion.cs" />
+    <Compile Include="DataAccess\DaPmrTrnPurchaseRequisition.cs" />
+    <Compile Include="DataAccess\DaPmrTrnRaiseEnquiry.cs" />
+    <Compile Include="DataAccess\DaPmrTrnRequestforQuote.cs" />
+    <Compile Include="Models\MdlAccMstOpeningbalance.cs" />
+    <Compile Include="Models\MdlPayableDashboard.cs" />
+    <Compile Include="Models\MdlPblTrnPaymentRpt.cs" />
+    <Compile Include="Models\MdlPmrDashboard.cs" />
+    <Compile Include="Models\MdlPmrMstCurrency.cs" />
+    <Compile Include="Models\MdlPmrMstProduct.cs" />
+    <Compile Include="Models\MdlPmrMstProductGroup.cs" />
+    <Compile Include="Models\MdlPmrMstProductUnit.cs" />
+    <Compile Include="Models\MdlPmrMstPurchaseConfig.cs" />
+    <Compile Include="Models\MdlPmrMstTax.cs" />
+    <Compile Include="Models\MdlPmrMstTermsConditions.cs" />
+    <Compile Include="Models\MdlPmrMstVendorRegister.cs" />
+    <Compile Include="Models\MdlPmrRptOutstandingAmountReport.cs" />
+    <Compile Include="Models\MdlPmrRptOverallReport.cs" />
+    <Compile Include="Models\MdlPmrRptPurchaseorderdetailedreport.cs" />
+    <Compile Include="Models\MdlPmrRptVendorledgerreport.cs" />
+    <Compile Include="Models\MdlPmrTrnDirectInvoice.cs" />
+    <Compile Include="Models\MdlPmrTrnGrn.cs" />
+    <Compile Include="Models\MdlPmrTrnGrnchecker.cs" />
+    <Compile Include="Models\MdlPmrTrnGrnInward.cs" />
+    <Compile Include="Models\MdlPmrTrnGrnqcchecker.cs" />
+    <Compile Include="Models\MdlPmrTrnInvoice.cs" />
+    <Compile Include="Models\MdlPmrTrnOpeningInvoice.cs" />
+    <Compile Include="Models\MdlPmrTrnPurchaseOrder.cs" />
+    <Compile Include="Models\MdlPmrTrnPurchaseQuotation.cs" />
+    <Compile Include="Models\MdlPmrTrnPurchaseRequisition.cs" />
+    <Compile Include="Models\MdlPmrTrnRaiseEnquiry.cs" />
+    <Compile Include="Models\MdlPmrTrnRequestforQuote.cs" />
+    <Compile Include="PmrCrpPurchaseOrder1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PmrCrpPurchaseOrder.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PmrPurchaseOrder.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="PmrPurchaseOrder.xsc">
+      <DependentUpon>PmrPurchaseOrder.xsd</DependentUpon>
+    </Content>
+    <None Include="PmrPurchaseOrder.xsd" />
+    <Content Include="PmrPurchaseOrder.xss">
+      <DependentUpon>PmrPurchaseOrder.xsd</DependentUpon>
+    </Content>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ems.utilities\ems.utilities.csproj">
+      <Project>{2EFA6A9B-095E-47BC-9468-43B8ED5A7128}</Project>
+      <Name>ems.utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StoryboardAPI.csproj">
+      <Project>{C0F7A8B5-D9A1-4CC7-97C8-94AFB81567AA}</Project>
+      <Name>StoryboardAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PmrCrpPurchaseOrder.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PmrCrpPurchaseOrder1.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64023</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/StoryboardAPI/ems.pmr</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,533 @@
+﻿using ems.sales.DataAccess;
+using ems.sales.Models;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net;
+using System.Web;
+using System.Web.Http;
+
+namespace ems.sales.Controllers
+{
+    [RoutePrefix("api/SmrTrnCustomerEnquiry")]
+    [Authorize]
+    public class SmrTrnCustomerEnquiryController : ApiController
+    {
+        session_values Objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaSmrTrnCustomerEnquiry objsales = new DaSmrTrnCustomerEnquiry();
+
+        //summary
+        [ActionName("GetCustomerEnquirySummary")]
+        [HttpGet]
+        public HttpResponseMessage GetCustomerEnquirySummary()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetCustomerEnquirySummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Lead DropDown
+        [ActionName("GetLeadDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetLeadDtl()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetLeadDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Update Close
+        [ActionName("GetUpdatedCloseEnquiry")]
+        [HttpPost]
+        public HttpResponseMessage GetUpdatedCloseEnquiry(GetCusEnquiry values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetUpdatedCloseEnquiry(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Team DropDown
+        [ActionName("GetTeamDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetTeamDtl()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetTeamDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Employee DropDown
+        [ActionName("GetEmployeeDtl")]
+        [HttpGet]
+        public HttpResponseMessage GetEmployeeDtl()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetEmployeeDtl(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //Update Reassign
+        [ActionName("GetUpdatedReAssignEnquiry")]
+        [HttpPost]
+        public HttpResponseMessage GetUpdatedReAssignEnquiry(GetCusEnquiry values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetUpdatedReAssignEnquiry(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Product Drop down
+        [ActionName("GetProduct")]
+        [HttpGet]
+        public HttpResponseMessage GetProduct()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetProducts(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+      
+        // Customer Dropdown
+        [ActionName("GetCustomer")]
+        [HttpGet]
+        public HttpResponseMessage GetCustomer()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetCustomer(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // CRM Customer Dropdown
+        [ActionName("GetCustomerCRM")]
+        [HttpGet]
+        public HttpResponseMessage GetCustomerCRM(string leadbank_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetCustomerCRM(values, leadbank_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+        
+        // Direct sales customer on change
+        [ActionName("GetOnChangeCustomerName")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeCustomerName(string customercontact_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetOnChangeCustomerName(customercontact_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // CRM on change customer
+        [ActionName("GetOnChangeCustomerNameCRM")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeCustomerNameCRM(string customercontact_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetOnChangeCustomerNameCRM(customercontact_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Edit customer name (Direct Sales)
+        [ActionName("GetOnEditCustomerName")]
+        [HttpGet]
+        public HttpResponseMessage GetOnEditCustomerName(string customercontact_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetOnEditCustomerName(customercontact_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Direct sales on change product
+        [ActionName("GetOnChangeProductsName")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeProductsName(string product_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetOnChangeProductsName(product_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Customer enquiry Edit summary
+        [ActionName("GetEditProductsSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetEditProductsSummary()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetEditProductsSummary(getsessionvalues.user_gid, getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        //  Temp Product Summary (Direct Enquiry)
+        [ActionName("GetProductsSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetProductSummary()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetProductsSummary(getsessionvalues.user_gid, getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Product Add for Direct raise Enquiry
+        [ActionName("PostOnAdds")]
+        [HttpPost]
+        public HttpResponseMessage PostOnAdds(productsummarys_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostOnAdds(getsessionvalues.user_gid, getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Product Summary Edit ( Edit Enquiry )
+        [ActionName("PostEditOnAdds")]
+        [HttpPost]
+        public HttpResponseMessage PostEditOnAdds(productsummarys_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostEditOnAdds(getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Currency dropdown for Raise quotation from enquiry
+        [ActionName("GetCurrencyDets")]
+        [HttpGet]
+        public HttpResponseMessage GetCurrencyDets()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetCurrencyDets(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Product dropdown for Raise Quotation
+        [ActionName("GetProductDets")]
+        [HttpGet]
+        public HttpResponseMessage GetProductDets()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetProductDets(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // On change product for enquiry to quotation
+        [ActionName("GetOnChangeProductNameDets")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeProductNameDets(string product_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetOnChangeProductNameDets(product_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        // Terms and conditions
+        [ActionName("GetOnChangeTerms")]
+        [HttpGet]
+        public HttpResponseMessage GetOnChangeTerms(string template_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetOnChangeTerms(template_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        // Tax 1 dropdown
+        [ActionName("GetFirstTax")]
+        [HttpGet]
+        public HttpResponseMessage GetFirstTax()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetFirstTax(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 2 dropdown
+        [ActionName("GetSecondTax")]
+        [HttpGet]
+        public HttpResponseMessage GetSecondTax()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetSecondTax(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 3 dropdown
+        [ActionName("GetThirdTax")]
+        [HttpGet]
+        public HttpResponseMessage GetThirdTax()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetThirdTax(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Tax 4 dropdown
+        [ActionName("GetFourthTax")]
+        [HttpGet]
+        public HttpResponseMessage GetFourthTax()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetFourthTax(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Branch dropdown
+        [ActionName("GetBranchDet")]
+        [HttpGet]
+        public HttpResponseMessage GetBranchDet()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetBranchDet(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Terms And Condition dropdown
+        [ActionName("GetTerms")]
+        [HttpGet]
+        public HttpResponseMessage GetTerms()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetTerms(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Summary bind for Enquiry to Quotation
+        [ActionName("GetQOSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetQOSummary(string enquiry_gid)
+        {
+            MdlSmrTrnCustomerEnquiry objresult = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetQOSummary(enquiry_gid, getsessionvalues.employee_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        //Product temp summary for enquiry to quotation
+        [ActionName("GetTempSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetTempSummary(string enquiry_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetTempSummary(enquiry_gid,values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        // Product Add for Enquiry to Quotation
+        [ActionName("GetOnProductAdd")]
+        [HttpPost]
+        public HttpResponseMessage GetOnProductAdd(Productsummarys_lists values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaGetOnProductAdd(getsessionvalues.employee_gid,  values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Employee Dropdown
+        [ActionName("GetEmployeePerson")]
+        [HttpGet]
+        public HttpResponseMessage GetEmployeePerson()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetEmployeePerson(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+
+        // delete for direct enquiry event
+        [ActionName("GetDeleteEnquiryProductSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetDeleteEnquiryProductSummary(string tmpsalesenquiry_gid)
+        {
+            productsummarys_list objresult = new productsummarys_list();
+            objsales.DaGetDeleteEnquiryProductSummary(tmpsalesenquiry_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // Delete enquiry edit for 
+        [ActionName("GetDeleteEnquiryEditProductSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetDeleteEnquiryEditProductSummary(string enquiry_gid, string product_gid, string productgroup_name, string qty_requested)
+        {
+            productsummarys_list objresult = new productsummarys_list();
+            objsales.DaGetDeleteEnquiryEditProductSummary(enquiry_gid, product_gid, productgroup_name, qty_requested, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // delete for enq to quote event
+        [ActionName("GetDeleteQuoteProductSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetDeleteQuoteProductSummary(string tmpquotationdtl_gid)
+        {
+            productsummarys_list objresult = new productsummarys_list();
+            objsales.DaGetDeleteQuoteProductSummary(tmpquotationdtl_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // POST ENQUIRY TO QUOTATION
+        [ActionName("PostCustomerEnquirytoQuotation")]
+        [HttpPost]
+        public HttpResponseMessage PostCustomerEnquirytoQuotation(postquotation_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostCustomerEnquirytoQuotation(getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Overall Submit For Direct Quotation
+        [ActionName("PostCustomerEnquiry")]
+        [HttpPost]
+        public HttpResponseMessage PostCustomerEnquiry(PostAll values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostCustomerEnquiry(getsessionvalues.employee_gid, getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Raise Proposal
+        [ActionName("GetSmrTrnRaiseProposal")]
+        [HttpGet]
+        public HttpResponseMessage GetSmrTrnRaiseProposalstring(string enquiry_gid)
+        {
+            MdlSmrTrnCustomerEnquiry objresult = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetSmrTrnRaiseProposal(enquiry_gid, objresult); ;
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // Document Type for Raise Proposal from Customer Enquiry Summary
+        [ActionName("GetDocumentType")]
+        [HttpGet]
+        public HttpResponseMessage GetDocumentType()
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetDocumentType(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+       // Post Proposal
+        [ActionName("Postpropsal")]
+        [HttpPost]
+        public HttpResponseMessage Postpropsal()
+        {
+            HttpRequest httpRequest;
+            //Postassetlocationcreation values = new Postassetlocationcreation();
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            httpRequest = HttpContext.Current.Request;
+            result objResult = new result();
+            objsales.DaPostproposal(httpRequest, objResult, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+
+        // Get Proposal Summary
+        [ActionName("GetProposalSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetProposalSummary(string enquiry_gid)
+        {
+            MdlSmrTrnCustomerEnquiry values = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetProposalSummary(enquiry_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+
+        }
+
+        // [ActionName("Uploaddocument")]
+        //  [HttpPost]
+        //public HttpResponseMessage Uploaddocument(string user_gid )
+        //{
+        //    HttpRequest httpRequest;
+        //   string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+        /// getsessionvalues = Objgetgid.gettokenvalues(token);
+        //httpRequest = HttpContext.Current.Request;
+        //result objResult = new result();
+        //objsales.DaUploaddocument(httpRequest, objResult ,getsessionvalues.user_gid);
+        //return Request.CreateResponse(HttpStatusCode.OK, objResult);
+
+        // Customer Enquiry Summary View
+        [ActionName("GetViewEnquirySummary")]
+        [HttpGet]
+        public HttpResponseMessage GetViewEnquirySummary(string enquiry_gid)
+        {
+            MdlSmrTrnCustomerEnquiry objresult = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetViewEnquirySummary(enquiry_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // Post Customer Enquiry Edit
+        [ActionName("PostCustomerEnquiryEdit")]
+        [HttpPost]
+        public HttpResponseMessage PostCustomerEnquiryEdit(PostAll values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostCustomerEnquiryEdit(getsessionvalues.employee_gid, getsessionvalues.user_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // Enquiry to Quotation Product Summary Edit
+
+        [ActionName("GetEnqtoQuoteEditProductSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetEnqtoQuoteEditProductSummary(string tmpquotationdtl_gid)
+        {
+            MdlSmrTrnCustomerEnquiry objresult = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetEnqtoQuoteEditProductSummary(tmpquotationdtl_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+
+        // DIRECT ENQUIRY PRODUCT EDIT
+
+        [ActionName("GetDirectEnquiryEditProductSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetDirectEnquiryEditProductSummary(string tmpsalesenquiry_gid)
+        {
+            MdlSmrTrnCustomerEnquiry objresult = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetDirectEnquiryEditProductSummary(tmpsalesenquiry_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // UPDATE PRODUCT -- DIRECT ENQUIRY PRODUCT SUMMARY
+        [ActionName("PostUpdateEnquiryProduct")]
+        [HttpPost]
+        public HttpResponseMessage PostUpdateEnquiryProduct(productsummarys_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostUpdateEnquiryProduct(getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        // ENQUIRY TO QUOTATION PRODUCT SUMMARY DETAIL BUTTON
+        [ActionName("GetRaiseQuotedetail")]
+        [HttpGet]
+        public HttpResponseMessage GetRaiseQuotedetail(string product_gid)
+        {
+            MdlSmrTrnCustomerEnquiry objresult = new MdlSmrTrnCustomerEnquiry();
+            objsales.DaGetRaiseQuotedetail(product_gid, objresult);
+            return Request.CreateResponse(HttpStatusCode.OK, objresult);
+        }
+
+        // UPDATE PRODUCT --  ENQUIRY TO QUOTATION PRODUCT SUMMARY
+        [ActionName("PostUpdateEnquirytoQuotationProduct")]
+        [HttpPost]
+        public HttpResponseMessage PostUpdateEnquirytoQuotationProduct(productsummarys_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = Objgetgid.gettokenvalues(token);
+            objsales.DaPostUpdateEnquirytoQuotationProduct(getsessionvalues.employee_gid, values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+    }
+}
+

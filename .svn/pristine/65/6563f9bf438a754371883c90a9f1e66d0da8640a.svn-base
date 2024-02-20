@@ -1,0 +1,487 @@
+﻿using ems.utilities.Functions;
+using System;
+using System.Collections.Generic;
+using System.Data.Odbc;
+using System.Data;
+using System.Linq;
+using System.Web;
+using ems.crm.Models;
+using Newtonsoft.Json;
+using RestSharp;
+using System.Net;
+using System.Configuration;
+using System.IO;
+using System.Net.Mail;
+using System.Diagnostics.Eventing.Reader;
+using System.Web.Http.Results;
+using static OfficeOpenXml.ExcelErrorValue;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
+
+namespace ems.crm.DataAccess
+{
+    public class DaMailCampaign
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        string msSQL1 = string.Empty;
+        OdbcDataReader objodbcDataReader;
+        DataTable dt_datatable;
+        int mnResult, ls_port;
+        string msGetGid,msUserGid, msEmployeeGID, msBiometricGID,body, msGetemployeetype, msTemporaryAddressGetGID, msPermanentAddressGetGID, usercode, lsuser_gid, lsemployee_gid, lsuser_code, lscountry_gid2, lscountry_gid, ls_server, ls_username, final_path, ls_password, events;
+
+        public void DaGetMailSummary(MdlMailCampaign values)
+        {
+
+            //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            //var client = new RestClient("https://api.sparkpost.com");
+            //var request = new RestRequest("/api/v1/events/message?from=2023-10-10", Method.GET);
+            //request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+            //IRestResponse response = client.Execute(request);
+            //string errornetsuiteJSON = response.Content;
+            //Mail_list objMdlMailCampaignResponse = new Mail_list();
+            //objMdlMailCampaignResponse = JsonConvert.DeserializeObject<Mail_list>(errornetsuiteJSON);
+            //return objMdlMailCampaignResponse;
+            msSQL = " SELECT a.mailmanagement_gid,a.from_mail,a.to_mail,a.sub,a.body,a.status_open,a.image_path, CONCAT(b.user_firstname,' ',b.user_lastname) as created_by,date_format(a.created_date,'%d-%m-%y')  as created_date  from crm_smm_mailmanagement a " +
+                   " left join adm_mst_tuser b on b.user_gid=a.created_by order by a.created_date desc";
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<mailsummary_list>();
+            if (dt_datatable.Rows.Count != 0)
+             
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new mailsummary_list
+                    {
+                        mailmanagement_gid = dt["mailmanagement_gid"].ToString(),
+                        mail_from = dt["from_mail"].ToString(),
+                        to = dt["to_mail"].ToString(),
+                        sub = dt["sub"].ToString(),
+                        body = dt["body"].ToString(),
+                        image_path = dt["image_path"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        status_open = dt["status_open"].ToString(),
+
+
+                    });
+                    values.mailsummary_list = getModuleList;
+                }
+            
+            dt_datatable.Dispose();
+
+
+        }
+
+
+        ///send mail with bcc & cc//
+        public void DaMailSend(mailsummary_list values, string user_gid, result objResult)
+
+        {
+
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://api.sparkpost.com");
+                var request = new RestRequest("/api/v1/transmissions", Method.POST);
+                request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+                request.AddHeader("Content-Type", "application/json");
+                var body = "{\"options\":{\"open_tracking\":true,\"click_tracking\":false},\"recipients\":[{\"address\":{\"email\":" + "\"" + values.to + "\"" + "}},{\"address\":{\"email\":" + "\"" + values.cc + "\"" + ",\"header_to\":" + "\"" + values.to + "\"" + "}},{\"address\":{\"email\":" + "\"" + values.bcc + "\"" + ",\"header_to\":" + "\"" + values.to + "\"" + "}}],\"content\":{\"from\":" + "\"" + values.mail_from + "\"" + ",\"headers\":{\"CC\":" + "\"" + values.cc + "\"" + "},\"subject\":" + "\"" + values.sub + "\"" + ",\"reply_to\":" + "\"" + values.reply_to + "\"" + ",\"html\":" + "\"" + values.body.Replace("\"","\\\"") + "\"" + "}}";
+                var body_content = JsonConvert.DeserializeObject(body);
+                request.AddParameter("application/json", body_content, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+                string errornetsuiteJSON = response.Content;
+                sendmail_list objMdlMailCampaignResponse = new sendmail_list(); ;
+                objMdlMailCampaignResponse = JsonConvert.DeserializeObject<sendmail_list>(errornetsuiteJSON);
+
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    // Insert email details into the database
+                    msGetGid = objcmnfunctions.GetMasterGID("MILC");
+                    msSQL = "INSERT INTO crm_smm_mailmanagement (" +
+                           "mailmanagement_gid, " +
+                        "from_mail, " +
+                        "to_mail, " +
+                        "sub, " +
+                        "transmission_id, " +
+                        "bcc, " +
+                        "cc, " +
+                        "reply_to, " +
+                        "body, " +
+                         " created_by, " +
+                        "created_date) " +
+                        "VALUES (" +
+                        "'" + msGetGid + "', " +
+                        "'" + values.mail_from + "', " +
+                        "'" + values.to + "', " +
+                        "'" + values.sub + "', " +
+                        "'" + objMdlMailCampaignResponse.results.id + "', " +
+                        "'" + values.bcc + "', " +
+                        "'" + values.cc + "', " +
+                        "'" + values.reply_to + "', " +
+                        "'" + values.body + "', " +
+                          "'" + user_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        objResult.status = true;
+                        objResult.message = "Mail Send Successfully !!";
+                    }
+                    else
+                    {
+                        objResult.status = false;
+                        objResult.message = "Error While Sending Mail !!";
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                objResult.status = false;
+                objResult.message = ex.ToString();
+            }
+
+        }
+
+        public void DaGetMailEventDelivery(MdlMailCampaign values)
+
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://api.sparkpost.com");
+            var request = new RestRequest("/api/v1/events/message?from=2023-10-10&events=delivery", Method.GET);
+            request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+            request.AddHeader("Content-Type", "application/json");
+            IRestResponse response = client.Execute(request);
+            string errornetsuiteJSON = response.Content;
+            mailevent_list objMdlMailCampaignResponse = new mailevent_list(); ;
+            objMdlMailCampaignResponse = JsonConvert.DeserializeObject<mailevent_list>(errornetsuiteJSON);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                // Insert email details into the database
+                for (int i = 0; i < objMdlMailCampaignResponse.results.ToArray().Length; i++)
+                {
+                    msSQL = "UPDATE crm_smm_mailmanagement " +
+                    "SET status_delivery='" + objMdlMailCampaignResponse.results[i].type + "', " +
+                    "status_date='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'" +
+                    "WHERE transmission_id ='" + objMdlMailCampaignResponse.results[i].transmission_id + "'";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+            }
+        }
+
+        public void DaGetMailEventOpen(MdlMailCampaign values)
+
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://api.sparkpost.com");
+            var request = new RestRequest("/api/v1/events/message?from=2023-10-10&events=open", Method.GET);
+            request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+            request.AddHeader("Content-Type", "application/json");
+            IRestResponse response = client.Execute(request);
+            string errornetsuiteJSON = response.Content;
+            mailevent_list objMdlMailCampaignResponse = new mailevent_list(); ;
+            objMdlMailCampaignResponse = JsonConvert.DeserializeObject<mailevent_list>(errornetsuiteJSON);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                // Insert email details into the database
+                for (int i = 0; i < objMdlMailCampaignResponse.results.ToArray().Length; i++)
+                {
+                    msSQL = "UPDATE crm_smm_mailmanagement " +
+                    "SET status_open='" + objMdlMailCampaignResponse.results[i].type + "', " +
+                    "status_date='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'" +
+                    "WHERE transmission_id ='" + objMdlMailCampaignResponse.results[i].transmission_id + "'";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+            }
+        }
+        public void DaGetMailEventClick(MdlMailCampaign values)
+
+        {
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            var client = new RestClient("https://api.sparkpost.com");
+            var request = new RestRequest("/api/v1/events/message?from=2023-10-10&events=click", Method.GET);
+            request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+            request.AddHeader("Content-Type", "application/json");
+            IRestResponse response = client.Execute(request);
+            string errornetsuiteJSON = response.Content;
+            mailevent_list objMdlMailCampaignResponse = new mailevent_list(); ;
+            objMdlMailCampaignResponse = JsonConvert.DeserializeObject<mailevent_list>(errornetsuiteJSON);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                // Insert email details into the database
+                for (int i = 0; i < objMdlMailCampaignResponse.results.ToArray().Length; i++)
+                {
+                    msSQL = "UPDATE crm_smm_mailmanagement " +
+                    "SET status_click='" + objMdlMailCampaignResponse.results[i].type + "', " +
+                    "status_date='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "'" +
+                    "WHERE transmission_id ='" + objMdlMailCampaignResponse.results[i].transmission_id + "'";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                }
+            }
+
+
+
+        }
+
+        public void DaGetMailEventCount(MdlMailCampaign values)
+
+        {
+                
+                    msSQL = "Select (select count(status_delivery) )as deliverytotal_count,(select count(status_open))as opentotal_count," +
+                            "(select count(status_click)) as clicktotal_count from crm_smm_mailmanagement";
+                    dt_datatable = objdbconn.GetDataTable(msSQL);
+                    var getModuleList = new List<mailcount_list>();
+                    if (dt_datatable.Rows.Count != 0)
+                    {
+                        foreach (DataRow dt in dt_datatable.Rows)
+                        {
+                            getModuleList.Add(new mailcount_list
+                            {
+                                deliverytotal_count = dt["deliverytotal_count"].ToString(),
+                                opentotal_count = dt["opentotal_count"].ToString(),
+                                clicktotal_count = dt["clicktotal_count"].ToString()
+
+
+
+
+                            });
+                            values.mailcount_list = getModuleList;
+                        }
+                    }
+                    dt_datatable.Dispose();
+
+        }
+
+        public void DaScheduledMailSend(mailsummary_list values, string user_gid, result objResult)
+
+        {
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://api.sparkpost.com");
+                var request = new RestRequest("/api/v1/transmissions", Method.POST);
+                request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+                request.AddHeader("Content-Type", "application/json");
+                var body = "{\"options\":{\"start_time\":" + "\"" + values.schedule_time + "+05:30\"},\"recipients\":[{\"address\":{\"email\":" + "\"" + values.to + "\"" + "}},{\"address\":{\"email\":" + "\"" + values.cc + "\"" + ",\"header_to\":" + "\"" + values.to + "\"" + "}},{\"address\":{\"email\":" + "\"" + values.bcc + "\"" + ",\"header_to\":" + "\"" + values.to + "\"" + "}}],\"content\":{\"from\":" + "\"" + values.mail_from + "\"" + ",\"headers\":{\"CC\":" + "\"" + values.cc + "\"" + "},\"subject\":" + "\"" + values.sub + "\"" + ",\"reply_to\":" + "\"" + values.reply_to + "\"" + ",\"html\":" + "\"" + values.body + "\"" + "}}";
+                var body_content = JsonConvert.DeserializeObject(body);
+                request.AddParameter("application/json", body_content, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+                string errornetsuiteJSON = response.Content;
+                sendmail_list objMdlMailCampaignResponse = new sendmail_list(); ;
+                objMdlMailCampaignResponse = JsonConvert.DeserializeObject<sendmail_list>(errornetsuiteJSON);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    // Insert email details into the database
+                    msSQL = "INSERT INTO crm_smm_mailmanagement (" +
+                        "from_mail, " +
+                        "to_mail, " +
+                        "sub, " +
+                        "transmission_id, " +
+                        "bcc, " +
+                        "cc, " +
+                        "reply_to, " +
+                        "scheduled_time, " +
+                        "body, " +
+                         " created_by, " +
+                        "created_date) " +
+                        "VALUES (" +
+                        "'" + values.mail_from + "', " +
+                        "'" + values.to + "', " +
+                        "'" + values.sub + "', " +
+                        "'" + objMdlMailCampaignResponse.results.id + "', " +
+                        "'" + values.bcc + "', " +
+                        "'" + values.cc + "', " +
+                        "'" + values.reply_to + "', " +
+                         "'" + values.schedule_time + "', " +
+                        "'" + values.body + "', " +
+                          "'" + user_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        objResult.status = true;
+                        objResult.message = "Mail Scheduled Successfully !!";
+                    }
+                    else
+                    {
+                        objResult.status = false;
+                        objResult.message = "Error While Scheduled Mail !!";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.status = false;
+                objResult.message = ex.ToString();
+            }
+        }
+
+
+        //public void DaSaveDraft(mailsummary_list values, string user_gid)
+        //{//need to add image path base 64 completed
+        //    msSQL = "INSERT INTO temp_crm_smm_mailmanagement (" +
+        //               "from_mail, " +
+        //               "to_mail, " +
+        //               "sub, " +
+        //               "bcc, " +
+        //               "cc, " +
+        //               "reply_to, " +
+        //               "body, " +
+        //                " created_by, " +
+        //               "created_date) " +
+        //               "VALUES (" +
+        //               "'" + values.mail_from + "', " +
+        //               "'" + values.to + "', " +
+        //               "'" + values.sub + "', " +
+        //               "'" + values.bcc + "', " +
+        //               "'" + values.cc + "', " +
+        //               "'" + values.reply_to + "', " +
+        //               "'" + values.body + "', " +
+        //                 "'" + user_gid + "'," +
+        //               "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+
+        //    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+        //    if (mnResult == 1)
+        //    {
+        //        msSQL = "select*from temp_crm_smm_mailmanagement";
+        //        dt_datatable = objdbconn.GetDataTable(msSQL);
+        //        var getmodulelist = new List<maildraft_list>();
+        //        if (dt_datatable.Rows.Count != 0)
+        //        {
+        //            foreach (DataRow dt in dt_datatable.Rows)
+        //            {
+        //                getmodulelist.Add(new maildraft_list
+        //                {
+        //                    temp_mail_gid = dt["temp_mail_gid"].ToString(),
+
+
+
+        //                });
+        //                values.maildraft_list = getmodulelist;
+        //            }
+        //        }
+        //        dt_datatable.Dispose();
+        //    }
+
+
+
+        //}
+
+
+
+        public void DaGetMailView(string mailmanagement_gid, MdlMailCampaign values)
+        {
+            msSQL = " SELECT a.mailmanagement_gid,a.from_mail,a.to_mail,a.sub,a.body,a.status_open,a.image_path, CONCAT(b.user_firstname,' ',b.user_lastname) as created_by,date_format(a.created_date,'%d-%m-%y')  as created_date  from crm_smm_mailmanagement a " +
+                   " left join adm_mst_tuser b on b.user_gid=a.created_by where mailmanagement_gid= '" + mailmanagement_gid + "'order by a.created_date desc";
+           
+
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<mailsummary_list>();
+            if (dt_datatable.Rows.Count != 0)
+
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new mailsummary_list
+                    {
+                        mailmanagement_gid = dt["mailmanagement_gid"].ToString(),
+                        mail_from = dt["from_mail"].ToString(),
+                        to = dt["to_mail"].ToString(),
+                        sub = dt["sub"].ToString(),
+                        body = dt["body"].ToString(),
+                        image_path = dt["image_path"].ToString(),
+                        created_by = dt["created_by"].ToString(),
+                        created_date = dt["created_date"].ToString(),
+                        status_open = dt["status_open"].ToString(),
+
+
+                    });
+                    values.mailsummary_list = getModuleList;
+                }
+
+            dt_datatable.Dispose();
+
+
+        }
+
+        public void DaMailUpload(HttpRequest httpRequest,mailsummary_list values, string user_gid, result objResult)
+
+        {
+            try
+            {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+                var client = new RestClient("https://api.sparkpost.com");
+                var request = new RestRequest("/api/v1/transmissions", Method.POST);
+                request.AddHeader("Authorization", "14e9f31c9e5002fb9dcf7e28b89f7d0d92759a4c");
+                request.AddHeader("Content-Type", "application/json");
+                var body = "{\"options\":{\"open_tracking\":true,\"click_tracking\":false},\"recipients\":[{\"address\":{\"email\":" + "\"" + values.to + "\"" + "}},{\"address\":{\"email\":" + "\"" + values.cc + "\"" + ",\"header_to\":" + "\"" + values.to + "\"" + "}},{\"address\":{\"email\":" + "\"" + values.bcc + "\"" + ",\"header_to\":" + "\"" + values.to + "\"" + "}}],\"content\":{\"from\":" + "\"" + values.mail_from + "\"" + ",\"headers\":{\"CC\":" + "\"" + values.cc + "\"" + "},\"subject\":" + "\"" + values.sub + "\"" + ",\"reply_to\":" + "\"" + values.reply_to + "\"" + ",\"html\":" + "\"" + values.body.Replace("\"", "\\\"") + "\"" + ",\"attachments\":[{\"name\":" + "\"" + values.name + "\"" + ",\"type\":" + "\"" + values.type + "\"" + ",\"data\":" + "\"" + values.basecode + "\"" + "}]}}";
+                var body_content = JsonConvert.DeserializeObject(body);
+                request.AddParameter("application/json", body_content, ParameterType.RequestBody);
+                IRestResponse response = client.Execute(request);
+                string errornetsuiteJSON = response.Content;
+                sendmail_list objMdlMailCampaignResponse = new sendmail_list(); ;
+                objMdlMailCampaignResponse = JsonConvert.DeserializeObject<sendmail_list>(errornetsuiteJSON);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    // Insert email details into the database
+                    msSQL = "INSERT INTO crm_smm_mailmanagement (" +
+                        "from_mail, " +
+                        "to_mail, " +
+                        "sub, " +
+                        "transmission_id, " +
+                        "bcc, " +
+                        "cc, " +
+                        "reply_to, " +
+                        "scheduled_time, " +
+                        "body, " +
+                         " created_by, " +
+                        "created_date) " +
+                        "VALUES (" +
+                        "'" + values.mail_from + "', " +
+                        "'" + values.to + "', " +
+                        "'" + values.sub + "', " +
+                        "'" + objMdlMailCampaignResponse.results.id + "', " +
+                        "'" + values.bcc + "', " +
+                        "'" + values.cc + "', " +
+                        "'" + values.reply_to + "', " +
+                         "'" + values.schedule_time + "', " +
+                        "'" + values.body + "', " +
+                          "'" + user_gid + "'," +
+                        "'" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "')";
+
+                    mnResult = objdbconn.ExecuteNonQuerySQL(msSQL);
+                    if (mnResult == 1)
+                    {
+                        objResult.status = true;
+                        objResult.message = "Mail Scheduled Successfully !!";
+                    }
+                    else
+                    {
+                        objResult.status = false;
+                        objResult.message = "Error While Scheduled Mail !!";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                objResult.status = false;
+                objResult.message = ex.ToString();
+            }
+        }
+
+
+
+
+
+
+
+    }
+}

@@ -1,0 +1,6 @@
+.table {
+    font-size: 0.9rem;   /* adjust this value as needed */
+}
+.table td, .table th {
+    font-size: 0.9rem;     /* adjust this value as needed */
+}

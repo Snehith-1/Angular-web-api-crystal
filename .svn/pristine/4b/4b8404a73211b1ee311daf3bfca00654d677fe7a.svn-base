@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.pmr.Models
+{
+    public class MdlPmrTrnGrn : result
+    {
+        public List<Getgrn_lists> Getgrn_lists { get; set; }
+
+    }
+    public class Getgrn_lists : result
+    {
+        public string purchaseorder_date { get; set; }
+        public string purchaseorder_gid { get; set; }
+        public string purchaseorder_status { get; set; }
+        public string vendor_companyname { get; set; }
+        public string costcenter_name { get; set; }
+        public string department_name { get; set; }
+        public string created_by { get; set; }
+        public string branch_name { get; set; }
+
+    }
+}

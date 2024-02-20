@@ -1,0 +1,147 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ems.crm.DataAccess;
+using ems.utilities.Functions;
+using ems.utilities.Models;
+using ems.crm.Models;
+
+namespace ems.crm.Controllers
+
+{
+    [Authorize]
+    [RoutePrefix("api/MailCampaign")]
+    public class MailCampaignController : ApiController
+    {
+        session_values objgetgid = new session_values();
+        logintoken getsessionvalues = new logintoken();
+        DaMailCampaign objdamailcampaign = new DaMailCampaign();
+
+
+        [ActionName("GetMailSummary")]
+        [HttpGet]
+        public HttpResponseMessage GetMailSummary()
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaGetMailSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("MailSend")]
+        [HttpPost]
+        public HttpResponseMessage MailSend(mailsummary_list values)
+        {
+           
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            result objResult = new result();
+            objdamailcampaign.DaMailSend(values, getsessionvalues.user_gid, objResult);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+
+        [ActionName("GetMailEventDelivery")]
+        [HttpGet]
+        public HttpResponseMessage GetMailEventDelivery()
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaGetMailEventDelivery(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMailEventOpen")]
+        [HttpGet]
+        public HttpResponseMessage GetMailEventOpen()
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaGetMailEventOpen(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMailEventClick")]
+        [HttpGet]
+        public HttpResponseMessage GetMailEventClick()
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaGetMailEventClick(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMailEventCount")]
+        [HttpGet]
+        public HttpResponseMessage GetMailEventCount()
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaGetMailEventCount(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("ScheduledMailSend")]
+        [HttpPost]
+        public HttpResponseMessage ScheduledMailSend()
+        {
+
+            HttpRequest httpRequest;
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            httpRequest = HttpContext.Current.Request;
+            result objResult = new result();
+            objdamailcampaign.DaScheduledMailSend(httpRequest, getsessionvalues.user_gid, objResult);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+
+        [ActionName("SaveTemplate")]
+        [HttpPost]
+        public HttpResponseMessage SaveTemplate(mailsummary_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdamailcampaign.DaSaveTemplate(values,getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("TemplateSummary")]
+        [HttpGet]
+        public HttpResponseMessage TemplateSummary()
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaTemplateSummary(values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("SendTemplate")]
+        [HttpPost]
+        public HttpResponseMessage SendTemplate(mailsummary_list values)
+        {
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            objdamailcampaign.DaSendTemplate(values, getsessionvalues.user_gid);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("GetMailView")]
+        [HttpGet]
+        public HttpResponseMessage GetMailView(string mailmanagement_gid)
+        {
+            MdlMailCampaign values = new MdlMailCampaign();
+            objdamailcampaign.DaGetMailView(mailmanagement_gid,values);
+            return Request.CreateResponse(HttpStatusCode.OK, values);
+        }
+
+        [ActionName("MailUpload")]
+        [HttpPost]
+        public HttpResponseMessage MailUpload()
+        {
+            HttpRequest httpRequest;
+            string token = Request.Headers.GetValues("Authorization").FirstOrDefault();
+            getsessionvalues = objgetgid.gettokenvalues(token);
+            httpRequest = HttpContext.Current.Request;
+            result objResult = new result();
+            objdamailcampaign.DaMailUpload(httpRequest, getsessionvalues.user_gid, objResult);
+            return Request.CreateResponse(HttpStatusCode.OK, objResult);
+        }
+    }
+}

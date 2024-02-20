@@ -1,0 +1,77 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using ems.inventory.Models;
+using ems.utilities.Functions;
+using System.Data.Odbc;
+using System.Data;
+//using System.Web;
+//using OfficeOpenXml;
+using System.Configuration;
+using System.IO;
+//using OfficeOpenXml.Style;
+using System.Drawing;
+using System.Net.Mail;
+using static System.Net.Mime.MediaTypeNames;
+using System.Web.UI.WebControls;
+using System.Text;
+
+namespace ems.inventory.DataAccess
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public class DaImsTrnOpeningStock
+    {
+        dbconn objdbconn = new dbconn();
+        cmnfunctions objcmnfunctions = new cmnfunctions();
+        string msSQL = string.Empty;
+        OdbcDataReader objODBCDatareader;
+        DataTable dt_datatable;
+        string msGetGid;
+        int mnResult, mnResult1;
+        public void DaGetImsTrnOpeningstockSummary(MdlImsTrnOpeningStock values)
+        {
+            msSQL = " SELECT a.product_gid,d.stock_gid, a.product_code, a.product_name,  b.productgroup_name, c.productuom_name," +
+                " d.stock_qty as opening_stock,g.branch_name,d.created_date,d.issued_qty," +
+                " e.producttype_name as product_type,d.uom_gid,d.branch_gid,d.display_field,h.location_name " +
+                " FROM ims_trn_tstock d " +
+                " left join pmr_mst_tproduct a on d.product_gid = a.product_gid" +
+                " left join pmr_mst_tproductgroup b on a.productgroup_gid = b.productgroup_gid" +
+                " left join pmr_mst_tproductuom c on d.uom_gid = c.productuom_gid" +
+                " left join pmr_mst_tproducttype e on a.producttype_gid = e.producttype_gid" +
+                " left join ims_mst_tstocktype f on d.stocktype_gid = f.stocktype_gid" +
+                " left join hrm_mst_tbranch g on d.branch_gid = g.branch_gid " +
+                " left join ims_mst_tlocation h on d.location_gid=h.location_gid" +
+                " order by created_date desc";
+               
+            dt_datatable = objdbconn.GetDataTable(msSQL);
+            var getModuleList = new List<stock_list>();
+            if (dt_datatable.Rows.Count != 0)
+            {
+                foreach (DataRow dt in dt_datatable.Rows)
+                {
+                    getModuleList.Add(new stock_list
+                    {
+
+                        created_date = dt["created_date"].ToString(),
+                        branch_name = dt["branch_name"].ToString(),
+                        location_name = dt["location_name"].ToString(),
+                        productgroup_name = dt["productgroup_name"].ToString(),
+                        product_code = dt["product_code"].ToString(),
+                        product_name = dt["product_name"].ToString(),
+                        productuom_name = dt["productuom_name"].ToString(),
+                        opening_stock = dt["opening_stock"].ToString(),
+                      
+
+                    });
+                    values.stock_list = getModuleList;
+                }
+            }
+            dt_datatable.Dispose();
+        }
+    }
+}

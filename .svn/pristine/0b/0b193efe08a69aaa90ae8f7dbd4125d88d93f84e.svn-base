@@ -1,0 +1,78 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AES } from 'crypto-js';
+
+@Component({
+  selector: 'app-smr-trn-salesorder-summary',
+  templateUrl: './smr-trn-salesorder-summary.component.html',
+  styleUrls: ['./smr-trn-salesorder-summary.component.scss']
+})
+export class SmrTrnSalesorderSummaryComponent {
+  reactiveForm!: FormGroup;
+  responsedata: any;
+  salesorder_list: any[] = [];
+  salesproduct_list: any[] = [];
+  getData: any;
+  parameterValue1: any;
+  salesorder_gid: any;
+  constructor(private formBuilder: FormBuilder,public route:ActivatedRoute,public service :SocketService,private router:Router,private ToastrService: ToastrService) {
+  }
+    
+  
+  ngOnInit(): void {
+    debugger
+    this.GetSmrTrnSalesordersummary();
+}
+//// Summary Grid//////
+GetSmrTrnSalesordersummary( )
+
+ {
+  debugger
+  var url = 'SmrTrnSalesorder/GetSmrTrnSalesordersummary'
+  this.service.get(url).subscribe((result: any) => {
+    $('#salesorder_list').DataTable().destroy();
+    this.responsedata = result;
+    this.salesorder_list = this.responsedata.salesorder_list;
+    setTimeout(() => {
+      $('#salesorder_list').DataTable();
+    }, 1);
+
+
+  })
+  
+  
+}
+onview(params:any){
+  const secretKey = 'storyboarderp';
+  const param = (params);
+  const encryptedParam = AES.encrypt(param,secretKey).toString();
+  this.router.navigate(['/smr/SmrTrnSalesorderview',encryptedParam])
+}
+
+add(){
+  this.router.navigate(['/smr/SmrTrnRaiseSalesOrder'])
+} 
+  openModaledit(){}
+  openModaldelete(){}
+  onattach(){}
+  openModalshop(){}
+
+  Details(parameter: string,salesorder_gid: string){
+  this.parameterValue1 = parameter;
+  this.salesorder_gid = parameter;
+
+  var url='SmrTrnSalesorder/GetSalesProductdetails'
+    let param = {
+      salesorder_gid : salesorder_gid 
+    }
+    this.service.getparams(url,param).subscribe((result:any)=>{
+    this.responsedata=result;
+    this.salesproduct_list = result.salesproduct_list;   
+    });
+    
+  
+}
+}

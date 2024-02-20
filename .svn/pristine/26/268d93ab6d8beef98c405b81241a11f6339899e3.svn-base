@@ -1,0 +1,188 @@
+<div style="background-color: white;">
+<div class="card card-bordered" style="background-color: white;">
+    <div class="card-header  d-flex justify-content-center " style="background: rgb(24, 18, 134);background:  radial-gradient(circle, #5c0067 0%, #00d4ff 100%);">
+        <h1 class="card-title fw-bold fs-3"  style="color:white;">Social Media Dashboard</h1>
+    </div>
+
+    <div class="d-flex flex-wrap flex-row  ">
+      <div class="col-lg-1 col-md-1 col-sm-1"></div>
+      <div class="col-4 col-lg-3 m-3 ms-0 ms-lg-4 shadow-lg p-3 mb-5 bg-white rounded" style="height:30%;"> 
+ 
+        <div class="card-header justify-content-center "style="background-color:#dfdede">
+         <h3 class="card-title fs-4 fw-bold"><i class="bi bi-shop" style="font-size:20px;font-weight: bolder;background-color: #c569c9;color:white;"></i> &nbsp; Shopify Store : {{store_name}} </h3>
+         <div class="card-toolbar"> </div>
+        </div>
+    
+ 
+ <div class="row d-flex flex-wrap m-4 " >
+  
+ <br>
+   <div class="card2" style="border-left: 10px solid  #57e234 !important;">
+  
+     <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#57e234;"></i>&nbsp;&nbsp; <b style="color:#57e234;">Product Count </b> </span>
+     <div>
+       <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+         <b>{{product_count}}</b>
+       </p>
+     </div>
+   </div>&nbsp;&nbsp;&nbsp;&nbsp;
+ 
+   <div class="card2" style="border-left: 10px solid  #f1a32d !important;">
+    <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#fc9904;"></i>&nbsp;&nbsp; <b style="color:#fc9904;">Customer Count </b> </span>
+    <div>
+      <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+        <b>{{customer_count}}</b>
+      </p>
+    </div>
+   </div>
+   <br><br>
+   
+ </div>
+   <div class="row d-flex flex-wrap m-4 " >
+    <div class="card2" style="border-left: 10px solid  #fa78e4 !important;">
+      <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#fa78e4;"></i>&nbsp;&nbsp; <b style="color:#fa78e4;">Order Count </b> </span>
+      <div>
+        <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+          <b>{{order_count}}</b>
+        </p>
+      </div>
+    </div>
+  
+  </div>
+ 
+
+    
+     
+    </div> 
+    <div class="col-4 col-lg-3 m-3 ms-0 ms-lg-4 shadow-lg p-3 mb-5 bg-white rounded" style="height:30%;"> 
+ 
+      <div class="card-header justify-content-center "style="background-color:#dfdede">
+       <h3 class="card-title fs-4 fw-bold"><i class="bi bi-whatsapp" style="font-size:20px;font-weight: bolder;color:white;background-color: #57e234;"></i> &nbsp; WhatsApp </h3>
+       <div class="card-toolbar"> </div>
+      </div>
+  
+
+<div class="row d-flex flex-wrap m-4 " >
+
+<br>
+ <div class="card2" style="border-left: 10px solid  #57e234 !important;">
+
+   <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#57e234;"></i>&nbsp;&nbsp; <b style="color:#57e234;">Contact Count </b> </span>
+   <div>
+     <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+       <b>10</b>
+     </p>
+   </div>
+ </div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+ <div class="card2" style="border-left: 10px solid  #f1a32d !important;">
+  <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#fc9904;"></i>&nbsp;&nbsp; <b style="color:#fc9904;">Message Count </b> </span>
+  <div>
+    <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+      <b>10</b>
+    </p>
+  </div>
+ </div>
+ <br><br>
+ 
+</div>
+ <div class="row d-flex flex-wrap m-4 " >
+  <div class="card2" style="border-left: 10px solid  #fa78e4 !important;">
+    <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#fa78e4;"></i>&nbsp;&nbsp; <b style="color:#fa78e4;">Outgoing Count </b> </span>
+    <div>
+      <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+        <b>10</b>
+      </p>
+    </div>
+  </div>&nbsp;&nbsp;&nbsp;&nbsp;
+  <div class="card2" style="border-left: 10px solid  #788bfa !important;">
+    <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#788bfa;"></i>&nbsp;&nbsp; <b style="color:#788bfa;">Incoming Count </b> </span>
+    <div>
+      <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+        <b>10</b>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+
+  
+   
+  </div> 
+  <div class="col-4 col-lg-3 m-3 ms-0 ms-lg-4 shadow-lg p-3 mb-5 bg-white rounded" style="height:30%;"> 
+ 
+    <div class="card-header justify-content-center "style="background-color:#dfdede">
+     <h3 class="card-title fs-4 fw-bold"><i class="bi bi-envelope" style="font-size:20px;font-weight: bolder;background-color:rgb(211, 72, 72);color:white;"></i> &nbsp; Email </h3>
+     <div class="card-toolbar"> </div>
+    </div>
+
+
+<div class="row d-flex flex-wrap m-4 " >
+
+<br>
+<div class="card2" style="border-left: 10px solid  #57e234 !important;">
+
+ <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#57e234;"></i>&nbsp;&nbsp; <b style="color:#57e234;">Sent Count </b> </span>
+ <div>
+   <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+     <b>10</b>
+   </p>
+ </div>
+</div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+<div class="card2" style="border-left: 10px solid  #4604fc !important;">
+<span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#4604fc;;"></i>&nbsp;&nbsp; <b style="color:#4604fc;">Draft Count </b> </span>
+<div>
+  <p class="num" style="text-align: center ;font-size:16px ;color: black;padding-top: 4px">
+    <b>10</b>
+  </p>
+</div>
+</div>
+<br><br>
+
+</div>
+<div class="row d-flex flex-wrap m-4 " >
+  
+
+<div class="card2" style="border-left: 10px solid  #f1a32d !important;">
+<span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#fc9904;"></i>&nbsp;&nbsp; <b style="color:#fc9904;">Devliver Count </b> </span>
+<div>
+  <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+    <b>10</b>
+  </p>
+</div>
+</div>&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="card2" style="border-left: 10px solid  #fa78e4 !important;">
+  <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#fa78e4;"></i>&nbsp;&nbsp; <b style="color:#fa78e4;">Open Count </b> </span>
+  <div>
+    <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+      <b>10</b>
+    </p>
+  </div>
+</div>
+
+</div>
+<div class="row d-flex flex-wrap m-4 " >
+ 
+  <div class="card2" style="border-left: 10px solid  #1fc5db !important;">
+    <span class="d-flex justify-content-center" style="font-size:12px ;margin-top:10px;"><i class="bi bi-file-text-fill" style="font-size: 16px;color:#1fc5db;"></i>&nbsp;&nbsp; <b style="color:#1fc5db;">Click Count </b> </span>
+    <div>
+      <p class="num" style="text-align: center ;font-size:16px ;color: black ;padding-top: 4px">
+        <b>10</b>
+      </p>
+    </div>
+  </div>
+  
+  </div>
+
+
+ 
+</div> 
+  </div>
+  
+</div>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+

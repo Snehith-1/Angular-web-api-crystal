@@ -1,0 +1,51 @@
+
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+          <h3 class="card-title">Over All Report</h3>
+      </div>
+
+      <br>
+      <div class="col me-5 ">
+        <button title="Export Excel" type="button" class="btn btn-icon btn-sm bg-export me-2 float-end"
+                (click)="reportexportExcel()"><i class="bi bi-file-earmark-arrow-down"></i></button>  
+      </div>
+    </div>
+  <div class="table-responsive">
+    
+    <div class="card card-body m-3  bg-white rounded">
+      <table id="vendorledger_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+        <thead>
+          <tr class="fw-bold fs-5 text-nowrap bg-lightblue text-blue">
+            <th>Purchase Requisition Ref No</th>
+            <th>Branch Name</th>
+            <th>Purchase Order Ref No</th>
+            <th>GRN Ref No</th>
+            <th>Invoice Ref No</th>
+            <th>Payment Ref No</th>
+            <th>Over All Status</th>
+            <th>GRN Status</th>
+            <th>Invoice Status</th>
+            <th>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>   
+            
+          <tr *ngFor="let data of overallreport_list;">
+            <td>{{data.purchaseorder_gid}}</td>
+            <td>{{data.branch_name}}</td>
+            <td>{{data.purchaseorder_gid}}</td>
+             <td>{{data.grn_gid}}</td>
+            <td>{{data.invoice_gid}}</td>
+            <td>{{data.payment_gid}}</td>
+            <td>{{data.purchaseorder_status}}</td>
+            <td>{{data.grn_flag}}</td>
+            <td>{{data.invoice_flag}}</td>
+            <td>{{data.payment_flag}}</td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+

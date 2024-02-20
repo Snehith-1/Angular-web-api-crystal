@@ -1,0 +1,27 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup,} from '@angular/forms';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+@Component({
+  selector: 'app-smr-trn-quotation-summary',
+  templateUrl: './smr-trn-quotation-summary.component.html',
+  styleUrls: ['./smr-trn-quotation-summary.component.scss']
+})
+export class SmrTrnQuotationSummaryComponent {
+
+  responsedata: any;
+  quotation_list: any[] = [];
+  getData: any;
+  constructor(private formBuilder: FormBuilder,public service :SocketService,private route:Router,private ToastrService: ToastrService) {
+  }
+
+  
+  openModaledit(){}
+  openModaldelete(){}
+
+
+}
+
+
+

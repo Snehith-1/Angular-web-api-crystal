@@ -1,0 +1,164 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace ems.pmr.Models
+{
+
+
+    public class MdlPmrTrnInvoice : result
+    {
+        public List<invoice_list> invoice_list { get; set; }
+
+        public List<invoice_lista> invoice_lista { get; set; }
+        public List<breadcrumb_list> breadcrumb_list { get; set; }
+        public List<GetPurchaseTypeDropdown> GetPmrPurchaseDtl { get; set; }
+
+        public List<GetEditInvList> invoiceaddcomfirm_list { get; set; }
+        public List<invoice_lists> invoice_lists { get; set; }
+        public List<pblinvoice_list> pblinvoice_list { get; set; }
+        public List<taxnamedropdown> taxnamedropdown { get; set; }
+
+
+    }
+
+    public class invoice_list : result
+    {
+        public string vendor_gid { get; set; }
+        public string invoice_gid { get; set; }
+        public string serviceorder_gid { get; set; }
+        public string purchaseorder_date { get; set; }
+        public string purchaseorder_gid { get; set; }
+        public string branch_name { get; set; }
+        public string vendor_companyname { get; set; }
+        public string vendor_contact_person { get; set; }
+        public string costcenter_name { get; set; }
+        public string invoice_amount { get; set; }
+        public string total_amount { get; set; }
+        public string outstanding_amount { get; set; }
+
+
+    }
+
+    public class invoice_lista : result
+    {
+        public string invoice_gid { get; set; }
+        public string invoice_date { get; set; }
+        public string payment_date { get; set; }
+        public string invoice_refno { get; set; }
+        public string vendor_gid { get; set; }
+        public string vendorinvoiceref_no { get; set; }
+        public string vendor_companyname { get; set; }
+        public string costcenter_name { get; set; }
+        public string invoice_amount { get; set; }
+        public string invoice_type { get; set; }
+        public string invoice_status { get; set; }
+        public string overall_status { get; set; }
+
+
+
+
+    }
+    public class GetPurchaseTypeDropdown : result
+    {
+        public string account_gid { get; set; }
+        public string purchasetype_name { get; set; }
+    }
+    public class GetEditInvList : result
+    {
+        public string branch_name { get; set; }
+        public string serviceorder_gid { get; set; }
+        public string payment_term { get; set; }
+        public string payment_date { get; set; }
+        public string invoice_gid { get; set; }
+        public string serviceorder_date { get; set; }
+        public string vendor_companyname { get; set; }
+        public string email_id { get; set; }
+        public string contactperson_name { get; set; }
+        public string exchange_rate { get; set; }
+        public string currency_code { get; set; }
+        public string invoice_remarks { get; set; }
+        public string invoice_date { get; set; }
+        public string addon_amount { get; set; }
+        public string discount_amount { get; set; }
+        public string invoice_refno { get; set; }
+        public string product_name { get; set; }
+        public string description { get; set; }
+        public string quantity { get; set; }
+        public string unit_price { get; set; }
+        public string purchasetype_name { get; set; }
+        public string tax_amount1 { get; set; }
+        public string tax_amount2 { get; set; }
+        public string tax_amount3 { get; set; }
+        public string tax_name1 { get; set; }
+        public string tax_name2 { get; set; }
+        public string tax_name3 { get; set; }
+        public string vendor_gid { get; set; }
+        public string tax_amount { get; set; }
+        public string outstanding_amount { get; set; }
+    }
+
+    public class invoice_lists : result
+    {
+        public string branch_name { get; set; }
+        public string invoice_gid { get; set; }
+        public string contact_telephonenumber { get; set; }
+        public string invoice_date { get; set; }
+        public string invoice_refno { get; set; }
+        public string contactperson_name { get; set; }
+        public string exchange_rate { get; set; }
+        public string vendor_companyname { get; set; }
+        public string vendor_address { get; set; }
+        public string currency_code { get; set; }
+        public string invoice_remarks { get; set; }
+        public string product_code { get; set; }
+        public string product_name { get; set; }
+        public string productuom_name { get; set; }
+        public string qty_invoice { get; set; }
+        public string product_price { get; set; }
+        public string product_totalprice { get; set; }
+        public string discount_amount { get; set; }
+        public string tax_name1 { get; set; }
+        public string tax_amount1 { get; set; }
+        public string tax_name2 { get; set; }
+        public string tax_amount2 { get; set; }
+        public string tax_name3 { get; set; }
+        public string tax_amount3 { get; set; }
+        public string product_remarks { get; set; }
+        public string discount_percentage { get; set; }
+    }
+
+    public class pblinvoice_list : result
+    {
+        public DateTime invoice_date { get; set; }
+        public DateTime payment_date { get; set; }
+        public string invoice_refno { get; set; }
+        public string branch_name { get; set; }
+        public string invoice_gid { get; set; }
+        public string vendor_gid { get; set; }
+        public string grand_total { get; set; }
+        public string invoice_amount { get; set; }
+        public string payment_term { get; set; }
+        public string discount_amount { get; set; }
+        public string addon_amount { get; set; }
+        public string currency_code { get; set; }
+        public string exchange_rate { get; set; }
+        public string branch_gid { get; set; }
+        public string invoice_remarks { get; set; }
+        public string serviceorder_gid { get; set; }
+        public string invoice_from { get; set; }
+    }
+
+    public class taxnamedropdown : result
+    {
+        public string tax_name { get; set; }
+        public string tax_gid { get; set; }
+        public string tax_percentage { get; set; }
+    }
+
+}

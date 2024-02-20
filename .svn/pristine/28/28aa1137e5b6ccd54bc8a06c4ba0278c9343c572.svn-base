@@ -1,0 +1,11 @@
+.error-text {
+
+    color: red;
+
+  }
+
+   //Flag Mobile Input box width 
+   :host ::ng-deep .custom-width { 
+    width: 357px;
+  /* Adjust the width to your preference */
+  }

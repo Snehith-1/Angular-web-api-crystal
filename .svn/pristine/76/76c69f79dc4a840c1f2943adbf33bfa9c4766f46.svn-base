@@ -1,0 +1,8 @@
+.download-button {
+  background-color: #5297ec;
+  /* Set the background color */
+  border: 1px solid #201d1d;
+  /* Add a border for visual separation */
+  color: #eb7f7f;
+  /* Text color */
+}

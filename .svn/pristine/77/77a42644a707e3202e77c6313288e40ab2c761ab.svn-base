@@ -1,0 +1,90 @@
+.grey-box {
+    background-color: grey;
+    padding: 10px; 
+    display: inline-block; 
+}
+.breadcrumb-item a {
+    color: white;
+}
+
+.breadcrumb-item span.bullet {
+    background-color: white;
+}
+/* Button Styles */
+.reload-button {
+    background-color: #00ab41; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.reload-button:hover {
+    background-color: #00c04b; /* Change background color on hover */
+}
+/* Button Styles */
+.reload-button1 {
+    background-color: #ecb0b0; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.reload-button1:hover {
+    background-color: #ecb0b0; /* Change background color on hover */
+}
+/* Button Styles */
+.reload-button2 {
+    background-color: #f01e2c; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.reload-button2:hover {
+    background-color: #de0a26; /* Change background color on hover */
+}
+/* Button Styles */
+.reload-button3 {
+    background-color: #546cf7; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.reload-button3:hover {
+    background-color: #5f84fd; /* Change background color on hover */
+}
+/* Button Styles */
+.reload-button4 {
+    background-color: #c0b3f0; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.reload-button4:hover {
+    background-color: #ecb0b0; /* Change background color on hover */
+}
+
+.star-button {
+    background-color: #49c6f8; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.star-button:hover {
+    background-color: #fae421; /* Change background color on hover */
+}
+
+/* New Mail Button */ 
+.mail-button {
+    background-color: #009EF7; /* Set the background color */
+    border: 1px solid #201d1d; /* Add a border for visual separation */
+    color: #333; /* Text color */
+}
+
+/* Hover State */
+.mail-button:hover {
+    background-color: #008cff; /* Change background color on hover */
+}

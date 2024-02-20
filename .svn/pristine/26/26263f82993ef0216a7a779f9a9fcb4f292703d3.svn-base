@@ -1,0 +1,248 @@
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SocketService } from 'src/app/ems.utilities/services/socket.service';
+import { ToastrService } from 'ngx-toastr';
+import { AES } from 'crypto-js';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
+interface Enquiry{
+  leadstage_gid: string;
+  enquiry_gid: string;
+  leadstage_name: string;
+  internal_notes: string;
+  campaign_title: string;
+  employee_name: string;
+  campaign_gid: string;
+  branch_gid: string;
+  campaign: string;
+  created_by: string;
+  vendor_gid:string;
+
+
+}
+
+
+@Component({
+  selector: 'app-pmr-trn-raise-enquiry',
+  templateUrl: './pmr-trn-raise-enquiry.component.html',
+  styleUrls: ['./pmr-trn-raise-enquiry.component.scss']
+})
+export class PmrTrnRaiseEnquiryComponent {
+
+  customerenquiryForm: FormGroup | any;
+  ReassignForm: FormGroup | any;
+  cusenquiry_list: any [] = [];
+  leads_list: any [] = [];
+  Team_list: any [] = [];
+  Employee_list: any [] = []; 
+  enquiry!:Enquiry;
+  responsedata: any;
+  selectstage: any;
+  selectteam: any;
+  selectemp:any;
+  parameterValue1: any;
+  getData: any;
+  
+
+
+
+  constructor(private formBuilder: FormBuilder,private router:Router, private ToastrService: ToastrService, public service: SocketService, private route: ActivatedRoute,private NgxSpinnerService:NgxSpinnerService) {
+    this.enquiry = {} as Enquiry;
+  }
+
+  ngOnInit(): void {
+    this.GetCustomerEnquirySummary();
+
+    this.customerenquiryForm = new FormGroup ({
+      enquiry_gid: new FormControl(''),
+      leadstage_gid: new FormControl(''),
+      leadstage_name : new FormControl (this.enquiry.leadstage_name, [Validators.required]),
+      internal_notes: new FormControl (this.enquiry. internal_notes, [Validators.required])
+    });
+
+    this.ReassignForm = new FormGroup ({
+      enquiry_gid: new FormControl(''),
+      campaign_gid: new FormControl(''),
+      employee_gid: new FormControl(''),
+      campaign_title: new FormControl(''),
+      branch_name: new FormControl(''),
+      employee_name : new FormControl ('') 
+    });
+
+    ///// Lead Dropdrown /////
+    // var url = 'SmrTrnCustomerEnquiry/GetLeadDtl'
+    // this.service.get(url).subscribe((result: any) => {
+    // this.responsedata = result;
+    // this.leads_list = this.responsedata.GetLeadDtl;
+
+    // });
+
+    ////// Team Dropdown ////////
+  // var url = 'SmrTrnCustomerEnquiry/GetTeamDtl'
+  // this.service.get(url).subscribe((result: any)=>{
+  //   this.responsedata = result;
+  //   this.Team_list = this.responsedata.GetTeamDtl;
+  // });
+
+  ////// Employee Dropdown ////////
+  // var url = 'SmrTrnCustomerEnquiry/GetEmployeeDtl'
+  // this.service.get(url).subscribe((result: any)=>{
+  //   this.responsedata = result;
+  //   this.Employee_list = this.responsedata.GetEmployeeDtl;
+  // });
+ 
+  }
+
+  GetCustomerEnquirySummary(){
+debugger
+// this.NgxSpinnerService.show();
+      var api = 'PmrTrnRaiseEnquiry/GetVendorEnquirySummary';
+      this.service.get(api).subscribe((result:any) => {
+        $('#cusenquiry_list').DataTable().destroy();
+        this.responsedata = result;
+        this.cusenquiry_list = this.responsedata.cusenquiry_list;
+        setTimeout(()=>{  
+          $('#cusenquiry_list').DataTable();
+        }, 1);
+        // this.NgxSpinnerService.hide();
+      });
+    
+    }
+    
+
+    ////////// Close Popup Validation ////////////
+    get leadstage_name() {
+      return this.customerenquiryForm.get('leadstage_name')!;
+    }
+   
+  /////// Re-Assign Popup Validation ////////
+  get campaign_title(){
+    return this.ReassignForm.get('campaign_title')!;
+  }
+
+  get employee_name(){
+    return this.ReassignForm.get('employee_name')!;
+  }
+  
+
+  onadd()
+  {
+        this.router.navigate(['/pmr/PmrTrnRaiseEnquiryadd']);
+
+  }
+  onview(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    const encryptedParam = AES.encrypt(param,secretKey).toString();
+    this.router.navigate(['/pmr/PmrTrnVendorenquiryView',encryptedParam]) 
+  }
+  // openModaledit(){
+  //   // const secretKey = 'storyboarderp';
+  //   //   const param = (params);
+  //   //   const encryptedParam = AES.encrypt(param,secretKey).toString();,encryptedParam
+  //     this.router.navigate(['/smr/SmrTrnEditCustomerEnquiry'])
+  // }
+  openModalclose(){
+
+  }
+
+  ////// Close Enquiry starts ////////
+
+
+  // onsubmit(){
+  //   if (this.customerenquiryForm.value.leadstage_name != null && this.customerenquiryForm.value.leadstage_name != '') {
+  //     for (const control of Object.keys(this.customerenquiryForm.controls)) {
+  //       this.customerenquiryForm.controls[control].markAsTouched();
+  //     }
+  //     this.customerenquiryForm.value;
+
+      
+  //     var url = 'SmrTrnCustomerEnquiry/GetUpdatedCloseEnquiry'
+
+  //     this.service.post(url,this.customerenquiryForm.value).pipe().subscribe((result:any)=>{
+  //       this.responsedata=result;
+  //       if(result.status ==false){
+  //         this.ToastrService.warning(result.message)
+  //         this.GetCustomerEnquirySummary();
+  //       }
+  //       else{
+  //         this.ToastrService.success(result.message)
+  //         this.GetCustomerEnquirySummary();
+  //       }
+  //   }); 
+
+  //   }
+  //   else {
+  //     this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+  //   }
+
+  // }
+  ///// Close Enquiry Ends //////
+
+
+  ////// Re-assing Starts //////
+
+  openModal(parameter: string){
+    this.parameterValue1 = parameter;
+    this.ReassignForm.get("branch_name")?.setValue(this.parameterValue1.branch_name);
+    this.ReassignForm.get("enquiry_gid")?.setValue(this.parameterValue1.enquiry_gid);
+  }
+ 
+  // onupdate(){
+
+  //   if (this.ReassignForm.value.employee_name != null && this.ReassignForm.value.employee_name != '') {
+  //     for (const control of Object.keys(this.ReassignForm.controls)) {
+  //       this.ReassignForm.controls[control].markAsTouched();
+  //     }
+  //     this.ReassignForm.value;
+
+      
+  //     var url = 'SmrTrnCustomerEnquiry/GetUpdatedReAssignEnquiry'
+
+  //     this.service.post(url,this.ReassignForm.value).pipe().subscribe((result:any)=>{
+  //       this.responsedata=result;
+  //       if(result.status ==false){
+  //         this.ToastrService.warning(result.message)
+  //         this.GetCustomerEnquirySummary();
+  //       }
+  //       else{
+  //         this.ToastrService.success(result.message)
+  //         this.GetCustomerEnquirySummary();
+  //       }
+  //   }); 
+
+  //   }
+  //   else {
+  //     this.ToastrService.warning('Kindly Fill All Mandatory Fields !! ')
+  //   }
+
+
+  // }
+
+  onclose(){
+    this.customerenquiryForm.reset();
+  }
+  
+  openrequest(params:any){
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    console.log(param)
+    const encryptedParam = AES.encrypt(param, secretKey).toString();
+    this.router.navigate(['./smr/SmrTrnRaiseproposal', encryptedParam])
+  }
+  oncloses(){
+    this.ReassignForm.reset();
+  }
+  
+  openquote(params:any){
+    debugger
+    const secretKey = 'storyboarderp';
+    const param = (params);
+    console.log(param)
+    const encryptedParam = AES.encrypt(param, secretKey).toString();
+    this.router.navigate(['./smr/SmrTrnRaisequote', encryptedParam])
+  }
+}
+

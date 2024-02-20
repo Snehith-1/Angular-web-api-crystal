@@ -1,0 +1,51 @@
+.card1 {
+    width: auto;
+    height: 190px;
+    background: #2ba6cb;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  }
+  .primary-button {
+    background-color: #0A66C3;
+    background: #0A66C3;
+    
+    }
+    
+    .secondary-button {
+    background-color: #b0deec;
+    
+    }
+  .card2 {
+    
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    width: 400px;
+	height: 410px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 7px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	padding: 1rem;
+}
+
+  .card2 h2{
+    color: #0A66C3;
+    font-size: 1.6rem;
+}
+  
+.card2 h2 i{
+    font-size: 1.8rem;
+    padding-left: .1rem;
+}
+  
+
+img {
+    border-radius: 50%;
+    width: 100px;
+    height: 90px;
+    margin-top: -30px;
+   
+}

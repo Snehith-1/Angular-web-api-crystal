@@ -1,0 +1,235 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BA1EE62A-6A48-4825-BABB-68F6A4833033}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ems.hrm</RootNamespace>
+    <AssemblyName>ems.hrm</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44389</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=6.2.10.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.6.2.10\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.1.1.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.Interfaces.6.1.1\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.1.1.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.System.Drawing.6.1.1\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OfficeOpenXml.Extends, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\OfficeOpenXml.Extends.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Site.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\ApplyLeaveController .cs" />
+    <Compile Include="Controllers\AppointmentOrderController.cs" />
+    <Compile Include="Controllers\ApproveleaveController.cs" />
+    <Compile Include="Controllers\BiometricController.cs" />
+    <Compile Include="Controllers\EmployeeOnboardController.cs" />
+    <Compile Include="Controllers\HRDocumentController.cs" />
+    <Compile Include="Controllers\HrmMasterController.cs" />
+    <Compile Include="Controllers\HrmTrnAdmincontrolController.cs" />
+    <Compile Include="Controllers\HrmTrnAssetcustodianController.cs" />
+    <Compile Include="Controllers\HrmTrnDashboardController.cs" />
+    <Compile Include="Controllers\HrmTrnProfileManagementController.cs" />
+    <Compile Include="Controllers\IAttendanceController.cs" />
+    <Compile Include="Controllers\LeaveGradeController.cs" />
+    <Compile Include="Controllers\LeaveopeningController.cs" />
+    <Compile Include="Controllers\LeaveTypeGradeController.cs" />
+    <Compile Include="Controllers\ManageRoleController.cs" />
+    <Compile Include="Controllers\MyLeaveController .cs" />
+    <Compile Include="Controllers\ProbationperiodController.cs" />
+    <Compile Include="Controllers\ShiftTypeController.cs" />
+    <Compile Include="DataAccess\DaApplyLeave.cs" />
+    <Compile Include="DataAccess\DaAppointmentOrder.cs" />
+    <Compile Include="DataAccess\DaApproveleave.cs" />
+    <Compile Include="DataAccess\DaBiometric.cs" />
+    <Compile Include="DataAccess\DaEmployeeOnboard.cs" />
+    <Compile Include="DataAccess\DaHRDocument.cs" />
+    <Compile Include="DataAccess\DaHrmMaster.cs" />
+    <Compile Include="DataAccess\DaHrmTrnAdmincontrol.cs" />
+    <Compile Include="DataAccess\DaHrmTrnAssetcustodian.cs" />
+    <Compile Include="DataAccess\DaHrmTrnDashboard.cs" />
+    <Compile Include="DataAccess\DaHrmTrnProfileManagement.cs" />
+    <Compile Include="DataAccess\DaIAttendance.cs" />
+    <Compile Include="DataAccess\DaLeaveGrade.cs" />
+    <Compile Include="DataAccess\DaLeaveopening.cs" />
+    <Compile Include="DataAccess\DaLeaveTypeGrade.cs" />
+    <Compile Include="DataAccess\DaManageRole.cs" />
+    <Compile Include="DataAccess\DaMyLeave.cs" />
+    <Compile Include="DataAccess\DaProbationperiod.cs" />
+    <Compile Include="DataAccess\DaShifttype.cs" />
+    <Compile Include="DataAccess\hrClass.cs" />
+    <Compile Include="Models\MdlApplyLeave.cs" />
+    <Compile Include="Models\MdlAppointmentOrder.cs" />
+    <Compile Include="Models\MdlApproveleave.cs" />
+    <Compile Include="Models\MdlBiometric.cs" />
+    <Compile Include="Models\Mdleavetypecs.cs" />
+    <Compile Include="Models\MdlEmployeeOnboard.cs" />
+    <Compile Include="Models\MdlHRDocument.cs" />
+    <Compile Include="Models\MdlHrmMaster.cs" />
+    <Compile Include="Models\MdlHrmTrnAdmincontrol.cs" />
+    <Compile Include="Models\MdlHrmTrnAssetcustodian.cs" />
+    <Compile Include="Models\MdlHrmTrnDashboard.cs" />
+    <Compile Include="Models\MdlHrmTrnProfileManagement.cs" />
+    <Compile Include="Models\MdlIAttendance.cs" />
+    <Compile Include="Models\MdlLeaveGrade.cs" />
+    <Compile Include="Models\MdlLeaveTypeGrade.cs" />
+    <Compile Include="Models\MdlManageRole.cs" />
+    <Compile Include="Models\MdlMyLeave.cs" />
+    <Compile Include="Models\MdlOpeningleave.cs" />
+    <Compile Include="Models\MdlProbationperiod.cs" />
+    <Compile Include="Models\MdlShiftType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ems.utilities\ems.utilities.csproj">
+      <Project>{2efa6a9b-095e-47bc-9468-43b8ed5a7128}</Project>
+      <Name>ems.utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StoryboardAPI.csproj">
+      <Project>{c0f7a8b5-d9a1-4cc7-97c8-94afb81567aa}</Project>
+      <Name>StoryboardAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="App_Start\" />
+    <Folder Include="Data\" />
+    <Folder Include="Views\HrmTrnAdmincontrol\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62751</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:86/StoryboardAPI/ems.hrm</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

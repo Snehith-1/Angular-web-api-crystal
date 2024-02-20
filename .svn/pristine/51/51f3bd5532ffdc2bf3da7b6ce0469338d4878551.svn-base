@@ -1,0 +1,150 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+          <h3 class="card-title">Customer</h3>
+      </div>
+
+      <br>
+      <div class="col me-3 ">
+        <button title="Import Excel" class="btn btn-icon btn-sm bg-success me-2 float-end "  routerLink="/smr/SmrTrnCustomerImportExcel"><span class="fas fa-file-excel text-white  fs-2"></span>  
+        </button>
+        <button title="Add Customer" class="btn-primary btn-sm text-white me-2 float-end" routerLink="/smr/SmrTrnCustomeradd">
+
+          Add Customer</button>  
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">         
+        <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrTrnCustomerRetailer">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-violet" >
+               <div class="card-body12">
+                   <div class="d-flex align-items-center">
+                       <div>
+                        <h5 class="mb-0 text-secondary">Retailer</h5>
+                        <div *ngFor="let ReatailerCount_List of customercount_list">
+                            <h4 class="my-1 text-info">{{ReatailerCount_List.retailer_counts}}</h4>
+                            </div>
+                       </div>
+                       <div class="widgets-icons-2 rounded-circle bg-gradient-violet text-white ms-auto"><i class="fa-solid fa-street-view"></i>
+                       </div>
+                   </div>
+               </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrTrnCustomerCorporate">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-darkblue" >
+               <div class="card-body12">
+                   <div class="d-flex align-items-center">
+                       <div>
+                        <h5 class="mb-0 text-secondary">Corporate</h5>
+                        <div *ngFor="let Corporatecount_list of customercount_list">
+                        <h4 class="my-1 text-info">{{Corporatecount_list.corporate_count}}</h4>
+                        </div>
+                       </div>
+                       <div class="widgets-icons-2 rounded-circle bg-gradient-darkblue text-white ms-auto"><i class="fa-solid fa-users-between-lines"></i>
+                       </div>
+                   </div>
+               </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrTrnCustomerDistributor">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-darkgreen">
+               <div class="card-body12">
+                   <div class="d-flex align-items-center">
+                       <div>
+                        <h5 class="mb-0 text-secondary">Distributor</h5>
+                        <div *ngFor="let Distributorcount_list of customercount_list">
+                            <h4 class="my-1 text-info">{{Distributorcount_list.distributor_count}}</h4>
+                        </div>
+                       </div>
+                       <div class="widgets-icons-2 rounded-circle bg-gradient-darkgreens text-white ms-auto"><i class="fa-solid fa-users-rectangle"></i>
+                       </div>
+                   </div>
+               </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-3" routerLink="/smr/SmrTrnCustomerSummary">
+            <div class="cardHead radius-10 border-start border-0 border-3 border-brown" style="background-color: #fcd3d3;" >
+               <div class="card-body12">
+                   <div class="d-flex align-items-center">
+                       <div>
+                        <h5 class="mb-0 text-secondary">Total Customer</h5>
+                        <div *ngFor="let TotalCustomercount_list of customercount_list">
+                            <h4 class="my-1 text-info">{{TotalCustomercount_list.total_count}}</h4>
+                        </div>
+                       </div>
+                       <div class="widgets-icons-2 rounded-circle bg-gradient-brown text-white ms-auto"><i class="fa-solid fa-users"></i>
+                       </div>
+                   </div>
+               </div>
+            </div>
+          </div>
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded" >
+        <table id="smrcustomer_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue align-middle">
+              <th>S.NO </th>
+              <th>Customer Code</th>
+              <th>Customer </th>
+              <th>Customer Type</th>
+              <th>Contact Details</th>
+              <!-- <th>Branch Details </th>
+              <th>Contact Person</th> -->
+              <th>Region</th>
+              <th>Customer Since</th>
+              <th>Last Order Raised On</th>
+           
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of smrcustomer_list; let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{data.customer_id}}</td>
+              <td>{{data.customer_name}}</td>
+              <td>{{data.customer_type}}</td>
+              <td>{{data.contact_details}}</td>
+              <!-- <td>{{data.created_by}}</td>
+              <td>{{data.created_date}}</td> -->
+              <td>{{data.region_name}}</td>
+              <td style="width:14%">{{data.customer_since}}</td>
+              <td>{{data.last_order_date}}</td>
+          
+              <td class="text-center text-nowrap"> 
+  
+                 <button title="View" type="button" class="btn btn-icon btn-sm bg-primary me-2" (click)="onview(data.customer_gid)" ><span class="fa-solid fa-eye text-white  fs-6"></span></button>
+                 <!-- <button title=" Price Segment" type="button" (click)="onprod(data.customer_gid)" class="btn btn-icon btn-sm bg-info me-2"><span class="fas fa-ticket text-white fs-6"></span> </button>  -->
+                 <button title=" Price Segment" type="button" (click)="onprod(data.customer_gid)" class="btn btn-icon btn-sm bg-info me-2"><span class="fas fa-ticket text-white fs-6"></span> </button>  
+                 <button title="Delete" type="button" (click)="openModaldelete(data.customer_gid)" data-bs-toggle="modal"data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-danger me-2"><span class="fa-solid fa-trash text-white  fs-6"></span></button>
+                 <button title="Additional Information" type="button" class="btn btn-icon btn-sm bg-warning me-2" (click)="onaddinfo()" ><span class="fa-solid fa-book text-white  fs-6"></span></button> 
+                 <!-- <button title=" Branch" type="button" (click)="onbranch()" class="btn btn-icon btn-sm bg-warning me-2"><span class="fas fa-code-branch text-white fs-6"routerLink="/crm/CrmTrnLeadBankbranch"></span> </button>   -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal" id="myModaldelete" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="text-center my-4">
+              <h2><b>Are you sure?</b></h2>
+              <br>
+              <p style="display: block;">Do You Want To Delete the Record ?</p>
+            <div class="text-center my-4">
+              <button class="btn-primary btn-sm text-white me-2"  data-bs-dismiss="modal">
+                  <i class="fas fa-close text-white"></i> &nbsp;Close
+                  </button>&nbsp;
+              <button class="btn-danger btn-sm text-white me-4"  (click)="ondelete()"  data-bs-dismiss="modal" >          
+                  <i class="fas fa-trash text-white fs-5 "></i> &nbsp;Delete
+              </button>
+             
+      
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+  

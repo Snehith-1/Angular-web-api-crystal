@@ -1,0 +1,816 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{52E9D902-A017-44FB-81E7-115106B331D0}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>print</RootNamespace>
+    <AssemblyName>print</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MyType>Custom</MyType>
+    <UseIISExpress>false</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>print.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DocumentationFile>print.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Collections.Specialized" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Text" />
+    <Import Include="System.Text.RegularExpressions" />
+    <Import Include="System.Web" />
+    <Import Include="System.Web.Caching" />
+    <Import Include="System.Web.SessionState" />
+    <Import Include="System.Web.Security" />
+    <Import Include="System.Web.Profile" />
+    <Import Include="System.Web.UI" />
+    <Import Include="System.Web.UI.WebControls" />
+    <Import Include="System.Web.UI.WebControls.WebParts" />
+    <Import Include="System.Web.UI.HtmlControls" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EMS_print\crm_trn_opendcadd.aspx" />
+    <Content Include="EMS_print\crm_trn_quatationinvoise.aspx" />
+    <Content Include="EMS_print\hrm_crp_appointmentletter.aspx" />
+    <Content Include="EMS_print\ims_dst_deliveryorder.xsc">
+      <DependentUpon>ims_dst_deliveryorder.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\ims_dst_deliveryorder.xss">
+      <DependentUpon>ims_dst_deliveryorder.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\ims_trn_directdeliveryorder.aspx" />
+    <Content Include="EMS_print\int_crp_quotationset.xsc">
+      <DependentUpon>int_crp_quotationset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\int_crp_quotationset.xss">
+      <DependentUpon>int_crp_quotationset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\pay_rpt_payempolyeeslip.aspx" />
+    <Content Include="EMS_print\pbl_crp_txtilepaymentreceiptpdfword.aspx" />
+    <Content Include="EMS_print\pbl_trn_paymentsummaryrpt.aspx" />
+    <Content Include="EMS_print\pmr_crp_grnreportcr.aspx" />
+    <Content Include="EMS_print\pmr_trn_purchaseordersummary.aspx" />
+    <Content Include="EMS_print\print.aspx" />
+    <Content Include="EMS_print\Properties\AssemblyInfo.cs" />
+    <Content Include="EMS_print\rbl_crp_paymentreceiptdataset.xsc">
+      <DependentUpon>rbl_crp_paymentreceiptdataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\rbl_crp_paymentreceiptdataset.xss">
+      <DependentUpon>rbl_crp_paymentreceiptdataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\rbl_dst_invoicedataset.xsc">
+      <DependentUpon>rbl_dst_invoicedataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\rbl_dst_invoicedataset.xss">
+      <DependentUpon>rbl_dst_invoicedataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\rbl_mst_paymentsummaryreceiptrpt.aspx" />
+    <Content Include="EMS_print\rbl_trn_proformainvoice.aspx" />
+    <Content Include="EMS_print\rbl_trn_salesinvoice.aspx" />
+    <Content Include="EMS_print\trp_crp_enquirytoquotation.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="authdbconn.vb">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\appointmentorder1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>appointmentorder.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\crm_rpt_quotaioninvoice.vb">
+      <DependentUpon>crm_rpt_quotaioninvoice.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\crm_trn_opendc.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crm_trn_opendc.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\crm_trn_opendcadd.aspx.designer.vb">
+      <DependentUpon>crm_trn_opendcadd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\crm_trn_opendcadd.aspx.vb">
+      <DependentUpon>crm_trn_opendcadd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\crm_trn_opnedc.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>crm_trn_opnedc.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\crm_trn_quatationinvoise.aspx.designer.vb">
+      <DependentUpon>crm_trn_quatationinvoise.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\crm_trn_quatationinvoise.aspx.vb">
+      <DependentUpon>crm_trn_quatationinvoise.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\einvoicedst1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>einvoicedst.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\grninwarddataset1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>grninwarddataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\hrm_crp_appointmentletter.aspx.designer.vb">
+      <DependentUpon>hrm_crp_appointmentletter.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\hrm_crp_appointmentletter.aspx.vb">
+      <DependentUpon>hrm_crp_appointmentletter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\hrm_crp_appointmentletterreport.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\ims_dst_deliveryorder.Designer.vb">
+      <DependentUpon>ims_dst_deliveryorder.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\ims_rpt_deliveryorder.vb">
+      <DependentUpon>ims_rpt_deliveryorder.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\ims_trn_directdeliveryorder.aspx.designer.vb">
+      <DependentUpon>ims_trn_directdeliveryorder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\ims_trn_directdeliveryorder.aspx.vb">
+      <DependentUpon>ims_trn_directdeliveryorder.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\int_crp_quotationdataset1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>int_crp_quotationdataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\int_crp_quotationrpt.vb">
+      <DependentUpon>int_crp_quotationrpt.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\int_crp_quotationset.Designer.vb">
+      <DependentUpon>int_crp_quotationset.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\payslip.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>payslip.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\payslipdataset1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>payslipdataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\payslippaydataset1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>payslippaydataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\payslipsubdataset.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>payslipsubdataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pay_rpt_payaauraaslip.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pay_rpt_payempolyeeslip.aspx.designer.vb">
+      <DependentUpon>pay_rpt_payempolyeeslip.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pay_rpt_payempolyeeslip.aspx.vb">
+      <DependentUpon>pay_rpt_payempolyeeslip.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pay_rpt_paysubreport1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pay_rpt_paysubreport1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pay_rpt_payvcidexpayslip.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pay_rpt_payvcidexpayslip.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pay_rpt_subreport2.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pay_rpt_subreport2.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pbl_crp_paymentadvicereport.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pbl_crp_textilevoucher.Designer.vb">
+      <DependentUpon>pbl_crp_textilevoucher.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pbl_crp_textilevoucher.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pbl_crp_txtilepaymentreceiptpdfword.aspx.designer.vb">
+      <DependentUpon>pbl_crp_txtilepaymentreceiptpdfword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pbl_crp_txtilepaymentreceiptpdfword.aspx.vb">
+      <DependentUpon>pbl_crp_txtilepaymentreceiptpdfword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pbl_trn_paymentsummaryrpt.aspx.designer.vb">
+      <DependentUpon>pbl_trn_paymentsummaryrpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pbl_trn_paymentsummaryrpt.aspx.vb">
+      <DependentUpon>pbl_trn_paymentsummaryrpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pmr_crp_grnreportcr.aspx.designer.vb">
+      <DependentUpon>pmr_crp_grnreportcr.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pmr_crp_grnreportcr.aspx.vb">
+      <DependentUpon>pmr_crp_grnreportcr.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\pmr_crp_grnreportcr.vb">
+      <DependentUpon>pmr_crp_grnreportcr.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\pmr_crp_grnreportdataset.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>pmr_crp_grnreportdataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pmr_rpt_purchaseorder.vb">
+      <DependentUpon>pmr_rpt_purchaseorder.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\pmr_trn_purchaseordersummary.aspx.designer.vb">
+      <DependentUpon>pmr_trn_purchaseordersummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\pmr_trn_purchaseordersummary.aspx.vb">
+      <DependentUpon>pmr_trn_purchaseordersummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\print.aspx.designer.vb">
+      <DependentUpon>print.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\print.aspx.vb">
+      <DependentUpon>print.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\ProformaInvoice1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProformaInvoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\purchaseorder1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>purchaseorder.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\quotationinvoice.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>quotationinvoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\rbl_crp_bobateainvoicereport.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rbl_crp_bobateainvoicereport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\rbl_crp_finalsalesproformainvoicereport.vb">
+      <DependentUpon>rbl_crp_finalsalesproformainvoicereport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\rbl_crp_invoicereport.vb">
+      <DependentUpon>rbl_crp_invoicereport.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\rbl_crp_paymentreceipt.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EMS_print\rbl_crp_paymentreceiptdataset.Designer.vb">
+      <DependentUpon>rbl_crp_paymentreceiptdataset.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\rbl_dst_invoicedataset.Designer.vb">
+      <DependentUpon>rbl_dst_invoicedataset.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="EMS_print\rbl_dst_invoicedataset.vb">
+      <DependentUpon>rbl_dst_invoicedataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\rbl_mst_paymentsummaryreceiptrpt.aspx.designer.vb">
+      <DependentUpon>rbl_mst_paymentsummaryreceiptrpt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\rbl_mst_paymentsummaryreceiptrpt.aspx.vb">
+      <DependentUpon>rbl_mst_paymentsummaryreceiptrpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\rbl_trn_proformainvoice.aspx.designer.vb">
+      <DependentUpon>rbl_trn_proformainvoice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\rbl_trn_proformainvoice.aspx.vb">
+      <DependentUpon>rbl_trn_proformainvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\rbl_trn_salesinvoice.aspx.vb">
+      <DependentUpon>rbl_trn_salesinvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMS_print\smr_crp_finalinvoice1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>smr_crp_finalinvoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\trp_crp_customerinvoice1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>trp_crp_customerinvoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="EMS_print\trv_crp_customerinvoice1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>trv_crp_customerinvoice.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\MyExtensions\MyWebExtension.vb">
+      <VBMyExtensionTemplateID>Microsoft.VisualBasic.Web.MyExtension</VBMyExtensionTemplateID>
+      <VBMyExtensionTemplateVersion>1.0.0.0</VBMyExtensionTemplateVersion>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EMS_print\crm_rpt_quotaioninvoice.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crm_rpt_quotaioninvoice.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\crm_trn_opendc.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>crm_trn_opendc.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\hrm_crp_appointmentletterreport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>hrm_crp_appointmentletterreport1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\ims_rpt_deliveryorder.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ims_rpt_deliveryorder.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\int_crp_quotationrpt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>int_crp_quotationrpt.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\payslip.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>payslip.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\pay_rpt_payaauraaslip.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pay_rpt_payaauraaslip1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\pay_rpt_payvcidexpayslip.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pay_rpt_payvcidexpayslip.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\pbl_crp_paymentadvicereport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pbl_crp_paymentadvicereport1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\pbl_crp_textilevoucher.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pbl_crp_textilevoucher1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\pmr_crp_grnreportcr.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pmr_crp_grnreportcr.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\pmr_rpt_purchaseorder.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>pmr_rpt_purchaseorder.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\rbl_crp_bobateainvoicereport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rbl_crp_bobateainvoicereport.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\rbl_crp_finalsalesproformainvoicereport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rbl_crp_finalsalesproformainvoicereport.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\rbl_crp_invoicereport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rbl_crp_invoicereport.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\rbl_crp_paymentreceipt.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rbl_crp_paymentreceipt1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EMS_print\trv_crp_customerinvoice.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>trv_crp_customerinvoice1.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EMS_print\appointmentorder.xsc">
+      <DependentUpon>appointmentorder.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\appointmentorder.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>appointmentorder1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\appointmentorder.xss">
+      <DependentUpon>appointmentorder.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\einvoicedst.xsc">
+      <DependentUpon>einvoicedst.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\crm_trn_opnedc.xsc">
+      <DependentUpon>crm_trn_opnedc.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\crm_trn_opnedc.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>crm_trn_opnedc.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\crm_trn_opnedc.xss">
+      <DependentUpon>crm_trn_opnedc.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\einvoicedst.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>einvoicedst1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\einvoicedst.xss">
+      <DependentUpon>einvoicedst.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\grninwarddataset.xsc">
+      <DependentUpon>grninwarddataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\grninwarddataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>grninwarddataset1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\grninwarddataset.xss">
+      <DependentUpon>grninwarddataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\ims_dst_deliveryorder.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ims_dst_deliveryorder.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="EMS_print\int_crp_quotationdataset.xsc">
+      <DependentUpon>int_crp_quotationdataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\int_crp_quotationdataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>int_crp_quotationdataset1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\int_crp_quotationdataset.xss">
+      <DependentUpon>int_crp_quotationdataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\int_crp_quotationset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>int_crp_quotationset.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="EMS_print\payslipdataset.xsc">
+      <DependentUpon>payslipdataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\payslipdataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>payslipdataset1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\payslipdataset.xss">
+      <DependentUpon>payslipdataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\payslippaydataset.xsc">
+      <DependentUpon>payslippaydataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\payslippaydataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>payslippaydataset1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\payslippaydataset.xss">
+      <DependentUpon>payslippaydataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\payslipsubdataset.xsc">
+      <DependentUpon>payslipsubdataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\payslipsubdataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>payslipsubdataset.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\payslipsubdataset.xss">
+      <DependentUpon>payslipsubdataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\pay_rpt_paysubreport1.xsc">
+      <DependentUpon>pay_rpt_paysubreport1.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\pay_rpt_paysubreport1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>pay_rpt_paysubreport1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\pay_rpt_paysubreport1.xss">
+      <DependentUpon>pay_rpt_paysubreport1.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\pay_rpt_subreport2.xsc">
+      <DependentUpon>pay_rpt_subreport2.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\pay_rpt_subreport2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>pay_rpt_subreport2.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\pay_rpt_subreport2.xss">
+      <DependentUpon>pay_rpt_subreport2.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\pbl_crp_textilevoucher.xsc" />
+    <Content Include="EMS_print\pbl_crp_textilevoucher.xss" />
+    <Content Include="EMS_print\pmr_crp_grnreportdataset.xsc">
+      <DependentUpon>pmr_crp_grnreportdataset.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\pmr_crp_grnreportdataset.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>pmr_crp_grnreportdataset.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\pmr_crp_grnreportdataset.xss">
+      <DependentUpon>pmr_crp_grnreportdataset.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\ProformaInvoice.xsc">
+      <DependentUpon>ProformaInvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\ProformaInvoice.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProformaInvoice1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\ProformaInvoice.xss">
+      <DependentUpon>ProformaInvoice.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\purchaseorder.xsc">
+      <DependentUpon>purchaseorder.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\purchaseorder.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>purchaseorder1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\purchaseorder.xss">
+      <DependentUpon>purchaseorder.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\quotationinvoice.xsc">
+      <DependentUpon>quotationinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\quotationinvoice.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>quotationinvoice.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\quotationinvoice.xss">
+      <DependentUpon>quotationinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\rbl_crp_paymentreceiptdataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>rbl_crp_paymentreceiptdataset.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="EMS_print\rbl_dst_invoicedataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>rbl_dst_invoicedataset.Designer.vb</LastGenOutput>
+    </None>
+    <Content Include="EMS_print\smr_crp_finalinvoice.xsc">
+      <DependentUpon>smr_crp_finalinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\smr_crp_finalinvoice.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>smr_crp_finalinvoice1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\smr_crp_finalinvoice.xss">
+      <DependentUpon>smr_crp_finalinvoice.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\smr_sdc_proformainsinvoice.xsc">
+      <DependentUpon>smr_sdc_proformainsinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\smr_sdc_proformainsinvoice.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>smr_sdc_proformainsinvoice1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\smr_sdc_proformainsinvoice.xss">
+      <DependentUpon>smr_sdc_proformainsinvoice.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\trp_crp_customerinvoice.xsc">
+      <DependentUpon>trp_crp_customerinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\trp_crp_customerinvoice.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>trp_crp_customerinvoice1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\trp_crp_customerinvoice.xss">
+      <DependentUpon>trp_crp_customerinvoice.xsd</DependentUpon>
+    </Content>
+    <Content Include="EMS_print\trv_crp_customerinvoice.xsc">
+      <DependentUpon>trv_crp_customerinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="EMS_print\trv_crp_customerinvoice.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>trv_crp_customerinvoice1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="EMS_print\trv_crp_customerinvoice.xss">
+      <DependentUpon>trv_crp_customerinvoice.xsd</DependentUpon>
+    </Content>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63576</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:86/print</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

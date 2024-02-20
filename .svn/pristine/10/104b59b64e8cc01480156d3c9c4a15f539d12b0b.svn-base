@@ -1,0 +1,43 @@
+<div class="head"  [ngClass]="getHeaderClass()">
+    <div class="head-content">
+        <div class="head-content-left">
+            <div *ngFor=" let list of menu; let i = index;" style="padding-left: 6px;"> 
+                <button class="head-menu-item-name-btn"
+                  (click)="getsidemenu(list);selectHead(i)"
+                  [ngClass]="{'activeHeader': selectedIndex === i}"
+                >{{list.text}}</button>
+            </div>
+        </div>
+        <div class="head-content-right">
+            <button class="head-menu-item-btn " title="Social Media"  (click)="social()" >
+                <i class="bi bi-cart4" style="font-size:14px;font-weight: bolder;"></i>
+            </button>
+            <button class="head-menu-item-btn " title="Notification">
+                <i class="fa-solid fa-bell"></i>
+            </button>
+            <button class="head-menu-item-btn" title="Profile">
+                <i class="fa-solid fa-user"></i>
+            </button>
+            <button class="head-menu-item-btn" title="Logout" (click)="logout()">
+                <i class="fa-solid fa-power-off"></i>
+            </button>
+        </div>
+    </div>
+     <div *ngIf="router.url != '/system/SystemDashboard' && router.url != '/base/SettingDashboard'">
+      <div *ngIf="showBreadCurmList" class="headBreadCrum">
+            <span *ngIf="level_one_name != '' && level_one_name != null" (click) = redirect_menu(level_one_link)>
+                &nbsp;&nbsp; {{level_one_name}} <span style="color: black;">></span> 
+            </span> 
+            <span *ngIf="level_two_name != '' && level_two_name != null" (click) = redirect_menu(level_two_link)>
+                {{level_two_name}} <span style="color: black;">></span>
+            </span>
+            <span *ngIf="level_three_name != '' && level_three_name != null" (click) = redirect_menu(level_three_link)>
+                {{level_three_name}} <span style="color: black;"></span>
+            </span>
+            <!-- <span *ngIf="level_four_link != '' && level_four_link != null" (click) = redirect_menu(level_four_link)>
+               >{{level_four_name}} 
+            </span>  -->
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,67 @@
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h3 class="card-title">Add Template</h3> 
+    </div>
+    <br>
+
+    <form  [formGroup]="reactiveForm" #form="ngForm">
+            
+                <div class="modal-body" >
+         
+                    <div class="m-3 "><span class="font-bold"><b>Template Name</b><span class="ms-1 text-red" >*</span></span>
+                        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+        
+                        
+                             <input formControlName="template_name" type="text" class="
+                             form-control-lg form-control-solid
+                             custom-input
+                             mb-3 mb-lg-0 col-12
+                             bg-white
+                           "  placeholder="Template Name"   name="template_name" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" required  />
+                        </div>
+                         
+                    </div>
+                    
+                   <br>
+                <div class="m-3 "><span class="font-bold"><b>Template Type</b><span class="ms-1 text-red" >*</span></span>
+                    <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+                       <div>
+                        <select class="form-select" formControlName="payment_terms"
+                        placeholder="Template Type"  pattern="^(?!\s*$).+"  name="payment_terms" required>
+                          <option value="General">General</option>
+                          <option value="Payment Terms">Payment Terms</option>
+                          <option value="Delivery Details">Delivery Details</option>
+                        </select>
+                      </div>
+                    </div>
+                     
+                </div>
+                <br>
+                <div class="m-3 col-12 col-lg-4 col-md-6 col-sm-12"><b>Template</b>
+
+                    <div class="col-lg-11 col-12 col-md-11 col-sm-11 fv-row ">
+                      <div class="container" style="margin-left: 6px;">
+                        <angular-editor  [config]="config" formControlName="template_content"></angular-editor>
+                        
+                      </div>
+                    </div>
+    
+                </div>
+                </div>
+          
+                <!-- Modal footer -->
+                <div class="text-center my-4">
+                    <button  (click)="onsubmit()" [disabled]="reactiveForm.invalid" [ngClass]="{
+                        'primary-button': !reactiveForm.invalid,
+                        'secondary-button': reactiveForm.invalid
+                      }" data-bs-dismiss="modal">          
+                        <i class="fas fa-check text-white fs-5 " ></i> &nbsp;Submit
+                    </button> &nbsp;&nbsp;
+                    <button class="btn-primary btn-sm text-white me-4" routerLink="/pmr/PmrMstTermsconditionssummary">
+                        <i class="fas fa-arrow-left"></i> &nbsp; Back
+                      </button>
+                </div>
+        
+          
+        </form>
+

@@ -1,0 +1,56 @@
+<div class="card">
+    <div class="row ms-3 mt-3 d-flex align-items-center">
+      <div class="col">
+        <h3 class="card-title">Purchase Requisition</h3>
+      </div>
+      <div class="col me-5">
+        <button type="button" class="btn-primary btn-sm text-white me-4 float-end" (click)="onadd()"> Raise PR
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <div class="mx-3 p-3 pt-0 pb-0 bg-white rounded">
+        <table id="purchaserequest_list" class="table table-striped table-row-bordered gy-5 gs-7 ">
+          <thead>
+            <tr class="fw-bold fs-7 text-nowrap bg-lightblue text-blue">
+              <th>PR Date</th>
+              <th>PR Ref. No</th>
+              <th>Cost Centre</th>
+              <th>Branch / Department</th>
+              <th>Details</th>
+              <th>PR Reference</th>
+              <th>Status</th>
+              <th>Created By</th>
+              <th>Remarks</th>              
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of purchaserequest_list;" class="align-items-center">
+              <td>{{data.purchaserequisition_date}}</td>
+              <td>{{data.purchaserequisition_gid}}</td>
+              <td>{{data.costcenter_name}}</td>
+              <td>{{data.branch_name}}</td>
+              <td>//</td>
+              <td>{{data.purchaserequisition_referencenumber}}</td>
+              <td>{{data.overall_status}}</td>
+              <td>{{data.user_firstname}}</td>
+              <td>{{data.purchaserequisition_remarks}}</td>
+              <td class="text-center text-nowrap">
+                <button title="Edit" type="button" class="btn btn-icon btn-sm bg-warning me-2" (click)="openModaledit()">
+                  <span class="fa-solid fa-pencil text-white  fs-6"></span>
+                </button>
+                <button title="Add Tax" type="button" class="btn btn-icon btn-sm bg-success me-2" (click)="openModaladd()">
+                  <span class="fa-solid fa-eye text-white  fs-6"></span>
+                </button>
+                <button title="Delete" type="button" (click)="openModaldelete()" data-bs-toggle="modal" data-bs-target="#myModaldelete" class="btn btn-icon btn-sm bg-primary me-2">
+                  <span class="fa-solid fa-clone text-white  fs-6"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
